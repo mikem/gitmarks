@@ -1,0 +1,604 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<script type="text/javascript">
+/*
+   [                                                       ]
+   [ SCHILLMANIA! | 2009 edition                           ]
+   [ ----------------------------------------------------- ]
+   [                                             200902xx  ]
+   [ APPROACH
+   [                                                       ]
+   [ Khoi Vinh + TheRoot42 + others as design inspiration. ]
+   [ Less is more. The grid is good. That is all.          ]
+   [                                                       ]
+   [ ABOOT                                                 ]
+   [                                                       ]
+   [ Name:        Scott Schiller                           ]
+   [ Background:  Canadian                                 ]
+   [ Live/Work:   San Francisco | Flickr/Yahoo!            ]
+   [ Email:       i'd like to work at yahoo.com            ]
+*/
+var APP_XHTML = false; // Apparently your agent doesn't support application/xhtml+xml (or has issues with it. try ?xhtml=true to force it.)
+var urlRoot = '/';
+</script>
+<title>More Rounded Corners with CSS - Schillmania.com</title>
+<meta name="description" content="Dialogs with rounded corners, borders and drop shadows are all the rage these days. Here's one approach." />
+<meta name="keywords" content="CSS, Scott Schiller, Schill, Schillmania, funky object-oriented javascript-centric design, panoramic photography" />
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+<meta name="robots" content="all" />
+<meta name="author" content="Scott Schiller" />
+<meta name="copyright" content="Copyright (C) 1997 onwards Scott Schiller" />
+<meta name="language" content="en-us" />
+<base href="http://www.schillmania.com/" />
+<link rel="stylesheet" media="screen" href="2009/2009.css" /><link rel="alternate" type="application/rss+xml" href="/content/schillmania_rss.xml" title="RSS feed for Schillmania.com" />
+<link rel="shortcut icon" href="http://schillmania.com/favicon.ico" />
+<script type="text/javascript" src="2009/yui.js"></script>
+<script type="text/javascript" src="2009/2009.js"></script>
+<script type="text/javascript" src="common/stats.js"></script>
+</head>
+
+<body id="body">
+
+<div id="site">
+
+<div id="content">
+
+ <div id="container">
+
+  <div id="header">
+
+   <div id="header-content">
+
+    <div id="logo">
+     <a href="http://www.schillmania.com/" title="The creative and technical vents of Scott Schiller">Schillmania!</a>
+    </div>
+
+    <div id="theme-archive">
+	 <div id="site-archives">
+	  <a href="?theme=2004" title="View the 2004 'now with more funk' theme">04</a>
+	  <a href="?theme=2005" title="View the 2005 'bouncing icons' theme">05</a>
+	  <a href="?theme=2006" title="View the 2006 'work/life balance' theme">06</a>
+	  <a href="?theme=2007" title="View the 2007/08 'night/day' theme">07/08</a>
+	  <a href="?theme=2008" title="View the 08 'back to basics' theme">08</a>
+	  <a href="#theme=2009" title="2009 (current) theme" class="current">09</a>
+	 </div>
+    </div>
+
+   </div>
+
+   <hr />
+  
+  </div>
+
+  <div id="lights"> </div>
+
+  <!-- dynamic content -->
+
+  <div id="main-content">
+	
+   <div id="entry-content">
+
+
+  <div class="top header">
+  <h1><img src="image/common/icon_content.gif" alt="" class="icon png" />More Rounded Corners with CSS</h1>
+  <div class="divider"> </div>
+</div>
+
+  <div class="copy">
+
+   <h3 class="tight">2007 Update</h3>
+   <p style="background:#eee">A new technique, <a href="/content/projects/even-more-rounded-corners/" title="Even More Rounded Corners With CSS">Even <em>More</em> Rounded Corners With CSS</a>, has been published; it uses a single image instead of slices, and still supports PNG + alpha transparency etc. Check it out.</p>
+
+   <h3>2006 Version</h3>
+
+   <p>Admit it. You know it, your Mom knows it and even your Grandmother probably knows it by now: Rounded corners, borders and drop shadows (while nothing new) are all the rage these days on the "Web 2.0, fully Ajaxed, Ajax-enhanced, Ajaxified<sup title="They forgot to add &quot;over-hyped&quot;">*</sup>" Web 2.0-era Web.</p>
+
+   <p>As I write this, I am in the midst of Web Development on the new <a href="http://www.demo.com/demonstrators/demo2006/63052.html">Yahoo! Photos</a> (unofficially version "3.0" internally, I just call it a "dream job,") which could theoretically have no shortage of rounded-corner dialogs using equally-round borders, drop shadows and perhaps even gradients. <em class="note">(Side disclaimer: The code and design examples shown are my own, and are not necessarily Yahoo!-related.)</em>
+  </p>
+
+   <p style="float:right;display:inline;margin-left:1em">
+    <a href="/projects/dialog/" title="Rounded corner dialogs with CSS - examples"><img src="image/content/entries/2006/04/more-rounded-corners/dialog-example.png" alt="Rounded corner dialogs with CSS - examples" /></a>
+   </p>
+
+   <p>From a Web Development perspective, these kind of design requirements can still bring the occasional headache. How does one standardize code and approaches to building potentially-numerous variants of rounded-corner boxes, allowing for fluid design and retaining flexibility for future updates, without going crazy?</p>
+
+   <h3>What We <em>Don't</em> Want</h3>
+
+   <p>As Web Developers, the usual ideals apply when writing code to meet a design goal.</p>
+
+   <h4>The Usual Web Developer Ideals:</h4>
+
+   <ul>
+
+    <li>
+     <p>Keep markup semantic and lean.</p>
+     <p class="note">Minimal, if any, extra cruft and "hook" elements.</p>
+    </li>
+
+    <li>
+     <p>No inline presentational images.</p>
+     <p class="note">Related to above; don't litter markup with inline rounded corners, for example.</p>
+    </li>
+
+    <li>
+     <p>Fixed-width/height design is generally bad.</p>
+     <p class="note">Goes against flexibility, scalable layout etc. Keep change and varying space requirements in mind at all times.</p>
+    </li>
+
+    <li>
+     <p>Javascript means "slower."</p>
+     <p class="note">Elements could be dynamically added, but that introduces external dependencies (Javascript) <em>and</em> potential performance issues. I <a href="/dev/boxlib/">tried this</a> in 2003, and I don't recommend it; I have since moved on.</p>
+    </li>
+
+    <li>
+     <p>Tables for layout are bad.</p>
+     <p class="note">Layout is one thing, rounded corners are an even more heinous crime - that's so 1997.</p>
+    </li>
+
+   </ul>
+
+   <h3>Been There, Done That.. Still Not Solved.</h3>
+
+   <p>Many hours, late nights and coffee have undoubtedly been spent and drank, respectively, working on the problem of "give me a fluid box with rounded corners." I can personally attest to this. (See <a href="/dev/boxlib/">BoxLib</a>.)</p>
+
+   <p>A lot of other approaches (do a search for "css rounded corners") use CSS hacks, inline images or even Javascript to accomplish the desired behaviour. Some have programmatically tried to generate corners via one-pixel <code>div</code> elements using Javascript; while perhaps a minor technical feat, they are ultimately kludgy, slow and perhaps unreliable.</p>
+
+   <p>It is my opinion that the cleanest solutions for producing design and layout will focus on CSS and well-formed, flexible and "copy-paste"-able-type markup: No javascript, no hacks, and more reliable results. The only real requirement is providing enough elements for CSS to apply background images, borders, margins and padding to - and in the case of rounded-corner dialogs, the nesting of elements for the "Sliding Doors" method.</p>
+
+   <h3>Providing The Right Hooks</h3>
+
+   <p>Most design problems with CSS involve a desire to have multiple, stretched or fluid background images on a single element. Unfortunately, current standards don't provide this sort of affordance. Thus, we are left with nesting elements and other techniques which allow the kind of effects we want. For example, <a href="http://www.stopdesign.com">Douglas Bowman</a>'s simple yet ingenious <a href="http://www.alistapart.com/articles/slidingdoors/">Sliding Doors</a> method, uses a parent element with a single nested child in order to provide CSS "hooks" for two background images - thus forming a left and right "cap" which can realise, in a fluid matter, a varying number of designs.</p>
+
+   <h3>Header, Body, Footer</h3>
+
+   <p>An approach like this may be more valuable than others, because Web Developers want to write code that can meet potentially-changing design requirements. Ideally, one of many styles of rounded-corner box could be swapped out with any other using this method, without having to modify the HTML.</p>
+
+   <p style="float:right;display:inline;margin-left:1em">
+    <a href="/projects/dialog/" title="Rounded corner dialogs with CSS - example of how the image is cut"><img src="image/content/entries/2006/04/more-rounded-corners/dialog-example-split.png" alt="Rounded corner dialogs with CSS - example of how the image is cut" /></a>
+   </p>
+
+   <p>The method is quite simple: The whole dialog is vertically split into three slices, each being an instance of the "Sliding Doors" method. Each "left" section (elements with CSS classes <code>.hd</code>, <code>.bd</code> and <code>.ft</code>,) has a corresponding nested "corner" or "cap", CSS class <code>.c</code> which merely overlays the left with a right-positioned, non-repeating background image.</p>
+
+   <h3>On Fluidity</h3>
+
+   <p>This method is horizontally fluid relative to the size of the left background image applied to <code>.hd</code>, <code>.bd</code> and <code>.ft</code>. Using PNG, a 1600-pixel-wide image can be cut with a minimal file size. If you're concerned about users hitting this limit, cut larger images or set a <code>max-width</code> on the <code>.dialog</code> class.</p>
+
+   <p>Vertically, the same scaling applies - the images cut will need to vertically expand to cover the maximum height case. For the example shown here, the header and footer are fixed-height and all content is centered inside the body.</p>
+
+
+   <h3>PNG and IE 6: Goodbye, and Good Riddance</h3>
+
+   <p>Some wise developer said a while back, "<a href="http://www.codinghorror.com/blog/archives/000242.html" title="Coding Horror: Regarding IE 6 antiquity">IE 6 is the new Netscape 4</a>." With IE 7 coming soon to replace an aged browser near you, hope is on the horizon for using alpha-transparent PNGs to their full potential without the crippling <code>DXAlphaImageLoader</code> and <code>filter:</code> crap that has plagued our CSS and bloated our Javascript for the last five-or-so years. In other words, using them as regular images and background images as we've been used to -- in fact, my PSP's web browser handles PNG alpha transparency better than IE 6.</p>
+
+   <p>IE 5, 5.5 and 6 all have restrictions on alpha-transparent PNGs; elements applying them must "have layout", can be stretched or cropped <em>but not tiled</em> (a huge setback in my opinion,) and can render elements seemingly-"disabled," invisible to events and clicking. My suggestion is to downgrade IE 6 to GIF where applicable, and save yourself a lot of time and trouble in the process with low-to-minimal cost. One would hope that alpha transparency is not <em>that</em> crucial to the operation of your site.</p>
+
+
+   <h3>In Closing</h3>
+
+   <p>This is just my current thinking, a combination of an adoption of existing ideas alongside a few new ones; the Sliding Doors method has worked quite well for rounded corners, so it makes sense to apply it to creating fluid rounded boxes with borders and drop shadows as well. SVG and Canvas are bringing vectors to possible mainstream use, it will be interesting to see where those respective technologies go. In the meantime, us HTML/CSS/Javascript developers have an existing toolset and browser base to work with, and naturally common support wins overall.</p>
+
+   <div id="foot1" class="footnote">* They forgot to add "over-hyped."</div>
+
+  </div>
+
+ <div class="top header">
+  <h4>Related links</h4>
+  <div class="divider"> </div>
+</div>
+<div class="copy">
+  <ul>
+    <li>
+      <a href="content/projects/even-more-rounded-corners">Even More Rounded Corners (2007 update)</a>
+    </li>
+    <li>
+      <a href="http://www.alistapart.com/articles/slidingdoors/">The "Sliding Doors" technique</a>
+    </li>
+    <li>
+      <a href="/projects/dialog/">Dialog example + code (GIF version)</a>
+    </li>
+    <li>
+      <a href="/projects/dialog/png/">Dialog example + code (PNG version)</a>
+    </li> </ul>
+</div>
+
+  <!-- /entry content -->
+
+  </div>
+
+  <!-- right column -->
+
+  <div id="right">
+
+<!-- end unique content -->
+
+   <div id="nav">
+
+    <div id="options-stub"></div>
+
+    <div id="stub" class="stub"></div>
+
+<ul id="nav-list" class="top">
+	
+<li id="external">
+
+	<h2 title="Recent Activity"><span class="l"></span>Recent<span>ly.</span></h2>
+	
+	<ul>
+	 <li>
+
+	    <div class="arkanoid item">
+	     <h3><a href="http://www.schillmania.com/arkanoid/" title="The classic Breakout-style arcade game, playable in-browser">Arkanoid</a><span class="opt">:</span> <span>Recent Submissions</span></h3>
+	     <div id="arkanoid-stub"></div>
+
+	     <p class="cta"><a href="http://www.schillmania.com/arkanoid/#editor" title="Edit and submit your own DHTML Arkanoid level">Create a level</a> <span class="divider">|</span> <a href="http://www.schillmania.com/arkanoid/#browser" title="Browse and play user-submitted levels in DHTML Arkanoid">More..</a></p>
+	    </div>
+
+	    <div class="flickr item">
+	     <h3>Amateur Photography <span class="opt">-</span> <span>Photos from Schill</span></h3>
+
+	     <div id="flickr-stub"></div>
+	    </div>
+
+	    <div class="lastfm item">
+	     <h3>Heavy Rotation <span class="opt">-</span> <span>Schill's most-listened-to artists @last.fm</span><span class="record"></span></h3>
+	     <div id="lastfm-stub"></div>
+	     <div class="clear"></div>
+	    </div>
+	
+	 </li>
+	</ul>
+
+</li>
+
+<li>
+  <h2 title="The latest and greatest."><span class="l"></span>Read<span>ing.</span><span></span></h2>
+  <ul>
+
+   <li>
+    <p>The latest and/or most relevant stuff.</p>
+    <h3>Most Recently</h3>
+    <dl>
+	 <dt><a href="content/entries/2010/how-soundmanager2-works/">How SoundManager 2 Works</a></dt>
+	 <dd>Background details to the JavaScript and Flash that makes SoundManager 2 work, plus technical notes and other findings about Flash's wacky ExternalInterface functionality.</dd>
+	 <dt><a href="content/entries/2009/css3-and-the-future/">CSS 3 and The Future: Image-free Rounded Corners, Drop Shadows and Gradients</a></dt>
+	 <dd>A brief history of rounded corner CSS 2 hacks and some examples of effects using border-radius, box-shadow and other fancy CSS 3 attributes (and vendor-specific extensions) allowing modern browsers to render shiny UI designs entirely from code.</dd>
+	 <dt><a href="content/entries/2009/browser-performance-cost-of-social-media/">The Cost of "Social Media" Javascript Overload</a></dt>
+	 <dd>Security, load time and user experience are all affected by the amount of inline Javascript blocks and third-party script &quot;includes&quot; being crammed into some modern sites, particularly commercial and tech blogs. This entry is a rant, and some suggestions to improve performance.</dd>
+	 <dt><a href="content/entries/2009/time-lapse-photography-chdk/">HD Time-Lapse Photography: A How-To</a></dt>
+	 <dd>A hacker type can't simply plant basil and cilantro outside, and leave them alone to grow; of course there has to be something else, preferably nerdy, in the process. This is how I ended up getting into time-lapse photography and making videos from sequences of photos using a Canon camera, the free CHDK software, and QuickTime.</dd>
+	 <dt><a href="content/entries/2009/javascript-malware-obfuscation-analysis/">Javascript Malware Analysis: A Case Study</a></dt>
+	 <dd>When JS goes bad: Remote iFrame tricks on legitimate (or phishing) sites can load Javascript exploits or &quot;shellcode&quot;, which can mean drive-by downloads and other risks. This is an example of some heavily-obfuscated code seen on a recent Facebook phishing site.</dd>
+	 <dt><a href="content/projects/javascript-animation-3/">Javascript Animation: Tutorial, Part 3</a></dt>
+	 <dd>The final, and overdue, part in a series on Javascript animation techniques: Creating tweens, simultaneous animations and event handling are discussed. A simple animation API, demo and source code is included.</dd>
+	 <dt><a href="content/entries/2009/adblock-vs-noscript/">Extension Wars: Adblock Plus vs. NoScript</a></dt>
+	 <dd>Is it okay for one popular Firefox extension to alter the behaviour of another without asking for your permission? (PS: Internet drama/tempest in a teapot amusement goes here.)</dd>
+	 <dt><a href="content/entries/2009/defer-script-loading/">Optimizing Your External Javascript References</a></dt>
+	 <dd>Traditionally, the script tag blocks parse, load and render of a web page. A few ideas around this include loading JS with JS, the defer attribute and caching locally.</dd>
+	 <dt><a href="http://www.yuiblog.com/blog/2009/06/30/yui-soundmanager/">Enhancing YUI-based Applications With Audio</a></dt>
+	 <dd>(yuiblog.com article) Thoughts about audio and how it can be applied online to user interface/experience design.</dd>
+	 <dt><a href="http://www.yuiblog.com/blog/2009/02/26/flickr-uploadr/">Flickr Web Uploadr: File uploads via YUI</a></dt>
+	 <dd>(code.flickr.com article) A brief history of how browser-based file uploads suck, and how we made them a lot better on Flickr.</dd>
+	 <dt><a href="content/entries/2009/yahoo-photos-frontend-thoughts/" class="xhr-exclude">A Snapshot of The Yahoo! Photos Beta (from 2006)</a></dt>
+	 <dd>Javascript performance learnings: Memory leaks and management, event delegation, performance tweaks, debugging, UI observations and side thoughts from a web development perspective from my time working on the Ajax-heavy redesign of Yahoo! Photos, between 2005 and 2006.</dd>
+     <dt><a href="content/entries/2009/what-i-did-in-2008/" class="xhr-exclude">What I Did In 2008</a></dt>
+     <dd>A productive year seeing the redesign of SoundManager 2, the Javascript Sound library, a refresh of Snowstorm (a free Javascript Snow effect), continued downtempo and trip-hop mixes, binaural audio recordings, time-lapse photography and video experiments.</dd>
+	 <dt><a href="http://code.flickr.com/blog/2008/11/12/on-ui-quality-the-little-things-client-side-image-resizing/">On UI Quality (The Little Things)</a></dt>
+	 <dd>(code.flickr.com article) Observations of how browsers do linear and bicubic image resampling when resizing, and how to make them look better in IE 6 and 7.</dd>
+    </dl>
+   </li>
+
+  </ul>
+ </li>
+ 
+<li>
+  <h2 title="Fun and entertainment"><span class="l"></span>Play<span>ing</span><span>.</span></h2>
+  <ul>
+   <li>
+    <h3>Entertainment: Games</h3>
+    <dl>
+     <dt><a href="/content/projects/dhtml_arkanoid/">DHTML Arkanoid</a></dt>
+     <dd>An attempt at recreating the classic Arkanoid arcade game entirely in DHTML. Includes a level editor and a highscores list.</dd>
+     <dt><a href="/?theme=2007&amp;christmas=1">"Smash Christmas Lights"</a></dt>
+     <dd>A seasonal twist on the 2007/08 web site theme, with animations and sound effects. There is a bonus sequence for those who are "thorough"..</dd>
+     <dt><a href="/projects/fireworks/">Fireworks.js</a></dt>
+     <dd>A goofy interactive Javascript Fireworks experiment, with animation and sound.</dd>
+     <dt><a href="/random/humour/web20awareness/">"Web 2.0 Awareness Test"</a></dt>
+     <dd>A Javascript/CSS experiment which gives you a score based on what Web 2.0-related sites you may have recently visited. (Written in 2006.)</dd>
+
+    </dl>
+   </li>
+
+   <li>
+    <h3>Code: F/OSS/Things You Can Use</h3>
+    <dl>
+     <dt><a href="http://www.schillmania.com/projects/soundmanager2/">SoundManager 2: Javascript Sound For The Web</a></dt>
+     <dd>A new, fancier version of a Javascript sound project allowing people to add sound, or make sound apps using Javascript.</dd>
+     <dt class="external"><a href="http://www.schillmania.com/projects/soundmanager2/demo/play-mp3-links/">Javascript MP3 Player Demo</a></dt>
+     <dd>An example of SoundManager 2, showing how you can make MP3 links play inline.</dd>
+     <dt><a href="/content/projects/even-more-rounded-corners/">Even More Rounded Corners With CSS</a></dt>
+     <dd>Another take at creating single-image, alpha-transparent, fluid, rounded corner dialogs with CSS.</dd>
+     <dt><a href="/content/projects/javascript-animation-1/">Javascript Animation: Tutorial, Part 1</a></dt>
+     <dd>Part one of a planned series: Theory behind Javascript/DHTML-based animation via setTimeout and setInterval.</dd>
+     <dt><a href="/content/projects/javascript-animation-2/">Javascript Animation: Tutorial, Part 2</a></dt>
+     <dd>Discussing efficiency regarding interval-based animation</dd>
+	 <dt><a href="content/projects/javascript-animation-3/">Javascript Animation: Tutorial, Part 3</a></dt>
+	 <dd>The final, and overdue, part in a series on Javascript animation techniques: Creating tweens, simultaneous animations and event handling are discussed. A simple animation API, demo and source code is included.</dd>
+     <dt><a href="/content/projects/snowstorm/">SnowStorm: A Javascript Snow Effect</a></dt>
+     <dd>A downloadable DHTML component that creates an animated snowfall effect. Uses PNG-based images where supported.</dd>
+    </dl>
+   </li>
+
+  </ul>
+ </li>
+ 
+<li>
+  <h2 title="Thoughts and so on"><span class="l"></span>Think<span>ing</span><span>.</span></h2>
+  <ul>
+   <li>
+
+    <p>Observations, Thoughts and Rants</p>
+    <h3>Writing: Highlights</h3>
+
+	<h4>Non-technical</h4>
+    <dl>
+     <dt><a href="content/entries/2008/beck-mellow-gold/">Top 5 favourite albums: Beck: Mellow Gold</a></dt>
+     <dd>Comments on Beck's classic break-out album from 1994, with a few insights from this Beck fan.</dd>
+     <dt><a href="/content/opinion/2005/04/12/what-turntables-to-buy/">What Turntables To Buy?</a></dt>
+     <dd>My response to a forum post on choosing DJ equipment.</dd>
+     <dt><a href="/content/opinion/2004/01/03/on_djing_and_turntablism/">On DJing and Turntablism</a></dt>
+     <dd>Why you should buy a pair of 1200s, a mixer and some records.</dd>
+    </dl>
+
+	<h4>Nerd glasses required</h4>
+    <dl>
+     <dt><a href="/content/projects/soundmanager2/">Sound For The Web: SoundManager 2 (Article)</a></dt>
+     <dd>A new, fancier version of a Javascript sound project allowing people to add sound, or make sound apps using Javascript.</dd>
+     <dt><a href="/content/entries/2006/08/how-web20-aware-are-you/">How Web 2.0-aware Are You?</a></dt>
+     <dd>A humorous look at Web 2.0-related sites, using a trick that tests your browser&#39;s visited URL history.</dd>
+     <dt><a href="/content/entries/2005/02/19/writing-html-like-1993/">Writing HTML like it&#39;s 1993</a></dt>
+     <dd>A new job update, California, Eric and Molly teach CSS.</dd>
+     <dt><a href="/content/opinion/2005/10/dont-believe-the-web-20-hype/">Don&#39;t Believe The (Web 2.0) Hype!</a></dt>
+     <dd>An attempt at popping the latest Internet 2.0 bubble and related technologies, along with a wishlist of ideals.</dd>
+     <dt><a href="/content/opinion/2005/10/on-seo-and-spamming/">On SEO and Search Engine Spamming</a></dt>
+     <dd>From a post on theroot42.org originally entitled, &#39;SEO/How To Do Well On The Search Engines&#39;</dd>
+     <dt><a href="content/entries/2004/10/24/application-xhtml+xml/">Application/XHTML+XML</a></dt>
+     <dd>What I learned about XHTML when switching schillmania.com to application/xhtml+xml (forcing true XML validation.)</dd>
+     <dt><a href="/content/opinion/2004/06/27/the_obligatory_standards_rant/">The Obligatory Standards Rant</a></dt>
+     <dd>A rant advocating standards on a respected design-oriented forum.</dd>
+     <dt><a href="/content/opinion/2004/01/01/spam_spam_spam/">Spam, spam, spam</a></dt>
+     <dd>Spam: The scourge of the Internet. A quick overview-cum-rant, and some recommended tools to fight the spam war.</dd>
+    </dl>
+
+   </li>
+
+  </ul>
+ </li>
+
+<li>
+  <h2 title="Audio: Recordings"><span class="l"></span>Listen<span>ing</span><span>.</span></h2>
+  <ul>
+   <li>
+    <p>Random soundbites + video clips</p>
+
+    <h3>Binaural Audio Recordings</h3>
+    <dl>
+     <dt><a href="/content/media/beat-juggling/">Hand/Eye Coordination</a></dt>
+     <dd>An attempt at &#39;Beat juggling&#39; a seamless loop from a sample using turntables and two copies of the same record.</dd>
+     <dt><a href="/content/media/drumming-with-vinyl/">Drumming with Vinyl</a></dt>
+     <dd>Correctly scratch a record with a drum sample on it, and you can make your own variation on a theme.</dd>
+
+     <dt><a href="/content/media/technics_mouse_scratching/">Scratching .. with a mouse?</a></dt>
+     <dd>Combine a turntable with a computer mouse and a copy of the SoundCraft vinyl scratching emulation engine, and you have at least 30 seconds of entertainment.</dd>
+     <dt><a href="/content/media/2-hour_mix/">Chill with Schill</a></dt>
+     <dd>A two-hour Downtempo/Trip-Hop mix, recorded on a lazy afternoon while drinking a $4 mocha from Starbucks. How&#39;s that for detail?</dd>
+    </dl>
+   </li>
+
+  </ul>
+ </li>
+
+<li>
+  <h2 title="Contact information and related links"><span class="l"></span>React<span>ing</span><span>.</span></h2>
+  <ul>
+   <li>
+    <p>Get In Touch.</p>
+
+    <h3>Interact</h3>
+    <dl>
+     <dt><a href="/content/react/contact/" title="Scott Schiller, contact information">Contact</a></dt>
+     <dd>How to get in touch with Scott Schiller.</dd>
+    </dl>
+
+    <h3>Elsewhere Online</h3>
+    <dl>
+     <dt><a href="http://flickr.com/people/schill/">schill on Flickr</a></dt>
+     <dd>Scott&#39;s Flickr profile and photos</dd>
+     <dt><a href="http://www.last.fm/user/chillwithschill/">chillwithschill on Last.fm</a></dt>
+     <dd>Scott&#39;s last.fm profile and music interests</dd>
+     <dt><a href="http://www.scottschiller.com/" title="Scott Schiller, professional portfolio site">scottschiller.com: Portfolio</a></dt>
+     <dd>Scott Schiller&#39;s professional and personal portfolio site. (Last updated: 2004)</dd>
+     <dt><a href="http://www.freshly-ground.com/" title="Experimental design/music/DJ site">freshly ground: Experimental sound/music</a></dt>
+     <dd>A side-project of experiments in music and binaural audio recordings</dd>
+    </dl>
+
+   </li>
+  </ul>
+</li>
+
+<li>
+  <h2 title="Old sites, articles and work"><span class="l"></span>Dig<span>ging</span><span>.</span></h2>
+  <ul>
+   <li>
+    <p>The Archives: Design and content</p>
+
+    <h3>Alternate Themes</h3>
+    <dl>
+     <dt><a href="http://schillmania.com/?theme=2008" title="2008 'Back to Basics' edition">2008 "Back To Basics" edition</a></dt>
+     <dd>Schillmania! 2008 Edition: Back To Basics (CSS grid layout, minimal JS/images)</dd>
+     <dt><a href="http://www.schillmania.com/?theme=2007" title="2007/2008 'night and day' theme">2007/08 "Night and Day" edition</a></dt>
+     <dd>Schillmania! 2007/08 Edition: "Night and day" theme with time-sensitive UI/design, environmental sound effects and ambience</dd>
+     <dt><a href="http://www.schillmania.com/?theme=2007&amp;christmas=1" title="2007 Smash Christmas Lights seasonal feature">"Smash Christmas Lights" 2007</a></dt>
+     <dd>Schillmania! 2007 Edition: "Smash Christmas Lights" seasonal feature</dd>
+     <dt><a href="http://www.schillmania.com/?theme=2006" title="Schillmania! 2006 Edition">2006 "Work/life balance" edition</a></dt>
+     <dd>Schillmania! 2006 Edition: Archived design (Sliding feature photo, two-column layout)</dd>
+     <dt><a href="http://www.schillmania.com/?theme=2005" title="Schillmania! 2005 Edition">2005 "Bouncing Icon" edition</a></dt>
+     <dd>Schillmania! 2005 Edition: Archived design (Horizon, bouncing icon layout)</dd>
+     <dt><a href="http://www.schillmania.com/?theme=2004" title="Schillmania! 2004 Edition">2004 Edition: Now With More Funk</a></dt>
+     <dd>Schillmania! 2004 Edition: Archived design (Multi-themed sliding photos+sound layout, may be buggy)</dd>
+    </dl>
+
+    <h3>Design Archives</h3>
+    <dl>
+     <dt><a href="/content/entries/2005/05/25/5-years/">A Five-Year Retrospective</a></dt>
+     <dd>A look back on the origins of schillmania.com and its previous incarnations.</dd>
+     <dt><a href="http://www.schillmania.com/spring_03" title="Schillmania! Spring.03 Edition">2003 (Spring.03): Strictly XHTML edition</a></dt>
+     <dd>Schillmania! 2003 Edition: Archived design ("Newspaper style", first major XHTML + heavy JavaScript rewrite)</dd>
+    </dl>
+
+	<h3>News + Article Archives</h3>
+	
+	<p>Everything else not previously mentioned.</p>
+
+	<h4>2005 - 2007</h4>
+    <dl>
+     <dt><a href="content/entries/2007/12/redesign/">A Fresh Redesign: 2007/08 edition</a></dt>
+     <dd>An aggressive new time-sensitive redesign renders the site with different visual and audible cues over the course of the day.</dd>
+     <dt><a href="content/entries/2006/12/happy-holidays/">A Holiday Update (2006)</a></dt>
+	 <dd>The usual holiday festivities: Snow, good tunes, smashing christmas lights and other debauchery.</dd>
+     <dt><a href="/content/projects/soundmanager2/">Sound For The Web: SoundManager 2 (Article)</a></dt>
+     <dd>A new, fancier version of a Javascript sound project allowing people to add sound, or make sound apps using Javascript.</dd>
+     <dd>The usual holiday festivities: Snow, good tunes, smashing christmas lights and other debauchery.</dd>
+     <dt><a href="/content/entries/2006/10/beck-hacks-yahoo/">Beck Hacks Yahoo!</a></dt>
+     <dd>Beck Hansen and his band play an unannounced gig at Yahoo! Hack Day.</dd>
+     <dt><a href="/content/entries/2006/08/how-web20-aware-are-you/">How Web 2.0-aware Are You?</a></dt>
+     <dd>A humorous look at Web 2.0-related sites, using a trick that tests your browser&#39;s visited URL history.</dd>
+     <dt><a href="/content/entries/2006/01/tj-schiller-us-open/">TJ Schiller Stomps US Open, X-Games</a></dt>
+     <dd>My brother takes first place in two massive comps, throwing a never-done-before trick at one.</dd>
+     <dt><a href="/content/media/world-of-trip-hop-mix/">World Of Trip-Hop Mix</a></dt>
+     <dd>A 160-minute mix of downtempo and trip-hop.</dd>
+     <dt><a href="/content/entries/2005/04/14/tj-schiller-2005-wsi/">TJ Schiller wins 2005 WSI Slopestyle</a></dt>
+     <dd>My brother wins at a popular freestyle skiing event.</dd>
+     <dt><a href="/content/entries/2005/04/03/okanagan-golf-paradise/">A Piece of Okanagan Golf Paradise</a></dt>
+     <dd>A site built for a tourist vacation company at Predator Ridge.</dd>
+     <dt><a href="/content/entries/2005/03/24/most-expensive-cab-ride-ever/">The Most Expensive Cab Ride. Ever.</a></dt>
+     <dd>Regarding the purchase of a 2005 Toyota Celica.</dd>
+     <dt><a href="/content/entries/2005/03/02/yahoo-10-sugar-ray/">Sugar Ray Rocks Yahoo! 10th Anniversary</a></dt>
+     <dd>Yahoo celebrates 10 years with the musical talents of Sugar Ray.</dd>
+     <dt><a href="/content/entries/2005/08/07/beck-in-santa-cruz/">Beck Live in Santa Cruz</a></dt>
+     <dd>Meeting Beck Hansen, my favourite musician of all-time, after a concert in Santa Cruz</dd>
+     <dt><a href="/content/entries/2005/02/19/writing-html-like-1993/">Writing HTML like it&#39;s 1993</a></dt>
+     <dd>A new job update, California, Eric and Molly teach CSS.</dd>
+     <dt><a href="/content/opinion/2005/10/dont-believe-the-web-20-hype/">Don&#39;t Believe The (Web 2.0) Hype!</a></dt>
+     <dd>An attempt at popping the latest Internet 2.0 bubble and related technologies, along with a wishlist of ideals.</dd>
+     <dt><a href="/content/opinion/2005/10/on-seo-and-spamming/">On SEO and Search Engine Spamming</a></dt>
+     <dd>From a post on theroot42.org originally entitled, &#39;SEO/How To Do Well On The Search Engines&#39;</dd>
+     <dt><a href="/content/opinion/2005/04/12/what-turntables-to-buy/">What Turntables To Buy?</a></dt>
+     <dd>My response to a forum post on choosing DJ equipment.</dd>
+     <dt><a href="/content/opinion/2005/01/25/way-to-doh/">Way To D&#39;oh!</a></dt>
+     <dd>Some tech/geek thoughts on &#39;Way To Dough&#39;, a neat web-based promotion for the Subway chain of stores.</dd>
+    </dl>
+
+	<h4>2004</h4>
+	<dl>
+	 <dt><a href="/content/opinion/2004/11/27/the-$5-coffee/">The (almost) Five-Dollar Coffee</a></dt>
+	 <dd>Starbucks ups the cost of already-overpriced coffee; I&#39;ve had enough.</dd>
+	 <dt><a href="content/entries/2004/10/24/application-xhtml+xml/">Application/XHTML+XML</a></dt>
+	 <dd>What I learned about XHTML when switching schillmania.com to application/xhtml+xml (forcing true XML validation.)</dd>
+	 <dt><a href="/content/opinion/2004/06/27/the_obligatory_standards_rant/">The Obligatory Standards Rant</a></dt>
+	 <dd>A rant advocating standards on a respected design-oriented forum.</dd>
+	 <dt><a href="/content/opinion/2004/01/03/on_djing_and_turntablism/">On DJing and Turntablism</a></dt>
+	 <dd>Why you should buy a pair of 1200s, a mixer and some records.</dd>
+	 <dt><a href="/content/opinion/2004/01/01/spam_spam_spam/">Spam, spam, spam</a></dt>
+	 <dd>Spam: The scourge of the Internet. A quick overview-cum-rant, and some recommended tools to fight the spam war.</dd>
+     <dt><a href="content/entries/../media/beat-juggling/">Hand/Eye Coordination</a></dt>
+     <dd>An attempt at 'Beat juggling' a seamless loop from a sample using turntables and two copies of the same record.</dd>
+     <dt><a href="content/entries/2004/12/19/15-minutes-of-fame/">15 Minutes Of Fame</a></dt>
+     <dd>The UK-based Magazine 'Web Designer,' writes some kind words about my work.</dd>
+     <dt><a href="content/entries/../projects/35mm-photo-viewer/">35mm Photo Viewer V5.0B</a></dt>
+     <dd>A free, downloadable web-based photo viewer with optional XML templates.</dd>
+     <dt><a href="content/entries/../media/drumming-with-vinyl/">Drumming with Vinyl</a></dt>
+     <dd>Correctly scratch a record with a drum sample on it, and you can make your own variation on a theme.</dd>
+     <dt><a href="content/entries/../opinion/2004/11/27/the-$5-coffee/">The (almost) Five-Dollar Coffee</a></dt>
+     <dd>Starbucks ups the cost of already-overpriced coffee; I've had enough.</dd>
+     <dt><a href="content/entries/2004/10/24/application-xhtml+xml/">Application/xhtml+xml</a></dt>
+     <dd>What I learned about XHTML when switching schillmania.com to application/xhtml+xml (forcing true XML validation.)</dd>
+     <dt><a href="content/entries/2004/10/17/tj-schiller_freshtival/">TJ Schiller at Freshtival 04</a></dt>
+     <dd>My younger brother TJ does the skiing thing at Calgary's Freshtival, a freestyle skiing movie release event and rail session, with Tanner Hall and others.</dd>
+     <dt><a href="content/entries/2004/10/04/javascript-sound/">Javascript Sound API</a></dt>
+     <dd>An API and flexible Flash template for adding sound to websites, controlled entirely by Javascript.</dd>
+     <dt><a href="content/entries/2004/09/19/a-real-world-website-counter/">A Real-World Website Counter</a></dt>
+     <dd>A parallel-port-driven mileage-style counter is connected to schillmania.com. Meanwhile, rumors of geek-like antics abound.</dd>
+     <dt><a href="content/entries/2004/08/15/photo-viewer-update/">Photo Viewer Update: v4.0a</a></dt>
+     <dd>A DHTML-driven photo viewer application is revamped with a basic search engine and other nifty features.</dd>
+     <dt><a href="content/entries/2004/08/15/when-lightning-strikes-next-door/">When Lightning Strikes - Next Door</a></dt>
+     <dd>A nasty storm in Calgary hits the neighbours', damaging all sorts of electronic equipment.</dd>
+     <dt><a href="content/entries/2004/07/18/">Montreal, Quebec, Toronto, Windsor</a></dt>
+     <dd>Photos and commentary on my vacation to Ontario and Quebec, which have some great summer weather - both sunny and stormy.</dd>
+     <dt><a href="content/entries/../opinion/2004/06/27/the_obligatory_standards_rant/">The Obligatory Standards Rant</a></dt>
+     <dd>A rant advocating standards on a respected design-oriented forum.</dd>
+     <dt><a href="content/entries/2004/06/20/cm_town_hall/">Critical Mass: Town Hall 2004</a></dt>
+     <dd>The annual Town Hall event at Critical Mass happens on-time, but with a presentational twist.</dd>
+     <dt><a href="content/entries/2004/06/13/">Scottschiller.com v4: Portfolio Site Update</a></dt>
+     <dd>Scott Schiller finally gets around to updating his technical/work experience portfolio site - now at version 4.</dd>
+     <dt><a href="content/entries/2004/05/31/calgary_flames_17th_red_mile_photos/">Flames win Game 3, city loses its mind</a></dt>
+     <dd>The Calgary Flames win Game 3 of the Stanley Cup finals, prompting a massive and energetic crowd along the ever-popular 17th Avenue area downtown.</dd>
+     <dt><a href="content/entries/2004/05/15/">DJing, beer, fire and .. rollerskating?</a></dt>
+     <dd>Urban nightlife activities keep one Scott Schiller away from the computer.</dd>
+     <dt><a href="content/entries/2004/04/27/whistler_2004_wsi/">Josh Bibby, TJ Schiller stomp the WSI</a></dt>
+     <dd>Two crazy freestyle skiiers from Vernon, BC turn heads at the 2004 Whistler Ski Invitational.</dd>
+     <dt><a href="content/entries/2004/04/12/">Okanagan Road Trip Photos</a></dt>
+     <dd>Some new panoramic photos and other images from a trip to the Okanagan region of BC, Canada.</dd>
+     <dt><a href="content/entries/../media/technics_mouse_scratching/">Scratching .. with a mouse?</a></dt>
+     <dd>Combine a turntable with a computer mouse and a copy of the SoundCraft vinyl scratching emulation engine, and you have at least 30 seconds of entertainment.</dd>
+     <dt><a href="content/entries/2004/03/28/">Special Blend</a></dt>
+     <dd>Vietnamese iced coffee, 'ca phe sua da' - an enjoyable caffeinated beverage.</dd>
+     <dt><a href="content/entries/2004/03/14/colophon/">Site Colophon</a></dt>
+     <dd>A description of how the content for this site is generated and served.</dd>
+     <dt><a href="content/entries/2004/03/14/aquarium_time_lapse/">Aquarium Time Lapse Video</a></dt>
+     <dd>A time-lapse video (~12 days) of a fish tank.</dd>
+     <dt><a href="content/entries/2004/03/01/">Back in Black</a></dt>
+     <dd>An overview of the site redesign.</dd>
+     <dt><a href="content/entries/2004/02/29/tj_schiller-us_open/">TJ Schiller at the US Freeskiing Open</a></dt>
+     <dd>TJ Schiller (my younger brother) wins the Slopestyle comp at the US Freeskiing open.</dd>
+    </dl>
+   </li>
+   <li>
+    <h4>2003</h4>
+    <dl>
+     <dt><a href="content/entries/2003/12/18/">SnowStorm Update</a></dt>
+     <dd>Changes and bug fixes relating to the DHTML SnowStorm component (Version 1.2a.)</dd>
+     <dt><a href="content/entries/2003/12/06/">SnowStorm Component</a></dt>
+     <dd>Continued description of SnowStorm, now a downloadable component-based javascript snow library.</dd>
+     <dt><a href="content/entries/2003/11/17/">Bring the SnowStorm (DHTML, that is..)</a></dt>
+     <dd>An introduction to SnowStorm, a DHTML component that provides a neat animated snow effect; uses PNG-based images where supported.</dd>
+     <dt><a href="content/entries/2003/10/26/">More Fish Stuff</a></dt>
+     <dd>Some small additions (and consequent losses) involving a 90-gallon fish tank.</dd>
+     <dt><a href="content/entries/2003/10/24/">Ugly Hallowe'en Theme</a></dt>
+     <dd>The one time of the year where the Spring.03 'Bold' theme actually suits the season.</dd>
+     <dt><a href="content/entries/2003/10/09/">I Love Spam</a></dt>
+     <dd>An experiment in spambots: 'How long until a new address is spammed?'</dd>
+    </dl>
+   </li>
+ </ul>
+</li>
+
+</ul>
+   
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script type="text/javascript">preInit();</script>
+
+</div>
+
+</body>
+</html>
