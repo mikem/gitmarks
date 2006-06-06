@@ -1,0 +1,901 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>Inside the Linux boot process</title>
+<meta http-equiv="PICS-Label" content='(PICS-1.1 "http://www.icra.org/ratingsv02.html" l gen true r (cz 1 lz 1 nz 1 oz 1 vz 1) "http://www.rsac.org/ratingsv01.html" l gen true r (n 0 s 0 v 0 l 0) "http://www.classify.org/safesurf/" l gen true r (SS~~000 1))'/>
+<link rel="schema.DC" href="http://purl.org/DC/elements/1.0/"/>
+<link rel="SHORTCUT ICON" href="http://www.ibm.com/favicon.ico"/>
+<meta name="Owner" content="developerWorks Content/Raleigh/IBM"/>
+<meta name="DC.Language" scheme="rfc1766" content="en"/>
+<meta name="IBM.Country" content="ZZ"/>
+<meta name="Security" content="Public"/>
+<meta name="IBM.SpecialPurpose" content="SP001"/>
+<meta name="IBM.PageAttributes" content="sid=1003"/>
+<meta name="Source" content="v16 Template Generator"/>
+<meta name="Robots" content="index,follow"/>
+<meta name="Abstract" content="The process of booting a Linux system consists of a number of stages. But whether you're booting a standard x86 desktop or a deeply embedded PowerPC target, much of the flow is surprisingly similar. This article explores the Linux boot process from the initial bootstrap to the start of the first user-space application. Along the way, you'll learn about various other boot-related topics such as the boot loaders, kernel decompression, the initial RAM disk, and other elements of Linux boot."/>
+<meta name="Description" content="The process of booting a Linux system consists of a number of stages. But whether you're booting a standard x86 desktop or a deeply embedded PowerPC target, much of the flow is surprisingly similar. This article explores the Linux boot process from the initial bootstrap to the start of the first user-space application. Along the way, you'll learn about various other boot-related topics such as the boot loaders, kernel decompression, the initial RAM disk, and other elements of Linux boot."/>
+<meta name="Keywords" content="Linux,GNU,boot process,bootstrap,boot loader,basic input/output system,BIOS,Master Boot Record,MBR,LILO,GRUB,kernel,init,M. Tim Jones, tttlca"/>
+<meta name="DC.Date" scheme="iso8601" content="2006-05-31"/>
+<meta name="DC.Type" scheme="IBM_ContentClassTaxonomy" content="CT316"/>
+<meta name="DC.Subject" scheme="IBM_SubjectTaxonomy" content="SWGC0"/>
+<meta scheme="IBM_WTMCategory" name="IBM.WTMCategory" content="SOFDCLNXZZ" />
+<meta name="DC.Rights" content="© Copyright IBM Corporation 2006"/>
+<meta name="IBM.Effective" scheme="W3CDTF" content="2006-05-31"/>
+<meta name="title" content="Inside the Linux boot process"/>
+
+<!-- HEADER_SCRIPTS_AND_CSS_INCLUDE -->
+<link href="//dw1.s81c.com/common/v16/css/all.css" media="all" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/common/v16/css/screen.css" media="screen,projection" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/common/v16/css/screen-uas.css" media="screen,projection" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/common/v16/css/zz/en/screen-fonts.css" media="screen,projection" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/common/v16/css/handheld.css" media="handheld" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/common/v16/css/print.css" media="print" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/common/v16/css/overlay.css" media="screen,projection" rel="stylesheet" title="www" type="text/css"/>
+
+<!-- dW-specific CSS -->
+<link href="//dw1.s81c.com/developerworks/css/dw-screen.css" media="screen,projection" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/developerworks/css/dw-screen-comments-ratings-signin.css" media="screen,projection" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/developerworks/js/jquery/cluetip98/jquery.cluetip.css" media="screen,projection" rel="stylesheet"  title="www" type="text/css" />
+
+<script src="//dw1.s81c.com/common/js/ibmcommon.js" type="text/javascript">//</script>
+<script src="//dw1.s81c.com/common/js/dynamicnav.js" type="text/javascript">//</script>
+
+<!-- dW functional JS -->
+<script language="JavaScript" src="//dw1.s81c.com/developerworks/js/urltactic.js" type="text/javascript"></script>
+<!-- Rating_START -->
+<script language="JavaScript" src="//dw1.s81c.com/developerworks/js/artrating/showrating.js" type="text/javascript"></script>
+<style type="text/css">
+.metavalue {
+  display: none;
+}
+</style>
+<!-- Rating_END --><!-- RESERVED_HEADER_INCLUDE -->
+<script language="javascript" src="//dw1.s81c.com/developerworks/js/ajax1.js" type="text/javascript"></script>
+<script language="javascript" src="//dw1.s81c.com/developerworks/js/search_counter-maverick.js" type="text/javascript"></script>
+<script language="javascript" src="//dw1.s81c.com/developerworks/js/request_referer_capture-maverick.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+ <!--
+ setDefaultQuery('');
+ //-->
+</script>
+<script language="JavaScript" type="text/javascript">
+ <!--
+ function openNewWindow(url,tar,arg){window.open(url,tar,arg);}
+ //-->
+</script>
+<!-- Include file support -->
+<script language="JavaScript" type="text/javascript">
+(function($) {
+	jQuery.extend({
+		getInc: function(u,d){
+			if(u==null)return;
+			jQuery.ajax({
+	    		type: "GET",
+			url: u,
+			dataType: "text",
+	        	success: function(t) {
+				jQuery(d).html(t);
+				ibmCommon.initShowHide(jQuery(d).children()[0]);			
+			},
+			async: true
+			});
+		}
+	});
+})(jQuery);
+</script>
+</head>
+
+<body id="ibm-com">
+<div id="ibm-top" class="ibm-landing-page">
+
+<!-- MASTHEAD_BEGIN -->
+<div class="ibm-access"><a href="#ibm-content">Skip to main content</a></div>
+<div id="ibm-masthead">
+<div id="ibm-logo"><a href="http://www.ibm.com/"><img height="50" src="//dw1.s81c.com/i/v16/t/ibm-logo.gif" width="110" alt="IBM®" /></a></div>
+<ul id="ibm-geo"><li id="ibm-country" class="ibm-first">Country/region</li><li id="ibm-change-country">[ <a href="http://www.ibm.com/developerworks/country/">select</a> ]</li></ul>
+  <form id="ibm-search-form" action="//www.ibm.com/developerworks/search/searchResults.jsp" method="get" name="form1"><input type="hidden" name="searchType" value="1"/><input type="hidden" name="searchSite" value="dW"/><p>
+<span id="ibm-search-scope">
+<label for="sn"><img src="//dw1.s81c.com/i/c.gif" width="1" height="1" alt="Search in:"/></label>
+<select name="searchScope" id="sn">
+<option value="dW" selected="selected">All of dW</option>
+<option value="dW">-----------------</option>
+<option value="aixunix">&nbsp;AIX and UNIX</option>
+<option value="db2">&nbsp;Information Mgmt</option>
+<option value="lotus">&nbsp;Lotus</option>
+<option value="rdd">&nbsp;Rational</option>
+<option value="tivoli">&nbsp;Tivoli</option>  
+<option value="WSDD">&nbsp;WebSphere</option>
+<option value="dW">-----------------</option> 
+<option value="javaZ">&nbsp;Java technology</option> 
+<option value="linuxZ">&nbsp;Linux</option> 
+<option value="opensrcZ">&nbsp;Open source</option>
+<option value="webservZ">&nbsp;SOA/Web services</option>
+<option value="webarchZ">&nbsp;Web development</option>  
+<option value="xmlZ">&nbsp;XML</option>
+<option value="dW">-----------------</option>
+<option value="forums">&nbsp;dW forums</option> 
+<option value="dW">-----------------</option>
+<option value="aI">University</option>
+<option value="dW">-----------------</option>
+<option value="aW">alphaWorks</option>
+<option value="dW">-----------------</option>
+<option value="all">All of IBM</option>
+</select>
+</span>
+
+<label for="q"><img alt="Search for:" height="1" width="1" src="//dw1.s81c.com/i/c.gif" /></label><input type="text" name="query" maxlength="100" id="q"/><input type="submit" id="ibm-search" class="ibm-btn-search" name="Search" value="Search" /></p></form>
+<div id="ibm-site-name">
+<!-- IBM site name container -->
+</div>
+<div id="ibm-universal-nav">
+<ul><li id="ibm-unav-home" class="ibm-first"><a href="http://www.ibm.com/">Home</a></li><li id="ibm-unav-solutions"><a href="http://www.ibm.com/solutions/">Solutions</a></li><li id="ibm-unav-services"><a href="http://www.ibm.com/technologyservices/">Services</a></li><li id="ibm-unav-products"><a href="http://www.ibm.com/products/">Products</a></li><li id="ibm-unav-support"><a href="http://www.ibm.com/support/">Support &amp; downloads</a></li><li id="ibm-unav-myibm"><a href="http://www.ibm.com/account/">My IBM</a></li></ul>
+</div>
+</div>
+<!-- MASTHEAD_END -->
+
+<div id="ibm-pcon">
+
+<!-- CONTENT_BEGIN -->
+<div id="ibm-content">
+
+<!-- Navigation_Trail_BEGIN -->
+<!-- &nbsp; -->
+      <div id="ibm-content-head"><ul id="ibm-navigation-trail"><li class="ibm-first"><a href="http://www.ibm.com/developerworks/">developerWorks</a></li><li><a href="http://www.ibm.com/developerworks/linux/">Linux</a></li><li><a href="http://www.ibm.com/developerworks/views/linux/library.jsp">Technical library</a></li></ul></div>
+<!-- Navigation_Trail_END -->
+
+<!-- dW_Summary Area_START -->
+<div id="dw-summary-article">
+
+<div class="dw-content-head">
+<h1>Inside the Linux boot process</h1><p><em>Take a guided tour from the Master Boot Record to the first user-space application</em></p>
+</div>
+
+<div class="ibm-container-body ibm-two-column">
+
+<div class="ibm-column ibm-first">
+<div class="author"><a class="dwauthor" rel="#authortip1" href="#author1">M. Tim Jones</a>, Consultant Engineer, Emulex</div><div id="authortip1" class="dwauthor-onload-state ibm-no-print"><div class="position"><img src="http://www.ibm.com/developerworks/i/p-mjones.jpg" width="64" height="80" alt="M. Tim Jones" /></div>M. Tim Jones is an embedded software architect and the author of <i>GNU/Linux Application Programming</i>, <i>AI Application Programming</i>, and <i>BSD Sockets Programming from a Multilanguage Perspective</i>. His engineering background ranges from the development of kernels for geosynchronous spacecraft to embedded systems architecture and networking protocols development. Tim is a Consultant Engineer for Emulex Corp. in Longmont, Colorado.</div>
+<p></p>
+<p><b>Summary:</b>&nbsp; The process of booting a Linux&#174; system consists of a number of stages. But whether you're booting a standard x86 desktop or a deeply embedded PowerPC&#174; target, much of the flow is surprisingly similar. This article explores the Linux boot process from the initial bootstrap to the start of the first user-space application. Along the way, you'll learn about various other boot-related topics such as the boot loaders, kernel decompression, the initial RAM disk, and other elements of Linux boot.</p>
+
+<div id="dw-tag-content" class="ibm-no-print"></div><div id="dw-moretags-access" class="ibm-access"></div>
+<p class="ibm-no-print"><div id="dw-tag-this" class="ibm-no-print"><a class="ibm-external-link" onclick="jQuery.launchTagThisWindow(); return false;" href="#">Tag this!</a></div><div id="interestShow" class="ibm-no-print"></div></p>
+</div>
+
+<div class="ibm-column ibm-second">
+<p class="leading"><b>Date:</b>&nbsp; 31 May  2006
+<br /><b>Level: </b>&nbsp;Introductory
+
+<br /><b>Also available in:&nbsp;</b>
+
+&nbsp;<a href="http://www.ibm.com/developerworks/kr/library/l-linuxboot/">Korean</a> 
+&nbsp;<a href="http://www.ibm.com/developerworks/ru/library/l-linuxboot/">Russian</a> 
+
+
+&nbsp;<a href="http://www.ibm.com/developerworks/br/library/l-linuxboot/">Portuguese</a> 
+
+<br />
+<br /><b>Activity:</b>&nbsp; 175237 views
+<br /><b>Comments:</b> &nbsp; <span id="nCmts"><img alt="" src="//dw1.s81c.com/developerworks/i/circle-preloader.gif" height="12" width="50" /><img alt="" src="//dw1.s81c.com/i/c.gif" height="14" width="1" /></span>
+<!-- Rating_Area_Begin -->
+<div id="art-rating-summary"></div>
+<!-- Rating_Area_End -->
+</p>
+</div>
+
+</div>
+</div>
+<!-- dW_Summary_Area_END -->
+
+<!-- CONTENT_BODY -->
+<div id="ibm-content-body">
+
+<!-- MAIN_COLUMN_BEGIN -->
+<div id="ibm-content-main">
+
+<!-- Related_Searches_Area -->
+<!-- Related_Searches_Area_Begin -->
+<script type="text/javascript" language="javascript">
+	     capture_referrer();
+</script>
+
+<div id="dw-related-searches-article" style="display:none">
+<div class="ibm-container ibm-alternate-two">
+<div class="ibm-container-body">
+
+<!--  START : HTML FOR ARTICLE SEARCH -->
+  <div id="article_results" style="display:block"></div>
+<!--  END : HTML FOR ARTICLE SEARCH -->
+
+</div>
+</div>
+</div>
+<!-- Related_Searches_Area_End -->
+<!-- MAIN_COLUMN_CONTAINER_BEGIN -->
+<div class="ibm-container">
+
+<!-- MAIN_COLUMN_CONTENT_BEGIN -->
+<p>In the early days, bootstrapping a computer meant feeding a paper tape
+containing a boot program or manually loading a boot program using the front
+panel address/data/control switches. Today's computers are equipped with
+facilities to simplify the boot process, but that doesn't necessarily make it simple.</p>
+            <p>Let's start with a high-level view of Linux boot so you can see the
+entire landscape. Then we'll review what's going on
+at each of the individual steps. Source references
+along the way will help you navigate the kernel tree and dig in further.</p>
+            <p><a name="N10062"><span class="atitle">Overview</span></a></p>
+            <p>Figure 1 gives you the 20,000-foot view.</p>
+            
+                <br /><a name="fig1"><b>Figure 1. The 20,000-foot view of the Linux boot process</b></a><br />
+                <img alt="High-level view of the Linux kernel boot" height="300" src="fig1.gif" width="529"/>
+            <br />
+            <p>When a system is first booted, or is reset, the processor executes code at
+a well-known location. In a personal computer (PC), this location is in the basic input/output system (BIOS),
+which is stored in flash memory on the motherboard. The central processing unit (CPU) in
+an embedded system invokes the reset vector to start a program at a known
+address in flash/ROM. In either case, the result is the same. Because PCs
+offer so much flexibility, the BIOS must determine which devices are candidates
+for boot. We'll look at this in more detail later.</p>
+            <p>When a boot device is found, the first-stage boot loader is loaded into RAM
+and executed. This boot loader is less than 512 bytes in length (a single
+sector), and its job is to load the second-stage boot loader.
+</p>
+
+            <p>When the second-stage boot loader is in RAM and executing, a splash screen
+is commonly displayed, and Linux and an optional initial RAM disk (temporary root
+file system) are loaded into memory. When the images are loaded, the second-stage boot loader passes control to the kernel
+image and the kernel is decompressed and initialized. At this stage, the second-stage boot loader
+checks the system hardware, enumerates the attached hardware devices, mounts the root device, and then
+loads the necessary kernel modules. When complete, the first user-space program
+(<code>init</code>) starts, and high-level system initialization is performed.</p>
+            <p>That's Linux boot in a nutshell. Now let's dig in a little further and
+explore some of the details of the Linux boot process.</p>
+            <div class="ibm-alternate-rule"><hr/></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="N1008B"><span class="atitle">System startup</span></a></p>
+            <p>The system startup stage depends on the hardware that Linux is being
+booted on. On an embedded platform, a bootstrap environment is used when the
+system is powered on, or reset. Examples include U-Boot, RedBoot, and MicroMonitor from Lucent. Embedded platforms are commonly shipped with a boot
+monitor. These programs reside in special region of flash memory on the target
+hardware and provide the means to download a Linux kernel image into flash memory and
+subsequently execute it. In addition to having the ability to store and boot a
+Linux image, these boot monitors perform some level of system test
+and hardware initialization. In an embedded target, these boot monitors commonly cover both the first- and second-stage boot loaders.</p>
+            <div class="ibm-container ibm-alt-header dw-container-sidebar"><h2>Extracting the MBR</h2><div class="ibm-container-body">
+                
+                <p>To see the contents of your MBR, use this command:</p>
+                <code>
+# <strong>dd if=/dev/hda of=mbr.bin bs=512 count=1</strong>
+                    <br />
+# <strong>od -xa mbr.bin</strong>
+                </code>
+                <p>The <code>dd</code> command, which needs to be run from
+       root, reads the first 512 bytes from /dev/hda (the first Integrated Drive Electronics, 
+       or IDE drive) and writes them to the <code>mbr.bin
+       </code> file. The <code>od</code> command prints
+       the binary file in hex and ASCII formats.</p>
+            </div></div>
+            <p>In a PC, booting Linux begins in the BIOS at address 0xFFFF0. The first
+step of the BIOS is the power-on self test (POST). The job of the POST is
+to perform a check of the hardware. The second step of the BIOS is local device
+enumeration and initialization.</p>
+            <p>Given the different uses of BIOS functions, the BIOS is made up of two
+parts: the POST code and runtime services. After the POST is complete, it is
+flushed from memory, but the BIOS runtime services remain and are available to
+the target operating system.</p>
+            <p>To boot an operating system, the BIOS runtime searches for devices that are
+both active and bootable in the order of preference defined by the complementary metal oxide semiconductor (CMOS) settings. A boot device can be a floppy disk, a CD-ROM, a partition on a
+hard disk, a device on the network, or even a USB flash memory stick.</p>
+            <p>Commonly, Linux is booted from a hard disk, where the Master Boot Record
+(MBR) contains the primary boot loader. The MBR is a 512-byte sector, located
+in the first sector on the disk (sector 1 of cylinder 0, head 0). After the MBR
+is loaded into RAM, the BIOS yields control to it.</p>
+            <div class="ibm-alternate-rule"><hr/></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="N100C8"><span class="atitle">Stage 1 boot loader</span></a></p>
+            <p>The primary boot loader that resides in the MBR is a 512-byte image
+containing both program code and a small partition table (see Figure 2). The
+first 446 bytes are the primary boot loader, which contains both executable code
+and error message text. The next sixty-four bytes are the partition table, which
+contains a record for each of four partitions (sixteen bytes each). The MBR ends
+with two bytes that are defined as the magic number (0xAA55). The magic number
+serves as a validation check of the MBR.</p>
+            
+                <br /><a name="fig2"><b>Figure 2. Anatomy of the MBR</b></a><br />
+                <img alt="Anatomy of the MBR" height="469" src="fig2.gif" width="479"/>
+            <br />
+            <p>The job of the primary boot loader is to find and load the secondary
+boot loader (stage 2). It does this by looking through the partition table for an active partition. When it finds an active partition, it scans the remaining partitions in the table to ensure that they're all
+inactive. When this is verified, the active partition's boot record is read
+from the device into RAM and executed.</p>
+            <div class="ibm-alternate-rule"><hr/></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="N100E4"><span class="atitle">Stage 2 boot loader</span></a></p>
+            <p>The secondary, or second-stage, boot loader could be more aptly called the
+kernel loader. The task at this stage is to load the Linux kernel and optional
+initial RAM disk.</p>
+            <div class="ibm-container ibm-alt-header dw-container-sidebar"><h2>GRUB stage boot loaders</h2><div class="ibm-container-body">
+                
+                <p>The <code>/boot/grub</code> directory contains the
+     <code>stage1</code>, <code>stage1.5</code>, 
+     and <code>stage2</code> boot loaders, as well as a number of
+     alternate loaders (for example, CR-ROMs use the <code>iso9660_stage_1_5</code>).</p>
+            </div></div>
+
+            <p>The first- and second-stage boot loaders combined are called Linux Loader (LILO) or GRand Unified Bootloader (GRUB) in the x86 PC environment. Because LILO has some disadvantages that were corrected in GRUB, let's look into GRUB. (See many additional resources on GRUB, LILO, and related topics in the <a href="#resources">Resources</a> section later in this article.)</p>
+
+            <p>The great thing about GRUB is that it
+includes knowledge of Linux file systems. Instead of using raw
+sectors on the disk, as LILO does, GRUB can load a Linux kernel
+from an ext2 or ext3 file system. It does this by making the two-stage
+boot loader into a three-stage boot loader. Stage 1 (MBR) boots a stage 1.5
+boot loader that understands the particular file system containing the Linux
+kernel image. Examples include <code>reiserfs_stage1_5</code>
+(to load from a Reiser journaling file system) or
+<code>e2fs_stage1_5</code> (to load from an ext2 or ext3
+file system). When the stage 1.5 boot loader is loaded and running, the stage
+2 boot loader can be loaded.</p>
+
+            <p>With stage 2 loaded, GRUB can, upon request, display a list of available
+kernels (defined in <code>/etc/grub.conf</code>, with soft links
+from <code>/etc/grub/menu.lst</code> and
+<code>/etc/grub.conf</code>).  You can select a kernel and even
+amend it with additional kernel parameters.  Optionally, you can use a command-line
+shell for greater manual control over the boot process.
+</p>
+
+            <p>With the second-stage boot loader in memory, the file system is consulted, and
+the default kernel image and <code>initrd</code> image are loaded into memory. With the
+images ready, the stage 2 boot loader invokes the kernel image.</p>
+            <div class="ibm-alternate-rule"><hr/></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="N10136"><span class="atitle">Kernel</span></a></p>
+            <div class="ibm-container ibm-alt-header dw-container-sidebar"><h2>Manual boot in GRUB</h2><div class="ibm-container-body">
+                
+
+                <p>From the GRUB command-line, you can boot a specific kernel with a
+       named <code>initrd</code> image as follows:</p>
+
+                <code>
+grub&gt; <strong>kernel /bzImage-2.6.14.2</strong><br />
+&#160;&#160;[Linux-bzImage, setup=0x1400, size=0x29672e]<br /><br />
+
+grub&gt; <strong>initrd /initrd-2.6.14.2.img</strong><br />
+&#160;&#160;[Linux-initrd @ 0x5f13000, 0xcc199 bytes]<br /><br />
+
+grub&gt; <strong>boot</strong><br /><br />
+
+Uncompressing Linux... Ok, booting the kernel.<br /><br /></code>
+
+                <p>If you don't know the name of the kernel to boot, just type a forward slash (/)
+       and press the Tab key. GRUB will display the list of kernels and <code>initrd</code>
+       images.</p>
+            </div></div>
+            <p>With the kernel image in memory and control given from the stage 2
+boot loader, the kernel stage begins. The kernel image isn't so much an
+executable kernel, but a compressed kernel image. Typically this is a zImage
+(compressed image, less than 512KB) or a bzImage (big compressed image, greater
+than 512KB), that has been previously compressed with zlib. At the head of
+this kernel image is a routine that does some minimal amount of hardware setup
+and then decompresses the kernel contained within the kernel image and places
+it into high memory. If an initial RAM disk image is present, this routine moves
+it into memory and notes it for later use. The routine then calls the kernel and the kernel boot
+begins.</p>
+
+            <p>When the bzImage (for an i386 image) is invoked, you begin at
+<code>./arch/i386/boot/head.S</code> in the
+<code>start</code> assembly routine (see Figure 3 for the major
+flow). This routine does some basic hardware setup and invokes the
+<code>startup_32</code> routine in
+<code>./arch/i386/boot/compressed/head.S</code>. This routine
+sets up a basic environment (stack, etc.) and clears the Block Started by Symbol (BSS). The kernel is
+then decompressed through a call to a C function called
+<code>decompress_kernel</code> (located in
+<code>./arch/i386/boot/compressed/misc.c</code>). When the
+kernel is decompressed into memory, it is called. This is yet
+another <code>startup_32</code> function, but this function is
+in <code>./arch/i386/kernel/head.S.</code>
+            </p>
+            <p>In the new <code>startup_32</code> function (also called the swapper or process 0), the page
+tables are initialized and memory paging is enabled. The type of CPU is
+detected along with any optional floating-point unit (FPU) and stored away for later use. The
+<code>start_kernel</code> function is then invoked
+(<code>init/main.c</code>), which takes you to the non-architecture
+specific Linux kernel. This is, in essence, the <code>main</code>
+function for the Linux kernel.</p>
+            
+                <br /><a name="fig3"><b>Figure 3. Major functions flow for the Linux kernel i386 boot
+  </b></a><br />
+                <img alt="Major Functions in Linux Kernel i386 Boot Process" height="288" src="fig3.gif" width="443"/>
+            <br />
+            <p>With the call to <code>start_kernel</code>, a long list of
+initialization functions are called to set up interrupts, perform further
+memory configuration, and load the initial RAM disk. In the end, a call is made
+to <code>kernel_thread</code> (in
+<code>arch/i386/kernel/process.c</code>) to start the
+<code>init</code> function, which is the first user-space
+process. Finally, the idle task is started and the scheduler can now take
+control (after the call to <code>cpu_idle</code>). With interrupts enabled, the
+pre-emptive scheduler periodically takes control to provide multitasking.</p>
+
+            <p>During the boot of the kernel, the initial-RAM disk (<code>initrd</code>) that was loaded
+into memory by the stage 2 boot loader is copied into RAM and mounted. This
+<code>initrd</code> serves as a temporary root file system in
+RAM and allows the kernel to fully boot without having to mount any physical
+disks. Since the necessary modules needed to interface with peripherals can be
+part of the <code>initrd</code>, the kernel can be very small,
+but still support a large number of possible hardware configurations. After
+the kernel is booted, the root file system is pivoted (via
+<code>pivot_root</code>) where the
+<code>initrd</code> root file system is unmounted and the real
+root file system is mounted.</p>
+            <div class="ibm-container ibm-alt-header dw-container-sidebar"><h2>decompress_kernel output</h2><div class="ibm-container-body">
+                
+                <p>The <code>decompress_kernel</code> function is where you see the usual
+      decompression messages emitted to the display:
+   </p>
+                <code>
+Uncompressing Linux... Ok, booting the kernel.</code>
+            </div></div>
+            <p>The <code>initrd</code> function allows you to create a small Linux
+kernel with drivers compiled as loadable modules. These loadable modules give
+the kernel the means to access disks and the file systems on those disks, as
+well as drivers for other hardware assets. Because the root file system is a <i>file system</i> on a disk, the <code>initrd</code> function provides a means
+of bootstrapping to gain access to the disk and mount the real root file system.
+In an embedded target without a hard disk, the <code>initrd</code>
+can be the final root file system, or the final root file system can be mounted
+via the Network File System (NFS).</p>
+            <div class="ibm-alternate-rule"><hr/></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="N1020F"><span class="atitle">Init</span></a></p>
+            <p>After the kernel is booted and initialized, the kernel starts the first user-space application. This is the first program invoked that is
+compiled with the standard C library. Prior to this point in the process, no standard C
+applications have been executed.</p>
+
+            <p>In a desktop Linux system, the first application started is commonly
+<code>/sbin/init</code>. But it need not be. Rarely do
+embedded systems require the extensive initialization provided by
+<code>init</code> (as configured through
+<code>/etc/inittab</code>). In many cases, you can invoke a
+simple shell script that starts the necessary embedded applications.
+</p>
+            <div class="ibm-alternate-rule"><hr/></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="N10228"><span class="atitle">Summary</span></a></p>
+            <p>
+Much like Linux itself, the Linux boot process is highly flexible, supporting
+a huge number of processors and hardware platforms. In the beginning, the
+loadlin boot loader provided a simple way to boot Linux without any frills.
+The LILO boot loader expanded the boot capabilities, but lacked any file system
+awareness. The latest generation of boot loaders, such as GRUB, permits Linux
+to boot from a range of file systems (from Minix to Reiser).
+</p>
+        <!-- CMA ID: 125853 --> <!-- Site ID: 1 --><!--XSLT stylesheet used to transform this file: dw-document-html-6.0.xsl-->
+<br />
+<p><a name="resources"><span class="atitle">Resources</span></a></p><p><b>Learn</b></p><ul><li>
+                <a href="http://mirror.href.com/thestarman/asm/mbr/MBR_in_detail.htm">
+        Boot Records Revealed</a> is a great resource on MBRs and the various boot loaders. 
+        This resource not only disassembles MBRs,
+        but also discusses GRUB, LILO, and the various Windows&#174; boot loaders.
+      <br /><br /></li><li>
+        Check out the <a href="http://www.rwc.uc.edu/koehler/comath/42.html">Disk
+        Geometry</a> page to understand disks and their geometries. You'll find an interesting summary of disk attributes.
+      <br /><br /></li><li>
+        A <a href="http://en.wikipedia.org/wiki/LiveCD">live CD</a> is an operating system that's bootable from a CD or DVD
+        without needing a hard drive.
+      <br /><br /></li><li>
+        "<a href="http://www.ibm.com/developerworks/linux/library/l-bootload.html">Boot loader showdown: Getting to know LILO and GRUB</a>" (developerWorks, August 2005) gives you a  detailed look at the LILO and GRUB boot loaders.
+      <br /><br /></li><li>
+In the <a href="http://www.ibm.com/developerworks/linux/lpi/101.html?S_TACT=105AGX03&amp;S_CMP=art">Linux Professional Institute (LPI) exam prep</a> series of developerWorks tutorials, get a comprehensive introduction to booting a Linux system and many other fundamental Linux tasks while you prepare for system administrator certification.
+<br /><br /></li><li>
+                <a href="http://www.freshmeat.net/projects/lilo/">LILO</a> was the precursor to GRUB, but you can still find it booting Linux.
+      <br /><br /></li><li>
+        The <a href="http://www.netadmintools.com/html/mkinitrd.man.html">
+        mkintrd</a> command is used to create an initial RAM disk image.
+        This command is useful for building an initial root file system for boot
+        configuration that allows preloading of block devices needed to access
+        the real root file system.
+      <br /><br /></li><li>
+       At the <a href="http://debianlinux.net/linux.html">
+        Debian Linux Kernel Project</a>, find more information on the Linux kernel, boot, and embedded development.
+      <br /><br /></li><li>
+In the <a href="http://www.ibm.com/developerworks/linux/">developerWorks Linux zone</a>, find more resources for Linux developers.
+<br /><br /></li><li>
+Stay current with <a href="http://www.ibm.com/developerworks/offers/techbriefings/?S_TACT=105AGX03&amp;S_CMP=art">developerWorks technical events and Webcasts</a>.
+<br /><br /></li></ul><p><b>Get products and technologies</b></p><ul><li>
+        The <a href="http://www.linuxdevices.com/articles/AT8516113114.html">
+        MicroMonitor</a> provides a boot environment for a variety of small
+        target devices. You can use this monitor to boot Linux in an embedded
+        environment. It has ports for ARM, XScale, MIPS, PowerPC, Coldfire, and
+        Hitachi's Super-H.
+      <br /><br /></li><li>
+                <a href="http://www.gnu.org/software/grub/">GNU GRUB</a> is a boot shell filled with options and flexibility.
+      <br /><br /></li><li>
+                <a href="http://www.linuxbios.org/index.php/Main_Page">LinuxBIOS</a> is a BIOS replacement. Not only does it boot Linux,
+        LinuxBIOS, itself, is a compressed Linux kernel.
+        <br /><br /></li><li>
+                <a href="http://www.openbios.org/">OpenBIOS</a> is another
+        portable BIOS project that operates on a variety of architectures such
+        as x86, Alpha, and AMD64.
+     <br /><br /></li><li>
+      At <a href="http://www.kernel.org">kernel.org</a>, grab the latest kernel tree.
+      <br /><br /></li><li>
+                <a href="http://www.ibm.com/developerworks/offers/sek/?S_TACT=105AGX03&amp;S_CMP=art">Order the SEK for Linux</a>, a two-DVD set containing the latest IBM trial software for Linux from DB2&#174;, Lotus&#174;, Rational&#174;, Tivoli&#174;, and WebSphere&#174;.
+<br /><br /></li><li>
+With <a href="http://www.ibm.com/developerworks/downloads/?S_TACT=105AGX03&amp;S_CMP=art">IBM trial software</a>, available for download directly from developerWorks, build your next development project on Linux.
+<br /><br /></li></ul><p><b>Discuss</b></p><ul><li>
+Check out <a href="http://www.ibm.com/developerworks/blogs/">developerWorks
+blogs</a> and get involved in the <a href="http://www.ibm.com/developerworks/community">developerWorks community</a>.
+<br /><br /></li></ul>
+<p><a name="author"><span class="atitle">About the author</span></a></p><div class="ibm-container ibm-portrait-module ibm-alternate-two"><div class="ibm-container-body"><img src="http://www.ibm.com/developerworks/i/p-mjones.jpg" width="64" height="80" alt="M. Tim Jones" /><p><a name="author1"></a>M. Tim Jones is an embedded software architect and the author of <i>GNU/Linux Application Programming</i>, <i>AI Application Programming</i>, and <i>BSD Sockets Programming from a Multilanguage Perspective</i>. His engineering background ranges from the development of kernels for geosynchronous spacecraft to embedded systems architecture and networking protocols development. Tim is a Consultant Engineer for Emulex Corp. in Longmont, Colorado.</p></div></div>
+<!-- MAIN_COLUMN_CONTENT_END -->
+
+<!-- OVERLAYS_START -->
+<!-- Report_Abuse_Start -->
+<div class="ibm-common-overlay ibm-no-print" id="reportabuseoverlay">
+   <div class="ibm-head"><p><a class="ibm-common-overlay-close" href="#">Close [x]</a></p></div>
+   <div class="ibm-body">
+      <div class="ibm-main">
+         <a class="ibm-access" name="reportabuseoverlay">Report abuse help</a>   
+         <div class="ibm-title"><h1>Report abuse</h1></div>
+         <div class="ibm-container ibm-alternate">
+            <p><strong>Thank you.</strong>  This entry has been flagged for moderator attention.</p>
+            <div class="ibm-overlay-rule"><hr /></div>
+            <div class="ibm-buttons-row">
+               <input type="button" onclick="ibmCommon.Overlays.hide('reportabuseoverlay');return false;" class="ibm-btn-cancel-sec dw-btn-cancel-sec" name="ibm-cancel" value="Close" />
+            </div>
+         </div>
+      </div> 
+   </div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Report_Abuse_Error_Start -->
+<div class="ibm-common-overlay ibm-no-print" id="reportabuseoverlayerror">
+   <div class="ibm-head"><p><a class="ibm-common-overlay-close" href="#">Close [x]</a></p></div>
+   <div class="ibm-body">
+      <div class="ibm-main">
+         <a class="ibm-access" name="reportabuseoverlayerror">Report abuse help</a>   
+         <div class="ibm-title"><h1>Report abuse</h1></div>
+         <div class="ibm-container ibm-alternate">
+            <p class="ibm-ind-error"><strong>Report abuse submission failed.  Please try again later.</strong></p>
+            <div class="ibm-overlay-rule"><hr /></div>
+            <div class="ibm-buttons-row">
+               <input type="button" onclick="ibmCommon.Overlays.hide('reportabuseoverlayerror');return false;" class="ibm-btn-cancel-sec dw-btn-cancel-sec" name="ibm-cancel" value="Close" />
+            </div>
+         </div>
+      </div> 
+   </div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Sign in OVERLAY STARTS HERE --> 
+<div id="fdiv"></div>
+<div class="ibm-common-overlay" id="signin_overlay">
+<div class="ibm-head">
+<p><a class="ibm-common-overlay-close" href="#" onclick="clearForm();">Close [x]</a></p>
+</div>
+<div class="ibm-body">
+<div class="ibm-main">
+<div class="ibm-title ibm-subtitle">
+<h1>developerWorks: Sign in</h1>
+<div id="ibm-overlay-error-signin" class="no-display"></div>
+</div>
+
+<div class="ibm-container ibm-alternate ibm-buttons-last">
+<div class="ibm-container-body">
+<p class="ibm-overlay-intro">If you do not have an IBM ID and password, <a href="#" onclick="(function () {window.location='/developerworks/dwwi/DWAuthRouter?m=reg&amp;d='+encodeURIComponent(location.href);})();">register here</a>.</p>
+<form class="ibm-column-form" id="sFormId" action="" method="post" name="sForm" onsubmit="return false;">
+<p><label for="ibmid">IBM ID:</label><span><input name="ibm-id" id="ibmid" size="25" value="" class="required" type="text" onkeypress="handleEP(event,this.form);" /><br /><a class="ibm-forward-link" href="/developerworks/dwwi/jsp/WSHelp.jsp?lang=en_US">Forgot your IBM ID?</a></span>   
+</p> 
+<p><label for="password">Password:</label><span><input name="password" id="password" size="25" value="" class="required" type="password" onkeypress="handleEP(event,this.form);" /><br /><a class="ibm-forward-link" href="#" onclick="(function () {window.location='https://www.ibm.com/account/profile?page=forgot&amp;lang=en_US&amp;appname=ibm&amp;required=null&amp;d='+encodeURIComponent(getAuthUrl())+'%3Fm%3Dloginpage%26lang%3Den_US%26d%3D'+encodeURIComponent(location.href);})();">Forgot your password?</a><br /><a class="ibm-forward-link" href="#" onclick="(function () {window.location='https://www.ibm.com/account/profile?page=chpw&amp;lang=en_US&amp;appname=ibm&amp;required=null&amp;d='+encodeURIComponent(location.href);})();">Change your password?</a></span></p> 
+<p class="no-bottom-padding"> 
+   <label for="AfterSignIn">After sign in:</label> 
+   <span>
+
+      <select name="SignInAction" id="AfterSignIn">
+          <option value="">Stay on the current page</option>
+          <option value="/developerworks/mydeveloperworks/profiles/html/myProfileView.do">Go to My developerWorks profile</option>
+          <option value="/developerworks/mydeveloperworks/homepage/">Go to My developerWorks homepage</option>
+      </select>
+   </span>
+</p>
+<div class="ibm-overlay-rule"><hr /></div>
+<p>By clicking <strong>Submit</strong>, you agree to the developerWorks <a href="/developerworks/mydeveloperworks/terms?lang=en">terms of use</a>.</p>
+<div class="ibm-buttons-row">
+   <p><input class="ibm-btn-arrow-pri" name="ibm-submit" value="Submit" onclick="signin();return false;" type="button" /><span class="ibm-sep">&nbsp;</span>
+<input value="Cancel" type="button" name="ibm-cancel" class="ibm-btn-cancel-sec" onclick="clearForm();ibmCommon.Overlays.hide('signin_overlay');return false;"/></p>
+</div>
+</form>
+<div class="ibm-overlay-rule"><hr /></div>
+<p>The first time you sign into developerWorks, a My developerWorks profile is created for you. This profile includes the first name, last name, and display name contained in the profile you created when you registered with My developerWorks. Selected information in your My developerWorks profile is displayed to the public, but you may edit the information at any time. Your first name, last name (unless you choose to hide them), and display name will accompany the content that you post. </p>
+<div class="dw-overlay-legal"><p>All information submitted is secure.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Sign in OVERLAY ENDS HERE --> 
+ 
+
+<!-- Display name OVERLAY STARTS HERE --> 
+<div class="ibm-common-overlay" id="displayname_overlay">
+<div class="ibm-head">
+<p><a class="ibm-common-overlay-close" href="#" onclick="clearForm();">Close [x]</a></p>
+</div>
+<div class="ibm-body">
+<div class="ibm-main">
+<div class="ibm-title ibm-subtitle">
+<h1>Choose your display name</h1>
+<div id="ibm-overlay-error-dname" class="no-display"></div>
+</div>
+<div class="ibm-container ibm-alternate ibm-buttons-last">
+<div class="ibm-container-body">
+<p class="ibm-overlay-intro">The first time you sign in to developerWorks a profile is created for you, so you need to choose a display name.  Your display name accompanies the content you post on developerWorks.</p>
+
+<form id="dFormId" method="post" action="" name="dForm" onsubmit="return false;" class="ibm-column-form">
+<p><label for="displayname">Display name:</label><span><input name="displayname" id="displayname" size="25" value="" type="text" onkeypress="handleEP(event,this.form);" /></span><span class="ibm-form-note">(Must be between 3 &ndash; 31 characters.)</span>
+</p>
+<p><strong>Note:</strong>  Please choose a display name between 3-31 characters. Your display name must be unique in the developerWorks community and should not be your email for privacy reasons.</p>
+<div class="ibm-overlay-rule"><hr />
+</div>
+<p>By clicking Submit, you agree to the developerWorks <a href="/developerworks/mydeveloperworks/terms?lang=en">terms of use</a>.</p>
+<div class="ibm-buttons-row">
+   <p><input class="ibm-btn-arrow-pri" name="ibm-submit" value="Submit" onclick="signin();return false;" type="button" /><span class="ibm-sep">&nbsp;</span>
+<input value="Cancel" type="button" name="ibm-cancel" class="ibm-btn-cancel-sec" onclick="clearForm();ibmCommon.Overlays.hide('displayname_overlay');return false;" /></p>
+</div>
+</form>
+<div class="ibm-overlay-rule"><hr /></div>
+<div class="dw-overlay-legal"><p>All information submitted is secure.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Display name OVERLAY ENDS HERE -->
+<!-- OVERLAYS_END -->
+
+<!-- RATINGS START -->
+<p class="ibm-no-print"><span class="atitle"><a name="iratings">Rate this article</a></span></p>
+<input id="art-rating" name="ratinga" type="hidden" value="0"/><div id="art-rating-module"></div>
+<script language="JavaScript" type="text/javascript">
+// <![CDATA[
+   // widget div id and article id as args
+   window.artRating.init('art-rating-module','art-rating-summary');
+// ]]>
+</script>
+<!-- RATINGS END -->
+
+<!-- INLINE_COMMENTS_START -->
+<p class="ibm-no-print"><span class="atitle"><a name="icomments">Comments</a></span></p>
+<script language="JavaScript" src="//dw1.s81c.com/developerworks/js/showcomments.js" type="text/javascript">//</script>
+<div id="threadShow"></div>
+<script language="JavaScript" type="text/javascript">
+// <![CDATA[
+ jQuery('threadShow').showComments('95%',5,'nCmts','icomments');
+// ]]>
+</script>
+<!-- INLINE_COMMENTS_END -->
+
+<p class="ibm-ind-link ibm-back-to-top"><a class="ibm-anchor-up-link" href="#ibm-pcon">Back to top</a></p>
+<p><a href="http://www.ibm.com/developerworks/ibm/trademarks/">Trademarks</a> &nbsp;|&nbsp; <a href="https://www.ibm.com/developerworks/mydeveloperworks/terms/">My developerWorks terms and conditions</a></p>
+
+<!-- Overlays -->
+<!-- Zone/Leaf_Interest_Overlay_Start -->
+<div class="ibm-common-overlay ibm-no-print" id="dwmyinterestadd">
+<div class="ibm-head"><p><a class="ibm-common-overlay-close" href="#close">Close [x]</a></p></div>
+<div class="ibm-body">
+<div class="ibm-main">
+<a class="ibm-access" name="dwmyinterestaddhelp">Help: Update or add to My dW interests</a>   
+<div class="ibm-title"><h1>What's this?</h1></div>
+<div class="ibm-container ibm-alternate">
+<p>This little timesaver lets you update your My developerWorks profile with just one click!  The general subject of this content (AIX and UNIX, Information Management, Lotus, Rational, Tivoli, WebSphere, Java, Linux, Open source, SOA and Web services, Web development, or XML) will be added to the interests section of your profile, if it's not there already.  You only need to be logged in to My developerWorks.</p>
+<p>And what's the point of adding your interests to your profile?  That's how you find other users with the same interests as yours, and see what they're reading and contributing to the community.  Your interests also help us recommend relevant developerWorks content to you.</p>
+<p><a href="https://www.ibm.com/developerworks/mydeveloperworks/profiles/home.do?lang=en">View your My developerWorks profile</a></p>
+<p class="ibm-access"><a href="#interestShow">Return from help</a></p>
+</div> 
+</div>
+</div>
+<div class="ibm-footer"></div>
+</div>
+
+<div class="ibm-common-overlay ibm-no-print" id="dwmyinterestremove">
+<div class="ibm-head"><p><a class="ibm-common-overlay-close" href="#close">Close [x]</a></p></div>
+<div class="ibm-body">
+<div class="ibm-main">
+<a class="ibm-access" name="dwmyinterestremovehelp">Help: Remove from My dW interests</a> 
+<div class="ibm-title"><h1>What's this?</h1></div>
+<div class="ibm-container ibm-alternate">
+<p>Removing this interest does not alter your profile, but rather removes this piece of content from a list of all content for which you've indicated interest.  In a future enhancement to My developerWorks, you'll be able to see a record of that content.</p>
+<p><a href="https://www.ibm.com/developerworks/mydeveloperworks/profiles/home.do?lang=en">View your My developerWorks profile</a></p>
+<p class="ibm-access"><a href="#interestShow">Return from help</a></p>
+</div> 
+</div>
+</div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Zone/Leaf_Interest_Overlay_End --></div>
+<!-- MAIN_COLUMN_CONTAINER_END -->
+
+<!-- Rating_Meta_BEGIN -->
+<!--Rating_Meta_BEGIN--><div class="metavalue">static.content.url=http://www.ibm.com/developerworks/js/artrating/</div><div class="metavalue">SITE_ID=1</div><div class="metavalue">Zone=Linux</div><div class="metavalue">ArticleID=125853</div><div class="metavalue">ArticleTitle=Inside the Linux boot process</div><div class="metavalue">publish-date=05312006</div><div class="metavalue">author1-email=mtj@mtjones.com</div><div class="metavalue">author1-email-cc=tomyoung@us.ibm.com</div><script language="javascript" type="text/javascript">document.write('<div class="metavalue">url='+location.href.replace('<', '%3C')+'</div>');</script><!--Rating_Meta_END-->
+<!-- Rating_Meta_END -->
+
+</div>
+<!-- MAIN_COLUMN_END-->
+
+<!-- RIGHT_COLUMN_BEGIN -->
+<div id="ibm-content-sidebar">
+<div id="ibm-social-tools-sidebar" class="ibm-share-this"></div>
+
+<!-- RIGHT_COLUMN_CONTENT_BEGIN --> 
+<div class="ibm-container"><h2>Table of contents</h2><div class="ibm-container-body"><img alt="" height="1" width="1" src="//www.ibm.com/i/c.gif"/><ul class="ibm-bullet-list"><li><a class="ibm-feature-link" href="#N10062">Overview</a></li><li><a class="ibm-feature-link" href="#N1008B">System startup</a></li><li><a class="ibm-feature-link" href="#N100C8">Stage 1 boot loader</a></li><li><a class="ibm-feature-link" href="#N100E4">Stage 2 boot loader</a></li><li><a class="ibm-feature-link" href="#N10136">Kernel</a></li><li><a class="ibm-feature-link" href="#N1020F">Init</a></li><li><a class="ibm-feature-link" href="#N10228">Summary</a></li><li><a class="ibm-feature-link" href="#resources">Resources</a></li><li><a class="ibm-feature-link" href="#author">About the author</a></li><li><a class="ibm-feature-link" href="#icomments">Comments</a></li></ul></div></div>
+<!--XSLT stylesheet used to transform this content: s-danube.xsl--><div class="ibm-container"><h2>Local resources</h2><div class="ibm-container-body"><img src="//www.ibm.com/developerworks/i/spot-danube.jpg" alt="" border="0" height="58" width="188"/><ul class="ibm-bullet-list"><li><a href="http://www.ibm.com/developerworks/cn/?S_TACT=105AGY81&amp;S_CMP=danube_as_as" class="ibm-feature-link">developerWorks 中国</a></li><li><a href="http://www.ibm.com/developerworks/jp/?S_TACT=105AGY81&amp;S_CMP=danube_as_as" class="ibm-feature-link">developerWorks Japan</a></li><li><a href="http://www.ibm.com/developerworks/kr/?S_TACT=105AGY81&amp;S_CMP=danube_as_as" class="ibm-feature-link">developerWorks 한국</a></li><li><a href="http://www.ibm.com/developerworks/vn/?S_TACT=105AGY81&amp;S_CMP=danube_as_as" class="ibm-feature-link">developerWorks Vietnam</a></li><li><a href="http://www.ibm.com/developerworks/views/global/techbriefing.jsp?end_no=100&amp;lcl_sort_order=desc&amp;sort_order=asc&amp;expand=&amp;start_no=1&amp;show_all=false&amp;geo_by=Asia+Pacific&amp;sort_by=Date&amp;search_by=&amp;topic_by=All+Topics&amp;show_abstract=true?S_TACT=105AGY81&amp;S_CMP=danube_as_as" class="ibm-feature-link">Technical Briefings in Asia</a></li></ul></div></div>
+<!--XSLT stylesheet used to transform this content: s-community.xsl--><div class="ibm-container"><h2>My developerWorks community</h2><div class="ibm-container-body"><p>Interact, share, and communicate with developers worldwide.</p><div class="ibm-rule"><hr/></div><ul class="ibm-bullet-list"><li><a href="https://www.ibm.com/developerworks/mydeveloperworks/homepage/web/getuserpref?ca=dma-" class="ibm-feature-link">My Home</a></li><li><a href="https://www.ibm.com/developerworks/mydeveloperworks/profiles/home.do?lang=en&amp;ca=dma-" class="ibm-feature-link">Profiles</a></li><li><a href="https://www.ibm.com/developerworks/mydeveloperworks/groups/service/html/allcommunities?ca=dma-" class="ibm-feature-link">Groups</a></li><li><a href="https://www.ibm.com/developerworks/mydeveloperworks/blogs/?ca=dma-" class="ibm-feature-link">Blogs</a></li><li><a href="https://www.ibm.com/developerworks/mydeveloperworks/bookmarks/?ca=dma-" class="ibm-feature-link">Bookmarks</a></li><li><a href="https://www.ibm.com/developerworks/mydeveloperworks/activities/service/html/mainpage?ca=dma-" class="ibm-feature-link">Activities</a></li><li><a href="http://www.ibm.com/developerworks/mydeveloperworks/files?ca=dma-" class="ibm-feature-link">Files</a></li><li><a href="http://www.ibm.com/developerworks/mydeveloperworks/wikis?ca=dma-" class="ibm-feature-link">Wikis</a></li><li><a href="http://www.ibm.com/developerworks/forums/?ca=dma-" class="ibm-feature-link">Forums</a></li><li><a href="http://www.ibm.com/developerworks/podcast/?ca=dma-" class="ibm-feature-link">Podcasts</a></li></ul><div class="ibm-rule"><hr/></div><p class="ibm-ind-link"><a href="https://www.ibm.com/developerworks/mydeveloperworks/?ca=dma-" class="ibm-forward-link">My developerWorks overview</a></p></div></div>
+<!-- Tagging_Start -->
+<div id="dw-tag-cloud-container" class="ibm-container dw-hidetag"><h2>Tags</h2>
+<div id="dw-tag-help"><a class="dwauthor" rel="#tagtip" id="dwtagtip"><img alt="Help" height="16" width="16" align="top" src="//dw1.s81c.com/developerworks/i/help_icon.gif"/></a></div>
+<div id="tagtip" class="dwauthor-onload-state ibm-no-print">Use the <strong>search field</strong> to find all types of content in My developerWorks with that tag.<p>Use the <strong>slider bar</strong> to see more or fewer tags.</p><p>For articles in technology zones (such as Java technology, Linux, Open source, XML), <strong>Popular tags</strong> shows the top tags 
+for <em>all technology zones</em>.  For articles in product zones (such as Info Mgmt, Rational, WebSphere), <strong>Popular tags</strong> shows the top tags for <em>just that product zone</em>.</p><p>For articles in technology zones (such as Java technology, Linux, Open source, XML), <strong>My tags</strong> shows your tags for <em>all technology zones</em>.  For articles in product zones (such as Info Mgmt, Rational, WebSphere), <strong>My tags</strong> shows your tags for <em>just that product zone</em>.</p></div>
+<div class="ibm-access">Use the search field to find all types of content in My developerWorks with that tag.  <em>Popular tags</em> shows the top tags for this particular content zone (for example, Java technology, Linux, WebSphere).  <em>My tags</em> shows your tags for this particular content zone (for example, Java technology, Linux, WebSphere).</div>
+<div class="ibm-container-body">
+<div class="dw-tag-search"><form action="//www.ibm.com/developerworks/mydeveloperworks/bookmarks/html?lang=en" method="get" id="actualtagform" onsubmit="popupform(this, 'join')">
+<p><label for="tagfield"><strong>Search all tags</strong></label><input id="tagfield" name="tag" type="text" maxlength="20" size="17" />&nbsp;<input src="//dw1.s81c.com/i/v16/buttons/short-btn.gif" type="image" class="ibm-btn-view" alt="submit search" title="submit search" value="Search" /></p></form></div>
+<div class="ibm-rule"><hr/></div>
+<div id="dw-tag-select">
+<div id="dw-tag-select-popular"><p><strong>Popular article tags</strong>&nbsp;|&nbsp;<br /><a id="a-my" href="javascript:;">My article tags</a><a href="#dw-tag-access" class="ibm-access">Skip to tags list</a></p></div>
+<div id="dw-tag-select-my" class="dw-hidetag"><p><a id="a-popular" href="javascript:;">Popular article tags</a>&nbsp;|&nbsp;<br /><strong>My article tags</strong></p><a href="#dw-tag-access" class="ibm-access">Skip to tags list</a></div>
+<div id="dw-tag-cloud"></div>  
+</div>   
+</div>
+</div>
+<!-- Tagging_End -->
+<!-- Dig_Deeper -->
+<div class="ibm-container"><h2>Dig deeper into Linux on developerWorks</h2><div class="ibm-container-body"><ul class="ibm-link-list"><li class="ibm-first"><a href="http://www.ibm.com/developerworks/linux/" class="ibm-forward-link">Overview</a></li><li><a href="http://www.ibm.com/developerworks/linux/newto/" class="ibm-forward-link">New to Linux</a></li><li><a href="http://www.ibm.com/developerworks/views/linux/downloads.jsp" class="ibm-forward-link">Downloads and products</a></li><li><a href="http://www.ibm.com/developerworks/views/linux/projects.jsp" class="ibm-forward-link">Open source projects</a></li><li><a href="http://www.ibm.com/developerworks/views/linux/library.jsp" class="ibm-forward-link">Technical library (articles, tutorials, training, and more)</a></li><li><a href="http://www.ibm.com/developerworks/forums/dw_lforums.jsp" class="ibm-forward-link">Forums</a></li><li><a href="http://www.ibm.com/developerworks/views/linux/events.jsp" class="ibm-forward-link">Events</a></li><li><a href="http://www.ibm.com/developerworks/newsletter/" class="ibm-forward-link">Newsletter</a></li></ul></div></div>
+<!-- High_Visibility_Offer -->
+<!--XSLT stylesheet used to transform this content: s-highvisibilityoffer.xsl--><div class="ibm-container"><h2>Stay ahead of the latest cloud trends</h2><div class="ibm-container-body"><img width="188" height="70" border="0" alt="Stay ahead of the latest cloud trends" src="//www.ibm.com/developerworks/i/hivis-w-cloudzone.jpg"/><p class="ibm-ind-link"><a href="https://www.ibm.com/developerworks/cloud/index.html?ca=dti-cloudzone" class="ibm-forward-link">Cloud Computing resources from developerWorks</a></p></div></div>
+<!-- Special_Offers -->
+<div class="ibm-container"><h2>Special offers</h2><div class="ibm-container-body"><p class="dw-special-offers"><a href="https://www-304.ibm.com/partnerworld/wps/servlet/ContentHandler/2011_beacon_awards_developerworks.html?ca=dti-dwbeacon"><img src="//www.ibm.com/developerworks/i/tile_v16_beacon2010.gif" width="158" height="50" border="0" alt="Partner Award Most Innovative use of dW" /></a></p><p class="dw-special-offers"><a href="http://www.ibm.com/developerworks/downloads/?ca=dti-rdownload#rational"><img src="//www.ibm.com/developerworks/i/tile_v16_r-download.gif" width="158" height="50" border="0" alt="Download and evaluate Rational software" /></a></p><p class="dw-special-offers"><a href="http://www.ibm.com/developerworks/views/linux/libraryview.jsp?type_by=Tutorials&amp;ca=dti-linuxtutorial"><img src="//www.ibm.com/developerworks/i/tile_v16_learnfast-l.gif" width="158" height="50" border="0" alt="Learn fast with free IBM Linux tutorials" /></a></p><div class="ibm-rule"><hr/></div><p class="ibm-ind-link"><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/downloads/?ca=dti-tilemoreoffers">Trial software offers</a></p></div></div>
+<!-- RIGHT_COLUMN_CONTENT_END -->
+
+</div>
+<!-- RIGHT_COLUMN_END -->
+
+<!-- CONTENT_BODY_END -->
+</div>
+
+</div>
+<!-- CONTENT_END -->
+
+ <!-- END_IBM-PCON -->
+</div>
+
+<!-- FOOTER_BEGIN -->
+<div id="ibm-page-tools">
+<!-- IBM page tools container -->
+</div>
+<div id="ibm-footer">
+<ul>
+<li class="ibm-first"><a href="http://www.ibm.com/ibm/">About IBM</a></li>
+<li><a href="http://www.ibm.com/privacy/">Privacy</a></li>
+<li><a href="http://www.ibm.com/contact/">Contact</a></li>
+<li><a href="http://www.ibm.com/legal/">Terms of use</a></li>
+</ul>
+</div>
+<!-- FOOTER_END -->
+
+ <!-- END_IBM-TOP -->
+</div>
+ 
+ <!-- SCRIPTS_INCLUDE_BEGIN -->
+<!-- JQuery start -->
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/jquery/cluetip98/jquery.dimensions-1.2.js"></script>
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/jquery/cluetip98/jquery.hoverIntent.minified.js"></script>
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/jquery/cluetip98/jquery.cluetip.js"></script>
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/jquery/tagging/ui.core-1.7.1.js"></script>
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/jquery/tagging/ui.slider-1.7.1.js"></script>
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/jquery/tagging/dwjquerytags.js"></script>
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/si/flash-detect.js"></script>
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/si/dwsi.js"></script>
+<script type="text/javascript" language="JavaScript">
+	jQuery.noConflict();     
+	// Put all your code in your document ready area
+	jQuery(document).ready(function(jQuery) {
+	// Do jQuery stuff using jQuery 
+	jQuery('a.dwauthor').cluetip({
+		local: true,
+		showTitle: false,
+		positionBy: 'bottomTop',
+		sticky: true,	
+		mouseOutClose: true,
+		closeText: '<img src="//dw1.s81c.com/developerworks/js/jquery/cluetip98/i/x.gif" alt="Close" />',
+		arrows: false,
+		dropShadow: true,
+		cluetipClass: 'dwbasic'
+		});
+
+		//tagging
+		login="false";
+		userid="";
+		whichTags = "init";
+		pCont = "";
+		mCont = "";
+		signInMCont = "";
+		accessCont = "";
+		pValue = 0;
+		mValue = 0;
+
+		rBHash = null;
+		rBHash = new Object();
+		rBHash['viperLang'] = 'en';
+		rBHash['urlLang'] = 'en';
+		rBHash['tagThisWinTitle'] = 'Tagit';
+		rBHash['pTags1'] = 'Popular tags';
+		rBHash['pTags2'] = 'End of Popular tags';
+		rBHash['mTags1'] = 'My tags';
+		rBHash['mTags2'] = 'End of My tags';
+		rBHash['alt1'] = 'Loading Content';
+		rBHash['noATags'] = 'No active tags';
+		rBHash['signIn1'] = 'Please ';
+		rBHash['signIn2'] = 'sign in';
+		rBHash['signIn3'] = ' to access';
+		rBHash['signIn4'] = 'My Tags';
+		rBHash['signIn5'] = 'To access My Tags, please ';
+		rBHash['signIn6'] = 'sign in';
+		rBHash['signIn7'] = 'Read Popular tags';
+
+		zoneHash = new Object();
+		zoneHash['aix'] = 'AIX and UNIX zone';
+		zoneHash['data'] = 'Information Management zone';
+		zoneHash['lotus'] = 'Lotus zone';
+		zoneHash['rational'] = 'Rational zone';
+		zoneHash['tivoli'] = 'Tivoli zone';
+		zoneHash['websphere'] = 'WebSphere zone';
+		zoneHash['architecture'] = 'Technical library';
+		zoneHash['autonomic'] = 'Technical library';
+		zoneHash['java'] = 'Technical library';
+		zoneHash['cloud'] = 'Technical library';
+		zoneHash['industry'] = 'Technical library';
+		zoneHash['library'] = 'Technical library';
+		zoneHash['linux'] = 'Technical library';
+		zoneHash['opensource'] = 'Technical library';
+		zoneHash['power'] = 'Technical library';
+		zoneHash['webservices'] = 'Technical library';
+		zoneHash['web'] = 'Technical library';
+		zoneHash['xml'] = 'Technical library';
+		zoneHash['wireless'] = 'Technical library';
+		jQuery.checkRB();
+		jQuery.getPopularTags("/developerworks/dwtags/dwjquerytabtags?lang=" + rBHash['viperLang'] + "&base=" + jQuery.getNormalizedZoneUrl(location.href));
+		jQuery.getUserTags();
+		if(jQuery.isTutorial(location.href) == "true") {
+			jQuery.getTagsForContent("/developerworks/tagging/UseCaseServlet?lang=" + rBHash['viperLang'] + "&format=maverick&cType=tutorials&use_case=geturltags&action=gettags&url=" + jQuery.normalizeUrl(location.href));
+		}
+		else {
+			jQuery.getTagsForContent("/developerworks/tagging/UseCaseServlet?lang=" + rBHash['viperLang'] + "&format=maverick&cType=articles&use_case=geturltags&action=gettags&url=" + jQuery.normalizeUrl(location.href));
+
+		}
+		
+		// si
+		initSI();
+	});
+ </script>
+ <!-- JQuery end -->
+ <!-- Overlay js -->
+<script language="JavaScript" src="//dw1.s81c.com/common/js/overlay.js" type="text/javascript"></script>
+<!-- My dW Interest article -->
+<script language="JavaScript" src="//dw1.s81c.com/developerworks/js/showinterest.js" type="text/javascript">//</script>
+<script language="JavaScript" type="text/javascript">
+        // <![CDATA[
+			var contentId = '';
+			var contentAreas = '';
+			var caArr = [];
+			contentId = '125853';
+			contentAreas = 'linux';
+			if(contentAreas != ''){caArr = contentAreas.split(',');}
+			var loginLink = 'https://www.ibm.com/developerworks/dwwi/DWAuthRouter?m=loginpage&d=' + encodeURIComponent(window.location);jQuery('interestShow').showInterest(contentId,'dw-article',{'int_tops':[246,86,87,32],'int_prods':[], 'int_prod_fam':[],'int_cont_area':caArr},
+'<div id="dw-interest-anon"><a id="intAnonBtn" class="ibm-external-link" href="">Update My dW interests</a> (<a class="dw-interest" href="' + loginLink + '">Log in</a> | <a class="dw-interest" href="#overlay" onclick="ibmCommon.Overlays.show(\'dwmyinterestadd\', this);return false;">What\'s this?</a>) <a class="ibm-access" href="#dwmyinterestaddhelp">Skip to help for Update My dW interests</a></div>',
+'<div id="dw-interest-add"><a id="intSelectBtn" class="ibm-external-link" href="">Add to My dW interests</a> (<a class="dw-interest" href="#overlay" onclick="ibmCommon.Overlays.show(\'dwmyinterestadd\', this);return false;">What\'s this?</a>) <a class="ibm-access" href="#dwmyinterestaddhelp">Skip to help for Add to My dW interests</a></div>',
+'<div id="dw-interest-remove">Added to My dW interests (<a class="dw-interest" href="https://www.ibm.com/developerworks/mydeveloperworks/profiles/html/myProfileView.do?lang=en">Edit</a>)</div>'
+);
+// ]]>
+</script><!-- BEGIN: Use this section to set page specific variables for the Unica Page Tag -->
+<script language="JavaScript">var NTPT_PGEXTRA="ibmSkillLevel=1&ibmAdoptPhase=-&ibmRole=-";</script>
+<!--END --><!-- SCRIPTS_INCLUDE_END -->
+
+<div id="ibm-metrics">
+<script src="//dw1.s81c.com/common/stats/stats.js" type="text/javascript">//</script>
+</div>
+
+</body>
+</html>
