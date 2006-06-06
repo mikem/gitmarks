@@ -1,0 +1,1260 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>Ajax RSS reader</title>
+<meta http-equiv="PICS-Label" content='(PICS-1.1 "http://www.icra.org/ratingsv02.html" l gen true r (cz 1 lz 1 nz 1 oz 1 vz 1) "http://www.rsac.org/ratingsv01.html" l gen true r (n 0 s 0 v 0 l 0) "http://www.classify.org/safesurf/" l gen true r (SS~~000 1))'/>
+<link rel="schema.DC" href="http://purl.org/DC/elements/1.0/"/>
+<link rel="SHORTCUT ICON" href="http://www.ibm.com/favicon.ico"/>
+<meta name="Owner" content="developerWorks Content/Raleigh/IBM"/>
+<meta name="DC.Language" scheme="rfc1766" content="en"/>
+<meta name="IBM.Country" content="ZZ"/>
+<meta name="Security" content="Public"/>
+<meta name="IBM.SpecialPurpose" content="SP001"/>
+<meta name="IBM.PageAttributes" content="sid=1003"/>
+<meta name="Source" content="v16 Template Generator"/>
+<meta name="Robots" content="index,follow"/>
+<meta name="Abstract" content="Learn how to build an Asynchronous JavaScript and XML (Ajax) Really Simple Syndication (RSS) reader, as well as a Web component that you can place on any Web site to look at the articles in the RSS feeds."/>
+<meta name="Description" content="Learn how to build an Asynchronous JavaScript and XML (Ajax) Really Simple Syndication (RSS) reader, as well as a Web component that you can place on any Web site to look at the articles in the RSS feeds."/>
+<meta name="Keywords" content="Jack Herrington, Ajax, AJAX, RSS reader, PHP, XML, JavaScript, XMLHTTP, script tags, MySQL, demo, tttxca, tttosca, tttwaca"/>
+<meta name="DC.Date" scheme="iso8601" content="2007-04-03"/>
+<meta name="DC.Type" scheme="IBM_ContentClassTaxonomy" content="CT316"/>
+<meta name="DC.Subject" scheme="IBM_SubjectTaxonomy" content="TTC00"/>
+<meta scheme="IBM_WTMCategory" name="IBM.WTMCategory" content="SOFDCXMLZZ" />
+<meta name="DC.Rights" content="© Copyright IBM Corporation 2006, 2007"/>
+<meta name="IBM.Effective" scheme="W3CDTF" content="2006-05-12"/>
+<meta name="title" content="Ajax RSS reader"/>
+
+<!-- HEADER_SCRIPTS_AND_CSS_INCLUDE -->
+<link href="//dw1.s81c.com/common/v16/css/all.css" media="all" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/common/v16/css/screen.css" media="screen,projection" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/common/v16/css/screen-uas.css" media="screen,projection" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/common/v16/css/zz/en/screen-fonts.css" media="screen,projection" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/common/v16/css/handheld.css" media="handheld" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/common/v16/css/print.css" media="print" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/common/v16/css/overlay.css" media="screen,projection" rel="stylesheet" title="www" type="text/css"/>
+
+<!-- dW-specific CSS -->
+<link href="//dw1.s81c.com/developerworks/css/dw-screen.css" media="screen,projection" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/developerworks/css/dw-screen-comments-ratings-signin.css" media="screen,projection" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/developerworks/js/jquery/cluetip98/jquery.cluetip.css" media="screen,projection" rel="stylesheet"  title="www" type="text/css" />
+
+<script src="//dw1.s81c.com/common/js/ibmcommon.js" type="text/javascript">//</script>
+<script src="//dw1.s81c.com/common/js/dynamicnav.js" type="text/javascript">//</script>
+
+<!-- dW functional JS -->
+<script language="JavaScript" src="//dw1.s81c.com/developerworks/js/urltactic.js" type="text/javascript"></script>
+<!-- Rating_START -->
+<script language="JavaScript" src="//dw1.s81c.com/developerworks/js/artrating/showrating.js" type="text/javascript"></script>
+<style type="text/css">
+.metavalue {
+  display: none;
+}
+</style>
+<!-- Rating_END --><!-- RESERVED_HEADER_INCLUDE -->
+<script language="javascript" src="//dw1.s81c.com/developerworks/js/ajax1.js" type="text/javascript"></script>
+<script language="javascript" src="//dw1.s81c.com/developerworks/js/search_counter-maverick.js" type="text/javascript"></script>
+<script language="javascript" src="//dw1.s81c.com/developerworks/js/request_referer_capture-maverick.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+ <!--
+ setDefaultQuery('');
+ //-->
+</script>
+<script language="JavaScript" type="text/javascript">
+ <!--
+ function openNewWindow(url,tar,arg){window.open(url,tar,arg);}
+ //-->
+</script>
+<!-- Include file support -->
+<script language="JavaScript" type="text/javascript">
+(function($) {
+	jQuery.extend({
+		getInc: function(u,d){
+			if(u==null)return;
+			jQuery.ajax({
+	    		type: "GET",
+			url: u,
+			dataType: "text",
+	        	success: function(t) {
+				jQuery(d).html(t);
+				ibmCommon.initShowHide(jQuery(d).children()[0]);			
+			},
+			async: true
+			});
+		}
+	});
+})(jQuery);
+</script>
+</head>
+
+<body id="ibm-com">
+<div id="ibm-top" class="ibm-landing-page">
+
+<!-- MASTHEAD_BEGIN -->
+<div class="ibm-access"><a href="#ibm-content">Skip to main content</a></div>
+<div id="ibm-masthead">
+<div id="ibm-logo"><a href="http://www.ibm.com/"><img height="50" src="//dw1.s81c.com/i/v16/t/ibm-logo.gif" width="110" alt="IBM®" /></a></div>
+<ul id="ibm-geo"><li id="ibm-country" class="ibm-first">Country/region</li><li id="ibm-change-country">[ <a href="http://www.ibm.com/developerworks/country/">select</a> ]</li></ul>
+  <form id="ibm-search-form" action="//www.ibm.com/developerworks/search/searchResults.jsp" method="get" name="form1"><input type="hidden" name="searchType" value="1"/><input type="hidden" name="searchSite" value="dW"/><p>
+<span id="ibm-search-scope">
+<label for="sn"><img src="//dw1.s81c.com/i/c.gif" width="1" height="1" alt="Search in:"/></label>
+<select name="searchScope" id="sn">
+<option value="dW" selected="selected">All of dW</option>
+<option value="dW">-----------------</option>
+<option value="aixunix">&nbsp;AIX and UNIX</option>
+<option value="db2">&nbsp;Information Mgmt</option>
+<option value="lotus">&nbsp;Lotus</option>
+<option value="rdd">&nbsp;Rational</option>
+<option value="tivoli">&nbsp;Tivoli</option>  
+<option value="WSDD">&nbsp;WebSphere</option>
+<option value="dW">-----------------</option> 
+<option value="javaZ">&nbsp;Java technology</option> 
+<option value="linuxZ">&nbsp;Linux</option> 
+<option value="opensrcZ">&nbsp;Open source</option>
+<option value="webservZ">&nbsp;SOA/Web services</option>
+<option value="webarchZ">&nbsp;Web development</option>  
+<option value="xmlZ">&nbsp;XML</option>
+<option value="dW">-----------------</option>
+<option value="forums">&nbsp;dW forums</option> 
+<option value="dW">-----------------</option>
+<option value="aI">University</option>
+<option value="dW">-----------------</option>
+<option value="aW">alphaWorks</option>
+<option value="dW">-----------------</option>
+<option value="all">All of IBM</option>
+</select>
+</span>
+
+<label for="q"><img alt="Search for:" height="1" width="1" src="//dw1.s81c.com/i/c.gif" /></label><input type="text" name="query" maxlength="100" id="q"/><input type="submit" id="ibm-search" class="ibm-btn-search" name="Search" value="Search" /></p></form>
+<div id="ibm-site-name">
+<!-- IBM site name container -->
+</div>
+<div id="ibm-universal-nav">
+<ul><li id="ibm-unav-home" class="ibm-first"><a href="http://www.ibm.com/">Home</a></li><li id="ibm-unav-solutions"><a href="http://www.ibm.com/solutions/">Solutions</a></li><li id="ibm-unav-services"><a href="http://www.ibm.com/technologyservices/">Services</a></li><li id="ibm-unav-products"><a href="http://www.ibm.com/products/">Products</a></li><li id="ibm-unav-support"><a href="http://www.ibm.com/support/">Support &amp; downloads</a></li><li id="ibm-unav-myibm"><a href="http://www.ibm.com/account/">My IBM</a></li></ul>
+</div>
+</div>
+<!-- MASTHEAD_END -->
+
+<div id="ibm-pcon">
+
+<!-- CONTENT_BEGIN -->
+<div id="ibm-content">
+
+<!-- Navigation_Trail_BEGIN -->
+<!-- &nbsp; -->
+        <div id="ibm-content-head"><ul id="ibm-navigation-trail"><li class="ibm-first"><a href="http://www.ibm.com/developerworks/">developerWorks</a></li><li><a href="http://www.ibm.com/developerworks/xml/">XML</a></li><li><a href="http://www.ibm.com/developerworks/views/xml/library.jsp">Technical library</a></li></ul></div>
+<!-- Navigation_Trail_END -->
+
+<!-- dW_Summary Area_START -->
+<div id="dw-summary-article">
+
+<div class="dw-content-head">
+<h1>Ajax RSS reader</h1><p><em>Use Ajax to build an RSS reader</em></p>
+</div>
+
+<div class="ibm-container-body ibm-two-column">
+
+<div class="ibm-column ibm-first">
+<div class="author"><a class="dwauthor" rel="#authortip1" href="#author1">Jack D Herrington</a> (<a href="mailto:jherr@pobox.com?subject=Ajax RSS reader&amp;cc=dwxed@us.ibm.com">jherr@pobox.com</a>), Senior Software Engineer, Leverage Software Inc.</div><div id="authortip1" class="dwauthor-onload-state ibm-no-print">A senior software engineer with more than 20 years of experience, Jack Herrington is the author of three books: <i>
+                    <a href="http://www.codegeneration.net/cgia">Code Generation in Action</a>, <a href="http://www.oreilly.com/catalog/podcastinghks/">Podcasting Hacks</a>,</i> and <i>
+                    <a href="http://www.oreilly.com/catalog/phphks/">PHP Hacks</a>.</i> He is also the author of more than 30 articles. You can contact him at <a href="mailto:jherr@pobox.com?cc=dwxed@us.ibm.com">jherr@pobox.com</a>.</div>
+<p></p>
+<p><b>Summary:</b>&nbsp; Learn how to build an Asynchronous JavaScript and XML (Ajax) Really Simple Syndication (RSS) reader, as well as a Web component that you can place on any Web site to look at the articles in the RSS feeds.</p>
+
+<div id="dw-tag-content" class="ibm-no-print"></div><div id="dw-moretags-access" class="ibm-access"></div>
+<p class="ibm-no-print"><div id="dw-tag-this" class="ibm-no-print"><a class="ibm-external-link" onclick="jQuery.launchTagThisWindow(); return false;" href="#">Tag this!</a></div><div id="interestShow" class="ibm-no-print"></div></p>
+</div>
+
+<div class="ibm-column ibm-second">
+<p class="leading"><b>Date:</b>&nbsp; 03 Apr  2007 (Published 12 May  2006)
+<br /><b>Level: </b>&nbsp;Advanced
+
+<br /><b>Also available in:&nbsp;</b>
+&nbsp;<a href="http://www.ibm.com/developerworks/cn/xml/x-ajaxrss/">Chinese</a>
+
+&nbsp;<a href="http://www.ibm.com/developerworks/ru/library/x-ajaxrss/">Russian</a> 
+&nbsp;<a href="http://www.ibm.com/developerworks/jp/xml/library/x-ajaxrss/">Japanese</a> 
+
+
+
+<br />
+<br /><b>Activity:</b>&nbsp; 55674 views
+<br /><b>Comments:</b> &nbsp; <span id="nCmts"><img alt="" src="//dw1.s81c.com/developerworks/i/circle-preloader.gif" height="12" width="50" /><img alt="" src="//dw1.s81c.com/i/c.gif" height="14" width="1" /></span>
+<!-- Rating_Area_Begin -->
+<div id="art-rating-summary"></div>
+<!-- Rating_Area_End -->
+</p>
+</div>
+
+</div>
+</div>
+<!-- dW_Summary_Area_END -->
+
+<!-- CONTENT_BODY -->
+<div id="ibm-content-body">
+
+<!-- MAIN_COLUMN_BEGIN -->
+<div id="ibm-content-main">
+
+<!-- Related_Searches_Area -->
+<!-- Related_Searches_Area_Begin -->
+<script type="text/javascript" language="javascript">
+	     capture_referrer();
+</script>
+
+<div id="dw-related-searches-article" style="display:none">
+<div class="ibm-container ibm-alternate-two">
+<div class="ibm-container-body">
+
+<!--  START : HTML FOR ARTICLE SEARCH -->
+  <div id="article_results" style="display:block"></div>
+<!--  END : HTML FOR ARTICLE SEARCH -->
+
+</div>
+</div>
+</div>
+<!-- Related_Searches_Area_End -->
+<!-- MAIN_COLUMN_CONTAINER_BEGIN -->
+<div class="ibm-container">
+
+<!-- MAIN_COLUMN_CONTENT_BEGIN -->
+<p>The first thing I thought about doing when I read about requesting Extensible Markup Language (XML) from JavaScript code on a Web page was to get some RSS and display it. But I immediately ran into the security issue of XML Hypertext Transfer Protocol (HTTP), where a page that comes from www.mysite.com can't address pages from anywhere other than www.mysite.com. My plans to build a generic RSS reader in just the page were dashed. But Web 2.0 is all about ingenuity, and solving the problem of how to create an RSS reader with XMLHTTP teaches a lot about how to program the 2.0 Web.</p>
+
+            <p>This article walks through the construction of an Ajax-based RSS reader using both XMLHTTP and <code>&lt;script&gt;</code> tags as the transport mechanisms.</p>
+            <p><a name="N10085"><span class="atitle">Building the server side</span></a></p>
+            <div class="ibm-container ibm-alt-header dw-container-sidebar"><h2>Download the code for this article</h2><div class="ibm-container-body">
+                The code listings in this article do not display all of the code required to build the RSS reader. For the complete code, see <a href="#download">Download</a>.  
+</div></div>
+            <p>The server side of the equation comes in two pieces. The first is the database, and the second is a set of PHP pages that allow you to add feeds, request the list of feeds, and get the article associated with a particular feed. I'll start with the database.
+</p>
+            <p><a name="N1009C"><span class="smalltitle">The database</span></a></p>
+            <p>For this article, I use a MySQL database. <a href="#listing1">Listing 1</a> shows the schema.</p>
+            <br /><a name="listing1"><b>Listing 1. The schema for the database</b></a><br /><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">
+                
+CREATE TABLE rss_feeds (
+        rss_feed_id MEDIUMINT NOT NULL AUTO_INCREMENT,
+        url TEXT NOT NULL,
+        name TEXT NOT NULL,
+        last_update TIMESTAMP,
+        PRIMARY KEY ( rss_feed_id )
+);
+
+CREATE TABLE rss_articles (
+        rss_feed_id MEDIUMINT NOT NULL,
+        link TEXT NOT NULL,
+        title TEXT NOT NULL,
+        description TEXT NOT NULL
+);
+</pre></td></tr></table><br />
+            <p>There are two tables. The <code>rss_feeds</code> table contains the list of feeds. And the <code>rss_articles</code> table contains the list of articles associated with each feed. When the system updates the articles, it deletes all of the current articles associated with the given <code>rss_feed_id</code> and then refreshes the table with the new set of articles.</p>
+            <p><a name="N100C2"><span class="smalltitle">The database wrapper</span></a></p>
+
+            <p>The next step is to wrap the database with a set of PHP classes that build the business logic for the application. This starts with the <code>DatabaseConnection</code> singleton that manages the connection to the database, as shown in <a href="#listing2">Listing 2</a>.</p>
+            <br /><a name="listing2"><b>Listing 2. The DatabaseConnection singleton in rss_db.php</b></a><br /><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">
+                
+&lt;?php
+// Install the DB module using 'pear install DB'
+require_once 'DB.php';
+require_once 'XML/RSS.php';
+
+class DatabaseConnection
+{
+  public static function get()
+  {
+    static $db = null;
+    if ( $db == null )
+      $db = new DatabaseConnection();
+    return $db;
+  }
+
+  private $_handle = null;
+
+  private function __construct()
+  {
+    $dsn = 'mysql://root:password@localhost/rss';
+    $this-&gt;_handle =&amp; DB::Connect( $dsn, array() );
+  }
+  
+  public function handle()
+  {
+    return $this-&gt;_handle;
+  }
+}
+</pre></td></tr></table><br />
+
+            <p>This is a standard PHP singleton pattern. It connects to the database and returns a handle through the <code>handle</code> method. The two <code>require_once</code> statements are another interesting part of this code. The first references the PHP Extension and Application Repository (PEAR) <code>DB</code> module that connects to the database. The second references the <code>XML_RSS</code> module that parses RSS feeds. I admit it; I used modules here because I'm far too lazy to worry about parsing all of the different forms of RSS. If you don't have these modules installed, use these on the command line:</p>
+            <p>
+                <code>% pear install DB</code>
+            </p>
+            <p>And:</p>
+            <p>
+                <code>% pear install XML_RSS</code>
+            </p>
+            <p>The <code>DB</code> module is commonly installed, but the <code>XML_RSS</code> module isn't.</p>
+
+            <p>The next step is to build a class that wraps the list of feeds so that you can add a feed, get a list of feeds, and so on. <a href="#listing3">Listing 3</a> shows this class.</p>
+            <br /><a name="listing3"><b>Listing 3. The FeedList class in rss_db.php</b></a><br /><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">
+                
+class FeedList {
+  public static function add( $url ) {
+    if ( FeedList::getFeedByUrl( $url ) != null ) return;
+
+    $db = DatabaseConnection::get()-&gt;handle();
+
+    $rss =&amp; new XML_RSS( $url );
+    $rss-&gt;parse();
+    $info = $rss-&gt;getChannelInfo();
+
+    $isth = $db-&gt;prepare( "INSERT INTO rss_feeds VALUES( null, ?, ?, null )" );
+    $db-&gt;execute( $isth, array( $url, $info['title'] ) );
+
+    $info = FeedList::getFeedByUrl( $url );
+    Feed::update( $info['rss_feed_id'] );
+  }
+
+  public static function getAll( ) {
+    $db = DatabaseConnection::get()-&gt;handle();
+    $res = $db-&gt;query( "SELECT * FROM rss_feeds" );
+    $rows = array();
+    while( $res-&gt;fetchInto( $row, DB_FETCHMODE_ASSOC ) ) { $rows []= $row; }
+    return $rows;
+  }
+
+  public static function getFeedInfo( $id ) {
+    $db = DatabaseConnection::get()-&gt;handle();
+    $res = $db-&gt;query( "SELECT * FROM rss_feeds WHERE rss_feed_id=?",
+      array( $id ) );
+    while( $res-&gt;fetchInto( $row, DB_FETCHMODE_ASSOC ) ) { return $row; }
+    return $null;
+  }
+
+  public static function getFeedByUrl( $url ) {
+    $db = DatabaseConnection::get()-&gt;handle();
+    $res = $db-&gt;query( "SELECT * FROM rss_feeds WHERE url=?", array( $url ) );
+    while( $res-&gt;fetchInto( $row, DB_FETCHMODE_ASSOC ) ) { return $row; }
+    return null;
+  }
+
+  public static function update() {
+    $db = DatabaseConnection::get()-&gt;handle();
+
+    $usth1 = $db-&gt;prepare( "UPDATE rss_feeds SET name='' WHERE rss_feed_id=?" );
+    $usth2 = $db-&gt;prepare( "UPDATE rss_feeds SET name=? WHERE rss_feed_id=?" );
+
+    $res = $db-&gt;query(
+   "SELECT rss_feed_id,name FROM rss_feeds WHERE last_update&lt;now()-600" );
+    while( $res-&gt;fetchInto( $row, DB_FETCHMODE_ASSOC ) ) {
+      Feed::update( $row['rss_feed_id'] );
+      $db-&gt;execute( $usth1, array( $row['rss_feed_id'] ) );
+      $db-&gt;execute( $usth2, array( $row['name'], $row['rss_feed_id'] ) );
+    }
+  }
+}
+</pre></td></tr></table><br />
+            <p>The <code>add</code> method adds a feed to the list and updates the feed. The <code>getAll</code> method returns a list of all of the feeds. The <code>getFeedInfo</code> method returns the information for a given feed. The <code>getFeedByUrl</code> method does the same thing as the <code>getFeedInfo</code> method, but it does it using the URL of the feed as a key. And the <code>update</code> function calls the <code>update</code> method on the given feed if that feed hasn't been updated in the last ten minutes.</p>
+            <p>
+                <a href="#listing4">Listing 4</a> shows the <code>Feed</code> class, which is the final class in the business logic classes. It has methods that deal with an individual feed.</p>
+            <br /><a name="listing4"><b>Listing 4. The Feed class from rss_db.php</b></a><br /><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">
+                
+class Feed
+{
+  public static function update( $id )
+  {
+    $db = DatabaseConnection::get()-&gt;handle();
+
+    $info = FeedList::getFeedInfo( $id );
+    $rss =&amp; new XML_RSS( $info['url'] );
+    $rss-&gt;parse();
+
+    $dsth = $db-&gt;prepare( "DELETE FROM rss_articles WHERE rss_feed_id=?" );
+    $db-&gt;execute( $dsth, array( $id ) );
+
+    $isth = $db-&gt;prepare( "INSERT INTO rss_articles VALUES( ?, ?, ?, ? )" );
+
+    foreach ($rss-&gt;getItems() as $item) {
+      $db-&gt;execute( $isth, array( $id,
+        $item['link'], $item['title'],
+        $item['description'] ) );
+    }
+  }
+
+  public static function get( $id )
+  {
+    $db = DatabaseConnection::get()-&gt;handle();
+    $res = $db-&gt;query( "SELECT * FROM rss_articles WHERE rss_feed_id=?",
+      array( $id ) );
+    $rows = array();
+    while( $res-&gt;fetchInto( $row, DB_FETCHMODE_ASSOC ) )
+    {
+      $rows []= $row;
+    }
+    return $rows;
+  }
+}
+?&gt;
+</pre></td></tr></table><br />
+            <p>The <code>update</code> method uses the RSS parser to get the feed and update the database. And the <code>get</code> method returns the current contents of the articles table for the given feed.</p>
+            <p><a name="N1015C"><span class="smalltitle">The PHP service pages</span></a></p>
+            <p>The first page you need to use is the add.php page, in <a href="#listing5">Listing 5</a>, to add feeds to the list.</p>
+            <br /><a name="listing5"><b>Listing 5. add.php</b></a><br /><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">
+                
+&lt;?php
+require_once 'rss_db.php';
+
+header( 'Content-type: text/xml' );
+
+FeedList::add( $_GET['url'] );
+?&gt;
+&lt;done /&gt;
+</pre></td></tr></table><br />
+            <p>This is a very simple wrapper around the <code>add</code> method on the <code>FeedList</code> class. The <code>&lt;done&gt;</code> tag at the bottom satisfies the need for this to return some type of XML indicating the success or failure of the process.</p>
+            <p>The next page is the list.php page, in <a href="#listing6">Listing 6</a>, that returns the list of feeds in the database.</p>
+            <br /><a name="listing6"><b>Listing 6. list.php</b></a><br /><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">
+                
+&lt;?php
+require_once 'rss_db.php';
+
+$rows = FeedList::getAll();
+
+$dom = new DomDocument();
+$dom-&gt;formatOutput = true;
+
+$root = $dom-&gt;createElement( 'feeds' );
+$dom-&gt;appendChild( $root );
+
+foreach( $rows as $row )
+{
+  $an = $dom-&gt;createElement( 'feed' );
+  $an-&gt;setAttribute( 'id', $row['rss_feed_id'] );
+  $an-&gt;setAttribute( 'link', $row['url'] );
+  $an-&gt;setAttribute( 'name', $row['name'] );
+  $root-&gt;appendChild( $an );
+}
+
+header( "Content-type: text/xml" );
+echo $dom-&gt;saveXML();
+?&gt;
+</pre></td></tr></table><br />
+
+            <p>To make it easier to write the XML properly, I use the Document Object Model (DOM) functions in the PHP core to create an XML DOM on the fly. Then I use the <code>saveXML</code> function to format it for output.</p>
+
+            <p>If I browse to this page using my Firefox&#174; browser, I see the output in <a href="#fig1">Figure 1</a>.</p>
+            
+                <br /><a name="fig1"><b>Figure 1. The feed list XML page</b></a><br />
+                <img alt="The feed list XML page" height="313" src="list_400_313.jpg" width="400"/>
+            <br />
+            <p>Of course, this is after I have added eight feeds to the list.</p>
+
+            <p>The final page I need to build before getting into the client side of the system is the read.php page, in <a href="#listing7">Listing 7</a>, that returns the articles associated with a given feed ID.</p>
+            <br /><a name="listing7"><b>Listing 7. read.php</b></a><br /><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">
+                
+&lt;?php
+require_once 'rss_db.php';
+
+FeedList::update();
+
+$rows = Feed::get( $_GET['id'] );
+
+$dom = new DomDocument();
+$dom-&gt;formatOutput = true;
+
+$root = $dom-&gt;createElement( 'articles' );
+$dom-&gt;appendChild( $root );
+
+foreach( $rows as $row )
+{
+  $an = $dom-&gt;createElement( 'article' );
+  $an-&gt;setAttribute( 'title', $row['title'] );
+  $an-&gt;setAttribute( 'link', $row['link'] );
+  $an-&gt;appendChild( $dom-&gt;createTextNode( $row['description'] ) );
+  $root-&gt;appendChild( $an );
+}
+
+header( "Content-type: text/xml" );
+echo $dom-&gt;saveXML();
+?&gt;
+</pre></td></tr></table><br />
+
+            <p>This is very similar in form to the list.php page. I use the <code>Feed</code> class to get the list of articles. Then I use the XML DOM object to create the XML and output it. When I browse to this page in Firefox, I see the output in <a href="#fig2">Figure 2</a>.
+</p>
+            
+                <br /><a name="fig2"><b>Figure 2. The XML from the read.php page</b></a><br />
+                <img alt="The XML from the read.php page" height="316" src="read_400_316.jpg" width="400"/>
+            <br />
+            <p>That finishes the server side of the equation. Now I need to put together a Dynamic Hyper Text Markup Language (DHTML) page that uses Ajax to use these PHP pages.
+</p>
+            <p><a name="N101E3"><span class="atitle">Building the client</span></a></p>
+
+            <p>The next thing to do is build a client that uses the PHP pages. I'll build it in three phases so you can follow along. The first version, in <a href="#listing8">Listing 8</a>, displays a control that shows the list of feeds.
+</p>
+            <br /><a name="listing8"><b>Listing 8. index2.html</b></a><br /><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">
+                
+&lt;html&gt; &lt;head&gt; &lt;title&gt;Ajax RSS Reader&lt;/title&gt;
+&lt;style&gt;
+body { font-family: arial, verdana, sans-serif; }
+&lt;/style&gt;
+&lt;script&gt;
+var g_homeDirectory = 'http://localhost/rss/';
+
+var req = null;
+function processReqChange( handler ) {
+  if (req.readyState == 4 &amp;&amp; req.status == 200 &amp;&amp; req.responseXML ) {
+    handler( req.responseXML ); }
+}
+
+function loadXMLDoc( url, handler ) {
+  if(window.XMLHttpRequest) {
+    try { req = new XMLHttpRequest(); } catch(e) { req = false; }
+  }
+  else if(window.ActiveXObject)
+  {
+    try { req = new ActiveXObject("Msxml2.XMLHTTP"); } catch(e) {
+    try { req = new ActiveXObject("Microsoft.XMLHTTP"); } catch(e) { req = false; } }
+  }
+
+  if(req) {
+    req.onreadystatechange = function() { processReqChange( handler ); };
+    req.open("GET", url, true);
+    req.send("");
+  }
+}
+
+function parseFeedList( dom ) {
+  var elfl = document.getElementById( 'elFeedList' );
+  elfl.innerHTML = '';
+
+  var nl = req.responseXML.getElementsByTagName( 'feed' );
+  for( var i = 0; i &lt; nl.length; i++ ) {
+    var nli = nl.item( i );
+    var id = nli.getAttribute( 'id' );
+    var link = nli.getAttribute( 'link' );
+    var name = nli.getAttribute( 'name' );
+
+    var elOption = document.createElement( 'option' );
+    elOption.value = id;
+    elOption.innerHTML = name;
+    elfl.appendChild( elOption );
+  }
+}
+
+function getFeedList()
+{
+  loadXMLDoc( g_homeDirectory+'list.php', parseFeedList );
+}
+&lt;/script&gt; &lt;/head&gt; &lt;body&gt;
+&lt;select id="elFeedList"&gt; &lt;/select&gt;
+&lt;script&gt; getFeedList(); &lt;/script&gt;
+&lt;/body&gt; &lt;/html&gt;
+</pre></td></tr></table><br />
+            <p>The page has one control on it, the <code>&lt;select&gt;</code> control. This control is filled by the <code>getFeedList</code> function that requests the list.php page from the server. When the page is loaded, the <code>parseFeedList</code> function adds the items to the <code>&lt;select&gt;</code> control.</p>
+            <p>When I browse to this in Firefox, I see the output in <a href="#fig3">Figure 3</a>.</p>
+            
+                <br /><a name="fig3"><b>Figure 3. The first version of the RSS reader</b></a><br />
+                <img alt="The first version of the RSS reader" height="346" src="index2_400_346.jpg" width="400"/>
+            <br />
+            <p>To get these first few feeds into the system, I use the MySQL interface to add them manually.</p>
+
+            <p>The next step is to display the content of the selected feed. <a href="#listing9">Listing 9</a> shows the upgraded code.</p>
+            <br /><a name="listing9"><b>Listing 9. index3.html</b></a><br /><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">
+                
+&lt;html&gt; &lt;head&gt; &lt;title&gt;Ajax RSS Reader&lt;/title&gt;
+&lt;style&gt;
+body { font-family: arial, verdana, sans-serif; }
+.title { font-size: 14pt; border-bottom: 1px solid black; }
+.title a { text-decoration: none; }
+.title a:hover { text-decoration: none; }
+.title a:visited { text-decoration: none; }
+.title a:active { text-decoration: none; }
+.title a:link { text-decoration: none; }
+.description { font-size: 9pt; margin-left: 20px; }
+&lt;/style&gt;
+&lt;script&gt;
+var g_homeDirectory = 'http://localhost/rss/';
+
+var req = null;
+function processReqChange( handler ) { ...  }
+
+function loadXMLDoc( url, handler ) { ...  }
+
+function parseFeed( dom ) {
+  var ela = document.getElementById( 'elArticles' );
+  ela.innerHTML = '';
+
+  var elTable = document.createElement( 'table' );
+  var elTBody = document.createElement( 'tbody' );
+  elTable.appendChild( elTBody );
+
+  var nl = req.responseXML.getElementsByTagName( 'article' );
+  for( var i = 0; i &lt; nl.length; i++ ) {
+    var nli = nl.item( i );
+    var title = nli.getAttribute( 'title' );
+    var link = nli.getAttribute( 'link' );
+    var description = nli.firstChild.nodeValue;
+
+    var elTR = document.createElement( 'tr' );
+    elTBody.appendChild( elTR );
+
+    var elTD = document.createElement( 'td' );
+    elTR.appendChild( elTD );
+
+    var elTitle = document.createElement( 'h1' );
+    elTitle.className = 'title';
+    elTD.appendChild( elTitle );
+
+    var elTitleLink = document.createElement( 'a' );
+    elTitleLink.href = link;
+    elTitleLink.innerHTML = title;
+    elTitleLink.target = '_blank';
+    elTitle.appendChild( elTitleLink );
+
+    var elDescription = document.createElement( 'p' );
+    elDescription.className = 'description';
+    elDescription.innerHTML = description;
+    elTD.appendChild( elDescription );
+  }
+
+  ela.appendChild( elTable );
+}
+
+function parseFeedList( dom ) {
+  var elfl = document.getElementById( 'elFeedList' );
+  elfl.innerHTML = '';
+
+  var nl = req.responseXML.getElementsByTagName( 'feed' );
+  var firstId = null;
+  for( var i = 0; i &lt; nl.length; i++ ) {
+    var nli = nl.item( i );
+    var id = nli.getAttribute( 'id' );
+    var link = nli.getAttribute( 'link' );
+    var name = nli.getAttribute( 'name' );
+
+    var elOption = document.createElement( 'option' );
+    elOption.value = id;
+    elOption.innerHTML = name;
+    elfl.appendChild( elOption );
+
+    if ( firstId == null ) firstId = id;
+  }
+  loadFeed( firstId );
+}
+
+function loadFeed( id ) { loadXMLDoc( g_homeDirectory+'read.php?id='+id, parseFeed ); }
+
+function getFeedList() { loadXMLDoc( g_homeDirectory+'list.php', parseFeedList ); }
+&lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;div style="width:600px;"&gt;
+&lt;select id="elFeedList" 
+  onchange="loadFeed( this.options[this.selectedIndex].value )"&gt; &lt;/select&gt;
+&lt;div id="elArticles"&gt; &lt;/div&gt;
+&lt;script&gt; getFeedList(); &lt;/script&gt;
+&lt;/div&gt; &lt;/body&gt; &lt;/html&gt;
+</pre></td></tr></table><br />
+            <p>I omitted the <code>processReqChange</code> and <code>loadXMLDoc</code> functions because they are the same as before. The new code is in the <code>loadFeed</code> and <code>parseFeed</code> functions that request data from the read.php page, parse it, and add it to the page.</p>
+            <p>
+                <a href="#fig4">Figure 4</a> shows the output of this page in Firefox.</p>
+            
+                <br /><a name="fig4"><b>Figure 4. The upgraded page that shows the article list</b></a><br />
+                <img alt="The upgraded page that shows the article list" height="347" src="index3_400_347.jpg" width="400"/>
+            <br />
+
+            <p>The next step is to finish the page with the ability to add a feed to the list through the add.php page. This final code for the page is in <a href="#listing10">Listing 10</a>.</p>
+            <br /><a name="listing10"><b>Listing 10. index.html</b></a><br /><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">
+                
+&lt;html&gt; &lt;head&gt; &lt;title&gt;Ajax RSS Reader&lt;/title&gt;
+&lt;style&gt;
+...
+&lt;/style&gt;
+&lt;script&gt;
+var g_homeDirectory = 'http://localhost/rss/';
+
+// The same transfer functions as before
+
+function addFeed()
+{
+  var url = prompt( "Url" );
+  loadXMLDoc( g_homeDirectory+'add.php?url='+escape( url ), parseAddReturn );
+  window.setTimeout( getFeedList, 1000 );
+}
+
+function loadFeed( id ) { loadXMLDoc( g_homeDirectory+'read.php?id='+id, parseFeed ); }
+
+function getFeedList() { loadXMLDoc( g_homeDirectory+'list.php', parseFeedList ); }
+&lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;div style="width:600px;"&gt;
+&lt;select id="elFeedList" onchange="loadFeed( this.options[this.selectedIndex].value )"&gt;
+&lt;/select&gt;
+&lt;input type="button" onclick="addFeed()" value="Add Feed..." /&gt;
+&lt;div id="elArticles"&gt; &lt;/div&gt;
+&lt;script&gt; getFeedList(); &lt;/script&gt;
+&lt;/div&gt; &lt;/body&gt; &lt;/html&gt;
+</pre></td></tr></table><br />
+            <p>Most of the code here is the same, but I have inserted a new <b>Add Feed...</b> button that opens a dialog box where you can insert a new URL into the feed list. To make it easy on myself, I have the browser wait for two seconds and then get the new feed list after the feed has been added.</p>
+            <p>
+                <a href="#fig5">Figure 5</a> shows the finished page.</p>
+            
+                <br /><a name="fig5"><b>Figure 5. The finished page</b></a><br />
+                <img alt="The finished page" height="313" src="index_400_313.jpg" width="400"/>
+            <br />
+
+            <p>Now this is pretty cool. But I'm not satisfied because the XMLHTTP security prevents me from taking the JavaScript code from this page and copying it onto someone else's blog so that anyone can look at the feeds. To do that, I need to re-engineer the services to use the <code>&lt;script&gt;</code> tag and the JavaScript Object Notation (JSON) syntax.</p>
+            <p><a name="N10295"><span class="atitle">Going from XML to JSON</span></a></p>
+
+            <p>For this article, I'm only going to allow the feeds to be viewed through the script syntax, although I really could go the whole way using script tags as the data transport mechanism. To get to the feeds, I first need the feed list encoded as JavaScript code. So I create a list_js.php page as shown in <a href="#listing11">Listing 11</a>.</p>
+            <br /><a name="listing11"><b>Listing 11. list_js.php</b></a><br /><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">
+                
+&lt;?php
+require_once 'rss_db.php';
+
+header( 'Content-type: text/javascript' );
+
+$rows = FeedList::getAll();
+
+$feeds = array();
+
+foreach( $rows as $row )
+{
+  $feed = "{ id:".$row['rss_feed_id'];
+  $feed .= ", link:'".$row['url']."'";
+  $feed .= ", name:'".$row['name']."' }";
+  $feeds []= $feed;
+}
+?&gt;
+setFeeds( [ &lt;?php echo( join( ', ', $feeds ) ); ?&gt; ] );
+</pre></td></tr></table><br />
+
+            <p>When I run this script on the command line, I see the output in <a href="#listing12">Listing 12</a>.</p>
+            <br /><a name="listing12"><b>Listing 12. Output from list_js.php</b></a><br /><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">
+                
+setFeeds( [
+{ id:1, link:'http://muttmansion.com/ds/index.xml', name:'Driving Sideways' },
+{ id:2, link:'http://slashdot.org/slashdot.rdf', name:'Slashdot' },
+{ id:3, link:'http://muttmansion.com/vl/index.xml', name:'Visible Light' },
+{ id:4, link:'http://muttmansion.com/sor/index.xml', name:'Socks on a Rooster' },
+{ id:5, link:'http://muttmansion.com/dd/index.xml', name:'Doxie Digest' },
+{ id:6, link:'http://rss.cnn.com/rss/cnn_topstories.rss', name:'CNN.com' },
+{ id:7, link:'http://rss.cnn.com/rss/cnn_world.rss', name:'CNN.com - World' },
+{ id:8, link:'http://rss.cnn.com/rss/cnn_us.rss', name:'CNN.com - U.S.' } ] );
+</pre></td></tr></table><br />
+            <p>This is conducive to a <code>&lt;script&gt;</code> tag. When the browser loads this, the <code>setFeeds</code> function is called with the list of the feeds. That, in turn, sets up the <code>&lt;select&gt;</code> control and loads the first feed.</p>
+            <p>I also need the equivalent of the <code>read.php</code> function that returns article data in JavaScript code instead of XML. <a href="#listing13">Listing 13</a> shows the read_js.php page.</p>
+            <br /><a name="listing13"><b>Listing 13. read_js.php</b></a><br /><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">
+                
+&lt;?php
+require_once 'rss_db.php';
+
+function js_clean( $str )
+{
+  $str = preg_replace( "/\'/", "", $str );
+  return $str;
+}
+
+FeedList::update();
+
+$id = array_key_exists( 'id', $_GET ) ? $_GET['id'] : 1;
+
+$rows = Feed::get( $id );
+
+$items = array();
+
+foreach( $rows as $row )
+{
+  $js = "{ title:'".js_clean($row['title'])."'";
+  $js .= ", link:'".js_clean($row['link'])."'";
+  $js .= ", description:'".js_clean($row['description'])."' }";
+  $items []= $js;
+}
+?&gt;
+addFeed( &lt;?php echo( $id ); ?&gt;,
+[ &lt;?php echo( join( ', ', $items ) ); ?&gt; ] );
+</pre></td></tr></table><br />
+
+            <p>Once again, after I run this script on the command line, I see the output in <a href="#listing14">Listing 14</a>.</p>
+            <br /><a name="listing14"><b>Listing 14. Output from read_js.php</b></a><br /><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">
+                
+addFeed( 1,
+[ { title:'War',
+  link:'http://www.muttmansion.com/ds/archives/002816.html',
+  description:'The...' }, ... ] );
+</pre></td></tr></table><br />
+
+            <p>I've truncated it here for brevity, but you get the point. The <code>addFeed</code> function is called with the ID of the feed and the article data encoded in JavaScript format.</p>
+
+            <p>With these new JavaScript-enabled services, I can now create a new page that uses the services. <a href="#listing15">Listing 15</a> shows this new page.</p>
+            <br /><a name="listing15"><b>Listing 15. script.html</b></a><br /><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">
+                
+&lt;html&gt; &lt;head&gt; &lt;title&gt;Script Component Test&lt;/title&gt;
+&lt;style&gt;
+...
+&lt;/style&gt;
+&lt;script&gt;
+var g_homeDirectory = 'http://localhost/rss/';
+
+function loadScript( url ) {
+  var elScript = document.createElement( 'script' );
+  elScript.src = url;
+  document.body.appendChild( elScript );
+}
+
+function addFeed( id, articles ) {
+  var ela = document.getElementById( 'elArticles' );
+  ela.innerHTML = '';
+
+  var elTable = document.createElement( 'table' );
+  var elTBody = document.createElement( 'tbody' );
+  elTable.appendChild( elTBody );
+
+  for( var a in articles ) {
+    var title = articles[a].title;
+    var link = articles[a].link;
+    var description = articles[a].description;
+
+	// Create elements as before...
+  }
+
+  ela.appendChild( elTable );
+}
+
+function setFeeds( feeds ) {
+  var elfl = document.getElementById( 'elFeedList' );
+  elfl.innerHTML = '';
+
+  var firstId = null;
+  for( var f in feeds ) {
+    var elOption = document.createElement( 'option' );
+    elOption.value = feeds[f].id;
+    elOption.innerHTML = feeds[f].name;
+    elfl.appendChild( elOption );
+
+    if ( firstId == null ) firstId = feeds[f].id;
+  }
+  loadFeed( firstId );
+}
+
+function loadFeed( id ) { loadScript( g_homeDirectory+'read_js.php?id='+id ); }
+
+function getFeedList() { loadScript( g_homeDirectory+'list_js.php' ); }
+&lt;/script&gt; &lt;/head&gt; &lt;body&gt;
+&lt;div class="rssControl"&gt; &lt;div class="rssControlTitle"&gt;
+&lt;select id="elFeedList" 
+  onchange="loadFeed( this.options[this.selectedIndex].value )"&gt;
+&lt;/select&gt; &lt;/div&gt; &lt;div id="elArticles"&gt; &lt;/div&gt; &lt;/div&gt;
+&lt;script&gt; getFeedList(); &lt;/script&gt;
+&lt;/body&gt; &lt;/html&gt;
+</pre></td></tr></table><br />
+
+            <p>This page is similar to the original index.html page. However, instead of using the <code>loadXMLDoc</code> function, I use a new function, called <code>loadScript</code>, that creates a <code>&lt;script&gt;</code> tag dynamically. The <code>&lt;script&gt;</code> tag then loads the JavaScript code from the specified URL.</p>
+
+            <p>These script tags call the read_js.php and list_js.php pages. These pages, in turn, create JavaScript code that calls back to the <code>setFeeds</code> and <code>addFeed</code> functions in the host page.</p>
+            <p>When I go to the page, my browser displays what is in <a href="#fig6">Figure 6</a>.</p>
+            
+                <br /><a name="fig6"><b>Figure 6. The RSS reader that uses &lt;script&gt; tags for the data</b></a><br />
+                <img alt="The RSS reader that uses &lt;script&gt; tags for the data" height="372" src="script_400_372.jpg" width="400"/>
+            <br />
+            <p>The big advantage of this code is that anyone can use the <b>View Source</b> command to view the script from the page and copy the code into their own pages. Then their pages will use the PHP services that return JavaScript code to update the page.</p>
+            <p><a name="N10345"><span class="atitle">Conclusion</span></a></p>
+            <div class="ibm-container ibm-alt-header dw-container-sidebar"><a name="demo"></a><h2>See the RSS reader at work</h2><div class="ibm-container-body">
+                
+                <p>
+                    <a href="http://download.boulder.ibm.com/ibmdl/pub/software/dw/richmedia/xml/x-ajaxrss/ajax_rss.swf" onClick="window.open('http://download.boulder.ibm.com/ibmdl/pub/software/dw/richmedia/xml/x-ajaxrss/ajax_rss.swf', 'demo', 'resizable=yes,height=800,width=600,innerHeight=602,innerWidth=785,status=yes,scrollbars=yes'); return false" target="demo">
+                        <img alt="Show me" border="0" height="16" src="http://www.ibm.com/i/v14/icons/video.gif" width="16"/>Show me</a>.</p>
+                <p>Download  <a href="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash">Adobe Flash Player</a>.</p>
+                <p>See more about <a href="#demos">animated demos</a>.</p>
+            </div></div>
+            <p>In this article, I demonstrated how to use two different techniques to access data dynamically from a Web page to create an RSS reader on the page. Hopefully, you can use the concepts and code provided here to enrich your own application without having to entirely retool your code. That's the real value of Ajax -- if you are familiar with Web technologies, it's a snap to upgrade the interactivity of your page with a few new services on the server side and a little code on the client side.</p>
+            <p><a name="demos"><span class="atitle">Animated demos</span></a></p>
+            <p>If this is your first encounter with a developerWorks article that includes demos, here are a few things you might want to know: </p>
+            <p>
+Demos are an optional way to see the same steps described in the tutorial. To see an animated demo, click the Show me link. The demo opens in a new browser window. 
+Each demo contains a navigation bar at the bottom of the screen. Use the navigation bar to to pause, exit, rewind, or fast forward portions of the demo. 
+The demos are 800 x 600 pixels. If this is the maximum resolution of your screen or if your resolution is lower than this, you will have to scroll to see some areas of the demo. JavaScript must be enabled in your browser and Macromedia Flash Player 6 or higher must be installed.</p>
+            <p>Download <a href="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash">Adobe Flash Player</a>.</p>
+        <!-- CMA ID: 111288 --> <!-- Site ID: 1 --><!--XSLT stylesheet used to transform this file: dw-document-html-6.0.xsl-->
+<br /><div class="ibm-alternate-rule"><hr/></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><span class="atitle"><a name="download">Download</a></span></p><table width="100%" class="ibm-data-table" cellspacing="0" cellpadding="0" border="0"><tr><th scope="col">Description</th><th scope="col">Name</th><th scope="col">Size</th><th scope="col">Download method</th></tr><tr><td class="tb-row" scope="row">Source code</td><td nowrap="nowrap">x-ajaxrss-code.zip</td><td nowrap="nowrap">8KB</td><td nowrap="nowrap"><a class="fbox" href="http://www.ibm.com/developerworks/apps/download/index.jsp?contentid=111288&amp;filename=x-ajaxrss-code.zip&amp;method=http&amp;locale=worldwide">
+                    
+                    HTTP
+                    </a></td></tr></table><p><a href="/developerworks/library/whichmethod.html" class="ibm-forward-link">Information about download methods</a></p><br />
+<p><a name="resources"><span class="atitle">Resources</span></a></p><p><b>Learn</b></p><ul><li>Read about <a href="http://en.wikipedia.org/wiki/Ajax_%28programming%29">Ajax</a> on Wikipedia's good page.<br /><br /></li><li>Get <a href="http://www.ibm.com/developerworks/library/x-ajaxslideshow/">Rich Ajax slide shows with DHTML and XML</a> quickly; learn how to dynamically create an animated, client-side slide show in this article by the author (developerWorks, April 2006).<br /><br /></li><li>Check out the <a href="http://web.resource.org/rss/1.0/">RSS 1.0 standard</a>.<br /><br /></li><li>Learn about the <a href="http://www.w3.org/RDF/">Resource Description Framework (RDF)</a>, which is closely related to RSS.<br /><br /></li><li>Visit the <a href="http://www.ibm.com/developerworks/xml/">developerWorks XML zone</a> to find more resources for XML developers.<br /><br /></li></ul><p><b>Get products and technologies</b></p><ul><li>Visit the <a href="http://php.net">PHP home page</a>, a great place to learn about PHP.<br /><br /></li><li>Build your next development project with <a href="http://www.ibm.com/developerworks/downloads/?S_TACT=105AGX06&amp;S_CMP=art">IBM trial software</a>, available for download directly from developerWorks.<br /><br /></li></ul><p><b>Discuss</b></p><ul><li>Check out <a href="http://www.ajaxian.com/">ajaxian</a>, an excellent blog that tracks developments in Ajax applications.<br /><br /></li><li>Participate in <a href="http://www.ibm.com/developerworks/blogs/">developerWorks blogs</a> and get involved in the developerWorks community.<br /><br /></li></ul>
+<p><a name="author"><span class="atitle">About the author</span></a></p><div class="ibm-container ibm-portrait-module ibm-alternate-two"><div class="ibm-container-body"><p><a name="author1"></a>A senior software engineer with more than 20 years of experience, Jack Herrington is the author of three books: <i>
+                    <a href="http://www.codegeneration.net/cgia">Code Generation in Action</a>, <a href="http://www.oreilly.com/catalog/podcastinghks/">Podcasting Hacks</a>,</i> and <i>
+                    <a href="http://www.oreilly.com/catalog/phphks/">PHP Hacks</a>.</i> He is also the author of more than 30 articles. You can contact him at <a href="mailto:jherr@pobox.com?cc=dwxed@us.ibm.com">jherr@pobox.com</a>.</p></div></div>
+<!-- MAIN_COLUMN_CONTENT_END -->
+
+<!-- OVERLAYS_START -->
+<!-- Report_Abuse_Start -->
+<div class="ibm-common-overlay ibm-no-print" id="reportabuseoverlay">
+   <div class="ibm-head"><p><a class="ibm-common-overlay-close" href="#">Close [x]</a></p></div>
+   <div class="ibm-body">
+      <div class="ibm-main">
+         <a class="ibm-access" name="reportabuseoverlay">Report abuse help</a>   
+         <div class="ibm-title"><h1>Report abuse</h1></div>
+         <div class="ibm-container ibm-alternate">
+            <p><strong>Thank you.</strong>  This entry has been flagged for moderator attention.</p>
+            <div class="ibm-overlay-rule"><hr /></div>
+            <div class="ibm-buttons-row">
+               <input type="button" onclick="ibmCommon.Overlays.hide('reportabuseoverlay');return false;" class="ibm-btn-cancel-sec dw-btn-cancel-sec" name="ibm-cancel" value="Close" />
+            </div>
+         </div>
+      </div> 
+   </div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Report_Abuse_Error_Start -->
+<div class="ibm-common-overlay ibm-no-print" id="reportabuseoverlayerror">
+   <div class="ibm-head"><p><a class="ibm-common-overlay-close" href="#">Close [x]</a></p></div>
+   <div class="ibm-body">
+      <div class="ibm-main">
+         <a class="ibm-access" name="reportabuseoverlayerror">Report abuse help</a>   
+         <div class="ibm-title"><h1>Report abuse</h1></div>
+         <div class="ibm-container ibm-alternate">
+            <p class="ibm-ind-error"><strong>Report abuse submission failed.  Please try again later.</strong></p>
+            <div class="ibm-overlay-rule"><hr /></div>
+            <div class="ibm-buttons-row">
+               <input type="button" onclick="ibmCommon.Overlays.hide('reportabuseoverlayerror');return false;" class="ibm-btn-cancel-sec dw-btn-cancel-sec" name="ibm-cancel" value="Close" />
+            </div>
+         </div>
+      </div> 
+   </div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Sign in OVERLAY STARTS HERE --> 
+<div id="fdiv"></div>
+<div class="ibm-common-overlay" id="signin_overlay">
+<div class="ibm-head">
+<p><a class="ibm-common-overlay-close" href="#" onclick="clearForm();">Close [x]</a></p>
+</div>
+<div class="ibm-body">
+<div class="ibm-main">
+<div class="ibm-title ibm-subtitle">
+<h1>developerWorks: Sign in</h1>
+<div id="ibm-overlay-error-signin" class="no-display"></div>
+</div>
+
+<div class="ibm-container ibm-alternate ibm-buttons-last">
+<div class="ibm-container-body">
+<p class="ibm-overlay-intro">If you do not have an IBM ID and password, <a href="#" onclick="(function () {window.location='/developerworks/dwwi/DWAuthRouter?m=reg&amp;d='+encodeURIComponent(location.href);})();">register here</a>.</p>
+<form class="ibm-column-form" id="sFormId" action="" method="post" name="sForm" onsubmit="return false;">
+<p><label for="ibmid">IBM ID:</label><span><input name="ibm-id" id="ibmid" size="25" value="" class="required" type="text" onkeypress="handleEP(event,this.form);" /><br /><a class="ibm-forward-link" href="/developerworks/dwwi/jsp/WSHelp.jsp?lang=en_US">Forgot your IBM ID?</a></span>   
+</p> 
+<p><label for="password">Password:</label><span><input name="password" id="password" size="25" value="" class="required" type="password" onkeypress="handleEP(event,this.form);" /><br /><a class="ibm-forward-link" href="#" onclick="(function () {window.location='https://www.ibm.com/account/profile?page=forgot&amp;lang=en_US&amp;appname=ibm&amp;required=null&amp;d='+encodeURIComponent(getAuthUrl())+'%3Fm%3Dloginpage%26lang%3Den_US%26d%3D'+encodeURIComponent(location.href);})();">Forgot your password?</a><br /><a class="ibm-forward-link" href="#" onclick="(function () {window.location='https://www.ibm.com/account/profile?page=chpw&amp;lang=en_US&amp;appname=ibm&amp;required=null&amp;d='+encodeURIComponent(location.href);})();">Change your password?</a></span></p> 
+<p class="no-bottom-padding"> 
+   <label for="AfterSignIn">After sign in:</label> 
+   <span>
+
+      <select name="SignInAction" id="AfterSignIn">
+          <option value="">Stay on the current page</option>
+          <option value="/developerworks/mydeveloperworks/profiles/html/myProfileView.do">Go to My developerWorks profile</option>
+          <option value="/developerworks/mydeveloperworks/homepage/">Go to My developerWorks homepage</option>
+      </select>
+   </span>
+</p>
+<div class="ibm-overlay-rule"><hr /></div>
+<p>By clicking <strong>Submit</strong>, you agree to the developerWorks <a href="/developerworks/mydeveloperworks/terms?lang=en">terms of use</a>.</p>
+<div class="ibm-buttons-row">
+   <p><input class="ibm-btn-arrow-pri" name="ibm-submit" value="Submit" onclick="signin();return false;" type="button" /><span class="ibm-sep">&nbsp;</span>
+<input value="Cancel" type="button" name="ibm-cancel" class="ibm-btn-cancel-sec" onclick="clearForm();ibmCommon.Overlays.hide('signin_overlay');return false;"/></p>
+</div>
+</form>
+<div class="ibm-overlay-rule"><hr /></div>
+<p>The first time you sign into developerWorks, a My developerWorks profile is created for you. This profile includes the first name, last name, and display name contained in the profile you created when you registered with My developerWorks. Selected information in your My developerWorks profile is displayed to the public, but you may edit the information at any time. Your first name, last name (unless you choose to hide them), and display name will accompany the content that you post. </p>
+<div class="dw-overlay-legal"><p>All information submitted is secure.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Sign in OVERLAY ENDS HERE --> 
+ 
+
+<!-- Display name OVERLAY STARTS HERE --> 
+<div class="ibm-common-overlay" id="displayname_overlay">
+<div class="ibm-head">
+<p><a class="ibm-common-overlay-close" href="#" onclick="clearForm();">Close [x]</a></p>
+</div>
+<div class="ibm-body">
+<div class="ibm-main">
+<div class="ibm-title ibm-subtitle">
+<h1>Choose your display name</h1>
+<div id="ibm-overlay-error-dname" class="no-display"></div>
+</div>
+<div class="ibm-container ibm-alternate ibm-buttons-last">
+<div class="ibm-container-body">
+<p class="ibm-overlay-intro">The first time you sign in to developerWorks a profile is created for you, so you need to choose a display name.  Your display name accompanies the content you post on developerWorks.</p>
+
+<form id="dFormId" method="post" action="" name="dForm" onsubmit="return false;" class="ibm-column-form">
+<p><label for="displayname">Display name:</label><span><input name="displayname" id="displayname" size="25" value="" type="text" onkeypress="handleEP(event,this.form);" /></span><span class="ibm-form-note">(Must be between 3 &ndash; 31 characters.)</span>
+</p>
+<p><strong>Note:</strong>  Please choose a display name between 3-31 characters. Your display name must be unique in the developerWorks community and should not be your email for privacy reasons.</p>
+<div class="ibm-overlay-rule"><hr />
+</div>
+<p>By clicking Submit, you agree to the developerWorks <a href="/developerworks/mydeveloperworks/terms?lang=en">terms of use</a>.</p>
+<div class="ibm-buttons-row">
+   <p><input class="ibm-btn-arrow-pri" name="ibm-submit" value="Submit" onclick="signin();return false;" type="button" /><span class="ibm-sep">&nbsp;</span>
+<input value="Cancel" type="button" name="ibm-cancel" class="ibm-btn-cancel-sec" onclick="clearForm();ibmCommon.Overlays.hide('displayname_overlay');return false;" /></p>
+</div>
+</form>
+<div class="ibm-overlay-rule"><hr /></div>
+<div class="dw-overlay-legal"><p>All information submitted is secure.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Display name OVERLAY ENDS HERE -->
+<!-- OVERLAYS_END -->
+
+<!-- RATINGS START -->
+<p class="ibm-no-print"><span class="atitle"><a name="iratings">Rate this article</a></span></p>
+<input id="art-rating" name="ratinga" type="hidden" value="0"/><div id="art-rating-module"></div>
+<script language="JavaScript" type="text/javascript">
+// <![CDATA[
+   // widget div id and article id as args
+   window.artRating.init('art-rating-module','art-rating-summary');
+// ]]>
+</script>
+<!-- RATINGS END -->
+
+<!-- INLINE_COMMENTS_START -->
+<p class="ibm-no-print"><span class="atitle"><a name="icomments">Comments</a></span></p>
+<script language="JavaScript" src="//dw1.s81c.com/developerworks/js/showcomments.js" type="text/javascript">//</script>
+<div id="threadShow"></div>
+<script language="JavaScript" type="text/javascript">
+// <![CDATA[
+ jQuery('threadShow').showComments('95%',5,'nCmts','icomments');
+// ]]>
+</script>
+<!-- INLINE_COMMENTS_END -->
+
+<p class="ibm-ind-link ibm-back-to-top"><a class="ibm-anchor-up-link" href="#ibm-pcon">Back to top</a></p>
+<p><a href="http://www.ibm.com/developerworks/ibm/trademarks/">Trademarks</a> &nbsp;|&nbsp; <a href="https://www.ibm.com/developerworks/mydeveloperworks/terms/">My developerWorks terms and conditions</a></p>
+
+<!-- Overlays -->
+<!-- Zone/Leaf_Interest_Overlay_Start -->
+<div class="ibm-common-overlay ibm-no-print" id="dwmyinterestadd">
+<div class="ibm-head"><p><a class="ibm-common-overlay-close" href="#close">Close [x]</a></p></div>
+<div class="ibm-body">
+<div class="ibm-main">
+<a class="ibm-access" name="dwmyinterestaddhelp">Help: Update or add to My dW interests</a>   
+<div class="ibm-title"><h1>What's this?</h1></div>
+<div class="ibm-container ibm-alternate">
+<p>This little timesaver lets you update your My developerWorks profile with just one click!  The general subject of this content (AIX and UNIX, Information Management, Lotus, Rational, Tivoli, WebSphere, Java, Linux, Open source, SOA and Web services, Web development, or XML) will be added to the interests section of your profile, if it's not there already.  You only need to be logged in to My developerWorks.</p>
+<p>And what's the point of adding your interests to your profile?  That's how you find other users with the same interests as yours, and see what they're reading and contributing to the community.  Your interests also help us recommend relevant developerWorks content to you.</p>
+<p><a href="https://www.ibm.com/developerworks/mydeveloperworks/profiles/home.do?lang=en">View your My developerWorks profile</a></p>
+<p class="ibm-access"><a href="#interestShow">Return from help</a></p>
+</div> 
+</div>
+</div>
+<div class="ibm-footer"></div>
+</div>
+
+<div class="ibm-common-overlay ibm-no-print" id="dwmyinterestremove">
+<div class="ibm-head"><p><a class="ibm-common-overlay-close" href="#close">Close [x]</a></p></div>
+<div class="ibm-body">
+<div class="ibm-main">
+<a class="ibm-access" name="dwmyinterestremovehelp">Help: Remove from My dW interests</a> 
+<div class="ibm-title"><h1>What's this?</h1></div>
+<div class="ibm-container ibm-alternate">
+<p>Removing this interest does not alter your profile, but rather removes this piece of content from a list of all content for which you've indicated interest.  In a future enhancement to My developerWorks, you'll be able to see a record of that content.</p>
+<p><a href="https://www.ibm.com/developerworks/mydeveloperworks/profiles/home.do?lang=en">View your My developerWorks profile</a></p>
+<p class="ibm-access"><a href="#interestShow">Return from help</a></p>
+</div> 
+</div>
+</div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Zone/Leaf_Interest_Overlay_End --></div>
+<!-- MAIN_COLUMN_CONTAINER_END -->
+
+<!-- Rating_Meta_BEGIN -->
+<!--Rating_Meta_BEGIN--><div class="metavalue">static.content.url=http://www.ibm.com/developerworks/js/artrating/</div><div class="metavalue">SITE_ID=1</div><div class="metavalue">Zone=XML, Open source, Web development</div><div class="metavalue">ArticleID=111288</div><div class="metavalue">ArticleTitle=Ajax RSS reader</div><div class="metavalue">publish-date=04032007</div><div class="metavalue">author1-email=jherr@pobox.com</div><div class="metavalue">author1-email-cc=dwxed@us.ibm.com</div><script language="javascript" type="text/javascript">document.write('<div class="metavalue">url='+location.href.replace('<', '%3C')+'</div>');</script><!--Rating_Meta_END-->
+<!-- Rating_Meta_END -->
+
+</div>
+<!-- MAIN_COLUMN_END-->
+
+<!-- RIGHT_COLUMN_BEGIN -->
+<div id="ibm-content-sidebar">
+<div id="ibm-social-tools-sidebar" class="ibm-share-this"></div>
+
+<!-- RIGHT_COLUMN_CONTENT_BEGIN --> 
+<div class="ibm-container"><h2>Table of contents</h2><div class="ibm-container-body"><img alt="" height="1" width="1" src="//www.ibm.com/i/c.gif"/><ul class="ibm-bullet-list"><li><a class="ibm-feature-link" href="#N10085">Building the server side</a></li><li><a class="ibm-feature-link" href="#N101E3">Building the client</a></li><li><a class="ibm-feature-link" href="#N10295">Going from XML to JSON</a></li><li><a class="ibm-feature-link" href="#N10345">Conclusion</a></li><li><a class="ibm-feature-link" href="#demos">Animated demos</a></li><li><a class="ibm-feature-link" href="#download">Download</a></li><li><a class="ibm-feature-link" href="#resources">Resources</a></li><li><a class="ibm-feature-link" href="#author">About the author</a></li><li><a class="ibm-feature-link" href="#icomments">Comments</a></li></ul></div></div>
+<!--XSLT stylesheet used to transform this content: s-nextsteps.xsl--><div class="ibm-container"><h2>Next steps from IBM</h2><div class="ibm-container-body"><img width="188" height="58" border="0" alt="" src="//www.ibm.com/developerworks/i/spot-nextsteps.jpg"/><p>Create rich Internet applications using WebSphere Portal Express Web 2.0
+   technologies.</p><div class="ibm-rule"><hr/></div><ul class="ibm-bullet-list"><li><a href="http://www.ibm.com/developerworks/downloads/ls/wpe/" class="ibm-feature-link">Try: WebSphere Portal Express</a></li><li><a href="http://www.ibm.com/developerworks/websphere/library/techarticles/0606_bishop/0606_bishop.html" class="ibm-feature-link">Article: Get started using Ajax and WebSphere Portal Express</a></li><li><a href="http://www.ibm.com/developerworks/websphere/library/tutorials/0608_bishop/0608_bishop.html" class="ibm-feature-link">Tutorial: Quickly build a an Ajax-enabled WebSphere Portal Express Web application</a></li><li><a href="http://www.ibm.com/developerworks/offers/lp/demos/summary/ajax.html" class="ibm-feature-link">Demo: Architecture, design, and construction using the IBM Rational Software Delivery Platform: AJAX</a></li><li><a href="http://www.ibm.com/software/genservers/portalexpress/portalexpress-popup.html" class="ibm-feature-link">Buy: WebSphere Portal Express</a></li></ul></div></div>
+<!--XSLT stylesheet used to transform this content: s-community.xsl--><div class="ibm-container"><h2>My developerWorks community</h2><div class="ibm-container-body"><p>Interact, share, and communicate with developers worldwide.</p><div class="ibm-rule"><hr/></div><ul class="ibm-bullet-list"><li><a href="https://www.ibm.com/developerworks/mydeveloperworks/homepage/web/getuserpref?ca=dma-" class="ibm-feature-link">My Home</a></li><li><a href="https://www.ibm.com/developerworks/mydeveloperworks/profiles/home.do?lang=en&amp;ca=dma-" class="ibm-feature-link">Profiles</a></li><li><a href="https://www.ibm.com/developerworks/mydeveloperworks/groups/service/html/allcommunities?ca=dma-" class="ibm-feature-link">Groups</a></li><li><a href="https://www.ibm.com/developerworks/mydeveloperworks/blogs/?ca=dma-" class="ibm-feature-link">Blogs</a></li><li><a href="https://www.ibm.com/developerworks/mydeveloperworks/bookmarks/?ca=dma-" class="ibm-feature-link">Bookmarks</a></li><li><a href="https://www.ibm.com/developerworks/mydeveloperworks/activities/service/html/mainpage?ca=dma-" class="ibm-feature-link">Activities</a></li><li><a href="http://www.ibm.com/developerworks/mydeveloperworks/files?ca=dma-" class="ibm-feature-link">Files</a></li><li><a href="http://www.ibm.com/developerworks/mydeveloperworks/wikis?ca=dma-" class="ibm-feature-link">Wikis</a></li><li><a href="http://www.ibm.com/developerworks/forums/?ca=dma-" class="ibm-feature-link">Forums</a></li><li><a href="http://www.ibm.com/developerworks/podcast/?ca=dma-" class="ibm-feature-link">Podcasts</a></li></ul><div class="ibm-rule"><hr/></div><p class="ibm-ind-link"><a href="https://www.ibm.com/developerworks/mydeveloperworks/?ca=dma-" class="ibm-forward-link">My developerWorks overview</a></p></div></div>
+<!-- Tagging_Start -->
+<div id="dw-tag-cloud-container" class="ibm-container dw-hidetag"><h2>Tags</h2>
+<div id="dw-tag-help"><a class="dwauthor" rel="#tagtip" id="dwtagtip"><img alt="Help" height="16" width="16" align="top" src="//dw1.s81c.com/developerworks/i/help_icon.gif"/></a></div>
+<div id="tagtip" class="dwauthor-onload-state ibm-no-print">Use the <strong>search field</strong> to find all types of content in My developerWorks with that tag.<p>Use the <strong>slider bar</strong> to see more or fewer tags.</p><p>For articles in technology zones (such as Java technology, Linux, Open source, XML), <strong>Popular tags</strong> shows the top tags 
+for <em>all technology zones</em>.  For articles in product zones (such as Info Mgmt, Rational, WebSphere), <strong>Popular tags</strong> shows the top tags for <em>just that product zone</em>.</p><p>For articles in technology zones (such as Java technology, Linux, Open source, XML), <strong>My tags</strong> shows your tags for <em>all technology zones</em>.  For articles in product zones (such as Info Mgmt, Rational, WebSphere), <strong>My tags</strong> shows your tags for <em>just that product zone</em>.</p></div>
+<div class="ibm-access">Use the search field to find all types of content in My developerWorks with that tag.  <em>Popular tags</em> shows the top tags for this particular content zone (for example, Java technology, Linux, WebSphere).  <em>My tags</em> shows your tags for this particular content zone (for example, Java technology, Linux, WebSphere).</div>
+<div class="ibm-container-body">
+<div class="dw-tag-search"><form action="//www.ibm.com/developerworks/mydeveloperworks/bookmarks/html?lang=en" method="get" id="actualtagform" onsubmit="popupform(this, 'join')">
+<p><label for="tagfield"><strong>Search all tags</strong></label><input id="tagfield" name="tag" type="text" maxlength="20" size="17" />&nbsp;<input src="//dw1.s81c.com/i/v16/buttons/short-btn.gif" type="image" class="ibm-btn-view" alt="submit search" title="submit search" value="Search" /></p></form></div>
+<div class="ibm-rule"><hr/></div>
+<div id="dw-tag-select">
+<div id="dw-tag-select-popular"><p><strong>Popular article tags</strong>&nbsp;|&nbsp;<br /><a id="a-my" href="javascript:;">My article tags</a><a href="#dw-tag-access" class="ibm-access">Skip to tags list</a></p></div>
+<div id="dw-tag-select-my" class="dw-hidetag"><p><a id="a-popular" href="javascript:;">Popular article tags</a>&nbsp;|&nbsp;<br /><strong>My article tags</strong></p><a href="#dw-tag-access" class="ibm-access">Skip to tags list</a></div>
+<div id="dw-tag-cloud"></div>  
+</div>   
+</div>
+</div>
+<!-- Tagging_End -->
+<!-- Dig_Deeper -->
+<div class="ibm-container"><h2>Dig deeper into XML on developerWorks</h2><div class="ibm-container-body"><ul class="ibm-link-list"><li class="ibm-first"><a href="http://www.ibm.com/developerworks/xml/" class="ibm-forward-link">Overview</a></li><li><a href="http://www.ibm.com/developerworks/xml/newto/" class="ibm-forward-link">New to XML</a></li><li><a href="http://www.ibm.com/developerworks/views/xml/downloads.jsp" class="ibm-forward-link">Downloads and products</a></li><li><a href="http://www.ibm.com/developerworks/views/xml/projects.jsp" class="ibm-forward-link">Open source projects</a></li><li><a href="http://www.ibm.com/developerworks/xml/standards/" class="ibm-forward-link">Standards</a></li><li><a href="http://www.ibm.com/developerworks/views/xml/library.jsp" class="ibm-forward-link">Technical library (articles, tutorials, and more)</a></li><li><a href="http://www.ibm.com/developerworks/xml/training/" class="ibm-forward-link">Training</a></li><li><a href="http://www.ibm.com/developerworks/forums/dw_xforums.jsp" class="ibm-forward-link">Forums</a></li><li><a href="http://www.ibm.com/developerworks/views/xml/events.jsp" class="ibm-forward-link">Events</a></li><li><a href="http://www.ibm.com/developerworks/newsletter/" class="ibm-forward-link">Newsletter</a></li></ul></div></div>
+<!-- High_Visibility_Offer -->
+<!--XSLT stylesheet used to transform this content: s-highvisibilityoffer.xsl--><div class="ibm-container"><h2>Stay ahead of the latest cloud trends</h2><div class="ibm-container-body"><img width="188" height="70" border="0" alt="Stay ahead of the latest cloud trends" src="//www.ibm.com/developerworks/i/hivis-w-cloudzone.jpg"/><p class="ibm-ind-link"><a href="https://www.ibm.com/developerworks/cloud/index.html?ca=dti-cloudzone" class="ibm-forward-link">Cloud Computing resources from developerWorks</a></p></div></div>
+<!-- Special_Offers -->
+<div class="ibm-container"><h2>Special offers</h2><div class="ibm-container-body"><p class="dw-special-offers"><a href="https://www-304.ibm.com/partnerworld/wps/servlet/ContentHandler/2011_beacon_awards_developerworks.html?ca=dti-dwbeacon"><img src="//www.ibm.com/developerworks/i/tile_v16_beacon2010.gif" width="158" height="50" border="0" alt="Partner Award Most Innovative use of dW" /></a></p><p class="dw-special-offers"><a href="http://www.ibm.com/developerworks/downloads/?ca=dti-rdownload#rational"><img src="//www.ibm.com/developerworks/i/tile_v16_r-download.gif" width="158" height="50" border="0" alt="Download and evaluate Rational software" /></a></p><p class="dw-special-offers"><a href="http://www.ibm.com/developerworks/views/linux/libraryview.jsp?type_by=Tutorials&amp;ca=dti-linuxtutorial"><img src="//www.ibm.com/developerworks/i/tile_v16_learnfast-l.gif" width="158" height="50" border="0" alt="Learn fast with free IBM Linux tutorials" /></a></p><div class="ibm-rule"><hr/></div><p class="ibm-ind-link"><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/downloads/?ca=dti-tilemoreoffers">Trial software offers</a></p></div></div>
+<!-- RIGHT_COLUMN_CONTENT_END -->
+
+</div>
+<!-- RIGHT_COLUMN_END -->
+
+<!-- CONTENT_BODY_END -->
+</div>
+
+</div>
+<!-- CONTENT_END -->
+
+ <!-- END_IBM-PCON -->
+</div>
+
+<!-- FOOTER_BEGIN -->
+<div id="ibm-page-tools">
+<!-- IBM page tools container -->
+</div>
+<div id="ibm-footer">
+<ul>
+<li class="ibm-first"><a href="http://www.ibm.com/ibm/">About IBM</a></li>
+<li><a href="http://www.ibm.com/privacy/">Privacy</a></li>
+<li><a href="http://www.ibm.com/contact/">Contact</a></li>
+<li><a href="http://www.ibm.com/legal/">Terms of use</a></li>
+</ul>
+</div>
+<!-- FOOTER_END -->
+
+ <!-- END_IBM-TOP -->
+</div>
+ 
+ <!-- SCRIPTS_INCLUDE_BEGIN -->
+<!-- JQuery start -->
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/jquery/cluetip98/jquery.dimensions-1.2.js"></script>
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/jquery/cluetip98/jquery.hoverIntent.minified.js"></script>
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/jquery/cluetip98/jquery.cluetip.js"></script>
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/jquery/tagging/ui.core-1.7.1.js"></script>
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/jquery/tagging/ui.slider-1.7.1.js"></script>
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/jquery/tagging/dwjquerytags.js"></script>
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/si/flash-detect.js"></script>
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/si/dwsi.js"></script>
+<script type="text/javascript" language="JavaScript">
+	jQuery.noConflict();     
+	// Put all your code in your document ready area
+	jQuery(document).ready(function(jQuery) {
+	// Do jQuery stuff using jQuery 
+	jQuery('a.dwauthor').cluetip({
+		local: true,
+		showTitle: false,
+		positionBy: 'bottomTop',
+		sticky: true,	
+		mouseOutClose: true,
+		closeText: '<img src="//dw1.s81c.com/developerworks/js/jquery/cluetip98/i/x.gif" alt="Close" />',
+		arrows: false,
+		dropShadow: true,
+		cluetipClass: 'dwbasic'
+		});
+
+		//tagging
+		login="false";
+		userid="";
+		whichTags = "init";
+		pCont = "";
+		mCont = "";
+		signInMCont = "";
+		accessCont = "";
+		pValue = 0;
+		mValue = 0;
+
+		rBHash = null;
+		rBHash = new Object();
+		rBHash['viperLang'] = 'en';
+		rBHash['urlLang'] = 'en';
+		rBHash['tagThisWinTitle'] = 'Tagit';
+		rBHash['pTags1'] = 'Popular tags';
+		rBHash['pTags2'] = 'End of Popular tags';
+		rBHash['mTags1'] = 'My tags';
+		rBHash['mTags2'] = 'End of My tags';
+		rBHash['alt1'] = 'Loading Content';
+		rBHash['noATags'] = 'No active tags';
+		rBHash['signIn1'] = 'Please ';
+		rBHash['signIn2'] = 'sign in';
+		rBHash['signIn3'] = ' to access';
+		rBHash['signIn4'] = 'My Tags';
+		rBHash['signIn5'] = 'To access My Tags, please ';
+		rBHash['signIn6'] = 'sign in';
+		rBHash['signIn7'] = 'Read Popular tags';
+
+		zoneHash = new Object();
+		zoneHash['aix'] = 'AIX and UNIX zone';
+		zoneHash['data'] = 'Information Management zone';
+		zoneHash['lotus'] = 'Lotus zone';
+		zoneHash['rational'] = 'Rational zone';
+		zoneHash['tivoli'] = 'Tivoli zone';
+		zoneHash['websphere'] = 'WebSphere zone';
+		zoneHash['architecture'] = 'Technical library';
+		zoneHash['autonomic'] = 'Technical library';
+		zoneHash['java'] = 'Technical library';
+		zoneHash['cloud'] = 'Technical library';
+		zoneHash['industry'] = 'Technical library';
+		zoneHash['library'] = 'Technical library';
+		zoneHash['linux'] = 'Technical library';
+		zoneHash['opensource'] = 'Technical library';
+		zoneHash['power'] = 'Technical library';
+		zoneHash['webservices'] = 'Technical library';
+		zoneHash['web'] = 'Technical library';
+		zoneHash['xml'] = 'Technical library';
+		zoneHash['wireless'] = 'Technical library';
+		jQuery.checkRB();
+		jQuery.getPopularTags("/developerworks/dwtags/dwjquerytabtags?lang=" + rBHash['viperLang'] + "&base=" + jQuery.getNormalizedZoneUrl(location.href));
+		jQuery.getUserTags();
+		if(jQuery.isTutorial(location.href) == "true") {
+			jQuery.getTagsForContent("/developerworks/tagging/UseCaseServlet?lang=" + rBHash['viperLang'] + "&format=maverick&cType=tutorials&use_case=geturltags&action=gettags&url=" + jQuery.normalizeUrl(location.href));
+		}
+		else {
+			jQuery.getTagsForContent("/developerworks/tagging/UseCaseServlet?lang=" + rBHash['viperLang'] + "&format=maverick&cType=articles&use_case=geturltags&action=gettags&url=" + jQuery.normalizeUrl(location.href));
+
+		}
+		
+		// si
+		initSI();
+	});
+ </script>
+ <!-- JQuery end -->
+ <!-- Overlay js -->
+<script language="JavaScript" src="//dw1.s81c.com/common/js/overlay.js" type="text/javascript"></script>
+<!-- My dW Interest article -->
+<script language="JavaScript" src="//dw1.s81c.com/developerworks/js/showinterest.js" type="text/javascript">//</script>
+<script language="JavaScript" type="text/javascript">
+        // <![CDATA[
+			var contentId = '';
+			var contentAreas = '';
+			var caArr = [];
+			contentId = '111288';
+			contentAreas = 'xml,opensource,web';
+			if(contentAreas != ''){caArr = contentAreas.split(',');}
+			var loginLink = 'https://www.ibm.com/developerworks/dwwi/DWAuthRouter?m=loginpage&d=' + encodeURIComponent(window.location);jQuery('interestShow').showInterest(contentId,'dw-article',{'int_tops':[9,54,889,2,725,107,890,637],'int_prods':[], 'int_prod_fam':[],'int_cont_area':caArr},
+'<div id="dw-interest-anon"><a id="intAnonBtn" class="ibm-external-link" href="">Update My dW interests</a> (<a class="dw-interest" href="' + loginLink + '">Log in</a> | <a class="dw-interest" href="#overlay" onclick="ibmCommon.Overlays.show(\'dwmyinterestadd\', this);return false;">What\'s this?</a>) <a class="ibm-access" href="#dwmyinterestaddhelp">Skip to help for Update My dW interests</a></div>',
+'<div id="dw-interest-add"><a id="intSelectBtn" class="ibm-external-link" href="">Add to My dW interests</a> (<a class="dw-interest" href="#overlay" onclick="ibmCommon.Overlays.show(\'dwmyinterestadd\', this);return false;">What\'s this?</a>) <a class="ibm-access" href="#dwmyinterestaddhelp">Skip to help for Add to My dW interests</a></div>',
+'<div id="dw-interest-remove">Added to My dW interests (<a class="dw-interest" href="https://www.ibm.com/developerworks/mydeveloperworks/profiles/html/myProfileView.do?lang=en">Edit</a>)</div>'
+);
+// ]]>
+</script><!-- BEGIN: Use this section to set page specific variables for the Unica Page Tag -->
+<script language="JavaScript">var NTPT_PGEXTRA="ibmSkillLevel=4&ibmAdoptPhase=-&ibmRole=-";</script>
+<!--END --><!-- SCRIPTS_INCLUDE_END -->
+
+<div id="ibm-metrics">
+<script src="//dw1.s81c.com/common/stats/stats.js" type="text/javascript">//</script>
+</div>
+
+</body>
+</html>
