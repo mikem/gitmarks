@@ -1,0 +1,396 @@
+
+
+
+
+	<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+
+	<html lang="en">
+	<head>
+		<link rel="SHORTCUT ICON" href="http://linuxcommand.org/favicon.ico">
+
+		<title>LinuxCommand.org: Writing shell scripts.</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="keywords" content="Linux bash shell programming tutorials">
+		<meta name="description" content="Learn the Linux command line">
+		<meta name="author" content="William Shotts, Jr.">
+		<meta name="copyright" content="Copyright 2000-2010, William Shotts, Jr.">
+		<link rel="stylesheet" type="text/css" href="linuxcommand2.css">
+	</head>
+
+	<body>
+	<a name="top"></a>
+		<table class="page" summary="This table is used for graphic layout.">
+			<tr>
+				<td>
+					<div class="colorblock"></div>
+				</td>
+				<td>
+					<div class="body">
+					<img src="images/writing_shell_scripts.jpg" alt="Title graphic">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td valign="top">
+		<div class="navbar">
+			<ul>
+				<li><a href="index.php">LinuxCommand</a></li>
+				<li><a href="learning_the_shell.php">Learning&nbsp;the&nbsp;shell</a></li>
+				<li><a href="writing_shell_scripts.php">Writing&nbsp;shell&nbsp;scripts</a></li>
+				<li><a href="script_library.php">Script library</a></li>
+				<li><a href="superman_pages.php">SuperMan pages</a></li>
+				<li><a href="who_what_where_why.php">Who, What, Where, Why</a></li>
+			</ul>
+			<hr noshade>
+			<ul>
+				<li><a href="http://lcorg.blogspot.com">Tips, News And Rants</a></li>
+			</ul>
+		</div>
+	
+				</td>
+				<td>
+					<div class="body">
+		<div class="pagenav">
+			<p class="right"><a
+			href="lts0080.php">Previous</a> | <a
+			href="writing_shell_scripts.php#contents">Contents</a> | <a
+			href="wss0010.php">Next</a></p>
+		</div>
+	<h1>Here is where the fun begins</h1>
+
+	<p>With the thousands of commands available for the
+	command line user, how can you remember them all?
+	The answer is, you don't. The real power of the
+	computer is its ability to do the work for you. To
+	get it to do that, we use the power of the shell to automate
+	things. We write scripts.</p>
+
+	<p>Scripts are collections of commands that are
+	stored in a file. The shell can read this file and
+	act on the commands as if they were typed at the
+	keyboard. In addition to the things you have
+	learned so far, the shell also provides a variety
+	of useful programming features to make your scripts
+	truly powerful.</p>
+
+	<p>What are scripts good for? A wide range of tasks
+	can be automated. Here are some of the things I
+	automate with scripts:</p>
+
+	<ul>
+	<li>A script gathers up all the files (over 2200) in this
+	site on my computer and transmits
+	them to my web server.<br>
+	<br>
+	</li>
+
+	<li>The <a href="superman_pages.php">SuperMan
+	pages</a> are built entirely by a script.<br>
+	<br>
+	</li>
+
+	<li>Every Friday night, all my computers copy
+	their files to a "backup server" on my network.
+	This is performed by a script.<br>
+	<br>
+	</li>
+
+	<li>A <a href=
+	"script_library.php#rh-errata">script</a>
+	automatically gets the current updates from my
+	Linux vendor and maintains a repository of vital
+	updates. It sends me an email message with a
+	report of tasks that need to be done.</li>
+</ul>
+
+<p>As you can see, scripts unlock the power of your
+Linux machine. So let's have some fun!</p>
+
+<h2><a name="contents">Contents</a></h2>
+
+	<ol>
+	<li>
+		<a href="wss0010.php">Writing your first
+		script and getting it to work</a>
+
+		<ol>
+		<li><a href="wss0010.php#write">Writing a
+		script</a></li>
+
+		<li><a href="wss0010.php#permission">Setting
+		permissions</a></li>
+
+		<li><a href="wss0010.php#path">Putting it in
+		your path</a></li>
+		</ol>
+	</li>
+
+	<li>
+		<a href="wss0020.php">Editing the scripts you
+		already have</a>
+
+		<ol>
+		<li><a href="wss0020.php#commands">Commands,
+		commands, everywhere</a></li>
+
+		<li><a href=
+		"wss0020.php#aliases">Aliases</a></li>
+
+		<li><a href=
+		"wss0020.php#shell_functions">Shell
+		functions</a></li>
+
+		<li><a href="wss0020.php#type">type</a></li>
+
+		<li><a href=
+		"wss0020.php#bashrc">.bashrc</a></li>
+		</ol>
+	</li>
+
+	<li>
+		<a href="wss0030.php">Here Scripts</a>
+
+		<ol>
+		<li><a href="wss0030.php#html">Writing an
+		HTML file with a script</a></li>
+		</ol>
+	</li>
+
+	<li>
+		<a href="wss0040.php">Substitutions - Part 1</a>
+
+
+		<ol>
+		<li><a href=
+		"wss0040.php#variables">Variables</a></li>
+
+		<li><a href="wss0040.php#how">How to create
+		a variable</a></li>
+
+		<li><a href="wss0040.php#where">Where does
+		the variable's name come from?</a></li>
+
+		<li><a href="wss0040.php#lazy">How does this
+		increase our laziness?</a></li>
+
+		<li><a href=
+		"wss0040.php#environment">Environment
+		Variables</a></li>
+		</ol>
+	</li>
+
+	<li>
+		<a href="wss0050.php">Substitutions - Part 2</a>
+
+
+		<ol>
+		<li><a href="wss0050.php#help">--help and
+		other tricks</a></li>
+
+		<li><a href="wss0050.php#assign">Assigning a
+		command's result to a variable</a></li>
+
+		<li><a href=
+		"wss0050.php#constants">Constants</a></li>
+		</ol>
+	</li>
+
+	<li>
+		<a href="wss0060.php">Quoting</a>
+
+		<ol>
+		<li><a href="wss0060.php#quotes">Single and
+		double quotes</a></li>
+
+		<li><a href="wss0060.php#single">Quoting a
+		single character</a></li>
+
+		<li><a href="wss0060.php#backslash">Other
+		backslash tricks</a></li>
+		</ol>
+	</li>
+
+	<li>
+		<a href="wss0070.php">Shell Functions</a>
+
+		<ol>
+		<li><a href="wss0070.php#keep">Keep your
+		scripts working</a></li>
+		</ol>
+	</li>
+
+	<li>
+		<a href="wss0080.php">Some Real Work</a>
+
+		<ol>
+		<li><a href=
+		"wss0080.php#show_uptime">show_uptime</a></li>
+
+		<li><a href=
+		"wss0080.php#drive_space">drive_space</a></li>
+
+		<li><a href=
+		"wss0080.php#home_space">home_space</a></li>
+
+		<li><a href=
+		"wss0080.php#system_info">system_info</a></li>
+		</ol>
+	</li>
+
+	<li>
+		<a href="wss0090.php">Flow Control - Part
+		1</a>
+
+		<ol>
+		<li><a href="wss0090.php#if">if</a></li>
+
+		<li><a href="wss0090.php#condition">What is
+		a "condition"?</a></li>
+
+		<li><a href="wss0090.php#exit_status">Exit
+		status</a></li>
+
+		<li><a href="wss0090.php#test">test</a></li>
+
+		<li><a href="wss0090.php#exit">exit</a></li>
+
+		<li><a href="wss0090.php#testing">Testing
+		for root</a></li>
+		</ol>
+	</li>
+
+	<li>
+		<a href="wss0100.php">Stay Out of Trouble</a>
+
+		<ol>
+		<li><a href=
+		"wss0100.php#empty_variables">Empty
+		variables</a></li>
+
+		<li><a href=
+		"wss0100.php#missing_quotes">Missing
+		quotes</a></li>
+
+		<li><a href=
+		"wss0100.php#isolating_problems">Isolating
+		problems</a></li>
+
+		<li><a href=
+		"wss0100.php#watching_your_script_run">Watching
+		your script run</a></li>
+		</ol>
+	</li>
+
+	<li>
+		<a href="wss0110.php">Keyboard Input and
+		Arithmetic</a>
+
+		<ol>
+		<li><a href="wss0110.php#read">read</a></li>
+
+		<li><a href=
+		"wss0110.php#arithmetic">Arithmetic</a></li>
+		</ol>
+	</li>
+
+	<li>
+		<a href="wss0120.php">Flow Control - Part
+		2</a>
+
+		<ol>
+		<li><a href=
+		"wss0120.php#more_branching">More
+		branching</a></li>
+
+		<li><a href=
+		"wss0120.php#loops">Loops</a></li>
+
+		<li><a href=
+		"wss0120.php#building_a_menu">Building a
+		menu</a></li>
+		</ol>
+	</li>
+
+	<li>
+		<a href="wss0130.php">Positional
+		Parameters</a>
+
+		<ol>
+		<li><a href=
+		"wss0130.php#detecting">Detecting command
+		line arguments</a></li>
+
+		<li><a href=
+		"wss0130.php#command_line_options">Command
+		line options</a></li>
+
+		<li><a href=
+		"wss0130.php#getting_an_argument">Getting an
+		option's argument</a></li>
+
+		<li><a href=
+		"wss0130.php#integrating_the_processor">Integrating
+		the command line processor into the
+		script</a></li>
+
+		<li><a href=
+		"wss0130.php#adding_interactive_mode">Adding
+		interactive mode</a></li>
+		</ol>
+	</li>
+
+	<li><a href="wss0140.php">Flow Control - Part
+	3</a></li>
+	<li>
+		<a href="wss0150.php">Errors and Signals and Traps (Oh My!) - Part 1</a>
+		<ol>
+		<li><a href="wss0150.php#exit_status">Exit status</a></li>
+		<li><a href="wss0150.php#checking_exit_status">Checking the exit status</a></li>
+		<li><a href="wss0150.php#error_exit">An error exit function</a></li>
+		<li><a href="wss0150.php#and_or_lists">AND and OR lists</a></li>
+		<li><a href="wss0150.php#improving_error_exit">Improving the error exit function</a></li>
+		</ol>
+	</li>
+	<li>
+		<a href="wss0160.php">Errors and Signals and Traps (Oh My!) - Part 2</a>
+		<ol>
+		<li><a href="wss0160.php#cleaning_up">Cleaning up after yourself</a></li>
+		<li><a href="wss0160.php#trap">trap</a></li>
+		<li><a href="wss0160.php#signal_9">Signal 9 From Outer Space</a></li>
+		<li><a href="wss0160.php#clean_up">A clean_up function</a></li>
+		<li><a href="wss0160.php#safe_temp_files">Creating safe temporary files</a></li>
+		</ol>
+	</li>
+</ol>
+
+
+
+		<div class="pagenav">
+			<p class="right"><a
+			href="lts0080.php">Previous</a> | <a
+			href="writing_shell_scripts.php#contents">Contents</a> | <a
+			href="#top">Top</a> | <a
+			href="wss0010.php">Next</a></p>
+		</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>
+	<div class="body">
+		<hr noshade>
+		<p class="fineprint">
+		&copy; 2000-2010,
+		<a href="mailto:bshotts@users.sourceforge.net">William E. Shotts, Jr.</a>
+		Verbatim copying and distribution of this entire article is
+		permitted in any medium, provided this copyright notice is preserved.</p>
+	
+		<p class="fineprint">Linux&reg; is a registered trademark of Linus Torvalds.</p>
+	</div>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>
