@@ -1,0 +1,811 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+		<title>  Linux and Web Development Intro - Monday By Noon</title>
+		
+		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+		<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+		
+				<link type="text/css" rel="stylesheet" href="http://mondaybynoon.com/wp-content/themes/v6/css/reset.css" media="screen,projection" />
+		<link type="text/css" rel="stylesheet" href="http://mondaybynoon.com/wp-content/themes/v6/css/960.css" media="screen,projection" />
+		<link type="text/css" rel="stylesheet" href="http://mondaybynoon.com/wp-content/themes/v6/css/screen.css?v=11" media="screen,projection" />
+		<link type="text/css" rel="stylesheet" href="http://mondaybynoon.com/wp-content/themes/v6/js/highlighting/css/sh_dull.css" media="screen,projection">
+				
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+		<script src="http://mondaybynoon.com/wp-content/themes/v6/js/highlighting/code_highlighter.js"></script>
+		
+		<script type="text/javascript" charset="utf-8">
+			var template_directory = 'http://mondaybynoon.com/wp-content/themes/v6';
+		</script>
+		
+		<script src="http://mondaybynoon.com/wp-content/themes/v6/js/mbn.js"></script>
+		
+		<link rel="alternate" type="application/rss+xml" title="Monday By Noon - Articles and Asides" href="http://mondaybynoon.com/feed/">
+		<link rel="alternate" type="application/rss+xml" title="Monday By Noon - Weekly Articles Only" href="http://mondaybynoon.com/feed/?cat=-378">
+		<link rel="alternate" type="application/rss+xml" title="Monday By Noon - Asides Only" href="http://mondaybynoon.com/feed/?cat=378">
+		<link rel="alternate" type="application/rss+xml" title="Monday By Noon - Comments" href="http://mondaybynoon.com/comments/feed/">
+
+		<link rel="pingback" href="http://mondaybynoon.com/xmlrpc.php">
+				
+<!-- META Tags added by Add-Meta-Tags WordPress plugin. Get it at: http://www.g-loaded.eu/ -->
+<meta name="description" content="I recently switched to using Linux full time from Windows and here&amp;#8217;s my experience so far." />
+<meta name="keywords" content="design, development, linux, tips, beagle, bluefish, design, development, gimp, linux, nvidia, open-source, pixel, ubuntu" />
+
+
+<link rel="alternate" type="application/rss+xml" title="Monday By Noon &raquo; Linux and Web Development Intro Comments Feed" href="http://mondaybynoon.com/2006/07/03/linux-and-web-development-intro/feed/" />
+<script type='text/javascript' src='http://mondaybynoon.com/wp-includes/js/jquery/jquery.js?ver=1.4.2'></script>
+<script type='text/javascript' src='http://mondaybynoon.com/wp-content/plugins/phpurchase/js/phpurchase-library.js?ver=1.0'></script>
+<script type='text/javascript' src='http://mondaybynoon.com/wp-content/plugins/pods/ui/js/pods.ui.js?ver=3.0.3'></script>
+<script type='text/javascript' src='http://mondaybynoon.com/wp-includes/js/comment-reply.js?ver=20090102'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://mondaybynoon.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://mondaybynoon.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='index' title='Monday By Noon' href='http://mondaybynoon.com/' />
+<link rel='start' title='Site Launching Soon' href='http://mondaybynoon.com/2006/02/07/site-launching-soon/' />
+<meta name="generator" content="WordPress 3.0.3" />
+<link rel='canonical' href='http://mondaybynoon.com/2006/07/03/linux-and-web-development-intro/' />
+<link rel='shortlink' href='http://mondaybynoon.com/?p=28' />
+<meta name="generator" content="PHPurchase Professional 2.6.5" />
+<link rel="stylesheet" href="http://mondaybynoon.com/wp-content/plugins/phpurchase/phpurchase.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="http://mondaybynoon.com/wp-content/plugins/phpurchase/views/phorm2.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="http://mondaybynoon.com/wp-content/plugins/phpurchase/views/buttons.css" type="text/css" media="screen" />
+<!-- Pods CMS 1.9.4 -->
+	
+	</head>
+
+	<body class="single single-post postid-28">
+		
+				
+		<div id="big-helper">
+
+			<div class="texture">
+
+				<div id="site">
+
+					<div class="container_24">
+
+						<div class="texture group">
+
+							<div class="grid_5">
+
+								<div class="grid_4 alpha inner" id="sidebar">
+
+									<div class="section">
+
+										<p id="linkhome"><a class="button" href="http://mondaybynoon.com"><img src="http://mondaybynoon.com/wp-content/themes/v6/images/monday-by-noon.png" alt="Monday By Noon" /></a></p>
+
+										<p id="about-mbn">Monday By Noon is a weekly publication focused on the topics of Web design and development.</p>
+
+										<!-- <p id="suggested-reading"><a href="http://mondaybynoon.com/category/favorites/" class="standout">Suggested articles</a></p> -->
+
+                                        <p id="suggested-reading"><a href="http://mondaybynoon.com/feed/" class="standout">Subscribe to RSS</a></p>
+
+										<div id="about-author">
+											<p>Read about the author</p>
+											<p id="jchristopher"><a href="http://mondaybynoon.com/about/"><img src="http://mondaybynoon.com/wp-content/themes/v6/images/jonathan-christopher.png" alt="Jonathan Christopher" /></a></p>
+											<p>Yeah, <a href="http://twitter.com/jchristopher">I tweet</a></p>
+										</div>
+										<!-- /about-author -->
+
+									</div>
+									<!-- /section -->
+
+									<div class="section separator">
+
+										<form action="http://mondaybynoon.com" method="get">
+											<legend><img src="http://mondaybynoon.com/wp-content/themes/v6/images/search.png" alt="Search" /></legend>
+											<div class="textfield" id="field-s">
+												<label for="s">Search</label>
+												<input type="text" id="s" name="s" value="" size="20" />
+											</div>
+											<div class="buttons">
+												<button type="submit" id="search" name="search" value="search">Search</button>
+											</div>
+										</form>
+
+									</div>
+									<!-- /section separator -->
+
+								</div>
+								<!-- /grid_4 -->
+
+								&nbsp;
+
+							</div>
+							<!-- /sidebar -->
+
+								<div class="grid_19" id="content">
+									
+									<div class="grid_19 alpha omega inner" id="copy-helper">
+
+										<div class="grid_14 alpha">
+											<div class="grid_13 alpha" id="copy">
+
+												<ul class="group" id="nav">
+													<li><a class="button" href="http://mondaybynoon.com"><img src="http://mondaybynoon.com/wp-content/themes/v6/images/home.png" alt="Home" /></a></li>
+													<li><a class="button" href="http://mondaybynoon.com/archive/"><img src="http://mondaybynoon.com/wp-content/themes/v6/images/archive.png" alt="Archive" /></a></li>
+													<li><a class="button" href="http://mondaybynoon.com/category/workbench/"><img src="http://mondaybynoon.com/wp-content/themes/v6/images/workbench.png" alt="Workbench" /></a></li>
+													<li><a class="button" href="http://mondaybynoon.com/category/book-reviews/"><img src="http://mondaybynoon.com/wp-content/themes/v6/images/reviews.png" alt="Reviews" /></a></li>
+													<li><a class="button" href="http://mondaybynoon.com/about/"><img src="http://mondaybynoon.com/wp-content/themes/v6/images/about.png" alt="About" /></a></li>
+													<li><a class="button" href="http://mondaybynoon.com/contact/"><img src="http://mondaybynoon.com/wp-content/themes/v6/images/contact.png" alt="Contact" /></a></li>
+												</ul>
+												<!-- /nav -->
+	
+		<div class="entry" id="post-28">
+			
+			<h1>Linux and Web Development Intro</h1>
+
+			<p>There&#8217;s a good chance you&#8217;ve heard of <a href="http://www.linux.org/">Linux</a>.  Recently there has been a whole lot of buzz going around the Internet about a particular distribution of Linux dubbed <a href="http://www.ubuntu.com/">Ubuntu</a>.  There are a ridiculous amount of articles floating around regarding the operating system itself and all sorts of introductory pieces surrounding it.  I&#8217;ll leave it to you and Google to read about that if this is the first time you&#8217;ve heard of Linux.  This article isn&#8217;t going to focus particularly on Ubuntu, but Linux in general, as the subject matter will be surrounding Linux as an operating system for Web development, not Ubuntu as a distribution of choice.  Software mentioned here is not specific to the Ubuntu distribution, but specific to Linux itself.</p>
+<p><img src="http://www.mondaybynoon.com/images/linux/tux.jpg" alt="Linux Logo" /></p>
+<p>I&#8217;m generally not a fan of Apple/Mac/Jobs and I&#8217;ve grown to dislike Microsoft/Windows/Gates.  <em>I don&#8217;t say that to offend anyone</em>, so please don&#8217;t take it the wrong way.  We all have our reasons for the setups on our desks.  This article is going to reflect my opinions of using Linux for Web development, not knock or support anything else.</p>
+<p><span id="more-28"></span></p>
+<h2>Why I Choose Linux</h2>
+<p>I&#8217;ve always had an interest in Linux, and over the past few years I&#8217;ve become increasingly frustrated with Windows.  My first Linux installations weren&#8217;t an absolute disaster but at the same time I had no idea what I was doing and found myself back on Windows in a matter of hours.  Regardless, my interest was there.</p>
+<p>Some months ago, I decided to give it another shot.  I use both a laptop and a desktop at home and thought that since I only really used my laptop for minimal tasks, it would make a good test bed for Linux.  My venture began with <a href="http://fedora.redhat.com">Fedora Core</a> and to make a long story short, a bad update rendered my display useless and I had no idea how to fix it.</p>
+<p><img src="http://www.mondaybynoon.com/images/linux/ubuntu.jpg" alt="Ubuntu Linux Logo" /></p>
+<p>Enter <a href="http://www.ubuntu.com/">Ubuntu</a>.  I don&#8217;t remember where I first read about Ubuntu Linux, but what struck me was all the ranting and raving about its out of the box compatibility with a wide range of hardware &#8212; especially laptops.  I thought I&#8217;d give it a shot with the 5.04 release and I was delighted with the results.  All of my hardware worked just fine, including my WiFi, which was a feat in itself using Fedora Core.  I now run Ubuntu 6.06 on that same laptop, my main home machine, and most recently my setup at work.  After working out all of the customizing issues at home over the course of eight months or so, I finally feel comfortable enough to be using Linux both personally and professionally.  Using it for work will be my true test, and I&#8217;d like to record my findings here.</p>
+<h3>Getting Set Up</h3>
+<p>The only issue I was faced with using this particular distribution of Linux was setting up and managing dual monitors.  I have grown to know and love a dual monitor setup and I&#8217;m not sure I would want to cope without.</p>
+<h4>nVidia Makes Life Easy</h4>
+<p>Luckily all of my video cards are <a href="http://www.nvidia.com">nVidia</a> based, which is a great thing because nVidia has taken the time and effort to publish video card drivers for their chipsets under Linux.  Following the proper documentation you can have their drivers installed in minutes, which is a blessing compared to setups with other chipsets from what I&#8217;ve read.</p>
+<p><img src="http://www.mondaybynoon.com/images/linux/nvidia.jpg" alt="nVidia Logo" /></p>
+<p>Getting two displays up and running isn&#8217;t as easy as checking &#8220;Extend my Desktop to this monitor&#8221; in Linux.  I had to manually edit a configuration file, but using the nVidia provided options, setup was painless and I now run a dual monitor system as I was in Windows.</p>
+<h4>What About Your Wacom?</h4>
+<p>I didn&#8217;t have to do a thing to get my Wacom tablet up and running in Linux.  It was working out of the box for me using Ubuntu 6.06 so there really isn&#8217;t much to write about the setup.  Support in applications is another issue I will touch upon in a bit.</p>
+<h3>Software for Web Development</h3>
+<p>The abundance of equivalent software for Linux for general tasks are heavily discussed in other areas of the net.  I&#8217;m going to focus on the applications that I find essential for Web development.</p>
+<h4>Email and Web</h4>
+<p>I was already using Firefox and Thunderbird on other platforms, so using them required absolutely no change.  All of my choice extensions work under Linux and I had no issues with the migration.</p>
+<p>As a Web developer, I needed to have other browsers at my disposal for testing.  I was able to install Opera with ease and my only real hurdle was Internet Explorer.  Luckily after a bit of searching I came across <a href="http://www.tatanka.com.br/ies4linux/index-en.html">IEs 4 Linux</a>.  This beautiful script will install a version of Internet Explorer 6 on top of <a href="http://www.winehq.com/">WINE</a> to allow me to test for IE6/Win.</p>
+<h4>Have you Heard of Beagle?</h4>
+<p>Something I&#8217;m really excited to write about after a few months of typical use on a Linux setup is using <a href="http://beagle-project.org/Main_Page">Beagle</a>.  For you Mac users, Beagle is most closely compared to <a href="http://www.apple.com/macosx/features/spotlight/">Spotlight</a> in OS X in that it keeps an archive of all files on your disks for easy searching.  I think it&#8217;s going to be great to be able to search all files, Emails, even Gaim logs on the fly and instantly.  If you haven&#8217;t heard of Beagle, <a href="http://nat.org/demos/">check out these videos of Beagle</a> in action &#8212; I&#8217;m very impressed with it so far.</p>
+<p><img src="http://www.mondaybynoon.com/images/linux/beagle.jpg" alt="Beagle Logo" /></p>
+<h2>Actual Development in Linux</h2>
+<p>Finding a good application for writing, editing, and managing your code is essential for anyone who develops.  Whether it be on the Web or otherwise, if you aren&#8217;t using a proper application your life can become much more difficult than it should be.  I&#8217;m not talking <acronym title="What You See Is What You Get">WYSIWYG</acronym> here, because any serious developer would laugh at its mention.</p>
+<h4>Bluefish is King for Development</h4>
+<p>I fell in love with <a href="http://bluefish.openoffice.nl/index.html">Bluefish</a> the instant I ran it for the first time.  It is by far my favorite editor and being able to use it daily at work is a great thing for me.  Why do I like it so much?  Apart from the things that most of the other editors do such as highlighting and auto line indent, it has the ability to create Projects, which some of the other editors I was using never had.  I am a fan of this feature because I&#8217;m working on different projects throughout the day and it is an easy way to switch.  The GUI is effective, nice looking, and everything seems to be in just the right spot.  I&#8217;d like to devote an entire article to its benefits in the future, but for the sake of time I&#8217;ll leave it at that.</p>
+<h4>Aren&#8217;t Fonts an Issue?</h4>
+<p>I think it&#8217;s great not to have the Windows default fonts at my disposal.  It really opened my eyes to taking more time in selecting a font family due to the fact that I didn&#8217;t have many of the typical fonts used on the Web.  It is possible to install TrueType fonts using Linux and if that&#8217;s something you&#8217;re interested in, it can be done.  I have since installed many of the fonts I was using under windows and don&#8217;t really notice any problems using the TrueType fonts.</p>
+<h3>Creating Site Mocks</h3>
+<p>More often than not a site design begins with a mock.  A static image that&#8217;s shown to the client to see if it meets approval.  From time to time I&#8217;ll be able to work on a mock, but they&#8217;re usually taken care of by the designers.  This brings up two situations that need to be handled by a developer using Linux.  First, which application is comprehensive enough to make the design?  Secondly, how are you going to work with that PSD the designer sent over?</p>
+<h4>Pixel and GIMP</h4>
+<p><a href="http://www.gimp.org">GIMP</a> is an extremely powerful image editing application.  It is very feature rich, but often confusing to use.  Scott Moschella&#8217;s <a href="http://www.plasticbugs.com/index.php?p=241">GIMPshop</a> and <a href="http://epierce.freeshell.org/gimp/gimp_ps.php">editing the keyboard shortcuts</a> can make GIMP a very Photoshop-like experience, and given some time and effort can be effective.  After some time using it, I still found GIMP to be awkward to use exclusively.</p>
+<p><img src="http://www.mondaybynoon.com/images/linux/gimp.jpg" alt="GIMP Logo" /></p>
+<p>That is, until I came across <a href="http://www.kanzelsberger.com">Pixel</a>.  Pixel has a much more Photoshop-like interface and can do many of the things Photoshop can, and in the way Photoshop does them.  It has been in development for many years and is not OSS nor is it free to use (save the demo version).  There are still a few bugs in the application as it is still in the beta stage, but Pixel has some definite promise and I was more than happy to pay the nominal fee to use it.</p>
+<p><img src="http://www.mondaybynoon.com/images/linux/pixel.jpg" alt="Pixel Screenshot" /></p>
+<h3>You Can&#8217;t Forget About Flash</h3>
+<p>Personally, I don&#8217;t develop in Flash at this time.  There is a very talented coworker of mine that handles the Flash projects we get so developing in Flash isn&#8217;t an issue for me.  Had it been, I probably wouldn&#8217;t be able to make the shift to Linux being that I wouldn&#8217;t have a way to work in Flash.</p>
+<p><img src="http://www.mondaybynoon.com/images/linux/flash.jpg" alt="Flash Logo" /></p>
+<p>Viewing Flash documents is another issue entirely.  While Adobe provides a download for a Linux Flash player, but it&#8217;s obvious that effort was lacking in it&#8217;s development.  Flash video is a bit choppy and more often than not will lag over time and the audio will desync.  When it isn&#8217;t video, a Flash movie will behave more or less normally which is a good thing, I suppose.  After a bit of reading I&#8217;ve found that version 9 will be releasing for Linux in the coming months and it should behave much better than the current version.</p>
+<h3>File Transfers</h3>
+<p>FTP is nothing but essential when developing for the Web.  This is where my first and one of my only issues with Linux arises.  The application I&#8217;m currently using for file transfers is <a href="http://gftp.seul.org/">gFTP</a>.  gFTP is great in that it works and has a GUI interface, but from a usability standpoint I&#8217;m not a big fan.  The interface closely resembles the WS_FTP of 1998 and you <em>have to use the right and left arrow buttons to make transfers.</em>  There&#8217;s no dragging from your local view to your remote view to make the transfer.  That&#8217;s really irritating to me.  Another problem I have with the application is that it doesn&#8217;t remember your site logins.  Security risk or not, I liked it when <a href="http://filezilla.sourceforge.net/">FileZilla</a> remembered my past few logins so I didn&#8217;t have to enter them every day.  Lastly, gFTP won&#8217;t keep your connection alive, so if you&#8217;re editing code for more than about a minute, you&#8217;ll have to reconnect to the server to upload your changes.  If there&#8217;s a way to change any of that, I haven&#8217;t found it and would love to hear what I&#8217;m doing wrong.  Luckily, FileZilla 3 is on the way and with it being cross platform, I&#8217;ll be able to return to my old habits.</p>
+<p><img src="http://www.mondaybynoon.com/images/linux/gftp.jpg" alt="gFTP Screenshot" /></p>
+<h4>Audio is Essential</h4>
+<p>If you&#8217;re anything like me, you have music playing the majority of the time you&#8217;re working.  There were many audio solutions for Linux, but my favorite by far has to be <a href="http://amarok.kde.org/">Amarok</a>.  It will organize your entire collection into a searchable database as many other audio players will do, but what I like about Amarok is that it takes things to the next level.  If you&#8217;re a member of <a href="http://www.last.fm/">last.fm</a>, you&#8217;re able to enter your account information from the start which is great.  Other features I like are integrated lyric lookup and incorporating the <a href="http://musicbrainz.org/">MusicBrainz</a> service to provide you a list of recommended songs based on what you&#8217;re listening to.  I just really like the way it functions and if you get the chance, take a second to check it out.  As a side note, you don&#8217;t need to be running <a href="http://www.kde.org/">KDE</a> for it to work, I&#8217;m using it in <a href="http://www.gnome.org/">Gnome</a>.</p>
+<p><img src="http://www.mondaybynoon.com/images/linux/amarok.jpg" alt="Amarok Logo" /></p>
+<h2>So Can it Work?</h2>
+<p>After a week of using Linux at work I have to say that I&#8217;m very pleased so far.  I&#8217;m mostly ecstatic about using Bluefish exclusively for writing code and I can&#8217;t wait to make more use of its features now that I&#8217;ll have the time and place to really give it a go.  So far working with Web mocks has been the biggest obstacle, and I think the only solution for that will be a Linux port of Photoshop.  Unfortunately I don&#8217;t see that happening any time soon as it is not in the best interest of Adobe to put any resources into such a thing.</p>
+<p>Browser testing is completely transparent as to which operating system I&#8217;m using.  With IEs 4 Linux I&#8217;m able to see the faults of Internet Explorer in all their glory, and also able to test in Opera.  Not being on a Mac I&#8217;m still forced to use a coworkers machine to check out Safari and the associated Mac browsers, but that is nothing new.</p>
+<p>Using Beagle has already become useful.  It&#8217;s great to be able to type in the name of a client and have all of their associated files, emails, Gaim logs, and anything else related to them put on display right in front of me.</p>
+<p>I think completely migrating to Linux will be a positive move for me.  I mainly develop at work so I will be able to deal with the image editing shortcomings I&#8217;ve discovered.  I may find that it will only take some time to learn the ins and outs of Pixel and GIMP and Photoshop can be a temporary memory until ported to Linux.  I haven&#8217;t received a complicated PSD from the designers yet but I&#8217;m sure that will provide an interesting morning or afternoon.  The only drawback I&#8217;ve found is that Wacom pressure sensitivity works only in GIMP, not Pixel.  The Pixel developer has indicated, however, that he is working on including Wacom support in a future build which is great.  I&#8217;ll be sure to include my findings in a future article.</p>
+<p>I&#8217;m going to enjoy not having to worry about hard drive fragmentation, <a href="http://www.microsoft.com/genuine/downloads/whyValidate.aspx">WGA</a> and the <a href="http://news.zdnet.com/2100-3513_22-6081286.html">garbage it brings</a>, Vista, spyware, viruses, and the other problems I came across from using Windows.  Linux is becoming better by the day and I&#8217;ll be excited to see how much further it reaches by the time Vista hits the shelves.</p>
+<p>The next few months will be really interesting as I&#8217;ll be able to find out whether or not Linux is the solution for me when it comes to my work environment.  I&#8217;d like to write again giving updates as to my findings specifically having to do with Web Development as opposed to average use.</p>
+
+		</div>
+
+		
+
+
+
+<!-- You can start editing here. -->
+<div id="comments">
+	<div class="section separator" id="comment-thread">
+	
+	                 
+                          
+                 <p class="nocomments">Comments are closed.</p>
+                
+            
+		
+	</div>
+	<!-- /comment-thread -->
+
+
+	
+</div>
+<!-- /comments -->
+		
+
+        </div>
+        <!-- /copy -->
+    </div>
+    <!-- /grid_14 -->
+
+    <div class="grid_5 omega" id="tertiary">
+    
+        <div class="section group" id="fusion">
+            <a id="fusion-powered" href="http://fusionads.net" title="Powered by Fusion">Powered <span>by</span> Fusion</a>
+            <script type="text/javascript">
+                /* <![CDATA[ */
+                document.write('<scr' + 'ipt type="text/javascript" src="http://adn.fusionads.net/www/pull/get.php?zoneid=28&charset=UTF-8&withtext=1&cb=' + Math.floor(Math.random() * 99999999999) + '"></scr' + 'ipt>');
+                /* ]]> */
+            </script>
+        </div>
+        <!-- /fusion -->
+
+                    <div class="section separator" id="sponsorships">
+                <p>Currently accepting <a href="http://mondaybynoon.com/sponsorship/">RSS feed sponsorships</a>!</p>
+            </div>
+            <!-- /sponsorships -->
+            
+        
+                            <div class="section separator" id="article-meta">
+                    <h4><img src="http://mondaybynoon.com/wp-content/themes/v6/images/this-article-is-so-meta.png" alt="This article is so meta" /></h4>
+                    <p>Published <span class="publish date">July 3rd, 2006</span></p>
+
+                    <ul class="categories">
+                                                    <li>
+                                <a href="http://mondaybynoon.com/category/design/">
+                                    Design                                </a>
+                            </li>
+                                                    <li>
+                                <a href="http://mondaybynoon.com/category/development/">
+                                    Development                                </a>
+                            </li>
+                                                    <li>
+                                <a href="http://mondaybynoon.com/category/linux/">
+                                    Linux                                </a>
+                            </li>
+                                                    <li>
+                                <a href="http://mondaybynoon.com/category/tips/">
+                                    Tips                                </a>
+                            </li>
+                                            </ul>
+
+                                                                <ul class="tags">
+                                                            <li>
+                                    <a href="http://mondaybynoon.com/tag/beagle/">
+                                        Beagle                                    </a>
+                                </li>
+                                                            <li>
+                                    <a href="http://mondaybynoon.com/tag/bluefish/">
+                                        Bluefish                                    </a>
+                                </li>
+                                                            <li>
+                                    <a href="http://mondaybynoon.com/tag/design/">
+                                        Design                                    </a>
+                                </li>
+                                                            <li>
+                                    <a href="http://mondaybynoon.com/tag/development/">
+                                        Development                                    </a>
+                                </li>
+                                                            <li>
+                                    <a href="http://mondaybynoon.com/tag/gimp/">
+                                        GIMP                                    </a>
+                                </li>
+                                                            <li>
+                                    <a href="http://mondaybynoon.com/tag/linux/">
+                                        Linux                                    </a>
+                                </li>
+                                                            <li>
+                                    <a href="http://mondaybynoon.com/tag/nvidia/">
+                                        nVidia                                    </a>
+                                </li>
+                                                            <li>
+                                    <a href="http://mondaybynoon.com/tag/open-source/">
+                                        open-source                                    </a>
+                                </li>
+                                                            <li>
+                                    <a href="http://mondaybynoon.com/tag/pixel/">
+                                        Pixel                                    </a>
+                                </li>
+                                                            <li>
+                                    <a href="http://mondaybynoon.com/tag/ubuntu/">
+                                        Ubuntu                                    </a>
+                                </li>
+                                                    </ul>
+                    
+                </div>
+                <!-- /article-meta -->
+
+                <div class="section separator" id="further-reading">
+                    <h4><img src="http://mondaybynoon.com/wp-content/themes/v6/images/recommended-after-this.png" alt="Recommended after this" /></h4>
+                    	<ul>
+					<li>
+				<a href="http://mondaybynoon.com/2006/09/11/linux-and-web-development-part-2/" rel="bookmark">
+					Linux and Web Development Part 2				</a>
+			</li>
+					<li>
+				<a href="http://mondaybynoon.com/2007/04/02/linux-font-equivalents-to-popular-web-typefaces/" rel="bookmark">
+					Linux Font Equivalents to Popular Web Typefaces				</a>
+			</li>
+					<li>
+				<a href="http://mondaybynoon.com/2007/11/26/ive-switched-from-linux-and-settled-on-os-x/" rel="bookmark">
+					I&#8217;ve Switched from Linux and Settled on OS X				</a>
+			</li>
+					<li>
+				<a href="http://mondaybynoon.com/2007/04/23/installing-and-running-webkit-in-linux-using-qt/" rel="bookmark">
+					Installing and Running WebKit in Linux Using Qt				</a>
+			</li>
+					<li>
+				<a href="http://mondaybynoon.com/2009/06/15/improving-your-process-faster-front-end-development/" rel="bookmark">
+					Improving Your Process: Faster Front End Development				</a>
+			</li>
+			</ul>
+                </div>
+                <!-- /further-reading -->
+            
+            <div class="section separator" id="latest-book-reviews">
+                <h4><img src="http://mondaybynoon.com/wp-content/themes/v6/images/from-the-book-shelf.png" alt="From the book shelf" /></h4>
+                                                    <ul>
+                                                    <li class="group">
+                                <a class="button group" href="http://mondaybynoon.com/2009/08/30/handcrafted-css-book-review-video-edition/">
+                                                                            <img width="64" height="64" src="http://mondaybynoon.com/wp-content/uploads/2009/08/handcraftedcss-64x64.jpg" class="attachment-post-thumbnail wp-post-image" alt="handcraftedcss" title="handcraftedcss" />                                                                        <span class="book-title">Handcrafted CSS Book Review (Video Edition) and Giveaway <span class="flag">&raquo;</span></span>
+                                </a>
+                            </li>
+                                                    <li class="group">
+                                <a class="button group" href="http://mondaybynoon.com/2007/01/15/dom-scripting-book-review/">
+                                                                            <img width="64" height="64" src="http://mondaybynoon.com/wp-content/uploads/2007/01/dom_scripting-64x64.jpg" class="attachment-post-thumbnail wp-post-image" alt="dom_scripting" title="dom_scripting" />                                                                        <span class="book-title">DOM Scripting &#8211; Book Review <span class="flag">&raquo;</span></span>
+                                </a>
+                            </li>
+                                            </ul>
+                                            </div>
+            <!-- /latest-book-reviews -->
+            
+            <div class="section separator" id="random-article">
+                                                                            <p><a href="http://mondaybynoon.com/2008/08/11/essential-actionscript-30-book-review/" class="standout">Random article</a></p>
+                                                                </div>
+            <!-- /random-article -->
+            
+            
+    </div>
+    <!-- /tertiary -->
+
+</div>
+<!-- /copy-helper -->
+
+
+								<div class="grid_19 alpha omega" id="footer">
+									
+									<div id="categories">
+									
+										<h4><img src="http://mondaybynoon.com/wp-content/themes/v6/images/article-categories.png" alt="Article Categories" /></h4>
+
+										
+																														<ul class="group">
+																			
+																				
+												<li class="grid_4 alpha">
+													<a href="http://mondaybynoon.com/category/accessibility/">
+														<span class="cat-title">Accessibility</span>
+														<span class="count">
+															(43)
+														</span>
+													</a>
+												</li>
+																															
+																				
+												<li class="grid_4">
+													<a href="http://mondaybynoon.com/category/apple/">
+														<span class="cat-title">Apple</span>
+														<span class="count">
+															(4)
+														</span>
+													</a>
+												</li>
+																															
+																				
+												<li class="grid_4">
+													<a href="http://mondaybynoon.com/category/asides/">
+														<span class="cat-title">Asides</span>
+														<span class="count">
+															(52)
+														</span>
+													</a>
+												</li>
+																															
+																				
+												<li class="grid_4">
+													<a href="http://mondaybynoon.com/category/book-reviews/">
+														<span class="cat-title">Book Reviews</span>
+														<span class="count">
+															(29)
+														</span>
+													</a>
+												</li>
+																															
+																				
+												<li class="grid_3 omega">
+													<a href="http://mondaybynoon.com/category/clients/">
+														<span class="cat-title">Clients</span>
+														<span class="count">
+															(11)
+														</span>
+													</a>
+												</li>
+																															
+																				
+												<li class="grid_4 alpha">
+													<a href="http://mondaybynoon.com/category/copyright/">
+														<span class="cat-title">Copyright</span>
+														<span class="count">
+															(1)
+														</span>
+													</a>
+												</li>
+																															
+																				
+												<li class="grid_4">
+													<a href="http://mondaybynoon.com/category/css/">
+														<span class="cat-title">CSS</span>
+														<span class="count">
+															(63)
+														</span>
+													</a>
+												</li>
+																															
+																				
+												<li class="grid_4">
+													<a href="http://mondaybynoon.com/category/current-events/">
+														<span class="cat-title">Current Events</span>
+														<span class="count">
+															(17)
+														</span>
+													</a>
+												</li>
+																															
+																				
+												<li class="grid_4">
+													<a href="http://mondaybynoon.com/category/design/">
+														<span class="cat-title">Design</span>
+														<span class="count">
+															(90)
+														</span>
+													</a>
+												</li>
+																															
+																				
+												<li class="grid_3 omega">
+													<a href="http://mondaybynoon.com/category/development/">
+														<span class="cat-title">Development</span>
+														<span class="count">
+															(123)
+														</span>
+													</a>
+												</li>
+																															
+																				
+												<li class="grid_4 alpha">
+													<a href="http://mondaybynoon.com/category/dom/">
+														<span class="cat-title">DOM</span>
+														<span class="count">
+															(15)
+														</span>
+													</a>
+												</li>
+																															
+																				
+												<li class="grid_4">
+													<a href="http://mondaybynoon.com/category/education/">
+														<span class="cat-title">Education</span>
+														<span class="count">
+															(3)
+														</span>
+													</a>
+												</li>
+																															
+																				
+												<li class="grid_4">
+													<a href="http://mondaybynoon.com/category/events/">
+														<span class="cat-title">Events</span>
+														<span class="count">
+															(1)
+														</span>
+													</a>
+												</li>
+																															
+																				
+												<li class="grid_4">
+													<a href="http://mondaybynoon.com/category/examples/">
+														<span class="cat-title">Examples</span>
+														<span class="count">
+															(15)
+														</span>
+													</a>
+												</li>
+																															
+																				
+												<li class="grid_3 omega">
+													<a href="http://mondaybynoon.com/category/favorites/">
+														<span class="cat-title">Favorites</span>
+														<span class="count">
+															(22)
+														</span>
+													</a>
+												</li>
+																															
+																				
+												<li class="grid_4 alpha">
+													<a href="http://mondaybynoon.com/category/flash/">
+														<span class="cat-title">Flash</span>
+														<span class="count">
+															(3)
+														</span>
+													</a>
+												</li>
+																															
+																				
+												<li class="grid_4">
+													<a href="http://mondaybynoon.com/category/google/">
+														<span class="cat-title">Google</span>
+														<span class="count">
+															(7)
+														</span>
+													</a>
+												</li>
+																															
+																				
+												<li class="grid_4">
+													<a href="http://mondaybynoon.com/category/html/">
+														<span class="cat-title">HTML</span>
+														<span class="count">
+															(51)
+														</span>
+													</a>
+												</li>
+																															
+																				
+												<li class="grid_4">
+													<a href="http://mondaybynoon.com/category/improving-process/">
+														<span class="cat-title">Improving Process</span>
+														<span class="count">
+															(22)
+														</span>
+													</a>
+												</li>
+																															
+																				
+												<li class="grid_3 omega">
+													<a href="http://mondaybynoon.com/category/inspiration/">
+														<span class="cat-title">Inspiration</span>
+														<span class="count">
+															(2)
+														</span>
+													</a>
+												</li>
+																															
+																				
+												<li class="grid_4 alpha">
+													<a href="http://mondaybynoon.com/category/interview/">
+														<span class="cat-title">Interview</span>
+														<span class="count">
+															(1)
+														</span>
+													</a>
+												</li>
+																															
+																				
+												<li class="grid_4">
+													<a href="http://mondaybynoon.com/category/javascript/">
+														<span class="cat-title">JavaScript</span>
+														<span class="count">
+															(35)
+														</span>
+													</a>
+												</li>
+																															
+																				
+												<li class="grid_4">
+													<a href="http://mondaybynoon.com/category/linux/">
+														<span class="cat-title">Linux</span>
+														<span class="count">
+															(7)
+														</span>
+													</a>
+												</li>
+																															
+																				
+												<li class="grid_4">
+													<a href="http://mondaybynoon.com/category/opinion/">
+														<span class="cat-title">Opinion</span>
+														<span class="count">
+															(156)
+														</span>
+													</a>
+												</li>
+																															
+																				
+												<li class="grid_3 omega">
+													<a href="http://mondaybynoon.com/category/programming-2/">
+														<span class="cat-title">Programming</span>
+														<span class="count">
+															(5)
+														</span>
+													</a>
+												</li>
+																															
+																				
+												<li class="grid_4 alpha">
+													<a href="http://mondaybynoon.com/category/reviews/">
+														<span class="cat-title">Reviews</span>
+														<span class="count">
+															(8)
+														</span>
+													</a>
+												</li>
+																															
+																				
+												<li class="grid_4">
+													<a href="http://mondaybynoon.com/category/semantics/">
+														<span class="cat-title">Semantics</span>
+														<span class="count">
+															(24)
+														</span>
+													</a>
+												</li>
+																															
+																				
+												<li class="grid_4">
+													<a href="http://mondaybynoon.com/category/seo/">
+														<span class="cat-title">SEO</span>
+														<span class="count">
+															(5)
+														</span>
+													</a>
+												</li>
+																															
+																				
+												<li class="grid_4">
+													<a href="http://mondaybynoon.com/category/site-news/">
+														<span class="cat-title">Site News</span>
+														<span class="count">
+															(25)
+														</span>
+													</a>
+												</li>
+																															
+																				
+												<li class="grid_3 omega">
+													<a href="http://mondaybynoon.com/category/standards/">
+														<span class="cat-title">Standards</span>
+														<span class="count">
+															(28)
+														</span>
+													</a>
+												</li>
+																															
+																				
+												<li class="grid_4 alpha">
+													<a href="http://mondaybynoon.com/category/tips/">
+														<span class="cat-title">Tips</span>
+														<span class="count">
+															(65)
+														</span>
+													</a>
+												</li>
+																															
+																				
+												<li class="grid_4">
+													<a href="http://mondaybynoon.com/category/typography/">
+														<span class="cat-title">Typography</span>
+														<span class="count">
+															(8)
+														</span>
+													</a>
+												</li>
+																															
+																				
+												<li class="grid_4">
+													<a href="http://mondaybynoon.com/category/usability/">
+														<span class="cat-title">Usability</span>
+														<span class="count">
+															(24)
+														</span>
+													</a>
+												</li>
+																															
+																				
+												<li class="grid_4">
+													<a href="http://mondaybynoon.com/category/wordpress/">
+														<span class="cat-title">WordPress</span>
+														<span class="count">
+															(27)
+														</span>
+													</a>
+												</li>
+																															
+																				
+												<li class="grid_3 omega">
+													<a href="http://mondaybynoon.com/category/workbench/">
+														<span class="cat-title">Workbench</span>
+														<span class="count">
+															(33)
+														</span>
+													</a>
+												</li>
+																																	</ul>
+									
+									</div>
+									<!-- /categories -->
+									
+									<div id="copyright" class="group">
+										
+										<p>Copyright &copy; 2006-2010 Jonathan Christopher</p>
+										
+										<ul>
+											<li>
+												<a href="http://www.wordpress.org/">
+													<img src="http://mondaybynoon.com/wp-content/themes/v6/images/logo-wordpress.png" alt="WordPress Logo" />
+												</a>
+											</li>
+											<li>
+												<a href="http://www.mediatemple.net/.from/9r-mondaybynoon.com">
+													<img src="http://mondaybynoon.com/wp-content/themes/v6/images/logo-mediatemple.png" alt="Media Temple Logo" />
+												</a>
+											</li>
+											<li>
+												<a href="http://www.9rules.com/">
+													<img src="http://mondaybynoon.com/wp-content/themes/v6/images/logo-9rules.png" alt="9rules Logo" />
+												</a>
+											</li>
+										</ul>
+										
+									</div>
+									<!-- /copyright -->
+
+								</div>
+								<!-- /footer -->
+						
+							</div>
+							<!-- /content -->
+
+						</div>
+						<!-- /texture -->
+				
+					</div>
+					<!-- /container -->
+			
+				</div>
+				<!-- /site -->
+		
+			</div>
+			<!-- /texture -->
+	
+		</div>
+		<!-- /big-helper -->
+
+				
+		<script src="/mint/?js" type="text/javascript"></script>
+
+		<script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
+		<script type="text/javascript">
+		_uacct = "UA-347507-2";
+		urchinTracker();
+		</script>
+
+        <!-- Piwik -->
+        <script type="text/javascript">
+        var pkBaseURL = (("https:" == document.location.protocol) ? "https://mondaybynoon.com/piwik/" : "http://mondaybynoon.com/piwik/");
+        document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+        </script><script type="text/javascript">
+        try {
+        var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 1);
+        piwikTracker.trackPageView();
+        piwikTracker.enableLinkTracking();
+        } catch( err ) {}
+        </script><noscript><p><img src="http://mondaybynoon.com/piwik/piwik.php?idsite=1" style="border:0" alt="" /></p></noscript>
+        <!-- End Piwik Tag -->
+	
+	</body>
+</html>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk (enhanced)
+Database Caching 44/79 queries in 0.327 seconds using disk
+Object Caching 0/0 objects using disk
+
+Served from: mondaybynoon.com @ 2010-12-25 08:44:42 -->
