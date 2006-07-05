@@ -1,0 +1,292 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+
+<head>
+
+	<title>Hot Dates with CSS by Christian Montoya, christianmontoya.com</title>
+
+	<meta name="author" content="Christian Montoya">
+	<meta name="copyright" content="Christian Montoya, http://www.christianmontoya.com">
+	<meta name="description" content="A demonstration by Christian Montoya of christianmontoya.com on making calendar-style dates for blog entries with CSS.">
+	<meta name="keywords" content="webdesign, css, html, accessibility">
+
+	<style type="text/css" media="screen">
+		html { font-size:100.01%; }
+		body { 	
+			font-size:1em; margin:0; padding:5px 0;
+			font-family: Verdana, sans-serif; 
+			background:#fff; 
+			color:#000;
+		}
+		
+		/* initial settings */
+
+		h1, h2, h3, h4, h5, h6, p, pre, blockquote, ul, ol, dl, address, table {
+			margin:.7em 0; 
+			padding:0; 
+		}
+		li, dd { margin-left:1.6em; }
+		ol li { margin-left:2.2em; }
+		li, dt { margin-top:.2em; margin-bottom:.2em; }
+		blockquote { margin: .2em .8em; }
+		input, select, textarea, button { font-size:100%; }
+		a img { border:none; }
+		pre { font-size:1.2em; }
+		code { font-size:1.2em; font-family:"Courier New", courier, monospace; }
+		
+		/* formatting */
+		
+		#container { width:40em; margin:0 auto; padding:0 1em; border:1px solid #ccc; }
+		.clear { clear:both; }
+		
+		/* typography */
+		
+		h1 { font-size:1.8em; font-weight:normal; letter-spacing:-1px; border-bottom:3px solid #ccc; }
+		h2 { font-size:1.4em; font-weight:normal; letter-spacing:-1px; border-bottom:1px solid #ccc; }
+		h3 { font-size:1.2em; font-weight:normal; letter-spacing:-1px; border-bottom:1px solid #ddd; }
+		.signature { text-align:right; }
+		
+		/* examples */
+		
+		.published-1 {
+			display:block; 
+			text-align:center;
+			float:left;
+			font-family:Arial, Helvetica, sans-serif;
+			border-bottom:none;  
+		}
+		.pub-month-1 {
+			display:block; 
+			font-size:.9em;
+			margin:0; 
+			padding:0;
+		}
+		.pub-date-1 { 
+			display:block;
+			font-size:1.4em;
+			margin:0; 
+			padding:0;  
+		}
+		
+		.published-2 {
+			display:block;
+			text-align:center;
+			float:left; 
+			font-family: Arial, Helvetica, sans-serif;
+			border-bottom:none;
+			border:1px outset #bbb;
+		}
+		.pub-month-2 {
+			display:block;
+			font-size:.9em;
+			margin:0; 
+			padding:0 2px;
+			padding-bottom:4px;
+			background:#fed url(cal-triangle.png) center bottom repeat-x;
+		}
+		.pub-date-2 { 
+			display:block;
+			font-size:1.4em;
+			margin:0; 
+			padding:0 2px;
+			background:#f6ffff;  
+		}
+		
+		.published-3 {
+			display:block;
+			text-align: center;
+			float:left; 
+			font-family: Arial, Helvetica, sans-serif;
+			border-bottom:none;
+			background:url(clip-bottom.png) 
+				right bottom no-repeat;
+			width:2.2em;
+			overflow:hidden; 
+		}
+		.pub-month-3 {
+			display:block;
+			font-size: .9em;
+			margin:0; 
+			padding:0;
+			padding-top:12px;
+			background:url(clip-top.png) 
+				center top repeat-x;
+		}
+		.pub-date-3 {
+			display:block;
+			font-size:1.4em;
+			margin:0; 
+			padding:0;
+		}
+		
+		.post-content-final { 
+			margin-left:2.6em; 
+			border-left:1px solid #ccc; 
+			padding-left:5px; 
+		}
+	</style>
+	
+</head>
+
+<body>
+
+	<div id="container">
+		<h1>Hot Dates with CSS</h1>
+		<p>Here are some demonstrations of ways to make blog dates look like small calendar pages. <a href="http://www.christianmontoya.com/2006/07/03/hot-dates-with-css/">Read the related blog entry at christianmontoya.com</a></p>
+		<p>Update July 9, 2006: This demonstration has been rewritten using the <a href="http://microformats.org/wiki/datetime-design-pattern">Microformats date-time-design pattern</a>. Unfortunately I had to use "acronym" instead of "abbr" because IE 6 does not support "abbr."</p>
+		
+		<h2>First, the markup</h2>
+		<p>All dates will have the following markup. You could do probably do them a little different, but it's important to have one wrapper container and two inner containers in order to have enough hooks.</p>
+
+<pre>&lt;acronym class="published" title="June 28, 2006"&gt;
+	&lt;span class="pub-month"&gt;Jun&lt;/span&gt;
+	&lt;span class="pub-date"&gt;28&lt;/span&gt;
+&lt;/acronym&gt;</pre>
+
+		<h2>Next, some basic styling</h2>
+		<p>The credit goes to <a href="http://www.wynia.org/wordpress/2005/09/05/css-date-blocks-for-blogs/">j wynia</a> on the default styling here, except that unlike his examples, I will not use pixel sizing on my text. Here's the styling:</p>
+		
+<pre>.published {
+	display:block;
+	text-align: center;
+	float:left;
+	font-family: Arial, Helvetica, sans-serif; 
+	border-bottom:none;
+}
+.pub-month {
+	display:block; 
+	font-size: .9em;
+	margin:0; 
+	padding:0;
+}
+.pub-date { 
+	display:block; 
+	font-size:1.4em;
+	margin:0; 
+	padding:0;  
+}</pre>
+
+		<p>The result of this default styling is this:</p>
+		
+		<acronym class="published-1" title="June 28, 2006">
+			<span class="pub-month-1">Jun</span>
+			<span class="pub-date-1">28</span>
+		</acronym>
+		
+		<br class="clear">
+		
+		<p>All elements must be given <code>display:block</code> for this to work. By floating the parent container, the block shrinks horizontally to the width of its text. (Remember that all floats have to be followed by a clearing element if you do not want other content to sit next to it.) The end result is a basic calendar date with the text exactly where we want it. Now we can play with images to get different results.</p>
+		
+		<h2>Example 1</h2>
+		<p>The first example will use this image across the middle to divide the month and the date: <code><a href="cal-triangle.png">cal-triangle.png</a></code>.</p>
+		<p>It will also use a border on the wrapper to complete the container. Here is the CSS:</p>
+		
+<pre>.published {
+	display:block;
+	text-align: center;
+	float:left; 
+	font-family: Arial, Helvetica, sans-serif;
+	border-bottom:none;
+	border:1px outset #bbb;
+}
+.pub-month {
+	display:block; 
+	font-size: .9em;
+	margin:0; 
+	padding:0 2px;
+	padding-bottom:4px;
+	background:#fed url(cal-triangle.png) 
+		center bottom repeat-x;
+}
+.pub-date { 
+	display:block; 
+	font-size:1.4em;
+	margin:0; 
+	padding:0 2px;
+	background:#f6ffff;  
+}</pre>
+
+		<p>The result of this styling is this:</p>
+		
+		<acronym class="published-2" title="June 28, 2006">
+			<span class="pub-month-2">Jun</span>
+			<span class="pub-date-2">28</span>
+		</acronym>
+		
+		<br class="clear">
+		
+		<h2>Example 2</h2>
+		<p>This example is inspired by everyone's favorite blog design over at <a href="http://veerle.duoh.com/index.php">veerle's blog</a>. Here are the images I will use: <code><a href="clip-top.png">clip-top.png</a> <a href="clip-bottom.png">clip-bottom.png</a></code>. They are not pretty but I suggest you take the technique and make your own images. Here is the CSS:</p>
+		
+<pre>.published {
+	display:block; 
+	text-align: center;
+	float:left; 
+	font-family: Arial, Helvetica, sans-serif;
+	border-bottom:none;
+	background:url(clip-bottom.png) 
+		right bottom no-repeat;
+	width:2.2em;
+}
+.pub-month {
+	display:block;
+	font-size: .9em;
+	margin:0; 
+	padding:0;
+	padding-top:12px;
+	background:url(clip-top.png) 
+		center top repeat-x;
+}
+.pub-date { 
+	display:block; 
+	font-size:1.4em;
+	margin:0; 
+	padding:0;
+}</pre>
+
+		<p>Notice that here I have applied the bottom background to the parent container and attached it to the bottom right, so as it scales with the date block the effect does not change. Both images are extra wide so they still fill the width as the text size increases. Notice that I also had to set the width of the parent container, because float-wrapping can get funky on elements of different sizes and cause the background images not to line up correctly. Here is the result:</p>
+		
+		<acronym class="published-3" title="June 28, 2006">
+			<span class="pub-month-3">Jun</span>
+			<span class="pub-date-3">28</span>
+		</acronym>
+		
+		<br class="clear">
+		
+		<h2>A Complete Example</h2>
+		
+		<p>Here's the previous example combined with a sample blog post. Check it out:</p>
+		
+		<div class="post-final">
+			<acronym class="published-3" title="June 28, 2006">
+				<span class="pub-month-3">Jun</span>
+				<span class="pub-date-3">28</span>
+			</acronym>
+			<div class="post-content-final">
+				<h3>Post title</h3>
+				<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam placerat enim sed tellus. In adipiscing iaculis metus. Cras arcu quam, adipiscing sed, volutpat et, lobortis vel, elit. Etiam ligula. Cras pede nisl, rutrum sit amet, pharetra vitae, eleifend vel, erat. Curabitur viverra tortor in lacus. Proin at nunc. Duis dictum. Ut id tellus. Mauris libero neque, posuere vel, adipiscing sollicitudin, tempor mattis, nisl. Praesent volutpat. Donec eget lacus id libero viverra ullamcorper. Pellentesque accumsan mauris eu risus accumsan tempor. Ut tristique consequat erat. Donec leo. Proin tempor condimentum velit. Vivamus ultricies leo. Nunc a erat at nisl elementum sodales.</p>
+			</div>
+			<br class="clear">
+		</div>
+		
+		<p>If you really need the CSS for the sample blog entry, here it is:</p>
+		
+<pre>.post-content-final { 
+	margin-left:2.6em; 
+	border-left:1px solid #ccc; 
+	padding-left:5px; 
+}</pre>
+
+		<p>The div of class "<code>post-content-final</code>" appears just after the calendar block in the markup. A float clear was added after that just for safety, but it usually will not be necessary if the entries are long enough.</p>
+		
+		<h2>Conclusion</h2>
+		<p>Dressing up your dates makes them stand out nicely, and you can do it in such a way that they scale well with the rest of your layout (even an elastic layout like this one). Feel free to use any code or images from this demonstration, and if you enjoy it, just a link back would be appreciated.</p>
+		
+		<p class="signature">&mdash; <a href="http://www.christianmontoya.com">Christian Montoya</a></p>
+
+	</div>
+	
+</body>
+
+</html>
