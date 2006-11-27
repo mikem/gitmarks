@@ -1,0 +1,1208 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>GnuPG Hacks | Linux Journal</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="canonical" href="http://www.linuxjournal.com/article/8732" />
+<meta name="keywords" content="linux, open source, Ubuntu, Debian, Fedora, Madriva, suse, magazine, lamp, Linux Journal" />
+<meta name="description" content="Have you wondered about using cryptography, but found it too confusing? Are complicated software packages, passphrases, keys, key rings, certificates and fingerprints too daunting?  You don&#039;t need all that. With no prior experience and nothing to remember, GnuPG can do basic and immediately useful cryptography." />
+<meta name="revisit-after" content="1 day" />
+<link rel="shortcut icon" href="/files/linuxjournal.com/ufiles/linuxjournal_favicon.png" type="image/x-icon" />
+  <link type="text/css" rel="stylesheet" media="all" href="/files/linuxjournal.com/ufiles/css/css_9238dc28ab2af9013ded9c9945059341.css" />
+<link type="text/css" rel="stylesheet" media="print" href="/files/linuxjournal.com/ufiles/css/css_df566e361d608ff23da524a73b8f6bae.css" />
+<!--[if IE]>
+<link type="text/css" rel="stylesheet" media="all" href="/sites/linuxjournal.com/themes/zen/zen/ie.css?O" />
+<![endif]-->
+  <script type="text/javascript" src="/files/linuxjournal.com/ufiles/js/js_3133bfe57f5b7a1fcfa3990f2752cc85.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+jQuery.extend(Drupal.settings, { "basePath": "/", "user_relationships_ui": { "loadingimage": "/sites/linuxjournal.com/modules/user_relationships/user_relationships_ui/images/loadingAnimation.gif", "savingimage": "/sites/linuxjournal.com/modules/user_relationships/user_relationships_ui/images/savingimage.gif", "position": { "position": "absolute", "left": "0", "top": "0" } }, "quicktabs": { "qt_1": { "tabs": [ 0, 0, 0 ] } } });
+//--><!]]>
+</script>
+<!-- PUT THIS TAG IN THE head SECTION -->
+<script type="text/javascript" src="http://partner.googleadservices.com/gampad/google_service.js">
+</script>
+<script type="text/javascript">
+  GS_googleAddAdSenseService("ca-pub-3600556074671070");
+  GS_googleEnableAllServices();
+</script>
+<script type="text/javascript">
+  GA_googleAddSlot("ca-pub-3600556074671070", "Half_Banner336x90");
+  GA_googleAddSlot("ca-pub-3600556074671070", "Large_Rectangle336x280");
+  GA_googleAddSlot("ca-pub-3600556074671070", "Leaderboard728x90");
+GA_googleAddSlot("ca-pub-3600556074671070", "Desktop_LargeRectangle");
+GA_googleAddSlot("ca-pub-3600556074671070", "Desktop_Leaderboard");
+GA_googleAddSlot("ca-pub-3600556074671070", "Embedded_LargeRectangle");
+GA_googleAddSlot("ca-pub-3600556074671070", "Embedded_Leaderboard");
+GA_googleAddSlot("ca-pub-3600556074671070", "Mobile_LargeRectangle");
+GA_googleAddSlot("ca-pub-3600556074671070", "Mobile_Leaderboard");
+GA_googleAddSlot("ca-pub-3600556074671070", "Security_LargeRectangle");
+GA_googleAddSlot("ca-pub-3600556074671070", "Security_Leaderboard");
+GA_googleAddSlot("ca-pub-3600556074671070", "SysAdmin_LargeRectangle");
+GA_googleAddSlot("ca-pub-3600556074671070", "SysAdmin_Leaderboard");
+GA_googleAddSlot("ca-pub-3600556074671070", "Virtualization_LargeRectangle");
+GA_googleAddSlot("ca-pub-3600556074671070", "Virtualization_Leaderboard");
+GA_googleAddSlot("ca-pub-3600556074671070", "HPC_LargeRectangle");
+GA_googleAddSlot("ca-pub-3600556074671070", "HPC_Leaderboard");
+GA_googleAddSlot("ca-pub-3600556074671070", "WebDevelopment_LargeRectangle");
+GA_googleAddSlot("ca-pub-3600556074671070", "WebDevelopment_Leaderboard");
+</script>
+<script type="text/javascript">
+  GA_googleFetchAds();
+</script>
+<!-- END OF TAG FOR head SECTION -->
+
+ <!-- <script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script> -->
+ <!--<script type="text/javascript">_uacct = "UA-1117794-1"; urchinTracker();</script> -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-1117794-1");
+pageTracker._setDomainName(".linuxjournal.com");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+<!-- Start Quantcast tag -->
+<script type="text/javascript"
+src="http://edge.quantserve.com/quant.js"></script>
+<script
+type="text/javascript">_qacct="p-a3K3N6enFe9wA";quantserve();</script>
+<object>
+<noscript>
+<a href="http://www.quantcast.com/p-a3K3N6enFe9wA"
+target="_blank"><img
+src="http://pixel.quantserve.com/pixel/p-a3K3N6enFe9wA.gif"
+style="display: none;" border="0" height="1" width="1"
+alt="Quantcast"/></a>
+</noscript>
+</object>
+<!-- End Quantcast tag -->
+
+</head>
+<body class="not-front not-logged-in node-type-xmlnode one-sidebar sidebar-right page-node-8732 section-node">
+
+
+  <div id="page"><div id="page-inner">
+<div id="header-top">
+<div id="login">
+<form action="/?q=user&amp;destination=node%2F8732"  method="post" id="user-login">
+Username/Email:&nbsp;<input type="text" maxlength="60" name="name" id="edit-name" size="15" value="" class="form-text required" />
+Password:&nbsp;<input type="password" maxlength="" name="pass" id="edit-pass" size="15" class="form-text required" />
+<input type="submit" name="op" value="Login" class="form-submit" />
+
+
+<input type="hidden" name="form_id" id="edit-user-login" value="user_login" />
+
+</form>
+</div>
+<div id="login-links">
+<a href="/user/register">Register</a> | <a href="/user/password">Forgot your password?</a>
+
+
+
+</div>
+<div id="connect">
+<a href="http://www.twitter.com/linuxjournal" title="Follow us on Twitter"><img alt="Twitter" src="/files/linuxjournal.com/images/twittericon.jpg" /></a><a href="http://www.facebook.com/linuxjournal" title="Become a Fan on Facebook"><img alt="Facebook" src="/files/linuxjournal.com/images/fbicon.jpg" /></a><a href="http://www.flickr.com/groups/linuxjournal/pool/" title="Contribute to Our Flickr Pool"><img alt="Flickr" src="/files/linuxjournal.com/images/flickricon.jpg" /></a><a href="/rss_feeds" title="Subscribe to Our Feeds"><img alt="RSS" src="/files/linuxjournal.com/images/rssicon.jpg" /></a>
+</div>
+</div> <!-- /#header-top -->
+
+
+
+
+
+    <a name="top" id="navigation-top"></a>
+          <div id="skip-to-nav"><a href="#navigation">Skip to Navigation</a></div>
+    
+    <div id="header"><div id="header-inner" class="clear-block">
+
+              <div id="logo-title">
+
+                      <div id="logo"><a href="/" title="Home" rel="home"><img src="/files/linuxjournal.com/ufiles/logo-lj.jpg" alt="Home" id="logo-image" /></a></div>
+          
+          
+          
+	<div id="leaderboard-adblock" class="adblock leaderboard-adblock">
+       <div id="block-block-90" class="block block-block region-odd odd region-count-1 count-13"><div class="block-inner">
+
+  
+  <div class="content">
+    <!-- PUT THIS TAG IN DESIRED LOCATION OF SLOT Leaderboard728x90
+     -->
+<script type="text/javascript">
+  GA_googleFillSlot("Leaderboard728x90");
+</script>
+<!-- END OF TAG FOR SLOT Leaderboard728x90
+     -->
+  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+	</div>
+
+        </div> <!-- /#logo-title -->
+      
+
+
+      
+    </div></div> <!-- /#header-inner, /#header -->
+
+    <div id="main"><div id="main-inner" class="clear-block with-navbar">
+
+      <div id="content"><div id="content-inner">
+
+        
+        
+                  <div id="content-header">
+            <div class="breadcrumb"><a href="/">Home</a> › </div>                          <h1 class="title">GnuPG Hacks</h1>
+                                                          </div> <!-- /#content-header -->
+        
+        <div id="content-area">
+          <div id="node-8732" class="node node-type-xmlnode"><div class="node-inner">
+
+
+
+  
+
+  
+  
+  
+
+
+  
+
+<div id="facebook-like">
+<iframe src="http://www.facebook.com/plugins/like.php?href=www.linuxjournal.com/article/8732&amp;layout=standard&amp;show_faces=false&amp;width=250&amp;action=like&amp;font=arial&amp;colorscheme=light&amp;height=55" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:250px; height:55px;" allowTransparency="true"></iframe>
+</div>
+
+<div class="issue"> 
+	<div class="issue-cover">
+	<a href="/issue/143"><img title="Issue 143" alt="Issue 143" src="/files/linuxjournal.com/linuxjournal/issues/143/cover143.small.jpg" /></a>
+	</div>
+	<p><a href="/issue/143">From Issue #143<br />March 2006</a></p>
+</div>
+
+  
+
+  
+
+  
+      <div class="meta">
+              <div class="submitted">
+		Jan 26, 2006		&nbsp;By&nbsp;<a href="/user/801591" title="View user profile.">Tony Stieber</a>	</div>
+      
+              <div class="terms terms-inline">&nbsp;in<ul class="links inline"><li class="taxonomy_term_29 first last"><a href="/taxonomy/term/29" rel="tag" title="">Linux Journal</a></li>
+</ul></div>
+      
+  	 </div>
+    <!-- how'd this get in here?</div> -->
+  
+  
+    	<div class="abstract">
+	GnuPG does a lot more than just encrypt and decrypt e-mail and attachments.	</div>
+    
+
+
+
+  <div class="content">
+
+    <div class="article" lang="en"><div class="simplesect" lang="en"><div class="titlepage"><a name="N0xa50890.0xb44b18"></a></div><p>
+Have you wondered about using cryptography, but found it too
+confusing? Are complicated software packages, passphrases, keys, key
+rings, certificates and fingerprints too daunting?
+</p><p>
+You don't need all that. With no prior experience and nothing to remember,
+GnuPG can do basic and immediately useful cryptography. GnuPG even may
+be installed on your Linux system already.
+</p></div><div class="simplesect" lang="en"><div class="titlepage"><a name="N0xa50890.0xb44c78"></a>
+GnuPG and OpenPGP</div><p>
+The GnuPG is the GNU Project's implementation of the OpenPGP
+standard. Also known as the Gnu Privacy Guard, it is a sophisticated
+public key cryptosystem with more than 70 command-line options, plus
+an internal command-line and menu environment. It has been ported to
+several operating systems and has precompiled binaries available from
+the GnuPG Web site (see the on-line Resources). Like all GNU software, it can be used freely under
+the GNU General Public License.
+</p><p>
+The OpenPGP standard, RFC 2440, is based on the Pretty Good Privacy
+system developed by Phil Zimmermann in 1991. OpenPGP is also the basis
+for commercial products on even more operating systems. An OpenPGP
+system is the most common file encryption system you will encounter.
+</p></div><div class="simplesect" lang="en"><div class="titlepage"><a name="N0xa50890.0xb44dd8"></a>
+Getting Started</div><p>
+First, let's begin with some GnuPG features that don't need
+a passphrase. After that, we'll choose a passphrase and use it to
+encrypt something.
+Note that GnuPG is the name of the software, but the name of the command
+is <tt>gpg</tt>.
+</p><p>
+Make sure GnuPG is installed and in your path:
+
+<pre class="programlisting">
+gpg --version
+</pre>
+</p><p>
+You should get something like this:
+
+
+<pre class="programlisting">
+gpg (GnuPG) 1.4.1
+Copyright (C) 2005 Free Software Foundation, Inc.
+This program comes with ABSOLUTELY NO WARRANTY.
+This is free software, and you are welcome to
+redistribute it under certain conditions.
+See the file COPYING for details.
+
+Home: ~/.gnupg
+Supported algorithms:
+Pubkey: RSA, RSA-E, RSA-S, ELG-E, DSA
+Cipher: 3DES, CAST5, BLOWFISH, AES, AES192, AES256, TWOFISH
+Hash: MD5, SHA1, RIPEMD160, SHA256, SHA384, SHA512
+Compression: Uncompressed, ZIP, ZLIB, BZIP2
+</pre>
+</p><p>
+The version number, date and other details may vary. The examples shown in
+this article should work for most current and future versions of GnuPG.
+</p><p>
+Now, type:
+
+<pre class="programlisting">
+gpg /dev/null
+</pre>
+</p><p>
+You might get something like this:
+
+<pre class="programlisting">
+gpg: /home/you/.gnupg: directory created
+gpg: new configuration file `/home/you/.gnupg/gpg.conf'
+ &#8618;created
+gpg: WARNING: options in `/home/you/.gnupg/gpg.conf'
+ &#8618;are not yet active during this run
+gpg: keyring `/home/you/.gnupg/secring.gpg' created
+gpg: keyring `/home/you/.gnupg/pubring.gpg' created
+gpg: processing message failed: eof
+</pre>
+</p><p>
+This is perfectly normal the first time you run GnuPG. If it doesn't
+happen, it simply means you've run GnuPG before, or your .gnupg directory
+already exists.
+</p></div><div class="simplesect" lang="en"><div class="titlepage"><a name="N0xa50890.0xb452a8"></a>
+Binary File Shields</div><p>
+Most e-mail programs support file attachments, but command-line e-mail
+programs, such as /bin/mail, don't. Sometimes it's more convenient to
+keep all the data in the message body. But binary files must be ASCII-encoded to prevent them from being corrupted in transit.
+</p><p>
+You may have tried to use uuencode and found it confusing or that it didn't
+work. Not all systems have a command-line MIME encoder. However, GnuPG
+has an ASCII-encoding option very similar to MIME, but without all
+the complexity, overhead and features.
+</p><p>
+To wrap a file in PGP ASCII armor, type:
+
+<pre class="programlisting">
+
+$ gpg --enarmor &lt; filename.bin &gt; filename.txt
+
+</pre>
+</p><p>
+To unwrap a file already in PGP ASCII armor, type:
+
+<pre class="programlisting">
+
+$ gpg --dearmor &lt; filename.txt &gt; filename.bin
+
+</pre>
+</p><p>
+Warning: despite the name, the OpenPGP ASCII armor has <span class="emphasis"><em>absolutely
+no security</em></span>. If you do want security and data compression, see
+the
+Quick and Clean Encryption section below and use a good passphrase.
+</p></div><div class="simplesect" lang="en"><div class="titlepage"><a name="N0xa50890.0xb45618"></a>
+Better Checksums</div><p>
+Do you suspect a file you just received is corrupted? Traditionally, the
+<tt>sum</tt> or <tt>cksum</tt> command is run over the file before
+and after it was sent and the outputs are compared. But there are three
+different incompatible versions of these commands, and even the same
+version can produce completely different output on different machines
+due to processor endian issues. Even worse, sometimes they won't even
+detect corrupted files. By chance alone, even when they are compatible,
+they sometimes will produce the same output for different files. The
+32-bit output of the sum and cksum commands is simply
+too small for reliability, much less security. The popular SSH v1
+CRC-32 compensation attack is the same vulnerability.
+</p><p>
+You could use <tt>md5sum</tt> instead, but there are different versions
+of this command. Each version has slight differences in formatting
+of filenames, whitespace and hexadecimal case. These differences
+in format prevent <tt>diff</tt> from running cleanly. In addition, there
+are known security vulnerabilities in the MD5 hash algorithm used by
+md5sum. And, sometimes md5sum isn't even installed.
+</p><p>
+GnuPG avoids these problems, because it produces the same output regardless
+of operating system or processor architecture. GnuPG also supports newer
+and more secure algorithms:
+
+<pre class="programlisting">
+$ gpg --print-md sha1 filename
+filename: E83A 42B9 BC84 31A6 6450  99BE 50B6 341A 35D3 DCEB
+</pre>
+</p><p>
+It also will take multiple files:
+
+<pre class="programlisting">
+$ gpg --print-md sha1 *.txt
+test.txt: E0D6 3F44 4253 CED5 9205  4047 4AA6 4E0F FD0F 130D
+test2.txt: 32AC 34F9 B7AF 1972 C015  E5EE 456E 89BD CC3C 7246
+</pre>
+</p><p>
+If you still need MD5, that's available too:
+
+<pre class="programlisting">
+$ gpg --print-md md5 filename
+filename: 26 E9 85 5F 8A D6 A5 90  6F EA 12 12 83 C7 29 C4
+</pre>
+</p><p>
+The more recent GnuPG versions also support much more secure hash
+algorithms, such as SHA-512:
+
+<pre class="programlisting">
+$ gpg --print-md sha512 filename
+filename: FC37410D 9336DD60 22AEB6A2 A42E82F1 2EA3470D 4982E958 B35C14A0
+          CF381CD2 3C4CBA35 BE5F11CB 05505ED2 DBF1C7A0 397EFF75 007FAEBB
+          30B43B30 6514990D
+</pre>
+</p><p>
+By the way, you can validate these --print-md examples by creating a file
+called filename containing the single line: <tt>The Linux Journal</tt>.
+</p><p>
+Your hash values should have exactly the same hexadecimal value as those
+in this article if the contents of the file is the same.
+</p></div></div><div class="links"><div class="item-list"><ul class="pager"><li class="pager-current first">1</li>
+<li class="pager-item"><a href="/article/8732?page=0,1" title="Go to page 2" class="active">2</a></li>
+<li class="pager-item"><a href="/article/8732?page=0,2" title="Go to page 3" class="active">3</a></li>
+<li class="pager-item"><a href="/article/8732?page=0,3" title="Go to page 4" class="active">4</a></li>
+<li class="pager-next"><a href="/article/8732?page=0,1" title="Go to next page" class="active">next ›</a></li>
+<li class="pager-last last"><a href="/article/8732?page=0,3" title="Go to last page" class="active">last »</a></li>
+</ul></div></div>
+  </div>
+      <div class="user-signature clear-block">
+______________________
+	<p>
+        <!--paging_filter-->	</p>
+      </div>
+   
+
+
+  <ul class="links inline"><li class="flag-anon first"><a href="/u?destination=node%2F8732">Login to save this as favorite</a></li>
+<li class="service-links-delicious"><a href="http://del.icio.us/post?url=http%3A%2F%2Fwww.linuxjournal.com%2Farticle%2F8732&amp;title=GnuPG+Hacks" title="Bookmark this post on del.icio.us." id="service-links-delicious-1" class="service-links-delicious" rel="nofollow"><img src="/sites/linuxjournal.com/modules/service_links/images/delicious.png" alt="del.icio.us" title="" width="16" height="16" /></a></li>
+<li class="service-links-digg"><a href="http://digg.com/submit?phase=2&amp;url=http%3A%2F%2Fwww.linuxjournal.com%2Farticle%2F8732&amp;title=GnuPG+Hacks" title="Digg this post on digg.com" id="service-links-digg-1" class="service-links-digg" rel="nofollow"><img src="/sites/linuxjournal.com/modules/service_links/images/digg.png" alt="Digg" title="" width="16" height="16" /></a></li>
+<li class="service-links-facebook"><a href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fwww.linuxjournal.com%2Farticle%2F8732&amp;t=GnuPG+Hacks" title="Share on Facebook." id="service-links-facebook-1" class="service-links-facebook" rel="nofollow"><img src="/sites/linuxjournal.com/modules/service_links/images/facebook.png" alt="Facebook" title="" width="16" height="16" /></a></li>
+<li class="service-links-reddit"><a href="http://reddit.com/submit?url=http%3A%2F%2Fwww.linuxjournal.com%2Farticle%2F8732&amp;title=GnuPG+Hacks" title="Submit this post on reddit.com." id="service-links-reddit-1" class="service-links-reddit" rel="nofollow"><img src="/sites/linuxjournal.com/modules/service_links/images/reddit.png" alt="Reddit" title="" width="16" height="16" /></a></li>
+<li class="service-links-slashdot"><a href="http://slashdot.org/bookmark.pl?url=http%3A%2F%2Fwww.linuxjournal.com%2Farticle%2F8732&amp;title=GnuPG+Hacks" title="Bookmark this post on SlashDot" id="service-links-slashdot-1" class="service-links-slashdot" rel="nofollow"><img src="/sites/linuxjournal.com/modules/service_links/images/slashdot.png" alt="SlashDot" title="" width="16" height="16" /></a></li>
+<li class="service-links-stumbleupon"><a href="http://www.stumbleupon.com/submit?url=http%3A%2F%2Fwww.linuxjournal.com%2Farticle%2F8732&amp;title=GnuPG+Hacks" title="Thumb this up at StumbleUpon" id="service-links-stumbleupon-1" class="service-links-stumbleupon" rel="nofollow"><img src="/sites/linuxjournal.com/modules/service_links/images/stumbleit.png" alt="StumbleUpon" title="" width="16" height="16" /></a></li>
+<li class="tweet_Twitter last"><a href="http://twitter.com/home?status=+GnuPG+Hacks%3A+http%3A/%2Fwww.linuxjournal.com/article/8732" class="tweet" rel="nofollow" target="_blank"><img src="/sites/linuxjournal.com/modules/tweet/twitter.png" alt="Post to Twitter" title="Post to Twitter" width="16" height="16" /></a></li>
+</ul>
+ <!-- <div class="contentad">
+
+  </div>
+  -->
+
+
+
+
+</div></div> <!-- /node-inner, /node -->
+
+
+  <div id="comments">
+          <h2 id="comments-title">Comments</h2>
+        <form action="/article/8732"  accept-charset="UTF-8" method="post" id="comment-controls">
+<div><div class="box"><div class="box-inner">
+
+      <h2 class="title">Comment viewing options</h2>
+  
+  <div class="content">
+    <div class="container-inline"><input type="hidden" name="form_build_id" id="form-fc16a233b0a04e66b50c5a32347a62e0" value="form-fc16a233b0a04e66b50c5a32347a62e0"  />
+<input type="hidden" name="form_id" id="edit-comment-controls" value="comment_controls"  />
+<div class="form-item" id="edit-mode-wrapper">
+ <select name="mode" class="form-select" id="edit-mode" ><option value="1">Flat list - collapsed</option><option value="2">Flat list - expanded</option><option value="3">Threaded list - collapsed</option><option value="4" selected="selected">Threaded list - expanded</option></select>
+</div>
+<div class="form-item" id="edit-order-wrapper">
+ <select name="order" class="form-select" id="edit-order" ><option value="1" selected="selected">Date - newest first</option><option value="2">Date - oldest first</option></select>
+</div>
+<div class="form-item" id="edit-comments-per-page-wrapper">
+ <select name="comments_per_page" class="form-select" id="edit-comments-per-page" ><option value="10">10 comments per page</option><option value="30">30 comments per page</option><option value="50" selected="selected">50 comments per page</option><option value="70">70 comments per page</option><option value="90">90 comments per page</option><option value="150">150 comments per page</option><option value="200">200 comments per page</option><option value="250">250 comments per page</option><option value="300">300 comments per page</option></select>
+</div>
+<input type="submit" name="op" id="edit-submit" value="Save settings"  class="form-submit" />
+</div><div class="description">Select your preferred way to display the comments and click "Save settings" to activate your changes.</div>  </div>
+
+</div></div> <!-- /box-inner, /box -->
+
+</div></form>
+<a id="comment-347808"></a>
+<div class="comment comment-published odd first comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/8732#comment-347808" class="active">wrong correction?</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Anonymous&#039;s picture" title="Anonymous&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Anonymous (not verified) on Tue, 01/26/2010 - 17:02.  </div>
+
+  <div class="content">
+    <p>&gt; The stdin (file descriptor 0) of the gpg process is filename txt,<br />
+rather than passphrase.txt, so your (intended) passphrase is never actually used!</p>
+<p>Then how come the decryption worked?</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<a id="comment-336784"></a>
+<div class="comment comment-published even comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/8732#comment-336784" class="active">I like this article</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="felipe1982&#039;s picture" title="felipe1982&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by <a href="http://felipe1982.com" rel="nofollow">felipe1982</a> (not verified) on Wed, 05/06/2009 - 08:56.  </div>
+
+  <div class="content">
+    <p>i've been using GPG for a few years, and never knew about the --enarmor option (it isn't even in man page for version 1.2.6. I also like the built-in RNG, which I never knew existed. I enjoyed this tutorial did not include information about public key crypto, which is much more common on the web. That makes this article (and ones like it) in shorter supply == more valuable.</p>
+<p>Thanks!</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<a id="comment-328659"></a>
+<div class="comment comment-published odd comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/8732#comment-328659" class="active">GPG should not be used here</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Anonymous&#039;s picture" title="Anonymous&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Anonymous (not verified) on Sun, 11/16/2008 - 13:29.  </div>
+
+  <div class="content">
+    <p>GPG should not be used here at all. According to the man page, the input password is not even hashed.<br />
+Have a look at aesloop instead. (Or maybe openssl enc alternatively)</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<a id="comment-157180"></a>
+<div class="comment comment-published even comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/8732#comment-157180" class="active">gpg --passphrase-fd 0 doesn&#039;t do what you think it does</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Anonymous&#039;s picture" title="Anonymous&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Anonymous (not verified) on Tue, 08/29/2006 - 12:54.  </div>
+
+  <div class="content">
+    <p>The following command, as given in the article, has a problem.</p>
+<p>cat passphrase.txt | gpg --passphrase-fd 0 -c &lt; filename.txt &gt; filename.gpg</p>
+<p>The stdin (file descriptor 0) of the gpg process is filename txt,<br />
+rather than passphrase.txt, so your (intended) passphrase is never actually used!</p>
+<p>Use this instead:</p>
+<p>gpg --passphrase-fd 3 -c 3&lt;passphrase.txt &lt; filename.txt &gt; filename.gpg</p>
+<p>You failed to spot the problem simply because the decryption command<br />
+has the same problem...</p>
+<p>(The unescaped less-than character in my 2 previous posts seem to have caused problems.Please delete them/ignore them)</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<a id="comment-157173"></a>
+<div class="comment comment-published odd last comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/8732#comment-157173" class="active">gpg --passphrase-fd 0 doesn&#039;t do what you think it does</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Anonymous&#039;s picture" title="Anonymous&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Anonymous (not verified) on Tue, 08/29/2006 - 12:36.  </div>
+
+  <div class="content">
+    <p>The following command, as given in the article, has a problem</p>
+<p>cat passphrase.txt | gpg --passphrase-fd 0 -c &lt; filename.txt &gt; filename.gpg</p>
+<p>The stdin (file descriptor 0) of the gpg process is filename txt,<br />
+and not passphrase.txt, so your (intended) passphrase is never actually used!</p>
+<p>Use this instead:</p>
+<p>gpg --passphrase-fd 3 -c 3 &lt; passphrase.txt &lt; filename.txt &gt; filename.gpg</p>
+<p>You failed to spot the problem simply because the decryption command<br />
+has the same problem...</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+  </div>
+        </div> <!-- /#content-area -->
+
+        
+        
+      </div></div> <!-- /#content-inner, /#content -->
+
+              <div id="navbar"><div id="navbar-inner" class="clear-block region region-navbar">
+
+          <a name="navigation" id="navigation"></a>
+
+          
+                      <div id="primary">
+              <ul class="links"><li class="menu-1783 first"><a href="/video">Video</a></li>
+<li class="menu-1800"><a href="/news">News</a></li>
+<li class="menu-150"><a href="/blog">Blogs</a></li>
+<li class="menu-1802"><a href="/tag/reviews" title="">Reviews</a></li>
+<li class="menu-187"><a href="/tag/how-tos">HOWTOs</a></li>
+<li class="menu-1803"><a href="/participate" title="">Participate</a></li>
+<li class="menu-71"><a href="/magazine">Magazine</a></li>
+<li class="menu-181"><a href="/getlinux">How to Get Linux</a></li>
+<li class="menu-184 last"><a href="/gettinghelp">Getting Help</a></li>
+</ul> <div id="searchbox">
+  <!-- Google CSE Search Box Begins  -->
+<form action="http://www.linuxjournal.com/googlesearch" id="searchbox_014164207538395607518:w82fvojcgcu">
+  <input type="hidden" name="cx" value="014164207538395607518:w82fvojcgcu" />
+  <input type="hidden" name="cof" value="FORID:11" />
+  <input type="text" name="as_q" size="25" />
+  <input type="submit" name="sa" value="Search" />
+</form>
+<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=searchbox_014164207538395607518%3Aw82fvojcgcu&lang=en"></script>
+<!-- Google CSE Search Box Ends -->
+</div>
+            </div> <!-- /#primary -->
+          
+          
+          
+        </div></div> <!-- /#navbar-inner, /#navbar -->
+      
+      
+              <div id="sidebar-right"><div id="sidebar-right-inner" class="region region-right">
+          <div id="block-block-44" class="block block-block region-odd even region-count-1 count-4"><div class="block-inner">
+
+  
+  <div class="content">
+    <!-- PUT THIS TAG IN DESIRED LOCATION OF SLOT Large_Rectangle336x280
+     -->
+<script type="text/javascript">
+  GA_googleFillSlot("Large_Rectangle336x280");
+</script>
+<!-- END OF TAG FOR SLOT Large_Rectangle336x280
+     -->  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-block-61" class="block block-block region-even odd region-count-2 count-5"><div class="block-inner">
+
+  
+  <div class="content">
+    
+<div id="subsblock">
+  
+  
+  <div class="cover">
+    <a href="/on-newsstands"><img alt="Linux Journal cover" src="/files/linuxjournal.com/linuxjournal/issues/201/cover201.small.jpg" /></a>
+  </div>
+<div id="subsright">
+  <div id="substitle">
+<h2><a href="/magazine">The Magazine</a></h2>
+<p><em>Linux Journal</em> is the premier source for how-tos, projects, product reviews, expert advice and opinions for everything Linux.</p>
+  </div>
+  <div id="subsmenu">
+   <ul>
+<li>
+<a href="/on-newsstands">New Issue/Podcast</a>
+</li><li>
+<a href="/lj-lite">Issue Excerpt</a>
+</li><li>
+<a href="/magazine">Archives</a>
+</li><li>
+<a href="https://www.pubservice.com/Subnew2page.aspx?PC=LJ" class="last">Subscribe</a>
+  </li>
+</ul>
+  </div>
+</div>
+</div>
+
+  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-menu-menu-channels" class="block block-menu region-odd even region-count-3 count-6"><div class="block-inner">
+
+      <h2 class="title">Trending Topics</h2>
+  
+  <div class="content">
+    <ul class="menu"><li class="leaf first"><a href="/tag/desktop" title="">Desktop</a></li>
+<li class="leaf"><a href="/tag/embedded" title="">Embedded</a></li>
+<li class="leaf"><a href="/tag/hpc" title="">HPC</a></li>
+<li class="leaf"><a href="/tag/mobile" title="">Mobile</a></li>
+<li class="leaf"><a href="/tag/security" title="">Security</a></li>
+<li class="leaf"><a href="/tag/sysadmin" title="">SysAdmin</a></li>
+<li class="leaf"><a href="/tag/virtualization" title="">Virtualization</a></li>
+<li class="leaf last"><a href="/tag/web-development" title="">Web Development</a></li>
+</ul>  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-quicktabs-1" class="block block-quicktabs region-even odd region-count-4 count-7"><div class="block-inner">
+
+  
+  <div class="content">
+    <div id="quicktabs-1" class="quicktabs_wrapper quicktabs-style-zen"><ul class="quicktabs_tabs quicktabs-style-zen"><li class="qtab-0 active first"><a href="/article/8732?quicktabs_1=0#quicktabs-1" id="quicktabs-tab-1-0" class="qt_tab active">The Latest</a></li><li class="qtab-1"><a href="/article/8732?quicktabs_1=1#quicktabs-1" id="quicktabs-tab-1-1" class="qt_tab active">Popular</a></li><li class="qtab-2 last"><a href="/article/8732?quicktabs_1=2#quicktabs-1" id="quicktabs-tab-1-2" class="qt_tab active">Recent Comments</a></li></ul><div id="quicktabs_container_1" class="quicktabs_main quicktabs-style-zen"><div id="quicktabs_tabpage_1_0" class="quicktabs_tabpage"><div id="block-views-latest_stories-block_1" class="block block-views region-odd odd region-count-1 count-1"><div class="block-inner">
+
+  
+  <div class="content">
+    <div class="view view-latest-stories view-id-latest_stories view-display-id-block_1 view-dom-id-1">
+    
+  
+  
+      <div class="view-content">
+      <table class="views-table cols-6">
+    <thead>
+    <tr>
+              <th class="views-field views-field-title">
+                  </th>
+              <th class="views-field views-field-created">
+                  </th>
+          </tr>
+  </thead>
+  <tbody>
+          <tr class="odd views-row-first">
+                  <td class="views-field views-field-title">
+            <a href="/content/do-you-google-yourself">Do you &quot;google&quot; yourself?</a>          </td>
+                  <td class="views-field views-field-created">
+            Dec 24, 2010          </td>
+              </tr>
+          <tr class="even">
+                  <td class="views-field views-field-title">
+            <a href="/content/android-sneaks-out-awesome-gmail-upgrade">Android Sneaks Out An Awesome Gmail Upgrade</a>          </td>
+                  <td class="views-field views-field-created">
+            Dec 23, 2010          </td>
+              </tr>
+          <tr class="odd">
+                  <td class="views-field views-field-title">
+            <a href="/content/allegations-openbsd-backdoors-may-be-true">Allegations of OpenBSD Backdoors May be True, Updated</a>          </td>
+                  <td class="views-field views-field-created">
+            Dec 22, 2010          </td>
+              </tr>
+          <tr class="even">
+                  <td class="views-field views-field-title">
+            <a href="/content/behind-cloud-its-still-just-computers">Behind the Cloud It&#039;s Still Just Computers</a>          </td>
+                  <td class="views-field views-field-created">
+            Dec 21, 2010          </td>
+              </tr>
+          <tr class="odd">
+                  <td class="views-field views-field-title">
+            <a href="/content/jolicloud-cloud-enabled-and-not-just-netbooks">Jolicloud: Cloud enabled and not just for netbooks</a>          </td>
+                  <td class="views-field views-field-created">
+            Dec 20, 2010          </td>
+              </tr>
+          <tr class="even views-row-last">
+                  <td class="views-field views-field-title">
+            <a href="/content/wi-fi-command-line">Wi-Fi on the Command Line</a>          </td>
+                  <td class="views-field views-field-created">
+            Dec 17, 2010          </td>
+              </tr>
+      </tbody>
+</table>
+    </div>
+  
+  
+  
+      
+<div class="more-link">
+  <a href="/latest">
+    more  </a>
+</div>
+  
+  
+  
+</div>   </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+</div><div id="quicktabs_tabpage_1_1" class="quicktabs_tabpage quicktabs-hide"><div id="block-views-popular-block_1" class="block block-views region-even even region-count-2 count-2"><div class="block-inner">
+
+  
+  <div class="content">
+    <div class="view view-popular view-id-popular view-display-id-block_1 view-dom-id-2">
+    
+  
+  
+      <div class="view-content">
+      <div class="item-list">
+    <ul>
+          <li class="views-row views-row-1 views-row-odd views-row-first">  
+  <span class="views-field-title">
+                <span class="field-content"><a href="/content/do-you-google-yourself">Do you &quot;google&quot; yourself?</a></span>
+  </span>
+</li>
+          <li class="views-row views-row-2 views-row-even">  
+  <span class="views-field-title">
+                <span class="field-content"><a href="/article/2082">Linux--The Internet Appliance?</a></span>
+  </span>
+</li>
+          <li class="views-row views-row-3 views-row-odd">  
+  <span class="views-field-title">
+                <span class="field-content"><a href="/content/allegations-openbsd-backdoors-may-be-true">Allegations of OpenBSD Backdoors May be True, Updated</a></span>
+  </span>
+</li>
+          <li class="views-row views-row-4 views-row-even">  
+  <span class="views-field-title">
+                <span class="field-content"><a href="/content/android-sneaks-out-awesome-gmail-upgrade">Android Sneaks Out An Awesome Gmail Upgrade</a></span>
+  </span>
+</li>
+          <li class="views-row views-row-5 views-row-odd">  
+  <span class="views-field-title">
+                <span class="field-content"><a href="/article/4622">Boot with GRUB</a></span>
+  </span>
+</li>
+          <li class="views-row views-row-6 views-row-even">  
+  <span class="views-field-title">
+                <span class="field-content"><a href="/content/wi-fi-command-line">Wi-Fi on the Command Line</a></span>
+  </span>
+</li>
+          <li class="views-row views-row-7 views-row-odd">  
+  <span class="views-field-title">
+                <span class="field-content"><a href="/content/jolicloud-cloud-enabled-and-not-just-netbooks">Jolicloud: Cloud enabled and not just for netbooks</a></span>
+  </span>
+</li>
+          <li class="views-row views-row-8 views-row-even">  
+  <span class="views-field-title">
+                <span class="field-content"><a href="/article/9266">Chapter 16: Ubuntu and Your iPod</a></span>
+  </span>
+</li>
+          <li class="views-row views-row-9 views-row-odd">  
+  <span class="views-field-title">
+                <span class="field-content"><a href="/rss_feeds">RSS Feeds</a></span>
+  </span>
+</li>
+          <li class="views-row views-row-10 views-row-even views-row-last">  
+  <span class="views-field-title">
+                <span class="field-content"><a href="/content/behind-cloud-its-still-just-computers">Behind the Cloud It&#039;s Still Just Computers</a></span>
+  </span>
+</li>
+      </ul>
+</div>    </div>
+  
+  
+  
+      
+<div class="more-link">
+  <a href="/popular/today">
+    more  </a>
+</div>
+  
+  
+  
+</div>   </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+</div><div id="quicktabs_tabpage_1_2" class="quicktabs_tabpage quicktabs-hide"><div id="block-comment-0" class="block block-comment region-odd odd region-count-3 count-3"><div class="block-inner">
+
+  
+  <div class="content">
+    <div class="item-list"><ul><li class="first"><a href="/content/linux-distribution-lightweight-portable-security#comment-360877">Hardware keylogger</a><br />4 hours 23 min ago</li>
+<li><a href="/content/has-novell-deal-hampered-opensuse#comment-360876">good</a><br />5 hours 40 min ago</li>
+<li><a href="/content/autokey-desktop-automation-utility-linux#comment-360875">good</a><br />5 hours 40 min ago</li>
+<li><a href="/content/autokey-desktop-automation-utility-linux#comment-360874">good</a><br />5 hours 41 min ago</li>
+<li><a href="/content/ubuntu-indicators-opensuse#comment-360870">good</a><br />5 hours 44 min ago</li>
+<li><a href="/content/text-frames-scribus#comment-360868">good</a><br />5 hours 47 min ago</li>
+<li><a href="/content/spotlight-linux-zevenos-neptune-191#comment-360867">good</a><br />5 hours 47 min ago</li>
+<li><a href="/content/wi-fi-command-line#comment-360866">good</a><br />5 hours 48 min ago</li>
+<li><a href="/content/jolicloud-cloud-enabled-and-not-just-netbooks#comment-360865">good</a><br />5 hours 50 min ago</li>
+<li class="last"><a href="/content/wi-fi-command-line#comment-360864">gfdgfdgf</a><br />8 hours 39 min ago</li>
+</ul></div>  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+</div></div></div>  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-block-67" class="block block-block region-odd even region-count-5 count-8"><div class="block-inner">
+
+  
+  <div class="content">
+    <!--paging_filter--><p><a href="/enewsletters"><img alt=" Linux Newsletter" src="/files/linuxjournal.com/images/NewsletterBanner_T3b.jpg" /></a></p>
+<p> <a href="/buyersguide"><img alt="Linux Buyers Guide" src="/files/linuxjournal.com/images/LJBuyersGuide.png" /></a> </p>
+  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-views-linux_minute-block_2" class="block block-views region-even odd region-count-6 count-9"><div class="block-inner">
+
+  
+  <div class="content">
+    <div class="view view-linux-minute view-id-linux_minute view-display-id-block_2 view-dom-id-3">
+    
+  
+  
+      <div class="view-content">
+        <div class="views-row views-row-1 views-row-odd views-row-first views-row-last">
+      
+  <div class="views-field-field-embed-video-embed">
+                <span class="field-content"><div class="emvideo emvideo-preview emvideo-youtube"><div class="emfield-emvideo emfield-emvideo-youtube">        <div id="emvideo-youtube-flash-wrapper-1"><object type="application/x-shockwave-flash" height="250" width="300" data="http://www.youtube.com/v/dOnXnslxxW0&amp;rel=0&amp;enablejsapi=1&amp;playerapiid=ytplayer&amp;fs=1" id="emvideo-youtube-flash-1">
+          <param name="movie" value="http://www.youtube.com/v/dOnXnslxxW0&amp;rel=0&amp;enablejsapi=1&amp;playerapiid=ytplayer&amp;fs=1" />
+          <param name="allowScriptAccess" value="sameDomain"/>
+          <param name="quality" value="best"/>
+          <param name="allowFullScreen" value="true"/>
+          <param name="bgcolor" value="#FFFFFF"/>
+          <param name="scale" value="noScale"/>
+          <param name="salign" value="TL"/>
+          <param name="FlashVars" value="playerMode=embedded" />
+          <param name="wmode" value="transparent" />
+        </object></div></div></div></span>
+  </div>
+  
+  <div class="views-field-title">
+                <span class="field-content"><a href="/video/google-tasks-tray">Google Tasks Tray</a></span>
+  </div>
+  </div>
+    </div>
+  
+  
+  
+  
+  
+  
+</div>   </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-views-linux_minute-block_3" class="block block-views region-odd even region-count-7 count-10"><div class="block-inner">
+
+  
+  <div class="content">
+    <div class="view view-linux-minute view-id-linux_minute view-display-id-block_3 view-dom-id-4">
+    
+  
+  
+      <div class="view-content">
+      <table class="views-view-grid">
+  <tbody>
+                <tr class="row-1 row-first row-last">
+                  <td class="col-1">
+              
+  <div class="views-field-field-embed-video-embed">
+                <span class="field-content"><a href="/video/working-mdb-files-linux"><img src="http://img.youtube.com/vi/8B8cs_KkmfQ/0.jpg" alt="See video" title="See video"  width="300" height="225" /></a></span>
+  </div>
+  
+  <div class="views-field-title">
+                <span class="field-content"><a href="/video/working-mdb-files-linux">Working with MDB Files in Linux</a></span>
+  </div>
+          </td>
+                  <td class="col-2">
+              
+  <div class="views-field-field-embed-video-embed">
+                <span class="field-content"><a href="/video/nautilus-location-bar-lucid"><img src="http://a.images.blip.tv/Linuxjournal-NautilusLocationBarInLucid469-436.jpg" alt="See video" title="See video"  width="300" height="225" /></a></span>
+  </div>
+  
+  <div class="views-field-title">
+                <span class="field-content"><a href="/video/nautilus-location-bar-lucid">Nautilus Location Bar in Lucid</a></span>
+  </div>
+          </td>
+                  <td class="col-3">
+                      </td>
+              </tr>
+      </tbody>
+</table>
+    </div>
+  
+  
+  
+  
+      <div class="view-footer">
+      <!--paging_filter--><div id="more-vids"><a href="/video">Click here for more videos</a></div>
+    </div>
+  
+  
+</div>   </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-views-distro_spotlight-block_1" class="block block-views region-even odd region-count-8 count-11"><div class="block-inner">
+
+      <h2 class="title">Distro Spotlight</h2>
+  
+  <div class="content">
+    <div class="view view-distro-spotlight view-id-distro_spotlight view-display-id-block_1 view-dom-id-5">
+    
+  
+  
+      <div class="view-content">
+        <div class="views-row views-row-1 views-row-odd views-row-first views-row-last">
+      
+  <div class="views-field-title">
+                <span class="field-content"><a href="/content/spotlight-linux-zevenos-neptune-191">Spotlight on Linux:  ZevenOS-Neptune 1.9.1</a></span>
+  </div>
+  
+  <div class="views-field-teaser">
+                <div class="field-content"><p><a href="http://www.zevenos.de">ZevenOS</a> is a German-born project that offers Debian-based and Ubuntu-based versions of their BeOS-like system.  ZevenOS is based on Ubuntu (Xubuntu) and ZevenOS-Neptune is based on Debian Testing.  The main purpose is to preserve some of the features of <a href="http://en.wikipedia.org/wiki/BeOS">BeOS</a> in a modern, capable operating system.</p></div>
+  </div>
+  
+  <div class="views-field-view-node">
+                <span class="field-content"><a href="/content/spotlight-linux-zevenos-neptune-191">more&gt;&gt;</a></span>
+  </div>
+  </div>
+    </div>
+  
+  
+  
+      
+<div class="more-link">
+  <a href="/distro-spotlight">
+    previous distros  </a>
+</div>
+  
+  
+  
+</div>   </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-poll-0" class="block block-poll region-odd even region-count-9 count-12"><div class="block-inner">
+
+      <h2 class="title">Poll</h2>
+  
+  <div class="content">
+    <form action="/article/8732"  accept-charset="UTF-8" method="post" id="poll-view-voting">
+<div><div class="poll">
+  <div class="vote-form">
+    <div class="choices">
+              <div class="title">Do you &quot;google&quot; yourself?:</div>
+            <div class="form-radios"><div class="form-item" id="edit-choice-0-wrapper">
+ <label class="option" for="edit-choice-0"><input type="radio" id="edit-choice-0" name="choice" value="0"   class="form-radio" /> Yes, daily.</label>
+</div>
+<div class="form-item" id="edit-choice-1-wrapper">
+ <label class="option" for="edit-choice-1"><input type="radio" id="edit-choice-1" name="choice" value="1"   class="form-radio" /> Yes, weekly.</label>
+</div>
+<div class="form-item" id="edit-choice-2-wrapper">
+ <label class="option" for="edit-choice-2"><input type="radio" id="edit-choice-2" name="choice" value="2"   class="form-radio" /> Yes, monthly.</label>
+</div>
+<div class="form-item" id="edit-choice-3-wrapper">
+ <label class="option" for="edit-choice-3"><input type="radio" id="edit-choice-3" name="choice" value="3"   class="form-radio" /> Yes, once or twice a year.</label>
+</div>
+<div class="form-item" id="edit-choice-4-wrapper">
+ <label class="option" for="edit-choice-4"><input type="radio" id="edit-choice-4" name="choice" value="4"   class="form-radio" /> Better yet, I have Google Alerts set up for my name.</label>
+</div>
+<div class="form-item" id="edit-choice-5-wrapper">
+ <label class="option" for="edit-choice-5"><input type="radio" id="edit-choice-5" name="choice" value="5"   class="form-radio" /> No, I did it once. Never again.</label>
+</div>
+<div class="form-item" id="edit-choice-6-wrapper">
+ <label class="option" for="edit-choice-6"><input type="radio" id="edit-choice-6" name="choice" value="6"   class="form-radio" /> No. I don&#039;t want to know.</label>
+</div>
+</div>    </div>
+    <input type="submit" name="op" id="edit-vote" value="Vote"  class="form-submit" />
+  </div>
+    <input type="hidden" name="form_build_id" id="form-40f9754a01308925aeed7a737d1eb9bd" value="form-40f9754a01308925aeed7a737d1eb9bd"  />
+<input type="hidden" name="form_id" id="edit-poll-view-voting" value="poll_view_voting"  />
+</div>
+
+</div></form>
+  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+        </div></div> <!-- /#sidebar-right-inner, /#sidebar-right -->
+      
+    </div></div> <!-- /#main-inner, /#main -->
+
+          <div id="footer"><div id="footer-inner" class="region region-footer">
+
+        
+        <div id="block-block-62" class="block block-block region-odd even region-count-1 count-14"><div class="block-inner">
+
+  
+  <div class="content">
+    <!--paging_filter--><div id="subsform">  
+     
+        
+	<form  method="post" name="form" action= "https://www.pubservice.com/subnew2page.aspx?PC=LJ&amp;PK&amp;FC=" class="subform">
+        
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <td valign="top">First Name</td>
+
+            <td valign="top" colspan="2">Last Name</td>
+          </tr>
+
+    
+          <tr>
+            <td valign="top"><input type="text" value="" name="FN" size= "18" maxlength="" class="form1" /></td>
+
+            <td valign="top" colspan="2"><input type="text" name="LN" value="" size= "18" class="form1" /></td>
+          </tr>
+          <tr>
+            <td valign="top" >Address 1</td>
+
+            <td valign="top" colspan="2">Address 2</td>
+
+
+          </tr>
+          <tr>
+            <td valign="top"><input type="text" value="" name="A1" size= "18" maxlength="" class="form1" /></td>
+
+            <td valign="top" colspan="2"><input type="text" value="" name="A2" size= "18" class="form1" /></td>
+
+  
+          </tr>
+          <tr>
+            <td valign="top">City</td>
+
+            <td valign="top">State</td>
+
+            <td valign="top">Zip</td>
+          </tr>
+
+    
+          <tr>
+            <td valign="top"><input type="text" value="" name="CT" size= "18" maxlength="" class="form1" /></td>
+
+            <td valign="top"><input type="text" value="" name="ST" size="2" class="form2" /></td>
+
+            <td valign="top"><input type="text" value="" name="ZP" size="5" maxlength="5" class="form3" /></td>
+          </tr>
+       <tr>
+            <td valign="top" colspan="3">Email</td>
+       </tr>
+       <tr>
+<td valign="top" colspan="3"><input type="text" value="" name="EM" size="40" class="form4" /></td>
+        </tr>
+        </table>
+        
+        <div align="center">
+         <input type="image" src="/files/linuxjournal.com/images/clickhere.jpg" />
+        </div>
+
+      </form>
+       <div class="subslinks">
+          <a href="https://www.pubservice.com/subnew2page.aspx?PC=LJ&amp;PK=MPUB911&amp;FC=CANADA&amp;SA=P">Canadian Residents</a> | <a href="https://www.pubservice.com/Subnew1.aspx?PC=LJ&amp;PK=MPUB911&amp;FC=UNITED%20STATES&amp;ref=1&amp;SA=P">Foreign Residents</a> | <a href="https://www.pubservice.com/subgift.aspx?PC=LJ">Gift Subscriptions</a> | <a href="http://www.linuxjournal.com/subs/customer_service">Customer Service</a> | <a href="/content/privacystatement">Privacy Policy</a>
+
+          </div>
+ 		</div> 
+  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-block-63" class="block block-block region-even odd region-count-2 count-15"><div class="block-inner">
+
+  
+  <div class="content">
+    <p><em>Linux Journal</em>, currently celebrating its 17th year of publication, is the original magazine of the global Linux community, delivering readers the advice and inspiration they need to get the most out of their Linux systems.</p>
+<p>In-depth information provides a full 360-degree look at featured topics relating to Linux, giving a comprehensive source of everything readers need for creating and completing their own projects -- not just tools they will use today, but relevant and encompassing information they will turn to in future months and years. In addition to how-to content, <em>Linux Journal</em> includes opinions, new product information, profiles of leaders making major contributions in Open Source and product reviews. It also covers business, social and technical news and developments in order to fulfill its mission as the central forum and advocate for the greater Linux community throughout the world.</p>
+  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-menu-menu-about" class="block block-menu region-odd even region-count-3 count-16"><div class="block-inner">
+
+      <h2 class="title">About Us</h2>
+  
+  <div class="content">
+    <ul class="menu"><li class="leaf first"><a href="/advertising" title="Advertise in Linux Journal">Advertise</a></li>
+<li class="leaf"><a href="/author" title="Write for Us">Author Info</a></li>
+<li class="leaf"><a href="/contact" title="Write a Letter to the Editor">Write a Letter</a></li>
+<li class="leaf"><a href="/aboutus/FAQ" title="Frequently Asked Questions">FAQ</a></li>
+<li class="leaf last"><a href="/staff" title="Masthead">Masthead</a></li>
+</ul>  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-menu-menu-subscriptions" class="block block-menu region-even odd region-count-4 count-17"><div class="block-inner">
+
+      <h2 class="title">Subscriptions</h2>
+  
+  <div class="content">
+    <ul class="menu"><li class="leaf first"><a href="https://www.pubservice.com/subnew1.aspx?PC=LJ" title="Subscribe to Linux Journal">Subscribe/Renew</a></li>
+<li class="leaf"><a href="https://www.pubservice.com/subinfo.aspx?PC=LJ&amp;DO=P" title="Pay Your Subscription Bill">Pay My Bill</a></li>
+<li class="leaf"><a href="/subs/customer_service" title="">Customer Service</a></li>
+<li class="leaf"><a href="http://www.linuxjournal.com/digital" title="">Digital Downloads</a></li>
+<li class="leaf last"><a href="https://www.pubservice.com/subgift.aspx?PC=LJ" title="Give a Subscription to Linux Journal">Gift Subscriptions</a></li>
+</ul>  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-menu-menu-store" class="block block-menu region-odd even region-count-5 count-18"><div class="block-inner">
+
+      <h2 class="title">The Store</h2>
+  
+  <div class="content">
+    <ul class="menu"><li class="leaf first"><a href="http://lj.mybigcommerce.com/categories/Buttons-%26-Stickers/" title="Buttons &amp; Stickers">Stickers</a></li>
+<li class="leaf"><a href="http://lj.mybigcommerce.com/categories/T%252dShirts-%26-Apparel/" title="T-shirts and Apparel">T-shirts</a></li>
+<li class="leaf"><a href="http://lj.mybigcommerce.com/categories/Posters/" title="Posters">Posters</a></li>
+<li class="leaf"><a href="http://lj.mybigcommerce.com/categories/Back-Issues-%252d-Print/" title="Buy Back Issues of Linux Journal">Back Issues</a></li>
+<li class="leaf last"><a href="http://linuxjournal.com/archive_cd" title="Archive CD">Archive CD</a></li>
+</ul>  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-menu-menu-linux-resources" class="block block-menu region-even odd region-count-6 count-19"><div class="block-inner">
+
+      <h2 class="title">Linux Resources</h2>
+  
+  <div class="content">
+    <ul class="menu"><li class="leaf first"><a href="/forum" title="Forums">Forums</a></li>
+<li class="leaf"><a href="/events" title="Industry Events">Industry Events</a></li>
+<li class="leaf"><a href="/buyersguide" title="">Buyers Guide</a></li>
+<li class="leaf"><a href="/getlinux" title="How to Get Linux">How to Get Linux</a></li>
+<li class="leaf last"><a href="/gettinghelp" title="Getting Help">Getting Help</a></li>
+</ul>  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-menu-menu-the-site" class="block block-menu region-odd even region-count-7 count-20"><div class="block-inner">
+
+      <h2 class="title">The Site</h2>
+  
+  <div class="content">
+    <ul class="menu"><li class="leaf first"><a href="/content/copyright" title="Copyright">Copyright</a></li>
+<li class="leaf"><a href="/rss_feeds" title="RSS Feeds">RSS Feeds</a></li>
+<li class="leaf"><a href="/content/privacy-statement" title="Privacy Statement">Privacy Policy</a></li>
+<li class="leaf"><a href="MAILTO:webmaster@linuxjournal.com" title="Report Problems">Report Problems</a></li>
+<li class="leaf last"><a href="/aboutus" title="Contact Us">Contact Us</a></li>
+</ul>  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-block-70" class="block block-block region-even odd region-count-8 count-21"><div class="block-inner">
+
+  
+  <div class="content">
+    <!--paging_filter--><div id="copyright">Copyright © 1994 - 2010 <em>Linux Journal</em>. All rights reserved.</div>
+  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+
+      </div></div> <!-- /#footer-inner, /#footer -->
+    
+  </div></div> <!-- /#page-inner, /#page -->
+
+  
+  <div id="user_relationships_popup_form" class="user_relationships_ui_popup_form"></div><script type="text/javascript" src="/files/linuxjournal.com/ufiles/js/js_a5d9eb11522c07991019d8a4e87bbb97.js"></script>
+<script type="text/javascript" src="http://s3.amazonaws.com/new.cetrk.com/pages/scripts/0010/8219.js"> </script>
+
+</body>
+</html>
