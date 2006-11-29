@@ -1,0 +1,849 @@
+<!-- print.view -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+	<title>Electronic Archaeology - O'Reilly Media</title>
+	<meta name="keywords" content="electronic archeology,electronic archaeology,ancient code,grep,vim,find,glimpse,source navigator,c/c++,c/c++ pre-processor,indent,lxr,linux kernel cross reference,,O'Reilly Media" />
+	<meta name="description" content="Professional programmers often have to deal with badly designed, badly implemented, uncommented code not of their making. The art of digging through ancient, muddled code is called electronic archaeology, and this article, by Steve Oualline, author of..." />
+	<meta name="date" content="Apr. 29, 2003" />
+	<meta name="search_date" content="2003-04-29" />
+	<meta name="pagename" content="Electronic Archaeology" />
+	<meta name="site" content="O'Reilly Network" />
+	<meta name="subtitle" content="" />
+	<meta name="author" content="Steve Oualline" />
+<meta name="target" content="" />
+
+
+<!--  feed links  -->
+<link rel="alternate" type="application/atom+xml" title="O'Reilly Network Articles" href="http://www.oreillynet.com/pub/feed/1" /><link rel="alternate" type="application/atom+xml" title="O'Reilly Network Articles and Weblogs" href="http://www.oreillynet.com/pub/feed/31" /><link rel="alternate" type="application/rdf+xml"  title="O'Reilly Network Articles" href="http://www.oreillynet.com/pub/feed/1?format=rss1" /><link rel="alternate" type="application/rdf+xml"  title="O'Reilly Network Articles and Weblogs" href="http://www.oreillynet.com/pub/feed/31?format=rss1" /><link rel="alternate" type="application/rss+xml"  title="O'Reilly Network Articles" href="http://www.oreillynet.com/pub/feed/1?format=rss2" /><link rel="alternate" type="application/rss+xml"  title="O'Reilly Network Articles and Weblogs" href="http://www.oreillynet.com/pub/feed/31?format=rss2" />
+
+<link rel="stylesheet" rev="stylesheet" href="http://www.oreillynet.com/styles/all-121707.css" />
+<link rel="stylesheet" rev="stylesheet" href="http://www.oreillynet.com/styles/network-121707.css" />
+<script language="JavaScript" type="text/javascript" src="http://www.oreillynet.com/engine.js"></script>
+
+<!-- sc/388 Common JavaScript -->
+<script language="JavaScript" type="text/javascript" src="http://www.oreillynet.com/common.js"></script>
+
+<script language="JavaScript" type="text/javascript" src="http://content.atomz.com/pb000035c5/publish/assets/js/common.js"></script>
+
+<link rel="STYLESHEET" type="text/css" href="http://www.oreillynet.com/styles/main.css" />
+<!-- path_info: /a/network/2003/04/29/steveoaulline.html -->
+<!-- table: a - ref_id: /network/2003/04/29/steveoaulline.html -->
+<!-- table: a - ref_id: /network/2003/04/29/steveoaulline.html -->
+<!-- table: a - ref_id: /network/2003/04/29/steveoaulline.html - cs_rid: 3644 -->
+<!-- 0 domain: www.oreillynet.com - path_info: a/network/2003/04/29/steveoaulline.html -->
+<!-- 1 domain: www.oreillynet.com - path_info: a/network/2003/04/29/steveoaulline.html -->
+<!-- 2 domain: www.oreillynet.com - path_info: a/network/2003/04/29/steveoaulline.html -->
+<!-- 3 domain: www.oreillynet.com - path_info: a/network/2003/04/29/steveoaulline.html -->
+<!-- 4 domain: oreillynet.com - path_info: a/network/2003/04/29/steveoaulline.html -->
+<!-- 5 domain: oreillynet - path_info: a/network/2003/04/29/steveoaulline.html -->
+<!-- 6 domain: oreillynet - path_info: a/network/2003/04/29/steveoaulline.html s_channel: network -->
+<!-- 7 domain: oreillynet - path_info: a/network/2003/04/29/steveoaulline.html -->
+<!-- 8 domain: www.oreillynet.com - path_info: a/network/2003/04/29/steveoaulline.html -->
+
+<script language="JavaScript" type="text/javascript"><!--
+var s_account="ornetwork,orglobal"
+//--></script>
+<!-- SiteCatalyst code version: H.20.2. Copyright 1997-2009 Omniture, Inc. More info available at http://www.omniture.com  -->
+<script language="JavaScript" type="text/javascript" src="http://assets.oreilly.com/js/s_code.js"></script>
+<script language="JavaScript" type="text/javascript"><!--
+s.pageName="network:network:electronic archaeology"
+s.channel="network"
+s.prop1="network:network"
+s.prop2="network:network"
+s.prop3="network:network"
+s.prop4="article"
+s.prop5="electronic archaeology"
+s.prop6="n/a/3644"
+s.prop24="04/29/2003"
+s.prop21="steve oualline"
+s.hier1="network,network"
+/************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/
+var s_code=s.t();if(s_code)document.write(s_code)//--></script>
+<!-- End SiteCatalyst code version: H.20.2. -->
+<!-- analytics.pl: 2010/12/25 0:43:51 -->
+
+
+
+<script type="text/javascript" src="http://www.oreillynet.com/tabber.js"></script>
+
+<!-- additional css -->
+<link rel="stylesheet" type="text/css" href="http://www.oreillynet.com/styles/articles.css" /> 
+
+
+<!--Autocomplete-->
+
+          <script type="text/javascript" src="http://content.atomz.com/static/ac/1.0/autocomplete.js"></script>
+          <link rel="stylesheet" type="text/css" href="http://content.atomz.com/pb000035c5/publish/autocompletestyles.css">
+ <!--Autocomplete-->
+
+
+<!-- MyBuys libraries and style sheet -->
+<link href="http://t.p.mybuys.com/css/mbstyles.css" type="text/css" rel="stylesheet" id="mybuysstyles" />
+<script type="text/javascript" src="http://t.p.mybuys.com/js/mybuys3.js"></script>
+<script type="text/javascript" src="http://t.p.mybuys.com/clients/OREILLY/js/setup.js"></script>
+<!-- End MyBuys libraries and style sheet -->
+
+</head>
+
+<body id="network">
+
+<div id="page">
+
+
+
+<div id="header" class="noindex">
+
+<script language="JavaScript" type="text/javascript" src="http://content.atomz.com/pb000035c5/publish/assets/js/common.js"></script>
+
+<div id="logo">
+<a href="http://oreilly.com">
+<img alt="O'Reilly" src="http://oreilly.com/images/oreilly/oreilly.gif"/>
+</a>
+</div>
+
+
+<ul>
+
+<li><a href="https://members.oreilly.com/" class="acct">My Account</a></li>
+<li><a href="https://epoch.oreilly.com/shop/cart.orm" class="cart">View Cart</a></li>
+</ul>
+<span id="animal">
+</span>
+</div><!-- /#header -->
+
+
+<div id="nav">
+<ul>
+<li><a href="http://www.oreilly.com/">Home</a></li>
+<li><a href="http://news.oreilly.com//">News</a></li>
+<li><a href="http://www.oreilly.com/store/">Books</a></li>
+<li><a href="http://safari.oreilly.com">Safari Books Online</a></li>
+<li><a href="http://conferences.oreillynet.com/">Conferences</a></li>
+<li><a href="http://www.oreillyschool.com/">School of Technology</a></li>
+<li><a href="http://www.oreilly.com/about/">About</a></li>
+<li class="searchbox"><input type="hidden" name="sp-q" />
+</li>
+</ul>
+</div>
+
+<!--
+<div id="subnav" class="noindex">
+<ul>
+<csif cond="" eq="articles"><li class="nav_selected"><cselse><li></csif>
+<a href="/pub/q/articles">Articles</a></li>
+
+<csif cond="" eq="weblogs"><li class="nav_selected"><cselse><li></csif>
+<a href="http://www.oreillynet.com/blogs/">Blogs</a></li>
+
+<csif cond="" eq="podcasts"><li class="nav_selected"><cselse><li></csif>
+<a href="http://www.oreillynet.com/podcasts">Podcasts</a></li>
+</ul>
+<div class="clear"></div>
+</div>
+-->
+
+
+
+<!-- new search box -->
+
+<div id="search-box">
+
+
+<b>
+We've expanded our news coverage and improved our search!</b> Visit <a href="http://oreilly.com">oreilly.com</a> for the latest or search for all things across O'Reilly!<br /><br />
+ 
+<form method="get" action="http://search.oreilly.com" id="search-form" name="searchfield">
+<fieldset>
+ <span id="search-title" style="color:#474747">Search</span>
+                    <span id="search-input">
+                        <span id="search-input-top">
+                            <span id="search-input-bot">
+                                <span id="search-field"><input style="//height: 25px;" id="q" name="q" type="text" maxlength="64" accesskey="s" value="" /></span>
+                                <span id="search-button"><input type="image" name="submit" src="/images/oreilly/search_bar_btn.gif" alt="Submit" /></span>
+                                <span class="clear"></span>
+                            </span>
+                            <div id="autocomplete"></div>
+                                <script type="text/javascript" src="http://content.atomz.com/pb000035c5/publish/autocompletelist.js"></script>
+                        </span>
+                    </span>
+                    <span id="search-tips"><a href="http://www.oreillynet.com/search/tips.csp" target="_blank">Search Tips</a></span>
+                </fieldset>
+            </form><br clear="all" />
+        </div><!-- /#search-box -->
+
+
+
+
+
+
+
+
+<div id="leaderboard">
+<img src="http://www.oreillynet.com/images/ads/ad-tag-vertical.gif" width="11" height="90" border="0" alt="advertisement" style="float:right;"/>
+
+<div style="width:728px;margin:0 auto;">
+<!-- Network Leaderboard Ad -->
+
+<!--JavaScript Tag // Tag for network 5159: TechVertical // Website: O'ReillyNet // Page: O'ReillyNet // Placement: ros_728x90 (425845) // created at: Oct 9, 2008 6:10:32 PM-->
+<script language="javascript"><!--
+document.write('<scr'+'ipt language="javascript1.1" src="http://adserver.adtechus.com/addyn/3.0/5159/425845/0/225/ADTECH;loc=100;target=_blank;key=key1+key2+key3+key4;grp=[group];misc='+new Date().getTime()+'"></scri'+'pt>');
+//-->
+</script><noscript><a href="http://adserver.adtechus.com/adlink/3.0/5159/425845/0/225/ADTECH;loc=300;key=key1+key2+key3+key4;grp=[group]" target="_blank"><img src="http://adserver.adtechus.com/adserv/3.0/5159/425845/0/225/ADTECH;loc=300;key=key1+key2+key3+key4;grp=[group]" border="0" width="728" height="90"></a></noscript>
+
+<!-- End of JavaScript Tag -->
+<!-- end ad -->
+
+</div>
+</div> <!-- end leaderboard -->
+
+<!-- textbar -->
+<div style="vertical-align:middle;background-color:#990000;height:24px;text-align:center;border-left: 1px #FFF solid;border-right: 1px #FFF solid;">
+<div class="tinywhite" style="vertical-align:middle;padding-top:3px;">
+<!-- Network Text Link -->
+
+
+<!-- End ad -->
+</div>
+</div>
+
+<div id="page-content">
+<div id="article">
+<!-- feature bar ad : layout component 1894 -->
+
+<div align="center" style="visibility: hidden">
+<!-- begin ad tag -->
+
+<!--JavaScript Tag // Tag for network 5159: TechVertical // Website: O'ReillyNet // Page: O'ReillyNet // Placement: text (425846) // created at: Oct 9, 2008 6:10:33 PM-->
+<script language="javascript"><!--
+document.write('<scr'+'ipt language="javascript1.1" src="http://adserver.adtechus.com/addyn/3.0/5159/425846/0/16/ADTECH;loc=100;target=_blank;key=key1+key2+key3+key4;grp=[group];misc='+new Date().getTime()+'"></scri'+'pt>');
+//-->
+</script><noscript><a href="http://adserver.adtechus.com/adlink/3.0/5159/425846/0/16/ADTECH;loc=300;key=key1+key2+key3+key4;grp=[group]" target="_blank"><img src="http://adserver.adtechus.com/adserv/3.0/5159/425846/0/16/ADTECH;loc=300;key=key1+key2+key3+key4;grp=[group]" border="0" width="1" height="1"></a></noscript>
+<!-- End of JavaScript Tag -->
+
+
+<!-- End ad tag -->
+</div>
+
+<!-- end feature bar ad -->
+<br />
+
+<!-- begin content-->
+
+
+
+
+
+
+
+
+
+<!-- begin  print-discuss-del.icio.us options -->
+<div style="margin: 0px 10px 0px 6px;">
+<div style="float: right; width: 170px;">
+
+<a class="print" title="Go to a print-friendly version of this page." href="/lpt/a/3644">Print</a>
+<!--csif cond="yes">
+<a class="discuss" title="Join the talkback discussion about this article" href="/pub/a/network/2003/04/29/steveoaulline.html?page=last#thread">Discuss</a>
+</csif-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a class="subscribe" title="Subscribe" href="http://www.oreillynet.com/pub/feed/1">Subscribe to Network</a>
+
+
+
+<a class="newsletter" href="http://www.oreillynet.com/cs/nl/home">Subscribe to Newsletters</a>
+
+<div id="share-options" style="text-align:right;">
+<script type="text/javascript" src="http://w.sharethis.com/button/sharethis.js#publisher=16098316-763b-41fc-a31d-7bbadcfcf894&amp;type=website&amp;embeds=true&amp;style=rotate&amp;send_services=email%2Caim%2Csms&amp;post_services=twitter%2Cfriendfeed%2Cfacebook%2Cdigg%2Cdelicious%2Creddit%2Cslashdot%2Cgoogle_bmarks%2Cblogger%2Ctypepad%2Cstumbleupon%2Cwordpress%2Cwindows_live%2Cnewsvine%2Clinkedin%2Cmyspace%2Ctechnorati"></script>
+</div>
+
+</div>
+</div>
+<!-- end  print-discuss-del.icio.us options -->
+
+
+
+
+
+<!-- content here -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<!-- mega preparse mp:yes -->
+
+<table border="0" cellspacing="0" cellpadding="2" width="75%">
+<tr>
+<td valign="top"><a href="http://www.oreilly.com/catalog/cplus2/index.html?CMP=IL7015"><img src="/images/animals/cplus2_chipmunk.gif" border="0" alt="Practical C++ Programming, 2nd Edition" hspace="8" vspace="8"></a>
+</td>
+<td valign="top">
+<h2>
+Electronic Archaeology</h2>
+by <a href="/pub/au/348">Steve Oualline</a>, author of <a href="http://www.oreilly.com/catalog/cplus2/index.html?CMP=IL7015">Practical C++ Programming, 2nd Edition</a><br />
+04/29/2003
+</td></tr></table>
+
+
+<p style="margin: 0px; margin-bottom: 0px; margin-left: 0px; 
+margin-right: 0px; margin-top: 0px; padding: 0px; padding-bottom: 0px; 
+padding-left: 0px; padding-right: 0px; padding-top: 0px; font-size: 
+1px;"></p>
+
+<!--ONJava MPU Ad -->
+
+
+
+
+
+<p>In college, programmers study the science of programming. They learn that you start with good requirements; this leads to a well-thought-out program design; and from this you create a coding plan, which you implement to produce a nearly perfect program.</p>
+
+<p>The real world is nothing like this. In the real world, most programmers spend most of their time going through code that's a hundred years old and extremely messy. If it ever was designed, the design document was lost long ago. It has evolved over the years. Hundreds of people have worked on it. And it appears most of them knew very little about programming. As a result, most professional programmers have to deal with badly designed, badly implemented, uncommented, incomprehensible blobs.</p>
+
+<p>The art of digging through ancient code is called electronic archaeology and this article discusses some of the tools you can use to make your job easier.</p>
+
+<p class="smalllist"><img src="/network/2003/04/29/graphics/tools.jpg" /><br />
+Ryan Hocket -- Big wrench. <br />
+Jim Hocket -- Medium wrench. <br />
+Chuck Cross -- Little wrench. <br />
+Steam engine courtesy of the Poway Midland Railroad.</p>
+
+<p>There are a large number of tools out there designed to make the
+job of the electronic archeologist easier. These include:</p>
+
+<table border="1" cellpadding="3" cellspacing="0">
+<tr><td><a href="#vim">Vim</a></td>
+<td>vi-like text editor with lots of extra features</td></tr>
+
+<tr><td><a href="/pub/a/network/2003/04/29/steveoaulline.html?page=2#grep">grep</a></td>
+<td>Text searching program</td></tr>
+	
+<tr><td><a href="/pub/a/network/2003/04/29/steveoaulline.html?page=2#find">find/grep</a></td>
+<td>File-finding program coupled with text search</td></tr>
+
+<tr><td><a href="/pub/a/network/2003/04/29/steveoaulline.html?page=3#glimpse">glimpse</a></td>
+<td>High-speed text search tool</td></tr>
+	
+<tr><td><a href="/pub/a/network/2003/04/29/steveoaulline.html?page=3#indent">indent</a></td>
+<td>Indents programs</td></tr>
+	
+<tr><td><a href="/pub/a/network/2003/04/29/steveoaulline.html?page=4#lxr">lxr</a></td>
+<td>Linux Kernel (or any large source system) cross reference</td></tr>
+	
+<tr><td><a href="/pub/a/network/2003/04/29/steveoaulline.html?page=4#cpp">cpp</a></td>
+<td>C/C++ pre-processor</td></tr>
+
+<tr><td><a href="/pub/a/network/2003/04/29/steveoaulline.html?page=4#nav">Source Navigator</a></td>
+<td>Source browsing tool</td></tr>
+</table>
+
+<a name="vim"></a>
+<h3>Vim</h3>
+
+<p>The <a href="http://www.vim.org">Vim</a> editor is a vi-like editor.  But while vi is a workhorse of an editor, Vim is a space-age, heavy-duty work truck with every high-tech accessory you can imagine.</p>
+
+<!--
+<csperl file="set_book_cover_image">
+-->
+
+<!-- sidebar begins -->
+<table width="140" border="1" cellspacing="2" cellpadding="10" align="right" style="border: 1px solid #333333; margin: 8px;"><tr>
+<td width="140" valign="top" bgcolor="#ffffff" style="border: none;">
+<p class="headline">Related Reading</p>
+<!--
+<csif perl="$cfg->vars('cover_image_url_base')">
+-->
+<a href="http://oreilly.com/catalog/9780596004194/index.html?CMP=ILL-4GV796923290">
+
+<img src="http://covers.oreilly.com/images/9780596004194/cat.gif">
+
+<!--
+
+<csperl>print $cfg->vars('cover_image_url_cat');</csperl>
+-->
+</a>
+<!--
+</csif>
+-->
+<p class="medlist"><span class="title"><a href="http://oreilly.com/catalog/9780596004194/index.html">Practical C++ Programming</a></span><strong><br />
+
+By <a href="http://www.oreillynet.com/pub/au/348">Steve Oualline</a></strong>
+</p>
+<div class="secondary">
+<!-- builds links to list in sidebar -->
+<!--csperl>
+    my @links = split(/(?:\r?\n)+/, ( $DATA{"supporting_links"} || "" ));
+    for my $link ( @links ) {
+	my ( $name, $url ) = split /=/, $link, 2;	
+	next unless $name and $url;
+	$url = "http://oreilly.com/catalog/$DATA{'reference'}/$url" unless $url =~ /^\w+:/os;
+$url = $url . "?CMP=ILL-4GV796923290";
+        if ($name =~ /Table of Contents/) {
+           print qq~ <a href="$url">$name</a><br /> \n ~;
+        } elsif ($name =~ /Index/) {
+           print qq~ <a href="$url">$name</a><br /> \n ~;
+        } elsif ($name eq "Author's Article") {
+           print qq~ <a href="$url">$name</a><br /> \n ~;
+        } elsif ($name =~ /Sample Chapter/) {
+           print qq~ <a href="$url">$name</a><br /> \n ~;
+        } else {
+           print qq~\n~;
+        }
+    }
+</csperl-->
+
+</div>
+</td>
+</tr></table>
+<!-- sidebar ends -->
+
+
+<p>Perhaps the newest command that Vim has is the <code>:help</code> command. By itself, it displays a window containing general help.   If you give it the name of a command, for example <code>:help j</code>, it will display help for the given command.</p>
+
+<h4>Fast Word Searches</h4>
+
+<p>Sometimes the simplest things are the most powerful.  In the case of Vim it's the quick-search capability.   Suppose you are looking at code that uses the variable <code>foo</code> and you want to see where else in your program <code>foo</code> is used. Simply put the cursor on this word and press <code>#</code>. Vim will search for the next occurrence of the word.  You can then use the normal vi commands <code>n</code> and <code>N</code> to repeat the search until you have scanned the entire file.</p>
+
+<p>The command <code>*</code> works in a similar manner, only it searches backwards.</p>
+
+<p>These commands are extremely useful in understanding how a variable or procedure is used in a particular file.</p>
+
+<h4>The :grep Command</h4>
+
+<p>But suppose you want to check out variables or procedures through multiple files.
+That's where <code>:grep</code> comes in.</p>
+
+<p>The <code>:grep</code> command can be used to search through a set of files for a given
+string.  For example, to search all the C source files for the string
+<code>connection_status</code> use the command:</p>
+
+<pre><code> :grep connection_status *.c *.h</code></pre>
+
+<p>The editor will search all the files for the string and position the cursor
+on the first line that matches.  To go to the next matching line, use the
+<code>:cnext</code> command.  To go to the previous match, use <code>:cprev</code>.
+Finally, if you've moved around and want to return to the current
+match, use <code>:cc</code>.</p>
+
+<p>The <code>:copen</code> command opens a new window that lists all the matches found.
+You can navigate to an interesting entry using the normal cursor movement commands,
+and then press <code>&lt;Enter;&gt;</code> to then edit that file (at the location matched).</p>
+
+<p>Note: The <code>:grep</code> command is very similar to the <code>:make</code> command,
+which integrates program building and editing.  For more information see
+<a href="http://www.oualline.com/10/top_10.html">The top 10 things a vi user
+should know about Vim</a>.</p>
+
+<h4>Tag Navigation</h4>
+
+<p>In programming they are called procedures.  For some reason in Vim they
+are called tags.  The Vim editor has a number of commands that let you 
+navigate through the procedures in your code.</p>
+
+<p>The first step, before you start editing, is to create a <i>tags</i> file, which
+contains location information about the procedures in your code.  This is created
+using the <code>ctags</code> command.  (This command comes with Vim.)</p>
+
+<p>Simply run this command on all your source files to generate the <i>tags</i> database:</p>
+
+<pre><code>	ctags *.c *.h</code></pre>
+
+<p>Now, when you are editing and you want to go to a particular procedure, all you have to do is execute a <code>:tag procedure</code> command.  For example, to jump to the definition of the <code>do_it</code> procedure:</p>
+
+<pre><code>	:tag do_it</code></pre>
+
+<p>Let's suppose that <code>do_it</code> calls <code>do_part_a</code>.  To find out where this procedure is defined, move the cursor onto the procedure call and press <code>CTRL-]</code>. The system will take us to the definition of <code>do_part_a</code>.  Should this function call another subroutine, you can go to the definition of that function by putting the cursor on it and pressing <code>CTRL-]</code>.</p>
+
+<p>OK, now that you've descended the procedure call stack, you may want to return to 
+where you started. The <code>CTRL-T</code> takes you back up through the call stack using <code>CTRL-]</code>. (So if you're in <code>do_part_a</code> the <code>CTRL-T</code> command will take you to the call in <code>do_it</code>.)</p>
+
+<p>This system works well as long as there is only one definition of each 
+procedure.  Unfortunately, C++ introduced overloading, so there can be multiple definitions of a function.  If you want to pick which definition you want, use the <code>:tselect</code> function. This command displays a list of all the functions that match and lets you choose which one you want. For example:</p>
+
+<pre><code>:tselect add_it
+  # pri kind tag               file
+  1 F   f    add_it            t.c
+               char add_it(char i1, char i2)
+  2 F   f    add_it            t.c
+               fixed_pt add_it(fixed_pt i1, fixed_pt i2)
+  3 F   f    add_it            t.c
+               float add_it(float i1, float i2)
+  4 F   f    add_it            t.c
+               int add_it(int i1, int i2)
+Enter nr of choice (&lt;CR&gt; to abort):</code></pre>
+
+<p>The <code>:tselect</code> function can also be used to search for a function using a regular expression. For example, to select from all functions with the word <i>add</i> in them, use the command:</p>
+
+<pre><code>	:tselect /add/</code></pre>
+
+<p>Finally, one of the innovations Vim introduced was multiple windows. To do a tag jump and display the result in a <i>new</i> window, use the command <code>CTRL-W CTRL-]</code>.  (For a full discussion of how to use windows, execute the command <code>:help windows</code>.)</p>
+
+<h4>C Indentation</h4>
+
+<p>The Vim editor has a good understanding of C syntax and knows how to properly
+indent C programs.  To turn on the C style indentation, use the command <code>:set cindent</code>. Now when you write your programs, indentation will be done automatically for you.</p>
+
+<p>The number of spaces for each indent is determined by the shiftwidth option. So if you want to indent four spaces per level, use the command:</p>
+
+<pre><code>:set sw=4</code></pre>
+
+<p>But suppose you are dealing with legacy code and it's indented badly.  The Vim command
+<code>=</code> will indent a section of code.  The form of the command is <code>=<i>&lt;motion&gt;</i></code>, where <i>&lt;motion&gt;</i> is a cursor's motion command.</p>
+
+<p>Perhaps the most common use of this command is to indent a block of code that's been badly indented.
+You start by positioning the cursor on the first curly brace (<code>{</code>) of the block.  Then execute the command <code>=%</code> (<code>=</code> -- indent to motion, <code>%</code> -- go to matching brace).</p>
+
+<p>The Vim editor has hundreds of additional commands.  Many of these are useful
+for programming and electronic archaeology.  You can find out more information 
+using the Vim help system (<code>:help</code>), the <a href="http://www.vim.org">Official Vim Web Site</a>, and <a href="http://www.oualline.com">my web site</a>.</p>
+
+<table id="page-break" width="100%" border="0" cellspacing="0" cellpadding="0" style="clear:left;"><tr><td><p class="secondary">
+Pages: <b>1</b>, <a href="/pub/a/network/2003/04/29/steveoaulline.html?page=2">2</a>, <a href="/pub/a/network/2003/04/29/steveoaulline.html?page=3">3</a>, <a href="/pub/a/network/2003/04/29/steveoaulline.html?page=4">4</a>
+</p></td><td><p class="secondary" align="right">
+<a href="/pub/a/network/2003/04/29/steveoaulline.html?page=2">
+Next Page<img src="/images/arrows/arrows-66.gif" border="0" alt="arrow" width="12" height="13" hspace="2" vspace="0" align="baseline"></a></p></td></tr></table>
+
+
+
+
+
+
+
+<!-- end article content -->
+
+<!-- OST promo -->
+
+<!-- end O'Reilly Learning box -->
+
+
+
+<!-- end content -->
+
+
+<img src="/images/trans.gif" alt=" " width="400" height="1" /><br />
+
+
+
+<br /><br />
+
+
+<!-- end content -->
+
+</div><!-- #article -->
+
+<div id="related">
+
+<!--
+<csperl>
+if( $cgi->url =~ /whatis/i ){
+print qq~
+-->
+<div class="sidebar-item">
+
+<!-- MyBuys Zone and Parameters -->
+<div class="sidebar-item">
+<h3>Recommended for You</h3>
+<div class="sidebar-item-content" style="text-align: center; padding: 0px;">
+
+<!-- MyBuys Web Recommendation Zone -->
+<div mybuyszone="5"></div>
+<!-- End MyBuys Web Recommendation Zone -->
+
+
+<!-- debug: type: content_item, cs cat: , deli cat:  -->
+<!-- MyBuys Page Parameters -->
+<script type="text/javascript">
+mybuys.setPageType("CONTENT_ITEM");
+mybuys.set("categoryid","");
+</script>
+<!-- End MyBuys Page Parameters -->
+		
+</div>
+</div>
+</div>
+<!--
+~;
+}
+</csperl>
+-->
+
+<!--Add Ruby Resource Page -->
+<div class="sidebar-item">
+<div class="sidebar-item-content">
+   
+<div >
+<a href="http://www.oreillynet.com/topic/ruby.csp">
+<img border="0px" width="100%"  src="http://www.oreillynet.com/images/sidebars/ruby_sidebar_link.png">
+</img>
+</a>
+</div>
+
+</div>
+</div>
+
+
+<!--Add Beautiful Code Feeds -->
+<div class="sidebar-item">
+<div class="sidebar-item-content">
+<a href="http://beautifulcode.oreillynet.com/">
+   <img 
+  src="http://www.oreillynet.com/images/beautiful_code_weblogs.gif"
+   border="0"
+/></a>
+<p class="secondary"><b><a href="http://beautifulcode.oreillynet.com/2008/04/resource_management_a_critical.php">Resource Management: A Critical Look at RAII</a></b> <em>Michael Feathers</em></p><p class="secondary"><b><a href="http://beautifulcode.oreillynet.com/2008/04/the_logs_that_bind_1.php">The Logs That Bind..</a></b> <em>Michael Feathers</em></p><p class="secondary"><b><a href="http://beautifulcode.oreillynet.com/2008/04/the_design_boundary.php">Outside the Design Boundary</a></b> <em>Michael Feathers</em></p><p class="secondary"><b><a href="http://beautifulcode.oreillynet.com/2008/04/can_a_program_lie_to_you_the_w.php">Can a program lie to you the way a story or essay can?</a></b> <em>Andy Oram</em></p>
+<p align="right" class="smalltext"><a href="http://beautifulcode.oreillynet.com/">&gt; More from Beautiful Code</a></p>
+</div>
+</div>
+
+<!-- search 
+<div class="sidebar-item">
+<h3>Search</h3>
+<div class="sidebar-item-content">
+
+<noindex>
+<form method="get" action="http://promosearch.atomz.com/search/promosearch" id="search" name="searchForm" onsubmit="processQuery();">
+<input id="src" name="query" size="10" maxlength="80" accesskey="s" type="text">
+<input value="test" name="sp-q" type="hidden">
+<input name="sp-a" value="sp1000a5a9" type="hidden">
+<input name="sp-f" value="ISO-8859-1" type="hidden">
+<input name="sp-t" value="general" type="hidden">
+<input name="sp-x-1" value="cat" type="hidden">
+<input name="sp-q-1" value="" type="hidden">
+<input name="sp-x-2" value="cat2" type="hidden">
+<input name="sp-q-2" value="" type="hidden">
+<input name="sp-c" value="25" type="hidden">
+<input name="sp-p" value="all" type="hidden">
+<input name="sp-k" value="Articles|Books|Conferences|Other|Weblogs" type="hidden">
+<input name="c" value="" type="hidden">
+<input name="p" value="" type="hidden">
+<input name="search" value="Go" onclick="return searchverif();" type="submit">
+</form>
+</noindex>
+
+</div>
+</div>
+-->
+
+
+
+<div class="sidebar-item">
+<h3>Tagged Articles</h3>
+<div class="sidebar-item-content tags">
+<p style="padding:10px 10px 6px 10px;margin:0;"><a class="delicious" title="Post to del.icio.us." href="http://del.icio.us/post" onclick="window.open('http://del.icio.us/post?v=4&partner=orn&noui&jump=close&url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title),'delicious','toolbar=no,width=700,height=400'); return false;">Be the first to post this article to del.icio.us</a></p>
+</div></div>
+
+<!-- sponsored developer resources -->
+<div class="sidebar-item">
+<h3>Sponsored Resources</h3>
+<div class="sidebar-item-content">
+
+<ul style="margin: 0 0 0 1.2em;padding: 0;">
+<li><a href="http://digitalmedia.oreilly.com/lightroom/">Inside Lightroom</a></li>
+</ul>
+
+</div>
+</div>
+
+
+<div class="sidebar-item">
+<h3>Related to this Article</h3>
+<div class="sidebar-item-content">
+<p style="font-size:10px;padding:0 0 10px 0;margin:0;">
+<a href="http://www.oreilly.com/catalog/9781449398873/?CMP=ILL-4GV796923290&amp;ATT=/network/2003/04/29/steveoaulline.html/"><img src="http://covers.oreilly.com/images/9781449398873/bkt.gif" class="aleft" style="padding-bottom:10px;" border="0" alt="Craft: Volume 10" /></a>
+
+<a href="http://www.oreilly.com/catalog/9781449398873/?CMP=ILL-4GV796923290&amp;ATT=/network/2003/04/29/steveoaulline.html"><b>
+Craft: Volume 10
+</b></a><br />
+by <a href="http://www.oreillynet.com/pub/au/3859">Tina Barseghian</a>
+<br />
+November 2010<br />
+<span class="price">
+$9.99 USD
+</span></p>
+<div class="clear"></div>
+<p style="font-size:10px;padding:0 0 10px 0;margin:0;">
+<a href="http://www.oreilly.com/catalog/9780596806477/?CMP=ILL-4GV796923290&amp;ATT=/network/2003/04/29/steveoaulline.html/"><img src="http://covers.oreilly.com/images/9780596806477/bkt.gif" class="aleft" style="padding-bottom:10px;" border="0" alt="Up and Running with Joomla" /></a>
+
+<a href="http://www.oreilly.com/catalog/9780596806477/?CMP=ILL-4GV796923290&amp;ATT=/network/2003/04/29/steveoaulline.html"><b>
+Up and Running with Joomla
+</b></a><br />
+by <a href="http://www.oreillynet.com/pub/au/3301">R. Allen Wyke</a>
+, <a href="http://www.oreillynet.com/pub/au/3302">Skip Matheny</a>
+<br />
+July 2009<br />
+<span class="price">
+$9.99 USD
+</span></p>
+<div class="clear"></div>
+</div>
+</div>
+
+
+
+
+<div style="text-align:center;background-color:#eee;padding-top:10px;padding-bottom:10px;">
+<img src="/images/ads/advertisement.gif" alt="Advertisement" style="padding-bottom:10px;" /><br />
+<div align="center">
+<!-- Network Skyscraper Ad -->
+
+<!--JavaScript Tag // Tag for network 5159: TechVertical // Website: O'ReillyNet // Page: O'ReillyNet // Placement: ros_160x600 (425844) // created at: Oct 9, 2008 6:10:29 PM-->
+<script language="javascript"><!--
+document.write('<scr'+'ipt language="javascript1.1" src="http://adserver.adtechus.com/addyn/3.0/5159/425844/0/154/ADTECH;loc=100;target=_blank;key=key1+key2+key3+key4;grp=[group];misc='+new Date().getTime()+'"></scri'+'pt>');
+//-->
+</script><noscript><a href="http://adserver.adtechus.com/adlink/3.0/5159/425844/0/154/ADTECH;loc=300;key=key1+key2+key3+key4;grp=[group]" target="_blank"><img src="http://adserver.adtechus.com/adserv/3.0/5159/425844/0/154/ADTECH;loc=300;key=key1+key2+key3+key4;grp=[group]" border="0" width="160" height="600"></a></noscript>
+
+<!-- End of JavaScript Tag -->
+
+<!-- End ad -->
+</div>
+</div>
+
+</div><!-- #related -->
+
+</div><!-- #page-content -->
+
+<!-- footer -->
+<div id="footer" class="noindex">
+
+<table border="0" style="padding-top:20px; padding-bottom:20px;">
+
+<tbody>
+
+
+<tr><td align="left" width="25%" valign="top" style="padding-left: 20px; padding-right: 20px;">
+<a href="http://oreilly.com/"><img height="35" border="0" width="155" src="http://cdn.oreilly.com/images/standard/oreilly-logo-footer.gif" alt="O'Reilly Media"/></a>
+<br/><br/>
+&copy;2010, O'Reilly Media, Inc.<br/>(707) 827-7000 / (800) 998-9938<br/> All trademarks and registered trademarks appearing on oreilly.com are the property of their respective owners. </td>
+
+<td valign="top" class="footercol1">
+<ul>
+<li><a href="http://oreilly.com/about/"><strong>About O'Reilly</strong></a></li>
+<li><a href="http://oreilly.com/academic/">Academic Solutions</a></li>
+<li><a href="http://oreilly.com/contact.html">Contacts</a></li>
+<li><a href="http://oreilly.com/oreilly/cs/">Customer Service</a></li>
+<li><a href="http://oreilly.com/jobs/">Careers</a></li>
+<li><a href="http://press.oreilly.com/">Press Room</a></li>
+<li><a href="http://oreilly.com/oreilly/privacy.csp">Privacy Policy</a></li>
+<li><a href="http://oreilly.com/terms/">Terms of Service</a></li>
+<li><a href="http://oreilly.com/oreilly/author/intro.csp">Writing for O'Reilly</a></li>
+</ul>
+</td>
+
+<td valign="top" class="footercol2">
+<ul>
+<li><a href="http://oreilly.com/community/"><strong>Community</strong></a></li>
+<li><a href="http://oreilly.com/authors/">Authors</a></li>
+<li><a href="http://forums.oreilly.com/">Forums</a></li>
+<li><a href="https://members.oreilly.com/">Membership</a></li>
+<li><a href="http://elists.oreilly.com/">Newsletters</a></li>
+<li><a href="http://oreilly.com/feeds/">RSS Feeds</a></li>
+<li><a href="http://ug.oreilly.com/">User Groups</a></li>
+</ul>
+</td>
+
+<td valign="top" class="footercol3">
+<ul>
+<li><strong>More O'Reilly Sites</strong></li>
+<li><a href="http://igniteshow.com/">igniteshow.com</a></li>
+<li><a href="http://makerfaire.com/">makerfaire.com</a></li>
+<li><a href="http://makezine.com/">makezine.com</a></li>
+<li><a href="http://craftzine.com">craftzine.com</a></li>
+<li><a href="http://labs.oreilly.com">labs.oreilly.com</a></li>
+</ul>
+
+<ul>
+<li><strong>Partner Sites</strong></li>
+<li><a href="https://www.x.com/community/ppx/devzone">PayPal Developer Zone</a></li>
+<li><a href="http://insideria.com">InsideRIA</a></li>
+<li><a href="http://www.forbes.com/oreillyinsights/">O'Reilly Insights on Forbes.com</a></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+
+<!-- autocomplete scripts -->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/yui/2.6.0/build/utilities/utilities.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/yui/2.6.0/build/datasource/datasource-min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/yui/2.6.0/build/autocomplete/autocomplete-min.js"></script>
+<script type="text/javascript" src="http://content.atomz.com/sp1003bcf0/publish/autocomplete_data.js?sp_js_cache_ver=3"></script>
+
+<!-- MyBuys Page Initialization -->
+<script type="text/javascript">
+mybuys.initPage();
+</script>
+<!-- End MyBuys Page Initialization -->
+
+<!-- #footer -->
+</div></body><!-- #page -->
+
+
+</html>
+
+
+
