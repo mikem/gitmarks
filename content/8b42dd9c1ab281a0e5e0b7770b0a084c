@@ -1,0 +1,783 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="content-type">
+  <title>Linux for Presentations</title>
+  <meta content="Akkana Peck" name="author">
+</head>
+<body vlink="#551a8b" alink="#0000ee" link="#0000ee"
+ style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">
+<h1>Using Linux for Presentations Mini-HOWTO<br>
+</h1>
+<a href="http://www.shallowsky.com/linux/"><span
+ style="font-style: italic;">Akkana Peck</span></a>
+<hr style="width: 100%; height: 2px;">
+<h2>Contents</h2>
+<ul>
+  <li><a href="#intro">Introduction and Motivation</a></li>
+  <li><a href="#contrib">Contributors</a></li>
+  <li><a href="#software">Software for Creating and Presenting Slides</a></li>
+  <ul>
+    <li><a href="#moztips">Tips and Tools for HTML presentations</a></li>
+    <li><a href="#pdftips">Tips and Tools for PDF presentations</a></li>
+  </ul>
+  <li><a href="#projector">The Moment of Truth: Connecting to the
+Projector</a></li>
+  <li><a href="#remote">Remote Presentation Devices</a></li>
+  <li><a href="#sharing">Sharing Your Slides</a></li>
+  <li><a href="#conclusions">Some Conclusions (opinions)</a></li>
+  <li><a href="#resources">Other Resources</a><br>
+  </li>
+</ul>
+<hr style="width: 100%; height: 2px;">
+<h2><a name="intro"></a>Introduction and Motivation<br>
+</h2>
+This Mini-HOWTO is aimed at people who have a laptop running linux, and
+want to use it to give presentations via a computer screen projector
+using free software, rather than use proprietary tools such as
+powerpoint.<br>
+<br>
+When I first wrote this HOWTO, I had very little experience presenting
+slides (though since then I've gotten quite a bit).
+I wrote it partly
+because I needed to research the options for an upcoming talk of my own,
+and partly because I was tired of seeing presenters at linux and open
+source gatherings using powerpoint because they didn't know there were
+other options or didn't have time to research them. Besides,
+powerpoint is <a
+ href="http://www.guardian.co.uk/online/comment/story/0%2c12449%2c891336%2c00.html">"the
+most loathsome, vicious and immoral piece of software ever produced"</a>
+:-)&nbsp; If you doubt this, check out <a
+ href="http://www.norvig.com/Gettysburg/">The Gettysburg Powerpoint
+Presentation</a>, or <a href="http://www.edwardtufte.com/">Edward R.
+Tufte</a>&#8217;s &#8220;<a
+ href="http://www.edwardtufte.com/1472288704/tufte/books_pp">The
+Cognitive Style of PowerPoint</a>&#8221; Presented in the <a
+ href="http://www.aaronsw.com/weblog/000931">Form of a PowerPoint
+Presentation</a>.<br>
+<br>
+The latest version of this howto lives at <a
+ href="http://www.shallowsky.com/linux/LinuxPresentations.html">http://www.shallowsky.com/linux/LinuxPresentations.html</a>.<br>
+<hr style="width: 100%; height: 2px;">
+<h2><a name="contrib"></a>Contributors:</h2>
+<a href="http://www.shallowsky.com/linux/">Akkana Peck</a> wrote
+this howto.<br>
+Other contributors: N. Thomas, Travis Casey and Alvin Goats.<br>
+This document is copyright 2003 by Akkana Peck and I'm still trying to
+figure out what license best says what I want, which is this: feel free
+to redistribute this document as much as you want, just don't remove
+the
+author credit.&nbsp; (I think that's the FreeBSD Documentation License?)<br>
+<hr style="width: 100%; height: 2px;">
+<h2><a name="software"></a>Software for Creating and Presenting Slides</h2>
+<p>
+There are plenty of software packages which can do a good job of
+presenting slides.
+<p>
+There are three major categories:
+<p>
+<b>Dedicated presentation programs</b>
+are programs designed to present slides. They usually have their
+own language for describing slides, and some of them include editing
+tools to help you design and edit your slides. The main advantage of
+this approach are that you're using a tool designed for the job.
+<p>
+<b>Browser/HTML based solutions</b> use HTML as the language for
+describing slides. To display them, you use a web browser, such as
+Firefox, usually in fullscreen mode. You can write the HTML by hand,
+use an HTML editor, or use a special tool aimed at creating HTML
+presentations. Advantages of this approach include portability,
+flexibility and ease of showing your slides on the web, and you
+can do equations with some difficulty (using <a
+ href="http://www.mozilla.org/projects/mathml/">MathML</a>).
+Disadvantages mainly involve difficulties in styling HTML,
+and browser portability issues.
+The author prefers HTML for her own presentations; there are some
+<a href="#moztips">tips for HTML presentations</a> later in this
+document.
+<p>
+<b>PDF based solutions</b> use PDF as the slide language.
+Most people who use PDF slides seem to use acroread as their
+presentation tool, but evince and others also work.
+Advantage: it's portable, and in a pinch you can always find
+a machine that can display PDF at least to some extent.
+Disadvantage: neither the viewers nor the creation tools
+are usually very flexible, and multimedia (like animations
+or effects) aren't an option.
+
+<h3>Presentation tool roundup:</h3>
+<ul>
+  <li><a href="#dedicated">Dedicated presentation programs</a>
+  <li><a href="#html">Browser/HTML based solutions</a>
+  <li><a href="#other">PDF based solutions</a>
+  <li><a href="#other">Other solutions</a>
+</ul>
+
+<a name="dedicated">
+<h3>Dedicated Presentation Programs</h3>
+<table style="text-align: left; width: 100%;" border="1" cellspacing="2"
+ cellpadding="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">App<br>
+      </th>
+      <th style="vertical-align: top;">Strengths<br>
+      </th>
+      <th style="vertical-align: top;">Weaknesses<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="http://www.openoffice.org/">Open Office Impress</a>
+      </td>
+      <td style="vertical-align: top;">
+      <ul>
+        <li>Fairly mature wysiwyg creation tool.</li>
+        <li>Can import/export powerpoint and other formats (at least to
+some extent -- animation and effects may not work).</li>
+        <li>True fullscreen mode. </li>
+        <li>May be able to export to html to put on the web afterward,
+	    or PDF for printing.</li>
+      </ul>
+      </td>
+      <td style="vertical-align: top;">
+      <ul>
+        <li>Very heavyweight to install and use (may be too much for some laptops).</li>
+	<li>Awkward and buggy.
+        <li>Powerpoint export is limited and buggy.</li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a
+ href="http://www.koffice.org/kpresenter/">KPresenter/Koffice</a><br>
+      </td>
+      <td style="vertical-align: top;">
+      <ul>
+        <li>Designed for the purpose.</li>
+        <li>Wysiwyg creation tool.<br>
+        </li>
+        <li>Some animation effects, piecharts, etc..</li>
+        <li>Can import/export html; some limited powerpoint.<br>
+        </li>
+        <li>Fullscreen, no-frame mode.<br>
+        </li>
+      </ul>
+      </td>
+      <td style="vertical-align: top;">
+      <ul>
+        <li>Editor is somewhat awkward to use.</li>
+        <li>Somewhat heavyweight, drags in KOffice/DCOP, lots of
+chatter on stdout.</li>
+        <li>Powerpoint support seems fairly limited.<br>
+        </li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="http://member.wide.ad.jp/wg/mgp/">MagicPoint</a><br>
+      </td>
+      <td style="vertical-align: top;">
+      <ul>
+        <li>Designed for the purpose.</li>
+        <li>Relatively small and lightweight.</li>
+        <li>Fairly simple text format files.<br>
+        </li>
+        <li>True fullscreen, no-frame mode: the only choice that can
+draw over the panel.</li>
+        <li>Can scribble on slides during presentations. :-)<br>
+        </li>
+      </ul>
+      </td>
+      <td style="vertical-align: top;">
+      <ul>
+        <li>Not many tools for creating content; must learn special
+language (or copy templates).</li>
+        <li>Annoying vffont error messages (avoid by running <span
+ style="font-style: italic;">mgp -x vflib</span>).<br>
+        </li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a
+ href="http://ultrapoint.sourceforge.net/">UltraPoint</a><br>
+      </td>
+      <td style="vertical-align: top;">
+      <ul>
+        <li>Designed for the purpose.</li>
+        <li>Works with Image Magick to scale images.</li>
+      </ul>
+      </td>
+      <td style="vertical-align: top;">
+      <ul>
+        <li>Requires GGI and other libs many people don't have; even
+then, didn't work for me, "VFlib initialization failed".</li>
+        <li>No tools for creating content.</li>
+        <li>No man page.</li>
+        <li>No output in html or other standard formats.</li>
+	<li>May be unmaintained (has been dropped from Debian</li>
+        </li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="http://pypi.python.org/pypi/bruce">Bruce</a>
+      <td style="vertical-align: top;">
+      <ul>
+        <li>Slides are just plaintext files
+        <li>Handles video and interactive Python sessions
+      </ul>
+      <td style="vertical-align: top;">
+      <ul>
+        <li>Documentation and support might be a little sketchy
+      </ul>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="http://impressive.sourceforge.net/">Impressive</a>
+      <td style="vertical-align: top;">
+        <ul>
+	  <li>Offers slide transitions and other effects
+	  <li>Simple, lightweight, Python
+	  <li>"highlight boxes" and spotlight effects
+        </ul>
+      <td style="vertical-align: top;">
+        <ul>
+	  <li>Fairly new, may not be mature yet.
+        </ul>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">ApplixWare Presents<br>
+      </td>
+      <td style="vertical-align: top;">
+      <ul>
+        <li>Look and feel familiar to powerpoint users.<br>
+        </li>
+      </ul>
+      </td>
+      <td style="vertical-align: top;">
+      <ul>
+        <li>Applixware seems to be orphaned; the boxed version
+currently available (several years old) is apparently flaky.<br>
+        </li>
+      </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<a name="html">
+<h3>Browser/HTML based solutions</h3>
+<table style="text-align: left; width: 100%;" border="1" cellspacing="2"
+ cellpadding="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">App<br>
+      </th>
+      <th style="vertical-align: top;">Strengths<br>
+      </th>
+      <th style="vertical-align: top;">Weaknesses<br>
+      </th>
+    </tr>
+    <tr>
+      <td><a href="http://meyerweb.com/eric/tools/s5/">S5</a></td>
+      <td>
+	<ul>
+          <li>An easy way of generating HTML/CSS slides.
+	</ul>
+      </td>
+      <td> 
+	<ul>
+          <li>A bit slow at displaying (may be processor intensive).
+	</ul>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="http://www.chrisarndt.de/en/software/pylize/">Pylize</a></td>
+      <td style="vertical-align: top;">
+      <ul>
+        <li>A Python script, lightweight and simple.</li>
+        <li>Generates HTML.</li>
+        <li>Output can be edited as needed.</li>
+      </ul>
+      </td>
+      <td style="vertical-align: top;">
+        &nbsp;
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="http://www.rot13.org/~dpavlin/presentations/XLSies_to_PLies/">PLies</a></td>
+      <td style="vertical-align: top;">
+      <ul>
+	<li>Perl script</li>
+        <li>Generates HTML.</li>
+        <li>Output can be edited as needed.</li>
+      </ul>
+      </td>
+      <td style="vertical-align: top;">
+        &nbsp;
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+        <a href="http://simon-cozens.org/programmer/takahashi.html">"Takahashi
+         method" XUL presentation tool</a>
+      <td style="vertical-align: top;">
+        <ul>
+	  <li>Slide syntax is simple to edit
+        </ul>
+      <td style="vertical-align: top;">
+        <ul>
+	  <li>Not really HTML, so works only in Mozilla.
+	  <li>Apparently deprecated in favor of the Monta method,
+	      which is documented only in Japanese.
+        </ul>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="http://www.w3.org/Talks/Tools/Slidy/">W3C HTML Slidy</a></td>
+      <td style="vertical-align: top;">
+      <ul>
+	<li>Switching off Javascript shows all slidse.</li>
+      </ul>
+      </td>
+      <td style="vertical-align: top;">
+        &nbsp;
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="http://www.w3.org/Talks/slidemaker/YYMMsub/slide1-0.html">W3C Slidemaker Tool</a></td>
+      <td style="vertical-align: top;">
+      <ul>
+	<li>Perl script.</li>
+        <li>Generates HTML.</li>
+        <li>Output can be edited as needed.</li>
+      </ul>
+      </td>
+      <td style="vertical-align: top;">
+      <ul>
+        <li>Older than Pylize and PLies; Doesn't seem to have key bindings, e.g. "next slide".</li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="http://talks.php.net/">PHP
+Presentation System<br>
+      </a></td>
+      <td style="vertical-align: top;">
+      <ul>
+        <li>Keyboard controls and special effects available.<br>
+        </li>
+      </ul>
+      </td>
+      <td style="vertical-align: top;">
+      <ul>
+        <li>Must be running a web server on the presentation machine.</li>
+        <li>A bit slow to load (at least, I never make it to the actual
+presentation on the page :-)</li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="http://sourcefrog.net/projects/pinpoint/">PinPoint</a>
+      <td style="vertical-align: top;">
+        <ul>
+	  <li>A GIMP plug-in for generating slides as JPEG.
+	  <li>Can apparently generate HTML too.
+        </ul>
+      <td style="vertical-align: top;">
+        <ul>
+	  <li>May be orphaned: only available for obsolete GIMP 1.2
+	  <li> If you get errors about "map", try changing "map" to
+	      "mapcar" in line 54
+        </ul>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a
+      href="http://www.opera.com/support/tutorials/operashow/">Opera Show<br>
+      </a></td>
+      <td style="vertical-align: top;">
+      <ul>
+        <li>Online composition tool.</li>
+      </ul>
+      </td>
+      <td style="vertical-align: top;">
+      <ul>
+        <li>Style sheets may be Opera specific (not sure)</li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="http://code.google.com/p/jessyink/">Jessyink</a></td>
+      <td style="vertical-align: top;">
+      <ul>
+        <li>Creates <b>SVG presentations</b> using Inkscape
+	<li>Can also create PDF
+	<li>Lots of animation effects
+	<li><a href="http://launchpadlibrarian.net/36714468/JessyInk_1_4_0_showcase.svg">Demo slides describing Jessyink</a>
+        <li>Another demo: <a href="http://www.w3.org/2009/Talks/socialweb-dhm/socialweb.svg">Social web</a>
+      </ul>
+      </td>
+      <td style="vertical-align: top;">
+        &nbsp;
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<h3><a name="moztips"></a>Tips and Tools for HTML Presentations:</h3>
+<ul>
+  <li>You can write a lightlight HTML fullscreen presentation
+  program in about 40 lines of Python: for example, see my
+  <a href="http://shallowsky.com/software/scripts/preso">webkit preso</a>
+  program.
+  <li>Firefox has a <a
+ href="http://www.mozilla.org/releases/mozilla1.1b/">fullscreen mode</a>:
+press F11 to toggle in and out.&nbsp; You still need to maximize the
+window; and you'll still see a titlebar and your windowmanager's panel,
+if any. You can turn them off with <i>View-&gt;Toolbars-&gt;Navigation
+Controls</i></li>
+  <li>Make a separate mozilla profile to use for giving presentations,
+so you can hide the urlbar and so forth without affecting your normal
+mozilla environment. Then you can add an entry to your panel or
+menu system to call: <span style="font-style: italic;">mozilla -P
+presenter</span> (subtitute your profile name).</li>
+  <li>Alternately, you can make the urlbar disappear automatically
+when you switch to fullscreen mode with this addition to <i>user.js</i>:
+<p>
+In Firefox:
+<pre wrap>
+#toolbar-menubar[moz-collapsed=true] + #nav-bar { display: none !important; }
+</pre>
+<p>
+In Seamonkey:
+<pre wrap>
+#main-menubar[moz-collapsed=true] + #nav-bar { display: none !important; }
+</pre>
+  <li>Some ways to advance to the next slide with a one-key command:</li>
+  <ul>
+    <li>Easy way (requires no fancy html or javascript): go through all
+the pages in order before the presentation, then go back to the first
+one and use alt-rightarrow to advance.<br>
+    </li>
+    <li>CSS to make your presentation all one document, one slide per
+page (then use spacebar and page up/down keys to move around).&nbsp;
+Disadvantage: shows a scrollbar.</li>
+    <li>Use page accesskeys and light javascript, then you can move
+around with keys like alt-N and alt-P, as in this <a
+ href="http://www.gerv.net/presentations/fosdem2003/slide00.html">Bugzilla
+Fosdem talk by Gervase Markham</a>.&nbsp; Note, this may not work well
+if you <a href="http://www.mozilla.org/unix/customizing.html#keys">rebind
+your mozilla accel key</a>.<br>
+    </li>
+    <li>Use heavier javascript, so you can trap keys like spacebar,
+forward and back arrows, and page up/down. You can do this with your
+slides all in separate HTML files, like in
+<a href="http://shallowsky.com/software/presentation/">this
+example by the author</a>;
+or you can put them all in one big file, as with this <a
+ href="http://eu.mozdev.org/Brussels2003/talks/chregu/index.html">Bitflux
+ Fosdem Talk</a> or with <a
+ href="http://www.meyerweb.com/eric/tools/s5/">Meyer Web's S5</a>.
+    </li>
+  </ul>
+  <li>If you're dying for effects like bullets scrolling in from the
+side, that's easily done with Javascript.&nbsp; More complicated
+animations are probably best done in mng or animated gif (create with <a
+ href="http://www.gimp.org">gimp</a>, <a
+ href="http://www.imagemagick.org/">image magick</a> or <a
+ href="http://www.lcdf.org/%7Eeddietwo/gifsicle/">gifsicle</a>).&nbsp;
+There are supposedly <a href="http://openswf.org/">free flash creation
+tools</a>, but I've never figured them out myself.</li>
+  <li>A useful collection of slides from presentations using mozilla
+can be found at the <a href="http://eu.mozdev.org/Brussels2003/talks/">eu.mozdev.org
+fosdem site</a>.<br>
+  </li>
+</ul>
+
+<a name="other">
+<h3>PDF-based and other solutions</h3>
+<table style="text-align: left; width: 100%;" border="1" cellspacing="2"
+ cellpadding="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">App<br>
+      </th>
+      <th style="vertical-align: top;">Strengths<br>
+      </th>
+      <th style="vertical-align: top;">Weaknesses<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span style="font-style: italic;">PDF viewers</span>
+        such as xpdf, evince, the non-free acroread, etc.
+      </td>
+      <td style="vertical-align: top;">
+      <ul>
+        <li>Good control over fonts, sizes.</li>
+        <li>Can make presentation available as a whitepaper afterward.</li>
+        <li>You may already have PDF for some or all of your slides.</li>
+        <li>Lots of software available for creating pdf.</li>
+	<li>Can borrow a laptop without worrying if your slides will work.</li>
+        <li>No problem with integrated equations.<br>
+        </li>
+      </ul>
+      </td>
+      <td style="vertical-align: top;">
+      <ul>
+        <li>No one will want to download your whitepaper because pdf is
+a pain. :-)</li>
+        <li>PDF viewer apps are heavyweight, sometimes unreliable.</li>
+        <li>PDF creation tools are also heavyweight.</li>
+	<li>No animations, effects, transitions etc.</li>
+        <li>Bloat (e.g. graphic backgrounds get stored redundantly for each slide).</li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a
+ href="http://freshmeat.net/projects/keyjnote/">KeyJNote</a><br>
+      </td>
+      <td style="vertical-align: top;">
+      <ul>
+        <li>Designed for the purpose.</li>
+        <li>Various page transition and highlighting effects.</li>
+	<li>Uses PDF as a base format</li>
+      </ul>
+      </td>
+      <td style="vertical-align: top;">
+      <ul>
+        <li>Fairly new ... I haven't tried it yet.</li>
+	<li>Not clear how to add effects on top of the PDF</li>
+        <li>May be orphaned -- main development page has disappeared.</li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">any image viewer (I'm partial to <a
+ href="http://www.shallowsky.com/software/pho/">pho</a> since I wrote
+it, but there are lots of choices, such as <span
+ style="font-style: italic;">ee</span> and <span
+ style="font-style: italic;">xv</span>).</td>
+      <td style="vertical-align: top;">
+      <ul>
+        <li>Many available.</li>
+        <li>Small and lightweight.</li>
+        <li>Content creation tools are well understood (might not have
+to learn anything new).</li>
+      </ul>
+      </td>
+      <td style="vertical-align: top;">
+      <ul>
+        <li>Hard to put into fullscreen mode.</li>
+	<li>Tied to a specific resolution</li>
+        <li>Image creation tools (e.g. GIMP) are heavyweight, and less
+flexible for text manipulation.</li>
+      </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3><a name="pdftips"></a>Tips and Tools for PDF presentations:</h3>
+<ul>
+  <li>LaTeX has tools for producing slides, such as
+  <a href="https://sourceforge.net/projects/latex-beamer/">LaTeX Beamer</a>.
+  LaTeX can be converted to
+PS,&nbsp; PDF or HTML.
+See this <a
+ href="http://www.theorie.physik.uni-wuppertal.de/%7Erainer/talks/latex2pdf.html">latex2pdf</a>
+page for some suggestions, and here's a <a
+ href="http://astronomy.sussex.ac.uk/%7Eeddie/soft/tutorial.html">tutorial
+for making slides in latex</a>.<br>
+  </li>
+  <li>You can produce PDF slides with packages such as <a
+ href="http://www.tug.org/applications/Seminar/">Seminar</a>, <a
+ href="http://prosper.sourceforge.net/">Prosper</a>, <a
+ href="http://packages.debian.org/unstable/tex/foiltex.html">foiltex</a>,
+or <a href="http://nwalsh.com/tex/texhelp/SliTeX.html">SliTeX</a>, or
+using XML combined with a system like <a
+ href="http://axpoint.axkit.org/">AxPoint</a> or ReportLab's <a
+ href="http://www.reportlab.org/python_point.html">PythonPoint</a>).</li>
+  <li><a href="http://packages.debian.org/unstable/x11/pspresent.html">pspresent</a>
+is a tool for presenting postscript slides.<br>
+  </li>
+  <li>Here's a good <a
+ href="http://www.mpa-garching.mpg.de/%7Egeorg/prosper/">tutorial for
+Prosper</a>, with some simple example slides.&nbsp; Reading the
+examples that come with Prosper are also helpful.<br>
+  </li>
+</ul>
+<hr style="width: 100%; height: 2px;">
+<h2><a name="projector"></a>The Moment of Truth: Connecting to the
+Projector<br>
+</h2>
+Here's a nice <a
+ href="http://www.astro.umd.edu/%7Eteuben/linux/laptop-display.html">howto
+on configuring X for connecting to projectors</a>.&nbsp; Some
+additional tips I've found:
+<p>
+If you use an <i>xorg.conf</i> file, include some common lower
+resolutions like add 800x600 and 640x480.
+Then use ctl-alt-KeypadPlus and Minus to cycle through resolutions "live".
+<p>
+ctl-alt-KeypadPlus and Minus may not work in all xorg setups.
+In newer Xorgs with some graphics cards, especially Intel, use
+xrandr to control resolution and send the signal to the projector.
+This command works on my current laptop:
+<pre>
+xrandr --output VGA --mode 1024x768
+</pre>
+When I'm done and no longer want to send to the projector, I run:
+<pre>
+xrandr --auto
+</pre>
+<p>
+However, this doesn't always work either. Some projectors are picky
+about whether the machine is sending a signal already when it's
+plugged in, or whether it sees a signal during power up. If you
+don't get a signal at first, keep trying. On my Vaio I find it's
+sometimes helpful to run the xrandr command mentioned above, then
+suspend the laptop and un-suspend it while still connected to the
+projector.
+<p>
+Some projectors, especially older ones, require a strong signal and
+won't work with a laptop that's displaying both to the external video
+port and to its own LCD.&nbsp; This can be a problem on laptops (such as my
+older Vaio) where the display is software controlled and there's no Linux
+tool to switch to external-only mode.&nbsp; I haven't found a solution,
+besides complaining to the laptop manufacturer and using a newer
+projector.
+<p>
+Some machines, especially older ones like my first Vaio, have no
+software-controlled way of switching the external signal on and off.
+Instead, the BIOS turns on an external signal if it sees an external
+monitor or projector plugged in at boot time. So if all else fails,
+try rebooting with the projector connected. With this sort of
+laptop, I recommend booting at home with a monitor connected,
+suspending, then leaving the machine suspended until you get to the talk.
+<p>
+Try adding this option in the device section of the xorg.conf file: <br>
+<pre>
+    Option "Display" "BIOS"
+</pre>
+On some laptops, such as Dell, that enables the function key that
+switches between LCD and CRT, and also allows the docking station to
+detect the external monitor and automatically switch to CRT mode.
+ <i>(Thanks to Justin Gaither.)</i>
+<br>
+nVidia-powered laptops have something called TwinView, which provide
+full support for switching between displays.&nbsp; Check the nVidia
+README.txt, "APPENDIX I: CONFIGURING TWINVIEW", for lots of
+detail.&nbsp; Here's a pointer to <a
+ href="http://download.nvidia.com/XFree86_40/1.0-2880/README.txt">nVidia's
+XFree86 4.0 page</a>.&nbsp; <span style="font-style: italic;">(Thanks
+to Jos Thalen for the nVidia information.)</span><br>
+<br>
+I'm sure there are other tricks for other laptops and distros.&nbsp;
+This is an important section, so please help me out if you have
+something to add here!<br>
+<br>
+Of course, always show up as early as possible in case there are
+problems hooking up. (This applies no matter what OS you're running!
+Windows and Mac users have just as much difficulty connecting to
+projectors as Linux users do.)
+
+<h2><a name="remote"></a>Remote Presenter Devices</h2>
+What about those remote presenter gizmos where you can press buttons
+to advance a slide while pacing back and forth on the other side of
+the room from your PC?
+<p>
+No problem. Most of them are implemented as generic USB keyboard
+devices and will work just fine with Linux.
+I have a Logitech Cordless Presenter and love it (battery life is
+amazing, too).
+<p>
+Be aware that presenters
+don't all send the same key sequences: some send Page Up/Down, some
+send up/down arrow, some apparently look like a mouse and send
+right/left mouse clicks. So you may need to check your presentation
+tool: if you're using PDF or scroll-down CSS, you may want to look
+for one which sends Page Up/Down. If you're using OpenOffice, it
+probably follows the normal PowerPoint conventions and will work
+with most tools. If you're using HTML and JavaScript, then you can
+use anything as long as you make sure your JS obeys the right keys.
+
+<h2><a name="sharing">A Note on Sharing Slides</h2>
+<p>
+Your choice of slide format may affect how easy it is to share your
+slides with the world.
+<p>
+HTML slides are easy to put on a website so they're accessible to
+anyone. Be aware, though, that sites like Slideshare won't accept
+HTML, so you might lose out on any social-networking benefit from Slideshare.
+<p>
+Just about everyone can read PDF slides, so you can put those on the
+web and let people download the presentation. They have to download
+the whole thing, though; you can't just point to one slide.
+<p>
+OpenOffice can save in PowerPoint format, but it will lose
+animations and may lose formatting and transition effects.
+Powerpoint isn't as ubiquitous as some people seem to think: not
+all Windows users have Powerpoint (it doesn't come free with
+Windows) so it's really not a great format for sharing.
+It's usually the only format accepted by non open-source
+conferences, though.
+<p>
+Open-source conferences usually specify that your slides should be
+ODP (OpenOffice's native format). You can freely ignore this and give them
+a PDF or a tarball of HTML slides; when they say ODP they really mean
+"an open format, not Powerpoint" and they haven't considered the
+possibility that anyone would use something besides OpenOffice.
+<p>
+Special formats used by programs like KPresenter or MagicPoint,
+while open, will be hard for most people to display and aren't a
+great choice for sharing.
+
+<hr style="width: 100%; height: 2px;">
+<h2><a name="conclusions"></a>Some Conclusions (warning, personal opinion)</h2>
+<ul>
+  <li>For my own presentations, I prefer using HTML and Firefox.
+I already have the tools, I already know html, and I like being able to put
+the presentation on the web without doing any extra work.</li>
+  <li>People used to powerpoint and gui tools might be happiest with
+KPresenter -- the UI is a bit rough but it is flexible and wysiwyg</li>
+  <li>People who already work with latex and pdf will probably prefer
+that format for presentations.</li>
+  <li>People who need to be compatible with powerpoint (perhaps because
+it's required at the company or conference where the presentation will be made,
+because they can use the standard company templates, or when writing a
+presentation for a windows user) will probably prefer Open Office,
+but stay away from fancy effects.</li>
+</ul>
+
+<hr style="width: 100%; height: 2px;">
+<h2><a name="resources"></a>Other resources<br>
+</h2>
+<ul>
+  <li><a href="http://perl.plover.com/yak/presentation/">Conference
+  Presentation Judo</a>, a wonderfully helpful (and funny) slide set
+  on how to give better presentations</li>
+  <li><a href="http://norvig.com/Gettysburg/">The Gettysburg
+  Powerpoint Presentation</a> ... consider whether you need slides
+  at all, and why
+  <li><a href="http://www.freeos.com/articles/3648/">From PowerPoint to
+MagicPoint</a>, a tutorial on MagicPoint.<br>
+  </li>
+  <li><a
+ href="http://infotrope.net/writing/content/presentation-HOWTO/presentation-HOWTO.html">The
+Presentation HOWTO</a> is a useful guide to organizing content for a
+presentation to LUGs and conferences.</li>
+  <li><a
+ href="http://trackstar.hprtec.org/main/track_frames.php3?track_id=85309&amp;nocache=1359266534">ThinkQuest:
+Reading Great Speeches, Making Great Speeches</a></li>
+  <li><a href="http://www.searls.com/present.html">It's the Story,
+Stupid: Don't let Presentation Software Keep You From GettingYour Story
+Across
+    </a></li>
+  <li><a href="http://xtrinsic.com/newtlug/040622/">Presentation
+  Boot Camp (or "Keeping the hecklers at bay")</a></li>
+</ul>
+<hr style="width: 100%; height: 2px;"><br>
+</body>
+</html>
