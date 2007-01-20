@@ -1,0 +1,428 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<HEAD>
+<TITLE>David Ross -- PGP Public Key Servers</TITLE>
+
+<META name="Author" content="David Ross">
+<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
+<link rel="shortcut icon" href="keys.ICO" type="image/x-icon">   
+<link rel="icon" href="keys.ICO" type="image/x-icon"> 
+
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../genl_style.css" >
+<style TYPE="text/css">
+div.dead p { text-align: left; margin-top: 0em; margin-left: 3em; text-indent: -3em }
+</style>
+</HEAD>
+
+<BODY>
+
+<table width="100%"><tr valign="middle">
+<td width="50%"><a class=image href="../viewing_site.html"><img class=browse src="../anybrowser.gif" alt="Viewable With ANY Browser"></a>
+<p class=nostyle><b>Note:</b> My Web pages are best viewed with style sheets enabled.  
+</td>
+<td align="right" width="50%"><a href="../unrated.html">Unrated</a></td>
+</tr></table>
+
+<h1>PGP: Public Key Servers</h1>
+<h3 class=cphd>Copyright <a href="../copyright.html">&copy;</a> 2002-2010 by David E. Ross</h3>
+
+<div class=trnsbox style="font-size: 85%">
+This page assumes the reader understands how to generate a PGP key pair and what it means to <a href="pgp_signatures.html#keys">sign someone else's key</a> or to revoke your own key.  The <a href="index.html#links">User's Guide</a> that came with your version of PGP is generally a good source of information on these topics.
+</div>
+
+<div align="center">
+<p><a href="#intro">Introduction</a>
+<p><a href="#search">Searching for Keys</a>
+<p><a href="#upload">Uploading a Key</a>
+<p><a href="#pubserv">Public Key Servers</a> (includes a list of servers)
+<p><a href="#noremove">Remove a Key From a Key Server?</a>
+</div>
+
+<hr width="25%">
+
+<a name="intro"> </a>
+<p>A public key server is a computer program that maintains a collection of <a href="pgp_encrypt.html#basic">public PGP keys</a>.  Someone with a new public key can add that key to a server's collection.  Anyone seeking someone else's public key can search the collection.  Keys already in a server's collection can also be updated.  Such updates can reflect the addition of <a href="pgp_signatures.html">key signatures</a> by other PGP users or the addition of a new user ID (i.e., a new E-mail address for the key's owner).  Also an update can reflect the owner having revoked the key.  However, <b>once a key has been added to a key server, consider it <a href="#noremove">not removable</a>.</b>  
+
+<p>There are several different Internet protocols (communication interfaces) used by key servers.  Servers that use the HTTP, LDAP, and E-mail protocols permit searches for individual keys; thus, I call these <i><b>single-key protocols</b></i> (although they may be used to find a set of keys that share a common characteristic).  The FTP protocol described at <a href="http://www.uk.pgp.net/pgpnet/ftp-key.html">The FTP Based Key Server System</a> provides access to very lengthy keyrings (over 20 MB) and is not suitable for processing individual keys.  
+
+<a name="search"> </a>
+<h3>Searching for Keys</h3>
+
+<p>You want the key of someone, and you know her E-mail address.  Or you want to check the status of your own key.  Or you already have someone else's key, but you want to see if anyone else new has signed that key.  Or&nbsp;&hellip;
+
+<p>You can use any single-key protocol to search a key server for the key.  I have had no experience with using the E-mail protocol, and so I refer you to the <a href="index.html#links">comp.security.pgp FAQ</a>.  You search a selected HTTP or LDAP key server for a key you identify by specifying either a part of the user ID (e.g., rossde for my keys) or the <b>complete</b> key ID (e.g., 0xE3EFE1A7, where the <i>0x</i> (zero-eks, not oh-eks) &mdash; <b>mandatory for key ID specifications</b> &mdash; at the beginning indicates the ID is a string of hexadecimal bytes).  The server returns all keys that satisfy that request.  The LDAP protocol actually allows you to specify more than one characteristic; for example, you could request all keys that contain rossde in the user ID and that are not revoked.  (I have not tried the LDAPS protocol because every server that supports it also supports the LDAP protocol, which I do use.)  
+
+<p>The easiest way to use these protocols is to setup server information in PGP's Options.  In the table at the end of this page, I indicate which protocols each server uses.  Then, you use PGP's Servers menu to perform the search.  Note that a <i>domain server</i> contains keys only for one E-mail domain (e.g., only for earthlink.net).  (A domain key server is usually only semi-public.  It is used by a company just for the keys of its own employees.  The public might be allowed to download a key from a domain server, but often only a system administrator can upload keys to it.)  A search through PGP's Search menu returns a list of keys in a display very similar to the standard PGPkeys window.  You can examine signatures and properties in that list.  Then, just mark one or more keys and then use a pull-down menu to import them into your keyring.  Yes, searching for a PGP key actually means downloading that key.  
+
+<p>Often, key servers that support the HTTP protocol also provide Web pages for use in searching for a key.  Using the HTTP protocol, these allow you to input a single identification (part of the user ID or the entire key ID).  Usually, they also allow you to specify <i>short</i> or <i>verbose</i>.  The former returns a listing of the keys that satisfy the request, one line per key.  The latter shows all the signatures on each key.  Sometimes, a Web page uses the terms <i>index</i> and <i>verbose</i>.  One server even has the descriptive terms <i>Simple index</i> and <i>Key & who has signed it</i>.  Some Web sites do not give any option.  
+
+<p>Note that, with a Web page, downloading requires one extra step after a successful search.  Keys are listed with a link (often at the key ID).  Select the link to download and see the key.  Then copy the resulting Web page and paste it into the PGPkeys window to add it to your keyring.  Extraneous information on the Web page may be included in the copy; PGP will automatically paste only the key itself.  
+
+<p><font color="#ff0000"><b>Warning:</b></font>  Just because you obtained a public key from a server does <b>not</b> mean that the key is authentic, that the actual owner is really who he or she claims to be.  If you have a message that is so sensitive that it must be encrypted, then you must also verify the authenticity of the key and its owner.  Once you have done that, you then <a href="pgp_signatures.html#keys">sign the key</a> to mark it as verified.  (You may then wish to distribute the signed key to let others know of your verification.  This is the following subject.)
+
+<a name="upload"> </a>
+<h3>Uploading a Key</h3>
+
+<p>You have just generated a key pair and want to distribute your new public key.  More important, you just revoked your key and want as many people as possible to know.  Public key servers are generally used for very broad public distribution of new and modified keys.  
+
+<p>If you add another user ID (e.g., a new E-mail address) to your key, which you previously uploaded to a key server, you must now upload the key again.  If you sign a key because you indeed know the owner of that key, then that key might also be uploaded to a key server; however, in this case, courtesy requires that you ask the key owner first (especially if the key has never been uploaded before).  
+
+<p>If you have setup the Servers portion of PGP's Options, you can upload directly from PGP.  After connecting to the Internet, select one or more keys to upload.  Then select Send To in the Servers menu.  Remember, <i>Domain</i> refers to a server that only has keys for the E-mail domain that matches the server's domain; to upload to such a server, it must first be setup in your list of servers.  
+
+<p>If you are using a Web page, select one or more keys and then copy them (from the Edit menu or from a pull-down menu).  Paste the result in the input area on the Web page.  Finally, select the appropriate button or link on the Web page to upload the pasted keys.  
+
+<a name="pubserv"> </a>
+<h3>Public Key Servers</h3>
+
+<p>The following table contains these columns:  
+
+<ul>
+<li><b>Server</b>:  This is the name of the server.  If you are setting up a server in the PGP Options, this is the name you use.  
+
+<li><b>Web</b>:  An <b>X</b> is a link to the Web page interface for uploading and searching for a key.  If these functions are on separate pages, the link is to the "parent" of those pages.  If there is no <b>X</b>, I could not find a Web page for these functions.  
+
+<li><b>Lang</b>:  This indicates the language that the Web site uses:  
+<ul>
+<li><i>Croat</i>:  Croatian  
+<li><i>Engl</i>: English  
+<li><i>Germ</i>: German  
+<li><i>Hung</i>: Hungarian  
+<li><i>Japn</i>: Japanese  
+<li><i>Span</i>: Spanish  
+</ul>
+If I could not access a Web page, I indicate&nbsp;<i>?</i>.  
+
+<li><b>Ports</b>:  When you setup a new entry in the list of servers, each protocol has a port number by which PGP connects to the server.  The port is blank for a protocol not supported by the server.  If all ports are blank, the server can be used only via a Web page.  
+
+<li><b>Alias</b>:  Some servers have more than one domain name.  Use only one of the names, either the primary or an alias.  Whatever you get from one will be the same as for the others.  
+
+<li><b>Tested</b>:  This is the date on which I last tested the information for this server.  Key servers are operated free to the users (often by volunteers).  Lists of servers quickly become obsolete as operators lose interest or are diverted to productive (i.e., money-making) activities and allow servers to die.  I tested the servers on the list in the following manner:  
+<ul><li>I check the  <a href="../internet/intr_gloss.html#domain" target="glossary">domain</a>, doing a <a href="../internet/intr_gloss.html#dns" target="glossary">DNS</a> lookup to make sure the domain is currently valid.  
+<li>I try a Web page interface to search for a key.  If the request fails, I try twice more with some other specification.  If there is no response at all or if I cannot get a successful request after three tries, I assume the server has no functioning Web interface.  
+<li>I try each of the known protocols for a key.  If a request fails, I assume that protocol is not functional.  
+<li>If a server fails for the Web interface and for all protocols, it is not listed.
+</ul>
+Note:  When searching for a key, I search for my own keys (the oldest of which was generated in 1997).  If that fails, I reject the server as not synchronizing.  Often, such non-synchronizing servers are specialized (e.g., handling keys for only one organization).  
+
+<p>Once a server is unlisted below, it can be added only if someone brings it to my attention.  I will not try it again later on my own initiative.  Running into a brick wall once per server is enough.  
+
+</ul>
+
+<p>The initial information in this table was obtained from Brian M. Carlson's <i>PGP and GnuPG</i> Web site, which no longer exists.  I solicit additional inputs and corrections.  (My E-mail link is on my Home page.)  
+
+<p>Note: Some (or all) of the servers listed below might not handle keys with subkeys or photos.  Not using either, I have not tested for their use.  
+
+<p>Those servers whose domain names are in <b>bold</b> are in the list of servers I entered into my PGP options.  I tested the synchronization of these using new, updated, and revoked keys late in August 2010; they synchronized with other servers in less than 90 minutes.  All the other servers in this list are also known to synchronize with others.  
+
+<p>After a key server has been tested above and entered into the list below, subsequent testing only involves checking to make sure the server responds.  
+
+<p>
+<table frame="box" rules="all" cellpadding=5 style="text-align: left">
+<thead>
+<tr>
+<th rowspan=2>Server</th>
+<th rowspan=2>Web</th>
+<th rowspan=2>Lang</th>
+<th colspan=2 align="center">Ports</th>
+<th rowspan=2>Alias</th>
+<th rowspan=2>Tested</th>
+</tr>
+<tr valign="middle"><th>HTTP</th><th>LDAP<sup><a href="#note1">1</a></sup></th></tr>
+</thead>
+
+<tr>
+<td>dannyj.dynip.com</td>
+<td> </td>
+<td>?</td>
+<td>11371</td> <td> </td>  <td> </td> 
+<td>1Jan10</td>
+</tr>
+
+<tr>
+<td>esperanza.ubuntu.com</td>
+<td><a href="http://esperanza.ubuntu.com:11371/"> X</a></td>
+<td>Engl</td><td>11371</td> <td> </td> <td>keyserver.ubuntu.com</td>
+<td>29Aug10</td>
+</tr>
+
+<tr>
+<td>gozer.rediris.es</td>
+<td><a href="http://www.rediris.es/cert/servicios/keyserver/"> X</a></td>
+<td>Engl Span</td><td>11371</td> <td> </td> <td>pgp.rediris.es</td>
+<td>29Aug10</td>
+</tr>
+
+<tr>
+<td>gpg-keyserver.de</td>
+<td><a href="http://gpg-keyserver.de/"> X</a></td>
+<td>Germ</td>
+<td>11371</td> <td> </td>  <td> </td> 
+<td>29Aug10</td>
+</tr>
+
+<tr>
+<td><b>kerckhoffs.surfnet.nl</b></td>
+<td><a href="http://wwwkeys.eu.pgp.net/"> X</a></td>
+<td>Engl</td><td>11371</td> <td> </td><td>minsky.surfnet.nl, pgp.surfnet.nl, wwwkeys.eu.pgp.net, wwwkeys.nl.pgp.net</td>
+<td>29Aug10</td>
+</tr>
+
+<tr>
+<td>keys.kfwebs.net</td>
+<td><a href="http://keys.kfwebs.net:11371/"> X</a></td>
+<td>Engl</td>
+<td>11371</td> <td> </td>  <td></td> 
+<td>29Aug10</td>
+</tr>
+
+<tr>
+<td>keys.nayr.net</td>
+<td><a href="http://keys.nayr.net/"> X</a></td>
+<td>Engl</td>
+<td>11371</td> <td> </td>  <td> </td> 
+<td>29Aug10</td>
+</tr>
+
+<tr>
+<td>keys.niif.hu</td>
+<td><a href="http://keys.niif.hu/"> X</a></td>
+<td>Hung</td>
+<td>11371</td> <td> </td>  <td>hufu.ki.iif.hu</td> 
+<td>29Aug10</td>
+</tr>
+
+<tr>
+<td>keyserver.maluska.de</td>
+<td> </td>
+<td>Germ</td>
+<td>11371</td> <td> </td>  <td> </td> 
+<td>7Jan07</td>
+</tr>
+
+<tr>
+<td>keyserver.oeg.com.au</td>
+<td> </td>
+<td>?</td>
+<td>11371</td> <td> </td>  <td> </td> 
+<td>8Jan07</td>
+</tr>
+
+<tr>
+<td>keyserver.pramberger.at</td>
+<td><a href="http://www.pramberger.at/peter/services/keyserver/"> X</a></td>
+<td>Engl</td>
+<td>11371</td> <td> </td>  <td> </td> 
+<td>29Aug10</td>
+</tr>
+
+<tr>
+<td>keyserver.rootbash.com</td>
+<td> </td>
+<td>?</td>
+<td>11371</td> <td> </td>  <td> </td> 
+<td>8Jan07</td>
+</tr>
+
+<tr>
+<td>keyserver.stack.nl</td>
+<td><a href="http://keyserver.stack.nl/"> X</a></td>
+<td>Engl</td>
+<td>11371</td> <td> </td>  <td> </td> 
+<td>8Sep10</td>
+</tr>
+
+<tr>
+<td>keyserver.unixbyte.com</td>
+<td> </td>
+<td>?</td>
+<td>11371</td> <td> </td>  <td> </td> 
+<td>9Jan07</td>
+</tr>
+
+<tr>
+<td>lorien.prato.linux.it</td>
+<td><a href="http://keyserver.linux.it/"> X</a></td>
+<td>Engl</td>
+<td>11371</td> <td> </td>  <td>keyserver.linux.it, www.prato.linux.it</td> 
+<td>29Aug10</td>
+</tr>
+
+<tr>
+<td>pgp.zdv.uni-mainz.de</td>
+<td><a href="http://pgp.zdv.uni-mainz.de/pks-commands.html"> X</a></td>
+<td>Engl</td><td>11371</td> <td> </td><td>pgp.uni-mainz.de</td>
+<td>29Aug10</td>
+</tr>
+
+<tr>
+<td>pgpkeys.logintas.ch</td>
+<td><a href="http://pgpkeys.logintas.ch:11371/"> X</a></td>
+<td>Germ</td><td>11371</td> <td> </td><td> </td>
+<td>29Aug10</td>
+</tr>
+
+<tr>
+<td>pgpkeys.pca.dfn.de</td>
+<td><a href="http://wwwkeys.de.pgp.net"> X</a></td>
+<td>Germ</td><td>11371</td> <td> </td><td>wwwkeys.de.pgp.net, blackhole.pca.dfn.de</td>
+<td>29Aug10</td>
+
+<tr>
+<td>r24-live.duf.hu</td>
+<td> </td>
+<td>Hung</td>
+<td>11371</td> <td> </td>  <td>keyserver.duf.hu</td> 
+<td>7Jan07</td>
+</tr>
+
+<tr>
+<td><b>stinkfoot.org</b></td>
+<td><a href="http://www.stinkfoot.org/pks-commands.html"> X</a></td>
+<td>Engl</td><td>11371</td> <td> </td><td>wwwkeys.stinkfoot.us.pgp.net</td>
+<td>30Aug10</td>
+</tr>
+
+<tr>
+<td>wwwkeys.cz.pgp.net</td>
+<td> </td>
+<td>?</td><td>11371</td> <td> </td> <td>pks.ms.mff.cuni.cz, wwwkeys.gpg.cz</td>
+<td>12Jan07</td>
+</tr>
+
+<tr><td colspan=7>Note:
+<a name="note1"> </a>
+<p>1. Currently, I cannot identify a functioning LDAP key server that synchronizes with other servers.  
+</td></tr>
+</table>
+
+
+<h4>Servers to Avoid</h4>
+
+<div class=sideright style="width: 40%">
+<p class=nostyle>*** Begin Right Sidebar ***</p>
+<h3 style="margin-top: 0">Dead Servers</h3>
+<p>The following servers cannot be queried via PGP.  Either their domains are no longer recognized, PGP cannot connect to them, they timeout on any query, or they are otherwise unreachable.  I also list servers that do not respond to pings.  Some were previously on my list above; others were recommended by other PGP users.  
+
+<div class=dead>
+<p style="margin-top: 1em">calvin.lk.etc.tu-bs.de
+<p>dbma.keyserver.ca
+<p>horowitz.surfnet.nl (europe.keys.pgp.com)
+<p>keys.kadath.com.ar
+<p>keyserver.fabbione.net
+<p>keyserver.hadiko.de
+<p>keyserver.kjsl.com (skyhawk.kjsl.com)
+<p>keyserver.mine.nu (mail.ganneff.de)
+<p>keyserv.nic.se (party.nic.se)
+<p>keyserver.noreply.org
+<p>netcat.upb.de
+<p>palunko.srce.hr
+<p>pgp.ael.be
+<p>pgp.demonserver.de (pgp.demonlord.de)
+<p>pgp.escomposlinux.org
+<p>pgp.eteo.mondragon.edu
+<p>pgp.isternet.sk
+<p>pgp.sjbcom.com
+<p>pgp.srv.ualberta.ca
+<p>pgp.uk.demon.net
+<p>pgp.upb.de
+<p>pks.aaiedu.hr
+<p>rex.citrin.ch (wwwkeys.ch.pgp.net, pgp.keyserver.ch)
+<p>sks.keyserver.penguin.de
+<p>wwwkeys.fi.pgp.net
+<p>wwwkeys.hu.pgp.net
+<p>wwwkeys.kjsl.us.pgp.net
+<p>wwwkeys.tw.pgp.net
+</div>
+<p>There are many other dead key servers.  I only list those that I have verified myself.  
+<p class=nostyle>*** End Right Sidebar ***</p>
+</div>
+
+<p>Because they fail to synchronize with other servers (at least within 48 hours), I strongly recommend against using the following key servers (listed with their aliases and the date tested).  Nevertheless, if you revoke a key, check these to see if they contain your key.  If any of these servers do contain the key you are revoking, safety requires that you specifically upload the revocation to that server.  
+
+<ul style="text-align: left">
+<li>dir2.es.net<br>6 Jan 06
+<li>keyserver.pgp.com<br>(certserver.pgp.com)<br>7 Jan 06
+<li>kies.mcbone.net<br>(keyserver.topnet.de, keyserver.freenet.de)<br>30 Aug 10
+<li>lord.keyserver.net<br>(search.keyserver.net, www.keyserver.net)<br>4 Sep 04
+<li>nicpgp2.nic.ad.jp<br>(pgp.nic.ad.jp)<br>30 Aug 10
+<li>pgp.dtype.org<br>(www.us.pgp.net, wwwkeys.us.pgp.net, keys.us.pgp.net)<br>7 Sep 04
+<li>pks.mtholyoke.edu<br>30 Aug 10
+</ul>
+
+<p>Also, there is a bug in the SKS key server code that impairs synchronization from other servers but not synchronization to others.  Among the servers affected are cryptonomicon.mit.edu (pgp.mit.edu, pgpkeys.mit.edu), pks.gpg.cz (sks.ms.mff.cuni.cz), and the.earth.li (wwwkeys.uk.pgp.net), all of which have been removed from the above list of servers.  However, not all SKS servers are impacted; among those SKS servers unaffected by this bug is keyserver.pramberger.at.  
+
+<p>When you urgently need to revoke your public key because either your private key or passphrase has been compromised, a server that is slow to synchronize can be as catastrophic as a server that does not synchronize at all.  
+
+<p><b>Note:</b>  If any of the servers listed here as non-synchronizing or dead are now functioning and synchronizing, please let me know.  
+
+<h4 style="clear:both">Server Networks and Round-Robins</h4>
+
+<p>At one time, key servers were closely grouped into networks.  Synchronization among servers within a network occurred more frequently than with servers in other networks.  Today, however, well-functioning servers synchronize with all other known servers quite often and quite quickly; and the concept of networks is no longer significant.  
+
+<p>Round-robins are pseudo-servers, one of which is wwwkeys.pgp.net (alias www.uk.pgp.net).  A round-robin reroutes requests to other servers, randomly or cyclically choosing one from a list.  However, some of the servers on the list may be inactive.  Thus, a round-robin might often be unresponsive and should be avoided.  The list of servers above excludes round-robins but does include known individual, active servers that participate in round-robins.  
+
+<a name="noremove"> </a>
+<h3>Remove a Key From a Key Server?</h3>
+
+<p>Several times a month, I see messages on the PGP <a href="../internet/surf.html#news">newsgroups</a> asking "How can I remove my key from a key server?"  In general, you should assume that you cannot.  While some public key servers do allow keys to be deleted, this is very problematical.  
+
+<ul>
+<li>To prevent a third-party attack (e.g., denial-of-service by eliminating a valid key), you must positively identify yourself as the owner of the key by signing the deletion request using your private key and passphrase &mdash; corresponding to the public key you want deleted.  Usually, however, those who want to delete their public keys have either lost their private keys or forgotten their passphases.  
+
+<li>If you delete your public key from only some key servers, they will reappear when those servers synchronize with other servers.  There is no standardized message servers can send to each other that a deletion request was processed by one server.  Synchronization merely involves comparing databases and adding keys to a database that are in another and updating keys in a database that have more recent updates in another.  Some servers synchronize only with a select group of other servers, some never synchronize, and some synchronize with all known servers.  (No one really knows all the servers.  My list above is not totally comprehensive.)  Thus, unless you know <b>all</b> the servers containing your key, unless they all accept deletion requests, and unless you send those requests simultaneously to all servers before any synchronization can occur (which can be three minutes or less, even between servers in different networks), your deleted key will not remain deleted.  
+
+<li>The best action in lieu of deletion is to revoke your key-pair and upload the revoked public key to key servers.  A revoked key cannot be used for encryption.  However, it does remain on the key servers, which is not a bad situation.  
+
+<ul>
+<li>While you might notify those <b>you know</b> who have your old key that it is revoked, what do you do about those who have your old key that <b>you don't know</b>?  Occasional synchronization of personal keyrings against key servers will uncover revoked keys.  But how often is <i>occasional</i>?  That is, how long is long enough for a revoked key to remain on a key server to let others know about the revocation?  
+
+<li>While a revoked public key can no longer be used for encryption, it can still be used to verify old PGP signatures made before the revocation.  
+</ul>
+</ul>
+
+<p>But what can you do if you lose your private key or forget your passphrase?  This is not clean, but can provide a warning to those who synchronize with key servers.  
+
+<ul>
+<li>Of course, you must generate a new key-pair.  If your software does not automatically <a href="pgp_signatures.html#keys">self-sign your public key</a>, do so manually.  Do <b>not yet</b> upload the public key to a key server.  
+
+<li>Add a user ID to your new key: "Key revoked -- do not use".  Make this your primary user ID (name).  Self-sign it.  
+
+<li>If you have lost both your public and private keys, you will have to download your old public key from a key server.  
+
+<li>Sign your <b>old</b> public key with your new key.  Upload your <b>old</b> public key to whatever key servers you previously uploaded it.  
+
+<li>Remove the "Key revoked &hellip; " user ID from your <b>new</b> key.  
+
+<li>Now you may upload your new public key to key servers.  However, you might want to make a <a href="index.html#links">revocation certificate</a> first, to avoid any repetition of the problem.
+</ul>
+
+<p>For more discussion about deleting keys from key servers, see <a href="index.html#links">Tom McCune's page for Pretty Good Privacy</a>.  
+
+<hr> 
+
+<p class=date>Last updated 3 September 2010
+
+<p>
+<table width="60%" align="center"><tr valign="bottom">
+<td class=footer>
+<a class=image href="index.html"><img class=pgpmain src="pgp_main.gif" alt="Link to my main PGP Web page" title="Link to my main PGP Web page"><br>Main PGP page</a>
+</td>
+
+<td class=footer>
+<a class=image href="../index.html"><img class=home src="../home.gif" alt="Link to David Ross's home page" title="Link to David Ross's home page"><br>David Ross home</a>
+</td>
+
+<td class=footer>
+<a class=image href="mykeys.html"><img class=mykeys src="mykeys.gif" alt="Link to David Ross's public PGP keys" title="Link to David Ross's public PGP keys"><br>My PGP keys</a>
+</td>
+</tr></table>
+
+<a class=image href="http://validator.w3.org/check?uri=http://www.rossde.com/PGP/pgp_keyserv.html">
+<img class=valid src="../valid-html401.gif" alt="Valid HTML 4.01" title="Select this icon to revalidate this page"></a>
+
+<p>
+</BODY>
+</HTML>
+
