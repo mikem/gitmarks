@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml">
+<head>
+  <title>GameDev.net - Zero-Defect Software Development</title>
+  <meta property="og:title" content="Zero-Defect Software Development"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:url" content="http://www.gamedev.net/reference/articles/article1050.asp"/>
+    <meta property="og:image" content="http://images.gamedev.net/icons/gamedev_net.png"/>
+    <meta property="og:site_name" content="GameDev.net" />
+    <meta property="fb:app_id" content="103355463445" />
+    <meta property="og:description" content="Describes a practice of developing software that is maintained in the highest quality state throughout the entire development process." />
+  <link rel=stylesheet href="/css/reference.css" type="text/css">
+  <link rel="icon" href="/pics/gdicon.png" type="image/png">
+  <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-279474-1']);
+      _gaq.push(['_trackPageview']);
+      (function () {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+</script>
+<script type="text/javascript" src="http://partner.googleadservices.com/gampad/google_service.js"></script> 
+<script type="text/javascript">
+    GS_googleAddAdSenseService("ca-pub-3167291168602081");
+    GS_googleEnableAllServices();
+</script> 
+<script type="text/javascript">
+GA_googleAddSlot("ca-pub-3167291168602081", "Leaderboard_Main");
+GA_googleAddSlot("ca-pub-3167291168602081", "Box_Main");
+</script>
+
+<script type="text/javascript">
+    GA_googleFetchAds();
+</script> 
+</head>
+<body>
+<div id="header"><a href="/">GameDev.net</a>Zero-Defect Software Development</div>
+<div id="fb-root"></div>
+<script>
+    window.fbAsyncInit = function () { FB.init({ appId: '103355463445', status: true, cookie: true, xfbml: true }); };
+    (function () {
+        var e = document.createElement('script'); e.async = true;
+        e.src = document.location.protocol +
+      '//connect.facebook.net/en_US/all.js';
+        document.getElementById('fb-root').appendChild(e);
+    } ());
+</script>
+<center><script type="text/javascript">
+GA_googleFillSlot("Leaderboard_Main");
+</script></center>
+<table cellpadding="5" cellspacing="0" border="0" width="100%"><tr><td>
+
+<CENTER><SPAN CLASS="title">Zero-Defect Software Development</SPAN>
+<BR><SPAN CLASS="author">by <A HREF="mailto:stevep@dexterity.com">Steve Pavlina</A>, <A HREF="http://www.dexterity.com">Dexterity Software</A></SPAN></CENTER>
+
+<P>As an independent game developer, I will work from six months to a couple years to develop and release a new computer game.  I can sell sequels or expansion packs, but I generally cannot sell upgrades as with other software.  When I release a new game, I must make sure it is of very high quality because my users won't think to look for an upgrade.  Because of the short lifespan of most computer games and their dependence on transient technology, my opportunities to improve a released product based on customer feedback are minimal.  To deal with these issues, I gradually adopted a system of Quality Assurance (QA) practices that allowed me to significantly increase product quality while simultaneously reducing development time.</P>
+<P>Not to be taken as meaning "bug-free," Zero-Defect Software Development (ZDSD) is a practice of developing software that is maintained in the highest quality state throughout the entire development process.  "Defects" are aspects of the evolving software that would not be suitable for the final product as-is.  This broad definition includes bugs as well as unwanted deviations from the desired final outcome.  Defects in the development of a computer game would include unpolished artwork, an unacceptably low frame rate on the target system, levels that aren't fun enough, or any number of unfinished features.</P>
+<P>The basic tenet of ZDSD is this:  Maintain your product in what you believe to be a defect-free state throughout the development process.  This sounds simple, but it is a rare practice.  The most common approach is to delay major testing until the final QA phase of software development, where defects are often discovered for the first time.  Most bugs are not detected or fixed until long after their introduction.  The longer a defect remains, the harder it is to fix.  On large software products, each stage of development that a defect survives will increase the cost of fixing the defect by ten to fifty times.  A defect introduced in the design phase can cost hundreds of times more to fix in the testing phase than it would if fixed immediately after its introduction.</P>
+<P>By focusing on product quality throughout the development lifecycle, you will actually complete products faster than if you didn't pay attention to quality until the end of the project.  The general rule of software quality is counter-intuitive:  Improving quality actually reduces development time.  This is because you eliminate all the time spent fixing bugs and reworking code, which can account for as much as 50% of development costs on a large project.  The typical programmer writes between eight and twenty lines of code a day; the rest of the day is usually spent on debugging.  ZDSD shortens schedules by eliminating most debugging time.  Extensive studies done at NASA, IBM, and elsewhere have shown that better QA leads to shorter schedules.  An IBM study concluded that software projects that make quality a top priority typically have the shortest schedules, the highest productivity, and even the best sales.</P>
+<P>Here are the ten basic rules of ZDSD:</P>
+
+<OL>
+<B><LI>  Test your product every day as you develop it, and fix defects as soon as you find them.</B>  Apply the daily build and smoke test.  At the end of every day you work on your project, build the current version of your software, and test it for basic functionality.  Microsoft enforces this policy religiously, using large teams to build each project on a daily basis.  A programmer whose code breaks the build may be called in the middle of the night and must go back to work to fix the problem immediately.  For independent game developers working on small projects, this is far easier.  At the end of each day, test your program for at least ten minutes.  Make a list of anything you would consider a "defect," and resolve to fix all defects before implementing any new features.  Once you find a defect, fixing it becomes your number one priority, and you avoid writing any new code until the defect is 100% eliminated.<BR><BR>
+<B><LI>  Review your code regularly.</B>  When most people think of QA, they think of testing, but testing is actually one of the least cost-effective strategies for finding bugs.  The most rigorous testing will typically find less than 60% of all bugs in a program, and there are certain types of bugs that testing will rarely find.  Studies conducted at many large software organizations have concluded that code inspections are far more cost-effective than testing.  A NASA study found that code reading detected almost twice as many defects per hour as testing.  Whenever you've added a few hundred lines of new code to your project, set aside an hour or two to read over your work and look for mistakes.  One hour of code review is equivalent to two or more hours of methodical testing.  As you gain experience, keep a list of the types of defects you find, and run down your list whenever reviewing new code.  To find even more defects, have someone else read your code as well.<BR><BR>
+<B><LI>  Rewrite poor-quality modules.</B>  When you discover an obscure new bug, do you ever pray, "Oh no!  Please don't let it be in that module!"  We all have monster modules of legacy code that were written when we weren't such seasoned programmers as we are today.  Don't fear them; rewrite them.  Often a better approach will only become clear when an inferior solution has already been implemented.  This is certainly true for John Carmack, who coded dozens of different approaches when writing the Quake engine before discovering one that satisfied him.  Defects will not be distributed evenly across your code.  You will typically find that 20% of your routines are responsible for 80% of your errors.  In my programs it is normally the modules that interact with the hardware or with third-party drivers, especially DirectX, that are the most buggy.  Raise your standards for those modules that seem to produce a never-ending supply of bugs, and take the time to rewrite them from scratch.  You may find that other intermittent bugs disappear completely as a result.<BR><BR>
+<B><LI>  Assume full responsibility for every bug.</B>  95% of all software defects are caused by the programmer.  Only 1% of defects are hardware errors, and the remaining 4% are caused by the compiler, the OS, or other software.  Never dismiss a potential bug; find out the exact cause of any anomaly.  When the Mars probe suffered serious software glitches during its mission, it was learned that the same glitch had occurred only once during testing on earth, but the engineers dismissed it as a temporary hardware hiccup.  Unless your hardware drinks soda, it does not hiccup.<BR><BR>
+<B><LI>  Handle change effectively.</B>  You will always think of great new features to add after you have started coding.  Carefully consider how each change will impact your pre-existing code.  Poor integration of unanticipated features is a major cause of defects.<BR><BR>
+<B><LI>  Rewrite all prototyping code from scratch.</B>  Sometimes you may quickly prototype a new feature to see if it will be viable.  Often this is done by sacrificing code quality in the name of rapid development.  If you eventually decide to keep the feature, it is very tempting to simply tack on some basic error checking to the prototyping code.  Don't fall into this trap.  If you weren't writing the code originally with quality as a priority, scrap the prototyping code, and re-implement the feature from scratch.  Rapidly prototyped features that slip into the final product are a major source of bugs because they are not subject to the same quality standards as the rest of the code.<BR><BR>
+<B><LI>  Set QA objectives at the beginning of every project.</B>  Studies have shown that developers who set reasonable QA goals will usually achieve them.  Decide in advance if your product must be fast, small, feature-rich, intuitive, scalable, etc.  Then prioritize those objectives.  When designing the interface code for an upcoming game, I decided that my top three priorities were to make it beginner-intuitive, fast, and fun, in that order.  Consequently, my game's interface isn't as graphically rich as other games, but it is easier to use and faster than any other game of its type.  Whenever you have to make a design decision, keep your objectives in mind.  If you do not set clear QA goals, then you are doomed to accept the results of random chance.<BR><BR>
+<B><LI>  Don't rush debugging work.</B>  Fully 50% of all bug fixes are done incorrectly the first time, often introducing new bugs in the process.  Never experiment by simply changing "x-1" to "x+1" to see if that will do the trick.  Take the time to understand the source of the bug.  Long ago when I was a boy scout and had to put out a campfire, the Scoutmaster would sometimes test my thoroughness by asking me to put my hand in the ashes.  I learned very quickly how to put out a fire so well that I had complete confidence it was 100% extinguished.  When you find a defect, it means your code is on fire.  As long as the defect remains, any new code you write will add fuel to that fire.  Whenever you find a defect, drop everything to fix it, and don't move on until you are 100% confident that your fix is correct.  If you don't take the time to do it right the first time, when will you find the time to do it over?<BR><BR>
+<B><LI>  Treat the quality of your code at the same level of importance as the quality of your product.</B>  Rate your code on a scale of one to ten for overall quality.  The first time I did this, I rated my 30,000-line project as a four.  I rewrote the worst of the code until I reached an eight overall.  It was one of the best investments of time I ever made because I was then able to add new features at double my previous rate.  The quality of your code is highly indicative of the quality of your product.  You may find as I have that your best selling products also receive your highest ratings for code quality.<BR><BR>
+<B><LI>  Learn from every bug; each one represents a mistake that you made.</B>  Learn why you made each mistake, and see if you can change something about your development practices to eliminate it.  Over the years I have adopted many simple coding practices that allow me to avoid common bugs that used to plague me.  There are many types of bugs that I now never encounter because my coding style makes it physically impossible for me to introduce them.<BR><BR>
+</OL>
+
+<P>Each of these rules represents a simple concept, but their combined benefits are significant.  You will achieve higher progress visibility, avoiding the situation of being "99% done" for the last 80% of your development time.  Higher quality will make your products easier to maintain and less expensive to support.  You will spend less time debugging old code and more time writing new code.  And most importantly, it actually takes less time to write high-quality code than it does to write low-quality code, so you will save a great deal of time on overall development.  If you have never developed products with a zero-defect philosophy from day one, its adoption can reduce your development time for new products by 30% or more while simultaneously improving product quality.</P>
+
+<P><HR SIZE="1">
+<B><P ALIGN="CENTER">Copyright &copy; 2000 by Steve Pavlina.   Email: <A HREF="mailto:stevep@dexterity.com">stevep@dexterity.com</A></P></B>
+<p align="center"><b><a href="/community/forums/topic.asp?key=featart&uid=1050&forum_id=35&Topic_Title=Zero%2DDefect+Software+Development">Discuss this article in the forums</a></b></p>
+<p>
+<br><span class="maintext-2">Date this article was posted to GameDev.net: <b>6/13/2000</b>
+<br>(Note that this date does not necessarily correspond to the date the article was written)</span>
+<p><b>See Also:</b><br>
+
+<a href="/reference/list.asp?categoryid=126">General  </a><br>
+
+<p align="center">&copy; 1999-2010 Gamedev.net. All rights reserved. <a href="/info/legal.htm#copyright"><u>Terms of Use</u></a> <a href="/info/legal.htm#privacy"><u>Privacy Policy</u></a>
+<br><span class="maintext-1">Comments? Questions? Feedback? <a href="/info/faq.asp">Click here!</a></span></p>
+
+</td></tr></table>
+
+
+<!-- start Vibrant Media IntelliTXT Tooltip style sheet -->
+<style type="text/css">
+.iTt{
+    FONT-FAMILY:       Verdana, Arial, Helvetica;
+    FONT-SIZE:         11px;
+    FONT-STYLE:        normal;
+    FONT-WEIGHT:       normal;
+    COLOR:             black;
+    BACKGROUND-COLOR:  lightyellow;
+    BORDER:            black 1px solid;
+    PADDING:           2px;
+}
+.iTt a {
+    COLOR:             0000CC;
+}
+.iTt a:visited {
+    COLOR:             0000CC;
+}
+.iTt a:hover {
+    COLOR:             6666CC;
+}
+.iTt TD {
+   COLOR:              999999;
+}
+</style>
+<!-- end Vibrant Media IntelliTXT style sheet -->
+<!-- start Vibrant Media IntelliTXT script section -->
+<script type="text/javascript" src="http://gamedev.us.intellitxt.com/intellitxt/front.asp?ipid=1966"></script>
+<!-- end Vibrant Media IntelliTXT script section -->
+
+</body>
+</html>
