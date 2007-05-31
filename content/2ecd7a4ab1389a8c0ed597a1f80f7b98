@@ -1,0 +1,809 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head >
+    <script type="text/javascript">
+        var CURRENTPOOL = 'worldpds2';
+        var CURRENTLANGUAGE = 'en';
+<!--
+          
+        var arrMobileClients=[
+          "iphone",
+          "ipod",
+          "android 2" /*,
+          "240x320",
+          "benq",
+          "blackberry",
+          "mda",
+          "midp",
+          "mot-",
+          "netfront",
+          "nokia",
+          "opera mini",
+          "panasonic",
+          "philips",
+          "pocket pc",
+          "portalmmm",
+          "sagem",
+          "samsung",
+          "sda",
+          "sgh-",
+          "sharp",
+          "sie-",
+          "sonyericsson",
+          "symbian",
+          "vodafone",
+          "windows ce",
+          "xda"*/
+        ];
+        function isMobileNavigator(userAgent) {
+          try {
+            userAgent=userAgent.toLowerCase();
+            for (var i=0; i < arrMobileClients.length; i++) {
+	            if (userAgent.indexOf(arrMobileClients[i]) != -1) {
+		            return true;
+	            }
+            }
+          }
+          catch (e) 
+          { 
+            // NOP
+          }
+          return false;
+        }
+        function goMobile(URL)
+        {
+          var params = URL.split("?");
+          if (params.length == 2)
+          {
+            if(params[1].indexOf("keephost=true") != -1)
+              return false;
+          }
+          
+          if(URL.indexOf("mobile.") != -1)
+          {
+            return false;
+          }
+          
+          if(URL.indexOf("my.porsche.com") != -1)
+          {
+            return false;
+          }
+          
+          if(URL.indexOf("www.porsche.com") != -1)
+          {
+            return true;
+          }
+
+          return false;
+        }
+        var arrMobilePools=["usa"];
+        function isMobilePool()
+        {
+          if(CURRENTPOOL == 'canada-pde')
+            return false;
+
+          return true;
+        }
+        function mobileRedirector() {
+          try {
+            if (isMobileNavigator(navigator.userAgent)) 
+            {
+              if(isMobilePool())
+              {
+                var URL = document.location.href.toLowerCase();
+		
+                if(goMobile(URL)) {
+                  URL = URL.replace("http://www.", "http://mobile.");
+                  URL = URL.replace("https://preview.", "https://preview.mobile.");
+                  if(URL.indexOf("mobile.") != -1)
+                  {
+                    document.location.href = URL;
+                  }
+                }
+              }
+            }
+          }
+          catch (e) 
+          {
+            // NOP
+          }
+        }
+
+        // check whether to continue loading or redirect to the mobile URL.
+        mobileRedirector();
+        
+        --></script>
+    <title>Porsche Design - Porsche Design</title>
+    <link rel="stylesheet" href="/Styles/PDS2/Main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="/Styles/PDS2/jquery-ui.css" type="text/css" media="screen" /><!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="/Styles/PDS2/ie67.css" /><![endif]--><!--[if IE]><link rel="stylesheet" type="text/css" href="/Styles/PDS2/ie.css" /><![endif]--><link rel="stylesheet" href="/Styles/PDS2/forms.css" type="text/css" media="screen" /><link rel="stylesheet" href="/Styles/PDS2/thickbox.css" type="text/css" media="screen" /><link rel="stylesheet" href="/Styles/PDS2/print.css" type="text/css" media="print" /><link rel="stylesheet" href="/Script/PDS2/shadowbox/shadowbox.css" type="text/css" media="screen" />
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="/worldpds2/rss/" />
+    <link rel="shortcut icon" href="/all/pds2/favicon.ico" type="image/x-icon" />
+    <script type="text/javascript" src="/Script/PDS2/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="/Script/PDS2/jquery-ui-1.7.2.custom.min.js"></script>
+<script type="text/javascript" src="/Script/PDS2/cufon-yui.js"></script>
+<script type="text/javascript" src="/Script/PDS2/Porsche_Design_Font_500.font.js"></script>
+<script type="text/javascript" src="/Script/PDS2/HelveticaNeue_LT_65_Medium_400.font.js"></script>
+<script type="text/javascript" src="/Script/PDS2/pd.js"></script>
+<script type="text/javascript" src="/Script/PDS2/default.js"></script>
+<script type="text/javascript" src="/Script/PDS2/thickbox.js"></script>
+<script type="text/javascript" src="/Script/PDS2/shadowbox/shadowbox.js"></script><!--[if IE 6]><style type="text/css">
+						#content{display:none;}
+						#footer{display:none;}
+					</style><![endif]--><meta http-equiv="Content-Style-Type" content="text/css" /><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta name="title" content="Porsche Design" /><meta name="author" content="Bassier, Bergmann &amp; Kindler" /><meta name="generator" content="Noxum Publishing Studio 5" /><meta name="cache-date" content="2010-12-25 09:36:58 GMT +1" /><meta http-equiv="imagetoolbar" content="no" /><meta name="verify-v1" content="Rmx1mu99AVMNRe3jgIJ3nDbzaQ6MZeOVM4J4246SZUs=" /><meta name="ms.locale" content="EN" /><meta name="nxid" content="home" /><meta name="pkeys" content="0" /><script type="text/javascript">
+            Shadowbox.init({handleOversize: "drag", overlayOpacity: 0.8});
+          </script></head>
+  <body onload="homeIntro()">
+    <div id="distance"></div>
+    <div id="back"></div>
+    <div id="wrapper" class="intro">
+      <div id="header">
+        <img src="/Images/PDS2/header.png" width="960" height="43" alt="" />
+      </div>
+      <div id="content">
+        <div id="mainnavi">
+  <div id="navibuttons_back">
+    <div id="productsdiv" class="naviback firstnaviback"></div>
+    <div id="studiodiv" class="naviback"></div>
+    <div id="companydiv" class="naviback"></div>
+    <div id="mainnavi_restdiv" class="naviback"></div>
+  </div>
+  <div id="navibuttons">
+    <a id="products" href="/international/en/products/" onmouseover="products()" onmouseout="products_out()" class="navibutton firstnavibutton">Products</a>
+    <a id="studio" href="/international/en/studio/" onmouseover="studio()" onmouseout="studio_out()" class="navibutton">Studio</a>
+    <a id="company" href="/international/en/company/" onmouseover="company()" onmouseout="company_out()" class="navibutton">Company</a>
+    <div id="mainnavi_rest" class="navibutton"></div>
+  </div>
+  <div id="navi_trenner">
+    <img id="trenner_1" class="navi_trenner" src="/Images/PDS2/navi_trenner.png" width="2" height="25" alt="" />
+    <img id="trenner_2" class="navi_trenner" src="/Images/PDS2/navi_trenner.png" width="2" height="25" alt="" />
+    <img id="trenner_3" class="navi_trenner" src="/Images/PDS2/navi_trenner.png" width="2" height="25" alt="" />
+  </div>
+</div>
+<div id="subnavi" onmouseover="subnaviover()" onmouseout="subnaviout()">
+  <div id="subnavi_back">
+    <div id="primary_back"></div>
+    <div id="breadcrumb">
+  <div id="bc_text">You are here:
+               <span class="activebreadcrumb">Porsche Design</span></div>
+</div>
+  </div>
+  <div id="subnavi_products">
+    <div class="subnavi_content">
+      <ul>
+        <li>
+          <a onmouseover="showNav2(this, '')" onmouseout="hideNav2(this)" href="/international/en/products/">Overview</a>
+        </li>
+        <li>
+          <a onmouseover="showNav2(this, 'p1000fashion')" onmouseout="hideNav2(this)" href="/international/en/products/p1000fashion/">P´1000 Fashion<span class="linkarrow"> </span></a>
+        </li>
+        <li>
+          <a onmouseover="showNav2(this, 'p2000luggage')" onmouseout="hideNav2(this)" href="/international/en/products/p2000luggage/">P´2000 Luggage<span class="linkarrow"> </span></a>
+        </li>
+        <li>
+          <a onmouseover="showNav2(this, 'p3000accessories')" onmouseout="hideNav2(this)" href="/international/en/products/p3000accessories/">P´3000 Accessories<span class="linkarrow"> </span></a>
+        </li>
+        <li>
+          <a onmouseover="showNav2(this, 'p5000sport')" onmouseout="hideNav2(this)" href="/international/en/products/p5000sport/">P´5000 Sport<span class="linkarrow"> </span></a>
+        </li>
+        <li>
+          <a onmouseover="showNav2(this, 'p6000timepieces')" onmouseout="hideNav2(this)" href="/international/en/products/p6000timepieces/">P´6000 Timepieces<span class="linkarrow"> </span></a>
+        </li>
+        <li>
+          <a onmouseover="showNav2(this, 'p7000home')" onmouseout="hideNav2(this)" href="/international/en/products/p7000home/">P´7000 Home<span class="linkarrow"> </span></a>
+        </li>
+        <li>
+          <a onmouseover="showNav2(this, 'p8000eyewear')" onmouseout="hideNav2(this)" href="/international/en/products/p8000eyewear/">P´8000 Eyewear<span class="linkarrow"> </span></a>
+        </li>
+        <li class="li_last">
+          <a onmouseover="showNav2(this, 'p9000electronics')" onmouseout="hideNav2(this)" href="/international/en/products/p9000electronics/">P´9000 Electronics<span class="linkarrow"> </span></a>
+        </li>
+      </ul>
+    </div>
+    <div id="subsubnavi">
+      <div id="subsubnavi_p1000fashion" class="subsubnavi_content">
+        <ul>
+          <li>
+            <a onmouseover="showNav3(this, 'leisure')" onmouseout="hideNav3(this)" href="/international/en/products/p1000fashion/leisure/">Leisure</a>
+          </li>
+          <li>
+            <a onmouseover="showNav3(this, 'shoes')" onmouseout="hideNav3(this)" href="/international/en/products/p1000fashion/shoes/">Shoes</a>
+          </li>
+          <li>
+            <a onmouseover="showNav3(this, 'fashionaccessories')" onmouseout="hideNav3(this)" href="/international/en/products/p1000fashion/fashionaccessories/">Fashion Accessories</a>
+          </li>
+        </ul>
+      </div>
+      <div id="subsubnavi_p2000luggage" class="subsubnavi_content">
+        <ul>
+          <li>
+            <a onmouseover="showNav3(this, 'cargon')" onmouseout="hideNav3(this)" href="/international/en/products/p2000luggage/cargon/">Cargon<span class="linkarrow"> </span></a>
+          </li>
+          <li>
+            <a onmouseover="showNav3(this, 'cervo20')" onmouseout="hideNav3(this)" href="/international/en/products/p2000luggage/cervo20/">Cervo 2.0<span class="linkarrow"> </span></a>
+          </li>
+          <li>
+            <a onmouseover="showNav3(this, 'cl220')" onmouseout="hideNav3(this)" href="/international/en/products/p2000luggage/cl220/">CL2 2.0<span class="linkarrow"> </span></a>
+          </li>
+          <li>
+            <a onmouseover="showNav3(this, 'classicline')" onmouseout="hideNav3(this)" href="/international/en/products/p2000luggage/classicline/">Classic Line<span class="linkarrow"> </span></a>
+          </li>
+          <li>
+            <a onmouseover="showNav3(this, 'frenchclassic')" onmouseout="hideNav3(this)" href="/international/en/products/p2000luggage/frenchclassic/">French Classic<span class="linkarrow"> </span></a>
+          </li>
+          <li>
+            <a onmouseover="showNav3(this, 'roadster')" onmouseout="hideNav3(this)" href="/international/en/products/p2000luggage/roadster/">Roadster 2.0<span class="linkarrow"> </span></a>
+          </li>
+          <li>
+            <a onmouseover="showNav3(this, 'roadster22')" onmouseout="hideNav3(this)" href="/international/en/products/p2000luggage/roadster22/">Roadster 2.2<span class="linkarrow"> </span></a>
+          </li>
+        </ul>
+      </div>
+      <div id="subsubnavi_p3000accessories" class="subsubnavi_content">
+        <ul>
+          <li>
+            <a onmouseover="showNav3(this, 'writingtools')" onmouseout="hideNav3(this)" href="/international/en/products/p3000accessories/writingtools/">Writing Tools<span class="linkarrow"> </span></a>
+          </li>
+          <li>
+            <a onmouseover="showNav3(this, 'fragrances')" onmouseout="hideNav3(this)" href="/international/en/products/p3000accessories/fragrances/">Fragrances<span class="linkarrow"> </span></a>
+          </li>
+          <li>
+            <a onmouseover="showNav3(this, 'smallleathergoods')" onmouseout="hideNav3(this)" href="/international/en/products/p3000accessories/smallleathergoods/">Small Leather Goods<span class="linkarrow"> </span></a>
+          </li>
+          <li>
+            <a onmouseover="showNav3(this, 'jewellery')" onmouseout="hideNav3(this)" href="/international/en/products/p3000accessories/jewellery/">Jewellery<span class="linkarrow"> </span></a>
+          </li>
+          <li>
+            <a onmouseover="showNav3(this, 'smokingaccessories')" onmouseout="hideNav3(this)" href="/international/en/products/p3000accessories/smokingaccessories/">Smoking Accessories<span class="linkarrow"> </span></a>
+          </li>
+        </ul>
+      </div>
+      <div id="subsubnavi_p5000sport" class="subsubnavi_content">
+        <ul>
+          <li>
+            <a onmouseover="showNav3(this, 'golf')" onmouseout="hideNav3(this)" href="/international/en/products/p5000sport/golf/">Golf</a>
+          </li>
+          <li>
+            <a onmouseover="showNav3(this, 'watersnow')" onmouseout="hideNav3(this)" href="/international/en/products/p5000sport/watersnow/">Water | Snow</a>
+          </li>
+          <li>
+            <a onmouseover="showNav3(this, 'tennis')" onmouseout="hideNav3(this)" href="/international/en/products/p5000sport/tennis/">Tennis</a>
+          </li>
+          <li>
+            <a onmouseover="showNav3(this, 'runningfitness')" onmouseout="hideNav3(this)" href="/international/en/products/p5000sport/runningfitness/">Running | Fitness</a>
+          </li>
+          <li>
+            <a onmouseover="showNav3(this, 'driving')" onmouseout="hideNav3(this)" href="/international/en/products/p5000sport/driving/">Driving</a>
+          </li>
+        </ul>
+      </div>
+      <div id="subsubnavi_p6000timepieces" class="subsubnavi_content">
+        <ul>
+          <li>
+            <a onmouseover="showNav3(this, 'heritage')" onmouseout="hideNav3(this)" href="/international/en/products/p6000timepieces/heritage/">Heritage<span class="linkarrow"> </span></a>
+          </li>
+          <li>
+            <a onmouseover="showNav3(this, 'indicator')" onmouseout="hideNav3(this)" href="/international/en/products/p6000timepieces/indicator/">Indicator<span class="linkarrow"> </span></a>
+          </li>
+          <li>
+            <a onmouseover="showNav3(this, 'performance')" onmouseout="hideNav3(this)" href="/international/en/products/p6000timepieces/performance/">Performance<span class="linkarrow"> </span></a>
+          </li>
+          <li>
+            <a onmouseover="showNav3(this, 'dashboard')" onmouseout="hideNav3(this)" href="/international/en/products/p6000timepieces/dashboard/">Dashboard<span class="linkarrow"> </span></a>
+          </li>
+          <li>
+            <a onmouseover="showNav3(this, 'flat6')" onmouseout="hideNav3(this)" href="/international/en/products/p6000timepieces/flat6/">Flat Six<span class="linkarrow"> </span></a>
+          </li>
+        </ul>
+      </div>
+      <div id="subsubnavi_p7000home" class="subsubnavi_content">
+        <ul>
+          <li>
+            <a onmouseover="showNav3(this, 'lighting')" onmouseout="hideNav3(this)" href="/international/en/products/p7000home/lighting/">Lighting</a>
+          </li>
+          <li>
+            <a onmouseover="showNav3(this, 'kitchenknives')" onmouseout="hideNav3(this)" href="/international/en/products/p7000home/kitchenknives/">Kitchen Knives</a>
+          </li>
+          <li>
+            <a onmouseover="showNav3(this, 'kitchen')" onmouseout="hideNav3(this)" href="/international/en/products/p7000home/kitchen/">Kitchen</a>
+          </li>
+        </ul>
+      </div>
+      <div id="subsubnavi_p8000eyewear" class="subsubnavi_content">
+        <ul>
+          <li>
+            <a onmouseover="showNav3(this, 'glasses')" onmouseout="hideNav3(this)" href="/international/en/products/p8000eyewear/glasses/">Corrective Glasses</a>
+          </li>
+          <li>
+            <a onmouseover="showNav3(this, 'sunglasses')" onmouseout="hideNav3(this)" href="/international/en/products/p8000eyewear/sunglasses/">Sunglasses</a>
+          </li>
+          <li>
+            <a onmouseover="showNav3(this, 'readingtools')" onmouseout="hideNav3(this)" href="/international/en/products/p8000eyewear/readingtools/">Reading Tools</a>
+          </li>
+        </ul>
+      </div>
+      <div id="subsubnavi_p9000electronics" class="subsubnavi_content">
+        <ul>
+          <li>
+            <a onmouseover="showNav3(this, 'communication')" onmouseout="hideNav3(this)" href="/international/en/products/p9000electronics/communication/">Communication<span class="linkarrow"> </span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div id="subsubsubnavi">
+      <div id="subsubsubnavi_cargon" class="subsubsubnavi_content">
+        <ul>
+          <li>
+            <a href="/international/en/products/p2000luggage/cargon/backbags/">BackBags</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p2000luggage/cargon/boardbags/">BoardBags</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p2000luggage/cargon/briefbags/">BriefBags</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p2000luggage/cargon/shoulderbags/">ShoulderBags</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p2000luggage/cargon/travelbags/">TravelBags</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p2000luggage/cargon/washbags/">WashBags</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p2000luggage/cargon/furtheraccessories/">Further Accessories</a>
+          </li>
+        </ul>
+      </div>
+      <div id="subsubsubnavi_cervo20" class="subsubsubnavi_content">
+        <ul>
+          <li>
+            <a href="/international/en/products/p2000luggage/cervo20/briefbags/">BriefBags</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p2000luggage/cervo20/portfolios/">PortFolios</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p2000luggage/cervo20/shoulderbags/">ShoulderBags</a>
+          </li>
+        </ul>
+      </div>
+      <div id="subsubsubnavi_cl220" class="subsubsubnavi_content">
+        <ul>
+          <li>
+            <a href="/international/en/products/p2000luggage/cl220/briefbags/">BriefBags</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p2000luggage/cl220/shoulderbags/">ShoulderBags</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p2000luggage/cl220/washbags/">WashBags</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p2000luggage/cl220/furtheraccessories/">Further Accessories</a>
+          </li>
+        </ul>
+      </div>
+      <div id="subsubsubnavi_classicline" class="subsubsubnavi_content">
+        <ul>
+          <li>
+            <a href="/international/en/products/p2000luggage/classicline/accessoriesbags/">AccessoriesBags</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p2000luggage/classicline/briefbags/">BriefBags</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p2000luggage/classicline/carecases/">CareCases</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p2000luggage/classicline/conferencecases/">ConferenceCases</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p2000luggage/classicline/lapdoccases/">LapDocCases</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p2000luggage/classicline/organizers/">Organizers</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p2000luggage/classicline/portfolios/">PortFolios</a>
+          </li>
+        </ul>
+      </div>
+      <div id="subsubsubnavi_frenchclassic" class="subsubsubnavi_content">
+        <ul>
+          <li>
+            <a href="/international/en/products/p2000luggage/frenchclassic/briefbags/">BriefBags</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p2000luggage/frenchclassic/briefcases/">BriefCases</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p2000luggage/frenchclassic/lapdoccases/">LapDocCases</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p2000luggage/frenchclassic/organizers/">Organizers</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p2000luggage/frenchclassic/trolleys/">Trolleys</a>
+          </li>
+        </ul>
+      </div>
+      <div id="subsubsubnavi_roadster" class="subsubsubnavi_content">
+        <ul>
+          <li>
+            <a href="/international/en/products/p2000luggage/roadster/backbags/">BackBags</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p2000luggage/roadster/briefbags/">BriefBags</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p2000luggage/roadster/briefcases/">BriefCases</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p2000luggage/roadster/cablebags/">CableBags</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p2000luggage/roadster/garmentbags/">GarmentBags</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p2000luggage/roadster/laptopbags/">LaptopBags</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p2000luggage/roadster/shoulderbags/">ShoulderBags</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p2000luggage/roadster/trolleys/">Trolleys</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p2000luggage/roadster/washbags/">WashBags</a>
+          </li>
+        </ul>
+      </div>
+      <div id="subsubsubnavi_roadster22" class="subsubsubnavi_content">
+        <ul>
+          <li>
+            <a href="/international/en/products/p2000luggage/roadster22/briefbags/">BriefBags</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p2000luggage/roadster22/briefcases/">BriefCases</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p2000luggage/roadster22/shoulderbags/">ShoulderBags</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p2000luggage/roadster22/trolleys/">Trolleys</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p2000luggage/roadster22/washbags/">WashBags</a>
+          </li>
+        </ul>
+      </div>
+      <div id="subsubsubnavi_writingtools" class="subsubsubnavi_content">
+        <ul>
+          <li>
+            <a href="/international/en/products/p3000accessories/writingtools/tecflex/">TecFlex</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p3000accessories/writingtools/mikado/">Mikado</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p3000accessories/writingtools/aluminium/">Aluminum</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p3000accessories/writingtools/shakepen/">Shake Pen</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p3000accessories/writingtools/leather/">Leather</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p3000accessories/writingtools/accessories/">Further Accessories</a>
+          </li>
+        </ul>
+      </div>
+      <div id="subsubsubnavi_fragrances" class="subsubsubnavi_content">
+        <ul>
+          <li>
+            <a href="/international/en/products/p3000accessories/fragrances/theessence/">The Essence</a>
+          </li>
+        </ul>
+      </div>
+      <div id="subsubsubnavi_smallleathergoods" class="subsubsubnavi_content">
+        <ul>
+          <li>
+            <a href="/international/en/products/p3000accessories/smallleathergoods/cl220/">CL2 2.0</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p3000accessories/smallleathergoods/classicline/">Classic Line</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p3000accessories/smallleathergoods/frenchclassic/">French Classic</a>
+          </li>
+        </ul>
+      </div>
+      <div id="subsubsubnavi_jewellery" class="subsubsubnavi_content">
+        <ul>
+          <li>
+            <a href="/international/en/products/p3000accessories/jewellery/acetat/">Acetate</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p3000accessories/jewellery/cutout/">Cutout</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p3000accessories/jewellery/ebony/">Ebony</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p3000accessories/jewellery/frenchcross/">French Cross</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p3000accessories/jewellery/functionality/">Functionality</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p3000accessories/jewellery/grooves/">Grooves</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p3000accessories/jewellery/mikado/">Mikado</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p3000accessories/jewellery/silhouette/">Silhouette</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p3000accessories/jewellery/stone/">Stone</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p3000accessories/jewellery/tecflex/">TecFlex</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p3000accessories/jewellery/titaniumdeluxe/">Titanium Deluxe</a>
+          </li>
+        </ul>
+      </div>
+      <div id="subsubsubnavi_smokingaccessories" class="subsubsubnavi_content">
+        <ul>
+          <li>
+            <a href="/international/en/products/p3000accessories/smokingaccessories/cigarcases/">Cigar Cases</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p3000accessories/smokingaccessories/lighters/">Lighters</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p3000accessories/smokingaccessories/tobaccopipes/">Tobacco Pipes</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p3000accessories/smokingaccessories/tobaccopipeaccessories/">Tobacco Pipe Accessories</a>
+          </li>
+        </ul>
+      </div>
+      <div id="subsubsubnavi_heritage" class="subsubsubnavi_content">
+        <ul>
+          <li>
+            <a href="/international/en/products/p6000timepieces/heritage/titanchronograph/">Titan Chronograph</a>
+          </li>
+        </ul>
+      </div>
+      <div id="subsubsubnavi_indicator" class="subsubsubnavi_content">
+        <ul>
+          <li>
+            <a href="/international/en/products/p6000timepieces/indicator/indicator/">Indicator</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p6000timepieces/indicator/indicatorrattrapante/">Rattrapante Limited Edition</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p6000timepieces/indicator/chronograph/">Chronograph</a>
+          </li>
+        </ul>
+      </div>
+      <div id="subsubsubnavi_performance" class="subsubsubnavi_content">
+        <ul>
+          <li>
+            <a href="/international/en/products/p6000timepieces/performance/worldtimer/">Worldtimer</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p6000timepieces/performance/diver/">Diver</a>
+          </li>
+        </ul>
+      </div>
+      <div id="subsubsubnavi_dashboard" class="subsubsubnavi_content">
+        <ul>
+          <li>
+            <a href="/international/en/products/p6000timepieces/dashboard/aluminiumchronograph/">Aluminium Chronograph</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p6000timepieces/dashboard/goldchronograph/">Gold Chronograph</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p6000timepieces/dashboard/titanchronograph/">Titanium Chronograph</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p6000timepieces/dashboard/lemans1970limitededition/">Le Mans 1970 Limited Edition</a>
+          </li>
+        </ul>
+      </div>
+      <div id="subsubsubnavi_flat6" class="subsubsubnavi_content">
+        <ul>
+          <li>
+            <a href="/international/en/products/p6000timepieces/flat6/automatic/">Automatic</a>
+          </li>
+          <li>
+            <a href="/international/en/products/p6000timepieces/flat6/automaticchronograph/">Automatic Chronograph</a>
+          </li>
+        </ul>
+      </div>
+      <div id="subsubsubnavi_communication" class="subsubsubnavi_content">
+        <ul>
+          <li>
+            <a href="/international/en/products/p9000electronics/communication/mobilephones/">Mobile Phones</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div id="subnavi_studio" class="subnavi_content">
+    <ul>
+      <li>
+        <a onmouseover="showNav2(this, '')" onmouseout="hideNav2(this)" href="/international/en/studio/">At a glance</a>
+      </li>
+      <li>
+        <a onmouseover="showNav2(this, 'company')" onmouseout="hideNav2(this)" href="/international/en/studio/company/">Company</a>
+      </li>
+      <li>
+        <a onmouseover="showNav2(this, 'designdevelopment')" onmouseout="hideNav2(this)" href="/international/en/studio/designdevelopment/">Design Development</a>
+      </li>
+      <li>
+        <a onmouseover="showNav2(this, 'projects')" onmouseout="hideNav2(this)" href="/international/en/studio/projects/">Projects</a>
+      </li>
+      <li>
+        <a onmouseover="showNav2(this, 'classic')" onmouseout="hideNav2(this)" href="/international/en/studio/classic/">Classics</a>
+      </li>
+      <li class="li_last">
+        <a onmouseover="showNav2(this, 'contact')" onmouseout="hideNav2(this)" href="/international/en/studio/contact/">Contact</a>
+      </li>
+    </ul>
+  </div>
+  <div id="subnavi_company" class="subnavi_content">
+    <ul>
+      <li>
+        <a onmouseover="showNav2(this, '')" onmouseout="hideNav2(this)" href="/international/en/company/">At a glance</a>
+      </li>
+      <li>
+        <a onmouseover="showNav2(this, 'news')" onmouseout="hideNav2(this)" href="/international/en/company/news/">News</a>
+      </li>
+      <li>
+        <a onmouseover="showNav2(this, 'pd')" onmouseout="hideNav2(this)" href="/international/en/company/pd/">Porsche Design</a>
+      </li>
+      <li>
+        <a onmouseover="showNav2(this, 'pdds')" onmouseout="hideNav2(this)" href="/international/en/company/pdds/">Porsche Design Driver's Selection</a>
+      </li>
+      <li>
+        <a onmouseover="showNav2(this, 'pdstudio')" onmouseout="hideNav2(this)" href="/international/en/company/pdstudio/">Porsche Design Studio</a>
+      </li>
+      <li>
+        <a onmouseover="showNav2(this, 'history')" onmouseout="hideNav2(this)" href="/international/en/company/history/">History</a>
+      </li>
+      <li>
+        <a onmouseover="showNav2(this, 'jobs')" onmouseout="hideNav2(this)" href="/international/en/company/jobs/">Jobs and Careers</a>
+      </li>
+      <li>
+        <a onmouseover="showNav2(this, 'press')" onmouseout="hideNav2(this)" href="/international/en/company/press/">Press</a>
+      </li>
+      <li class="li_last">
+        <a onmouseover="showNav2(this, 'imprint')" onmouseout="hideNav2(this)" href="/international/en/company/imprint/">Legal information</a>
+      </li>
+    </ul>
+  </div>
+</div>
+        <div id="introdiv" >
+          <div id="intro1">IF YOU ANALYSE THE FUNCTION<br />OF AN OBJECT,</div>
+          <div id="intro2">
+            <div>ITS FORM OFTEN<br />BECOMES OBVIOUS.<br /><span class="small">Ferdinand Alexander Porsche</span></div>
+          </div>
+        </div>
+        <div id="skip" >
+          <a href="javascript:skipIntro()">skip</a>&gt;</div>
+        <div id="imgs" >
+          <div id="allimgs">
+            <img class="img247" id="img1" src="" alt="/filestore.aspx/normal.jpg/?pool=germanypds2&amp;type=image&amp;id=intro-jacket-01&amp;lang=none&amp;filetype=normal" />
+            <img class="img247" id="img2" src="" alt="/filestore.aspx/normal.jpg/?pool=germanypds2&amp;type=image&amp;id=intro-jacket-02&amp;lang=none&amp;filetype=normal" />
+            <img class="img247" id="img3" src="" alt="/filestore.aspx/normal.jpg/?pool=germanypds2&amp;type=image&amp;id=intro-jacket-03&amp;lang=none&amp;filetype=normal" />
+            <img class="img247" id="img4" src="" alt="/filestore.aspx/normal.jpg/?pool=germanypds2&amp;type=image&amp;id=intro-jacket-04&amp;lang=none&amp;filetype=normal" />
+          </div>
+        </div>
+        <div id="left" class="arrow" >
+          <img src="/images/PDS2/arrow_last.png" alt="" />
+        </div>
+        <div id="right" class="arrow" >
+          <img src="/images/PDS2/arrow_next.png" alt="" />
+        </div>
+        <div id="hotlayer" >
+          <div class="hl_back"></div>
+          <div class="hl_imgtext">
+            <img id="productloader" src="/images/PDS2/ajax-loader.gif" alt="" />
+            <img id="hl_img" src="/images/PDS2/dummy.gif" alt="" />
+            <div id="hl_text"></div>
+            <div id="hl_links">
+              <div id="hl_button"></div>
+            </div>
+          </div>
+          <img id="hl_close" src="/images/PDS2/hl_close.jpg" alt="" />
+        </div>
+        <div id="teaser" class="visible" >
+          <div id="teaserarrow"></div>
+          <div id="teaserheader">Porsche Design</div>
+          <div id="teasertext">The Battle</div>
+          <div id="teaserimage">
+            <img id="hometeaser-vkr" src="/filestore.aspx/normal.jpg/?pool=germanypds2&amp;type=image&amp;id=hometeaser-vkr&amp;lang=none&amp;filetype=normal" />
+          </div>
+          <div id="teasershopbutton"></div>
+          <div id="teaserbutton"></div>
+          <div id="fullteaserimage">
+            <img id="hometeaser-vkr-full" src="/filestore.aspx/normal.jpg/?pool=germanypds2&amp;type=image&amp;id=hometeaser-vkr-full&amp;lang=none&amp;filetype=normal" />
+          </div>
+          <div id="fullteaserheader">Porsche Design</div>
+          <div id="fullteasersubheader">The Battle</div>
+          <div id="fullteasertext">
+            <p>
+              <b>Porsche Design staged by Hollywood</b>
+            </p>
+            <p>Actors portray design duel between form and function.<br /><br />The Porsche Design Group presents<br />its new image film, entitled<br />“Form and Function - The Battle”.<br /><br />The film is launched on the website <a target="_blank" href="http://www.formandfunction-thebattle.com">www.formandfunction-thebattle.com</a>.<br /><br />The focal point is an offbeat portrayal of the philosophy of the luxury brand staged by Hollywood actors Billy Zane and Karel Roden.</p>
+          </div>
+          <div id="productsteaserbutton"></div>
+          <div id="closeteaserbutton"></div>
+        </div>
+      </div>
+      <div id="footer" >
+        <div id="tools_back"></div>
+        <div id="tools">
+          <div id="tool5" class="tools">
+            <a target="_blank" href="http://www.berlin.porsche-design.com">Online shop</a>
+          </div>
+          <div id="tool1" class="tools">Stores</div>
+          <div id="tool2" class="tools">Contact &amp; service</div>
+          <div id="tool3" class="tools">Newsletter</div>
+          <div id="tool4" class="tools">Recommend this page</div>
+        </div>
+        <div id="search">
+          <form action="#">
+            <div>
+              <input id="searchfield" type="text" size="30" maxlength="50" value="Product, color, material, ZIP code" />
+              <input id="searchbutton" type="submit" value="Search" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div id="meta" >
+      <a href="/international/en/company/imprint/">
+        <span>Legal information</span>
+      </a>
+      <a href="/international/en/company/imprint/dataprotection/">
+        <span>Data protection</span>
+      </a>
+      <a href="/international/en/company/imprint/legalnotice/">
+        <span>Legal notice</span>
+      </a>
+      <a href="/international/en/sitemap">
+        <span>Sitemap</span>
+      </a>
+      <a href="javascript:showLanguageSelect();">
+        <span id="lang">Language</span>
+      </a>
+    </div>
+    <script type="text/javascript" > Cufon.now(); </script>
+    <script type="text/javascript" >
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-2789744-1']);
+			_gaq.push(['_trackPageview']);
+
+			(function() {
+				var ga = document.createElement('script');
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 
+						'http://www') + '.google-analytics.com/ga.js';
+				ga.setAttribute('async', 'true');
+				document.documentElement.firstChild.appendChild(ga);
+			})();
+		</script>
+  </body>
+</html>
+
+<!-- Noxum Publishing Studio -->
+<!-- build time 2010-12-25 09:36:58 -->
