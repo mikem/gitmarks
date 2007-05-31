@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html debug="false">
+<!--  <html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml"  xml:lang="en" lang="en">
+-->
+<head>
+<title>Tissot</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<link rel="stylesheet" type="text/css" href="pages/_css/scroll.css" />
+<link rel="stylesheet" type="text/css" href="pages/_css/boxy.css" />
+
+
+<link rel="stylesheet" type="text/css" href="pages/_css/general.css" />
+<link rel="stylesheet" type="text/css" href="pages/_css/jquery.lightbox-0.5.css" media="screen" />
+<link rel="icon" type="image/png" href="favicon.png" />
+
+<script type="text/javascript" src="pages/_js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="pages/_js/screensizer.js"></script>
+<script type="text/javascript" src="pages/_js/jquery.scrollable-1.0.2.js"></script>
+<script type="text/javascript" src="pages/_js/jquery.ui.core.js"></script>
+<script type="text/javascript" src="pages/_js/jquery.ui.draggable.js"></script>
+<script type="text/javascript" src="pages/_js/jquery.mousewheel.js"></script>
+<script type="text/javascript" src="pages/_js/jquery.boxy.js"></script>
+<script type="text/javascript" src="pages/_js/cookies.js"></script>
+<script type="text/javascript" src="pages/_js/languages.js"></script>
+<script type="text/javascript" src="pages/_js/jquery.lightbox-0.5.js"></script>
+<script type="text/javascript" src="pages/_js/scroll.js"></script>
+
+<script type="text/javascript">
+
+    function htmlFacebook(){
+        var tagHTML = document.getElementsByTagName("head")[0].parentNode;
+        tagHTML.setAttribute("xmlns", "http://www.w3.org/1999/xhtml");
+        tagHTML.setAttribute("xmlns:fb", "http://www.facebook.com/2008/fbml");
+        tagHTML.setAttribute("xml:lang","en");
+        tagHTML.setAttribute("lang","en");        
+    }
+  
+    function onloadPrime(div) {
+       skinScroll.add(div);
+    }
+  
+    $(document).ready(function(){
+        
+        $("#linkLangList").click(function () {
+            languagesFunctions.showLanguages();
+        });
+        
+        $('.lightbox').lightBox();
+    
+        onloadPrime('article_overflow');
+    });
+        
+    /** 
+     * Redirection seulement sur la racine www.tissot.ch SANS query 
+     * Fred 19/10/2010 16:23:47    
+     */    
+    function checkClient(){
+        if((navigator.userAgent.match(/iPhone/i))||
+           (navigator.userAgent.match(/iPod/i))) {
+    	      fullURL = parent.document.URL
+            query = fullURL.substring(fullURL.indexOf('?')+3, fullURL.length)
+            //if (!query) document.location.href='http://www.tissot.ch/iphone';
+        }else{
+            
+        }
+    }
+    
+</script>
+
+<!--[if lte IE 6]>
+<script type="text/javascript" src="pages/_js/png-ie.js"></script>
+<script type="text/javascript" src="pages/_js/ie6update.js"></script>
+<![endif]-->
+</head>
+
+<body onload="checkClient()">
+	
+<div id="menu_global">
+	<div id="menu_central">
+		<div id="logo"><a href="?"><img src="pages/_img/general/logo_tissot.gif" alt="Tissot" width="100" height="65" border="0"/></a></div>
+		<div id="menu_top">
+			
+<!-- pages/TM_menu.html -->
+<ul>
+    
+        <li><a href="?mod_homepage" class="menu1">Homepage</a><span>.</span></li>   
+    
+        <li><a href="?mod_collections" class="menu1">Collections</a><span>.</span></li>   
+    
+        <li><a href="?mod_sports" class="menu1">Sports</a><span>.</span></li>   
+    
+        <li><a href="?mod_ambassadors" class="menu1">Ambassadors</a><span>.</span></li>   
+    
+        <li><a href="?mod_stores" class="menu1">Stores</a><span>.</span></li>   
+    
+        <li><a href="?mod_news" class="menu1">News / Events</a><span>.</span></li>   
+    
+        <li><a href="?mod_communication" class="menu1">The Brand</a><span>.</span></li>   
+    
+        <li><a href="?mod_competition" class="menu1">Contest</a><span>.</span></li>   
+    
+</ul>
+
+		
+<!-- EO pages/TM_menu.html -->
+	  	</div><!--fin de menu_top-->
+        <div id="menu_bottom">
+    		<div id="social_links">
+                <a href="?mod_redirection/id_facebook" target="_blank"><img src="pages/_img/general/facebook.gif" alt="Tissot on Facebook" title="Tissot on Facebook" /></a><a href="?mod_redirection/id_ttouch" target="_blank"><img src="pages/_img/general/t-touch.gif" alt="Visit our T-Touch website" title="Visit our T-Touch website" /></a><a href="?mod_redirection/id_reality" target="_blank"><img src="pages/_img/general/reality.png" alt="" title="" /></a><a href="?ajax_news_export_xml" target="_blank"><img src="pages/_img/general/rss.png" alt="" title="" /></a>            </div>
+            <div id="menu_bottom_right">
+        		<div id="langueSelector">
+            		<div id="linkLangList"><span style="color:#EE3A34">+</span>  International</div>
+             	</div>
+                <div id="recherche">
+        			
+<!-- pages/TM_submenuSearch.html -->
+
+<a href="?mod_search">
+    <span style="color:#EE3A34">+</span> Watch Selector 
+    <img align="absmiddle" src="pages/_img/general/loupe.png"/>
+</a>
+
+<!-- EO pages/TM_submenuSearch.html -->
+        		</div><!--fin de recherche-->
+        		
+        	</div><!--fin de menu_bottom_right-->
+    		<div id="menu_bottom_left">
+                
+<!-- pages/TM_submenu.html -->
+<ul>
+
+    <li><a href="http://extranet.tissot.ch/presslounge" target="_blank" class="menu1">Press Lounge</a></li>    
+
+    <li><a href="http://support.tissot.ch/?page_policies" target="_blank" class="menu1">Terms of use</a></li>    
+
+    <li><a href="http://support.tissot.ch/" target="_blank" class="menu1">Product Support</a></li>    
+
+    <li><a href="?mod_contact" target="" class="menu1">Contact</a></li>    
+
+    <li><a href="?mod_stores/option_cs" target="" class="menu1">Customer service</a></li>    
+
+    <li><a href="?mod_swiss_quality" target="" class="menu1">Swiss Quality</a></li>    
+
+    <li><a href="http://livecam.tissot.ch" target="_blank" class="menu1">Webcam</a></li>    
+
+</ul>
+<!-- EO pages/TM_submenu.html -->
+            </div>
+            
+		</div><!--fin de menu_bottom-->
+        
+	</div><!--fin de menu_central-->
+	
+</div><!--fin de menu_global-->
+
+<!--[if IE 6]>
+<script type="text/javascript">
+    if (readCookie('ie6_updateBar_close') == null) {
+        var IE6UPDATE_OPTIONS = {
+    		message: "To benefit from the full Tissot website experience, please upgrade your Internet browser by clicking here...",
+    		icons_path: "pages/_img/ie6/"
+    	}
+     
+        jQuery(document).ready(function($) {
+            $('<div></div>').html(IE6UPDATE_OPTIONS.message || 'Internet Explorer is missing updates required to view this site. Click here to update... ')
+            .activebar(window.IE6UPDATE_OPTIONS);
+        });
+    }
+</script>
+<![endif]-->
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-2736219-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+
+</body>
+</html>
