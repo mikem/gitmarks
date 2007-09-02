@@ -1,0 +1,100 @@
+
+
+
+    <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+    <html>
+    <head>
+      <title>Jumpclaimer!  - Digital postcards using text messages on mobile phones.</title>
+
+	<!-- Welcome to Jumpclaimer.com.  Use your mobile phone to map your travels as you go. -->
+        <meta name="description" content="Send SMS 'postcards' and have them automatically mapped so your friends and family can see your current location.">
+        <meta name="keywords" content="SMS, texting, text, mobile phone, handy, digital pin, cellphone, travel, international, map, postcard, pin">
+        <meta name="author" content="Uberdoers Ltd">
+        <meta name="copyright" content="Uberdoers Ltd, Copyright 2005, 2006">
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+        <meta http-equiv="expires" content="0">
+
+      <link href="http://www.jumpclaimer.com/incl/jc.css" rel="stylesheet" type="text/css">
+      <script src="http://www.jumpclaimer.com/incl/buttons.js" type="text/javascript"></script>
+      <script src="http://www.jumpclaimer.com/incl/jc.js" type="text/javascript"></script>
+
+      <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAARqlUE2Zg9Njkr1Xef3XJQhQ47rlZfPjs8rKJjg2XjKBPzSx52hQOPR-7ZmTCFeC0Ljo8ZzU_lNcD_A" type="text/javascript"></script>
+
+	<script type="text/javascript">
+		var icon = new GIcon();
+		icon.image = "http://www.jumpclaimer.com/images/travelman_icon.png";
+		//icon.shadow = "http://www.jumpclaimer.com/images/travelman_shadow.png";
+		icon.iconSize = new GSize(42,27);
+		icon.shadowSize = new GSize(39,18);
+		icon.iconAnchor = new GPoint(42,3);
+		icon.infoWindowAnchor = new GPoint(42,3);
+	</script>
+
+
+
+
+</head>
+
+<body onload="doPreload(); menu();" >
+
+<div id="container">
+	<div id="topspace">
+		Jumpclaimer, digital postcards on a map by SMS/text messaging from anywhere in the world.
+	</div>
+
+	<div id="outside"> 
+
+		<div id="map"> 
+
+		<h2>Info About this Site</h2>
+        This website enables a traveller to <em>stick digital pins</em> on a world map. Friends and family can then follow the progress. We do this by accepting a simple SMS containing the nearest town to you. We do some analysis to find the latitude/longitude coordinate of the nearest town with that name using your previous location. This is then plotted on a Google map.<br/><br/>
+        Short Message Service (SMS) is the ability to send and receive short alphanumeric messages (maximum 160 characters) to and from mobile telephones. <br/><br/>
+        There are lots of features coming, as you can see below. We are working hard to fix a few 'misfeatures' and add some extra groovy stuff. Check back soon when we will hopefully have the subscriptions working!<br/><br/><br/>
+        
+        <h3>SMS formats</h3>
+        Only <em>test</em> and <em>register</em> are available for non-registered users. The crossed-out lines are not implemented yet.<br/><br/>
+        <code>point#country#town#comment</code> <br/>
+        <code>point#us#state#town#comment</code> &nbsp; &nbsp; &nbsp; (increased accuracy for U.S. users)<br/>
+        <strike><code>latlng#decimal_latitude#decimal_longitude#comment</code></strike> <br/>
+        <code>register#username#password#email</code> <br/>
+        <code>geocode#country#town</code> <br/>
+        <code>help#</code> &nbsp; &nbsp; &nbsp; - returns an sms with SMS format help.<br/>
+        <code>help#country</code> &nbsp; &nbsp; &nbsp; - returns an SMS with the country code.<br/>
+        <code>test#country#town#comment</code> <br/>
+        <strike><code>translate#from_lang#to_lang#text_for_translation</code></strike> &nbsp; &nbsp; &nbsp; - language translation<br/>
+        <code>trivia#</code> &nbsp; &nbsp; &nbsp; - sends a travel related trivia question.
+        <br/><br/>Remember that apart from <em>help#</em> the country and state entries need to be the two letter ISO code.
+        <br/><br/><br/>
+
+	<h3>Contact</h3>
+        Please send an email with any queries or, well, anything really, to <a href="mailto:info@jumpclaimer.com">info@jumpclaimer.com</a>
+        <br/><br/><br/>
+
+        <h3>FAQ</h3>
+        Q. How does SMS work?<br/>
+        A. See <a href="http://en.wikipedia.org/wiki/Short_message_service">this page</a> for further information.<br/><br/>
+        Q. I can't send or receive text messages.<br/>
+        A. Contact your mobile service provider to verify that your plan includes messaging services, that these services have been correctly activated, and that they are available at your location (your mobile service provider should be able to tell you if messaging services have been experiencing transmission delays).<br/><br/>
+        Q. I know I have SMS capability but I still can't get an SMS to jumpclaimer.com.<br/>
+        A. Unfortunately not all telecom companies allow SMS traffic. We will try and get a list soon.<br/><br/>
+        Q. How much for this service, and how long does it last?<br/>
+        A. In the future we will need to charge &#163;<a href="#" title="9 British pounds is approximately $US 16">9</a> per year to cover costs, but for now it's FREE.<br/><br/>
+        Q. Hey, you keep showing completely wrong locations on the map when I send a SMS!<br/>
+        A. We expect there to be a few problems geolocating the correct towns. At the moment we try to work out the <em>most likely</em> result. Very soon we will increase the accuracy by using a proximity algorithm to compare with your last location. At the moment though, you can login and edit any of your points.<br/><br/>
+        <br/><br/><br/>
+        
+        <h3>Simple API</h3>
+        There is also a very simple geocoding API which admittedly needs some work. Example: http://www.jumpclaimer.com/claim/Api?api=geocode&country=fr&place=paris<br/>
+        The 'country' must be an ISO3166 two letter code.<br/><br/>
+        
+		</div>   <!-- map -->
+
+		<div id="rightMenu"> </div>
+
+	</div>   <!-- outside -->
+
+</div>   <!-- coontainer -->
+
+</body>
+
+</html>
