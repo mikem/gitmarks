@@ -1,0 +1,1016 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>Packaging software with RPM, Part 1: Building and distributing packages</title>
+<meta http-equiv="PICS-Label" content='(PICS-1.1 "http://www.icra.org/ratingsv02.html" l gen true r (cz 1 lz 1 nz 1 oz 1 vz 1) "http://www.rsac.org/ratingsv01.html" l gen true r (n 0 s 0 v 0 l 0) "http://www.classify.org/safesurf/" l gen true r (SS~~000 1))'/>
+<link rel="schema.DC" href="http://purl.org/DC/elements/1.0/"/>
+<link rel="SHORTCUT ICON" href="http://www.ibm.com/favicon.ico"/>
+<meta name="Owner" content="developerWorks Content/Raleigh/IBM"/>
+<meta name="DC.Language" scheme="rfc1766" content="en"/>
+<meta name="IBM.Country" content="ZZ"/>
+<meta name="Security" content="Public"/>
+<meta name="IBM.SpecialPurpose" content="SP001"/>
+<meta name="IBM.PageAttributes" content="sid=1003"/>
+<meta name="Source" content="v16 Template Generator"/>
+<meta name="Robots" content="index,follow"/>
+<meta name="Abstract" content="In this first article in a three-part series on the RPM Package Manager, learn how to use RPM not just to install software and attendant files but to package almost anything, from system scripts to source code to documentation. (This series replaces an earlier series on RPM written by Dan Poirier.)"/>
+<meta name="Description" content="In this first article in a three-part series on the RPM Package Manager, learn how to use RPM not just to install software and attendant files but to package almost anything, from system scripts to source code to documentation. (This series replaces an earlier series on RPM written by Dan Poirier.)"/>
+<meta name="Keywords" content="Martin Streicher, Linux, software packaging, RPM, tttlca"/>
+<meta name="DC.Date" scheme="iso8601" content="2010-01-12"/>
+<meta name="DC.Type" scheme="IBM_ContentClassTaxonomy" content="CT316"/>
+<meta name="DC.Subject" scheme="IBM_SubjectTaxonomy" content="SWGC0"/>
+<meta scheme="IBM_WTMCategory" name="IBM.WTMCategory" content="SOFDCLNXZZ" />
+<meta name="DC.Rights" content="© Copyright IBM Corporation 2010"/>
+<meta name="IBM.Effective" scheme="W3CDTF" content="2010-01-12"/>
+<meta name="title" content="Packaging software with RPM, Part 1: Building and distributing packages"/>
+
+<!-- HEADER_SCRIPTS_AND_CSS_INCLUDE -->
+<link href="//dw1.s81c.com/common/v16/css/all.css" media="all" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/common/v16/css/screen.css" media="screen,projection" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/common/v16/css/screen-uas.css" media="screen,projection" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/common/v16/css/zz/en/screen-fonts.css" media="screen,projection" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/common/v16/css/handheld.css" media="handheld" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/common/v16/css/print.css" media="print" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/common/v16/css/overlay.css" media="screen,projection" rel="stylesheet" title="www" type="text/css"/>
+
+<!-- dW-specific CSS -->
+<link href="//dw1.s81c.com/developerworks/css/dw-screen.css" media="screen,projection" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/developerworks/css/dw-screen-comments-ratings-signin.css" media="screen,projection" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/developerworks/js/jquery/cluetip98/jquery.cluetip.css" media="screen,projection" rel="stylesheet"  title="www" type="text/css" />
+
+<script src="//dw1.s81c.com/common/js/ibmcommon.js" type="text/javascript">//</script>
+<script src="//dw1.s81c.com/common/js/dynamicnav.js" type="text/javascript">//</script>
+
+<!-- dW functional JS -->
+<script language="JavaScript" src="//dw1.s81c.com/developerworks/js/urltactic.js" type="text/javascript"></script>
+<!-- Rating_START -->
+<script language="JavaScript" src="//dw1.s81c.com/developerworks/js/artrating/showrating.js" type="text/javascript"></script>
+<style type="text/css">
+.metavalue {
+  display: none;
+}
+</style>
+<!-- Rating_END --><!-- RESERVED_HEADER_INCLUDE -->
+<script language="javascript" src="//dw1.s81c.com/developerworks/js/ajax1.js" type="text/javascript"></script>
+<script language="javascript" src="//dw1.s81c.com/developerworks/js/search_counter-maverick.js" type="text/javascript"></script>
+<script language="javascript" src="//dw1.s81c.com/developerworks/js/request_referer_capture-maverick.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+ <!--
+ setDefaultQuery('linuxart');
+ //-->
+</script>
+<script language="JavaScript" type="text/javascript">
+ <!--
+ function openNewWindow(url,tar,arg){window.open(url,tar,arg);}
+ //-->
+</script>
+<!-- Include file support -->
+<script language="JavaScript" type="text/javascript">
+(function($) {
+	jQuery.extend({
+		getInc: function(u,d){
+			if(u==null)return;
+			jQuery.ajax({
+	    		type: "GET",
+			url: u,
+			dataType: "text",
+	        	success: function(t) {
+				jQuery(d).html(t);
+				ibmCommon.initShowHide(jQuery(d).children()[0]);			
+			},
+			async: true
+			});
+		}
+	});
+})(jQuery);
+</script>
+</head>
+
+<body id="ibm-com">
+<div id="ibm-top" class="ibm-landing-page">
+
+<!-- MASTHEAD_BEGIN -->
+<div class="ibm-access"><a href="#ibm-content">Skip to main content</a></div>
+<div id="ibm-masthead">
+<div id="ibm-logo"><a href="http://www.ibm.com/"><img height="50" src="//dw1.s81c.com/i/v16/t/ibm-logo.gif" width="110" alt="IBM®" /></a></div>
+<ul id="ibm-geo"><li id="ibm-country" class="ibm-first">Country/region</li><li id="ibm-change-country">[ <a href="http://www.ibm.com/developerworks/country/">select</a> ]</li></ul>
+  <form id="ibm-search-form" action="//www.ibm.com/developerworks/search/searchResults.jsp" method="get" name="form1"><input type="hidden" name="searchType" value="1"/><input type="hidden" name="searchSite" value="dW"/><p>
+<span id="ibm-search-scope">
+<label for="sn"><img src="//dw1.s81c.com/i/c.gif" width="1" height="1" alt="Search in:"/></label>
+<select name="searchScope" id="sn">
+<option value="dW" selected="selected">All of dW</option>
+<option value="dW">-----------------</option>
+<option value="aixunix">&nbsp;AIX and UNIX</option>
+<option value="db2">&nbsp;Information Mgmt</option>
+<option value="lotus">&nbsp;Lotus</option>
+<option value="rdd">&nbsp;Rational</option>
+<option value="tivoli">&nbsp;Tivoli</option>  
+<option value="WSDD">&nbsp;WebSphere</option>
+<option value="dW">-----------------</option> 
+<option value="javaZ">&nbsp;Java technology</option> 
+<option value="linuxZ">&nbsp;Linux</option> 
+<option value="opensrcZ">&nbsp;Open source</option>
+<option value="webservZ">&nbsp;SOA/Web services</option>
+<option value="webarchZ">&nbsp;Web development</option>  
+<option value="xmlZ">&nbsp;XML</option>
+<option value="dW">-----------------</option>
+<option value="forums">&nbsp;dW forums</option> 
+<option value="dW">-----------------</option>
+<option value="aI">University</option>
+<option value="dW">-----------------</option>
+<option value="aW">alphaWorks</option>
+<option value="dW">-----------------</option>
+<option value="all">All of IBM</option>
+</select>
+</span>
+
+<label for="q"><img alt="Search for:" height="1" width="1" src="//dw1.s81c.com/i/c.gif" /></label><input type="text" name="query" maxlength="100" id="q"/><input type="submit" id="ibm-search" class="ibm-btn-search" name="Search" value="Search" /></p></form>
+<div id="ibm-site-name">
+<!-- IBM site name container -->
+</div>
+<div id="ibm-universal-nav">
+<ul><li id="ibm-unav-home" class="ibm-first"><a href="http://www.ibm.com/">Home</a></li><li id="ibm-unav-solutions"><a href="http://www.ibm.com/solutions/">Solutions</a></li><li id="ibm-unav-services"><a href="http://www.ibm.com/technologyservices/">Services</a></li><li id="ibm-unav-products"><a href="http://www.ibm.com/products/">Products</a></li><li id="ibm-unav-support"><a href="http://www.ibm.com/support/">Support &amp; downloads</a></li><li id="ibm-unav-myibm"><a href="http://www.ibm.com/account/">My IBM</a></li></ul>
+</div>
+</div>
+<!-- MASTHEAD_END -->
+
+<div id="ibm-pcon">
+
+<!-- CONTENT_BEGIN -->
+<div id="ibm-content">
+
+<!-- Navigation_Trail_BEGIN -->
+<!-- &nbsp; -->
+        <div id="ibm-content-head"><ul id="ibm-navigation-trail"><li class="ibm-first"><a href="http://www.ibm.com/developerworks/">developerWorks</a></li><li><a href="http://www.ibm.com/developerworks/linux/">Linux</a></li><li><a href="http://www.ibm.com/developerworks/views/linux/library.jsp">Technical library</a></li></ul></div>
+<!-- Navigation_Trail_END -->
+
+<!-- dW_Summary Area_START -->
+<div id="dw-summary-article">
+
+<div class="dw-content-head">
+<h1>Packaging software with RPM, Part 1: Building and distributing packages</h1><p/>
+</div>
+
+<div class="ibm-container-body ibm-two-column">
+
+<div class="ibm-column ibm-first">
+<div class="author"><a class="dwauthor" rel="#authortip1" href="#author1">Martin Streicher</a>, Software Developer, Pixel, Byte, and Comma</div><div id="authortip1" class="dwauthor-onload-state ibm-no-print"><div class="position"><img src="http://www.ibm.com/developerworks/i/p-mstreicher.jpg" width="64" height="80" alt="author photo - martin streicher" /></div>Martin Streicher is a freelance Ruby on Rails developer and the former
+                Editor-in-Chief of
+                    <em><a href="http://www.linux-mag.com">Linux Magazine</a>.</em> Martin
+                holds a Master of Science degree in computer science from Purdue
+                University, and has programmed UNIX-like systems since 1986. He collects
+                art and toys.</div>
+<p></p>
+<p><b>Summary:</b>&nbsp; In this first article in a 
+            <a xmlns:dw="http://www.ibm.com/developerWorks/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" href="http://www.ibm.com/developerworks/views/linux/libraryview.jsp?sort_by=&amp;show_abstract=true&amp;show_all=&amp;search_flag=&amp;topic_by=-1&amp;type_by=Articles&amp;search_by=rpm%2C&amp;Go.x=48&amp;Go.y=12">three-part series</a> 
+            on the RPM Package Manager, 
+            learn how to use RPM not just to install software and attendant files but to
+            package almost anything, from system scripts to source code to
+            documentation. (This series replaces an earlier series on RPM written by Dan
+            Poirier.)
+            <p><strong>Share your expertise:</strong>&#160; What are your favorite RPM tricks? 
+                <a href="#icomments">Add your comments</a> below.</p></p>
+<p class="ibm-no-print"><a href="http://www.ibm.com/developerworks/views/linux/libraryview.jsp?sort_by=&amp;show_abstract=true&amp;show_all=&amp;search_flag=&amp;topic_by=-1&amp;type_by=Articles&amp;search_by=rpm%2C&amp;Go.x=48&amp;Go.y=12">View more content in this series</a></p>
+<div id="dw-tag-content" class="ibm-no-print"></div><div id="dw-moretags-access" class="ibm-access"></div>
+<p class="ibm-no-print"><div id="dw-tag-this" class="ibm-no-print"><a class="ibm-external-link" onclick="jQuery.launchTagThisWindow(); return false;" href="#">Tag this!</a></div><div id="interestShow" class="ibm-no-print"></div></p>
+</div>
+
+<div class="ibm-column ibm-second">
+<p class="leading"><b>Date:</b>&nbsp; 12 Jan 2010
+<br /><b>Level: </b>&nbsp;Introductory
+<br class="ibm-ind-link"/><b>PDF:</b>&nbsp; <a href="http://public.dhe.ibm.com/software/dw/linux/l-rpm1/l-rpm1-pdf.pdf">A4 and Letter</a> (37KB | 10 pages)<a class="ibm-external-link" href="http://www.adobe.com/products/acrobat/readstep2.html">Get Adobe&#174; Reader&#174;</a>
+<br /><b>Also available in:&nbsp;</b>
+
+
+
+&nbsp;<a href="http://www.ibm.com/developerworks/jp/linux/library/l-rpm1/">Japanese</a> 
+
+&nbsp;<a href="http://www.ibm.com/developerworks/br/linux/library/l-rpm1/">Portuguese</a> 
+&nbsp;<a href="http://www.ibm.com/developerworks/ssa/linux/library/l-rpm1/">Spanish</a> 
+<br />
+<br /><b>Activity:</b>&nbsp; 143123 views
+<br /><b>Comments:</b> &nbsp; <span id="nCmts"><img alt="" src="//dw1.s81c.com/developerworks/i/circle-preloader.gif" height="12" width="50" /><img alt="" src="//dw1.s81c.com/i/c.gif" height="14" width="1" /></span>
+<!-- Rating_Area_Begin -->
+<div id="art-rating-summary"></div>
+<!-- Rating_Area_End -->
+</p>
+</div>
+
+</div>
+</div>
+<!-- dW_Summary_Area_END -->
+
+<!-- CONTENT_BODY -->
+<div id="ibm-content-body">
+
+<!-- MAIN_COLUMN_BEGIN -->
+<div id="ibm-content-main">
+
+<!-- Related_Searches_Area -->
+<!-- Related_Searches_Area_Begin -->
+<script type="text/javascript" language="javascript">
+	     capture_referrer();
+</script>
+
+<div id="dw-related-searches-article" style="display:none">
+<div class="ibm-container ibm-alternate-two">
+<div class="ibm-container-body">
+
+<!--  START : HTML FOR ARTICLE SEARCH -->
+  <div id="article_results" style="display:block"></div>
+<!--  END : HTML FOR ARTICLE SEARCH -->
+
+</div>
+</div>
+</div>
+<!-- Related_Searches_Area_End -->
+<!-- MAIN_COLUMN_CONTAINER_BEGIN -->
+<div class="ibm-container">
+
+<!-- MAIN_COLUMN_CONTENT_BEGIN -->
+<p>The principal benefit of open source software is, as its name implies,
+                access to the inner workings of an application. Given the source, you can
+                study how an application works; change, improve, and extend its operation;
+                borrow and repurpose code (per the limits of the application's license);
+                and port the application to novel and emergent platforms. </p>
+            <p>However, such liberal access is not always wanted. For instance, a user may
+                not want the onus of building from source code. Instead, he or she may
+                simply want to install the software much like a traditional
+                "shrink-wrapped" application: insert media, run setup, answer a few
+                prompts, and go. Indeed, for most computer users, such pre-built software
+                is preferred. Pre-built code is less sensitive to system vagaries and thus
+                more uniform and predictable. </p>
+            <p>In general, a pre-built, open source application is called a <em>package</em>
+                and bundles all the binary, data, and configuration files required to run
+                the application. A package also includes all the steps required to deploy
+                the application on a system, typically in the form of a script. The script
+                might generate data, start and stop system services, or manipulate files
+                and directories. A script might also perform operations to upgrade
+                existing software to a new version. </p>
+            <p>Because each operating system has its idiosyncrasies, a package is
+                typically tailored to a specific system. Moreover, each operating system
+                provides its own <em>package manager,</em> a special utility to add and
+                remove packages from the system. For example, Debian Linux&#174;-based
+                systems use the Advanced Package Tool (APT), while Fedora Linux systems
+                use the RPM Package Manager. The package manager precludes partial and
+                faulty installations and "uninstalls" by adding and removing the files in
+                a package atomically. The package manager also maintains a manifest of all
+                packages installed on the system and can validate the existence of
+                prerequisites and co-requisites beforehand. </p>
+            <p>If you're a software developer or a systems administrator, providing your
+                application as a package makes installations, upgrades, and maintenance
+                much easier. Here, you learn how to use the popular RPM Package Manager to
+                bundle a utility. For purposes of demonstration, you'll bundle the
+                networking utility <code>wget</code>, which downloads files
+                from the Internet. The <code>wget</code> utility is useful
+                but isn't commonly found standard in distributions. (An analog,
+                <code>curl</code>, is often included in distributions.) Be
+                aware that you can use RPM to distribute most anything&#8212;scripts,
+                documentation, and data&#8212;and perform nearly any maintenance task. </p>
+
+            <p><a name="manual_wget"><span class="atitle">Building wget manually</span></a></p>
+            <p>The <code>wget</code> utility, like many other open source
+                applications, can be built manually. Understanding that process is the
+                starting point for bundling <code>wget</code> in a package.
+                Per the general convention, building <code>wget</code>
+                requires four steps: </p>
+            <ol>
+                <li>Download and unpack the source.</li>
+                <li>Configure the build.</li>
+                <li>Build the code.</li>
+                <li>Install the software.</li>
+            </ol>
+            <p>You can download the latest version of the <code>wget</code>
+                source code from ftp.gnu.org (see <a href="#resources">Resources</a> for
+                a link; as of late September 2009, the current version of
+                <code>wget</code> was 1.12). The rest of the steps require
+                the command line, as shown in <a href="#list1">Listing 1</a>. </p>
+
+            <br /><a name="list1"><b>Listing 1. Installing wget</b></a><br /><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">
+	
+$ tar xzf wget-latest.tar.gz
+$ cd wget-1.12
+$ ./configure
+configure: configuring for GNU Wget 1.12
+checking for a BSD-compatible install... /usr/bin/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... build-aux/install-sh -c -d
+checking for gawk... no
+checking for mawk... no
+checking for nawk... no
+...
+$ make
+$ sudo make install
+</pre></td></tr></table><br />
+
+            <p><code>./configure</code> queries the system and sets
+                compilation options suitable for the hardware and software detected.
+                <code>make</code> compiles the code, and
+                <code>sudo make install</code> installs the code in system
+                directories. By default, the directories are rooted at /usr/local,
+                although you can change the target root with the
+                <code>--prefix=<em>/some/full/path/name</em></code> option to
+                <code>./configure</code>. </p>
+            <p>To convert this process to RPM, you place the source in a repository and
+                write a configuration file to dictate where to find the source to be
+                compiled and how to build and install the code. The configuration file,
+                called a <em>spec file,</em> is the input to a utility called
+                <code>rpmbuild</code>. The spec file and the binaries are
+                packaged by <code>rpmbuild</code> into an RPM. When another
+                user downloads your RPM, the <code>rpm</code> utility reads
+                the spec file and installs the package per your prewritten instructions. </p>
+
+            <div class="ibm-alternate-rule"><hr/></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="first_rpm"><span class="atitle">Building your first RPM</span></a></p>
+            <p>Before you continue, one word of caution. In the past, packages were built
+                by root, the superuser, because root was the only user able to access the
+                system source code repository. However, this approach was potentially
+                hazardous. Because root can alter any file on the system, it was easy to
+                inadvertently alter a running system by adding extraneous files or
+                removing important files during interim builds of an RPM. More recently,
+                the RPM system changed to allow any user to build RPMs in a home
+                directory. Building an RPM without the privileges of root prevents changes
+                to core system files. Here, the more modern approach is shown. </p>
+            
+            <p>To build an RPM, you must:</p>
+            <ul>
+                <li>Set up a directory hierarchy per the
+                    <code>rpmbuild</code> specifications. </li>
+                <li>Place your source code and supplemental files in the proper locations
+                    in the hierarchy. </li>
+                <li>Create your spec file.</li>
+                <li>Build the RPM. You can optionally build a <em>source RPM</em> to share
+                    your source code with others. </li>
+            </ul>
+            <p>To begin, build the hierarchy. In a directory in your home
+                directory&#8212;say, $HOME/mywget&#8212;create five subdirectories: </p>
+            <ul>
+                <li><strong>BUILD.</strong> BUILD is used as scratch space to actually compile the
+                    software. </li>
+                <li><strong>RPMS.</strong> RPMS contains the binary RPM that
+                    <code>rpmbuild</code> builds. </li>
+                <li><strong>SOURCES.</strong> SOURCES is for source code.</li>
+                <li><strong>SPECS.</strong> SPECS contains your spec file or files&#8212;one spec
+                    file per RPM you want to build. </li>
+                <li><strong>SRPMS.</strong> SRPMS contains the source RPM built during the
+                    process.</li>
+            </ul>
+            
+            <p>At a minimum, you need source code in SOURCES and a spec file in SPECS.</p>
+            
+            <p>Copy your source, ideally bundled as a tarball, into the SOURCES directory,
+                as shown in <a href="#list2">Listing 2</a>.
+                If necessary, rename the tarball to include the version number of the
+                application to differentiate it from others. The naming convention is
+                    <em>package-version</em>.tar.gz. In the case of
+                <code>wget</code>, you would use: </p>
+
+            <br /><a name="list2"><b>Listing 2. Copying your source</b></a><br /><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">
+
+$ cd ~
+$ mkdir mywget
+$ cd mywget 
+$ mkdir BUILD RPMS SOURCES SPECS SRPMS
+$ cd SOURCES
+$ cp wget-latest.tar.gz .
+$ mv wget-latest.tar.gz wget-1.12.tar.gz
+$ cd ..
+</pre></td></tr></table><br />
+
+            <p>Next, create the spec file. A spec file is nothing more than a text file
+                with a special syntax. <a href="#list3">Listing 3</a> shows an example of
+                a spec file. </p>
+
+            <br /><a name="list3"><b>Listing 3. Sample spec file</b></a><br /><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">
+	
+# This is a sample spec file for wget
+
+%define _topdir	 	/home/strike/mywget
+%define name			wget 
+%define release		1
+%define version 	1.12
+%define buildroot %{_topdir}/%{name}-%{version}-root
+
+BuildRoot:	%{buildroot}
+Summary: 		GNU wget
+License: 		GPL
+Name: 			%{name}
+Version: 		%{version}
+Release: 		%{release}
+Source: 		%{name}-%{version}.tar.gz
+Prefix: 		/usr
+Group: 			Development/Tools
+
+%description
+The GNU wget program downloads files from the Internet using the command-line.
+
+%prep
+%setup -q
+
+%build
+./configure
+make
+
+%install
+make install prefix=$RPM_BUILD_ROOT/usr
+
+%files
+%defattr(-,root,root)
+/usr/local/bin/wget
+
+%doc %attr(0444,root,root) /usr/local/share/man/man1/wget.1
+</pre></td></tr></table><br />
+
+            <p>Let's walk through the spec file from top to bottom. Lines 1-5 define a set
+                of convenience variables used throughout the rest of the file. Lines 7-15
+                set a number of required parameters using the form <em>parameter:
+                value</em>. As you can see in line 7 and elsewhere, variables can be
+                evaluated and combined to produce the value of a setting. </p>
+            <p>The parameter names are largely self-evident, but
+                <code>BuildRoot</code> merits some explanation to
+                differentiate it from the BUILD directory you already created.
+                <code>BuildRoot</code> is a proxy for the final installation
+                directory. In other words, if <code>wget</code> is
+                ultimately installed in /usr/local/bin/wget and other subdirectories in
+                /usr/local, such as /usr/local/man for documentation,
+                <code>BuildRoot</code> stands in for /usr/local during the
+                RPM build process. Once you set <code>BuildRoot</code>, you
+                can access its value using the <code>RPM_BUILD_ROOT</code>
+                environment variable. You should always set
+                <code>BuildRoot</code> in your spec file and check the
+                contents of that directory to verify what is going to be installed by the
+                package. </p>
+            <p>Here are a few tips:</p>
+            <ul>
+                <li>Do not use
+                    <code>./configure --prefix=$RPM_BUILD_ROOT</code>. This
+                    command builds the entire package, assuming that the final location of
+                    the files is the build root. It is likely that this would cause any
+                    program that needs to locate its installed files at run time to fail,
+                    because when your RPM is finally installed on a user's system, the
+                    files aren't under the build root anymore&#8212;that's just a
+                    temporary directory on your build system. </li>
+                <li>Do not include a path in the definition of Source.</li>
+                <li>Version and Release are especially important. Each time you change
+                    your application's code or data and make a new RPM available, be sure
+                    to increment the values of Version and Release to reflect major and
+                    minor changes, respectively. You may find it helpful to bump the
+                    release number each time you build an RPM, even if for your own use,
+                    to keep attempts separate. </li>
+            </ul>
+            <p>The next section starts with <code>%description</code>. You
+                should provide a concise but clear description of the software here. This
+                line is shown whenever a user runs <code>rpm -qi</code> to
+                query the RPM database. You can explain what the package does, describe
+                any warnings or additional configuration instructions, and more. </p>
+            <p>The <code>%prep</code>, <code>%build</code>,
+                and <code>%install</code> sections are next, consecutively.
+                Each section generates a shell script that is embedded into the RPM and
+                run subsequently as part of the installation.
+                <code>%prep</code> readies the source code, such as
+                unpacking the tarball. Here, <code>%setup -q</code> is a
+                <code>%prep</code> macro to automatically unpack the tarball
+                named in Source. </p>
+            <p>The instructions in the <code>%build</code> section should
+                look familiar. They are identical to the steps you used to configure and
+                launch the build manually. The <code>%install</code> section
+                is identical, too. However, while the target of the manual build was the
+                actual /usr/local directory of your system, the target of the
+                <code>%install</code> instruction is ~/mywget/BUILD. </p>
+            <p><code>%files</code> lists the files that should be bundled
+                into the RPM and optionally sets permissions and other information. Within
+                <code>%files</code>, you can use the
+                <code>%defattr</code> macro to define the default
+                permissions, owner, and group of files in the RPM; in this example,
+                <code>%defattr(-,root,root) </code> installs all the files
+                owned by root, using whatever permissions found when RPM bundled them up
+                from the build system. </p>
+            <p>You can include multiple files per line in
+                <code>%files</code>. You can tag files by adding
+                <code>%doc</code> or <code>%config</code> to
+                the line. <code>%doc</code> tells RPM that the file is a
+                documentation file, so that if a user installs the package using
+                <code>--excludedocs</code>, the file is not be installed.
+                <code>%config</code> tells RPM that this is a configuration
+                file. During upgrades, RPM will attempt to avoid overwriting a user's
+                carefully modified configuration with an RPM-packaged default
+                configuration file. </p>
+            <p>Be aware that if you list a directory name under
+                <code>%files</code>, RPM includes every file under that
+                directory. </p>
+
+            <div class="ibm-alternate-rule"><hr/></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="revving"><span class="atitle">Revving the RPM</span></a></p>
+            <p>Now that your files are in place and your spec file is defined, you are
+                ready to build the actual RPM file. To build it, use the aptly named
+                <code>rpmbuild</code> utility: </p>
+
+            <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">
+$ rpmbuild -v -bb --clean SPECS/wget.spec
+</pre></td></tr></table><br />
+
+            <p>This command uses the named spec file to build a binary package
+                (<code>-bb</code> for "build binary") with verbose output
+                (<code>-v</code>). The build utility removes the build tree
+                after the packages are made (<code>--clean</code>). If you
+                also wanted to build the source RPM, specify
+                <code>-ba</code> ("build all") instead of
+                <code>-bb</code>. (See the
+                <code>rpmbuild</code> man page for a complete list of
+                options.) </p>
+            <p><code>rpmbuild</code> performs these steps:</p>
+            <ul>
+                <li>Reads and parses the wget.spec file.</li>
+                <li>Runs the <code>%prep</code> section to unpack the source
+                    code into a temporary directory. Here, the temporary directory is
+                    BUILD. </li>
+                <li>Runs the <code>%build</code> section to compile the
+                    code.</li>
+                <li>Runs the <code>%install</code> section to install the
+                    code into directories on the build machine. </li>
+                <li>Reads the list of files from the <code>%files</code>
+                    section, gathers them up, and creates a binary RPM (and source RPM
+                    files, if you elect). </li>
+            </ul>
+            <p>If you examine your $HOME/mywget directory, you should find a new directory
+                named <em>wget-1.12-root.</em> This directory is the proxy for the target
+                destination. You should also find a new directory named RPMS/i386, which
+                should in turn contain your RPM, named <em>wget-1.12-1.i386.rpm.</em> The
+                name of the RPM reflects that this is <code>wget</code>
+                version 1.12 for the i386 processor. </p>
+            <p>To verify that the RPM contains the proper files, you can use the
+                <code>rpm</code> command, as shown in
+                <a href="#list4">Listing 4</a>. </p>
+
+            <br /><a name="list4"><b>Listing 4. Verifying the RPM contents</b></a><br /><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">
+	
+$ rpm -Vp RPMS/i386/wget-1.12-1.i386.rpm
+missing     /usr/local/bin/wget
+.M....G.    /usr/local/etc
+missing   c /usr/local/etc/wgetrc
+.M....G.    /usr/local/share
+missing     /usr/local/share/info
+missing   d /usr/local/share/info/wget.info
+missing     /usr/local/share/locale
+missing     /usr/local/share/locale/be
+missing     /usr/local/share/locale/be/LC_MESSAGES
+missing   d /usr/local/share/locale/be/LC_MESSAGES/wget.mo
+.
+.
+.
+</pre></td></tr></table><br />
+
+            <p>The command
+                <code>rpm -Vp RPMS/i386/wget-1.12-1.i386.rpm</code> verifies
+                the package against the files on the system. Although there are seemingly
+                lots of errors, each is a clue that the contents of the RPM file are
+                correct. If you are expecting a file to be installed and it does not
+                appear in the output, it was not included in the package. In that event,
+                review the spec file and make sure the file is enumerated in the
+                <code>%files</code> section. </p>
+            <p>After you've verified the RPM, you can distribute the file to coworkers.
+                Once your colleagues receive the file, they should run
+                <code>rpm</code> to install <code>wget</code>
+                on their own systems: </p>
+
+            <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">
+$ sudo rpm -i wget-1.12-1.i386.rpm
+</pre></td></tr></table><br />
+
+            <div class="ibm-alternate-rule"><hr/></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="other"><span class="atitle">Other uses for RPM</span></a></p>
+            <p>This brief introduction merely scratches the surface of what's possible
+                with RPM. Although it is most often used to install software and attendant
+                files, you can package most anything, from system scripts to 
+                source code to documentation. And as you'll see in the second installment
+                of this series, you can also use RPM to patch source code as well as
+                rebuild and reinstall software. The RPM distribution format is found on
+                many Linux systems and is the preferred method to install binary software
+                on Red Hat and Fedora systems, among others. </p>
+            <p>If you build it and package it with RPM, they will come.</p>
+        <!-- CMA ID: 11167 --> <!-- Site ID: 1 --> <!-- XSLT stylesheet used to transform this file: dw-document-html-6.0.xsl -->
+<br />
+<p><a name="resources"><span class="atitle">Resources</span></a></p><p><b>Learn</b></p><ul><li>
+                Read all <a href="http://www.ibm.com/developerworks/views/linux/libraryview.jsp?sort_by=&amp;show_abstract=true&amp;show_all=&amp;search_flag=&amp;topic_by=-1&amp;type_by=Articles&amp;search_by=rpm%2C&amp;Go.x=48&amp;Go.y=12">three
+articles 
+in this series</a> (developerWorks, January 2010) on the RPM Package Manager.<br /><br /></li><li>
+                Read Wikipedia's <a href="http://en.wikipedia.org/wiki/RPM_Package_Manager">overview 
+of the RPM Package Manager</a>.<br /><br /></li><li>
+               Visit the official <a href="http://www.rpm.org/">RPM site</a>
+                for more information about package management in Linux. <br /><br /></li><li>
+                Learn about <a href="http://www.redhat.com/docs/manuals/linux/RHL-7.2-Manual/custom-guide/ch-rpm.html">RPM
+			in Red Hat Linux</a>. <br /><br /></li><li>
+                Check out <a href="https://fedoraproject.org/wiki/Packaging/Guidelines">Fedora's RPM Guidelines</a>. <br /><br /></li><li>
+                Get the <a href="http://fedora.redhat.com/docs/drafts/rpm-guide-en">official RPM 
+                software guide</a> from Fedora. <br /><br /></li><li>
+                Read <a href="http://www.ibm.com/developerworks/views/linux/libraryview.jsp?site_id=1&amp;contentarea_by=Linux&amp;sort_by=Date&amp;sort_order=2&amp;start=1&amp;end=11&amp;topic_by=-1&amp;product_by=&amp;type_by=Articles&amp;show_abstract=true&amp;search_by=streicher">all
+of Martin's articles on developerWorks</a> <br /><br /></li><li> In the
+                <a href="http://www.ibm.com/developerworks/linux/" onmouseover="linkQueryAppend(this)">developerWorks Linux zone</a>,
+                find more resources for Linux developers, and scan our
+                <a href="http://www.ibm.com/developerworks/linux/library/l-top-10.html" onmouseover="linkQueryAppend(this)">most popular articles and
+            tutorials</a>. <br /><br /></li><li> See all
+                <a href="http://www.ibm.com/developerworks/views/linux/libraryview.jsp?topic_by=All+topics+and+related+products&amp;sort_order=desc&amp;lcl_sort_order=desc&amp;search_by=linux+tip%3A&amp;search_flag=true&amp;type_by=All+Types&amp;show_abstract=true&amp;start_no=1&amp;sort_by=Date&amp;end_no=100&amp;show_all=false" onmouseover="linkQueryAppend(this)">
+            Linux tips</a>
+                and
+                <a href="http://www.ibm.com/developerworks/views/linux/libraryview.jsp?topic_by=All+topics+and+related+products&amp;sort_order=desc&amp;lcl_sort_order=desc&amp;search_by=&amp;search_flag=&amp;type_by=Tutorials&amp;show_abstract=true&amp;sort_by=Date&amp;end_no=100&amp;show_all=false" onmouseover="linkQueryAppend(this)">
+            Linux tutorials</a>
+                on developerWorks. <br /><br /></li><li> Stay current with
+                <a href="http://www.ibm.com/developerworks/offers/techbriefings/" onmouseover="linkQueryAppend(this)">developerWorks technical events and Webcasts</a>. <br /><br /></li></ul><p><b>Get products and technologies</b></p><ul><li>
+            Download the latest version of the 
+                <a href="http://ftp.gnu.org/gnu/wget/wget-latest.tar.gz"><code>wget</code>
+                source code</a> from ftp.gnu.org.
+            <br /><br /></li><li>
+                Learn more and download
+                <a href="http://rpmlint.zarb.org/cgi-bin/trac.cgi/wiki/Releases"><code>rpmlint</code></a>. <br /><br /></li><li>
+                Learn more and download <a href="http://www.kde-apps.org/content/show.php/Easy+RPM+Builder">Easy RPM Builder</a>. <br /><br /></li><li> With
+                <a href="http://www.ibm.com/developerworks/downloads/" onmouseover="linkQueryAppend(this)">IBM trial software</a>,
+                available for download directly from developerWorks, build your next
+                development project on Linux. <br /><br /></li></ul><p><b>Discuss</b></p><ul><li> Get involved in the <a href="http://www.ibm.com/developerworks/community" onmouseover="linkQueryAppend(this)"> My developerWorks community</a>.
+                Connect with other developerWorks users while exploring the
+                developer-driven blogs, forums, groups, and wikis. <br /><br /></li></ul>
+<p><a name="author"><span class="atitle">About the author</span></a></p><div class="ibm-container ibm-portrait-module ibm-alternate-two"><div class="ibm-container-body"><img src="http://www.ibm.com/developerworks/i/p-mstreicher.jpg" class="dw-author-img" width="64" height="80" alt="author photo - martin streicher" /><p><a name="author1"></a>Martin Streicher is a freelance Ruby on Rails developer and the former
+                Editor-in-Chief of
+                    <em><a href="http://www.linux-mag.com">Linux Magazine</a>.</em> Martin
+                holds a Master of Science degree in computer science from Purdue
+                University, and has programmed UNIX-like systems since 1986. He collects
+                art and toys.</p></div></div>
+<!-- MAIN_COLUMN_CONTENT_END -->
+
+<!-- OVERLAYS_START -->
+<!-- Report_Abuse_Start -->
+<div class="ibm-common-overlay ibm-no-print" id="reportabuseoverlay">
+   <div class="ibm-head"><p><a class="ibm-common-overlay-close" href="#">Close [x]</a></p></div>
+   <div class="ibm-body">
+      <div class="ibm-main">
+         <a class="ibm-access" name="reportabuseoverlay">Report abuse help</a>   
+         <div class="ibm-title"><h1>Report abuse</h1></div>
+         <div class="ibm-container ibm-alternate">
+            <p><strong>Thank you.</strong>  This entry has been flagged for moderator attention.</p>
+            <div class="ibm-overlay-rule"><hr /></div>
+            <div class="ibm-buttons-row">
+               <input type="button" onclick="ibmCommon.Overlays.hide('reportabuseoverlay');return false;" class="ibm-btn-cancel-sec dw-btn-cancel-sec" name="ibm-cancel" value="Close" />
+            </div>
+         </div>
+      </div> 
+   </div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Report_Abuse_Error_Start -->
+<div class="ibm-common-overlay ibm-no-print" id="reportabuseoverlayerror">
+   <div class="ibm-head"><p><a class="ibm-common-overlay-close" href="#">Close [x]</a></p></div>
+   <div class="ibm-body">
+      <div class="ibm-main">
+         <a class="ibm-access" name="reportabuseoverlayerror">Report abuse help</a>   
+         <div class="ibm-title"><h1>Report abuse</h1></div>
+         <div class="ibm-container ibm-alternate">
+            <p class="ibm-ind-error"><strong>Report abuse submission failed.  Please try again later.</strong></p>
+            <div class="ibm-overlay-rule"><hr /></div>
+            <div class="ibm-buttons-row">
+               <input type="button" onclick="ibmCommon.Overlays.hide('reportabuseoverlayerror');return false;" class="ibm-btn-cancel-sec dw-btn-cancel-sec" name="ibm-cancel" value="Close" />
+            </div>
+         </div>
+      </div> 
+   </div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Sign in OVERLAY STARTS HERE --> 
+<div id="fdiv"></div>
+<div class="ibm-common-overlay" id="signin_overlay">
+<div class="ibm-head">
+<p><a class="ibm-common-overlay-close" href="#" onclick="clearForm();">Close [x]</a></p>
+</div>
+<div class="ibm-body">
+<div class="ibm-main">
+<div class="ibm-title ibm-subtitle">
+<h1>developerWorks: Sign in</h1>
+<div id="ibm-overlay-error-signin" class="no-display"></div>
+</div>
+
+<div class="ibm-container ibm-alternate ibm-buttons-last">
+<div class="ibm-container-body">
+<p class="ibm-overlay-intro">If you do not have an IBM ID and password, <a href="#" onclick="(function () {window.location='/developerworks/dwwi/DWAuthRouter?m=reg&amp;d='+encodeURIComponent(location.href);})();">register here</a>.</p>
+<form class="ibm-column-form" id="sFormId" action="" method="post" name="sForm" onsubmit="return false;">
+<p><label for="ibmid">IBM ID:</label><span><input name="ibm-id" id="ibmid" size="25" value="" class="required" type="text" onkeypress="handleEP(event,this.form);" /><br /><a class="ibm-forward-link" href="/developerworks/dwwi/jsp/WSHelp.jsp?lang=en_US">Forgot your IBM ID?</a></span>   
+</p> 
+<p><label for="password">Password:</label><span><input name="password" id="password" size="25" value="" class="required" type="password" onkeypress="handleEP(event,this.form);" /><br /><a class="ibm-forward-link" href="#" onclick="(function () {window.location='https://www.ibm.com/account/profile?page=forgot&amp;lang=en_US&amp;appname=ibm&amp;required=null&amp;d='+encodeURIComponent(getAuthUrl())+'%3Fm%3Dloginpage%26lang%3Den_US%26d%3D'+encodeURIComponent(location.href);})();">Forgot your password?</a><br /><a class="ibm-forward-link" href="#" onclick="(function () {window.location='https://www.ibm.com/account/profile?page=chpw&amp;lang=en_US&amp;appname=ibm&amp;required=null&amp;d='+encodeURIComponent(location.href);})();">Change your password?</a></span></p> 
+<p class="no-bottom-padding"> 
+   <label for="AfterSignIn">After sign in:</label> 
+   <span>
+
+      <select name="SignInAction" id="AfterSignIn">
+          <option value="">Stay on the current page</option>
+          <option value="/developerworks/mydeveloperworks/profiles/html/myProfileView.do">Go to My developerWorks profile</option>
+          <option value="/developerworks/mydeveloperworks/homepage/">Go to My developerWorks homepage</option>
+      </select>
+   </span>
+</p>
+<div class="ibm-overlay-rule"><hr /></div>
+<p>By clicking <strong>Submit</strong>, you agree to the developerWorks <a href="/developerworks/mydeveloperworks/terms?lang=en">terms of use</a>.</p>
+<div class="ibm-buttons-row">
+   <p><input class="ibm-btn-arrow-pri" name="ibm-submit" value="Submit" onclick="signin();return false;" type="button" /><span class="ibm-sep">&nbsp;</span>
+<input value="Cancel" type="button" name="ibm-cancel" class="ibm-btn-cancel-sec" onclick="clearForm();ibmCommon.Overlays.hide('signin_overlay');return false;"/></p>
+</div>
+</form>
+<div class="ibm-overlay-rule"><hr /></div>
+<p>The first time you sign into developerWorks, a My developerWorks profile is created for you. This profile includes the first name, last name, and display name contained in the profile you created when you registered with My developerWorks. Selected information in your My developerWorks profile is displayed to the public, but you may edit the information at any time. Your first name, last name (unless you choose to hide them), and display name will accompany the content that you post. </p>
+<div class="dw-overlay-legal"><p>All information submitted is secure.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Sign in OVERLAY ENDS HERE --> 
+ 
+
+<!-- Display name OVERLAY STARTS HERE --> 
+<div class="ibm-common-overlay" id="displayname_overlay">
+<div class="ibm-head">
+<p><a class="ibm-common-overlay-close" href="#" onclick="clearForm();">Close [x]</a></p>
+</div>
+<div class="ibm-body">
+<div class="ibm-main">
+<div class="ibm-title ibm-subtitle">
+<h1>Choose your display name</h1>
+<div id="ibm-overlay-error-dname" class="no-display"></div>
+</div>
+<div class="ibm-container ibm-alternate ibm-buttons-last">
+<div class="ibm-container-body">
+<p class="ibm-overlay-intro">The first time you sign in to developerWorks a profile is created for you, so you need to choose a display name.  Your display name accompanies the content you post on developerWorks.</p>
+
+<form id="dFormId" method="post" action="" name="dForm" onsubmit="return false;" class="ibm-column-form">
+<p><label for="displayname">Display name:</label><span><input name="displayname" id="displayname" size="25" value="" type="text" onkeypress="handleEP(event,this.form);" /></span><span class="ibm-form-note">(Must be between 3 &ndash; 31 characters.)</span>
+</p>
+<p><strong>Note:</strong>  Please choose a display name between 3-31 characters. Your display name must be unique in the developerWorks community and should not be your email for privacy reasons.</p>
+<div class="ibm-overlay-rule"><hr />
+</div>
+<p>By clicking Submit, you agree to the developerWorks <a href="/developerworks/mydeveloperworks/terms?lang=en">terms of use</a>.</p>
+<div class="ibm-buttons-row">
+   <p><input class="ibm-btn-arrow-pri" name="ibm-submit" value="Submit" onclick="signin();return false;" type="button" /><span class="ibm-sep">&nbsp;</span>
+<input value="Cancel" type="button" name="ibm-cancel" class="ibm-btn-cancel-sec" onclick="clearForm();ibmCommon.Overlays.hide('displayname_overlay');return false;" /></p>
+</div>
+</form>
+<div class="ibm-overlay-rule"><hr /></div>
+<div class="dw-overlay-legal"><p>All information submitted is secure.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Display name OVERLAY ENDS HERE -->
+<!-- OVERLAYS_END -->
+
+<!-- RATINGS START -->
+<p class="ibm-no-print"><span class="atitle"><a name="iratings">Rate this article</a></span></p>
+<input id="art-rating" name="ratinga" type="hidden" value="0"/><div id="art-rating-module"></div>
+<script language="JavaScript" type="text/javascript">
+// <![CDATA[
+   // widget div id and article id as args
+   window.artRating.init('art-rating-module','art-rating-summary');
+// ]]>
+</script>
+<!-- RATINGS END -->
+
+<!-- INLINE_COMMENTS_START -->
+<p class="ibm-no-print"><span class="atitle"><a name="icomments">Comments</a></span></p>
+<script language="JavaScript" src="//dw1.s81c.com/developerworks/js/showcomments.js" type="text/javascript">//</script>
+<div id="threadShow"></div>
+<script language="JavaScript" type="text/javascript">
+// <![CDATA[
+ jQuery('threadShow').showComments('95%',5,'nCmts','icomments');
+// ]]>
+</script>
+<!-- INLINE_COMMENTS_END -->
+
+<p class="ibm-ind-link ibm-back-to-top"><a class="ibm-anchor-up-link" href="#ibm-pcon">Back to top</a></p>
+<p><a href="http://www.ibm.com/developerworks/ibm/trademarks/">Trademarks</a> &nbsp;|&nbsp; <a href="https://www.ibm.com/developerworks/mydeveloperworks/terms/">My developerWorks terms and conditions</a></p>
+
+<!-- Overlays -->
+<!-- Zone/Leaf_Interest_Overlay_Start -->
+<div class="ibm-common-overlay ibm-no-print" id="dwmyinterestadd">
+<div class="ibm-head"><p><a class="ibm-common-overlay-close" href="#close">Close [x]</a></p></div>
+<div class="ibm-body">
+<div class="ibm-main">
+<a class="ibm-access" name="dwmyinterestaddhelp">Help: Update or add to My dW interests</a>   
+<div class="ibm-title"><h1>What's this?</h1></div>
+<div class="ibm-container ibm-alternate">
+<p>This little timesaver lets you update your My developerWorks profile with just one click!  The general subject of this content (AIX and UNIX, Information Management, Lotus, Rational, Tivoli, WebSphere, Java, Linux, Open source, SOA and Web services, Web development, or XML) will be added to the interests section of your profile, if it's not there already.  You only need to be logged in to My developerWorks.</p>
+<p>And what's the point of adding your interests to your profile?  That's how you find other users with the same interests as yours, and see what they're reading and contributing to the community.  Your interests also help us recommend relevant developerWorks content to you.</p>
+<p><a href="https://www.ibm.com/developerworks/mydeveloperworks/profiles/home.do?lang=en">View your My developerWorks profile</a></p>
+<p class="ibm-access"><a href="#interestShow">Return from help</a></p>
+</div> 
+</div>
+</div>
+<div class="ibm-footer"></div>
+</div>
+
+<div class="ibm-common-overlay ibm-no-print" id="dwmyinterestremove">
+<div class="ibm-head"><p><a class="ibm-common-overlay-close" href="#close">Close [x]</a></p></div>
+<div class="ibm-body">
+<div class="ibm-main">
+<a class="ibm-access" name="dwmyinterestremovehelp">Help: Remove from My dW interests</a> 
+<div class="ibm-title"><h1>What's this?</h1></div>
+<div class="ibm-container ibm-alternate">
+<p>Removing this interest does not alter your profile, but rather removes this piece of content from a list of all content for which you've indicated interest.  In a future enhancement to My developerWorks, you'll be able to see a record of that content.</p>
+<p><a href="https://www.ibm.com/developerworks/mydeveloperworks/profiles/home.do?lang=en">View your My developerWorks profile</a></p>
+<p class="ibm-access"><a href="#interestShow">Return from help</a></p>
+</div> 
+</div>
+</div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Zone/Leaf_Interest_Overlay_End --></div>
+<!-- MAIN_COLUMN_CONTAINER_END -->
+
+<!-- Rating_Meta_BEGIN -->
+<!--Rating_Meta_BEGIN--><div class="metavalue">static.content.url=http://www.ibm.com/developerworks/js/artrating/</div><div class="metavalue">SITE_ID=1</div><div class="metavalue">Zone=Linux</div><div class="metavalue">ArticleID=11167</div><div class="metavalue">ArticleTitle=Packaging software with RPM, Part 1: Building and distributing packages</div><div class="metavalue">publish-date=01122010</div><div class="metavalue">author1-email=martin.streicher@gmail.com</div><div class="metavalue">author1-email-cc=</div><script language="javascript" type="text/javascript">document.write('<div class="metavalue">url='+location.href.replace('<', '%3C')+'</div>');</script><!--Rating_Meta_END-->
+<!-- Rating_Meta_END -->
+
+</div>
+<!-- MAIN_COLUMN_END-->
+
+<!-- RIGHT_COLUMN_BEGIN -->
+<div id="ibm-content-sidebar">
+<div id="ibm-social-tools-sidebar" class="ibm-share-this"></div>
+
+<!-- RIGHT_COLUMN_CONTENT_BEGIN --> 
+<div class="ibm-container"><h2>Table of contents</h2><div class="ibm-container-body"><img alt="" height="1" width="1" src="//www.ibm.com/i/c.gif"/><ul class="ibm-bullet-list"><li><a class="ibm-feature-link" href="#manual_wget">Building wget manually</a></li><li><a class="ibm-feature-link" href="#first_rpm">Building your first RPM</a></li><li><a class="ibm-feature-link" href="#revving">Revving the RPM</a></li><li><a class="ibm-feature-link" href="#other">Other uses for RPM</a></li><li><a class="ibm-feature-link" href="#resources">Resources</a></li><li><a class="ibm-feature-link" href="#author">About the author</a></li><li><a class="ibm-feature-link" href="#icomments">Comments</a></li></ul></div></div>
+<!--XSLT stylesheet used to transform this content: s-danube.xsl--><div class="ibm-container"><h2>Local resources</h2><div class="ibm-container-body"><img src="//www.ibm.com/developerworks/i/spot-danube.jpg" alt="" border="0" height="58" width="188"/><ul class="ibm-bullet-list"><li><a href="http://www.ibm.com/developerworks/cn/?S_TACT=105AGY81&amp;S_CMP=danube_as_as" class="ibm-feature-link">developerWorks 中国</a></li><li><a href="http://www.ibm.com/developerworks/jp/?S_TACT=105AGY81&amp;S_CMP=danube_as_as" class="ibm-feature-link">developerWorks Japan</a></li><li><a href="http://www.ibm.com/developerworks/kr/?S_TACT=105AGY81&amp;S_CMP=danube_as_as" class="ibm-feature-link">developerWorks 한국</a></li><li><a href="http://www.ibm.com/developerworks/vn/?S_TACT=105AGY81&amp;S_CMP=danube_as_as" class="ibm-feature-link">developerWorks Vietnam</a></li><li><a href="http://www.ibm.com/developerworks/views/global/techbriefing.jsp?end_no=100&amp;lcl_sort_order=desc&amp;sort_order=asc&amp;expand=&amp;start_no=1&amp;show_all=false&amp;geo_by=Asia+Pacific&amp;sort_by=Date&amp;search_by=&amp;topic_by=All+Topics&amp;show_abstract=true?S_TACT=105AGY81&amp;S_CMP=danube_as_as" class="ibm-feature-link">Technical Briefings in Asia</a></li></ul></div></div>
+<!--XSLT stylesheet used to transform this content: s-community.xsl--><div class="ibm-container"><h2>My developerWorks community</h2><div class="ibm-container-body"><p>Interact, share, and communicate with developers worldwide.</p><div class="ibm-rule"><hr/></div><ul class="ibm-bullet-list"><li><a href="https://www.ibm.com/developerworks/mydeveloperworks/homepage/web/getuserpref?ca=dma-" class="ibm-feature-link">My Home</a></li><li><a href="https://www.ibm.com/developerworks/mydeveloperworks/profiles/home.do?lang=en&amp;ca=dma-" class="ibm-feature-link">Profiles</a></li><li><a href="https://www.ibm.com/developerworks/mydeveloperworks/groups/service/html/allcommunities?ca=dma-" class="ibm-feature-link">Groups</a></li><li><a href="https://www.ibm.com/developerworks/mydeveloperworks/blogs/?ca=dma-" class="ibm-feature-link">Blogs</a></li><li><a href="https://www.ibm.com/developerworks/mydeveloperworks/bookmarks/?ca=dma-" class="ibm-feature-link">Bookmarks</a></li><li><a href="https://www.ibm.com/developerworks/mydeveloperworks/activities/service/html/mainpage?ca=dma-" class="ibm-feature-link">Activities</a></li><li><a href="http://www.ibm.com/developerworks/mydeveloperworks/files?ca=dma-" class="ibm-feature-link">Files</a></li><li><a href="http://www.ibm.com/developerworks/mydeveloperworks/wikis?ca=dma-" class="ibm-feature-link">Wikis</a></li><li><a href="http://www.ibm.com/developerworks/forums/?ca=dma-" class="ibm-feature-link">Forums</a></li><li><a href="http://www.ibm.com/developerworks/podcast/?ca=dma-" class="ibm-feature-link">Podcasts</a></li></ul><div class="ibm-rule"><hr/></div><p class="ibm-ind-link"><a href="https://www.ibm.com/developerworks/mydeveloperworks/?ca=dma-" class="ibm-forward-link">My developerWorks overview</a></p></div></div>
+<!-- Tagging_Start -->
+<div id="dw-tag-cloud-container" class="ibm-container dw-hidetag"><h2>Tags</h2>
+<div id="dw-tag-help"><a class="dwauthor" rel="#tagtip" id="dwtagtip"><img alt="Help" height="16" width="16" align="top" src="//dw1.s81c.com/developerworks/i/help_icon.gif"/></a></div>
+<div id="tagtip" class="dwauthor-onload-state ibm-no-print">Use the <strong>search field</strong> to find all types of content in My developerWorks with that tag.<p>Use the <strong>slider bar</strong> to see more or fewer tags.</p><p>For articles in technology zones (such as Java technology, Linux, Open source, XML), <strong>Popular tags</strong> shows the top tags 
+for <em>all technology zones</em>.  For articles in product zones (such as Info Mgmt, Rational, WebSphere), <strong>Popular tags</strong> shows the top tags for <em>just that product zone</em>.</p><p>For articles in technology zones (such as Java technology, Linux, Open source, XML), <strong>My tags</strong> shows your tags for <em>all technology zones</em>.  For articles in product zones (such as Info Mgmt, Rational, WebSphere), <strong>My tags</strong> shows your tags for <em>just that product zone</em>.</p></div>
+<div class="ibm-access">Use the search field to find all types of content in My developerWorks with that tag.  <em>Popular tags</em> shows the top tags for this particular content zone (for example, Java technology, Linux, WebSphere).  <em>My tags</em> shows your tags for this particular content zone (for example, Java technology, Linux, WebSphere).</div>
+<div class="ibm-container-body">
+<div class="dw-tag-search"><form action="//www.ibm.com/developerworks/mydeveloperworks/bookmarks/html?lang=en" method="get" id="actualtagform" onsubmit="popupform(this, 'join')">
+<p><label for="tagfield"><strong>Search all tags</strong></label><input id="tagfield" name="tag" type="text" maxlength="20" size="17" />&nbsp;<input src="//dw1.s81c.com/i/v16/buttons/short-btn.gif" type="image" class="ibm-btn-view" alt="submit search" title="submit search" value="Search" /></p></form></div>
+<div class="ibm-rule"><hr/></div>
+<div id="dw-tag-select">
+<div id="dw-tag-select-popular"><p><strong>Popular article tags</strong>&nbsp;|&nbsp;<br /><a id="a-my" href="javascript:;">My article tags</a><a href="#dw-tag-access" class="ibm-access">Skip to tags list</a></p></div>
+<div id="dw-tag-select-my" class="dw-hidetag"><p><a id="a-popular" href="javascript:;">Popular article tags</a>&nbsp;|&nbsp;<br /><strong>My article tags</strong></p><a href="#dw-tag-access" class="ibm-access">Skip to tags list</a></div>
+<div id="dw-tag-cloud"></div>  
+</div>   
+</div>
+</div>
+<!-- Tagging_End -->
+<!-- Dig_Deeper -->
+<div class="ibm-container"><h2>Dig deeper into Linux on developerWorks</h2><div class="ibm-container-body"><ul class="ibm-link-list"><li class="ibm-first"><a href="http://www.ibm.com/developerworks/linux/" class="ibm-forward-link">Overview</a></li><li><a href="http://www.ibm.com/developerworks/linux/newto/" class="ibm-forward-link">New to Linux</a></li><li><a href="http://www.ibm.com/developerworks/views/linux/downloads.jsp" class="ibm-forward-link">Downloads and products</a></li><li><a href="http://www.ibm.com/developerworks/views/linux/projects.jsp" class="ibm-forward-link">Open source projects</a></li><li><a href="http://www.ibm.com/developerworks/views/linux/library.jsp" class="ibm-forward-link">Technical library (articles, tutorials, training, and more)</a></li><li><a href="http://www.ibm.com/developerworks/forums/dw_lforums.jsp" class="ibm-forward-link">Forums</a></li><li><a href="http://www.ibm.com/developerworks/views/linux/events.jsp" class="ibm-forward-link">Events</a></li><li><a href="http://www.ibm.com/developerworks/newsletter/" class="ibm-forward-link">Newsletter</a></li></ul></div></div>
+<!-- High_Visibility_Offer -->
+<!--XSLT stylesheet used to transform this content: s-highvisibilityoffer.xsl--><div class="ibm-container"><h2>Stay ahead of the latest cloud trends</h2><div class="ibm-container-body"><img width="188" height="70" border="0" alt="Stay ahead of the latest cloud trends" src="//www.ibm.com/developerworks/i/hivis-w-cloudzone.jpg"/><p class="ibm-ind-link"><a href="https://www.ibm.com/developerworks/cloud/index.html?ca=dti-cloudzone" class="ibm-forward-link">Cloud Computing resources from developerWorks</a></p></div></div>
+<!-- Special_Offers -->
+<div class="ibm-container"><h2>Special offers</h2><div class="ibm-container-body"><p class="dw-special-offers"><a href="https://www-304.ibm.com/partnerworld/wps/servlet/ContentHandler/2011_beacon_awards_developerworks.html?ca=dti-dwbeacon"><img src="//www.ibm.com/developerworks/i/tile_v16_beacon2010.gif" width="158" height="50" border="0" alt="Partner Award Most Innovative use of dW" /></a></p><p class="dw-special-offers"><a href="http://www.ibm.com/developerworks/downloads/?ca=dti-rdownload#rational"><img src="//www.ibm.com/developerworks/i/tile_v16_r-download.gif" width="158" height="50" border="0" alt="Download and evaluate Rational software" /></a></p><p class="dw-special-offers"><a href="http://www.ibm.com/developerworks/views/linux/libraryview.jsp?type_by=Tutorials&amp;ca=dti-linuxtutorial"><img src="//www.ibm.com/developerworks/i/tile_v16_learnfast-l.gif" width="158" height="50" border="0" alt="Learn fast with free IBM Linux tutorials" /></a></p><div class="ibm-rule"><hr/></div><p class="ibm-ind-link"><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/downloads/?ca=dti-tilemoreoffers">Trial software offers</a></p></div></div>
+<!-- RIGHT_COLUMN_CONTENT_END -->
+
+</div>
+<!-- RIGHT_COLUMN_END -->
+
+<!-- CONTENT_BODY_END -->
+</div>
+
+</div>
+<!-- CONTENT_END -->
+
+ <!-- END_IBM-PCON -->
+</div>
+
+<!-- FOOTER_BEGIN -->
+<div id="ibm-page-tools">
+<!-- IBM page tools container -->
+</div>
+<div id="ibm-footer">
+<ul>
+<li class="ibm-first"><a href="http://www.ibm.com/ibm/">About IBM</a></li>
+<li><a href="http://www.ibm.com/privacy/">Privacy</a></li>
+<li><a href="http://www.ibm.com/contact/">Contact</a></li>
+<li><a href="http://www.ibm.com/legal/">Terms of use</a></li>
+</ul>
+</div>
+<!-- FOOTER_END -->
+
+ <!-- END_IBM-TOP -->
+</div>
+ 
+ <!-- SCRIPTS_INCLUDE_BEGIN -->
+<!-- JQuery start -->
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/jquery/cluetip98/jquery.dimensions-1.2.js"></script>
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/jquery/cluetip98/jquery.hoverIntent.minified.js"></script>
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/jquery/cluetip98/jquery.cluetip.js"></script>
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/jquery/tagging/ui.core-1.7.1.js"></script>
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/jquery/tagging/ui.slider-1.7.1.js"></script>
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/jquery/tagging/dwjquerytags.js"></script>
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/si/flash-detect.js"></script>
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/si/dwsi.js"></script>
+<script type="text/javascript" language="JavaScript">
+	jQuery.noConflict();     
+	// Put all your code in your document ready area
+	jQuery(document).ready(function(jQuery) {
+	// Do jQuery stuff using jQuery 
+	jQuery('a.dwauthor').cluetip({
+		local: true,
+		showTitle: false,
+		positionBy: 'bottomTop',
+		sticky: true,	
+		mouseOutClose: true,
+		closeText: '<img src="//dw1.s81c.com/developerworks/js/jquery/cluetip98/i/x.gif" alt="Close" />',
+		arrows: false,
+		dropShadow: true,
+		cluetipClass: 'dwbasic'
+		});
+
+		//tagging
+		login="false";
+		userid="";
+		whichTags = "init";
+		pCont = "";
+		mCont = "";
+		signInMCont = "";
+		accessCont = "";
+		pValue = 0;
+		mValue = 0;
+
+		rBHash = null;
+		rBHash = new Object();
+		rBHash['viperLang'] = 'en';
+		rBHash['urlLang'] = 'en';
+		rBHash['tagThisWinTitle'] = 'Tagit';
+		rBHash['pTags1'] = 'Popular tags';
+		rBHash['pTags2'] = 'End of Popular tags';
+		rBHash['mTags1'] = 'My tags';
+		rBHash['mTags2'] = 'End of My tags';
+		rBHash['alt1'] = 'Loading Content';
+		rBHash['noATags'] = 'No active tags';
+		rBHash['signIn1'] = 'Please ';
+		rBHash['signIn2'] = 'sign in';
+		rBHash['signIn3'] = ' to access';
+		rBHash['signIn4'] = 'My Tags';
+		rBHash['signIn5'] = 'To access My Tags, please ';
+		rBHash['signIn6'] = 'sign in';
+		rBHash['signIn7'] = 'Read Popular tags';
+
+		zoneHash = new Object();
+		zoneHash['aix'] = 'AIX and UNIX zone';
+		zoneHash['data'] = 'Information Management zone';
+		zoneHash['lotus'] = 'Lotus zone';
+		zoneHash['rational'] = 'Rational zone';
+		zoneHash['tivoli'] = 'Tivoli zone';
+		zoneHash['websphere'] = 'WebSphere zone';
+		zoneHash['architecture'] = 'Technical library';
+		zoneHash['autonomic'] = 'Technical library';
+		zoneHash['java'] = 'Technical library';
+		zoneHash['cloud'] = 'Technical library';
+		zoneHash['industry'] = 'Technical library';
+		zoneHash['library'] = 'Technical library';
+		zoneHash['linux'] = 'Technical library';
+		zoneHash['opensource'] = 'Technical library';
+		zoneHash['power'] = 'Technical library';
+		zoneHash['webservices'] = 'Technical library';
+		zoneHash['web'] = 'Technical library';
+		zoneHash['xml'] = 'Technical library';
+		zoneHash['wireless'] = 'Technical library';
+		jQuery.checkRB();
+		jQuery.getPopularTags("/developerworks/dwtags/dwjquerytabtags?lang=" + rBHash['viperLang'] + "&base=" + jQuery.getNormalizedZoneUrl(location.href));
+		jQuery.getUserTags();
+		if(jQuery.isTutorial(location.href) == "true") {
+			jQuery.getTagsForContent("/developerworks/tagging/UseCaseServlet?lang=" + rBHash['viperLang'] + "&format=maverick&cType=tutorials&use_case=geturltags&action=gettags&url=" + jQuery.normalizeUrl(location.href));
+		}
+		else {
+			jQuery.getTagsForContent("/developerworks/tagging/UseCaseServlet?lang=" + rBHash['viperLang'] + "&format=maverick&cType=articles&use_case=geturltags&action=gettags&url=" + jQuery.normalizeUrl(location.href));
+
+		}
+		
+		// si
+		initSI();
+	});
+ </script>
+ <!-- JQuery end -->
+ <!-- Overlay js -->
+<script language="JavaScript" src="//dw1.s81c.com/common/js/overlay.js" type="text/javascript"></script>
+<!-- My dW Interest article -->
+<script language="JavaScript" src="//dw1.s81c.com/developerworks/js/showinterest.js" type="text/javascript">//</script>
+<script language="JavaScript" type="text/javascript">
+        // <![CDATA[
+			var contentId = '';
+			var contentAreas = '';
+			var caArr = [];
+			contentId = '11167';
+			contentAreas = 'linux';
+			if(contentAreas != ''){caArr = contentAreas.split(',');}
+			var loginLink = 'https://www.ibm.com/developerworks/dwwi/DWAuthRouter?m=loginpage&d=' + encodeURIComponent(window.location);jQuery('interestShow').showInterest(contentId,'dw-article',{'int_tops':[82,81],'int_prods':[], 'int_prod_fam':[],'int_cont_area':caArr},
+'<div id="dw-interest-anon"><a id="intAnonBtn" class="ibm-external-link" href="">Update My dW interests</a> (<a class="dw-interest" href="' + loginLink + '">Log in</a> | <a class="dw-interest" href="#overlay" onclick="ibmCommon.Overlays.show(\'dwmyinterestadd\', this);return false;">What\'s this?</a>) <a class="ibm-access" href="#dwmyinterestaddhelp">Skip to help for Update My dW interests</a></div>',
+'<div id="dw-interest-add"><a id="intSelectBtn" class="ibm-external-link" href="">Add to My dW interests</a> (<a class="dw-interest" href="#overlay" onclick="ibmCommon.Overlays.show(\'dwmyinterestadd\', this);return false;">What\'s this?</a>) <a class="ibm-access" href="#dwmyinterestaddhelp">Skip to help for Add to My dW interests</a></div>',
+'<div id="dw-interest-remove">Added to My dW interests (<a class="dw-interest" href="https://www.ibm.com/developerworks/mydeveloperworks/profiles/html/myProfileView.do?lang=en">Edit</a>)</div>'
+);
+// ]]>
+</script><!-- BEGIN: Use this section to set page specific variables for the Unica Page Tag -->
+<script language="JavaScript">var NTPT_PGEXTRA="ibmSkillLevel=1&ibmAdoptPhase=-&ibmRole=-";</script>
+<!--END --><!-- SCRIPTS_INCLUDE_END -->
+
+<div id="ibm-metrics">
+<script src="//dw1.s81c.com/common/stats/stats.js" type="text/javascript">//</script>
+</div>
+
+</body>
+</html>
