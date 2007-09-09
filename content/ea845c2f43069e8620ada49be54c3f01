@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en   ">
+
+  <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name='author' content="Bruce Williams (http://codefluency.com), for
+Ruby Central (http://rubycentral.org)">
+	<title>RubyForge: Search</title>
+  <link rel="alternate" type="application/rss+xml" title="Recent gems" href="http://gems.rubyforge.org/index.rss" />
+<link rel="alternate" type="text/xml" title="RSS" href="http://rubyforge.org/export/rss_sfnews.php"/>
+        <link rel="Shortcut Icon" href="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/favicon.ico"/>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-6400569-7']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+	<script language="JavaScript" type="text/javascript">
+	<!--
+	function help_window(helpurl) {
+		HelpWin = window.open( 'http://rubyforge.org' + helpurl,'HelpWindow','scrollbars=yes,resizable=yes,toolbar=no,height=400,width=400');
+	}
+	// -->
+	</script>
+
+<style type="text/css">
+	<!--
+
+        body {
+          margin: 0px;
+          background: #fff;
+        }
+
+	OL,UL,P,BODY,TR,TD,TH,FORM {
+		font-family: Lucida Grande,verdana,arial,helvetica,sans-serif;
+		font-size:13px;
+		color: #202020;
+	}
+
+	HR { margin: 2px 0px 2px 0px }
+
+
+	H1 { font-size: x-large; font-family: Lucida Grande,verdana,arial,helvetica,sans-serif; }
+	H2 { font-size: large; font-family: Lucida Grande,verdana,arial,helvetica,sans-serif; }
+	H3 { font-size: medium; font-family: Lucida Grande,verdana,arial,helvetica,sans-serif; }
+	H4 { font-size: small; font-family: Lucida Grande,verdana,arial,helvetica,sans-serif; }
+	H5 { font-size: x-small; font-family: Lucida Grande,verdana,arial,helvetica,sans-serif; }
+	H6 { font-size: xx-small; font-family: Lucida Grande,verdana,arial,helvetica,sans-serif; }
+
+	PRE,TT { font-family: 'Bitstream Vera Sans Mono',courier,sans-serif }
+  a {
+    color: #cc3333;
+    text-decoration: none;
+  }
+  a img {
+    border: 0px;
+  }
+  table em {
+    font-style: normal;
+    font-weight: bold;
+    color: #666;
+    margin-left: 0px;
+  }
+  hr { /* unfortunately hrs are hardcoded */
+    height: 2px;
+    color: #e6e6e6;
+    background: #e6e6e6;
+    border: 0px;
+  }
+  td hr {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+        #header {
+          height: 79px;
+          background: #fff url(http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/header-bg.png) bottom left repeat-x;
+          margin: 0px;
+        }
+        #header-right {
+          position: absolute;
+          top: 0px;
+          right: 0px;
+          width: 40%;
+        }
+        #search {
+          margin: 10px;
+        }
+        #controls {
+          padding: 0px;
+          height: 20px;
+          line-height: 20px;
+          vertical-align: middle;
+          background: url(http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/controls-bg.png) top left repeat-x;
+        }
+        #controls img {
+          float: left;
+          margin-right: 1em;
+        }
+        #controls a {
+          padding: 0px;
+          margin: 0px;
+          color: #fff;
+          text-decoration: none;
+          margin-right: 1em;
+        }
+        #controls a:hover {
+          color: #ffffcc;
+        }
+        #content {
+          padding-left: 2em;
+          padding-right: 2em;
+        }
+        .tabs {
+          clear: both;
+          margin: 0px;
+          height: 26px;
+          padding: 0px;
+        }
+        #outer-tabs {
+          background: #fff url(http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/tabs-bg.png) top left repeat-x;
+        }
+        #inner-tabs {
+          background: #fff url(http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/inner-tabs-bg.png) top left repeat-x;
+        }
+        .tabs li {
+          padding: 4px;
+          padding-left: 10px;
+          padding-right: 10px;
+          float: left;
+          display: block;
+          margin-left: 0.5em;
+        }
+        .tabs li a {
+          color: #444;
+          text-decoration: none;
+          font-size: 14px;
+          font-weight: bold;
+        }
+        .tabs li a:hover {
+          color: red; }
+        #outer-tabs li.active {
+          background: url(http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/active-tab-bg.png) top left repeat-x;
+        }
+        #inner-tabs li a {
+          font-size: 13px; }
+        #inner-tabs li.active {
+          background: url(http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/active-inner-tab-bg.png) top left repeat-x;
+        }
+        .tabs li.active a {
+          color: #000;
+        }
+        #fade { 
+          background: url(http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/bottom-fade-bg.png) bottom left repeat-x;
+          height: 13px;
+        }
+
+        .titlebar {
+          background: #FFFFCC;
+          padding: 4px;
+          font-size: 14px;
+          font-weight: bold;
+          border-bottom: 1px #fab444 solid; }
+        .files-header td {
+          background: #ffffcc;
+          border: 1px #fab444 solid;
+        }
+        .files-header td * {
+          background: none;
+          border: 0px; }
+        .files-header + tr td {
+          background: #ddd;
+        }
+        .files-header + tr td * {
+          background: none;
+          border: 0px;
+          color: #666;
+        }
+        .package td {
+          background: #ffffcc;
+        }
+	-->
+  </style>
+</head>
+<body>
+
+<div id='header'>
+  <div id='header-right'>
+    <div id='controls'><img alt='' src='http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/controls-left.png'/>
+      				<a href="/account/login.php">Log In</a>
+				<a href="/projects/support/">Support</a>
+				<a href="/account/register.php">New Account</a>
+          </div>
+    <div id='search'>
+		<form action="/search/" method="get">
+		<table border="0" cellpadding="0" cellspacing="0">
+		<tr><td>
+		<div align="center" style="font-size:smaller"><select name="type_of_search"><option value="soft" selected="selected">Software/Group</option>
+<option value="people">People</option>
+<option value="skill">Skill</option>
+</select></div></td><td>&nbsp;</td><td><input type="text" size="12" name="words" value="openid" /></td><td>&nbsp;</td><td><input type="submit" name="Search" value="Search" /></td></tr></table></form></div>
+  </div>
+  <a href='/' title='Back to Homepage'><img alt='RubyForge' src='http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/header.png'/></a>
+  <!-- <a href='http://reddirtrubyconf.com/?source=rubyforge'><img alt='Red Dirt Ruby Conf' src='/images/rdrc_icon.png'/></a> -->
+</div>
+<ul id="outer-tabs"
+class="tabs"><li class='active'><a href='/'>Home</a></li><li><a href='/my/'>My&nbsp;Page</a></li><li><a href='/softwaremap/'>Project&nbsp;Tree</a></li><li><a href='/snippet/'>Code&nbsp;Snippets</a></li><li><a href='/people/'>Project&nbsp;Openings</a></li></ul><div id='fade'></div>
+
+<div id='content'>
+<table border="0" width="100%" cellspacing="0" cellpadding="0">
+
+			<tr>
+				<td><img
+					src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/clear.png" width="10" height="1" alt="" /></td>
+				<td valign="top" width="99%">
+	<div align="center">
+		<form action="/search/" method="get">
+		<table border="0" cellpadding="0" cellspacing="0">
+		<tr><td>
+		<div align="center" style="font-size:smaller"><select name="type_of_search"><option value="soft" selected="selected">Software/Group</option>
+<option value="people">People</option>
+<option value="skill">Skill</option>
+</select></div></td><td>&nbsp;</td><td><input type="text" size="12" name="words" value="openid" /></td><td>&nbsp;</td><td><input type="submit" name="Search" value="Search" /></td></tr></table></form></div><h3>Search results for <em>openid</em></h3>
+		<!-- listTableTop -->
+		<table cellspacing="0" cellpadding="1" width="100%" border="0">
+		<tr><td>
+		<table width="100%" border="0" cellspacing="2" cellpadding="0">
+			<tr>
+				<td align="left">Group Name</td>
+				<td align="left">Description</td>
+		</tr>
+		<tr align="left" bgcolor="#B6B6B6">
+			<td colspan="2" height="1"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/clear.png" height="1" width="1" alt="" /></td>
+		</tr><tr bgcolor="#FFFFFF"><td width="30%"><a href="/projects/openid/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> <span style="background-color:pink">OpenID</span></a></td><td width="70%"><span style="background-color:pink">OpenID</span> support for Ruby -- <span style="background-color:pink">OpenID</span> (http://<span style="background-color:pink">openid</span>.net) is a decentralized identification system that allows users to prove they own a url.</td></tr><tr bgcolor="#DDDDDD"><td width="30%"><a href="/projects/ruby-openid/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> Ruby <span style="background-color:pink">OpenID</span></a></td><td width="70%">A robust library for verifying and serving <span style="background-color:pink">OpenID</span> identities.</td></tr><tr bgcolor="#B6B6B6"><td width="30%"><a href="/projects/oinoid/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> <span style="background-color:pink">Openid</span>entity</a></td><td width="70%">An open profile system displaying an <span style="background-color:pink">OpenID</span>'s public content from multiple external services.  Think of it as a very dynamic homepage service, the content of which is not limited to a single provider's content or services.</td></tr><tr bgcolor="#FFFFFF"><td width="30%"><a href="/projects/heraldry/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> Heraldry</a></td><td width="70%">Heraldry is a full-stack implementation of <span style="background-color:pink">OpenID</span>. It includes an <span style="background-color:pink">OpenID</span> 1.1 Server, which allows you to operate as an IdP, as well as a Rails consumer plugin, which allows you to make your own Rails applications <span style="background-color:pink">OpenID</span> consumers.</td></tr><tr bgcolor="#DDDDDD"><td width="30%"><a href="/projects/tribenet/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> tribe.net 3,0</a></td><td width="70%">Currently developing tribe.net 3.0 in Ruby on Rails. Migrating from Java/Tomcat, old codebase is owned by Cisco. This will provide much functionality including OpenSocial compliance, <span style="background-color:pink">OpenID</span> compliance, and much more.</td></tr><tr bgcolor="#B6B6B6"><td width="30%"><a href="/projects/aaa-openid/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> acts_as_authenticated_<span style="background-color:pink">openid</span></a></td><td width="70%">An out-of-the-box plugin for apps that use <span style="background-color:pink">OpenID</span> exclusively for authentication. This plugin is based on acts_as_authenticated and DHH's open_id_authentication plugin.</td></tr><tr bgcolor="#FFFFFF"><td width="30%"><a href="/projects/noids/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> Ninghuan <span style="background-color:pink">OpenID</span> Server</a></td><td width="70%"><span style="background-color:pink">OpenId</span> Server written in Ruby.</td></tr><tr bgcolor="#DDDDDD"><td width="30%"><a href="/projects/rpx-now/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> rpx_now</a></td><td width="70%">Ruby: RPXNow.com user login/creation and view helpers Facebook, Twitter, Google, MSN, <span style="background-color:pink">OpenID</span>, MySpace, Yahoo -- All in One</td></tr><tr bgcolor="#B6B6B6"><td width="30%"><a href="/projects/move/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> MOVE</a></td><td width="70%">MOVE (MOVE Organizational Virtual Environment) is a Content Management System for Distributed Social Software.
+It supports: users, groups, blogs, galleries, podcasts, bookmarks, documents, <span style="background-color:pink">OpenID</span> client and server, Atom feeds, AtomPub, folksonomies...</td></tr><tr bgcolor="#FFFFFF"><td width="30%"><a href="/projects/pasaporte/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> Pasaporte</a></td><td width="70%">An <span style="background-color:pink">OpenID</span> server with a colored bar on top</td></tr><tr bgcolor="#DDDDDD"><td width="30%"><a href="/projects/openid4ldap/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> <span style="background-color:pink">OpenID</span>4LDAP</a></td><td width="70%"><span style="background-color:pink">OpenID</span> server for LDAP accounts</td></tr><tr bgcolor="#B6B6B6"><td width="30%"><a href="/projects/openid-fu/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> <span style="background-color:pink">openid</span>_fu</a></td><td width="70%">We develop an authentication system based on <span style="background-color:pink">OpenID</span> which is provided as a generator gem for Ruby on Rails.</td></tr><tr bgcolor="#FFFFFF"><td width="30%"><a href="/projects/tempopenidauth/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> Temp SVN repo for open_id_authentication</a></td><td width="70%">Provides temporary SVN access of the newest version of the open_id_authentication plugin available at http://github.com/josh/open_id_authentication/tree/ruby_<span style="background-color:pink">openid</span>_2.</td></tr><tr bgcolor="#DDDDDD"><td width="30%"><a href="/projects/merbopenid/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> Merb <span style="background-color:pink">OpenID</span> Plugin</a></td><td width="70%">A plugin gem for Merb that also you to easily consume <span style="background-color:pink">OpenID</span> via the ruby-<span style="background-color:pink">openid</span> gem.  Very similar to the open_id_authentication plugin for Rails.</td></tr><tr bgcolor="#B6B6B6"><td width="30%"><a href="/projects/congo/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> Congo - Convention Management</a></td><td width="70%">Web-based convention/trade-show management. OpenSocial/<span style="background-color:pink">OpenID</span>/Facebook integration. Attendee registration and payment. Event home pages and forums. Staff management. Event &amp; resource scheduling. Calendars. Email notifications &amp; RSS feeds.</td></tr><tr bgcolor="#FFFFFF"><td width="30%"><a href="/projects/openid-wrapper/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> <span style="background-color:pink">Openid</span> Wrapper</a></td><td width="70%">Thin <span style="background-color:pink">OpenID</span> Wrapper for Ruby on Rails using ruby-<span style="background-color:pink">openid</span> gem. Please read more info at http://gitorious.org/projects/<span style="background-color:pink">openid</span>-wrapper/repos/mainline/blobs/master/README</td></tr><tr bgcolor="#DDDDDD"><td width="30%"><a href="/projects/propel/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> Thought Propulsion</a></td><td width="70%">A cohesive set of Rails GemPlugins for reverse route lookup; hcard; custom FormBuilder; <span style="background-color:pink">OpenID</span>.</td></tr><tr bgcolor="#B6B6B6"><td width="30%"><a href="/projects/rost/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> rots</a></td><td width="70%">Ruby <span style="background-color:pink">OpenID</span> Test Server (ROTS), a dummy <span style="background-color:pink">OpenID</span> server that makes consumer tests dead easy.</td></tr><tr bgcolor="#FFFFFF"><td width="30%"><a href="/projects/authlogic-oid/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> Authlogic <span style="background-color:pink">OpenID</span></a></td><td width="70%">An extension of the Authlogic library to add <span style="background-color:pink">OpenID</span> support.</td></tr><tr bgcolor="#DDDDDD"><td width="30%"><a href="/projects/qrp/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> Quack Ruby Projects</a></td><td width="70%">One-off Ruby projects.  Formerly qrp (queueing reverse proxy).  qrp is a
+Mongrel-based reverse proxy designed to feed concurrency-disabled Mongrels.
+qrp is deprecated.
+</td></tr><tr bgcolor="#B6B6B6"><td width="30%"><a href="/projects/rack-openid/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> Rack::<span style="background-color:pink">OpenID</span></a></td><td width="70%">Provides a more HTTPish API around the ruby-<span style="background-color:pink">openid</span> library</td></tr></table></td>
+			<!-- <td valign="top" align="right" width="10" background="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/box-grad.png"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/box-topright.png" width="10" height="75"></td> -->
+			</tr></table>
+			&nbsp;<p>
+			<!-- end main body row -->
+
+
+				</td>
+				<td width="10"><img
+					src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/clear.png" width="2" height="1" alt="" /></td>
+			</tr>
+			<tr>
+				<td><img
+					src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/clear.png" width="1" height="1" alt="" /></td>
+			</tr>
+			</table>
+
+		<!-- end inner body row -->
+
+		</td>
+		<td width="10"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/clear.png" width="2" height="1" alt="" /></td>
+	</tr>
+	<tr>
+		<!-- some extra space to make it look nicer -->
+		<td height="100">&nbsp;</td>
+    
+	</tr>
+</table>
+
+    </div>
+  </body>
+</html>
