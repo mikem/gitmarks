@@ -1,0 +1,25 @@
+<html><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><style type="text/css">body { font-family: verdana, sans-serif; background-color: #fff;line-height: 20px; }a:link, a:visited { color: #4fa3da; }a:hover { text-decoration: none; color: #f65077; }div.header { border-bottom: 1px dashed #f65077; }code.header { margin-left: 30px; font-weight: bold;background-color: #fcf095; }h1 { font-size: 5em; margin: 0; padding-left: 30px; color: #4fa3da;clear: both; font-weight: bold; letter-spacing: -5px; }h1 a { text-decoration: none; }div.main{ float: left; width: 100%; }div.content { float: left; width: 70%; padding: 15px 0 15px 30px;line-height: 20px; }div.side{ float: left; padding: 10px; text-align: right;width: 20%; }div.footer{ text-align: center; border-top: 1px dashed #f65077;padding-top: 10px; font-size: small; }div.sheet { font-size: .8em; line-height: 17px; padding: 5px;font-family: courier, fixed-width; background-color: #e8e8e8; }pre.sheet { line-height: 15px; }li { list-style: none; }div.version { background-color: #fcf095; padding: 5px;width: 450px; margin-top: 50px; }p.error { background-color: #fcf095; padding: 5px; }div.clear{ clear: both; }div.clear_10 { clear: both; font-size: 10px; line-height: 10px; }textarea { font-family: courier; }code { background-color: #fcf095 }span.diff_cut { color: #f65077; }span.diff_add { color: #009933; }@media print {.side, .version, .footer { display: none; }div.content { width: 100%; }h1 a:link, h1 a:visited { color: #eee;}.header code { font-size: 18px; background: none; }div.header { border-bottom: none; }}</style><link rel="alternate" type="application/atom+xml" href="http://feeds.feedburner.com/cheatsheets" title="Recently Updated Cheat Sheets"/><title>$ cheat gitsvn</title></head><body><div class="main"><div class="header"><h1><a href="/s/gitsvn">cheat sheets.</a></h1><code class="header">$ cheat gitsvn</code></div><div class="content"><pre class="sheet">Tracking and contributing to the trunk of a Subversion-managed project:
+
+# Clone a repo (like git clone):
+        git-svn clone http://svn.foo.org/project/trunk
+# Enter the newly cloned directory:
+        cd trunk
+# You should be on master branch, double-check with git-branch
+        git branch
+# Do some work and commit locally to git:
+        git commit ...
+# Something is committed to SVN, rebase your local changes against the
+# latest changes in SVN:
+        git-svn rebase
+# Now commit your changes (that were committed previously using git) to SVN,
+# as well as automatically updating your working HEAD:
+        git-svn dcommit
+# Append svn:ignore settings to the default git exclude file:
+        git-svn show-ignore &gt;&gt; .git/info/exclude
+# Some useful aliases
+        spull = svn rebase
+        spush = svn dcommit
+        sfetch = svn fetch
+
+
+http://www.kernel.org/pub/software/scm/git/docs/git-svn.html</pre><div class="version">Version <strong>2</strong>, updated 428 days ago.  <br/>. o 0 (  | <a href="/s/gitsvn/1">previous</a> | <a href="/h/gitsvn">history</a> | <a href="/e/gitsvn/2">revert to</a> | <a href="/s/gitsvn">current</a> | <a href="/d/gitsvn/2">diff</a> )</div></div><div class="side">( <a href="/a">add new</a> | <a href="/b">see all</a> )<ul><li><strong>updated sheets</strong></li><li><a href="http://feeds.feedburner.com/cheatsheets"><img src="http://errtheblog.com/images/feed.png" border="0" alt="Recently Updated Cheat Sheets Feed"/></a></li><li><a href="/s/rails_review/">rails_review</a></li><li><a href="/s/semver/">semver</a></li><li><a href="/s/rails_checklist/">rails_checklist</a></li><li><a href="/s/dollar/">dollar</a></li><li><a href="/s/authorizenet/">authorizenet</a></li><li><a href="/s/cheat/">cheat</a></li><li><a href="/s/bash_emacskeys/">bash_emacskeys</a></li><li><a href="/s/scili/">scili</a></li><li><a href="/s/vim/">vim</a></li><li><a href="/s/dired/">dired</a></li><li><a href="/s/cakephp/">cakephp</a></li><li><a href="/s/chromium/">chromium</a></li><li><a href="/s/iptables/">iptables</a></li><li><a href="/s/sinatra/">sinatra</a></li><li><a href="/s/rspec/">rspec</a></li></ul></div><div class="clear"></div><div class="footer">Powered by <a href="http://code.whytheluckystiff.net/camping">Camping</a>, <a href="http://heroku.com/">Heroku</a> and, to a lesser extent, <a href="http://github.com/">GitHub</a>.</div></div><script src="http://getclicky.com/1070.js"> </script><noscript><img height=0 width=0 src="http://getclicky.com/1070ns.gif"></noscript></body></html>
