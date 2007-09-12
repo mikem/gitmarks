@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en   ">
+
+  <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name='author' content="Bruce Williams (http://codefluency.com), for
+Ruby Central (http://rubycentral.org)">
+	<title>RubyForge: Search</title>
+  <link rel="alternate" type="application/rss+xml" title="Recent gems" href="http://gems.rubyforge.org/index.rss" />
+<link rel="alternate" type="text/xml" title="RSS" href="http://rubyforge.org/export/rss_sfnews.php"/>
+        <link rel="Shortcut Icon" href="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/favicon.ico"/>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-6400569-7']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+	<script language="JavaScript" type="text/javascript">
+	<!--
+	function help_window(helpurl) {
+		HelpWin = window.open( 'http://rubyforge.org' + helpurl,'HelpWindow','scrollbars=yes,resizable=yes,toolbar=no,height=400,width=400');
+	}
+	// -->
+	</script>
+
+<style type="text/css">
+	<!--
+
+        body {
+          margin: 0px;
+          background: #fff;
+        }
+
+	OL,UL,P,BODY,TR,TD,TH,FORM {
+		font-family: Lucida Grande,verdana,arial,helvetica,sans-serif;
+		font-size:13px;
+		color: #202020;
+	}
+
+	HR { margin: 2px 0px 2px 0px }
+
+
+	H1 { font-size: x-large; font-family: Lucida Grande,verdana,arial,helvetica,sans-serif; }
+	H2 { font-size: large; font-family: Lucida Grande,verdana,arial,helvetica,sans-serif; }
+	H3 { font-size: medium; font-family: Lucida Grande,verdana,arial,helvetica,sans-serif; }
+	H4 { font-size: small; font-family: Lucida Grande,verdana,arial,helvetica,sans-serif; }
+	H5 { font-size: x-small; font-family: Lucida Grande,verdana,arial,helvetica,sans-serif; }
+	H6 { font-size: xx-small; font-family: Lucida Grande,verdana,arial,helvetica,sans-serif; }
+
+	PRE,TT { font-family: 'Bitstream Vera Sans Mono',courier,sans-serif }
+  a {
+    color: #cc3333;
+    text-decoration: none;
+  }
+  a img {
+    border: 0px;
+  }
+  table em {
+    font-style: normal;
+    font-weight: bold;
+    color: #666;
+    margin-left: 0px;
+  }
+  hr { /* unfortunately hrs are hardcoded */
+    height: 2px;
+    color: #e6e6e6;
+    background: #e6e6e6;
+    border: 0px;
+  }
+  td hr {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+        #header {
+          height: 79px;
+          background: #fff url(http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/header-bg.png) bottom left repeat-x;
+          margin: 0px;
+        }
+        #header-right {
+          position: absolute;
+          top: 0px;
+          right: 0px;
+          width: 40%;
+        }
+        #search {
+          margin: 10px;
+        }
+        #controls {
+          padding: 0px;
+          height: 20px;
+          line-height: 20px;
+          vertical-align: middle;
+          background: url(http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/controls-bg.png) top left repeat-x;
+        }
+        #controls img {
+          float: left;
+          margin-right: 1em;
+        }
+        #controls a {
+          padding: 0px;
+          margin: 0px;
+          color: #fff;
+          text-decoration: none;
+          margin-right: 1em;
+        }
+        #controls a:hover {
+          color: #ffffcc;
+        }
+        #content {
+          padding-left: 2em;
+          padding-right: 2em;
+        }
+        .tabs {
+          clear: both;
+          margin: 0px;
+          height: 26px;
+          padding: 0px;
+        }
+        #outer-tabs {
+          background: #fff url(http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/tabs-bg.png) top left repeat-x;
+        }
+        #inner-tabs {
+          background: #fff url(http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/inner-tabs-bg.png) top left repeat-x;
+        }
+        .tabs li {
+          padding: 4px;
+          padding-left: 10px;
+          padding-right: 10px;
+          float: left;
+          display: block;
+          margin-left: 0.5em;
+        }
+        .tabs li a {
+          color: #444;
+          text-decoration: none;
+          font-size: 14px;
+          font-weight: bold;
+        }
+        .tabs li a:hover {
+          color: red; }
+        #outer-tabs li.active {
+          background: url(http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/active-tab-bg.png) top left repeat-x;
+        }
+        #inner-tabs li a {
+          font-size: 13px; }
+        #inner-tabs li.active {
+          background: url(http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/active-inner-tab-bg.png) top left repeat-x;
+        }
+        .tabs li.active a {
+          color: #000;
+        }
+        #fade { 
+          background: url(http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/bottom-fade-bg.png) bottom left repeat-x;
+          height: 13px;
+        }
+
+        .titlebar {
+          background: #FFFFCC;
+          padding: 4px;
+          font-size: 14px;
+          font-weight: bold;
+          border-bottom: 1px #fab444 solid; }
+        .files-header td {
+          background: #ffffcc;
+          border: 1px #fab444 solid;
+        }
+        .files-header td * {
+          background: none;
+          border: 0px; }
+        .files-header + tr td {
+          background: #ddd;
+        }
+        .files-header + tr td * {
+          background: none;
+          border: 0px;
+          color: #666;
+        }
+        .package td {
+          background: #ffffcc;
+        }
+	-->
+  </style>
+</head>
+<body>
+
+<div id='header'>
+  <div id='header-right'>
+    <div id='controls'><img alt='' src='http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/controls-left.png'/>
+      				<a href="/account/login.php">Log In</a>
+				<a href="/projects/support/">Support</a>
+				<a href="/account/register.php">New Account</a>
+          </div>
+    <div id='search'>
+		<form action="/search/" method="get">
+		<table border="0" cellpadding="0" cellspacing="0">
+		<tr><td>
+		<div align="center" style="font-size:smaller"><select name="type_of_search"><option value="soft" selected="selected">Software/Group</option>
+<option value="people">People</option>
+<option value="skill">Skill</option>
+</select></div></td><td>&nbsp;</td><td><input type="text" size="12" name="words" value="ferret" /></td><td>&nbsp;</td><td><input type="submit" name="Search" value="Search" /></td></tr></table></form></div>
+  </div>
+  <a href='/' title='Back to Homepage'><img alt='RubyForge' src='http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/header.png'/></a>
+  <!-- <a href='http://reddirtrubyconf.com/?source=rubyforge'><img alt='Red Dirt Ruby Conf' src='/images/rdrc_icon.png'/></a> -->
+</div>
+<ul id="outer-tabs"
+class="tabs"><li class='active'><a href='/'>Home</a></li><li><a href='/my/'>My&nbsp;Page</a></li><li><a href='/softwaremap/'>Project&nbsp;Tree</a></li><li><a href='/snippet/'>Code&nbsp;Snippets</a></li><li><a href='/people/'>Project&nbsp;Openings</a></li></ul><div id='fade'></div>
+
+<div id='content'>
+<table border="0" width="100%" cellspacing="0" cellpadding="0">
+
+			<tr>
+				<td><img
+					src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/clear.png" width="10" height="1" alt="" /></td>
+				<td valign="top" width="99%">
+	<div align="center">
+		<form action="/search/" method="get">
+		<table border="0" cellpadding="0" cellspacing="0">
+		<tr><td>
+		<div align="center" style="font-size:smaller"><select name="type_of_search"><option value="soft" selected="selected">Software/Group</option>
+<option value="people">People</option>
+<option value="skill">Skill</option>
+</select></div></td><td>&nbsp;</td><td><input type="text" size="12" name="words" value="ferret" /></td><td>&nbsp;</td><td><input type="submit" name="Search" value="Search" /></td></tr></table></form></div><h3>Search results for <em>ferret</em></h3>
+		<!-- listTableTop -->
+		<table cellspacing="0" cellpadding="1" width="100%" border="0">
+		<tr><td>
+		<table width="100%" border="0" cellspacing="2" cellpadding="0">
+			<tr>
+				<td align="left">Group Name</td>
+				<td align="left">Description</td>
+		</tr>
+		<tr align="left" bgcolor="#B6B6B6">
+			<td colspan="2" height="1"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/clear.png" height="1" width="1" alt="" /></td>
+		</tr><tr bgcolor="#FFFFFF"><td width="30%"><a href="/projects/ferret/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> <span style="background-color:pink">ferret</span></a></td><td width="70%"><span style="background-color:pink">Ferret</span> is a high-performance, full-featured text search engine library written entirely in pure Ruby (with an optional C extension). It is inspired by the Java Lucene Project.</td></tr><tr bgcolor="#DDDDDD"><td width="30%"><a href="/projects/svnlog/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> SvnLog</a></td><td width="70%">A package that provides full-text search of a Subversion commit log. Uses <span style="background-color:pink">Ferret</span> for indexing.</td></tr><tr bgcolor="#B6B6B6"><td width="30%"><a href="/projects/searchable/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> Searchable for ActiveRecord</a></td><td width="70%">Searchable is a module designed for use with ActiveRecord.  It includes a DSL to declaratively specify how model attributes should be indexed.  There are both <span style="background-color:pink">Ferret</span> 0.10.x and Solr backends.</td></tr><tr bgcolor="#FFFFFF"><td width="30%"><a href="/projects/activeferret/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> Active<span style="background-color:pink">Ferret</span></a></td><td width="70%">Active<span style="background-color:pink">Ferret</span> aims to provide &quot;ActiveWrappers&quot; to <span style="background-color:pink">Ferret</span>, an indexing oriented database, in order to use <span style="background-color:pink">ferret</span> as a real Database with fast full text search in Rails applications.</td></tr><tr bgcolor="#DDDDDD"><td width="30%"><a href="/projects/palmtree/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> Palmtree</a></td><td width="70%">Assortment of Capistrano recipes for managing other aspects of your Rails application such as <span style="background-color:pink">ferret</span> or backgroundrb servers. These recipes are designed for the newly upcoming Capistrano 2.0 release.</td></tr><tr bgcolor="#B6B6B6"><td width="30%"><a href="/projects/acts-as-tsearch/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> acts_as_tsearch</a></td><td width="70%">Much like acts_as_<span style="background-color:pink">ferret</span> - this adds full text search to your models using Postgresql's TSearch2.  This is postgresql specific and won't run on any other database platforms.</td></tr><tr bgcolor="#FFFFFF"><td width="30%"><a href="/projects/gumeshoe/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> Gumshoe</a></td><td width="70%">Gumshoe is a collection of tools used to populate and manage a <span style="background-color:pink">Ferret</span> index along with a Rails front end to access the index.</td></tr><tr bgcolor="#DDDDDD"><td width="30%"><a href="/projects/rmmseg-cpp/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> RMMSeg re-implementation in C++</a></td><td width="70%">rmmseg-cpp is a re-implementation of RMMSeg in C++ with a Ruby interface. It implements the MMSEG Chinese word segmentation algorithm, and can be easily integrated with <span style="background-color:pink">Ferret</span>.</td></tr><tr bgcolor="#B6B6B6"><td width="30%"><a href="/projects/picolena/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> Picolena</a></td><td width="70%">Picolena is a lightweight <span style="background-color:pink">ferret</span>-powered documents search engine written in Ruby on rails:
+
+1) Just let <span style="background-color:pink">Ferret</span> index any directory you want.
+2) Enter queries on your browser to get corresponding documents in a few milliseconds.</td></tr><tr bgcolor="#FFFFFF"><td width="30%"><a href="/projects/stellr/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> Stellr</a></td><td width="70%">Stellr is a <span style="background-color:pink">Ferret</span> based standalone search server featuring a DRB and (soon to come) an http frontend. It can handle multiple indexes, including multi-index searches. A client library and a simple command line query tool are included with the gem.</td></tr><tr bgcolor="#DDDDDD"><td width="30%"><a href="/projects/rmmseg/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> RMMSeg: MMSeg implementation in Ruby</a></td><td width="70%">RMMSeg is an implementation of MMSeg algorithm in Ruby. MMSeg is a Chinese segmentation algorithm based on two variants of maximum matching. 
+
+RMMSeg can be used as a stand alone program or as an Analyzer of <span style="background-color:pink">Ferret</span>.</td></tr><tr bgcolor="#B6B6B6"><td width="30%"><a href="/projects/has-ftsearch/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> has_ftsearch</a></td><td width="70%">has_ftsearch is the successor of the acts_as_<span style="background-color:pink">ferret</span> Rails fulltext search plugin. has_ftsearch will support multiple search engine backends like <span style="background-color:pink">Ferret</span> (local and remote via DRb) and Lucene (with JRuby).</td></tr><tr bgcolor="#FFFFFF"><td width="30%"><a href="/projects/mypedia/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> MyPedia</a></td><td width="70%">A super-fast offline Wikipedia browser built on top of <span style="background-color:pink">Ferret</span> and a simple WEBrick server.</td></tr><tr bgcolor="#DDDDDD"><td width="30%"><a href="/projects/datamapper/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> DataMapper</a></td><td width="70%">An O/R Mapper based on the DataMapper pattern.</td></tr><tr bgcolor="#B6B6B6"><td width="30%"><a href="/projects/actsasferret/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> acts_as_<span style="background-color:pink">ferret</span></a></td><td width="70%">Acts_as_<span style="background-color:pink">ferret</span> is a Rails plugin that makes it easy to make any ActiveRecord model full-text searchable.</td></tr><tr bgcolor="#FFFFFF"><td width="30%"><a href="/projects/rdig/"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/msg.png" border="0" alt="" width="10" height="12" /> RDig</a></td><td width="70%">Crawler and content extractor for building a full text index of a website's contents. Uses <span style="background-color:pink">Ferret</span> for indexing.</td></tr></table></td>
+			<!-- <td valign="top" align="right" width="10" background="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/box-grad.png"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/box-topright.png" width="10" height="75"></td> -->
+			</tr></table>
+			&nbsp;<p>
+			<!-- end main body row -->
+
+
+				</td>
+				<td width="10"><img
+					src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/clear.png" width="2" height="1" alt="" /></td>
+			</tr>
+			<tr>
+				<td><img
+					src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/clear.png" width="1" height="1" alt="" /></td>
+			</tr>
+			</table>
+
+		<!-- end inner body row -->
+
+		</td>
+		<td width="10"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/clear.png" width="2" height="1" alt="" /></td>
+	</tr>
+	<tr>
+		<!-- some extra space to make it look nicer -->
+		<td height="100">&nbsp;</td>
+    
+	</tr>
+</table>
+
+    </div>
+  </body>
+</html>
