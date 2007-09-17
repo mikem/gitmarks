@@ -1,0 +1,795 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+            <title>Guides to Pylons for people in a hurry - Pylons Cookbook - PythonWeb</title>
+    
+        
+
+                        
+    
+    
+            
+<meta id="confluence-context-path" name="confluence-context-path" content="">
+<meta id="atlassian-token" name="atlassian-token" content="1Q17kugAyo">
+<meta id="confluence-space-key" name="confluence-space-key" content="pylonscookbook">
+
+<script type="text/javascript">
+    // Deprecated global variables. To be removed in a future version of Confluence.
+    var contextPath = '';
+    var i18n = [];
+</script>
+
+    
+
+<!-- include system resources -->
+<link type="text/css" rel="stylesheet" href="/s/1634/3/1.0/_/download/batch/confluence.web.resources:master-styles/confluence.web.resources:master-styles.css" media="all"/>
+<!--[if IE]>
+<link type="text/css" rel="stylesheet" href="/s/1634/3/1.0/_/download/batch/confluence.web.resources:master-styles/confluence.web.resources:master-styles.css?ieonly=true" media="all"/>
+<![endif]-->
+<script type="text/javascript" src="/s/1634/3/1.0.2/_/download/batch/com.atlassian.auiplugin:jquery/com.atlassian.auiplugin:jquery.js" ></script>
+<script type="text/javascript" src="/s/1634/3/1.0.2/_/download/batch/com.atlassian.auiplugin:jquery-base/com.atlassian.auiplugin:jquery-base.js" ></script>
+<script type="text/javascript" src="/s/1634/3/1.0.2/_/download/batch/com.atlassian.auiplugin:ajs/com.atlassian.auiplugin:ajs.js" ></script>
+<link type="text/css" rel="stylesheet" href="/s/1634/3/1.6.2.8/_/download/batch/confluence.macros.advanced:recently-updated-sidebar-resources/confluence.macros.advanced:recently-updated-sidebar-resources.css" media="all"/>
+<link type="text/css" rel="stylesheet" href="/s/1634/3/1.0/_/download/batch/confluence.macros.profile:network-resources-css/confluence.macros.profile:network-resources-css.css" media="all"/>
+<link type="text/css" rel="stylesheet" href="/s/1634/3/1.0/_/download/batch/confluence.macros.profile:profile-macro-styles/confluence.macros.profile:profile-macro-styles.css" media="all"/>
+<!--[if IE]>
+<link type="text/css" rel="stylesheet" href="/s/1634/3/1.0/_/download/batch/confluence.macros.profile:profile-macro-styles/confluence.macros.profile:profile-macro-styles.css?ieonly=true" media="all"/>
+<![endif]-->
+<script type="text/javascript" src="/s/1634/3/1.0/_/download/batch/confluence.macros.profile:profile-macro-styles/confluence.macros.profile:profile-macro-styles.js" ></script>
+<script type="text/javascript" src="/s/1634/3/1.5/_/download/batch/com.atlassian.confluence.extra.officeconnector:editinoffice/com.atlassian.confluence.extra.officeconnector:editinoffice.js" ></script>
+<script type="text/javascript" src="/s/1634/3/1.0/_/download/batch/confluence.web.resources:image-effects/confluence.web.resources:image-effects.js" ></script>
+<script type="text/javascript" src="/s/1634/3/1.0/_/download/batch/confluence.web.resources:prototype/confluence.web.resources:prototype.js" ></script>
+<script type="text/javascript" src="/s/1634/3/1.0/_/download/batch/confluence.web.resources:scriptaculous/confluence.web.resources:scriptaculous.js" ></script>
+<script type="text/javascript" src="/s/1634/3/1.0/_/download/resources/confluence.web.resources:dwr/engine.js" ></script>
+<script type="text/javascript" src="/s/1634/3/1.0/_/download/resources/confluence.web.resources:dwr/util.js" ></script>
+<script type="text/javascript" src="/s/1634/3/1.0/_/download/resources/confluence.web.resources:labels-editor/AddLabeltoEntity.js" ></script>
+<script type="text/javascript" src="/s/1634/3/1.0/_/download/resources/confluence.web.resources:labels-editor/RemoveLabelFromEntity.js" ></script>
+<script type="text/javascript" src="/s/1634/3/1.0/_/download/resources/confluence.web.resources:labels-editor/SuggestedLabelsForEntity.js" ></script>
+<script type="text/javascript" src="/s/1634/3/1.0/_/download/resources/confluence.web.resources:labels-editor/GenerateAutocompleteLabelsListForEntity.js" ></script>
+<script type="text/javascript" src="/s/1634/3/1.0/_/download/batch/confluence.web.resources:labels-editor/confluence.web.resources:labels-editor.js" ></script>
+<link type="text/css" rel="stylesheet" href="/s/1634/3/1.0/_/download/batch/confluence.web.resources:labels-editor/confluence.web.resources:labels-editor.css" media="all"/>
+<script type="text/javascript" src="/s/1634/3/1.0/_/download/batch/confluence.web.resources:animation/confluence.web.resources:animation.js" ></script>
+<script type="text/javascript" src="/s/1634/3/1.0/_/download/batch/confluence.web.resources:comments/confluence.web.resources:comments.js" ></script>
+<link type="text/css" rel="stylesheet" href="/s/1634/3/1.0/_/download/batch/confluence.web.resources:comments/confluence.web.resources:comments.css" media="all"/>
+<!--[if IE]>
+<link type="text/css" rel="stylesheet" href="/s/1634/3/1.0/_/download/batch/confluence.web.resources:comments/confluence.web.resources:comments.css?ieonly=true" media="all"/>
+<![endif]-->
+<script type="text/javascript" src="/s/1634/3/1.0/_/download/batch/confluence.web.resources:breadcrumbs/confluence.web.resources:breadcrumbs.js" ></script>
+<link type="text/css" rel="stylesheet" href="/s/1634/3/1.0/_/download/batch/confluence.web.resources:print-styles/confluence.web.resources:print-styles.css?media=print" media="print"/>
+<script type="text/javascript" src="/s/1634/3/1.0/_/download/batch/confluence.web.resources:safe-ajax/confluence.web.resources:safe-ajax.js" ></script>
+<script type="text/javascript" src="/s/1634/3/1.0.2/_/download/batch/com.atlassian.auiplugin:dialog/com.atlassian.auiplugin:dialog.js" ></script>
+<link type="text/css" rel="stylesheet" href="/s/1634/3/1.0.2/_/download/batch/com.atlassian.auiplugin:dialog/com.atlassian.auiplugin:dialog.css" media="all"/>
+<!--[if IE]>
+<link type="text/css" rel="stylesheet" href="/s/1634/3/1.0.2/_/download/batch/com.atlassian.auiplugin:dialog/com.atlassian.auiplugin:dialog.css?ieonly=true" media="all"/>
+<![endif]-->
+<script type="text/javascript" src="/s/1634/3/1.0/_/download/batch/confluence.userstatus:userstatus-resources/confluence.userstatus:userstatus-resources.js" ></script>
+<link type="text/css" rel="stylesheet" href="/s/1634/3/1.0/_/download/batch/confluence.userstatus:userstatus-resources/confluence.userstatus:userstatus-resources.css" media="all"/>
+<script type="text/javascript" src="/s/1634/3/1.0/_/download/batch/confluence.web.resources:master-scripts/confluence.web.resources:master-scripts.js" ></script>
+<script type="text/javascript" src="/s/1634/3/1.0/_/download/resources/confluence.web.resources:master-scripts/PageNotification.js" ></script>
+<script type="text/javascript" src="/s/1634/3/1.0/_/download/batch/confluence.web.resources:contentnamesearch/confluence.web.resources:contentnamesearch.js" ></script>
+<link type="text/css" rel="stylesheet" href="/s/1634/3/1.0/_/download/batch/confluence.web.resources:contentnamesearch/confluence.web.resources:contentnamesearch.css" media="all"/>
+<script type="text/javascript" src="/s/1634/3/1.0/_/download/batch/confluence.web.resources:userlink/confluence.web.resources:userlink.js" ></script>
+<link type="text/css" rel="stylesheet" href="/s/1634/3/1.0/_/download/batch/confluence.web.resources:userlink/confluence.web.resources:userlink.css" media="all"/>
+<!--[if IE]>
+<link type="text/css" rel="stylesheet" href="/s/1634/3/1.0/_/download/batch/confluence.web.resources:userlink/confluence.web.resources:userlink.css?ieonly=true" media="all"/>
+<![endif]-->
+<script type="text/javascript" src="/s/1634/3/1.0.2/_/download/batch/com.atlassian.auiplugin:drop-down/com.atlassian.auiplugin:drop-down.js" ></script>
+<link type="text/css" rel="stylesheet" href="/s/1634/3/1.0.2/_/download/batch/com.atlassian.auiplugin:drop-down/com.atlassian.auiplugin:drop-down.css" media="all"/>
+<script type="text/javascript" src="/s/1634/3/1.0/_/download/batch/confluence.web.resources:atlassian-effects/confluence.web.resources:atlassian-effects.js" ></script>
+
+<!-- end system resources -->
+
+    <link rel="stylesheet" href="/s/1634/3/2/_/styles/combined.css?spaceKey=pylonscookbook" type="text/css">
+
+    <meta name="confluence-request-time" content="1293266221581">
+
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" href="/s/1634/3/_/images/logo/confluence_16.png">
+
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch/osd.action" title="PythonWeb"/>
+
+    
+</head>
+
+<body             onload="placeFocus()"
+     id="com-atlassian-confluence">
+
+
+
+
+
+<!--
+<div id="custom-doc" class="yui-t4">
+  <a name="top"></a>
+
+  <div id="hd">
+    <a href="http://pylonshq.com/"><h1 id="logo" class="replace">PylonsHQ<span>.</span></h1></a>
+    <div id="download">Latest Version: <a href="http://pylonshq.com/install">0.9.5</a></div>
+    <div id="nav-items">
+
+      <div id="nav-bar">
+        <ul id="navlist">
+          <li><a href="http://pylonshq.com/" accesskey="A">Home</a></li>
+          <li   ><a href="http://wiki.pylonshq.com/display/pylonsdocs/Home" accesskey="B"   >Docs</a></li>
+          <li     class="active"
+  ><a href="http://wiki.pylonshq.com/dashboard.action" accesskey="C"     class="active"
+  >Wiki</a></li>
+          <li><a href="http://pylonshq.com/project/" accesskey="C">Trac</a></li>
+          <li   ><a href="http://wiki.pylonshq.com/display/pylonscommunity/Home" accesskey="D"   >Community</a></li>
+          <li   ><a href="http://wiki.pylonshq.com/display/pylonsfaq/Home" accesskey="E"   >FAQ</a></li>
+          <li   ><a href="http://pylonshq.com/install" accesskey="F"   >Install</a></li>
+          <li><a href="http://pylonshq.com/pasties" accesskey="G">Pastebin</a></li>
+          <li><a href="http://pylonshq.com/search_docs.html" accesskey="H">Search Docs</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+-->
+
+
+<!-- http://pylonshq.com http://pylonshq.com/css -->
+
+<style type="text/css">
+/** Select portions of custom.css **/
+
+body { background:#0f0f0f url(http://pylonshq.com/css/images/body-bg.jpg) repeat-x 0 0; margin:0; padding:0;}
+#doc4 { position:relative; }
+
+#hd { height:185px; position:relative;}
+.home #bd { background:#fff url(http://pylonshq.com/css/images/content-bg.jpg) repeat-x 0 100%;padding:20px;}
+
+/* LOGO */
+#logo {position: absolute; top: 60px; left: 0;}
+#logo, #logo span {height:68px; width:315px; color: #000; background: transparent url(http://pylonshq.com/css/images/pylons-logo.gif) no-repeat 0 0;}
+h1#logo {color: #000;font-size:0; cursor: pointer;}
+#logo span {background-color: transparent;}
+
+/* nav */
+#nav { color:#ffd630; position:absolute; top:25px; right:0;}
+#nav * { margin:0; padding:0;}
+#nav ul { margin-left:0!important; width:549px;}
+#nav ul li{ list-style:none; float:left; width:100px; display:inline; position:relative; }
+#nav ul a{ color:#ffd630; height:43px; line-height:37px; display:block; text-align:center;}
+#nav ul li a { font-size:123.1%; font-weight:700;}
+#nav ul li.selected a { color:#000;}
+#nav ul li a:hover { text-decoration:underline;}
+
+#nav ul ul { position:absolute; top:45px; left:0; width:auto;}
+#nav ul ul li { display:block; position:relative; width:auto; float:none; margin-bottom:4px; *margin-bottom:3px;}
+#nav ul ul li a{ text-decoration:none; font-weight:300; font-size:84.65%; padding:0 0 0 20px; color:#ffd630!important; background:none!important; text-align:left; height:auto; *height:1%;line-height:1.2;}
+#nav ul ul li.selected a { background: transparent url(http://pylonshq.com/css/images/nav-sub-select.gif) no-repeat 5px 50%!important; text-decoration:underline;}
+
+#nav ul li#nav-1 { width:88px;}
+#nav ul li#nav-1.selected a {background: transparent url(http://pylonshq.com/css/images/nav-main-selected.gif) no-repeat 10px 0;}
+#nav ul li#nav-2 { width:155px;}
+#nav ul li#nav-2.selected a {background: transparent url(http://pylonshq.com/css/images/nav-main-selected.gif) no-repeat 10px -53px;}
+#nav ul li#nav-3 { width:130px;}
+#nav ul li#nav-3.selected a {background: transparent url(http://pylonshq.com/css/images/nav-main-selected.gif) no-repeat 10px -106px;}
+#nav ul li#nav-4 { width:88px;}
+#nav ul li#nav-4.selected a {background: transparent url(http://pylonshq.com/css/images/nav-main-selected.gif) no-repeat 10px 0;}
+#nav ul li#nav-5 { width:88px;}
+#nav ul li#nav-5.selected a {background: transparent url(http://pylonshq.com/css/images/nav-main-selected.gif) no-repeat 10px 0;}
+
+/*
+#bd { color:#2b2b2b; line-height:1.5;}
+#bd a { color:#6f4706; text-decoration: none;}
+*/
+.home #bd a:hover { text-decoration:underline; color:#f60}
+#sidebar .home #bd ul, #sidebar .home #bd ol { margin-left:20px; padding-left:0;}
+
+/* Fix for pygments only when rendered via rEST. The pygments-macro-plugin
+   already does this. */
+td.linenos{ margin: 0; line-height: 1.3em; font-size: 0.95em; }
+
+
+/* Global clear float fix */
+.clearfix:after {    content: ".";     display: block;     height: 0;     clear: both;     visibility: hidden;}
+
+/* Global IR code IR (Image Replacement )*/
+.replace{      position:relative;      margin:0; padding:0;      /* \*/      overflow: hidden;      /* */}
+.replace span{      display:block !important;      position:absolute !important;      top:0;      left:0;      z-index:1;}
+*>html .clearfix {height: auto;}
+
+/* Hides from IE-mac \*/
+* html #container, * html .clearfix {height: 1%;} 
+/* End hide from IE5/mac */
+
+
+/** Select portion of fonts.css **/
+body {font:13px/1.231 arial,helvetica,clean,sans-serif;*font-size:small;*font:x-small;}
+table {font-size:inherit;font:100%;}
+
+
+/** Disable Confluence's border bottom for our logo **/
+h1 {
+    border-bottom: transparent;
+}
+
+.home #bd, #bd {
+    position: relative;
+    padding-top: 33px;
+    margin-top: -20px;
+}
+
+div#loginbar {
+	position: absolute;
+	top: 0;
+	left: 0;
+    margin: 0;
+    text-align: right;
+    width: 100%;
+    color: #ddd;
+    font-size: 83%;
+    height: 20px;
+    background: transparent url(http://pylonshq.com/css/images/loginbar.jpg) repeat-x 0 0;    
+}
+
+div#loginbar .layoutstyle {
+    float: left;
+    padding: 1px 0 0 4px;
+}
+
+div#loginbar .links {
+    margin-right: 15px;
+    padding: 1px 0 0 0;
+}
+div#loginbar a {
+    color: #ffd630;
+    text-decoration: none;
+    padding: 0 4px 0 4px;
+}
+
+div#loginbar a:hover {
+    text-decoration: underline;
+    color: #ffd630;
+}
+</style>
+
+<script type="text/javascript" src="http://pylonshq.com/javascripts/jquery_all.js" charset="utf-8"></script>
+    
+            <script type="text/javascript" src="/s/1634/3/_/pylonshq/behavior.js"></script>
+    <link href="http://pylonshq.com/css/grids.css" media="screen" rel="stylesheet" type="text/css" />
+
+
+<div id="doc4" class="home">
+  <div id="hd">
+    <a href="http://pylonshq.com/"><h1 id="logo" class="replace">PylonsHQ<span>.</span></h1></a>
+    <div id="nav">  <ul class="clearfix">
+        <li id="nav-1"><a href="http://pylonshq.com/">Home</a>
+          <ul>
+            <li><a href="http://pylonshq.com/">Overview</a></li>
+            <li><a href="http://pylonshq.com/features">Features</a></li>
+            <li><a href="http://pylonshq.com/history">History</a></li>
+            <li><a href="http://pylonshq.com/search">Search</a></li>
+          </ul>
+        </li>
+        <li id="nav-2"><a href="http://pylonshq.com/docs/en/0.9.7/">Documentation</a>
+          <ul>
+            <li><a href="http://pylonshq.com/docs/en/0.9.7/">Reference</a></li>
+            <li><a href="http://pylonshq.com/docs/en/0.9.7/modules/">Modules</a></li>
+            <li><a href="http://pylonshq.com/docs/en/0.9.7/glossary/">Glossary</a></li>
+            <li><a href="http://pylonshq.com/docs/en/0.9.7/index/">Index</a></li>
+          </ul>
+        </li>
+        <li id="nav-3" class="selected"><a href="http://pylonshq.com/community">Community</a>
+          <ul>
+            <li><a href="http://pylonshq.com/articles">Blog</a></li>
+            <li class="selected"><a href="/">Wiki</a></li>
+          </ul>
+        </li>
+        <li id="nav-4"><a href="http://pylonshq.com/pasties">Tools</a>
+          <ul>
+            <li><a href="http://pylonshq.com/pasties">Pastebin</a></li>
+            <li><a href="http://pylonshq.com/tracebacks">Tracebacks</a></li>
+            <li><a href="http://pylonshq.com/snippets">Snippets</a></li>
+          </ul>
+        </li>
+        <li id="nav-5"><a href="#">Code</a>
+          <ul>
+            <li><a href="#">Contributing</a></li>
+            <li><a href="http://pylonshq.com/project/pylonshq/roadmap/">Milestones</a></li>
+            <li><a href="http://pylonshq.com/project/pylonshq/report">View Tickets</a></li>
+            <li><a href="http://pylonshq.com/project/pylonshq/browser/">Source</a></li>
+            <li><a href="http://pylonshq.com/buildbot/index">Buildbots</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+<!--</div> doc4-->
+<div id="bd">
+  <div id="loginbar">
+    <div class="layoutstyle">
+      Layout: <a href="#" id="layout-toggle">Fixed-width</a>
+    </div>
+  </div>
+
+
+<fieldset class="hidden parameters">
+    <input type="hidden" id="statusDialogHeading" value="What are you working on?">
+    <input type="hidden" id="statusDialogLatestLabel" value="Last update:">
+    <input type="hidden" id="statusDialogUpdateButtonLabel" value="Update">
+    <input type="hidden" id="statusDialogCancelButtonLabel" value="Cancel">
+</fieldset>
+
+    
+<div id="header">
+        <form id="quick-search" class="quick-search" method="get" action="/dosearchsite.action">
+                <fieldset>
+            <legend>Quick Search</legend>
+            <input class="quick-search-query" id="quick-search-query" type="text" accessKey="q" autocomplete="off" name="queryString" size="25" />
+            <input class="quick-search-submit" id="quick-search-submit" type="submit" value="Search" />
+        </fieldset>
+        <fieldset class="hidden parameters">
+            <input type="hidden" class="quickSearchPlaceholder" id="quickSearchPlaceholder" value="Search" />
+
+            <input type="hidden" id="quickNavEnabled" value="true" />
+             <!-- Quick nav disabled. SettingsManager could not be found -->         </fieldset>
+    </form>
+    <ul id="header-menu-bar" class="ajs-menu-bar">
+                    
+        
+            <li class="normal ajs-menu-item">
+        <a id="browse-menu-link" class="browse trigger ajs-menu-title" href="#"><span><span>Browse</span></span></a>         <div class="hidden ajs-drop-down">
+                        <ul  id="browse-menu-link-leading"                 class="section-leading first">
+                                        <li>
+    
+    <a  id="space-pages-link"  href="/pages/listpages.action?key=pylonscookbook"  class=""  >
+                   <span>Pages</span>            </a>
+</li>
+                                        <li>
+    
+    <a  id="space-blogposts-link"  href="/pages/viewrecentblogposts.action?key=pylonscookbook"  class=""  >
+                   <span>News</span>            </a>
+</li>
+                                        <li>
+    
+    <a  id="space-labels-link"  href="/labels/listlabels-heatmap.action?key=pylonscookbook"  class=""  >
+                   <span>Labels</span>            </a>
+</li>
+                                        <li>
+    
+    <a  id="space-attachments-link"  href="/spaces/listattachmentsforspace.action?key=pylonscookbook"  class=""  >
+                   <span>Attachments</span>            </a>
+</li>
+                                        <li>
+    
+    <a  id="space-mail-link"  href="/spaces/viewmailarchive.action?key=pylonscookbook"  class=""  >
+                   <span>Mail</span>            </a>
+</li>
+                                        <li>
+    
+    <a   href="/spaces/space-bookmarks.action?spaceKey=pylonscookbook"  class=""  >
+                   <span>Bookmarks</span>            </a>
+</li>
+                                        <li>
+    
+    <a  id="space-advanced-link"  href="/spaces/viewspacesummary.action?key=pylonscookbook"  class=""  >
+                   <span>Advanced</span>            </a>
+</li>
+                            </ul>
+                    </div>
+    </li>
+        
+                                                         <li class="ajs-menu-item normal">
+    
+    <a  id="login-link"  href="/login.action?os_destination=%2Fdisplay%2Fpylonscookbook%2FGuides%2Bto%2BPylons%2Bfor%2Bpeople%2Bin%2Ba%2Bhurry"  class="user-item login-link"  >
+                   <span>Log In</span>            </a>
+</li>
+                            <li class="ajs-menu-item normal">
+    
+    <a  id="signup-link"  href="/signup.action"  class="user-item signup-link"  >
+                   <span>Sign Up</span>            </a>
+</li>
+                            </ul>
+    
+    
+    <ol id="breadcrumbs">
+                    
+        <li class="first" ><span>
+                                    <a href="/dashboard.action">Dashboard</a>
+                </span></li>
+                    
+        <li><span>
+                                    <a href="/display/pylonscookbook">Pylons Cookbook</a>
+                </span></li>
+                                        <li id="ellipsis" title="    &#8230;
+                    Home
+        &#8230;
+"><span><strong>&#8230;</strong></span></li>
+                                    
+        <li class="hidden-crumb" ><span>
+                                    <a href="/display/pylonscookbook/Home">Home</a>
+                </span></li>
+                    
+        <li><span>
+                                    <a href="/display/pylonscookbook/Tutorials">Tutorials</a>
+                </span></li>
+                    
+        <li><span>
+                                    Guides to Pylons for people in a hurry
+                </span></li>
+        </ol>
+
+</div>
+<div id="main"  >
+    
+                <ul id="user-control-panel">
+                                
+            <li class="first"><a href="/login.action?os_destination=%2Fdisplay%2Fpylonscookbook%2FGuides%2Bto%2BPylons%2Bfor%2Bpeople%2Bin%2Ba%2Bhurry">Log In</a></li>
+
+                                            <li><a href="/signup.action">Sign Up</a></li>
+                                            </ul>
+        
+    <div id="navigation" class="content-navigation view">
+        <fieldset class="hidden parameters">
+            <input type="hidden" id="pageId" value="7995410">
+        </fieldset>
+        <ul class="ajs-menu-bar">
+                                
+                        
+            <li class="normal ajs-menu-item">
+        <a id="action-menu-link" class="action trigger ajs-menu-title" href="#"><span><span>Tools</span></span></a>         <div class="hidden ajs-drop-down">
+                        <ul  id="action-menu-link-primary"                 class="section-primary first">
+                                        <li>
+    
+    <a  id="view-attachments-link"  href="/pages/viewpageattachments.action?pageId=7995410"  class="action-view-attachments"  accessKey="a" >
+                   <span><u>A</u>ttachments (0)</span>            </a>
+</li>
+                                        <li>
+    
+    <a  id="action-view-history-link"  href="/pages/viewpreviousversions.action?pageId=7995410"  class="action-view-history"  >
+                   <span>Page History</span>            </a>
+</li>
+                            </ul>
+                        <ul  id="action-menu-link-secondary"                 class="section-secondary">
+                                        <li>
+    
+    <a  id="view-page-info-link"  href="/pages/viewinfo.action?pageId=7995410"  class="action-view-info"  accessKey="i" >
+                   <span><u>I</u>nfo</span>            </a>
+</li>
+                                        <li>
+    
+    <a  id="action-view-source-link"  href="/pages/viewpagesrc.action?pageId=7995410"  class="action-view-source popup-link"  >
+                   <span>View Wiki Markup</span>            </a>
+</li>
+                            </ul>
+                    </div>
+    </li>
+            </ul>
+    </div>
+
+    
+    <h1 id="title-heading" class="pagetitle">
+                    <a href="/display/pylonscookbook"><img class="logo global custom" src="/download/attachments/16121857/global.logo?version=1&amp;modificationDate=1252126922123" alt=""></a>        
+		<span id="title-text">
+					            <a href="/display/pylonscookbook/Guides+to+Pylons+for+people+in+a+hurry">Guides to Pylons for people in a hurry</a>
+    				</span>
+    </h1>
+
+    
+
+    
+    
+    
+    <!--
+    Root decorator: this is a layer of abstraction that Confluence doesn't need. It will be removed eventually.
+-->
+
+
+
+
+    
+    
+
+    
+    
+        
+    
+    
+                    
+    
+
+    
+
+
+<div id="content" class="page view">
+    
+        
+    
+            
+                            
+    
+
+                    
+
+        
+        <div class="page-metadata">
+    <ul>
+                <li class="page-metadata-modification-info">
+                    Added by <a class="url fn" href="/display/~brendanarnold@gmail.com">Brendan Arnold</a>, last edited by <a class="url fn" href="/display/~n1ywb">Jeffrey Laughlin</a> on Feb 14, 2008
+                                        <span class="noprint">&nbsp;(<a href="/pages/diffpages.action?pageId=7995410&originalId=11698466">view change</a>)</span>
+                            </li>
+                <li class="show-hide-comment-link">
+            <a id="show" class="inline-control-link" href="#" onclick="showComment(); return false;">show comment</a>
+            <a id="hide" class="inline-control-link" style="display:none;" href="#" onclick="hideComment(); return false;">hide comment</a>
+        </li>
+            </ul>
+      <div id="versionComment" class="noteMacro" style="display:none; padding: 5px;">
+      <strong>Comment:</strong>
+      Changed from static list to {children:all=true}<br />
+  </div>
+
+    <script>
+      var show = document.getElementById('show');
+      var hide = document.getElementById('hide');
+      var versionComment = document.getElementById('versionComment');
+
+      function showComment(){
+        show.style.display = 'none';
+        hide.style.display = 'inline';
+        versionComment.style.display = 'block';
+      }
+
+      function hideComment(){
+        show.style.display = 'inline';
+        hide.style.display = 'none';
+        versionComment.style.display = 'none';
+      }
+
+    </script>
+</div>        
+        <div class="wiki-content">
+           <!-- wiki content -->
+            <h1><a name="GuidestoPylonsforpeopleinahurry-GuidestoPylonsforpeopleinahurry"></a>Guides to Pylons for people in a hurry</h1>
+
+<p>Learning Pylons can be daunting.</p>
+
+<p>Yet what the typical Pylons user employs on a daily basis can be learnt relatively quickly.</p>
+
+<p>These guides are not meant to be comprehensive or even 100% correct. They will however get you started programming applications in Pylons in the quickest, most pragmatic way possible. They will also make suggestions for what other more detailed aspects you can then go on to learn.</p>
+
+<p>If you are looking for <em>Webhelpers for people in a hurry</em>, the <a href="http://pylonshq.com/WebHelpers/module-index.html" class="external-link" rel="nofollow">Webhelpers documentation</a> is consice enough not to make it worthwhile summerising. Also <em>Paste for people in a hurry</em> is covered in <a href="/display/pylonscookbook/Pylons+for+people+in+a+hurry" title="Pylons for people in a hurry">Pylons for people in a hurry</a></p>
+
+<p>Without further ado,</p>
+
+<ul><li><a href="/display/pylonscookbook/Mako+for+people+in+a+hurry" title="Mako for people in a hurry">Mako for people in a hurry</a></li><li><a href="/display/pylonscookbook/Pylons+debugger+for+people+in+a+hurry" title="Pylons debugger for people in a hurry">Pylons debugger for people in a hurry</a></li><li><a href="/display/pylonscookbook/Pylons+for+people+in+a+hurry" title="Pylons for people in a hurry">Pylons for people in a hurry</a></li><li><a href="/display/pylonscookbook/Relational+databases+for+people+in+a+hurry" title="Relational databases for people in a hurry">Relational databases for people in a hurry</a></li></ul>
+
+<p>Credit should be given to Christopher Haas for his excellent <a href="http://workaround.org/moin/PylonsCheatsheet" class="external-link" rel="nofollow">Pylons Cheatsheet</a></p>
+        </div>
+
+        <!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+         <rdf:Description
+    rdf:about="http://wiki.pylonshq.com/display/pylonscookbook/Guides+to+Pylons+for+people+in+a+hurry"
+    dc:identifier="http://wiki.pylonshq.com/display/pylonscookbook/Guides+to+Pylons+for+people+in+a+hurry"
+    dc:title="Guides to Pylons for people in a hurry"
+    trackback:ping="http://wiki.pylonshq.com/rpc/trackback/7995410"/>
+</rdf:RDF>
+-->
+
+            
+    
+    
+    
+
+
+<fieldset class="hidden parameters">
+    <legend>Labels parameters</legend>
+    <input type="hidden" id="editLabel" value="Edit">
+    <input type="hidden" id="addLabel" value="Add Labels">
+    <input type="hidden" id="domainName" value="http://wiki.pylonshq.com">
+    <input type="hidden" id="pageId" value="7995410">
+    <input type="hidden" id="spaceKey" value="pylonscookbook">
+</fieldset>
+
+<div id="labels-section" class="pageSection">
+    <div id="default-labels-header" class="section-header">
+        <h2 id="labels-section-title" class="section-title  hidden ">Labels</h2>
+            </div>
+
+    <div class="labels-editor">
+        <div id="labelsList">
+                    </div>
+
+        <span class="errorMessage error" id="errorSpan"></span>
+        <form method="GET" action="" id="add-labels-form">
+            <div id="labelInputSpan" class="labels-input">
+                <div id="labelOperationErrorContainer" class="hidden">
+                    <span class="error"><span class="errorMessage" id="labelOperationErrorMessage"></span></span>
+                </div>
+
+                <div class="caption">Enter labels to add to this page:</div>
+
+                <input autocomplete="off" id="labelsString" name="labelsString" value="" size="40">
+                <input type="submit" class="add-labels" value="Add">
+                <input type="submit" class="hide-labels-editor" value="Done">
+                <div id="waitImageAndStatus">
+                    <img class="waiting" alt="Please wait" src="/s/1634/3/_/images/icons/wait.gif">&nbsp;
+                    <span id="labelOperationStatus" class="smalltext"></span>
+                </div>
+                <div class="auto_complete" id="labelsAutocompleteList"></div>
+                <div class="labels-tip">
+                    <div id="suggestedLabelsSpan"></div>
+                    Looking for a label? Just start typing.
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+                    <div id="children-section" class="pageSection">
+        
+        <div class="section-header ">
+            <h2 id="children-section-title" class="section-title">
+                <a name="children">Children (4)</a>
+            </h2>
+            <span class="noprint">
+                &nbsp;
+                                    <a id="hide-children-link" class="grey" href="/display/pylonscookbook/Guides+to+Pylons+for+people+in+a+hurry?showChildren=false&#0035;children">Hide Children</a>
+                
+                &nbsp;|&nbsp; <a class="grey" href="/pages/listpages-dirview.action?key=pylonscookbook&amp;openId=7995410#selectedPageInHierarchy">View in Hierarchy</a>
+                            </span>
+        </div>
+                    <div id="page-children" class="pageSectionBody">
+                                                     <img src="/s/1634/3/_/images/icons/docs_16.gif" height="16" width="16" border="0" align="absmiddle" title="Mako for people in a hurry"/>
+                         <a href="/display/pylonscookbook/Mako+for+people+in+a+hurry">Mako for people in a hurry</a>
+                             <br>
+                                                     <img src="/s/1634/3/_/images/icons/docs_16.gif" height="16" width="16" border="0" align="absmiddle" title="Pylons debugger for people in a hurry"/>
+                         <a href="/display/pylonscookbook/Pylons+debugger+for+people+in+a+hurry">Pylons debugger for people in a hurry</a>
+                             <br>
+                                                     <img src="/s/1634/3/_/images/icons/docs_16.gif" height="16" width="16" border="0" align="absmiddle" title="Pylons for people in a hurry"/>
+                         <a href="/display/pylonscookbook/Pylons+for+people+in+a+hurry">Pylons for people in a hurry</a>
+                             <br>
+                                                     <img src="/s/1634/3/_/images/icons/docs_16.gif" height="16" width="16" border="0" align="absmiddle" title="Relational databases for people in a hurry"/>
+                         <a href="/display/pylonscookbook/Relational+databases+for+people+in+a+hurry">Relational databases for people in a hurry</a>
+                             <br>
+                            </div>
+                </div>
+    
+            
+
+<!--
+    Root decorator: this is a layer of abstraction that Confluence doesn't need. It will be removed eventually.
+-->
+
+
+
+
+    
+        
+    
+    
+
+
+<fieldset class="parameters hidden">
+    <input type="hidden" id="deleteCommentConfirmMessage" value="Are you sure you want to remove the comment?">
+    <input type="hidden" id="collapseTooltip" value="Click to toggle the display of this comment.">
+</fieldset>
+
+
+
+
+
+<div id="comments-section" class="pageSection">
+    
+            <div class="section-header ">
+            <h2 id="comments-section-title" class="section-title">
+                <a name="comments">Comments (1)</a>
+            </h2>
+            &nbsp;
+            <ul id="comment-top-links" class="global-comment-actions">
+                <li id="comment-show-hide">
+                    <a href="/display/pylonscookbook/Guides+to+Pylons+for+people+in+a+hurry?showComments=false#comments" id="comments-hide" >Hide Comments</a>
+                    <a href="/display/pylonscookbook/Guides+to+Pylons+for+people+in+a+hurry?showComments=true#comments" id="comments-show"  class="hidden" >Show Comments</a>
+                </li>
+                <li id="comments-expand-collapse" >
+                    <a href="#" id="comments-collapse">Collapse All</a>
+                    <span id="collapse-wait" class="hidden">Collapsing&hellip;</span>
+                    <span id="expand-wait" class="hidden">Expanding&hellip;</span>
+                    <a href="#" class="hidden" id="comments-expand">Expand All</a>
+                </li>
+                            </ul>
+        </div>
+    
+    
+                            <ol class="comment-threads top-level " id="page-comments">
+                        <li id="comment-thread-7995443" class="comment-thread">
+                    <div class="comment  " id="comment-7995443">
+                <p class="comment-user-logo">
+                    <a class="" href="/display/~field.tim@gmail.com"><img class="userLogo logo" src="/images/icons/profilepics/default.gif" alt="" title="field.tim@gmail.com"></a>                </p>
+                <p class="date" title="May 20, 2007 04:53">
+                    May 20, 2007
+                </p>
+                <div class="comment-header comment-toggle">
+                    <h4 class="author"><a class="url fn" href="/display/~field.tim@gmail.com">Tim</a> says:</h4>
+                                        <span class="excerpt">Great work keep it up, eagerly awaiting the completion of "SQLAlchemy for people...</span>
+                </div>
+                <div class="comment-body">
+                    <div class="comment-content wiki-content">
+                        <p>Great work keep it up, eagerly awaiting the completion of "SQLAlchemy for people in a hurry"</p>
+                    </div>
+                    <div class="comment-actions">
+                                                    <ul id="comment-actions-secondary">
+                                                          <li class="first comment-permalink">
+            <a title="Permanent link to this comment" href="/display/pylonscookbook/Guides+to+Pylons+for+people+in+a+hurry?focusedCommentId=7995443#comment-7995443"
+                id="comment-permalink-7995443"                ><span>Permalink</span></a></li>
+            </ul>
+                            <ul id="comment-actions-primary">
+            </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+         <rdf:Description
+    rdf:about="http://wiki.pylonshq.com/display/pylonscookbook/Guides+to+Pylons+for+people+in+a+hurry?focusedCommentId=7995443#comment-7995443"
+    dc:identifier="http://wiki.pylonshq.com/display/pylonscookbook/Guides+to+Pylons+for+people+in+a+hurry?focusedCommentId=7995443#comment-7995443"
+    dc:title="Guides to Pylons for people in a hurry"
+    trackback:ping="http://wiki.pylonshq.com/rpc/trackback/7995443"/>
+</rdf:RDF>
+-->
+
+                    
+                                </li>
+                </ol>
+    
+                                    </div>
+
+
+
+            
+</div>
+    <br class="clear">
+</div>
+
+
+<div id="footer">
+                                        <p class="license license-opensource">
+                  Powered by a free <b>Atlassian Confluence Open Source Project License</b> granted to Pylons. <a href="http://www.atlassian.com/c/conf/11461">Evaluate Confluence today</a>.<br>
+                </p>
+                            <ul id="poweredby">
+        <li class="noprint">Powered by <a href="http://www.atlassian.com/software/confluence" class="smalltext">Atlassian Confluence</a> 3.0.1, the <a href="http://www.atlassian.com/software/confluence" class="smalltext">Enterprise Wiki</a>.</li>
+        <li class="print-only">Printed by Atlassian Confluence 3.0.1, the Enterprise Wiki.</li>
+        <li class="noprint"><a href="http://jira.atlassian.com/secure/BrowseProject.jspa?id=10470" class="smalltext">Bug/feature request</a> &#8211;</li>
+        <li class="noprint"><a href="http://www.atlassian.com/about/connected.jsp?s_kwcid=Confluence-stayintouch" class="smalltext">Atlassian news</a> &#8211;</li>
+        <li class="noprint"><a href="/administrators.action">Contact administrators</a></li>
+    </ul>
+</div>
+
+<style type="text/css">
+/** From custom.css **/
+/* Footer */
+/** Differs from custom; explicitly sets color back to white, and resets our
+    font style, does it in p instead of the #ft div **/
+/*#ft { color:#f4f4f4; text-align:center; font-size:84.65%; padding:20px;}*/
+#ft p {
+    color:#f4f4f4;
+    text-align:center;
+    font:13px/1.231 arial,helvetica,clean,sans-serif;
+    font-size:84.65%;
+    padding:20px;
+    line-height:1.7;
+}
+#ft a {color:#f6c058}
+#ft a:hover { text-decoration:none; color:#f60}
+
+/** Reset Confluence's poweredby to non-black bg **/
+#poweredby { background: #f0f0f0; }
+</style>
+
+  </div>
+</div>
+<div id="ft">
+    <p>Powered by Pylons - <a href="#">Contact Administrators</a></p>
+</div>
+
+
+</body>
+</html>
