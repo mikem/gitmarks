@@ -1,0 +1,261 @@
+<head><title>Test Driven Development</title>
+
+</head>
+<body text=black bgcolor=white><h1><img src="http://c2.com/sig/wiki.gif">
+<a href="fullSearch" rel="nofollow">Test Driven Development</a></h1>
+<div id="wiki">
+<img src="http://www.zeroplayer.com/tdd.png">
+<p></p>
+When you code, alternate these activities:
+<p></p>
+<UL>
+<li> add a test, get it to fail, and write code to pass the test (<a href="wiki?DoSimpleThings">DoSimpleThings</a>, <a href="wiki?CodeUnitTestFirst">CodeUnitTestFirst</a>)
+<li> remove duplication (<a href="wiki?OnceAndOnlyOnce">OnceAndOnlyOnce</a>, <a href="wiki?DontRepeatYourself">DontRepeatYourself</a>, <a href="wiki?ThreeStrikesAndYouAutomate">ThreeStrikesAndYouAutomate</a>)
+<p></p>
+</UL>
+This inner loop pumps the outer loops of <a href="wiki?ExtremeProgramming">ExtremeProgramming</a> - <a href="wiki?ContinuousIntegration">ContinuousIntegration</a>, DailyDeployment<a href="wiki?edit=DailyDeployment" rel="nofollow">?</a>, <a href="wiki?FrequentReleases">FrequentReleases</a>, and <a href="wiki?SteeringSoftwareProjects">SteeringSoftwareProjects</a>. (<em>Hence the graphic.</em>) Tests help us keep promises regarding the quality, cost, and existence of previously installed features.
+<p></p>
+Using this system, all my code is highly decoupled (meaning easy to re-use) because it all already has two users - its clients, and its test rigs. Classes typically resist the transition from one user to two, then the rest are easy. I make reuse easy as a side-effect of coding very fast.
+<p></p>
+Then, the &quot;remove duplication&quot; phase forces one to examine code for latent abstractions that one could express via virtual methods and other techniques that naturally make code more extendable. This is the &quot;reuse&quot; that the OO hype of the 1980s screamed about.
+<p></p>
+<hr>
+<UL>
+<li> Think about what you want to do. 
+<li> Think about how to test it. 
+<li> Write a small test. Think about the desired API. 
+<li> Write just enough code to fail the test. 
+<li> Run and watch the test fail. (The test-runner, if you're using something like JUnit, shows the &quot;Red Bar&quot;). Now you know that your test is going to be executed. 
+<li> Write just enough code to pass the test (and pass all your previous tests). 
+<li> Run and watch all of the tests pass. (The test-runner, if you're using JUnit, etc., shows the &quot;Green Bar&quot;). If it doesn't pass, you did something wrong, fix it now since it's got to be something you just wrote. 
+<li> If you have any duplicate logic, or inexpressive code, refactor to remove duplication and increase expressiveness -- this includes reducing coupling and increasing cohesion. 
+<li> Run the tests again, you should still have the Green Bar. If you get the Red Bar, then you made a mistake in your refactoring. Fix it now and re-run. 
+<li> Repeat the steps above until you can't find any more tests that drive writing new code. 
+<p></p>
+</UL>
+Please note that first item is by far the most difficult, followed by the second item. The rest of the list is really pretty easy, but the first two are critical.
+<p></p>
+<em>Uh, item 1 is what your <a href="wiki?OnsiteCustomer">OnsiteCustomer</a> keeps screaming about, and item 2 is just item 1 stated inside-out. They are all easy, especially in this order.</em>
+<p></p>
+There is a big step between hearing the words of an <a href="wiki?OnsiteCustomer">OnsiteCustomer</a> and understanding the meaning. Translating a business statement into technical language can be a difficult job and one should respect that difficulty. Item 2 recognizes that testing the code often requires exposing some things not necessarily required by the end user. There is a step to go beyond what the user needs to what the test will need. 
+<p></p>
+<hr>
+<p></p>
+Systems created using <a href="wiki?CodeUnitTestFirst">CodeUnitTestFirst</a>, <a href="wiki?RelentlessTesting">RelentlessTesting</a> &amp; <a href="wiki?AcceptanceTest">AcceptanceTest</a><strong></strong>s might just be better designed than traditional systems. But they all certainly would support <a href="wiki?CodeUnitTestFirst">CodeUnitTestFirst</a> while using them better than our current set of systems.
+<p></p>
+But because so danged many of them were not, we are a little blind to what we could have available on the shelf.
+<p></p>
+<hr>
+<p></p>
+A list of ways that test-first programming can affect design:
+<p></p>
+<UL>
+<li> Re-use is good. Test first code is born with two clients, not one. This makes adding a third client twice as easy.
+<li> Refactoring test-first code results in equally tested code, permitting more aggressive refactorings (<a href="wiki?RefactorMercilessly">RefactorMercilessly</a>). Cruft is not allowed, and code is generally in better shape to accept more refactorings.
+<li> When paying attention during all of the little steps, you may discover patterns in your code.
+<li> Test code is easy to write. It's usually a couple calls to the server object, then a list of assertions. Writing the easy code first makes writing the hard code easy.
+<li> <a href="wiki?DesignPatterns">DesignPatterns</a> may be incremented in, not added all of a bunch up front.
+<li> Test-first code is written Interface first. You think of the simplest interface that can show function.
+<li> Code tends to be less coupled. Effective unit tests only test one thing. To do this you have to move the irrelevant portions out of the way (e.g., <a href="wiki?MockObject">MockObject</a><strong></strong>s). This forces out what might be a poor design choice.
+<li> <a href="wiki?UnitTest">UnitTest</a><strong></strong>s stand as canonical &amp; tested documentation for objects' usage. Developers read them, and do what they do in production code to the same objects. This keeps projects annealed and on track.
+<li> When the developer has to write tests for what he is going to do, he is far less likely to add extraneous capabilities. This really puts a damper on developer driven scope creep.
+<li> Test First Design forces you to really think about what you are going to do. It gets you away from &quot;It seemed like a good idea at the time&quot; programming.
+<p></p>
+</UL>
+- This sure isn't a page for irresponsible people. <em>Is any programming activity for irresponsible people?</em> See <a href="wiki?CodeAndFix">CodeAndFix</a>, <a href="wiki?WaterFall">WaterFall</a>.
+<p></p>
+- <em>Nope. the problem is:</em> <strong>They don't know!</strong> [<a href="wiki?UnskilledAndUnawareOfIt">UnskilledAndUnawareOfIt</a>]
+<hr>
+<p></p>
+I have been working my way through Kent's TDD book for a while now, and applying the principles quite rigorously. I am a real dullard sometimes, because it takes me a horribly long time to understand even simple stuff. I had probably been applying TDD for more than a week before I realized why it works so well (at least for me). There are three parts to this:
+<p></p>
+<UL>
+<li> The tests (obviously) help find bugs in the application code, and the micro-steps taken with TDD mean that any &quot;bugs&quot; are in the very code I have just been writing and hence which still has a relevant mental model in my small brain
+<li> By doing the absolutely simplest thing in the application code in order to get each test to run, I often have small <a href="wiki?AhaMoment">AhaMoment</a><strong></strong>s, where I see that I am writing such overly concrete code (i.e. just enough to get the tests to work) that the tests (even though they run) cannot possibly be adequate to cover the &quot;real&quot; requirements. So to justify writing more abstract application code, I need to add more test cases that demand that abstraction, and this forces me to explore the requirement further. Therefore, the application code actually helps me debug the tests. That is, since the tests are the specification, feedback from the application code helps me debug the specification.
+<li> As I have these &quot;aha!&quot; moments (mentioned in 2 above) I follow Kent's practice of adding them to the <a href="wiki?ToDoList">ToDoList</a>. It took my stupid head quite some time to realize that the TODO list is actually a list of Micro-Stories, which I constantly prioritize (since I am the customer at this level). Following <a href="wiki?AlistairCockburn">AlistairCockburn</a>'s insight that Stories are promises to have a conversation with the customer, I see, then, that the Micro-Stories in the TODO list are a promise to have a conversation with myself (and, here is the weird bit) to have a conversation with the code (since it gives me feedback - it tells me things - and TDD tunes me in to listening to the code).
+<p></p>
+</UL>
+-- <a href="wiki?AnthonyLauder">AnthonyLauder</a>
+<p></p>
+<hr>
+<p></p>
+<em>Test Driven Development</em> (TDD) by <a href="wiki?KentBeck">KentBeck</a> 
+<p></p>
+<img src="http://images.amazon.com/images/P/0321146530.01._PE_PI_SCMZZZZZZZ_.jpg">
+<p></p>
+<a href="http://www.amazon.com/exec/obidos/ISBN=0321146530/portlandpatternrA/" rel="nofollow">ISBN  0321146530</a>  A Book, 
+<p></p>
+Mailing list: <a href="http://groups.yahoo.com/group/testdrivendevelopment" rel="nofollow">http://groups.yahoo.com/group/testdrivendevelopment</a>.
+<p></p>
+<em>Test Driven Development</em> (TDD) by DavidAstels<a href="wiki?edit=DavidAstels" rel="nofollow">?</a> 
+<p></p>
+<a href="http://www.amazon.com/exec/obidos/ISBN=0131016490/portlandpatternrA/" rel="nofollow">ISBN  0131016490</a>  another book
+<p></p>
+<hr>
+<p></p>
+<a href="wiki?JohnRusk">JohnRusk</a> worries <em>that one danger of <a href="wiki?TestDrivenDevelopment">TestDrivenDevelopment</a> is that developers may <strong>not</strong> take that step that you take. I.e. developers may stay with overly concrete code that satisfies the tests but not the &quot;real&quot; requirements.</em>
+<p></p>
+<em>To look at it another way, I have always felt that it was dangerous to approach design with (only) particular test cases in mind, since its usually necessary to think about boundary cases, and other unusual cases.</em>
+<p></p>
+<em>How does XP address that danger? By encouraging developers to write sufficiently comprehensive tests? Or by relying on developers to take that step which you mention, which is saying, &quot;OK, this actually passes my tests, but its not really adequate for the real world because....&quot;.</em>
+<p></p>
+XP addresses that danger with <a href="wiki?PairProgramming">PairProgramming</a>. When obvious boundary cases are overlooked by the programmer driving the keyboard, the programmer acting as navigator points out the oversight. This is an excellent example of a case where a single practice is, by itself, insufficient to reasonably guarantee success but, in combination with a complementary practice, provides excellent results.
+<p></p>
+<em><a href="wiki?TestFirst">TestFirst</a> is a cool way to program source code. XP extends <a href="wiki?TestFirst">TestFirst</a> to all scales of the project. One tests the entire project by frequently releasing it and collecting feedback.</em>
+<p></p>
+<strong>Q: What &quot;real&quot; requirements can you not test?</strong>
+<UL>
+<li> Those requirements which are not stated.
+<li> Requirements which requires highly specialized, unaffordable, or non-existant support hardware to test.  E.g., with hardware such as the Intellasys SEAforth chips, it's possible to generate pulses on an I/O pin as narrow as 6ns under software control.  To <em>see</em> these pulses, you need an oscilloscope with a bandwidth no less than 166MHz, and to make sure their waveform is accurate, you need a bandwidth no less than 500MHz, with 1GHz strongly preferred.  However, at 1GHz bandwidths, you're looking at <em>incredibly</em> expensive sampling oscilloscopes.  Thus, if you cannot afford this kind of hardware, you pretty much have to take it on faith things are OK.  Then, you need some means of feeding this waveform data back to the test framework PC (which may or may not be the PC running the actual test), which adds to the cost.
+</UL>
+<hr>
+Note: here is the link to the pdf file on the yahoo groups area:
+<UL>
+<li> <a href="http://groups.yahoo.com/group/testdrivendevelopment/files/TDD17Jul2002.pdf" rel="nofollow">http://groups.yahoo.com/group/testdrivendevelopment/files/TDD17Jul2002.pdf</a>
+<p></p>
+</UL>
+I found this unexpectedly awkward to locate by searching, so I thought I'd drop the link in here. -- <a href="wiki?DavidPlumpton">DavidPlumpton</a>
+<hr>
+<p></p>
+I've sometimes been an advocate of test driven development, but my enthusiasm has dropped after I've noticed that <a href="wiki?CodeUnitTestFirst">CodeUnitTestFirst</a> goes heavily against prototyping. I prefer a style of coding where the division of responsibility between units and the interfaces live a lot in the beginning of the development cycle, and writing a test for those before the actual code is written will seriously hinder the speed of development and almost certainly end testing the wrong thing.
+<p></p>
+Agreed. Please see my blog entry about adapting TDD for mere mortals at <a href="http://agileskills2.org/blog/2010/02/07/tdd-adapted-for-mere-mortals/" rel="nofollow">http://agileskills2.org/blog/2010/02/07/tdd-adapted-for-mere-mortals/</a> -- <a href="wiki?KentTong">KentTong</a>
+<p></p>
+: <em>Assuming you're not shipping the prototype, there's nothing particularly in conflict. The prototype is in itself a sort of design test. The trouble with prototypes is that they have this habit of becoming the product...</em>
+<p></p>
+<UL>
+<li>[RE: prototypes becoming &quot;the&quot; product.  Arrg.. I agree. <em>No reason for it to happen. TDD makes rewriting slops as clean code absurdly easy</em>]
+<p></p>
+</UL>
+Design is a lot more difficult than implementing a design. But <a href="wiki?UnitTest">UnitTest</a><strong></strong>s explicitly require one to define the design before making it work.
+<p></p>
+There are other problems, too. Like OO methodology, the difficulties which test driven development helps with are sometimes caused by itself. Every extra line of code adds to the complexity of the program, and tests slow down serious refactoring. This is most apparent in hard-to-test things like GUI's, databases and web applications, which sometimes get restructured to allow for testing and get complicated a lot. -- <a href="wiki?PanuKalliokoski">PanuKalliokoski</a>
+<p></p>
+<em><a href="wiki?CodeUnitTestFirst">CodeUnitTestFirst</a> goes heavily against prototyping? Strange, I haven't found that to be true, myself. Closer to the opposite, in fact - I start with a very thin shell of a ProtoType<a href="wiki?edit=ProtoType" rel="nofollow">?</a>, and as I make progress it fills in with real features. I wonder how what you actually do differs from what I actually do.</em>
+<p></p>
+Strongly agree. A big side benefit of <a href="wiki?CodeUnitTestFirst">CodeUnitTestFirst</a> that doesn't get enough attention is how it rearranges your thinking. Instead of thinking &quot;oh I'll need these accessors on these classes, etc&quot; you think in terms of use cases. And you end up with *exactly* what you need, nothing more and nothing less.
+<p></p>
+<em>I find I have a huge increase in speed in all areas of development when I <a href="wiki?CodeUnitTestFirst">CodeUnitTestFirst</a>. I honestly believe that anyone who doesn't experience this is either busy knocking down <a href="wiki?StrawMan">StrawMan</a><strong></strong>s, isn't doing it right, or hasn't really given it a chance.</em>
+<p></p>
+TDDing GUIs is quite frustrating. It may be a lot easier if there were a GUI toolkit available that has been TDDed itself, from the ground up. Anyone interested in such a TDDedGuiFramework project?
+<p></p>
+<em>You mean like <a href="wiki?RubyOnRails">RubyOnRails</a>?  --<a href="wiki?PhlIp">PhlIp</a></em>
+<p></p>
+:-) No, I mean a toolkit for standalone clients (or maybe a hybrid one, people have been experimenting with this already). Something like SWT, but a lot more intuitive :-)
+<p></p>
+<hr>
+<p></p>
+Note that some TDDers abuse <a href="wiki?MockObject">MockObject</a><strong></strong>s. Dynamic mock systems like <a href="http://classmock.sf.net" rel="nofollow">http://classmock.sf.net</a> can make this too easy. A TDD design should be sufficiently decoupled that its native object work fine as stubs and test resources. They help to test other objects without runaway dependencies. One should mock the few remaining things which are too hard to adapt to testing, such as random numbers or filesystem errors.
+<p></p>
+Some of us disagree with that view, see <a href="http://www.mockobjects.com/files/mockrolesnotobjects.pdf" rel="nofollow">http://www.mockobjects.com/files/mockrolesnotobjects.pdf</a> for an alternative.
+<p></p>
+<hr>
+<p></p>
+I'd like to revisit a comment that <a href="wiki?JohnRusk">JohnRusk</a> made above:
+<p></p>
+<em>It seems to me that one danger of <a href="wiki?TestDrivenDevelopment">TestDrivenDevelopment</a> is that developers may _not_ take that step that you take. I.e. developers may stay with overly concrete code that satisfies the tests but not the &quot;real&quot; requirements.</em>
+<p></p>
+See <a href="wiki?FakeItUntilYouMakeIt">FakeItUntilYouMakeIt</a>
+<p></p>
+<hr>
+<p></p>
+The principles of TDD can be applied quite well to analysis and design, also. There's a tutorial on Test-driven Analysis &amp; Design at <a href="http://www.parlezuml.com/tutorials/tdad/index_files/frame.htm" rel="nofollow">http://www.parlezuml.com/tutorials/tdad/index_files/frame.htm</a> which neatly introduces the ideas.
+<p></p>
+-- <a href="wiki?DaveChan">DaveChan</a>
+<p></p>
+<hr>
+<p></p>
+&quot;Roman Numerals&quot; is often held up as a good sample project to learn TDD. I know TDD but I'm bad at math, so I tried the project, and put its results here:
+<p></p>
+<UL>
+<li> <a href="http://www.xpsd.org/cgi-bin/wiki?TestDrivenDevelopmentTutorialRomanNumerals" rel="nofollow">http://www.xpsd.org/cgi-bin/wiki?TestDrivenDevelopmentTutorialRomanNumerals</a>
+<p></p>
+</UL>
+-- <a href="wiki?PhlIp">PhlIp</a>
+<p></p>
+<hr>
+<p></p>
+&lt;shameless plug&gt; Up to date info on tools and practices at <a href="http://testdriven.com" rel="nofollow">http://testdriven.com</a>
+<p></p>
+-- <a href="wiki?DavidVydra">DavidVydra</a>
+<p></p>
+<hr>
+<p></p>
+I found GNU/Unix command line option parsing to be a good TDD exercise as well. My results here:
+<p></p>
+<UL>
+<li> <a href="http://home.comcast.net/~pholser/software/pholser-getopts.zip" rel="nofollow">http://home.comcast.net/~pholser/software/pholser-getopts.zip</a> (3.5Mb download; 4.7Mb unpacked)
+<p></p>
+</UL>
+-- <a href="wiki?PaulHolser">PaulHolser</a>
+<hr>
+<a href="wiki?OrganicTesting">OrganicTesting</a> of the <a href="wiki?TgpMethodology">TgpMethodology</a> is one way to practice <a href="wiki?TestDrivenDevelopment">TestDrivenDevelopment</a>. Organic Testing is an <a href="wiki?AutomatedTest">AutomatedTest</a><strong></strong>s methodology that share resemblance to both <a href="wiki?UnitTest">UnitTest</a> and <a href="wiki?IntegrationTest">IntegrationTest</a>. Like <a href="wiki?UnitTest">UnitTest</a>, they are run by the developers whenever they want (before check-in). Unlike <a href="wiki?UnitTest">UnitTest</a>, only the framework for the test is provided by the programmers, while the actual data of the test is given by <a href="wiki?BusinessProfessionals">BusinessProfessionals</a>. In Organic testing like <a href="wiki?IntegrationTest">IntegrationTest</a><strong></strong>s, in each run the whole software (or a whole module) is activated. -- <a href="wiki?OriInbar">OriInbar</a>
+<hr>
+<p></p>
+Another reference: article &quot;Improving Application Quality Using Test-Driven Development&quot; from Methods &amp; Tools
+<p></p>
+<a href="http://www.methodsandtools.com/archive/archive.php?id=20" rel="nofollow">http://www.methodsandtools.com/archive/archive.php?id=20</a>
+<p></p>
+<hr>
+<p></p>
+But what about SecureDesign<a href="wiki?edit=SecureDesign" rel="nofollow">?</a>? SecurityAsAnAfterthought<a href="wiki?edit=SecurityAsAnAfterthought" rel="nofollow">?</a> is a bad idea and it seems that test-driven development (and a number of other agile processes, though perhaps not all) has a bad habit of ignoring security except as test cases, which isn't always the best way to approach the problem. 
+<p></p>
+-- <a href="wiki?KyleMaxwell">KyleMaxwell</a> 
+<p></p>
+<hr>
+<p></p>
+Hmmmm.  Seems to me that TDD deals with security (as well as things like performance) just like any other functional requirement.  You have a story (or task) explicitly stating what functionality is needed (e.g., user needs 2 passwords to login, which are stored in an LDAP server; or algorithm needs to perform 5000 calculations per second).  You then write tests that will verify functionality.  And then you write the functionality itself.
+<p></p>
+And unlike traditional development, you now have regression tests to make sure that this functionality never gets broken.  (i.e., if, due to subsequent coding, the security code gets broken, or the algorithm performance drops off, you'll have a broken test to alert you of that.)
+<p></p>
+-- <a href="wiki?DavidRosenstrauch">DavidRosenstrauch</a>
+<p></p>
+One of the reasons that security is hard is that security is not just a piece of functionality. Okay, there are things like passwords which are
+security features, but the rest of the code also has to not have security holes, which are NegativeRequirements<a href="wiki?edit=NegativeRequirements" rel="nofollow">?</a>; ie, code must not do X.
+This is obvious in the case of 'must not overflow buffer', which TDD does address, but is less obvious in things like 'component X should 
+not be able to affect component Y'. How do you test that? ( I probably read this in 'Security Engineering', by Ross Anderson, which is now free on the web).
+<p></p>
+-- AlexBurr<a href="wiki?edit=AlexBurr" rel="nofollow">?</a> 
+<p></p>
+<em>In the case of &quot;Component A must not affect Component B&quot;, how would you evaluate this </em>without<em> test-driven development? If you can't formally define this requirement, then TDD is no better or worse than hoping for the best. (One answer in this case may be rule-based formal validation of the system, which is easy enough to plug into a TDD framework.)</em> -- JevonWright<a href="wiki?edit=JevonWright" rel="nofollow">?</a>
+<p></p>
+<hr>
+Some interesting info on test driven development from E. Dijkstra:
+<UL>
+<li> <a href="http://www.cs.utexas.edu/users/EWD/ewd10xx/EWD1012.PDF" rel="nofollow">http://www.cs.utexas.edu/users/EWD/ewd10xx/EWD1012.PDF</a>
+<li> (above is from <a href="http://www.cs.utexas.edu/users/EWD/index10xx.html" rel="nofollow">http://www.cs.utexas.edu/users/EWD/index10xx.html</a>)
+<p></p>
+</UL>
+Bit Torrent founder (Bram) uses test driven development, and thinks Formal methods suck:
+<UL>
+<li> <a href="http://z505.com/cgi-bin/qkcont/qkcont.cgi?p=Bittorrent-Founder-Wrong" rel="nofollow">http://z505.com/cgi-bin/qkcont/qkcont.cgi?p=Bittorrent-Founder-Wrong</a>
+</UL>
+<hr>
+IEEE Software will publish a special issue on Test-Driven Development in July 2007. For more information, see <a href="wiki?IeeeSoftwareSpecialIssueOnTestDrivenDevelopment">IeeeSoftwareSpecialIssueOnTestDrivenDevelopment</a>
+<p></p>
+<hr>
+Found this useful illustration of TDD in .NET (Flash screen cast)
+<a href="http://www.parlezuml.com/tutorials/tdd.html" rel="nofollow">http://www.parlezuml.com/tutorials/tdd.html</a>
+<hr>
+See <a href="wiki?TestFirstUserInterfaces">TestFirstUserInterfaces</a> <a href="wiki?CalvinAndHobbesDiscussTdd">CalvinAndHobbesDiscussTdd</a> <a href="wiki?TestDrivenAnalysisAndDesign">TestDrivenAnalysisAndDesign</a> <a href="wiki?TestDrivenDevelopmentaPracticalGuide">TestDrivenDevelopmentaPracticalGuide</a> <a href="wiki?TestDrivenDevelopmentChallenges">TestDrivenDevelopmentChallenges</a> <a href="wiki?TestDrivenDesignPhaseShift">TestDrivenDesignPhaseShift</a>, <a href="wiki?PowerOfTdd">PowerOfTdd</a>, <a href="wiki?IeeeSoftwareSpecialIssueOnTestDrivenDevelopment">IeeeSoftwareSpecialIssueOnTestDrivenDevelopment</a>, <a href="wiki?BehaviorDrivenDevelopment">BehaviorDrivenDevelopment</a>, <a href="wiki?TestFoodPyramid">TestFoodPyramid</a>
+<p></p>
+<hr>
+<a href="wiki?CategoryTesting">CategoryTesting</a> <a href="wiki?CategoryBook">CategoryBook</a> <a href="wiki?CategoryTestDrivenDevelopment">CategoryTestDrivenDevelopment</a> <a href="wiki?CategoryExtremeProgramming">CategoryExtremeProgramming</a>
+</div>
+</form>
+<hr>
+<a href="wiki?edit=TestDrivenDevelopment" rel="nofollow"><img src=/wiki.png style="border: none;"> EditText</a> of this page
+(last edited <a href=quickDiff?TestDrivenDevelopment rel="nofollow">May 19, 2010</a>)<br>
+<a href="wiki?FindPage">FindPage</a> by searching (or browse <a href=like rel="nofollow">LikePages</a> or take a <a href=tour rel="nofollow">VisualTour</a>)<br>
+<link rel="alternate" type="application/wiki" title="Edit this page!" href="wiki?edit=TestDrivenDevelopment"/>
+<link rel="edit" title="Edit this page" href="wiki?edit=TestDrivenDevelopment" />
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-2377314-2";
+_udn="c2.com"; 
+urchinTracker();
+</script>
+
+</body>
