@@ -1,0 +1,989 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional-dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head id="ctl00_ctl00"><meta name="keywords" content="Automated Unit Testing &amp; TDD, Cool Developer Tools, Visual Studio 2005" />
+<meta name="GENERATOR" content="CommunityServer 2007 SP1 (Build: 20510.895)" />
+<link rel="pingback" href="http://weblogs.asp.net/scottdockendorf/pingback.aspx" />
+<link rel="shortcut icon" type="image/ico" href="/favicon.ico" />
+<link rel="alternate" type="application/rss+xml" title="ScottD&amp;#39;s Musings (RSS 2.0)" href="http://weblogs.asp.net/scottdockendorf/rss.aspx"  />
+<link rel="alternate" type="application/atom+xml" title="ScottD&amp;#39;s Musings (Atom 1.0)" href="http://weblogs.asp.net/scottdockendorf/atom.aspx"  />
+<link rel="alternate" type="application/rss+xml" title="ScottD&#39;s Musings - All Comments (RSS 2.0)" href="http://weblogs.asp.net/scottdockendorf/rsscomments.aspx"  />
+<link rel="alternate" type="application/rss+xml" title="My Uber-Test-Driven Development (&quot;TDD&quot;) Links Listing - Comments for this post (RSS 2.0)" href="http://weblogs.asp.net/scottdockendorf/rsscomments.aspx?PostID=238811"  />
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=7" />
+	<link rel="stylesheet" href="/Themes/Blogs/paperclip/style/style.css?SectionID=444" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/Themes/Blogs/paperclip/style/print.css?SectionID=444" type="text/css" media="print" />
+	<link rel="stylesheet" href="/themes/blogs/paperclip/style/winter.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/Themes/Blogs/paperclip/style/DynamicStyle.aspx?SectionID=444" type="text/css" media="screen" />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://weblogs.asp.net/scottdockendorf/rsd.ashx" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" title="WLWManifest" href="http://weblogs.asp.net/scottdockendorf/wlwmanifest.ashx" />
+<title>
+	My Uber-Test-Driven Development (&quot;TDD&quot;) Links Listing - ScottD&#39;s Musings
+</title></head>
+<body>
+    <form name="aspnetForm" method="post" action="/scottdockendorf/archive/2004/10/06/238811.aspx" id="aspnetForm">
+<div>
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwULLTExNzgzNzk5NjRkGAEFHl9fQ29udHJvbHNSZXF1aXJlUG9zdEJhY2tLZXlfXxYBBS5jdGwwMCRNYWluJGN0bDEwJGN0bDAyJGN0bDAyJGN0bDAyJGNoa1JlbWVtYmVylssj8AOEnLZ+xn1lthGs5fsj4GQ=" />
+</div>
+
+
+<script src="/WebResource.axd?d=q6ov62X28zDBDTdQS5SP034gm-YxSB1SonUG54KNJF7sQoh80b4vpt9w2MYWwuk7wGr6FEP0yR6EHMPqKgL9TInCUISp-mLcSv0L6dp48oeJftigy_ShrKSuHLSrYwRwLmqZtLiL9zI6N1gFf-Bmv1EtdR81&amp;t=634048573380000000" type="text/javascript"></script>
+<script src="/WebResource.axd?d=gCMDOXGl-cxyKf3sgDNQx6yIstazLHyB3PvS2e0HwcRY6mIogZpgKHjdMP0KRItE9sGSZ7P3ecIR5BlU9JC7tJX94y1V8-G6F3wo3IU3TYwh5_9HwGZQoj_6hwhjNpB4UfjKDZOeFoF7AFwpxJhOiEdrj5k1&amp;t=634048573380000000" type="text/javascript"></script>
+<script src="/WebResource.axd?d=SesSnHkYu7DgY1sdJSpkP-dioTxQ9JVUo3l9e9otUB8fW6JEiEI_wYH5KEPhtVdDpJOga6wvS1pFZsth6-T3Zj24sCXgmxaw18DSYXTporuo0V_rfkFN4i0BbsAIfRGp4pQMl2OcLDueln0cPwiND9-iK90Cfj2cLtbwOyIc5qzAw3fs0&amp;t=634048573380000000" type="text/javascript"></script>
+<script src="/WebResource.axd?d=o-VtzwHHoBsG5HMTtFu1D7fVDTX6txs-GiVvcK3sAd2Br7BVCYssI_GR89v-RUIy8oadb1wwdLFc8sgLzTH1714plna4tqAQ-XuigA2FBWXF0kL6jgubVqsyvzYCbTtESuV4EDGA2AcmeKnVoyzztKnCkuXbT2cqkyFcffJUk_CejZJu0&amp;t=634048573380000000" type="text/javascript"></script>
+
+    			
+
+    <div id="masthead">
+	    <div id="userArea">
+	        <div id="welcome" class="welcome" align="right">
+	            
+        <a href="/login.aspx?ReturnUrl=%2fscottdockendorf%2farchive%2f2004%2f10%2f06%2f238811.aspx">Sign in </a>
+         | <a href="/user/CreateUser.aspx?ReturnUrl=">Join</a>
+     
+
+
+	        </div>
+	        
+		    <div id="Search" align="right">
+                    <table cellpadding="0" cellspacing="0" border="0">
+                    <tr><td>
+                        <input name="ctl00$ctl06$ctl00$SearchBox" type="text" id="ctl00_ctl06_ctl00_SearchBox" class="searchBox" Button="SearchButton" onclick="if(this.defaultValue==this.value) this.value='';" onblur="if(this.value=='') this.value=this.defaultValue;" /> 
+                    </td><td>
+                        <span class="SearchButtonOuter"><a id="ctl00_ctl06_ctl00_SearchButton" class="SearchButton" href="javascript:__doPostBack('ctl00$ctl06$ctl00$SearchButton','')">Search</a></span>
+                    </td></tr>
+                    </table>		        
+                </div>
+	    </div>
+	    <div id="title">
+            <h1 class="headermaintitle">ScottD&#39;s Musings</h1>
+            <div>C#, .NET, ASP.NET, Automated Unit Testing, Middle Tier Development, and various topics!</div>
+        </div>
+    </div>
+
+    <div id="nav">
+	    <div id="navbar">
+		    <ul>
+		        <li><a href="/scottdockendorf/default.aspx">Home</a></li>
+			    <li><a href="/scottdockendorf/contact.aspx">Contact</a></li>
+			    <li><a href="/scottdockendorf/about.aspx">About</a></li>
+			    <li><a href="/scottdockendorf/rss.aspx">RSS</a></li>
+			    <li><a href="/scottdockendorf/atom.aspx">Atom</a></li>
+		        <li id="RssComments"><a href="/scottdockendorf/rsscomments.aspx">Comments RSS</a></li>
+			    
+		    </ul>
+	    </div>
+    </div>
+    <div id="content">
+        <div id="leftmenu">
+            
+                
+                
+                
+                
+                <div id="RecentPosts"><h3>Recent Posts</h3>
+<ul>
+<li><a href="/scottdockendorf/archive/2007/06/03/june-4-2007-talk-okcpro-net-developer-s-group.aspx">June 4 2007 - Talk @ OKCPRO.NET Developer's Group</a></li><li><a href="/scottdockendorf/archive/2007/04/26/free-videos-for-wpf-expression-blend.aspx">FREE Videos for WPF &amp;amp; Expression Blend</a></li><li><a href="/scottdockendorf/archive/2007/04/21/dallas-code-camp-talk-today-4-21-2007.aspx">Dallas Code Camp Talk Today (4/21/2007)</a></li><li><a href="/scottdockendorf/archive/2006/11/07/Test-Post-From-BlogMailr.com.aspx">Test Post From BlogMailr.com</a></li><li><a href="/scottdockendorf/archive/2006/10/26/Scott-Guthrie-is-coming-to-Dallas_2100_--Thu.-11_2F00_2_2F00_2006.aspx">Scott Guthrie is coming to Dallas!  Thu. 11/2/2006</a></li>
+</ul></div>
+                
+                
+                <div id="TagSideBar">
+                        <h3>Tags</h3>
+                    <ul class="SidebarTagCloud">
+<li class="Tag2"><a href="/scottdockendorf/archive/tags/_26002300_187_3B00_telligent/default.aspx" rel="tag">&#187;telligent</a></li>
+<li class="Tag3"><a href="/scottdockendorf/archive/tags/.NET/default.aspx" rel="tag">.NET</a></li>
+<li class="Tag1"><a href="/scottdockendorf/archive/tags/.NET+Community/default.aspx" rel="tag">.NET Community</a></li>
+<li class="Tag6"><a href="/scottdockendorf/archive/tags/.NET+Compact+Framework/default.aspx" rel="tag">.NET Compact Framework</a></li>
+<li class="Tag6"><a href="/scottdockendorf/archive/tags/AJAX/default.aspx" rel="tag">AJAX</a></li>
+<li class="Tag2"><a href="/scottdockendorf/archive/tags/Application+Security/default.aspx" rel="tag">Application Security</a></li>
+<li class="Tag2"><a href="/scottdockendorf/archive/tags/Architecture/default.aspx" rel="tag">Architecture</a></li>
+<li class="Tag2"><a href="/scottdockendorf/archive/tags/ASP.NET/default.aspx" rel="tag">ASP.NET</a></li>
+<li class="Tag4"><a href="/scottdockendorf/archive/tags/Atlas/default.aspx" rel="tag">Atlas</a></li>
+<li class="Tag1"><a href="/scottdockendorf/archive/tags/Automated+Unit+Testing+_2600_amp_3B00_+TDD/default.aspx" rel="tag">Automated Unit Testing &amp; TDD</a></li>
+<li class="Tag6"><a href="/scottdockendorf/archive/tags/BlackBerry/default.aspx" rel="tag">BlackBerry</a></li>
+<li class="Tag6"><a href="/scottdockendorf/archive/tags/Blog/default.aspx" rel="tag">Blog</a></li>
+<li class="Tag6"><a href="/scottdockendorf/archive/tags/CodeCamp/default.aspx" rel="tag">CodeCamp</a></li>
+<li class="Tag3"><a href="/scottdockendorf/archive/tags/Community/default.aspx" rel="tag">Community</a></li>
+<li class="Tag3"><a href="/scottdockendorf/archive/tags/Community+Server/default.aspx" rel="tag">Community Server</a></li>
+<li class="Tag1"><a href="/scottdockendorf/archive/tags/Cool+Developer+Tools/default.aspx" rel="tag">Cool Developer Tools</a></li>
+<li class="Tag4"><a href="/scottdockendorf/archive/tags/Development+Methodologies/default.aspx" rel="tag">Development Methodologies</a></li>
+<li class="Tag6"><a href="/scottdockendorf/archive/tags/Expression/default.aspx" rel="tag">Expression</a></li>
+<li class="Tag6"><a href="/scottdockendorf/archive/tags/FireFox/default.aspx" rel="tag">FireFox</a></li>
+<li class="Tag3"><a href="/scottdockendorf/archive/tags/Gaming/default.aspx" rel="tag">Gaming</a></li>
+<li class="Tag4"><a href="/scottdockendorf/archive/tags/Hardware/default.aspx" rel="tag">Hardware</a></li>
+<li class="Tag6"><a href="/scottdockendorf/archive/tags/LINQ/default.aspx" rel="tag">LINQ</a></li>
+<li class="Tag1"><a href="/scottdockendorf/archive/tags/Misc/default.aspx" rel="tag">Misc</a></li>
+<li class="Tag2"><a href="/scottdockendorf/archive/tags/Music/default.aspx" rel="tag">Music</a></li>
+<li class="Tag6"><a href="/scottdockendorf/archive/tags/NHL/default.aspx" rel="tag">NHL</a></li>
+<li class="Tag6"><a href="/scottdockendorf/archive/tags/Patterns/default.aspx" rel="tag">Patterns</a></li>
+<li class="Tag1"><a href="/scottdockendorf/archive/tags/Presentations/default.aspx" rel="tag">Presentations</a></li>
+<li class="Tag6"><a href="/scottdockendorf/archive/tags/Silverlight/default.aspx" rel="tag">Silverlight</a></li>
+<li class="Tag4"><a href="/scottdockendorf/archive/tags/SOA/default.aspx" rel="tag">SOA</a></li>
+<li class="Tag1"><a href="/scottdockendorf/archive/tags/Sports/default.aspx" rel="tag">Sports</a></li>
+<li class="Tag6"><a href="/scottdockendorf/archive/tags/TDD/default.aspx" rel="tag">TDD</a></li>
+<li class="Tag6"><a href="/scottdockendorf/archive/tags/TeliTwitter/default.aspx" rel="tag">TeliTwitter</a></li>
+<li class="Tag6"><a href="/scottdockendorf/archive/tags/Telligent/default.aspx" rel="tag">Telligent</a></li>
+<li class="Tag6"><a href="/scottdockendorf/archive/tags/Twitter/default.aspx" rel="tag">Twitter</a></li>
+<li class="Tag1"><a href="/scottdockendorf/archive/tags/Visual+Studio+2005/default.aspx" rel="tag">Visual Studio 2005</a></li>
+<li class="Tag6"><a href="/scottdockendorf/archive/tags/Web+Services/default.aspx" rel="tag">Web Services</a></li>
+<li class="Tag4"><a href="/scottdockendorf/archive/tags/Windows+Mobile/default.aspx" rel="tag">Windows Mobile</a></li>
+<li class="Tag6"><a href="/scottdockendorf/archive/tags/Windows+Services/default.aspx" rel="tag">Windows Services</a></li>
+<li class="Tag6"><a href="/scottdockendorf/archive/tags/WPF/default.aspx" rel="tag">WPF</a></li>
+</ul>
+</div>
+              
+                
+                <div id="NewsSidebar">
+                        <h3>News</h3>
+                    &lt;script src=&quot;http://jobburner.com/adclient.ashx?/0/6&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;<br />
+<a href="https://mvp.support.microsoft.com/profile=d589f2f5-5b2e-4a0f-bdc0-a563f884de7d">
+<img src="http://www.csharpened.net/scott/images/blog/mvp_color_logo.gif" alt="" />
+<br />
+Visual C# MVP
+</a>
+                        <p />
+                    </div>                
+                                
+                
+                <div id="NavSideBar"><h3>Navigation</h3>
+<ul>
+<li><a href="/">Home</a></li><li><a href="/">Blogs</a></li>
+</ul></div>
+                
+                
+                
+                
+                
+                        <h3>&#187;telligent Bloggers</h3>
+                        
+<ul>
+<li><a href="http://weblogs.asp.net/rhoward">Rob Howard</a></li><li><a href="http://www.jasona.net/">Jason Alexander</a></li><li><a href="http://scottwater.com/">Scott Watermasysk</a></li><li><a href="http://weblogs.asp.net/asmith/">Andy Smith</a></li><li><a href="http://www.qgyen.net/blog/">Ken Robertson</a></li><li><a href="http://www.codeblooded.com/blog/default.aspx">Terry Denham</a></li><li><a href="http://www.mcglumphy.com/blogs/">Mike McGlumphy</a></li><li><a href="http://callmealex.com/cs/default.aspx">Alex Lowe</a></li>
+</ul>
+                    
+                        <h3>.NET Community</h3>
+                        
+<ul>
+<li><a href="http://www.ddnug.net">Dallas .NET User Group</a></li><li><a href="http://www.nddnug.net">>> North .NET User Group</a></li><li><a href="http://www.fwdnug.com">Ft. Worth .NET User Group</a></li><li><a href="http://www.ineta.org">INETA</a></li><li><a href="http://www.ineta.org/DesktopDefault.aspx?tabindex=4&amp;tabid=15">INETA User Group Specials $$$</a></li><li><a href="http://www.dallas-csharp-sig.com/csharpsig/DesktopDefault.aspx">Dallas C# SIG</a></li>
+</ul>
+                    
+                        <h3>About Me</h3>
+                        
+<ul>
+<li><a href="http://weblogs.asp.net/scottdockendorf/articles/242630.aspx">About Me</a></li><li><a href="http://weblogs.asp.net/scottdockendorf/articles/231782.aspx">View Blog Disclaimer</a></li>
+</ul>
+                    
+                        <h3>Blogs I Read</h3>
+                        
+<ul>
+<li><a href="http://blogs.msdn.com/somasegar/">S. Somasegar [MS]</a></li><li><a href="http://weblogs.asp.net/cmenegay">Chris Menegay</a></li><li><a href="http://blogs.msdn.com/danielfe">Dan Fernandez [MS]</a></li><li><a href="http://weblogs.asp.net/michael_Howard/">Michael Howard [MS]</a></li><li><a href="http://weblogs.asp.net/smguest/">Simon Guest [MS]</a></li><li><a href="http://dallas.sark.com/SarkBlog/kcunningham/">Kevin Cunningham</a></li><li><a href="http://weblogs.asp.net/stoey/">Ryan Storgaard [MS]</a></li><li><a href="http://weblogs.asp.net/whaggard/">Wes Puzzling</a></li><li><a href="http://weblogs.asp.net/jsgreenwood/">JS Greenwood</a></li><li><a href="http://blogs.msdn.com/robcaron/">Rob Caron [MS]</a></li><li><a href="http://sqljunkies.com/weblog/brianr/">Brian Randell</a></li><li><a href="http://weblogs.asp.net/yassers/">Yasser Shohoud</a></li><li><a href="http://blog.rogerguess.net">Roger Guess</a></li><li><a href="http://www.hanselman.com/blog/">Scott Hanselman</a></li><li><a href="http://blogs.msdn.com/scottgu">Scott Guthrie [MS]</a></li><li><a href="http://weblogs.asp.net/daviskyle">Kyle Davis</a></li><li><a href="http://weblogs.asp.net/omarv">Omar Villarreal [Dallas DNUG]</a></li><li><a href="http://www.sqlblog.com/default.aspx">Peter DeBetta</a></li>
+</ul>
+                    
+                        <h3>Cool Utilities</h3>
+                        
+<ul>
+<li><a href="http://www.lipsum.com/">Lorem Ipsum Generator</a></li><li><a href="http://www.aisto.com/roeder/dotnet/">Reflector (Lutz Roeder)</a></li><li><a href="http://csharp21.tripod.com/ReflectorAddIns/">Reflector Add-Ins</a></li><li><a href="http://www.gotdotnet.com/workspaces/workspace.aspx?id=0f5846c3-c7aa-4879-8043-e0f4fc233ade">Reflector GDN Space</a></li>
+</ul>
+                    
+                        <h3>Lists - Others</h3>
+                        
+<ul>
+<li><a href="http://www.hanselman.com/blog/PermaLink.aspx?guid=61cbc43d-d888-4092-be5e-312378aa4147">Scott's Presentation Tips #2</a></li><li><a href="http://www.richlanguage.com/archives/the_editing_process.html">Authoring Tips</a></li><li><a href="http://dotnetjunkies.com/WebLog/christopherbowen/archive/2004/06/07/15677.aspx">Tools Affected By VS 2005 Team System</a></li><li><a href="http://www.dofactory.com/Patterns/Patterns.aspx%20">C# Design Patterns Reference</a></li><li><a href="http://www.harding.edu/USER/fmccown/WWW/vbnet_csharp_comparison.html">C# & VB.NET Comparison</a></li><li><a href="http://www.geekswithblogs.net/evjen/archive/2004/12/10/learnaspnet.aspx">Great ASP.NET References</a></li><li><a href="http://www.grimes.demon.co.uk/workshops/fusionWS.htm">.NET Assembly Loading</a></li><li><a href="http://pinvoke.net/">PInvoke Wiki</a></li><li><a href="http://msdn.microsoft.com/netframework/programming/interop/default.aspx?pull=/library/en-us/dndotnet/html/win32map.asp">Win32==>.NET BCL</a></li><li><a href="http://www.venkatarangan.com/blog/PermaLink.aspx?guid=dab57735-2976-40d7-a5d0-2e641ddea515">Good Presentation Tips</a></li><li><a href="http://www.hanselman.com/blog/WhatAGreatNETDevelopersOughtToKnowMoreNETInterviewQuestions.aspx">ScottH's Interview Questions</a></li><li><a href="http://www.hanselman.com/blog/ScottHanselmans2005UltimateDeveloperAndPowerUsersToolList.aspx">ScottH's 2005 Ultimate Tool List</a></li><li><a href="http://blogs.msdn.com/micahel/archive/2004/06/16/157202.aspx">A Good Developer...</a></li><li><a href="http://weblogs.asp.net/lbarbieri/articles/MSF_Resources.aspx">MSF 3.0 Resources</a></li><li><a href="http://weblogs.asp.net/lbarbieri/articles/MSF4_Resources.aspx">MSF 4.0 Resources</a></li><li><a href="http://www.hanselman.com/blog/content/radiostories/2003/09/09/scottHanselmansUltimateDeveloperAndPowerUsersToolsList.html">Uber Tools Listing (from Scott H.)</a></li><li><a href="http://www.hanselman.com/blog/content/radiostories/2003/01/22/scottHanselmansTipsForASuccessfulMsftPresentation.html">Scott's Presentation Tips #1</a></li><li><a href="http://www.hanselman.com/blog/PermaLink.aspx?guid=115">Scott's Presentation Tools</a></li>
+</ul>
+                    
+                        <h3>Lists - Scooter's</h3>
+                        
+<ul>
+<li><a href="http://weblogs.asp.net/scottdockendorf/archive/2004/10/06/238811.aspx">My Uber-TDD List</a></li><li><a href="http://weblogs.asp.net/scottdockendorf/archive/2005/01/26/361020.aspx">.NET Naming Conventions & Coding Standards</a></li>
+</ul>
+                    
+                        <h3>Microsoft Events</h3>
+                        
+<ul>
+<li><a href="http://msdn.microsoft.com/events/devdays/sessions/default.aspx">DevDays 2004 Videos</a></li><li><a href="http://msdn.microsoft.com/netframework/support/training/teched2004/">TechEd 2004 Slides</a></li>
+</ul>
+                    
+                        <h3>Other Posts</h3>
+                        
+<ul>
+<li><a href="http://www.dotnetdevs.com">.NET Developers</a></li>
+</ul>
+                    
+                
+                
+                <div id="ArchiveSideBar"><h3>Archives</h3>
+<ul>
+<li><a href="/scottdockendorf/archive/2007/06.aspx">June 2007 (1)</a></li><li><a href="/scottdockendorf/archive/2007/04.aspx">April 2007 (2)</a></li><li><a href="/scottdockendorf/archive/2006/11.aspx">November 2006 (1)</a></li><li><a href="/scottdockendorf/archive/2006/10.aspx">October 2006 (1)</a></li><li><a href="/scottdockendorf/archive/2006/09.aspx">September 2006 (2)</a></li><li><a href="/scottdockendorf/archive/2006/06.aspx">June 2006 (1)</a></li><li><a href="/scottdockendorf/archive/2006/05.aspx">May 2006 (2)</a></li><li><a href="/scottdockendorf/archive/2006/04.aspx">April 2006 (1)</a></li><li><a href="/scottdockendorf/archive/2006/03.aspx">March 2006 (1)</a></li><li><a href="/scottdockendorf/archive/2006/02.aspx">February 2006 (1)</a></li><li><a href="/scottdockendorf/archive/2005/11.aspx">November 2005 (2)</a></li><li><a href="/scottdockendorf/archive/2005/09.aspx">September 2005 (2)</a></li><li><a href="/scottdockendorf/archive/2005/08.aspx">August 2005 (6)</a></li><li><a href="/scottdockendorf/archive/2005/07.aspx">July 2005 (11)</a></li><li><a href="/scottdockendorf/archive/2005/05.aspx">May 2005 (5)</a></li><li><a href="/scottdockendorf/archive/2005/04.aspx">April 2005 (12)</a></li><li><a href="/scottdockendorf/archive/2005/03.aspx">March 2005 (12)</a></li><li><a href="/scottdockendorf/archive/2005/02.aspx">February 2005 (17)</a></li><li><a href="/scottdockendorf/archive/2005/01.aspx">January 2005 (19)</a></li><li><a href="/scottdockendorf/archive/2004/12.aspx">December 2004 (15)</a></li><li><a href="/scottdockendorf/archive/2004/11.aspx">November 2004 (20)</a></li><li><a href="/scottdockendorf/archive/2004/10.aspx">October 2004 (19)</a></li><li><a href="/scottdockendorf/archive/2004/09.aspx">September 2004 (4)</a></li>
+</ul></div> 
+	        
+        </div>
+        <div id="main">
+	        
+    <div class="post">
+       <h2 class="pageTitle">My Uber-Test-Driven Development (&quot;TDD&quot;) Links Listing</h2>
+
+       <font face="Tahoma" size="2"> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><b style="mso-bidi-font-weight: normal"><span style="FONT-SIZE: 14pt"><font face="Tahoma"><font size="3">Welcome to the home for my Uber-List of <span style="COLOR: red">Test-Driven Development</span> Links</font></font></span></b></p> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><b style="mso-bidi-font-weight: normal"><span style="FONT-SIZE: 14pt"><font face="Tahoma"><font size="3"><?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /><o:p></o:p></font></font></span></b>&nbsp;</p></font> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><font face="Tahoma" size="2">I discovered TDD about 3 years ago, and haven't stopped using it since.&nbsp; Wanting to&nbsp;give back to the community,&nbsp;I wanted to share&nbsp;any/all links that I have for TDD/VS 2005/etc...&nbsp; I will continue to modify this list, so please let me know your feedback, questions, additions, etc...</font></p> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><font face="Tahoma" size="2"></font>&nbsp;</p> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><font face="Tahoma" size="2">Known issues</font></p> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><font face="Tahoma" size="2">1 -&nbsp;VS 2005 &amp; TDD Articles need more links.&nbsp; I hope to have some more ASAP.</font></p> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><font face="Tahoma" size="2">2 - I might pull Development Methodologies into it's own category.&nbsp; Will let everyone know if I do so.</font></p> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><font face="Tahoma" size="2"></font>&nbsp;</p> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><font face="Tahoma" color="#008000" size="2">/*</font></p> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><font face="Tahoma" color="#008000" size="2">&nbsp;&nbsp;&nbsp;Modification History</font></p> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><font face="Tahoma" color="#008000" size="2">&nbsp;&nbsp;&nbsp;10/19/2004&nbsp;&nbsp;&nbsp;Added TDD Blog link&nbsp;to Michael's (Unit Test Code as sacred as Production Code) Post</font></p> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt">&nbsp;&nbsp;&nbsp;<font face="Tahoma" color="#008000" size="2">10/20/2004&nbsp;&nbsp;&nbsp;Added Drag &amp; Drop Unit Test for MbUnit</font></p> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><font face="Tahoma" color="#008000" size="2">&nbsp;&nbsp; 11/30/2004&nbsp;&nbsp; Replaced NunitAddin for TestDriven.net</font></p> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><font face="Tahoma" color="#008000" size="2">&nbsp;&nbsp;&nbsp;12/06/2004&nbsp;&nbsp; Added <a href="http://www.developertesting.com/">http://www.developertesting.com/</a>&nbsp;and Blog article on Google/TDD/xP</font></p> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><font face="Tahoma" color="#008000" size="2">*/</font></p> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><font face="Tahoma" size="2"></font>&nbsp;</p> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><font face="Tahoma" size="2">Enjoy &amp; Cheers,</font></p> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><font face="Tahoma" size="2"><em>Scooter</em></font></p> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><font face="Tahoma" size="2"></font>&nbsp;</p> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><o:p><font face="Tahoma" size="2">&nbsp;</font></o:p></p> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><b style="mso-bidi-font-weight: normal"><font face="Tahoma"><font size="2">Methodology / Approach<o:p></o:p></font></font></b></p> <ul style="MARGIN-TOP: 0in" type="disc"> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l1 level1 lfo4; tab-stops: list .5in"><font face="Tahoma" size="2">TDD evolved from eXtreme Programming Methodology - </font><a href="http://www.xprogramming.com/xpmag/whatisxp.htm#test" target="_new"><font face="Tahoma" size="2">http://www.xprogramming.com/xpmag/whatisxp.htm#test</font></a><font face="Tahoma" size="2"> </font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l1 level1 lfo4; tab-stops: list .5in"><font face="Tahoma"><font size="2">Listing of xUnit Test Runners - <b><a href="http://www.xprogramming.com/software.htm" target="_new">www.xprogramming.com/software.htm</a> </b></font></font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l1 level1 lfo4; tab-stops: list .5in"><span style="mso-bidi-font-weight: bold"><font face="Tahoma" size="2">TestDriven.com – </font><a href="http://www.testdriven.com/" target="_new"><font face="Tahoma" size="2">www.testdriven.com</font></a></span> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l1 level1 lfo4; tab-stops: list .5in"><a href="http://www.parlezuml.com/" target="_new"><font face="Tahoma" size="2">http://www.parlezuml.com/</font></a><font face="Tahoma" size="2"> (Good UML &amp; TDD reference)</font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l1 level1 lfo4; tab-stops: list .5in"><font face="Tahoma" size="2"><font color="#ff0000">(new) </font><a href="http://www.developertesting.com/">http://www.developertesting.com/</a></font></li></ul> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><b style="mso-bidi-font-weight: normal"><font face="Tahoma"><font size="2">TDD Blog Roll<o:p></o:p></font></font></b></p> <ul style="MARGIN-TOP: 0in" type="disc"> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l10 level1 lfo14; tab-stops: list .5in"><font face="Tahoma" size="2">James Newkirk (Father of NUnit, now MS Employee!) – </font><A href="http://weblogs.asp.net/jamesnewkirk/" target="_new"><font face="Tahoma" size="2">http://weblogs.asp.net/jamesnewkirk/</font></a><font face="Tahoma" size="2"> </font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l10 level1 lfo14; tab-stops: list .5in"><font face="Tahoma" size="2">Roy Osherove – Iserializable’s TDD Category - </font><A href="http://weblogs.asp.net/rosherove/category/3037.aspx" target="_new"><font face="Tahoma" size="2">http://weblogs.asp.net/rosherove/category/3037.aspx</font></a><font face="Tahoma" size="2"> </font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l10 level1 lfo14; tab-stops: list .5in"><font face="Tahoma" size="2">Darrell Norton’s TDD Category - </font><a href="http://dotnetjunkies.com/WebLog/darrell.norton/category/1029.aspx" target="_new"><font face="Tahoma" size="2">http://dotnetjunkies.com/WebLog/darrell.norton/category/1029.aspx</font></a><font face="Tahoma" size="2"> </font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l10 level1 lfo14; tab-stops: list .5in"><font face="Tahoma" size="2">Visual Studio 2005 Team System Blogroll - </font><a href="http://lab.msdn.microsoft.com/vs2005/teamsystem/blogs.aspx" target="_new"><font face="Tahoma" size="2">http://lab.msdn.microsoft.com/vs2005/teamsystem/blogs.aspx</font></a> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l10 level1 lfo14; tab-stops: list .5in"><font face="Tahoma" size="2"><font color="#ff0000">(New)&nbsp;</font>Jonathan Cogley's TDD Category - </font><A href="http://weblogs.asp.net/jcogley/category/3607.aspx?Show=All"><font face="Tahoma" size="2">http://weblogs.asp.net/jcogley/category/3607.aspx?Show=All</font></a> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l10 level1 lfo14; tab-stops: list .5in"><font face="Tahoma" size="2"><font color="#ff0000">(new)</font> Good Post - Consider Unit Test Code as sacred as production code - </font><a href="http://blogs.msdn.com/micahel/archive/2004/10/13/241775.aspx"><font face="Tahoma" size="2">http://blogs.msdn.com/micahel/archive/2004/10/13/241775.aspx</font></a></li></ul> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><b style="mso-bidi-font-weight: normal"><font face="Tahoma"><font size="2">Software – Commercial Test Runners<o:p></o:p></font></font></b></p> <ul style="MARGIN-TOP: 0in" type="square"> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l14 level1 lfo6; tab-stops: list .5in"><font face="Tahoma" size="2">HarnessIT - </font><a href="http://www.unittesting.com/" target="_new"><font face="Tahoma" size="2">http://www.unittesting.com</font></a> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l14 level1 lfo6; tab-stops: list .5in"><font face="Tahoma" size="2">XUnity - </font><a href="http://x-unity.miik.com.ua/" target="_new"><font face="Tahoma" size="2">http://X-unity.miik.com.ua</font></a> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l14 level1 lfo6; tab-stops: list .5in"><font face="Tahoma" size="2">Unite.NET - </font><a href="http://www.ascentiv.ch/" target="_new"><font face="Tahoma" size="2">http://www.ascentiv.ch</font></a><font face="Tahoma" size="2"> (Unit &amp; Integration Testing)</font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l14 level1 lfo6; tab-stops: list .5in"><font face="Tahoma" size="2">.TEST - </font><a href="http://www.parasoft.com/jsp/products/home.jsp?product=TestNet&amp;itemId=158" target="_new"><font face="Tahoma" size="2">http://www.parasoft.com/jsp/products/home.jsp?product=TestNet&amp;itemId=158</font></a><font face="Tahoma" size="2"> </font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l14 level1 lfo6; tab-stops: list .5in"><font face="Tahoma" size="2">Visual Studio 2005 &amp; Team System (Team Developer &amp; Team Test Editions) - </font><a href="http://lab.msdn.microsoft.com/vs2005/teamsystem/" target="_new"><font face="Tahoma" size="2">http://lab.msdn.microsoft.com/vs2005/teamsystem/</font></a><font face="Tahoma" size="2"> </font></li></ul> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><b style="mso-bidi-font-weight: normal"><font face="Tahoma"><font size="2">Software – Open-Source Test Runners<o:p></o:p></font></font></b></p> <ul style="MARGIN-TOP: 0in" type="disc"> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l0 level1 lfo5; tab-stops: list .5in"><font face="Tahoma" size="2">Nunit – </font><a href="http://www.nunit.org/" target="_new"><font face="Tahoma" size="2">www.nunit.org</font></a> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l0 level1 lfo5; tab-stops: list .5in"><font face="Tahoma" size="2">csUnit – </font><a href="http://www.csunit.org/" target="_new"><font face="Tahoma" size="2">www.csUnit.org</font></a> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l0 level1 lfo5; tab-stops: list .5in"><font face="Tahoma" size="2">mbunit - </font><a href="http://mbunit.tigris.org/" target="_new"><font face="Tahoma" size="2">http://mbunit.tigris.org/</font></a><font face="Tahoma" size="2"> </font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l0 level1 lfo5; tab-stops: list .5in"><font face="Tahoma" size="2">RUnit - </font><a href="http://www.ruxp.net/runit.asp" target="_new"><font face="Tahoma" size="2">http://www.ruxp.net/runit.asp</font></a><font face="Tahoma" size="2"> (Very cool - runs NUnit tests in ASP.NET… run from any browser, remotely, etc…)</font></li></ul> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><b style="mso-bidi-font-weight: normal"><font face="Tahoma"><font size="2">Software – Open-Source Test Runner Complements<o:p></o:p></font></font></b></p> <ul style="MARGIN-TOP: 0in" type="disc"> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l7 level1 lfo7; tab-stops: list .5in"><font face="Tahoma" size="2">NUnit MSI (Nunit Plugin for MSI Installer) – VERY COOL! </font><A href="http://weblogs.asp.net/jsgreenwood/archive/2004/08/18/216229.aspx" target="_new"><font face="Tahoma" size="2">http://weblogs.asp.net/jsgreenwood/archive/2004/08/18/216229.aspx</font></a><font face="Tahoma" size="2"> </font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l7 level1 lfo7; tab-stops: list .5in"><font face="Tahoma" size="2">NUnitASP - </font><a href="http://nunitasp.sourceforge.net/" target="_new"><font face="Tahoma" size="2">http://nunitasp.sourceforge.net/</font></a><font face="Tahoma"><font size="2"><span style="mso-spacerun: yes">&nbsp;&nbsp; </span>(Good Blog Tips &amp; Tricks, </font></font><a href="http://dotnetjunkies.com/WebLog/darrell.norton/archive/2004/01/22/5950.aspx" target="_new"><font face="Tahoma" size="2">here</font></a><font face="Tahoma" size="2">)</font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l7 level1 lfo7; tab-stops: list .5in"><font face="Tahoma" size="2">NunitForms - </font><a href="http://nunitforms.sourceforge.net/" target="_new"><font face="Tahoma" size="2">http://nunitforms.sourceforge.net/</font></a><font face="Tahoma"><font size="2"><span style="mso-spacerun: yes">&nbsp; </span>(WinForms unit testing with Recorder app)</font></font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l7 level1 lfo7; tab-stops: list .5in"><font face="Tahoma" size="2">Mailframe’s TestRunner for VS.NET 2003 - </font><a href="http://www.mailframe.net/Products/TestRunner.htm" target="_new"><font face="Tahoma" size="2">http://www.mailframe.net/Products/TestRunner.htm</font></a><font face="Tahoma" size="2"> (repalces use of NUnitGui, integrated into VS.NET 2003)</font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l7 level1 lfo7; tab-stops: list .5in"><font face="Tahoma" size="2">VSNUnit for VS.NET (Link appears to be dead at this time)</font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l7 level1 lfo7; tab-stops: list .5in"><font face="Tahoma" size="2"><strike>NUnitAddin - </strike></font><A href="http://weblogs.asp.net/nunitaddin" target="_new"><font face="Tahoma" size="2"><strike>http://weblogs.asp.net/nunitaddin</strike></font></a> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l7 level1 lfo7; tab-stops: list .5in"><font face="Tahoma" size="2"><font color="#ff0000">(new)</font> TestDriven.net&nbsp;(Replaces NUnitAddin) - &nbsp;</font><a href="http://www.testdriven.net"><font face="Tahoma" size="2">http://www.testdriven.net</font></a><font face="Tahoma" size="2"> </font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l7 level1 lfo7; tab-stops: list .5in"><font face="Tahoma" size="2"><font color="#ff0000">(new)</font> NunitForms - </font><a href="http://sourceforge.net/projects/nunitforms/"><font face="Tahoma" size="2">http://sourceforge.net/projects/nunitforms/</font></a><font face="Tahoma" size="2">&nbsp;(Windows Forms testing with NUnit)</font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l7 level1 lfo7; tab-stops: list .5in"><font face="Tahoma" size="2"><font color="#ff0000">(new)</font> MBUnit - Drag &amp; Drop Unit Tests!&nbsp; VERY COOL (w/ Flash Demonstration) - <a href="http://blog.dotnetwiki.org/archive/2004/09/16/963.aspx">http://blog.dotnetwiki.org/archive/2004/09/16/963.aspx</a></font></li></ul> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><b style="mso-bidi-font-weight: normal"><font face="Tahoma"><font size="2">Software – Open-Source Mock Objects<o:p></o:p></font></font></b></p> <ul style="MARGIN-TOP: 0in" type="disc"> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l5 level1 lfo9; tab-stops: list .5in"><font face="Tahoma" size="2">EasyMock.NET - </font><a href="http://sourceforge.net/projects/easymocknet/" target="_new"><font face="Tahoma" size="2">http://sourceforge.net/projects/easymocknet/</font></a> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l5 level1 lfo9; tab-stops: list .5in"><font face="Tahoma" size="2">MockObjects - </font><a href="http://www.mockobjects.com/FrontPage.html" target="_new"><font face="Tahoma" size="2">http://www.mockobjects.com/FrontPage.html</font></a><font face="Tahoma" size="2"> (Good overall reference)</font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l5 level1 lfo9; tab-stops: list .5in"><font face="Tahoma" size="2">DotNetMock - </font><a href="http://sourceforge.net/projects/dotnetmock/" target="_new"><font face="Tahoma" size="2">http://sourceforge.net/projects/dotnetmock/</font></a> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l5 level1 lfo9; tab-stops: list .5in"><font face="Tahoma" size="2">POCMock - </font><a href="http://en.www.prettyobjects.com/POCMock.aspx" target="_new"><font face="Tahoma" size="2">http://en.www.prettyobjects.com/POCMock.aspx</font></a><font face="Tahoma" size="2"> </font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l5 level1 lfo9; tab-stops: list .5in"><font face="Tahoma" size="2">NMock - </font><a href="http://nmock.truemesh.com/" target="_new"><font face="Tahoma" size="2">http://nmock.truemesh.com/</font></a><font face="Tahoma" size="2"> </font></li></ul> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><b style="mso-bidi-font-weight: normal"><font face="Tahoma"><font size="2">Software - Unit Testing &amp; Tools for Xml Web Services<o:p></o:p></font></font></b></p> <ul style="MARGIN-TOP: 0in" type="disc"> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l2 level1 lfo1; tab-stops: list .5in 1.0in"><font face="Tahoma" size="2">AmberPoint Express - </font><a href="http://www.amberpoint.com/solutions/express.shtml" target="_new"><font face="Tahoma" size="2">http://www.amberpoint.com/solutions/express.shtml</font></a> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l2 level1 lfo1; tab-stops: list .5in 1.0in"><font face="Tahoma"><font size="2">Proxy Trace - <span style="mso-bidi-font-weight: bold"><a href="http://www.pocketsoap.com/tcptrace/pt.aspx" target="_new">http://www.pocketsoap.com/tcptrace/pt.aspx</a> <o:p></o:p></span></font></font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l2 level1 lfo1; tab-stops: list .5in 1.0in"><font face="Tahoma"><font size="2">Soap Scope - <span style="mso-bidi-font-weight: bold"><a href="http://www.mindreef.com/products/overview.html" target="_new">http://www.mindreef.com/products/overview.html</a> </span></font></font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l2 level1 lfo1; tab-stops: list .5in 1.0in"><font face="Tahoma"><font size="2">WSE 2.0 Tracing Utility - <span style="mso-bidi-font-weight: bold"><a href="http://mtaulty.com/blog/archive/2004/05/25/433.aspx" target="_new">http://mtaulty.com/blog/archive/2004/05/25/433.aspx</a><b><o:p></o:p></b></span></font></font></li></ul> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><b style="mso-bidi-font-weight: normal"><font face="Tahoma" size="2">Books (Linked to the greatness that is </font><a href="http://www.bookpool.com/" target="_new"><font face="Tahoma" size="2">www.bookpool.com</font></a><font face="Tahoma"><font size="2"> )<o:p></o:p></font></font></b></p> <ul style="MARGIN-TOP: 0in" type="disc"> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l6 level1 lfo10; tab-stops: list .5in"><font face="Tahoma" size="2">Test-Driven Development in Microsoft.NET (James Newkirk) - </font><a href="http://www.bookpool.com/.x/qb9tcf9zii/sm/0735619484" target="_new"><font face="Tahoma" size="2">http://www.bookpool.com/.x/qb9tcf9zii/sm/0735619484</font></a><font face="Tahoma"><font size="2"><span style="mso-spacerun: yes">&nbsp; </span>(Code @ </font></font><a href="http://www.gotdotnet.com/workspaces/workspace.aspx?ID=348DD896-50B5-42B8-8FF6-9621BD4FEFF9" target="_new"><font face="Tahoma" size="2">GDN Workspace</font></a><font face="Tahoma" size="2">)</font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l6 level1 lfo10; tab-stops: list .5in"><font face="Tahoma" size="2">Test-Driven Development: By Example (Kent Beck) - </font><a href="http://www.bookpool.com/.x/qb9tcf9zii/sm/0321146530" target="_new"><font face="Tahoma" size="2">http://www.bookpool.com/.x/qb9tcf9zii/sm/0321146530</font></a> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l6 level1 lfo10; tab-stops: list .5in"><font face="Tahoma" size="2">Test-Driven Development: A Practical Guide (Dave Astels) - </font><a href="http://www.bookpool.com/.x/qb9tcf9zii/sm/0131016490" target="_new"><font face="Tahoma" size="2">http://www.bookpool.com/.x/qb9tcf9zii/sm/0131016490</font></a><font face="Tahoma" size="2"> </font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l6 level1 lfo10; tab-stops: list .5in"><font face="Tahoma" size="2">Pragmatic Unit Testing in C# &amp; NUnit (Andy Hunt, Dave Thomas) - </font><a href="http://www.bookpool.com/.x/qb9tcfhjy1/ss?qs=0-9745140-2-0&amp;x=26&amp;y=5" target="_new"><font face="Tahoma" size="2">http://www.bookpool.com/.x/qb9tcfhjy1/ss?qs=0-9745140-2-0&amp;x=26&amp;y=5</font></a><font face="Tahoma" size="2"> </font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l6 level1 lfo10; tab-stops: list .5in"><font face="Tahoma" size="2"><font color="#ff0000">(new)</font> Interesting Read Google does TDD &amp; xP - <a href="http://geekswithblogs.net/srkprasad/archive/2004/12/03/16712.aspx">http://geekswithblogs.net/srkprasad/archive/2004/12/03/16712.aspx</a></font></li></ul> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><b style="mso-bidi-font-weight: normal"><font face="Tahoma"><font size="2">Articles<o:p></o:p></font></font></b></p> <ul style="MARGIN-TOP: 0in" type="disc"> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l13 level1 lfo8; tab-stops: list .5in"><font face="Tahoma" size="2">Microsoft God Eric Gunnerson’s article on TDD &amp; Test-First Development - </font><a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dncscol/html/csharp03202003.asp" target="_new"><font face="Tahoma" size="2">http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dncscol/html/csharp03202003.asp</font></a><font face="Tahoma" size="2"> </font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l13 level1 lfo8; tab-stops: list .5in"><font face="Tahoma" size="2">Scott Ambler’s Article on TDD - </font><a href="http://www.agiledata.org/essays/tdd.html" target="_new"><font face="Tahoma" size="2">http://www.agiledata.org/essays/tdd.html</font></a> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l12 level1 lfo3; tab-stops: list .5in"><span style="mso-bidi-font-weight: bold"><font face="Tahoma" size="2">TDD Overview<span style="mso-spacerun: yes">&nbsp; </span>- </font><a href="http://www.codeproject.com/dotnet/tdd_in_dotnet.asp" target="_new"><font face="Tahoma" size="2">http://www.codeproject.com/dotnet/tdd_in_dotnet.asp</font></a><font face="Tahoma"><font size="2"> <o:p></o:p></font></font></span> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l13 level1 lfo8; tab-stops: list .5in"><font face="Tahoma" size="2">Review of James Newkirk’s TechEd Europe BOF Session - <span style="mso-bidi-font-weight: bold"><a href="http://benjaminm.net/PermaLink.aspx?guid=fdd292d0-a324-4178-b46e-f02a114bde74" target="_new">http://benjaminm.net/PermaLink.aspx?guid=fdd292d0-a324-4178-b46e-f02a114bde74</a></span> </font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l13 level1 lfo8; tab-stops: list .5in"><font face="Tahoma" size="2">Organizing Your Automated Tests (9-part series) - </font><a href="http://tap.testautomationpatterns.com:8080/TestAutomationOverview.html" target="_new"><font face="Tahoma" size="2">http://tap.testautomationpatterns.com:8080/TestAutomationOverview.html</font></a><font face="Tahoma" size="2"> </font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l13 level1 lfo8; tab-stops: list .5in"><font face="Tahoma" size="2">(more to come)</font></li></ul> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><b style="mso-bidi-font-weight: normal"><font face="Tahoma"><font size="2">Software - Code Coverage (How much code actually executed?)<o:p></o:p></font></font></b></p> <ul style="MARGIN-TOP: 0in" type="disc"> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l13 level1 lfo8; tab-stops: list .5in"><font face="Tahoma" size="2">NCover - </font><a href="http://ncover.sourceforge.net/" target="_new"><font face="Tahoma" size="2">http://ncover.sourceforge.net/</font></a><font face="Tahoma" size="2"> </font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l13 level1 lfo8; tab-stops: list .5in"><font face="Tahoma" size="2">CoverageEye.NET - </font><a href="http://www.gotdotnet.com/Community/UserSamples/Details.aspx?SampleGuid=881A36C6-6F45-4485-A94E-060130687151" target="_new"><font face="Tahoma" size="2">http://www.gotdotnet.com/Community/UserSamples/Details.aspx?SampleGuid=881A36C6-6F45-4485-A94E-060130687151</font></a><font face="Tahoma" size="2"> </font></li></ul> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><b style="mso-bidi-font-weight: normal"><font face="Tahoma"><font size="2">Refactoring:<o:p></o:p></font></font></b></p> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><o:p><font face="Tahoma" size="2">&nbsp;</font></o:p></p> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><font face="Tahoma" size="2">Sites:</font></p> <ul style="MARGIN-TOP: 0in" type="disc"> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l13 level1 lfo8; tab-stops: list .5in"><font face="Tahoma" size="2">Martin Fowler’s Refactoring Portal - </font><a href="http://www.refactoring.com/" target="_new"><font face="Tahoma" size="2">http://www.refactoring.com/</font></a><font face="Tahoma" size="2"> </font></li></ul> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><font face="Tahoma" size="2">Software:</font></p> <ul style="MARGIN-TOP: 0in" type="disc"> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l13 level1 lfo8; tab-stops: list .5in"><font face="Tahoma" size="2">C# ReFactory - </font><a href="http://www.xtreme-simplicity.net/" target="_new"><font face="Tahoma" size="2">http://www.xtreme-simplicity.net/</font></a><font face="Tahoma" size="2"> </font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l13 level1 lfo8; tab-stops: list .5in"><font face="Tahoma" size="2">C#/Refactoring Tutorial - </font><a href="http://www.parlezuml.com/tutorials/dotnet_refactoring/intro.htm" target="_new"><font face="Tahoma" size="2">http://www.parlezuml.com/tutorials/dotnet_refactoring/intro.htm</font></a><font face="Tahoma" size="2"> </font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l13 level1 lfo8; tab-stops: list .5in"><font face="Tahoma" size="2"><font color="#ff0000">(New)</font> JetBrains Resharper (VS.NET AddIn) - <a href="http://www.jetbrains.com/resharper/">http://www.jetbrains.com/resharper/</a></font></li></ul> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><font face="Tahoma" size="2">Books:</font></p> <ul style="MARGIN-TOP: 0in" type="disc"> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l8 level1 lfo15; tab-stops: list .5in"><font face="Tahoma" size="2">Refactoring to Patterns (<i><span style="FONT-SIZE: 8pt; COLOR: black; FONT-FAMILY: Verdana">Joshua Kerievsky</span></i>) - </font><a href="http://www.bookpool.com/.x/qb9tcf7fz1/sm/0321213351" target="_new"><font face="Tahoma" size="2">http://www.bookpool.com/.x/qb9tcf7fz1/sm/0321213351</font></a> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l8 level1 lfo15; tab-stops: list .5in"><font face="Tahoma" size="2">Refactoring: Improving the design of Existing Code (Martin Fowler) AWESOME BOOK - </font><a href="http://www.bookpool.com/.x/qb9tcf7fz1/sm/0201485672" target="_new"><font face="Tahoma" size="2">http://www.bookpool.com/.x/qb9tcf7fz1/sm/0201485672</font></a><font face="Tahoma" size="2"> </font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l8 level1 lfo15; tab-stops: list .5in"><font face="Tahoma" size="2">Refactoring Workbook (William C Wake)- </font><a href="http://www.bookpool.com/.x/qb9tcf7fz1/sm/0321109295" target="_new"><font face="Tahoma" size="2">http://www.bookpool.com/.x/qb9tcf7fz1/sm/0321109295</font></a><font face="Tahoma" size="2"> </font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l8 level1 lfo15; tab-stops: list .5in"><font face="Tahoma" size="2">Anti-Patterns: Refactoring Software, Architectures, and Projects in Crisis (William Brown, et. al.) - </font><a href="http://www.bookpool.com/.x/qb9tcf7fz1/sm/0471197130" target="_new"><font face="Tahoma" size="2">http://www.bookpool.com/.x/qb9tcf7fz1/sm/0471197130</font></a><font face="Tahoma" size="2"> </font></li></ul> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><o:p><font face="Tahoma" size="2"></font></o:p>&nbsp;</p> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><o:p><font face="Tahoma" size="2">&nbsp;</font></o:p></p> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><b style="mso-bidi-font-weight: normal"><font face="Tahoma"><font size="2">Development Methodologies Links<o:p></o:p></font></font></b></p> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><font face="Tahoma" size="2"></font>&nbsp;</p> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><font face="Tahoma" size="2">MSF - </font><a href="http://msdn.microsoft.com/vstudio/enterprise/msf/" target="_new"><font face="Tahoma" size="2">http://msdn.microsoft.com/vstudio/enterprise/msf/</font></a><font face="Tahoma" size="2"> </font></p> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><font face="Tahoma" size="2">FDD</font></p> <ul style="MARGIN-TOP: 0in" type="disc"> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l9 level1 lfo2; tab-stops: list .5in"><a href="http://www.featuredrivendevelopment.com/" target="_new"><font face="Tahoma" size="2">http://www.featuredrivendevelopment.com/</font></a> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l9 level1 lfo2; tab-stops: list .5in"><a href="http://www.nebulon.com/fdd/" target="_new"><font face="Tahoma" size="2">http://www.nebulon.com/fdd/</font></a> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l9 level1 lfo2; tab-stops: list .5in"><o:p><font face="Tahoma" size="2">&nbsp;</font></o:p></li></ul> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><font face="Tahoma" size="2">Agile - </font><a href="http://www.agilemanifesto.org/" target="_new"><font face="Tahoma" size="2">http://www.agilemanifesto.org/</font></a></p> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><font face="Tahoma" size="2">xP – </font></p> <ul style="MARGIN-TOP: 0in" type="disc"> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l4 level1 lfo13; tab-stops: list .5in"><a href="http://www.xpexchange.net/en/index.html" target="_new"><font face="Tahoma" size="2">http://www.xpexchange.net/en/index.html</font></a> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l4 level1 lfo13; tab-stops: list .5in"><a href="http://www.xprogramming.com/" target="_new"><font face="Tahoma" size="2">http://www.xprogramming.com</font></a><font face="Tahoma" size="2"> </font></li></ul> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><font face="Tahoma" size="2">SCRUM</font></p> <ul style="MARGIN-TOP: 0in" type="disc"> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l3 level1 lfo12; tab-stops: list .5in"><font face="Tahoma" size="2">Control Chaos – (Home of Scrum)- </font><a href="http://www.controlchaos.com/" target="_new"><font face="Tahoma" size="2">http://www.controlchaos.com/</font></a> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l3 level1 lfo12; tab-stops: list .5in"><font face="Tahoma" size="2">Book: Agile Project Management with Scrum (Ken Schwaber ) - </font><a href="http://www.bookpool.com/.x/qb9tcfatk4/sm/073561993X" target="_new"><font face="Tahoma" size="2">http://www.bookpool.com/.x/qb9tcfatk4/sm/073561993X</font></a><font face="Tahoma" size="2"> </font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l3 level1 lfo12; tab-stops: list .5in"><font face="Tahoma" size="2">Scrum Process - </font><a href="http://c2.com/cgi/wiki?ScrumProcess" target="_new"><font face="Tahoma" size="2">http://c2.com/cgi/wiki?ScrumProcess</font></a><font face="Tahoma" size="2"> </font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l3 level1 lfo12; tab-stops: list .5in"><font face="Tahoma" size="2">Blog Post - </font><a href="http://bolourian.com/archive/2004/03/25/161.aspx" target="_new"><font face="Tahoma" size="2">http://bolourian.com/archive/2004/03/25/161.aspx</font></a> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l3 level1 lfo12; tab-stops: list .5in"><font face="Tahoma" size="2">Get Ready For Scrum (excerpt&amp;nbsp;from Agile Software Development with Scrum book) - </font><a href="http://www.controlchaos.com/excerpt.pdf" target="_new"><font face="Tahoma" size="2">http://www.controlchaos.com/excerpt.pdf</font></a><font face="Tahoma" size="2"> </font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l3 level1 lfo12; tab-stops: list .5in"><font face="Tahoma" size="2">Introducing an Agile Process to an Organization - </font><a href="http://www.mountaingoatsoftware.com/articles/IntroducingAnAgileProcess.pdf" target="_new"><font face="Tahoma" size="2">http://www.mountaingoatsoftware.com/articles/IntroducingAnAgileProcess.pdf</font></a><font face="Tahoma" size="2"> </font></li></ul> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><o:p><font face="Tahoma" size="2">&nbsp;</font></o:p></p> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><b style="mso-bidi-font-weight: normal"><font face="Tahoma"><font size="2">Visual Studio 2005 Team System Links<o:p></o:p></font></font></b></p> <p class="MsoNormal" style="MARGIN: 0in 0in 0pt"><o:p><font face="Tahoma" size="2"></font></o:p>&nbsp;</p> <ul style="MARGIN-TOP: 0in" type="disc"> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l11 level1 lfo11; tab-stops: list .5in"><font face="Tahoma" size="2">VS 2005 Home Page – </font><a href="http://lab.msdn.microsoft.com/vs2005/" target="_new"><font face="Tahoma" size="2">http://lab.msdn.microsoft.com/vs2005/</font></a><font face="Tahoma" size="2"> </font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l11 level1 lfo11; tab-stops: list .5in"><font face="Tahoma" size="2">VS 2005 Team System Home Page - </font><a href="http://lab.msdn.microsoft.com/vs2005/teamsystem/" target="_new"><font face="Tahoma" size="2">http://lab.msdn.microsoft.com/vs2005/teamsystem/</font></a> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l11 level1 lfo11; tab-stops: list .5in"><font face="Tahoma" size="2">Official Team System 'AskBurton' Blog - </font><a href="http://blogs.msdn.com/askburton/" target="_new"><font face="Tahoma" size="2">http://blogs.msdn.com/askburton/</font></a><font face="Tahoma" size="2"> </font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l11 level1 lfo11; tab-stops: list .5in"><font face="Tahoma" size="2">*** Offical Team System Blogroll - </font><a href="http://lab.msdn.microsoft.com/vs2005/teamsystem/blogs.aspx" target="_new"><font face="Tahoma" size="2">http://lab.msdn.microsoft.com/vs2005/teamsystem/blogs.aspx</font></a><font face="Tahoma" size="2"> </font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l11 level1 lfo11; tab-stops: list .5in"><font face="Tahoma" size="2">'VS 2005 Beta 1 Refresh' &amp; VPC 2004 Installation Issue - </font><a href="http://blogs.msdn.com/askburton/archive/2004/09/01/224471.aspx" target="_new"><font face="Tahoma" size="2">http://blogs.msdn.com/askburton/archive/2004/09/01/224471.aspx</font></a><font face="Tahoma" size="2"> </font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l11 level1 lfo11; tab-stops: list .5in"><font face="Tahoma" size="2">Team System Q&amp;A with Jason Anderson (Good Read) - </font><a href="http://blogs.msdn.com/jason_anderson/archive/2004/09/16/230361.aspx" target="_new"><font face="Tahoma" size="2">http://blogs.msdn.com/jason_anderson/archive/2004/09/16/230361.aspx</font></a><font face="Tahoma" size="2"> </font> <li class="MsoNormal" style="MARGIN: 0in 0in 0pt; mso-list: l11 level1 lfo11; tab-stops: list .5in"><font face="Tahoma" size="2">Chris Menegay – <?xml:namespace prefix = st1 ns = "urn:schemas-microsoft-com:office:smarttags" /><st1:Street w:st="on"><st1:address w:st="on">South Central MSDN RD</st1:address></st1:Street>, Fellow DGC member, and Team System afficionado (i.e Uber-stud) - </font><A href="http://weblogs.asp.net/cmenegay" target="_new"><font face="Tahoma" size="2">http://weblogs.asp.net/cmenegay</font></a><font face="Tahoma" size="2"> </font></li></ul>
+       
+
+        <div class="postfoot">
+            	
+            <span class="em">Posted:</span>
+            <a href="/scottdockendorf/archive/2004/10/06/238811.aspx">Oct 06 2004, 02:24 PM</a>
+			by
+			<a href="/members/scottdockendorf.aspx">Scott Dockendorf</a> 
+			
+                    | with <a href="/scottdockendorf/archive/2004/10/06/238811.aspx#comments">34 comment(s)</a>
+                    
+                
+            
+            
+            <div class="em"><span id="ctl00_Main_ctl09_ctl01">Filed under: <a href="/scottdockendorf/archive/tags/Automated+Unit+Testing+_2600_amp_3B00_+TDD/default.aspx" rel="tag">Automated Unit Testing &amp; TDD</a>, <a href="/scottdockendorf/archive/tags/Cool+Developer+Tools/default.aspx" rel="tag">Cool Developer Tools</a>, <a href="/scottdockendorf/archive/tags/Visual+Studio+2005/default.aspx" rel="tag">Visual Studio 2005</a></span><input type="hidden" name="ctl00$Main$ctl09$ctl01" id="ctl00_Main_ctl09_ctl01_State" value="nochange" /></div>
+        </div>    
+    </div>
+    
+    
+            
+                    <div id="comments">
+                    <a name="Comments"></a>
+                    <h2>Comments</h2>
+                
+                    <div class="CommentArea">
+			            <h4 class="CommentTitle">
+				            <a title="TrackBack" rel="nofollow" href="http://weblogs.asp.net/scottdockendorf/archive/2004/10/06/238853.aspx">TrackBack</a>
+				            said:
+				            <img class="CommentArrow" src="/Themes/Blogs/paperclip/images/spacer.gif" alt=" " align="bottom" style="border-width:0px;" />
+			            </h4>
+			            <div class="CommentText">
+				            <div class="CommentText2">
+					            <div class="CommentText3"></div>
+				            </div>
+			            </div>
+			            <div class="CommentFooter">
+			                <a href="/scottdockendorf/archive/2004/10/06/238811.aspx#238854">#</a>
+			                October 6, 2004 5:20 PM
+                            
+                        </div>
+		            </div>
+                
+                    <div class="CommentArea">
+			            <h4 class="CommentTitle">
+				            <a title="Christian Romney" rel="nofollow" href="http://www.xml-blog.com">Christian Romney</a>
+				            said:
+				            <img class="CommentArrow" src="/Themes/Blogs/paperclip/images/spacer.gif" alt=" " align="bottom" style="border-width:0px;" />
+			            </h4>
+			            <div class="CommentText">
+				            <div class="CommentText2">
+					            <div class="CommentText3">Refactoring software<br><a target="_new" href="http://www.jetbrains.com/resharper">http://www.jetbrains.com/resharper</a></div>
+				            </div>
+			            </div>
+			            <div class="CommentFooter">
+			                <a href="/scottdockendorf/archive/2004/10/06/238811.aspx#238893">#</a>
+			                October 6, 2004 5:24 PM
+                            
+                        </div>
+		            </div>
+                
+                    <div class="CommentArea">
+			            <h4 class="CommentTitle">
+				            Scooter
+				            said:
+				            <img class="CommentArrow" src="/Themes/Blogs/paperclip/images/spacer.gif" alt=" " align="bottom" style="border-width:0px;" />
+			            </h4>
+			            <div class="CommentText">
+				            <div class="CommentText2">
+					            <div class="CommentText3">Thanks Christan - I added the link above (marked with (new))</div>
+				            </div>
+			            </div>
+			            <div class="CommentFooter">
+			                <a href="/scottdockendorf/archive/2004/10/06/238811.aspx#239185">#</a>
+			                October 7, 2004 9:16 AM
+                            
+                        </div>
+		            </div>
+                
+                    <div class="CommentArea">
+			            <h4 class="CommentTitle">
+				            <a title="TrackBack" rel="nofollow" href="http://weblogs.asp.net/scottdockendorf/archive/0001/01/01/238853.aspx">TrackBack</a>
+				            said:
+				            <img class="CommentArrow" src="/Themes/Blogs/paperclip/images/spacer.gif" alt=" " align="bottom" style="border-width:0px;" />
+			            </h4>
+			            <div class="CommentText">
+				            <div class="CommentText2">
+					            <div class="CommentText3"></div>
+				            </div>
+			            </div>
+			            <div class="CommentFooter">
+			                <a href="/scottdockendorf/archive/2004/10/06/238811.aspx#239450">#</a>
+			                October 7, 2004 6:26 PM
+                            
+                        </div>
+		            </div>
+                
+                    <div class="CommentArea">
+			            <h4 class="CommentTitle">
+				            <a title="TrackBack" rel="nofollow" href="http://blogs.msdn.com/robcaron/archive/2004/10/07/239118.aspx">TrackBack</a>
+				            said:
+				            <img class="CommentArrow" src="/Themes/Blogs/paperclip/images/spacer.gif" alt=" " align="bottom" style="border-width:0px;" />
+			            </h4>
+			            <div class="CommentText">
+				            <div class="CommentText2">
+					            <div class="CommentText3"></div>
+				            </div>
+			            </div>
+			            <div class="CommentFooter">
+			                <a href="/scottdockendorf/archive/2004/10/06/238811.aspx#239617">#</a>
+			                October 8, 2004 12:15 AM
+                            
+                        </div>
+		            </div>
+                
+                    <div class="CommentArea">
+			            <h4 class="CommentTitle">
+				            <a title="TrackBack" rel="nofollow" href="http://gibbensfamily.net/blogs/dotrob/archive/2004/10/08/458.aspx">TrackBack</a>
+				            said:
+				            <img class="CommentArrow" src="/Themes/Blogs/paperclip/images/spacer.gif" alt=" " align="bottom" style="border-width:0px;" />
+			            </h4>
+			            <div class="CommentText">
+				            <div class="CommentText2">
+					            <div class="CommentText3"></div>
+				            </div>
+			            </div>
+			            <div class="CommentFooter">
+			                <a href="/scottdockendorf/archive/2004/10/06/238811.aspx#240004">#</a>
+			                October 8, 2004 6:52 PM
+                            
+                        </div>
+		            </div>
+                
+                    <div class="CommentArea">
+			            <h4 class="CommentTitle">
+				            <a title="TrackBack" rel="nofollow" href="http://weblogs.asp.net/scottdockendorf/archive/2004/12/10/279369.aspx">TrackBack</a>
+				            said:
+				            <img class="CommentArrow" src="/Themes/Blogs/paperclip/images/spacer.gif" alt=" " align="bottom" style="border-width:0px;" />
+			            </h4>
+			            <div class="CommentText">
+				            <div class="CommentText2">
+					            <div class="CommentText3"></div>
+				            </div>
+			            </div>
+			            <div class="CommentFooter">
+			                <a href="/scottdockendorf/archive/2004/10/06/238811.aspx#279370">#</a>
+			                December 10, 2004 2:56 AM
+                            
+                        </div>
+		            </div>
+                
+                    <div class="CommentArea">
+			            <h4 class="CommentTitle">
+				            <a title="TrackBack" rel="nofollow" href="http://weblogs.asp.net/scottdockendorf/archive/0001/01/01/279369.aspx">TrackBack</a>
+				            said:
+				            <img class="CommentArrow" src="/Themes/Blogs/paperclip/images/spacer.gif" alt=" " align="bottom" style="border-width:0px;" />
+			            </h4>
+			            <div class="CommentText">
+				            <div class="CommentText2">
+					            <div class="CommentText3"></div>
+				            </div>
+			            </div>
+			            <div class="CommentFooter">
+			                <a href="/scottdockendorf/archive/2004/10/06/238811.aspx#279379">#</a>
+			                December 10, 2004 3:15 AM
+                            
+                        </div>
+		            </div>
+                
+                    <div class="CommentArea">
+			            <h4 class="CommentTitle">
+				            <a title="TrackBack" rel="nofollow" href="http://www.geekswithblogs.net/ilennox/archive/2004/12/20/18156.aspx">TrackBack</a>
+				            said:
+				            <img class="CommentArrow" src="/Themes/Blogs/paperclip/images/spacer.gif" alt=" " align="bottom" style="border-width:0px;" />
+			            </h4>
+			            <div class="CommentText">
+				            <div class="CommentText2">
+					            <div class="CommentText3"></div>
+				            </div>
+			            </div>
+			            <div class="CommentFooter">
+			                <a href="/scottdockendorf/archive/2004/10/06/238811.aspx#327337">#</a>
+			                December 20, 2004 9:42 AM
+                            
+                        </div>
+		            </div>
+                
+                    <div class="CommentArea">
+			            <h4 class="CommentTitle">
+				            <a title="TrackBack" rel="nofollow" href="http://www.geekswithblogs.net/ilennox/archive/2004/12/20/18157.aspx">TrackBack</a>
+				            said:
+				            <img class="CommentArrow" src="/Themes/Blogs/paperclip/images/spacer.gif" alt=" " align="bottom" style="border-width:0px;" />
+			            </h4>
+			            <div class="CommentText">
+				            <div class="CommentText2">
+					            <div class="CommentText3"></div>
+				            </div>
+			            </div>
+			            <div class="CommentFooter">
+			                <a href="/scottdockendorf/archive/2004/10/06/238811.aspx#327338">#</a>
+			                December 20, 2004 9:43 AM
+                            
+                        </div>
+		            </div>
+                
+                    <div class="CommentArea">
+			            <h4 class="CommentTitle">
+				            <a title="TrackBack" rel="nofollow" href="http://blog.pieter.co.za/archive/2004/12/23/480.aspx">TrackBack</a>
+				            said:
+				            <img class="CommentArrow" src="/Themes/Blogs/paperclip/images/spacer.gif" alt=" " align="bottom" style="border-width:0px;" />
+			            </h4>
+			            <div class="CommentText">
+				            <div class="CommentText2">
+					            <div class="CommentText3"></div>
+				            </div>
+			            </div>
+			            <div class="CommentFooter">
+			                <a href="/scottdockendorf/archive/2004/10/06/238811.aspx#331106">#</a>
+			                December 23, 2004 3:56 AM
+                            
+                        </div>
+		            </div>
+                
+                    <div class="CommentArea">
+			            <h4 class="CommentTitle">
+				            <a title="TrackBack" rel="nofollow" href="http://www.geekswithblogs.net/sbellware/archive/2005/01/27/21275.aspx">TrackBack</a>
+				            said:
+				            <img class="CommentArrow" src="/Themes/Blogs/paperclip/images/spacer.gif" alt=" " align="bottom" style="border-width:0px;" />
+			            </h4>
+			            <div class="CommentText">
+				            <div class="CommentText2">
+					            <div class="CommentText3"></div>
+				            </div>
+			            </div>
+			            <div class="CommentFooter">
+			                <a href="/scottdockendorf/archive/2004/10/06/238811.aspx#362176">#</a>
+			                January 28, 2005 1:31 AM
+                            
+                        </div>
+		            </div>
+                
+                    <div class="CommentArea">
+			            <h4 class="CommentTitle">
+				            <a title="TrackBack" rel="nofollow" href="http://www.geekswithblogs.com/sbellware/archive/0001/01/01/21275.aspx">TrackBack</a>
+				            said:
+				            <img class="CommentArrow" src="/Themes/Blogs/paperclip/images/spacer.gif" alt=" " align="bottom" style="border-width:0px;" />
+			            </h4>
+			            <div class="CommentText">
+				            <div class="CommentText2">
+					            <div class="CommentText3"></div>
+				            </div>
+			            </div>
+			            <div class="CommentFooter">
+			                <a href="/scottdockendorf/archive/2004/10/06/238811.aspx#362179">#</a>
+			                January 28, 2005 1:32 AM
+                            
+                        </div>
+		            </div>
+                
+                    <div class="CommentArea">
+			            <h4 class="CommentTitle">
+				            <a title="TrackBack" rel="nofollow" href="http://www.geekswithblogs.net/sbellware/archive/2005/01/27/21276.aspx">TrackBack</a>
+				            said:
+				            <img class="CommentArrow" src="/Themes/Blogs/paperclip/images/spacer.gif" alt=" " align="bottom" style="border-width:0px;" />
+			            </h4>
+			            <div class="CommentText">
+				            <div class="CommentText2">
+					            <div class="CommentText3"></div>
+				            </div>
+			            </div>
+			            <div class="CommentFooter">
+			                <a href="/scottdockendorf/archive/2004/10/06/238811.aspx#362181">#</a>
+			                January 28, 2005 1:38 AM
+                            
+                        </div>
+		            </div>
+                
+                    <div class="CommentArea">
+			            <h4 class="CommentTitle">
+				            <a title="dokka" rel="nofollow" href="http://stat.my-php.net">dokka</a>
+				            said:
+				            <img class="CommentArrow" src="/Themes/Blogs/paperclip/images/spacer.gif" alt=" " align="bottom" style="border-width:0px;" />
+			            </h4>
+			            <div class="CommentText">
+				            <div class="CommentText2">
+					            <div class="CommentText3"><p>I have a problem in your design. I use Firefox in Ubuntu.</p>
+</div>
+				            </div>
+			            </div>
+			            <div class="CommentFooter">
+			                <a href="/scottdockendorf/archive/2004/10/06/238811.aspx#2066432">#</a>
+			                March 20, 2007 4:01 AM
+                            
+                        </div>
+		            </div>
+                
+                    <div class="CommentArea">
+			            <h4 class="CommentTitle">
+				            <a title="sokka" rel="nofollow" href="http://stat.freewaywebhost.com">sokka</a>
+				            said:
+				            <img class="CommentArrow" src="/Themes/Blogs/paperclip/images/spacer.gif" alt=" " align="bottom" style="border-width:0px;" />
+			            </h4>
+			            <div class="CommentText">
+				            <div class="CommentText2">
+					            <div class="CommentText3"><p>I have a problem in your design. I use Netscape.</p>
+</div>
+				            </div>
+			            </div>
+			            <div class="CommentFooter">
+			                <a href="/scottdockendorf/archive/2004/10/06/238811.aspx#2069188">#</a>
+			                March 20, 2007 12:53 PM
+                            
+                        </div>
+		            </div>
+                
+                    <div class="CommentArea">
+			            <h4 class="CommentTitle">
+				            <a title="Jeremy" rel="nofollow" href="http://www.JeremyJarrell.com">Jeremy</a>
+				            said:
+				            <img class="CommentArrow" src="/Themes/Blogs/paperclip/images/spacer.gif" alt=" " align="bottom" style="border-width:0px;" />
+			            </h4>
+			            <div class="CommentText">
+				            <div class="CommentText2">
+					            <div class="CommentText3"><p>Awesome list! &nbsp;Here's a very cool addition to your mock objects listing:</p>
+<p>Rhino.Mocks</p>
+<p><a rel="nofollow" target="_new" href="http://www.ayende.com/projects/rhino-mocks.aspx">http://www.ayende.com/projects/rhino-mocks.aspx</a></p>
+</div>
+				            </div>
+			            </div>
+			            <div class="CommentFooter">
+			                <a href="/scottdockendorf/archive/2004/10/06/238811.aspx#2292917">#</a>
+			                April 19, 2007 3:44 PM
+                            
+                        </div>
+		            </div>
+                
+                    <div class="CommentArea">
+			            <h4 class="CommentTitle">
+				            <a title="MaryJames" rel="nofollow" href="http://myspace.com">MaryJames</a>
+				            said:
+				            <img class="CommentArrow" src="/Themes/Blogs/paperclip/images/spacer.gif" alt=" " align="bottom" style="border-width:0px;" />
+			            </h4>
+			            <div class="CommentText">
+				            <div class="CommentText2">
+					            <div class="CommentText3"><p>Yo &nbsp;all </p>
+<p>How I can change avatar in this forum?</p>
+</div>
+				            </div>
+			            </div>
+			            <div class="CommentFooter">
+			                <a href="/scottdockendorf/archive/2004/10/06/238811.aspx#2646763">#</a>
+			                May 23, 2007 7:31 PM
+                            
+                        </div>
+		            </div>
+                
+                    <div class="CommentArea">
+			            <h4 class="CommentTitle">
+				            <a title="TrackBack" rel="nofollow" href="http://blog.napyfab.com/197/links-for-2007-09-17/">napyfab:blog&raquo; Blog Archive &raquo; links for 2007-09-17</a>
+				            said:
+				            <img class="CommentArrow" src="/Themes/Blogs/paperclip/images/spacer.gif" alt=" " align="bottom" style="border-width:0px;" />
+			            </h4>
+			            <div class="CommentText">
+				            <div class="CommentText2">
+					            <div class="CommentText3"><p>Pingback from &nbsp;napyfab:blog&amp;raquo; Blog Archive &amp;raquo; links for 2007-09-17</p>
+</div>
+				            </div>
+			            </div>
+			            <div class="CommentFooter">
+			                <a href="/scottdockendorf/archive/2004/10/06/238811.aspx#3920670">#</a>
+			                September 17, 2007 7:41 PM
+                            
+                        </div>
+		            </div>
+                
+                    <div class="CommentArea">
+			            <h4 class="CommentTitle">
+				            <a title="remix8754" rel="nofollow" href="http://www.remix-kamin.ru/">remix8754</a>
+				            said:
+				            <img class="CommentArrow" src="/Themes/Blogs/paperclip/images/spacer.gif" alt=" " align="bottom" style="border-width:0px;" />
+			            </h4>
+			            <div class="CommentText">
+				            <div class="CommentText2">
+					            <div class="CommentText3"><p>����� ������� ������� ���������� ������� ����� ������� �� ����� ������ �����.</p>
+<p>&lt;a href=<a rel="nofollow" target="_new" href="http://www.remix-kamin.ru/&gt;">http://www.remix-kamin.ru/&gt;</a>������&lt;/a&gt;</p>
+<p>�������</p>
+</div>
+				            </div>
+			            </div>
+			            <div class="CommentFooter">
+			                <a href="/scottdockendorf/archive/2004/10/06/238811.aspx#6822645">#</a>
+			                January 6, 2009 10:40 AM
+                            
+                        </div>
+		            </div>
+                
+                    <div class="CommentArea">
+			            <h4 class="CommentTitle">
+				            <a title="Vikrama Dhiman" rel="nofollow" href="http://www.wiziq.com/online-class/93064-test-driven-development-introduction-and-basics">Vikrama Dhiman</a>
+				            said:
+				            <img class="CommentArrow" src="/Themes/Blogs/paperclip/images/spacer.gif" alt=" " align="bottom" style="border-width:0px;" />
+			            </h4>
+			            <div class="CommentText">
+				            <div class="CommentText2">
+					            <div class="CommentText3"><p>I wanted to let the users of this blog and all TDD enthusiasts that Jeff Langr, an experienced coach and consultant, is conducting a free online webinar at <a rel="nofollow" target="_new" href="http://www.wiziq.com/online-class/93064-test-driven-development-introduction-and-basics">www.wiziq.com/.../93064-test-driven-development-introduction-and-basics</a> on Feb 12. Please join in to learn more. </p>
+</div>
+				            </div>
+			            </div>
+			            <div class="CommentFooter">
+			                <a href="/scottdockendorf/archive/2004/10/06/238811.aspx#6881660">#</a>
+			                February 4, 2009 9:46 AM
+                            
+                        </div>
+		            </div>
+                
+                    <div class="CommentArea">
+			            <h4 class="CommentTitle">
+				            <a title="TrackBack" rel="nofollow" href="http://adam.lexikal.com/journal/2006/07/19/quality-assurance-unit-testing-test-driven-development-tdd-write-the-test-first/">Adam.Kahtava.com / AdamDotCom.com &raquo; Quality Assurance: Unit Testing: Test Driven Development (&#8221;TDD&#8221;): &#8220;Write the test first&#8221;</a>
+				            said:
+				            <img class="CommentArrow" src="/Themes/Blogs/paperclip/images/spacer.gif" alt=" " align="bottom" style="border-width:0px;" />
+			            </h4>
+			            <div class="CommentText">
+				            <div class="CommentText2">
+					            <div class="CommentText3"><p>Pingback from &nbsp;Adam.Kahtava.com / AdamDotCom.com &amp;raquo; Quality Assurance: Unit Testing: Test Driven Development (&amp;#8221;TDD&amp;#8221;): &amp;#8220;Write the test first&amp;#8221;</p>
+</div>
+				            </div>
+			            </div>
+			            <div class="CommentFooter">
+			                <a href="/scottdockendorf/archive/2004/10/06/238811.aspx#7073753">#</a>
+			                May 5, 2009 8:39 AM
+                            
+                        </div>
+		            </div>
+                
+                    <div class="CommentArea">
+			            <h4 class="CommentTitle">
+				            <a title="tinoleg" rel="nofollow" href="http://urmaz.ru/">tinoleg</a>
+				            said:
+				            <img class="CommentArrow" src="/Themes/Blogs/paperclip/images/spacer.gif" alt=" " align="bottom" style="border-width:0px;" />
+			            </h4>
+			            <div class="CommentText">
+				            <div class="CommentText2">
+					            <div class="CommentText3"><p>������ ����, ������� ������! ����� ���������, ��� �������� ������������ ����� - ������, �� ������� �� ������� ����������� ��������� � ��� ����������� ������ ������ ������������� �������� �� �������� ��������! ��� &lt;a href=&quot;<a rel="nofollow" target="_new" href="http://urmaz.ru/&quot;&gt;&lt;b&gt;">urmaz.ru/&quot;&gt;&lt;b&gt;</a>������ ������&lt;/b&gt;&lt;/a&gt; ����� ������������ ���������� �������! � ��� �� ������� ����� ��� �������������� ������ ������, ��� � ������ ������� (���� ��� ��������). ������ ����� � ��� ��������� ����������� ��������� ���������� �������������� ������ ������������ � �������. �������� � ��� �� ���� � ��������� ������������ �� ���������!</p>
+</div>
+				            </div>
+			            </div>
+			            <div class="CommentFooter">
+			                <a href="/scottdockendorf/archive/2004/10/06/238811.aspx#7091738">#</a>
+			                May 17, 2009 11:24 PM
+                            
+                        </div>
+		            </div>
+                
+                    <div class="CommentArea">
+			            <h4 class="CommentTitle">
+				            <a title="vadim300" rel="nofollow" href="http://laserprint.uaprom.net/">vadim300</a>
+				            said:
+				            <img class="CommentArrow" src="/Themes/Blogs/paperclip/images/spacer.gif" alt=" " align="bottom" style="border-width:0px;" />
+			            </h4>
+			            <div class="CommentText">
+				            <div class="CommentText2">
+					            <div class="CommentText3"><p>Toner cartridges.</p>
+<p>Service cartridges recycling and remanufacturing, as well as the repair of laser printers are manufactured in the city of Kiev (Ukraine).</p>
+<p><a rel="nofollow" target="_new" href="http://laserprint.uaprom.net/">http://laserprint.uaprom.net/</a></p>
+</div>
+				            </div>
+			            </div>
+			            <div class="CommentFooter">
+			                <a href="/scottdockendorf/archive/2004/10/06/238811.aspx#7249774">#</a>
+			                November 9, 2009 8:05 AM
+                            
+                        </div>
+		            </div>
+                
+                    <div class="CommentArea">
+			            <h4 class="CommentTitle">
+				            <a title="poori" rel="nofollow" href="http://unlockiphone22.com/%0d%0a">poori</a>
+				            said:
+				            <img class="CommentArrow" src="/Themes/Blogs/paperclip/images/spacer.gif" alt=" " align="bottom" style="border-width:0px;" />
+			            </h4>
+			            <div class="CommentText">
+				            <div class="CommentText2">
+					            <div class="CommentText3"><p>I'm planning to buy an iPhone. But before i do that i need to find out if the &lt;a href=&quot;<a rel="nofollow" target="_new" href="http://unlockiphone22.com/&quot;&gt;unlockiphone22.com&lt;/a&gt;">unlockiphone22.com/.../a&gt;</a> &nbsp;can view every website just like the one on the computer. Does Safari support all websites including JAVA and flash players. Can i view Youtube and pics and other videos on the Iphone using the interent website? One last thing how long does it take for a page to load?</p>
+</div>
+				            </div>
+			            </div>
+			            <div class="CommentFooter">
+			                <a href="/scottdockendorf/archive/2004/10/06/238811.aspx#7264775">#</a>
+			                November 25, 2009 9:13 AM
+                            
+                        </div>
+		            </div>
+                
+                    <div class="CommentArea">
+			            <h4 class="CommentTitle">
+				            <a title="iphone user" rel="nofollow" href="http://www.unlockediphone.info">iphone user</a>
+				            said:
+				            <img class="CommentArrow" src="/Themes/Blogs/paperclip/images/spacer.gif" alt=" " align="bottom" style="border-width:0px;" />
+			            </h4>
+			            <div class="CommentText">
+				            <div class="CommentText2">
+					            <div class="CommentText3"><p>Did anybody try to unlock 3gs? &lt;a href=&quot;<a rel="nofollow" target="_new" href="http://unlockediphone.info&quot;&gt;unlock">http://unlockediphone.info&quot;&gt;unlock</a> iphone 3g&lt;/a&gt; </p>
+</div>
+				            </div>
+			            </div>
+			            <div class="CommentFooter">
+			                <a href="/scottdockendorf/archive/2004/10/06/238811.aspx#7292426">#</a>
+			                December 27, 2009 1:02 PM
+                            
+                        </div>
+		            </div>
+                
+                    <div class="CommentArea">
+			            <h4 class="CommentTitle">
+				            <a title="unlock iphone" rel="nofollow" href="http://&lt;a%20href=http://unlockediphone.info>unlock%20iphone%203g&lt;/a>%20">unlock iphone</a>
+				            said:
+				            <img class="CommentArrow" src="/Themes/Blogs/paperclip/images/spacer.gif" alt=" " align="bottom" style="border-width:0px;" />
+			            </h4>
+			            <div class="CommentText">
+				            <div class="CommentText2">
+					            <div class="CommentText3"><p>&lt;a href=<a rel="nofollow" target="_new" href="http://unlockediphone.info&gt;unlock">http://unlockediphone.info&gt;unlock</a> iphone 3g&lt;/a&gt; &nbsp;I did and it works well :)</p>
+</div>
+				            </div>
+			            </div>
+			            <div class="CommentFooter">
+			                <a href="/scottdockendorf/archive/2004/10/06/238811.aspx#7292427">#</a>
+			                December 27, 2009 1:06 PM
+                            
+                        </div>
+		            </div>
+                
+                    <div class="CommentArea">
+			            <h4 class="CommentTitle">
+				            <a title="www.uralstroykom.ru" rel="nofollow" href="http://www.uralstroykom.ru/index.php/2010-01-18-06-27-57">www.uralstroykom.ru</a>
+				            said:
+				            <img class="CommentArrow" src="/Themes/Blogs/paperclip/images/spacer.gif" alt=" " align="bottom" style="border-width:0px;" />
+			            </h4>
+			            <div class="CommentText">
+				            <div class="CommentText2">
+					            <div class="CommentText3"><p>�������������: ��������-������������ ��������������, � ��������������� �������������� ���������� ����������,</p>
+<p> ������������ �� ��������� �������������� ��������.</p>
+<p>������� ������ �� <a rel="nofollow" target="_new" href="http://www.uralstroykom.ru/index.php?start=45">www.uralstroykom.ru/index.php</a> </p>
+<p>�������� �� ������ �� �������! </p>
+</div>
+				            </div>
+			            </div>
+			            <div class="CommentFooter">
+			                <a href="/scottdockendorf/archive/2004/10/06/238811.aspx#7371576">#</a>
+			                March 5, 2010 1:42 PM
+                            
+                        </div>
+		            </div>
+                
+                    <div class="CommentArea">
+			            <h4 class="CommentTitle">
+				            <a title="Krutikmalokoza89" rel="nofollow" href="http://cool-mill-m.narod2.ru">Krutikmalokoza89</a>
+				            said:
+				            <img class="CommentArrow" src="/Themes/Blogs/paperclip/images/spacer.gif" alt=" " align="bottom" style="border-width:0px;" />
+			            </h4>
+			            <div class="CommentText">
+				            <div class="CommentText2">
+					            <div class="CommentText3"><p>������� ��������� ����� ������</p>
+<p>�� ���� 2. ����� �������(2010) </p>
+<p>�����. ���� ������(2010) </p>
+<p>����� �������(2010) </p>
+<p>��� ������(2010) </p>
+<p>22 ����. ����������� (2010) </p>
+<p>������ � ������� ������ 2 (2010)</p>
+<p>�������� � ������� ���������: <a rel="nofollow" target="_new" href="http://cool-mill-m.narod2.ru">http://cool-mill-m.narod2.ru</a></p>
+</div>
+				            </div>
+			            </div>
+			            <div class="CommentFooter">
+			                <a href="/scottdockendorf/archive/2004/10/06/238811.aspx#7429976">#</a>
+			                April 4, 2010 10:01 AM
+                            
+                        </div>
+		            </div>
+                
+                    <div class="CommentArea">
+			            <h4 class="CommentTitle">
+				            <a title="donreal" rel="nofollow" href="http://donklass.com">donreal</a>
+				            said:
+				            <img class="CommentArrow" src="/Themes/Blogs/paperclip/images/spacer.gif" alt=" " align="bottom" style="border-width:0px;" />
+			            </h4>
+			            <div class="CommentText">
+				            <div class="CommentText2">
+					            <div class="CommentText3"><p>����, ��������� �������� � ���������� �����������, ����� � ��������� ���������� ���������� ������. �� ��� ���� ��� ��� ����� ��������, � ��� ������ �������, ��� ��������� ����������� � ���, ��� �������������� ��� ������. ��, ����������� ��� ��� �������������� ����� � ���������, ��������� �����������, ��� ����� ��� �������� �� �� ���� �� �������������.</p>
+<p>&lt;a href=<a rel="nofollow" target="_new" href="http://donklass.com/2010-03-15-15-40-59/71-2009-11-06-00-03-02/72-2009-11-06-00-17-25.html&gt;">donklass.com/.../72-2009-11-06-00-17-25.html&gt;</a>��������� &lt;/a&gt; </p>
+</div>
+				            </div>
+			            </div>
+			            <div class="CommentFooter">
+			                <a href="/scottdockendorf/archive/2004/10/06/238811.aspx#7442568">#</a>
+			                April 13, 2010 3:17 PM
+                            
+                        </div>
+		            </div>
+                
+                    <div class="CommentArea">
+			            <h4 class="CommentTitle">
+				            <a title="donreal" rel="nofollow" href="http://donklass.com">donreal</a>
+				            said:
+				            <img class="CommentArrow" src="/Themes/Blogs/paperclip/images/spacer.gif" alt=" " align="bottom" style="border-width:0px;" />
+			            </h4>
+			            <div class="CommentText">
+				            <div class="CommentText2">
+					            <div class="CommentText3"><p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ����������� �������.</p>
+<p>� ������ ���� �������� ������ ������ �������������, ��� ����������� �������. </p>
+<p>��������, ��� ����� ������� ������� � ���������� �����, ���������� </p>
+<p>������������� ��������, ���������� ���������� �������, ������ ������� </p>
+<p>� ������� � ��� �������� � �������������� ����� � �����������. ��������� </p>
+<p>����� ������� ��������� ��������� ����������� �������, ���������� ���������, </p>
+<p>� ������ � ��� � �����������, � ��� � ���� ������� ������� ���� ������������. </p>
+<p>���������� ���������� ������� ���� ������� ������������� ��������������� </p>
+<p>� �������������� ����������� ����������� �� ���������� ����� ����� �������� </p>
+<p>������� ���������. ���������� ���������� ���� �� ������������� ������</p>
+<p> �������������� ��������. ���������� �������� ��������� � ����������� ����� </p>
+<p>�� ���������, ���� ��������� �������� �� ���� �� ���������. ������������ ����� </p>
+<p>���� ������� ��� ������� ����� ��������� � ������ ���������� ���������. </p>
+<p>� ������� ����� ������� �� � ���� ������, � � ���������� ��������� ���������, </p>
+<p>������������ � ������� ���������.</p>
+<p>���������: <a rel="nofollow" target="_new" href="http://donklass.com">http://donklass.com</a></p>
+</div>
+				            </div>
+			            </div>
+			            <div class="CommentFooter">
+			                <a href="/scottdockendorf/archive/2004/10/06/238811.aspx#7596335">#</a>
+			                August 19, 2010 2:07 AM
+                            
+                        </div>
+		            </div>
+                
+                    <div class="CommentArea">
+			            <h4 class="CommentTitle">
+				            <a title="pereezdkv" rel="nofollow" href="http://www.sityservis.ru">pereezdkv</a>
+				            said:
+				            <img class="CommentArrow" src="/Themes/Blogs/paperclip/images/spacer.gif" alt=" " align="bottom" style="border-width:0px;" />
+			            </h4>
+			            <div class="CommentText">
+				            <div class="CommentText2">
+					            <div class="CommentText3"><p>������� �����, ������� ��������. ��������������� ������� ����������� ���������������� ������� �������, ������� ��������, ���������� ������ ���������, ������/�������� ������ (����� ��������), ��������� ��� � �������. </p>
+<p>�������� � ����������� ������. </p>
+<p>www.sityservis.ru </p>
+<p>vall757@mail.ru </p>
+<p>495-506-60-84 </p>
+<p>8-925-830-66-77</p>
+</div>
+				            </div>
+			            </div>
+			            <div class="CommentFooter">
+			                <a href="/scottdockendorf/archive/2004/10/06/238811.aspx#7606799">#</a>
+			                September 7, 2010 11:07 PM
+                            
+                        </div>
+		            </div>
+                
+                    <div class="CommentArea">
+			            <h4 class="CommentTitle">
+				            <a title="Jetpower" rel="nofollow" href="http://mininotebook.ru">Jetpower</a>
+				            said:
+				            <img class="CommentArrow" src="/Themes/Blogs/paperclip/images/spacer.gif" alt=" " align="bottom" style="border-width:0px;" />
+			            </h4>
+			            <div class="CommentText">
+				            <div class="CommentText2">
+					            <div class="CommentText3"><p>Всем Привет! Заходите на &lt;a href=<a rel="nofollow" target="_new" href="http://mininotebook.ru&gt;Тесты">http://mininotebook.ru&gt;Тесты</a> обзоры ноутбуков&lt;/a&gt;.</p>
+</div>
+				            </div>
+			            </div>
+			            <div class="CommentFooter">
+			                <a href="/scottdockendorf/archive/2004/10/06/238811.aspx#7631413">#</a>
+			                October 23, 2010 4:41 AM
+                            
+                        </div>
+		            </div>
+                
+                    <div class="CommentArea">
+			            <h4 class="CommentTitle">
+				            <a title="Blues HarMonica" rel="nofollow" href="http://hohnerharmonica.org">Blues HarMonica</a>
+				            said:
+				            <img class="CommentArrow" src="/Themes/Blogs/paperclip/images/spacer.gif" alt=" " align="bottom" style="border-width:0px;" />
+			            </h4>
+			            <div class="CommentText">
+				            <div class="CommentText2">
+					            <div class="CommentText3"><p>Genuinely like your websites info! &nbsp;Certainly a good deal of details which is extremely useful. &nbsp;Carry on to preserve publishing and i am gonna continue &nbsp;reading by way of! &nbsp;Cheers.</p>
+<p>--------------------------------------------</p>
+<p>my website is &nbsp;</p>
+<p><a rel="nofollow" target="_new" href="http://saxophonetenor.org">http://saxophonetenor.org</a></p>
+<p>Also welcome you!</p>
+</div>
+				            </div>
+			            </div>
+			            <div class="CommentFooter">
+			                <a href="/scottdockendorf/archive/2004/10/06/238811.aspx#7649151">#</a>
+			                November 22, 2010 6:17 PM
+                            
+                        </div>
+		            </div>
+                
+                    </div>
+                
+            
+            
+            
+            
+                    <fieldset id="commentform">
+                    <legend>Leave a Comment</legend>
+	                    <p />
+                        <div><label for="ctl00_Main_ctl10_ctl02_ctl02_ctl02_tbTitle">Title</label> <em>(required)</em>&nbsp;</div>
+	                    <div><input name="ctl00$Main$ctl10$ctl02$ctl02$ctl02$tbTitle" type="text" value="re: My Uber-Test-Driven Development (&quot;TDD&quot;) Links Listing" id="ctl00_Main_ctl10_ctl02_ctl02_ctl02_tbTitle" class="smallbox" /></div>
+	                    <p />
+                        <div id="ctl00_Main_ctl10_ctl02_ctl02_ctl02_NameTitle"><label for="ctl00_Main_ctl10_ctl02_ctl02_ctl02_tbName">Name</label> <em>(required)</em>&nbsp;</div>
+                        <div id="ctl00_Main_ctl10_ctl02_ctl02_ctl02_NameDesc"><input name="ctl00$Main$ctl10$ctl02$ctl02$ctl02$tbName" type="text" id="ctl00_Main_ctl10_ctl02_ctl02_ctl02_tbName" class="smallbox" /></div>
+                        <p />
+                        <div><label for="ctl00_Main_ctl10_ctl02_ctl02_ctl02_tbUrl">Your URL</label> <em>(optional</em>)</div>
+                        <div><input name="ctl00$Main$ctl10$ctl02$ctl02$ctl02$tbUrl" type="text" id="ctl00_Main_ctl10_ctl02_ctl02_ctl02_tbUrl" class="smallbox" /></div>
+                        <p />
+                        <div><label for="ctl00_Main_ctl10_ctl02_ctl02_ctl02_tbComment">Comments</label> <em>(required)</em>&nbsp;</div>
+                        <div><textarea name="ctl00$Main$ctl10$ctl02$ctl02$ctl02$tbComment" rows="5" cols="25" id="ctl00_Main_ctl10_ctl02_ctl02_ctl02_tbComment"></textarea></div>
+	                    
+	                        <p />
+                            <div><input id="ctl00_Main_ctl10_ctl02_ctl02_ctl02_chkRemember" type="checkbox" name="ctl00$Main$ctl10$ctl02$ctl02$ctl02$chkRemember" /><label for="ctl00_Main_ctl10_ctl02_ctl02_ctl02_chkRemember">Remember Me?</label></div>
+                        
+	                    <p />
+                        <input type="submit" name="ctl00$Main$ctl10$ctl02$ctl02$ctl02$btnSubmit" value="Submit" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$Main$ctl10$ctl02$ctl02$ctl02$btnSubmit&quot;, &quot;&quot;, true, &quot;CreateCommentForm&quot;, &quot;&quot;, false, false))" id="ctl00_Main_ctl10_ctl02_ctl02_ctl02_btnSubmit" />
+                    </fieldset>
+                
+        
+        
+        </div>
+        <div id="footer">
+	       
+			    <div> <span><a href="http://www.microsoft.com/info/cpyright.mspx">Terms of Use</a></span></div>
+				
+			
+        </div>
+    </div>        
+        <script type="text/javascript" src="http://i3.asp.net/script/omniture/omniture_all.js?cdn_id=2010-10-05-001"></script>
+            <noscript><a href="http://www.omniture.com" title="Web Analytics"><img
+                src="http://msstonojsaspnet.112.2O7.net/b/ss/msstonojsaspnet/1/H.20.2--NS/0"
+                height="1" width="1" border="0" alt="" /></a></noscript>
+    
+
+<!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+rdf:about="http://weblogs.asp.net/scottdockendorf/archive/2004/10/06/238811.aspx"
+dc:identifier="http://weblogs.asp.net/scottdockendorf/archive/2004/10/06/238811.aspx"
+dc:title="My Uber-Test-Driven Development (&quot;TDD&quot;) Links Listing"
+trackback:ping="http://weblogs.asp.net/scottdockendorf/trackback.ashx?PostID=238811" />
+</rdf:RDF>
+-->
+<script type="text/javascript">
+// <![CDATA[
+Telligent_Modal.Configure('/utility/loading.htm',['Modal'],['ModalTitle'],['ModalClose'],['ModalContent'],['ModalFooter'],['ModalResize'],['ModalMask'],100);
+// ]]>
+</script><script type="text/javascript">
+// <![CDATA[
+window.ctl00_Main_ctl09_ctl01 = new Telligent_InlineEditorPanel('ctl00_Main_ctl09_ctl01','ctl00_Main_ctl09_ctl01','ctl00_Main_ctl09_ctl01_State','ctl00_Main_ctl09_ctl00',false,null,null,null);
+// ]]>
+</script></form>
+</body>
+</html>
