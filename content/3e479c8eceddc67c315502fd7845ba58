@@ -1,0 +1,737 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
+   <meta name="Robots" content="index,follow" /> 
+  
+  
+  <!-- rorsecurity -->
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+
+  <link id="primaryStylesheet" rel="stylesheet" type="text/css" href="/display/common.css?styleId=246919&amp;RK=1223580060427&amp;CE=23"/>
+  
+  
+  
+
+  <script type="text/javascript" src="/universal/yui/yahoo-dom-event/yahoo-dom-event.js?CE=23"></script>
+<script type="text/javascript" src="/universal/yui/connection/connection_core-min.js?CE=23"></script>
+<script type="text/javascript" src="/universal/yui/json/json-min.js?CE=23"></script>
+<script type="text/javascript" src="/universal/yui/animation/animation-min.js?CE=23"></script>
+<script type="text/javascript" src="/universal/scripts/global.js?CE=23"></script>
+<script type="text/javascript" src="/universal/scripts/lightbox.js?CE=23"></script>
+<script type="text/javascript" src="/universal/scripts/api.js?CE=23"></script>
+
+
+  <script type="text/javascript">
+  // <![CDATA[
+
+    Squarespace.Constants.SS_AUTHKEY = encodeURIComponent("");
+    Squarespace.Constants.WEBSITE_TITLE =  "Ruby on Rails Security Project"; 
+    
+     Squarespace.Constants.CURRENT_MODULE_ID = "2849217"; 
+    
+    
+    
+    Squarespace.Constants.ADMINISTRATION_UI =  false; 
+    
+    
+    
+
+    
+
+    
+
+  // ]]>
+  </script>
+
+      <title>Ruby on Rails Security Project - Cheatsheet</title>
+  
+
+  <!-- End Heading -->
+
+  
+
+</head>
+
+<body  id="modulePage2849217"   >
+
+  <script type="text/javascript">
+  YAHOO.util.Event.onDOMReady(function() {
+    if (document.location.href.indexOf("SSLogoutOk=true") != -1) {
+      new Squarespace.FixedPositionTip("Logout Successful", "You have been successfully logged out.", { xMargin: 15, yMargin: 15, icon: "/universal/images/helptip-info.png", orientation: "upper-right", viewportFixed: true, autoHide: 1800 }).show();
+    }
+  });
+</script>
+
+    
+
+  <script type="text/javascript">
+    YAHOO.util.Event.addListener(document, "keyup", function (e) { if (!e) { e = event; } if (e.keyCode == 27) { document.location.href = "/display/Login?returnUrl=%2Fruby-on-rails-security-cheatsheet"; } });
+  </script>
+
+
+
+
+  
+
+  <div id="canvasWrapper"><div id="canvas">
+  
+  
+
+  <div id="pageHeaderWrapper"><div id="pageHeader">
+
+      <div id="navigationTop"><div id="navigationTop-sectionContent1491307" class="horizontalNavigationBar"><ul class="content-navigation">
+    
+  <li class="module   " id="navigationTop-moduleContentWrapper2845483">
+
+    <div id="navigationTop-moduleContent2845483">
+
+              <a id="navigationTop-moduleLink2845483" class=" " href="/" ><span>Journal</span></a>
+      
+
+      
+
+    </div>
+
+  </li>
+
+
+  <li class="module   " id="navigationTop-moduleContentWrapper2845484">
+
+    <div id="navigationTop-moduleContent2845484">
+
+              <a id="navigationTop-moduleLink2845484" class=" " href="/about/" ><span>About</span></a>
+      
+
+      
+
+    </div>
+
+  </li>
+
+
+  <li class="module   " id="navigationTop-moduleContentWrapper2849203">
+
+    <div id="navigationTop-moduleContent2849203">
+
+              <a id="navigationTop-moduleLink2849203" class=" " href="/the-book/" ><span>The Book</span></a>
+      
+
+      
+
+    </div>
+
+  </li>
+
+
+  <li class="module   " id="navigationTop-moduleContentWrapper2849214">
+
+    <div id="navigationTop-moduleContent2849214">
+
+              <a id="navigationTop-moduleLink2849214" class=" " href="/security-audits/" ><span>Ruby on Rails Security Audits</span></a>
+      
+
+      
+
+    </div>
+
+  </li>
+
+
+  <li class="module active-module  " id="navigationTop-moduleContentWrapper2849217">
+
+    <div id="navigationTop-moduleContent2849217">
+
+              <a id="navigationTop-moduleLink2849217" class=" " href="/cheatsheet/" ><span>Cheatsheet</span></a>
+      
+
+      
+
+    </div>
+
+  </li>
+
+
+  <li class="module   " id="navigationTop-moduleContentWrapper2849225">
+
+    <div id="navigationTop-moduleContent2849225">
+
+              <a id="navigationTop-moduleLink2849225" class=" " href="/contact/" ><span>Contact</span></a>
+      
+
+      
+
+    </div>
+
+  </li>
+
+
+  <li class="module   " id="navigationTop-moduleContentWrapper2851836">
+
+    <div id="navigationTop-moduleContent2851836">
+
+              <a id="navigationTop-moduleLink2851836" class=" " href="/search/" ><span>Search</span></a>
+      
+
+      
+
+    </div>
+
+  </li>
+
+
+  <li class="module   " id="navigationTop-moduleContentWrapper2864556">
+
+    <div id="navigationTop-moduleContent2864556">
+
+              <a id="navigationTop-moduleLink2864556" class=" " href="/links/" ><span>Links</span></a>
+      
+
+      
+
+    </div>
+
+  </li>
+
+
+  </ul><br class="clearer"/></div></div>
+
+    
+        
+      
+  
+      <div id="bannerAreaWrapper"><div id="bannerArea">
+
+        
+        <div id="bannerWrapper">
+          <a href="http://www.rorsecurity.info/"><img id="banner" src="/storage/header_round.png" alt="Ruby on Rails Security Project" title="Ruby on Rails Security Project"/></a>
+        </div>  
+
+      
+      
+      </div></div>
+    
+    
+    
+
+      <div id="navigationBottom"><div id="navigationBottom-sectionContent1491307" class="horizontalNavigationBar"><ul class="content-navigation">
+    
+  <li class="module   " id="navigationBottom-moduleContentWrapper2845483">
+
+    <div id="navigationBottom-moduleContent2845483">
+
+              <a id="navigationBottom-moduleLink2845483" class=" " href="/" ><span>Journal</span></a>
+      
+
+      
+
+    </div>
+
+  </li>
+
+
+  <li class="module   " id="navigationBottom-moduleContentWrapper2845484">
+
+    <div id="navigationBottom-moduleContent2845484">
+
+              <a id="navigationBottom-moduleLink2845484" class=" " href="/about/" ><span>About</span></a>
+      
+
+      
+
+    </div>
+
+  </li>
+
+
+  <li class="module   " id="navigationBottom-moduleContentWrapper2849203">
+
+    <div id="navigationBottom-moduleContent2849203">
+
+              <a id="navigationBottom-moduleLink2849203" class=" " href="/the-book/" ><span>The Book</span></a>
+      
+
+      
+
+    </div>
+
+  </li>
+
+
+  <li class="module   " id="navigationBottom-moduleContentWrapper2849214">
+
+    <div id="navigationBottom-moduleContent2849214">
+
+              <a id="navigationBottom-moduleLink2849214" class=" " href="/security-audits/" ><span>Ruby on Rails Security Audits</span></a>
+      
+
+      
+
+    </div>
+
+  </li>
+
+
+  <li class="module active-module  " id="navigationBottom-moduleContentWrapper2849217">
+
+    <div id="navigationBottom-moduleContent2849217">
+
+              <a id="navigationBottom-moduleLink2849217" class=" " href="/cheatsheet/" ><span>Cheatsheet</span></a>
+      
+
+      
+
+    </div>
+
+  </li>
+
+
+  <li class="module   " id="navigationBottom-moduleContentWrapper2849225">
+
+    <div id="navigationBottom-moduleContent2849225">
+
+              <a id="navigationBottom-moduleLink2849225" class=" " href="/contact/" ><span>Contact</span></a>
+      
+
+      
+
+    </div>
+
+  </li>
+
+
+  <li class="module   " id="navigationBottom-moduleContentWrapper2851836">
+
+    <div id="navigationBottom-moduleContent2851836">
+
+              <a id="navigationBottom-moduleLink2851836" class=" " href="/search/" ><span>Search</span></a>
+      
+
+      
+
+    </div>
+
+  </li>
+
+
+  <li class="module   " id="navigationBottom-moduleContentWrapper2864556">
+
+    <div id="navigationBottom-moduleContent2864556">
+
+              <a id="navigationBottom-moduleLink2864556" class=" " href="/links/" ><span>Links</span></a>
+      
+
+      
+
+    </div>
+
+  </li>
+
+
+  </ul><br class="clearer"/></div></div>
+
+
+  </div></div>
+  
+  
+
+  
+
+  
+  <div id="pageBodyWrapper"><div id="pageBody">
+  
+  <div id="sidebar1Wrapper" class="verticalNavigationBarWrapper"><div class="iw-vnb1"><div class="iw-vnb2"><div class="iw-vnb3"><div class="iw-vnb4"><div id="sidebar1" class="verticalNavigationBar">
+
+  
+
+    <div id="sectionContent1491307" class="sectionWrapper promotedContainer "><div class="iw-s1"><div class="iw-s2"><div class="iw-s3"><div class="iw-s4"><div class="section">
+
+       <div class="caption">Top</div> 
+
+      
+        
+          <ul class="content-navigation">
+  <li class="module   " id="moduleContentWrapper2845483">
+
+    <div id="moduleContent2845483">
+
+              <a id="moduleLink2845483" class=" " href="/" ><span>Journal</span></a>
+      
+
+      
+
+    </div>
+
+  </li>
+
+
+  <li class="module   " id="moduleContentWrapper2845484">
+
+    <div id="moduleContent2845484">
+
+              <a id="moduleLink2845484" class=" " href="/about/" ><span>About</span></a>
+      
+
+      
+
+    </div>
+
+  </li>
+
+
+  <li class="module   " id="moduleContentWrapper2849203">
+
+    <div id="moduleContent2849203">
+
+              <a id="moduleLink2849203" class=" " href="/the-book/" ><span>The Book</span></a>
+      
+
+      
+
+    </div>
+
+  </li>
+
+
+  <li class="module   " id="moduleContentWrapper2849214">
+
+    <div id="moduleContent2849214">
+
+              <a id="moduleLink2849214" class=" " href="/security-audits/" ><span>Ruby on Rails Security Audits</span></a>
+      
+
+      
+
+    </div>
+
+  </li>
+
+
+  <li class="module active-module  " id="moduleContentWrapper2849217">
+
+    <div id="moduleContent2849217">
+
+              <a id="moduleLink2849217" class=" " href="/cheatsheet/" ><span>Cheatsheet</span></a>
+      
+
+      
+
+    </div>
+
+  </li>
+
+
+  <li class="module   " id="moduleContentWrapper2849225">
+
+    <div id="moduleContent2849225">
+
+              <a id="moduleLink2849225" class=" " href="/contact/" ><span>Contact</span></a>
+      
+
+      
+
+    </div>
+
+  </li>
+
+
+  <li class="module   " id="moduleContentWrapper2851836">
+
+    <div id="moduleContent2851836">
+
+              <a id="moduleLink2851836" class=" " href="/search/" ><span>Search</span></a>
+      
+
+      
+
+    </div>
+
+  </li>
+
+
+  <li class="module   " id="moduleContentWrapper2864556">
+
+    <div id="moduleContent2864556">
+
+              <a id="moduleLink2864556" class=" " href="/links/" ><span>Links</span></a>
+      
+
+      
+
+    </div>
+
+  </li>
+
+</ul>
+
+        
+
+      
+  
+    </div></div></div></div></div></div>
+
+  
+
+    <div id="sectionContent1493608" class="sectionWrapper  "><div class="iw-s1"><div class="iw-s2"><div class="iw-s3"><div class="iw-s4"><div class="section">
+
+       <div class="caption">Welcome</div> 
+
+      
+        
+          <div class="content-passthrough"><div id="moduleContentWrapper2851739" class="widget-wrapper  widget-type-page"><div id="moduleContent2851739">
+
+
+
+
+
+  <p>The Ruby on Rails Security Project wants to make Rails (applications) more secure. <a href="http://www.workingwithrails.com/person/8145-heiko-webers">Heiko Webers</a> of <a href="/about/">bauland42</a> writes blog posts about Rails and security related topics and carries out <a href="/security-audits/">Rails security audits</a> for your web applications. We have a <a href="/the-book/">free book</a>, <a href="/links/">interesting links</a> and a <a href="http://guides.rubyonrails.org/security.html">Rails Security Guide</a> for you, too. Contact Heiko at 42 -the AT sign- bauland42.de.</p>
+</div></div><div id="moduleContentWrapper2870140" class="widget-wrapper  widget-type-page"><div id="moduleContent2870140">
+
+
+
+
+
+  <p><span class="full-image-block ssNonEditable"><span><a href="/the-book"><img src="/storage/book_cover.png?__SQUARESPACE_CACHEVERSION=1234364383973" alt="" /></a></span></span></p>
+  
+  <p><a href="http://www.owasp.org" target="_blank"><img src="/storage/owasp_logo.png?__SQUARESPACE_CACHEVERSION=1257271283817" alt="" /></a></p>
+  
+  <p><a href="http://www.webwarelist.com" target="_blank">The Webwarelist - The directory for web-based software</a></p>
+  
+  
+  <p><a href="http://it-republik.de/conferences/railswaycon2010/" target="_blank"><img src="/storage/rwc10_button_speaker_en.jpg" alt=""/></a></p>
+
+</div></div></div>
+
+        
+
+      
+  
+    </div></div></div></div></div></div>
+
+  
+
+    <div id="sectionContent1539072" class="sectionWrapper  "><div class="iw-s1"><div class="iw-s2"><div class="iw-s3"><div class="iw-s4"><div class="section">
+
+       <div class="caption">Most Popular</div> 
+
+      
+        
+          <div class="content-passthrough"><div id="moduleContentWrapper2988641" class="widget-wrapper  widget-type-links"><div id="moduleContent2988641">
+
+
+
+
+
+
+  <ul class="link-group-list-pt">
+
+    
+
+          <li id="linkGroup169569">
+
+            
+             <div class="title">Most Popular&nbsp;Posts</div> 
+            
+
+            <ul>
+
+            
+
+                      <li id="link515665">
+                        <div class="title"><a onclick="this.target='new';" href="http://www.rorsecurity.info/journal/2008/11/4/rails-security-guide-and-book.html">Rails Security Guide and&nbsp;Book</a></div>
+                        <div class="description"></div>
+                        
+                      </li>
+
+                    
+
+                      <li id="link805345">
+                        <div class="title"><a onclick="this.target='new';" href="http://www.rorsecurity.info/journal/2009/5/1/webappsec-twitters-admin-panel-compromised.html">Twitter admin&nbsp;panel</a></div>
+                        <div class="description"></div>
+                        
+                      </li>
+
+                    
+
+                      <li id="link515692">
+                        <div class="title"><a onclick="this.target='new';" href="http://www.rorsecurity.info/journal/2007/4/16/ruby-regular-expression-fun.html">Ruby Regular&nbsp;Expressions</a></div>
+                        <div class="description"></div>
+                        
+                      </li>
+
+                    
+
+                      <li id="link515667">
+                        <div class="title"><a onclick="this.target='new';" href="http://www.rorsecurity.info/journal/2008/6/17/automatic-security.html">Automatic&nbsp;Security</a></div>
+                        <div class="description"></div>
+                        
+                      </li>
+
+                    
+
+                      <li id="link805347">
+                        <div class="title"><a onclick="this.target='new';" href="http://www.rorsecurity.info/journal/2009/3/15/ssl-and-rails.html">SSL and&nbsp;Rails</a></div>
+                        <div class="description"></div>
+                        
+                      </li>
+
+                    
+
+                      <li id="link515668">
+                        <div class="title"><a onclick="this.target='new';" href="http://www.rorsecurity.info/journal/2008/5/5/csrf-an-underestimated-attack-method.html">Underestimated&nbsp;CSRF</a></div>
+                        <div class="description"></div>
+                        
+                      </li>
+
+                    
+
+                      <li id="link515670">
+                        <div class="title"><a onclick="this.target='new';" href="http://www.rorsecurity.info/journal/2008/4/4/webappsec-the-idea-of-negative-captchas.html">Negative&nbsp;CAPTCHAs</a></div>
+                        <div class="description"></div>
+                        
+                      </li>
+
+                    
+
+                      <li id="link515674">
+                        <div class="title"><a onclick="this.target='new';" href="http://www.rorsecurity.info/journal/2008/3/3/intranet-and-admin-security.html">Intranet And Admin&nbsp;Security</a></div>
+                        <div class="description"></div>
+                        
+                      </li>
+
+                    
+
+                      <li id="link515678">
+                        <div class="title"><a onclick="this.target='new';" href="http://www.rorsecurity.info/journal/2008/2/13/the-tainted-edition.html">The Tainted&nbsp;Edition</a></div>
+                        <div class="description"></div>
+                        
+                      </li>
+
+                    
+
+                      <li id="link515679">
+                        <div class="title"><a onclick="this.target='new';" href="http://www.rorsecurity.info/journal/2007/10/28/restful_authentication-login-security.html">restful_authentication&nbsp;security</a></div>
+                        <div class="description"></div>
+                        
+                      </li>
+
+                    
+
+                      <li id="link515684">
+                        <div class="title"><a onclick="this.target='new';" href="http://www.rorsecurity.info/journal/2007/6/19/everything-you-always-wanted-to-know-about-web-application-s.html">App Security&nbsp;FAQ</a></div>
+                        <div class="description"></div>
+                        
+                      </li>
+
+                    
+
+                      <li id="link515688">
+                        <div class="title"><a onclick="this.target='new';" href="http://www.rorsecurity.info/journal/2007/6/5/use-good-passwords.html">Use good&nbsp;passwords</a></div>
+                        <div class="description"></div>
+                        
+                      </li>
+
+                    
+
+                      <li id="link515693">
+                        <div class="title"><a onclick="this.target='new';" href="http://www.rorsecurity.info/journal/2007/4/15/session-fixation-in-rails.html">Session&nbsp;Fixation</a></div>
+                        <div class="description"></div>
+                        
+                      </li>
+
+                    
+
+                      <li id="link515697">
+                        <div class="title"><a onclick="this.target='new';" href="http://www.rorsecurity.info/journal/2007/4/2/dont-trust-primary-key-parameters.html">Privilege&nbsp;Escalation</a></div>
+                        <div class="description"></div>
+                        
+                      </li>
+
+                    
+
+                      <li id="link515666">
+                        <div class="title"><a onclick="this.target='new';" href="http://www.rorsecurity.info/journal/2008/10/13/new-redcloth-security.html">New Redcloth&nbsp;Security</a></div>
+                        <div class="description"></div>
+                        
+                      </li>
+
+                    
+
+            </ul>
+
+          </li>
+
+        
+
+  </ul>
+
+</div></div></div>
+
+        
+
+      
+  
+    </div></div></div></div></div></div>
+
+  
+
+  
+
+</div></div></div></div></div></div>
+  <div id="sidebar2Wrapper" class="verticalNavigationBarWrapper"><div class="iw-vnb1"><div class="iw-vnb2"><div class="iw-vnb3"><div class="iw-vnb4"><div id="sidebar2" class="verticalNavigationBar">
+
+  
+
+  
+
+</div></div></div></div></div></div>
+  
+  
+
+  <div id="contentWrapper"><div id="content">
+    
+          
+    
+
+
+  
+
+ 
+  
+    <h3>Ruby On Rails Security Cheatsheet<br /><br /></h3>
+<p><span>We used to publish a cheatsheet here. It has been transfered to the <a href="http://guides.rubyonrails.org/security.html" target="_blank">Rails guides page</a>. Or download <a href="/the-book/">our book</a> and scan the pages for the highlighted parts. Those are checklists and general guidelines for the security of your project.<br /></span></p>
+
+  
+
+
+</div></div> <!-- Content -->
+  
+    
+  
+    </div></div> <!-- Page Body -->
+
+    
+    
+    <div id="pageFooterWrapper"><div id="pageFooter">
+  
+              Copyright &copy; 2006-2010, <a href="http://www.bauland42.de">bauland42</a>. All rights reserved. See also: <a href="http://www.werkstatt42.de">Online Projektmanagement</a>
+      
+  
+      
+  
+    </div></div>
+  
+  </div></div> <!-- Canvas -->
+  
+   
+
+
+  <div class="clearer" id="bodyClearer"></div>
+
+  
+
+</body>
+</html>
