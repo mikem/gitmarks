@@ -1,0 +1,870 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head profile="http://gmpg.org/xfn/11">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title>   Hands on MySQL Backup &amp; Migration - igvita.com</title>
+<link rel="stylesheet" href="http://www.igvita.com/wp-content/themes/igvita/style.css" type="text/css" media="screen" />
+
+
+<link rel="openid.server" href="http://www.myopenid.com/server" />
+<link rel="openid.delegate" href="http://openid.igvita.com/igrigorik" />
+<link rel="openid2.local_id" href="http://openid.igvita.com/igrigorik" />
+<link rel="openid2.provider" href="http://www.myopenid.com/server" />
+
+<link rel="alternate" type="application/rss+xml" title="igvita.com RSS Feed" href="http://www.igvita.com/feed/" />
+<link rel="pingback" href="http://www.igvita.com/xmlrpc.php" />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.igvita.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.igvita.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 2.7.1" />
+
+
+<script type="text/javascript">
+function showme(thisdiv)
+{
+   if(document.getElementById(thisdiv).style.display=='none')
+   document.getElementById(thisdiv).style.display='block';
+   else document.getElementById(thisdiv).style.display='none';
+}
+</script>
+
+<style type="text/css">
+div.aka_half {
+	float: left;
+	overflow: auto;
+	width: 45%;
+}
+div.aka_clear {
+	clear: both;
+	float: none;
+}
+</style>
+		<script type="text/javascript" src="http://yui.yahooapis.com/combo?2.8.0r4/build/yahoo-dom-event/yahoo-dom-event.js"></script><!-- ClickTale Top part -->
+<script type="text/javascript">
+var WRInitTime=(new Date()).getTime();
+</script>
+<!-- ClickTale end of Top part --><script type="text/javascript" src="http://www.igvita.com/wp-content/plugins/lifestream/lifestream.js"></script><link rel="stylesheet" type="text/css" media="screen" href="http://www.igvita.com/wp-content/plugins/lifestream/themes/default/media/lifestream.css"/>	<style type="text/css">
+	a.postrank {
+		border:1px solid #333333;
+		color:#000000;
+		display:block;
+		float:right;
+		font-size:1.2em;
+		font-weight:bold;
+		margin: 0 0.2em;
+		position:relative;
+		text-align:center;
+		text-decoration: none;
+		width:34px;
+	}
+
+	a.postrank span.topLeft, a.postrank span.topRight, a.postrank span.bottomLeft, a.postrank span.bottomRight {
+		background:transparent url(http://www.igvita.com/wp-content/plugins/wp-postrank/images/corners.png) no-repeat scroll 0 0;
+		display:block;
+		height:3px;
+		position:absolute;
+		width:3px;
+	}
+
+	a.postrank span.topLeft {
+		background-position:0 0;
+		left:-1px;
+		top:-1px;
+	}
+
+	a.postrank span.topRight {
+		background-position:-3px 0;
+		right:-1px;
+		top:-1px;
+	}
+
+	a.postrank span.bottomLeft {
+		background-position:0 -3px;
+		left:-1px;
+		bottom:-1px;
+	}
+
+	a.postrank span.bottomRight {
+		background-position:-3px -3px;
+		right:-1px;
+		bottom:-1px;
+	}
+
+	/* metrics */
+	#postrank_metrics { margin: 3px; background-color: #f6faff; border: 1px #c3d9ff solid; }
+	#postrank_metrics table{ margin: 5px 0; font-size: 1.3em; border-collapse: collapse; }
+	#postrank_metrics table td{ padding: 7px 11px 9px 14px; border: #c3d9ff solid; border-width: 0 0 0 1px; }
+	#postrank_metrics table td:first-child{ border: 0; padding-left: 11px; }
+	#postrank_metrics table td a, #postrank_metrics table td span{ padding: 1px 0 0 21px; background: url( http://postrank.com/graphics/spriteSet_3.png ) no-repeat; height: 15px; display: block; }
+	#postrank_metrics .bloglines{ background-position: 0 -16px; }
+	#postrank_metrics .reddit, #postrank_metrics .reddit_votes { background-position: 0 -32px; }
+	#postrank_metrics .technorati{ background-position: 0 -48px; }
+	#postrank_metrics .reddit_comments { background-position: 0 -416px; }
+	#postrank_metrics .magnolia{ background-position: 0 -64px; }
+	#postrank_metrics .digg{ background-position: 0 -80px; }
+	#postrank_metrics .twitter{ background-position: 0 -96px; }
+	#postrank_metrics .comments{ background-position: 0 -112px; }
+	#postrank_metrics .icerocket{ background-position: 0 -128px; }
+	#postrank_metrics .delicious{ background-position: 0 -144px; }
+	#postrank_metrics .google{ background-position: 0 -160px; }
+	#postrank_metrics .pownce{ background-position: 0 -176px; }
+	#postrank_metrics .views{ background-position: 0 -192px; }
+	#postrank_metrics .bookmarks{ background-position: 0 -208px; }
+	#postrank_metrics .clicks{ background-position: 0 -224px; }
+	#postrank_metrics .jaiku{ background-position: 0 -240px; }
+	#postrank_metrics .identica{ background-position: 0 -352px; }
+	#postrank_metrics .digg_comments{ background-position: 0 -256px; }
+	#postrank_metrics .twitarmy{ background-position: 0 -336px; }
+	#postrank_metrics .diigo{ background-position: 0 -272px; }
+	#postrank_metrics .furl{ background-position: 0 -320px; }
+	#postrank_metrics .brightkite{ background-position: 0 -304px; }
+	#postrank_metrics .feecle{ background-position: 0 -288px; }
+	#postrank_metrics .friendfeed_like{ background-position: 0 -368px; }
+	#postrank_metrics .friendfeed_comm{ background-position: 0 -432px; }
+	#postrank_metrics .blip{ background-position: 0 -384px; }
+	#postrank_metrics .tumblr { background-position: 0 -400px; }
+	</style>
+
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="favicon" href="/favicon.ico" />
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-71196-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+  })();
+</script>
+
+</head>
+<body>
+	<div id="header">
+		<div class="inside">
+			<h2><a href="http://www.igvita.com/"><img src="/wp-content/themes/igvita/images/igvita.gif" alt="igvita.com" /></a></h2>
+			<p class="description">A goal is a dream with a deadline.</p>
+			<div class="menu">
+				<ul id="nav">
+					<li><span>&nbsp;</span></li>
+					<li class="page_item"><a  href="http://www.igvita.com/">Blog</a></li>
+					<li class="page_item page-item-184"><a rel="me" href="http://www.igvita.com/lifestream/" title="Lifestream">Lifestream</a></li>
+<li class="page_item page-item-31"><a rel="me" href="http://www.igvita.com/about/" title="About">About</a></li>
+<li class="page_item page-item-96 current_page_ancestor"><a rel="me" href="http://www.igvita.com/archives/" title="Archives">Archives</a></li>
+					<li><span class="right">&nbsp;</span></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- [END] #header -->
+
+	<div id="primary" class="single-post">
+		<div class="inside">
+						<div class="primary">
+				<h3><span>Hands on MySQL Backup &#038; Migration</span></h3>
+				<p><img align="left" style="margin: 0pt 0.5em 0.2em 0pt;" src="http://www.igvita.com/blog/posts/10-07/backup.gif"/> Everybody talks about doing it, but very few developers follow through - you guessed it, data backups! Perhaps it's a matter of getting  burnt at least once, or having proper company policies in place (aka have a boss breath down your neck about it), but the practice remains surprisingly elusive. In either case, over the weekend I had to research how to migrate a sizable MySQL database, and hence below are a few tips from the trenches. In the end, the entire process is surprisingly simple.</p>
+<h4><strong>MySQL tools & strategies</h4>
+<p></strong></p>
+<p>As popular as MySQL is there aren't many third party backup tools that will do a proper backup of your data. If you want to avoid data corruption, half-committed transactions, and many other problems, your best to go with one of the bundled backup utilities: <a href="http://dev.mysql.com/doc/refman/5.0/en/mysqldump.html">mysqldump</a>, <a href="http://dev.mysql.com/doc/refman/5.0/en/mysqlhotcopy.html">mysqlhotcopy</a>, <a href="http://jeremy.zawodny.com/mysql/mysqlsnapshot/">mysqlsnapshot</a>, and if you have the bucks, <a href="http://www.innodb.com/hot-backup/order">ibbackup</a>. To select the proper tool for the job, first determine the answers to the following questions: <em>online vs. offline</em> backup, and <em>data dump vs. raw</em>.</p>
+<h4><strong>Online vs. Offline backups</h4>
+<p></strong></p>
+<p> Online backups are often the preferred method as database downtime may be an unacceptable option. Having said that, offline backups are usually faster and less error prone as we do not have to worry about running transactions, table locks, orphaned processes, and other consistency problems. If you can afford to have a brief period of downtime, or if you're lucky enough to have master-slave replication, offline is the way to go.</p>
+<h4><strong>Data dump vs. Raw backups</h4>
+<p></strong></p>
+<p><img align="left" style="margin: 0pt 0.5em 0.2em 0pt;" src="http://www.igvita.com/blog/posts/10-07/why-backup.gif"/>A data dump results in a sequence of SQL statement which can be ran against any database to recreate the database structure and the data itself. <a href="http://dev.mysql.com/doc/refman/5.0/en/mysqldump.html">mysqldump</a> is the premier tool in this space, and it can be used on any table type locally and even over the network. However, data dumps incur a lot of overhead with extra SQL syntax, result in larger data files, are much more CPU intensive, and most importantly, they require a full index rebuild when the data is being restored!</p>
+<p>Arguably the most efficient way to backup your database is through a raw snapshot of the MySQL files as they exist on disk. Because we are skipping all the conversion steps, the process is much more efficient than dumps. To perform a proper backup of a MyISAM table, you will have to copy the data and the index files; for InnoDB you will need to backup the entire tablespace and the associated transaction logs.</p>
+<h4><strong>mysqldump / mysqlhotcopy / mysqlsnapshot / ibbackup</h4>
+<p></strong></p>
+<p><a style="color:blue; font-weight:bold;" href="http://dev.mysql.com/doc/refman/5.0/en/mysqldump.html">mysqldump</a> - (<strong>online, dump</strong>) - most commonly used tool in our toolkit. It will perform a full data dump from an online database by locking the tables and writing a hefty file to disk or a network location. It is ideally suited for small databases as the process is not very efficient. </p>
+<div style=" background:white;" id=6405_1>
+<pre class="ruby"><span style="color:#008000; font-style:italic;"># typical mysql dump backup and restore usage</span>
+mysqldump -u root -pPassword -x --all-databases &gt; db_dump.<span style="color:#9900CC;">sql</span>
+mysql -u root -pPassword &lt; db_dump.<span style="color:#9900CC;">sql</span>
+&nbsp;
+<span style="color:#008000; font-style:italic;"># dump into 'backup' folder (local machine), into two text files &lt;data, table_structure&gt;</span>
+mysqldump -T backup --fields-terminated-by=<span style="color:#996600;">','</span> database-name -u root -pPassword
+&nbsp;
+<span style="color:#008000; font-style:italic;"># compress the dumped data on the fly</span>
+mysqldump -u root -pPassword --all-databases | bzip2 -c &gt; db_dump.<span style="color:#9900CC;">bz2</span>
+&nbsp;</pre>
+</div>
+<p><a style="color:blue; font-weight:bold;" href="http://dev.mysql.com/doc/refman/5.0/en/mysqlhotcopy.html">mysqlhotcopy</a> - (<strong>online, raw</strong>) - will perform a full raw backup of any database consisting of ISAM or MyISAM tables. It operates by acquiring a read lock on all tables, copying them, and then releasing the lock.</p>
+<div style=" background:white;" id=6405_2>
+<pre class="ruby"><span style="color:#008000; font-style:italic;"># perform an online backup into /backup/location</span>
+mysqlhotcopy -u root -<span style="color:#CC0066; font-weight:bold;">p</span> password database_name /backup/location
+&nbsp;</pre>
+</div>
+<p><a style="color:blue; font-weight:bold;" href="http://jeremy.zawodny.com/mysql/mysqlsnapshot/">mysqlsnapshot</a> - (<strong>online, raw</strong>) - a great tool to obtain a full database snapshot of any MySQL database without taking it offline. You can configure it to compress the data, and/or provide separate tar files for each database. The only downside: MyISAM only as well.</p>
+<div style=" background:white;" id=6405_3>
+<pre class="ruby"><span style="color:#008000; font-style:italic;"># save a full database snapshot of an online database into /backup/location</span>
+mysqlsnapshot -u root -pPassword -s /backup/location
+&nbsp;
+<span style="color:#008000; font-style:italic;"># restore a snapshot</span>
+tar -xvf /backup/location/db.<span style="color:#9900CC;">tar</span>
+&nbsp;</pre>
+</div>
+<p><a style="color:blue; font-weight:bold;"  href="http://www.innodb.com/hot-backup/order">ibbackup</a> - (<strong>online, raw</strong>) - will perform an online backup of InnoDB and MyISAM tables on any MySQL database. A great tool, but it comes with a price tag. Then again, if you're a heavy InnoDB user, it may well be worth the price.</p>
+<div style=" background:white;" id=6405_4>
+<pre class="ruby"><span style="color:#008000; font-style:italic;"># perform online backup of MyISAM / InnoDB tables</span>
+ibbackup /etc/my.<span style="color:#9900CC;">cnf</span> /etc/ibbackup.<span style="color:#9900CC;">cnf</span>
+&nbsp;
+<span style="color:#008000; font-style:italic;"># restore recent backup (as configured in ibbackup.cnf)</span>
+ibbackup --restore /etc/ibbackup.<span style="color:#9900CC;">cnf</span>
+&nbsp;</pre>
+</div>
+<p><a style="color:blue; font-weight:bold;" href="http://unixhelp.ed.ac.uk/CGI/man-cgi?cp">cp</a>, <a style="color:blue; font-weight:bold;"  href="http://unixhelp.ed.ac.uk/CGI/man-cgi?scp+1">scp</a>, <a style="color:blue; font-weight:bold;"  href="http://www.hmug.org/man/1/nc.php">nc</a> - (<strong>offline, raw</strong>) - if you can afford to take your database offline, raw backups are as simple as doing a copy, or a remote transfer to a different machine. It may sound crude, but it is arguably the safest way to get a snapshot of your data!</p>
+<h4><strong>Network backups: Netcat & mysqldump</h4>
+<p></strong></p>
+<p>For full safety you should backup your data on multiple drives, and even better, on multiple computers. Thankfully, this process is remarkably simple with the help of netcat, or even mysqldump itself:</p>
+<div style=" background:white;" id=6405_5>
+<pre class="ruby"><span style="color:#008000; font-style:italic;"># Replicate / populate a remote database in a single step (redirect data dump)</span>
+mysqldump --opt --compress --user=username database | mysql --user=username2 --password=p2 --host=hostB -D database -C database
+&nbsp;
+<span style="color:#008000; font-style:italic;"># data backup with netcat</span>
+  <span style="color:#008000; font-style:italic;"># backup recipient - listen on port 6000, write recieved data to backup.bz2</span>
+  nc -l <span style="color:#006666;">6000</span> &gt; backup.<span style="color:#9900CC;">bz2</span>
+&nbsp;
+  <span style="color:#008000; font-style:italic;"># backup initiator - dump the database, compress, and send to hostB:6000</span>
+  mysqldump --opt -u user1 -t database | bzip2 -c | nc -w1 hostB <span style="color:#006666;">6000</span>
+&nbsp;</pre>
+</div>
+<p>A little overwhelming at first, but once you wrap your head around <em>online vs. offline</em>, and <em>raw vs. dump</em>, it's not all that bad. And let me tell you, once automated, you also tend to sleep far better at night!</p>
+<p><div class='download-link'>
+							<a href='http://www.igvita.com/download.php?file=http://www.igvita.com/downloads/MySQL_Backup_and_Migration_ES.zip'><img alt='Download' class='leftalign' src='http://www.igvita.com/wp-content/plugins/dBeautifier/icons/downloads.png' /></a>
+							<h4>
+								<a href='http://www.igvita.com/download.php?file=http://www.igvita.com/downloads/MySQL_Backup_and_Migration_ES.zip'>Spanish: MySQL Backup and Migration (.zip courtesy of Luis Felipe)</a>
+							</h4><p>Downloads: 521 File Size: 26.8 KB </p>
+						</div></p>
+			</div>
+			<hr class="hide" />
+			<div class="secondary">
+	
+			
+		<div style="margin-bottom:15px">
+			<a href="http://feeds.igvita.com/igvita" onclick="_gaq.push(['_trackEvent', 'RSS', 'subscribe']"><img src="http://www.igvita.com/wp-content/themes/igvita/images/rss-icon.png" style="float:left; margin-right: 5px;"></a>
+			<span style="font-weight:bold; font-size:16px"><a class="follower-link" href="http://feeds.igvita.com/igvita" onclick="_gaq.push(['_trackEvent', 'RSS', 'subscribe']">8283 readers</a></span><br />
+			<span style=""><a class="follower-link" style="color:#808080" href="http://feeds.igvita.com/igvita" onclick="_gaq.push(['_trackEvent', 'RSS', 'subscribe']">subscribe via RSS</a></span>
+		</div>
+		
+		<div style="margin-bottom:15px">
+			<a href="http://www.twitter.com/igrigorik" onclick="_gaq.push(['_trackEvent', 'Twitter', 'subscribe']"><img src="http://www.igvita.com/wp-content/themes/igvita/images/twitter-icon.png" style="float:left; margin-right: 5px;"></a>
+			<span style="font-weight:bold; font-size:16px"><a class="follower-link" href="http://www.twitter.com/igrigorik" onclick="_gaq.push(['_trackEvent', 'Twitter', 'subscribe']">5541 followers</a></span><br />
+			<span style=""><a class="follower-link" rel="me" style="color:#808080" href="http://www.twitter.com/igrigorik" onclick="_gaq.push(['_trackEvent', 'Twitter', 'subscribe']">follow @igrigorik</a></span>
+		</div>
+
+		<div>
+			<a href="http://www.github.com/igrigorik" onclick="_gaq.push(['_trackEvent', 'Github', 'subscribe']"><img src="http://www.igvita.com/wp-content/themes/igvita/images/github.png" style="float:left; margin-right: 5px;"></a>
+			<span style="font-weight:bold; font-size:16px"><a class="follower-link" href="http://www.github.com/igrigorik" onclick="_gaq.push(['_trackEvent', 'Github', 'subscribe']">724
+ followers</a></span><br />
+			<span style=""><a class="follower-link" rel="me" style="color:#808080" href="http://www.github.com/igrigorik" onclick="_gaq.push(['_trackEvent', 'Github', 'subscribe']">follow on github</a></span>
+		</div>
+	<br />
+	<br />
+
+				<h2>About this entry</h2>
+				<div class="featured">
+					<dl class="both">
+						<dt>Published:</dt>
+						<dd>10.10.07 / 10am</dd>
+					</dl>
+					<dl>
+						<dt>Category:</dt>
+						<dd><a href="http://www.igvita.com/category/databases/" title="View all posts in Databases" rel="category tag">Databases</a></dd>
+					</dl>
+					<dl>
+						<dt>Tagged:</dt>
+						<dd><a href="http://www.igvita.com/tag/backup/" rel="tag">backup</a>, <a href="http://www.igvita.com/tag/data/" rel="tag">data</a>, <a href="http://www.igvita.com/tag/mysql/" rel="tag">MySQL</a>, <a href="http://www.igvita.com/tag/restore/" rel="tag">restore</a></dd>
+          </dl>
+					<dl>
+						<dt>Print:</dt>
+						<dd>
+							<script src="http://cdn.printfriendly.com/printfriendly.js" type="text/javascript"></script>
+							<img src="http://cdn.printfriendly.com/pf-pdf-icon.gif" style="vertical-align:middle;" />
+							<a href="http://www.printfriendly.com" id="pfLink" onclick="window.print(); return false;">PDF & Email friendly</a>
+						</dd>
+          </dl>
+										<br />
+          <br />
+      
+      					
+	 <h2> Related Posts</h2>
+   <ul class="dates">
+       <li class="inverse"><a href="http://www.igvita.com/2008/12/02/zero-downtime-restarts-with-haproxy/" class="inverse" rel="bookmark" title="Permanent Link: Zero-Downtime Restarts with HAProxy"><span class="date-white">02.12</span>  Zero-Downtime Restarts with HAProxy</a></li><li class="inverse"><a href="http://www.igvita.com/2006/08/28/extending-acts_as_taggable/" class="inverse" rel="bookmark" title="Permanent Link: Counter for acts_as_taggable"><span class="date-white">28.08</span>  Counter for acts_as_taggable</a></li><li class="inverse"><a href="http://www.igvita.com/2008/09/22/high-performance-dns-for-the-cloud/" class="inverse" rel="bookmark" title="Permanent Link: High-Performance DNS for The Cloud"><span class="date-white">22.09</span>  High-Performance DNS for The Cloud</a></li><li class="inverse"><a href="http://www.igvita.com/2007/12/28/thrudb-faster-and-cheaper-than-simpledb/" class="inverse" rel="bookmark" title="Permanent Link: Thrudb - faster, cheaper than SimpleDB"><span class="date-white">28.12</span>  Thrudb - faster, cheaper than SimpleDB</a></li><li class="inverse"><a href="http://www.igvita.com/2007/02/17/business-moo-cards-bandwagon/" class="inverse" rel="bookmark" title="Permanent Link: Business / Moo Cards Bandwagon"><span class="date-white">17.02</span>  Business / Moo Cards Bandwagon</a></li>    </ul>
+	  <br />
+    <ul id="widget">
+    <li id="postrank" class="widget widget_postrank"><div class="postrank-widget theDarkSide">
+<script type="text/javascript" src="http://api.postrank.com/static/widget-v2.js"></script>
+<script type="text/javascript">
+//<![CDATA[
+	var options = {
+		"feed_hash": "421df2d86ab95100de7dcc2e247a08ab", // Unique feed identifier
+		"num": 6, // Number of top posts to display
+		"theme": "theDarkSide", // blueAndBlue, blackAndGray
+		"hasLink": true,
+		"contextual": true
+	}   
+	new PostRankWidget(options);
+//]]>
+</script>
+<div class="powered-by-postrank-wrapper">
+<div class="powered-by-postrank">
+<a href="http://www.postrank.com/?utm_source=topposts&utm_medium=widget&utm_content=topposts&utm_campaign=pr-1"><span>Powered by Postrank</span></a>
+</div>
+<div class="pr_bottomCornerSet"><div class="pr_clearBottomLeft"></div><div class="pr_solidSpecialMiddle"></div><div class="pr_clearBottomRight"></div></div>
+</div>
+</div>
+
+
+</li>
+  </ul>
+
+
+
+
+ 
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<!-- [END] #primary -->
+	
+	<hr class="hide" />
+	<div id="secondary">
+		<div class="inside">
+			
+							<div class="comment-head">
+					<h2>21 Comments</h2>
+					<span class="details"><a href='http://www.igvita.com/2007/10/10/hands-on-mysql-backup-migration/feed/'>comments rss</a> | <a href="http://www.igvita.com/2007/10/10/hands-on-mysql-backup-migration/trackback/">trackback uri</a> </span>
+				</div>
+						
+			
+<!-- You can start editing here. -->
+
+
+	<ol id="comments">
+
+			<li id="comment-74832">
+			<cite>
+								<span class="author"><a href='http://www.slashdotdash.net/' rel='external nofollow'><img style='border:1px solid #BFBFBF; float:right; margin-left:10px;' src='http://www.gravatar.com/avatar/22db5780967f8840d92a60050be8a4f1?rating=X&amp;default=http://www.igvita.com/wp-content/themes/igvita/images/gravatar.png' alt='No Gravatar' width=50 height=50/></a><a href='http://www.slashdotdash.net/' rel='external nofollow'>Ben</a></span>
+				<span class="date">10.10.07 / 5pm</span>
+			</cite>
+			<div class="content">
+								<p>Another one for the list: <a href="http://www.zmanda.com/backup-mysql.html" rel="nofollow">Zmanda Recovery Manager for MySQL (ZRM) </a></p>
+			</div>
+			<div class="clear"></div>
+		</li>
+
+
+	
+			<li id="comment-74856">
+			<cite>
+								<span class="author"><a href='http://links.vanhecke.info/2007/10/10/' rel='external nofollow' class='url'>Pascal Van Hecke - Daily Links &raquo; 2007 &raquo; October &raquo; 10</a></span>
+				<span class="date">10.10.07 / 8pm</span>
+			</cite>
+			<div class="content">
+								<p>[...] Hands on MySQL Backup &amp; Migration how to migrate a sizable MySQL database: best to go with one of the bundled backup utilities: mysqldump, mysqlhotcopy, mysqlsnapshot, and if you have the bucks, ibbackup. Determine first: online vs. offline backup, and data dump vs. raw. (tags: backup mysql howto databases migration tips) [...]</p>
+			</div>
+			<div class="clear"></div>
+		</li>
+
+
+	
+			<li id="comment-75061">
+			<cite>
+								<span class="author"><a href='http://www.moskalyuk.com/blog/handy-guide-to-mysql-backup-and-migration/1494' rel='external nofollow' class='url'>Handy guide to MySQL backup and migration - alex.moskalyuk</a></span>
+				<span class="date">12.10.07 / 12am</span>
+			</cite>
+			<div class="content">
+								<p>[...] false;}Share this post on Facebook    No Comments   Leave a Commenttrackback addressThere was an error with your comment, please try again. name (required)email (will not be published)(required)url [...]</p>
+			</div>
+			<div class="clear"></div>
+		</li>
+
+
+	
+			<li id="comment-75155">
+			<cite>
+								<span class="author"><a href='http://www.mellowmorning.com' rel='external nofollow'><img style='border:1px solid #BFBFBF; float:right; margin-left:10px;' src='http://www.gravatar.com/avatar/55d71ad27f79006049e236f8254e2548?rating=X&amp;default=http://www.igvita.com/wp-content/themes/igvita/images/gravatar.png' alt='No Gravatar' width=50 height=50/></a><a href='http://www.mellowmorning.com' rel='external nofollow'>Thierry Schellenbach</a></span>
+				<span class="date">12.10.07 / 11am</span>
+			</cite>
+			<div class="content">
+								<p>Great Write up!, enjoyed reading it</p>
+			</div>
+			<div class="clear"></div>
+		</li>
+
+
+	
+			<li id="comment-75170">
+			<cite>
+								<span class="author"><a href='http://suburbia.org.uk' rel='external nofollow'><img style='border:1px solid #BFBFBF; float:right; margin-left:10px;' src='http://www.gravatar.com/avatar/1ae9d9770da0b1c1d03e804d6cd93e09?rating=X&amp;default=http://www.igvita.com/wp-content/themes/igvita/images/gravatar.png' alt='No Gravatar' width=50 height=50/></a><a href='http://suburbia.org.uk' rel='external nofollow'>Rick Curran</a></span>
+				<span class="date">12.10.07 / 12pm</span>
+			</cite>
+			<div class="content">
+								<p>I&#8217;ve found the application Navicat (www.navicat.com) to be totally invaluable as a tool for managing MySQL databases. You can do data transfer, synchronisation and scheduled backups with it. Mac, PC and Linux versions too!</p>
+			</div>
+			<div class="clear"></div>
+		</li>
+
+
+	
+			<li id="comment-75239">
+			<cite>
+								<span class="author"><a href='http://uduogah.wordpress.com/2007/10/13/links-for-2007-10-13/' rel='external nofollow' class='url'>links for 2007-10-13 &laquo; Where Is All This Leading To?</a></span>
+				<span class="date">12.10.07 / 8pm</span>
+			</cite>
+			<div class="content">
+								<p>[...] Hands on MySQL Backup &amp; Migration - igvita.com (tags: mysql backup database howto migration sysadmin deployment programming offline development) [...]</p>
+			</div>
+			<div class="clear"></div>
+		</li>
+
+
+	
+			<li id="comment-75424">
+			<cite>
+								<span class="author"><img style='border:1px solid #BFBFBF; float:right; margin-left:10px;' src='http://www.gravatar.com/avatar/baa493762803518bf4adfbeb75d98e76?rating=X&amp;default=http://www.igvita.com/wp-content/themes/igvita/images/gravatar.png' alt='No Gravatar' width=50 height=50/>Ilya Grigorik</span>
+				<span class="date">13.10.07 / 11pm</span>
+			</cite>
+			<div class="content">
+								<p>Ben/Rick, Zmanda and Navicat both look great. Only downside, neither is free! :)</p>
+			</div>
+			<div class="clear"></div>
+		</li>
+
+
+	
+			<li id="comment-75858">
+			<cite>
+								<span class="author"><a href='http://www.buzzwordcompliant.net' rel='external nofollow'><img style='border:1px solid #BFBFBF; float:right; margin-left:10px;' src='http://www.gravatar.com/avatar/6b2f1516abfdcb7aef33f4ad2a2e8c05?rating=X&amp;default=http://www.igvita.com/wp-content/themes/igvita/images/gravatar.png' alt='No Gravatar' width=50 height=50/></a><a href='http://www.buzzwordcompliant.net' rel='external nofollow'>Michael Buckbee</a></span>
+				<span class="date">17.10.07 / 12am</span>
+			</cite>
+			<div class="content">
+								<p>Earlier in the comments someone mentioned Navicat as being useful. The MySQL graphical utilities for OS X have really really improved as of late and you would be well served to give them a try. </p>
+<p>From the latest build you can remotely setup, schedule and control backups from within the app (essentially graphical config for mysqldump). </p>
+<p>Thanks, </p>
+<p>Mike</p>
+			</div>
+			<div class="clear"></div>
+		</li>
+
+
+	
+			<li id="comment-77207">
+			<cite>
+								<span class="author"><a href='http://eliteab.cn/index.php/2007/10/10/hands-on-mysql-backup-migration/' rel='external nofollow' class='url'>eliteab &raquo; Blog Archive &raquo; Hands on MySQL Backup &amp; Migration</a></span>
+				<span class="date">22.10.07 / 5am</span>
+			</cite>
+			<div class="content">
+								<p>[...] sourced here [...]</p>
+			</div>
+			<div class="clear"></div>
+		</li>
+
+
+	
+			<li id="comment-98188">
+			<cite>
+								<span class="author"><a href='http://bhushangahire.wordpress.com/2007/12/13/backups/' rel='external nofollow' class='url'>Backups &laquo; Bhushan G Ahire&#8217;s Weblog</a></span>
+				<span class="date">13.12.07 / 5am</span>
+			</cite>
+			<div class="content">
+								<p>[...] Hands on MySQL backup and migration [...]</p>
+			</div>
+			<div class="clear"></div>
+		</li>
+
+
+	
+			<li id="comment-98748">
+			<cite>
+								<span class="author"><a href='http://windhood.wordpress.com/2007/12/16/great-post-about-mysql-backup/' rel='external nofollow' class='url'>Great post about mysql backup &laquo; Windhood&#8217;s Weblog</a></span>
+				<span class="date">16.12.07 / 4am</span>
+			</cite>
+			<div class="content">
+								<p>[...] Great post about mysql&nbsp;backup  <a href="http://www.igvita.com/blog/2007/10/10/hands-on-mysql-backup-migration/" rel="nofollow">http://www.igvita.com/blog/2007/10/10/hands-on-mysql-backup-migration/</a> [...]</p>
+			</div>
+			<div class="clear"></div>
+		</li>
+
+
+	
+			<li id="comment-100838">
+			<cite>
+								<span class="author"><a href='http://www.secobackup.com' rel='external nofollow'><img style='border:1px solid #BFBFBF; float:right; margin-left:10px;' src='http://www.gravatar.com/avatar/f40b75ee4031ab7aa981124af3ae0f21?rating=X&amp;default=http://www.igvita.com/wp-content/themes/igvita/images/gravatar.png' alt='No Gravatar' width=50 height=50/></a><a href='http://www.secobackup.com' rel='external nofollow'>GP</a></span>
+				<span class="date">03.01.08 / 3am</span>
+			</cite>
+			<div class="content">
+								<p>Another one that is FREE and gives offsite, automated backup to Amazon&#8217;s datacenters (Amazon S3 web service). It also has compression, de-duplication and differential backup  built in. Best of all, its trivial to use - in a few minutes you will be backing up your databases.</p>
+<p><a href="http://www.secobackup.com" rel="nofollow">http://www.secobackup.com</a></p>
+<p>Enjoy!<br />
+Secobackup Guru</p>
+			</div>
+			<div class="clear"></div>
+		</li>
+
+
+	
+			<li id="comment-100858">
+			<cite>
+								<span class="author"><img style='border:1px solid #BFBFBF; float:right; margin-left:10px;' src='http://www.gravatar.com/avatar/676065c6a10572ca62802d6b04559229?rating=X&amp;default=http://www.igvita.com/wp-content/themes/igvita/images/gravatar.png' alt='No Gravatar' width=50 height=50/>Sherlon Padmore</span>
+				<span class="date">04.01.08 / 4pm</span>
+			</cite>
+			<div class="content">
+								<p>This is excellent stuff.</p>
+<p>Thanks</p>
+<p>- Shelon Padmore</p>
+			</div>
+			<div class="clear"></div>
+		</li>
+
+
+	
+			<li id="comment-100867">
+			<cite>
+								<span class="author"><img style='border:1px solid #BFBFBF; float:right; margin-left:10px;' src='http://www.gravatar.com/avatar/baa493762803518bf4adfbeb75d98e76?rating=X&amp;default=http://www.igvita.com/wp-content/themes/igvita/images/gravatar.png' alt='No Gravatar' width=50 height=50/>Ilya Grigorik</span>
+				<span class="date">05.01.08 / 12pm</span>
+			</cite>
+			<div class="content">
+								<p>GP, interesting on paper, but I couldn&#8217;t get the software to run. It seems to be windows only, which is a big no-no for most MySQL users, and it crashed on my Vista machine as well.</p>
+			</div>
+			<div class="clear"></div>
+		</li>
+
+
+	
+			<li id="comment-101065">
+			<cite>
+								<span class="author"><a href='http://www.secobackup.com' rel='external nofollow'><img style='border:1px solid #BFBFBF; float:right; margin-left:10px;' src='http://www.gravatar.com/avatar/f40b75ee4031ab7aa981124af3ae0f21?rating=X&amp;default=http://www.igvita.com/wp-content/themes/igvita/images/gravatar.png' alt='No Gravatar' width=50 height=50/></a><a href='http://www.secobackup.com' rel='external nofollow'>GP</a></span>
+				<span class="date">17.01.08 / 1am</span>
+			</cite>
+			<div class="content">
+								<p>Sherlon, glad you liked it. Feel free to send an email with your commet&#8230;</p>
+<p>GP, thanks for the feedback. The version you tried is XP only. I think you are right on in your comment on windows only being a no-no. Other ports are on their way. We are doing a limited beta of our Linux version of the software. It is designed to be for backing up mysql or any set of directories on your Linux servers or desktops, with the same great encryption and de-duplication capabilities. </p>
+<p>The windows XP version is currently a &#8220;backup server&#8221; - which backs up one or more mysql systems (can be on windows or Unix or Linux) and acts as an aggregator that then sends the backups to Amazon S3. </p>
+<p>The Linux version is (as expected) a lot more powerful, in that it can be invoked as a command line utility that you can put in cron or your own scripts. </p>
+<p>Let me know if you are interested in being part of the Linux beta, just shoot me an email.</p>
+<p>Secobackup Guru<br />
+(info@secobackup.com)</p>
+			</div>
+			<div class="clear"></div>
+		</li>
+
+
+	
+			<li id="comment-102542">
+			<cite>
+								<span class="author"><img style='border:1px solid #BFBFBF; float:right; margin-left:10px;' src='http://www.gravatar.com/avatar/6fa35afcf1fda3432da5081bb221528b?rating=X&amp;default=http://www.igvita.com/wp-content/themes/igvita/images/gravatar.png' alt='No Gravatar' width=50 height=50/>Igor Chernenko</span>
+				<span class="date">19.04.08 / 3am</span>
+			</cite>
+			<div class="content">
+								<p>Many thanks for your paper.<br />
+&#8220;Offline backups&#8221; is what I really need, but there might be a problem with &#8220;different versions of MySQL&#8221;.<br />
+The question is: &#8220;Which versions of MySQL are so different that they expect some files to be in a different format?&#8221;<br />
+QUOTE:<br />
+&#8220;We don&#8217;t recommend this tactic [Copying Database Files (cp)] for moving a database from one machine to another server, since different versions of MySQL may expect these files to be in a different format.&#8221; (O&#8217;Reilly, &#8220;Learning PHP and MySQL&#8221; 2nd Ed. 2007, Page 156)</p>
+<p>Do you have an idea how to deal with this problem?</p>
+<p>Thanks once more,<br />
+Igor</p>
+			</div>
+			<div class="clear"></div>
+		</li>
+
+
+	
+			<li id="comment-110543">
+			<cite>
+								<span class="author"><a href='http://www.myonlinecomputertech.com' rel='external nofollow'><img style='border:1px solid #BFBFBF; float:right; margin-left:10px;' src='http://www.gravatar.com/avatar/8054190c855b816ba8029ed2cb71715f?rating=X&amp;default=http://www.igvita.com/wp-content/themes/igvita/images/gravatar.png' alt='No Gravatar' width=50 height=50/></a><a href='http://www.myonlinecomputertech.com' rel='external nofollow'>Gerard Espinas</a></span>
+				<span class="date">12.08.08 / 1am</span>
+			</cite>
+			<div class="content">
+								<p>I am searching on how to backup mysql database and<br />
+this article comes very useful.</p>
+			</div>
+			<div class="clear"></div>
+		</li>
+
+
+	
+			<li id="comment-126140">
+			<cite>
+								<span class="author"><a href='http://coderchina.72pines.com/2008/08/19/reverse-proxy-server%e5%9c%a8%e9%ab%98%e6%80%a7%e8%83%bd%e5%ba%94%e7%94%a8%e7%8e%af%e5%a2%83%e7%9a%84%e6%80%9d%e8%80%83/' rel='external nofollow' class='url'>Reverse Proxy Server在高性能应用环境的思考 | Coder,肖德时的个人BLOG</a></span>
+				<span class="date">08.09.08 / 7am</span>
+			</cite>
+			<div class="content">
+								<p>[...] 1.http://blog.kovyrin.net/2006/05/18/nginx-as-reverse-proxy/ 2.http://www.igvita.com/2007/10/10/hands-on-mysql-backup-migration/ [...]</p>
+			</div>
+			<div class="clear"></div>
+		</li>
+
+
+	
+			<li id="comment-136924">
+			<cite>
+								<span class="author"><a href='http://nhw.pl/wp/' rel='external nofollow'><img style='border:1px solid #BFBFBF; float:right; margin-left:10px;' src='http://www.gravatar.com/avatar/c25909d53e693206a9ec8cbf0631092e?rating=X&amp;default=http://www.igvita.com/wp-content/themes/igvita/images/gravatar.png' alt='No Gravatar' width=50 height=50/></a><a href='http://nhw.pl/wp/' rel='external nofollow'>Witold Rugowski</a></span>
+				<span class="date">30.09.08 / 5pm</span>
+			</cite>
+			<div class="content">
+								<p>I would add one remark - char set. Newer versions of mysqldump uses utf-8 as default and older - latin1. So if You  have some international characters in DB, make sure that dump/restore does not make mess with them.</p>
+			</div>
+			<div class="clear"></div>
+		</li>
+
+
+	
+			<li id="comment-148509">
+			<cite>
+								<span class="author"><a href='http://yesure.wordpress.com/2008/11/22/links-for-2008-11-21/' rel='external nofollow' class='url'>links for 2008-11-21 &laquo; Yesure</a></span>
+				<span class="date">21.11.08 / 9pm</span>
+			</cite>
+			<div class="content">
+								<p>[...] Hands on MySQL Backup &amp; Migration - igvita.com As popular as MySQL is there aren&#39;t many third party backup tools that will do a proper backup of your data. If you want to avoid data corruption, half-committed transactions, and many other problems, your best to go with one of the bundled backup utilities: mysqldump, mysqlhotcopy, mysqlsnapshot, (tags: mysql linux database backup) [...]</p>
+			</div>
+			<div class="clear"></div>
+		</li>
+
+
+	
+			<li id="comment-209572">
+			<cite>
+								<span class="author"><a href='http://www.dbload.com' rel='external nofollow'><img style='border:1px solid #BFBFBF; float:right; margin-left:10px;' src='http://www.gravatar.com/avatar/f034b855d3ad498f390c712902e857f9?rating=X&amp;default=http://www.igvita.com/wp-content/themes/igvita/images/gravatar.png' alt='No Gravatar' width=50 height=50/></a><a href='http://www.dbload.com' rel='external nofollow'>J vincent</a></span>
+				<span class="date">19.08.09 / 6am</span>
+			</cite>
+			<div class="content">
+								<p>I use data loader for migrating almost any data, it helps me to convert MSSQL to MYSQL, MS access to MSSQL, mysql, csv loader, foxpro and MSSQL to MS access, MYSQl, CSV, foxpro etc. In my view this is a best Data Migration Tool</p>
+			</div>
+			<div class="clear"></div>
+		</li>
+
+
+	
+	
+	</ol>
+
+ 
+
+
+		<div id="comment-form">
+				<h3 class="formhead">Have your say</h3>
+				<p><small><strong>XHTML:</strong> You can use these tags: &lt;a href=&quot;&quot; title=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;acronym title=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote cite=&quot;&quot;&gt; &lt;cite&gt; &lt;code&gt; &lt;del datetime=&quot;&quot;&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=&quot;&quot;&gt; &lt;strike&gt; &lt;strong&gt; </small></p>
+								<form action="http://www.igvita.com/wp-comments-post.php" method="post" id="commentform">
+								
+				<input type="text" name="author" id="author" value="" class="textfield" tabindex="1" /><label class="text">Name (required)</label><br />
+				<input type="text" name="email" id="email" value="" class="textfield" tabindex="2" /><label class="text">Email (required)</label><br />
+				<input type="text" name="url" id="url" value="" class="textfield" tabindex="3" /><label class="text">Website</label><br />
+				
+								
+				<textarea name="comment" id="comment" class="commentbox" tabindex="4"></textarea>
+				<div class="formactions">
+					
+
+	<p style="clear: both;" class="subscribe-to-comments">
+	<input type="checkbox" name="subscribe" id="subscribe" value="subscribe" style="width: auto;" />
+	<label for="subscribe">Notify me of follow up comments via e-mail</label>
+	</p>
+
+
+					<span style="visibility:hidden">Safari hates me</span>
+					<input type="submit" name="submit" tabindex="5" class="submit" value="Add your comment" />
+				</div>
+				<input type="hidden" name="comment_post_ID" value="164" />
+								</form>
+			</div>
+
+
+			
+					</div>
+	</div>
+<hr class="hide" />
+
+	<div id="ancillary">
+		<div class="inside">
+			<div class="block first">
+				<a href="http://www.twitter.com/igrigorik" title="Follow me on Twitter"><img src="/wp-content/themes/igvita/images/twitter_logo.gif" style="float:right;" /></a>
+<h2>Twitter Updates</h2>
+<div style="margin-top:-0.5em;" class="twitter">
+
+	<div id="twitter_div">
+		<ul id="twitter_update_list"></ul>
+	</div>
+	<script type="text/javascript" src="http://twitter.com/javascripts/blogger.js"></script>
+	<script type="text/javascript" src="http://twitter.com/statuses/user_timeline/igrigorik.json?callback=twitterCallback2&count=5"></script>
+	<span class="read-on"><a href="http://www.twitter.com/igrigorik">follow igrigorik</a></span>
+</div>
+			</div>
+			
+			<div class="block">
+				<h2>Recently</h2>
+<ul class="dates">
+			<li><a href="http://www.igvita.com/2010/12/14/beyond-ruby-mirah-reia-rite/"><span class="date">14.12</span> Beyond Ruby: Mirah, Reia, Rite </a></li>
+		<li><a href="http://www.igvita.com/2010/12/02/concurrency-with-actors-goroutines-ruby/"><span class="date">02.12</span> Concurrency with Actors, Goroutines &#038; Ruby </a></li>
+		<li><a href="http://www.igvita.com/2010/11/17/routing-with-ruby-zeromq-devices/"><span class="date">17.11</span> Routing with Ruby &#038; ZeroMQ Devices </a></li>
+		<li><a href="http://www.igvita.com/2010/10/22/open-source-search-with-lucene-solr/"><span class="date">22.10</span> Open Source Search with Lucene &#038; Solr </a></li>
+		<li><a href="http://www.igvita.com/2010/10/05/case-for-smartphone-web-activity-feeds/"><span class="date">05.10</span> Case for Smartphone Web Activity Feeds </a></li>
+		<li><a href="http://www.igvita.com/2010/09/03/zeromq-modern-fast-networking-stack/"><span class="date">03.09</span> ZeroMQ: Modern &#038; Fast Networking Stack </a></li>
+		<li><a href="http://www.igvita.com/2010/08/18/multi-core-threads-message-passing/"><span class="date">18.08</span> Multi-core, Threads &#038; Message Passing </a></li>
+		<li><a href="http://www.igvita.com/2010/08/04/rails-3-internals-railtie-creating-plugins/"><span class="date">04.08</span> Rails 3 Internals: Railtie &#038; Creating Plugins </a></li>
+		<li><a href="http://www.igvita.com/2010/07/19/speed-tracer-server-side-tracing-with-rack/"><span class="date">19.07</span> Speed Tracer Server-side Tracing with Rack </a></li>
+		<li><a href="http://www.igvita.com/2010/06/24/weak-consistency-and-cap-implications/"><span class="date">24.06</span> Weak Consistency and CAP Implications </a></li>
+		<li><a href="http://www.igvita.com/2010/06/07/rails-performance-needs-an-overhaul/"><span class="date">07.06</span> Rails Performance Needs an Overhaul </a></li>
+		<li><a href="http://www.igvita.com/2010/05/20/scalable-work-queues-with-beanstalk/"><span class="date">20.05</span> Scalable Work Queues with Beanstalk </a></li>
+	</ul>
+			</div>
+			
+			<div class="block">
+				<h2> Amazon Review </h2>
+
+<div class="amazon">
+
+	
+		<a href="http://www.amazon.com/exec/obidos/ASIN/0684865246/igvitacom-20?tag=igvitacom-20">
+			<img class="cover" src="http://ecx.images-amazon.com/images/I/51QkkgkZ9YL.jpg" width="59" height="90" alt="Euclid's Window " />
+		</a>
+
+		<p><a href="http://www.amazon.com/exec/obidos/ASIN/0684865246/igvitacom-20?tag=igvitacom-20">Euclid's Window </a> <span class="separator">by</span> <span class="author">Leonard Mlodinow</span></p>
+
+		<p><img src="/wp-content/themes/igvita/images/stars/stars-5-0.gif" valign="middle" />
+			&nbsp; &nbsp; <span class="date"> History of geometry</span><br />
+			December 5, 2010		</p>
+
+		<span class="read-on"><a href="http://www.amazon.com/gp/cdp/member-reviews/A2MGUNKW1ANLT5">read review</a></span>
+
+
+	
+</div>
+
+
+<h2>My <span class="flickrblue">Flick</span><span class="flickrpink">r</span> Photos</h2>
+
+	<div class="flickr">	
+		<a href="http://www.flickr.com/photos/ig/5175692732/" title="House of Voodoo - New Orleans"><img src="http://farm5.static.flickr.com/4084/5175692732_f252591880_s.jpg" alt="House of Voodoo - New Orleans" /></a><a href="http://www.flickr.com/photos/ig/5175670076/" title="Bourbon Street - New Orleans"><img src="http://farm5.static.flickr.com/4113/5175670076_72da19449a_s.jpg" alt="Bourbon Street - New Orleans" /></a><a href="http://www.flickr.com/photos/ig/5111287246/" title="Chicago Downtown"><img src="http://farm2.static.flickr.com/1418/5111287246_8dbf47031a_s.jpg" alt="Chicago Downtown" /></a><a href="http://www.flickr.com/photos/ig/5111286974/" title="Chicago Downtown"><img src="http://farm5.static.flickr.com/4088/5111286974_0a8ccde0ee_s.jpg" alt="Chicago Downtown" /></a><a href="http://www.flickr.com/photos/ig/5110683535/" title="Underworld of Chicago "><img src="http://farm5.static.flickr.com/4087/5110683535_24b3e0e181_s.jpg" alt="Underworld of Chicago " /></a><a href="http://www.flickr.com/photos/ig/5090028966/" title="Boston Harbor Sunset"><img src="http://farm5.static.flickr.com/4108/5090028966_b1096211ca_s.jpg" alt="Boston Harbor Sunset" /></a>				
+		<span class="read-on"><a href="http://flickr.com/photos/ig/">view gallery</a></span>
+</div>	
+
+			</div>
+			
+			<div class="clear"></div>
+		</div>
+	</div>
+	<!-- [END] #ancillary -->	
+
+<hr class="hide" />
+	<div id="footer">
+		<div class="inside">
+			
+			<p class="copyright"><a href="http://wordpress.org"><img src="/wp-content/themes/igvita/images/wordpress.gif" alt="wordpress" valign="middle" /></a> &nbsp;&nbsp;Copyright &copy; 2005-2011 Ilya Grigorik</p>
+			<p class="attributes"><a href="http://www.igvita.com/feed/" onClick="pageTracker._trackEvent('RSS', 'Subscribe', 'footer');"><img src="/wp-content/themes/igvita/images/rss.gif" style="vertical-align:middle;"/>&nbsp; Entries RSS</a> <a href="http://www.igvita.com/comments/feed/"><img src="/wp-content/themes/igvita/images/rss.gif" style="vertical-align:middle;"/>&nbsp; Comments RSS</a></p>
+		</div>
+	</div>
+	<!-- [END] #footer -->	
+
+	<!-- 47 queries. 2.307 seconds. -->
+	<!-- ClickTale Bottom part -->
+<div id="ClickTaleDiv" style="display: none;"></div>
+<script type="text/javascript">
+if(document.location.protocol!='https:')
+  document.write(unescape("%3Cscript%20src='http://s.clicktale.net/WRb6.js'%20type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+if(typeof ClickTale=='function') ClickTale(6746,0.045,"www03");
+</script>
+<!-- ClickTale end of Bottom part -->
+
+			<script type="text/javascript">
+			/*<![CDATA[*//*---->*/
+			inputs = document.getElementsByTagName("input");
+			for (var i in inputs) {
+				if (typeof(inputs[i].value) != 'unknown' && inputs[i].value != null && (inputs[i].type == "button" || inputs[i].type == "submit") && inputs[i].value.search(/^Search$/) != -1) {
+					var oElement = inputs[i];
+					function fn(e) { ClickTaleTag("Search"); }
+					YAHOO.util.Event.addListener(oElement, "click", fn);  
+				}
+			} 
+			/*--*//*]]>*/
+			</script>
+			
+			<script type="text/javascript">
+			/*<![CDATA[*//*---->*/
+			for (var i in document.forms) {
+				if (typeof(document.forms[i].action) != 'unknown' && document.forms[i].action != null && document.forms[i].action.search(/\/wp-comments-post\.php$/) != -1) { 
+					var oElement = document.forms[i];
+					function fn(e) { ClickTaleTag("Comment");}
+					YAHOO.util.Event.addListener(oElement, "submit", fn);  
+				}
+			}
+			/*--*//*]]>*/
+			</script>
+			
+			<script type="text/javascript">
+			/*<![CDATA[*//*---->*/
+			for (var i in document.links) {
+				if (typeof(document.links[i].href) != 'unknown' && document.links[i].href != null && document.links[i].href.search(/(feed=rss2$)|(feed$)|(feed\/$)/) != -1) {
+					var oElement = document.links[i];
+					function fn(e) { ClickTaleTag("RSS"); }
+					YAHOO.util.Event.addListener(oElement, "click", fn);  
+				}
+			} 
+			/*--*//*]]>*/
+			</script>
+			
+			<script type="text/javascript">
+			/*<![CDATA[*//*---->*/
+			for (var i in document.links) {
+				if (typeof(document.links[i].href) != 'unknown' && document.links[i].href != null && document.links[i].href.search(/(feed=comments-rss2$)|(comments\/feed$)|(comments\/feed\/$)/) != -1) {
+					var oElement = document.links[i];
+					function fn(e) { ClickTaleTag("Comments-RSS"); }
+					YAHOO.util.Event.addListener(oElement, "click", fn);  
+				}
+			} 
+			/*--*//*]]>*/
+			</script>
+			
+			<script type="text/javascript">
+			/*<![CDATA[*//*---->*/
+			for (var i in document.links) {
+				if (typeof(document.links[i].href) != 'unknown' && document.links[i].href != null && document.links[i].href.search(/(feed=rss2$)|(feed$)|(feed\/$)/) != -1) {
+					var oElement = document.links[i];
+					function fn(e) { ClickTaleTag("RSS-Rightclick"); }
+					YAHOO.util.Event.addListener(oElement, "contextmenu", fn);  
+				}
+			} 
+			/*--*//*]]>*/
+			</script>
+			
+			<script type="text/javascript">
+			/*<![CDATA[*//*---->*/
+			for (var i in document.links) {
+				if (typeof(document.links[i].href) != 'unknown' && document.links[i].href != null && document.links[i].href.search(/(feed=comments-rss2$)|(comments\/feed$)|(comments\/feed\/$)/) != -1) {
+					var oElement = document.links[i];
+					function fn(e) { ClickTaleTag("Comments-RSS-Rightclick"); }
+					YAHOO.util.Event.addListener(oElement, "contextmenu", fn);  
+				}
+			} 
+			/*--*//*]]>*/
+			</script>
+			
+<!-- Start Quantcast tag -->
+<script type="text/javascript">
+_qoptions={
+qacct:"p-1eZUZ-mfpiyU2"
+};
+</script>
+<script type="text/javascript" src="http://edge.quantserve.com/quant.js"></script>
+<noscript>
+<img src="http://pixel.quantserve.com/pixel/p-1eZUZ-mfpiyU2.gif" style="display: none;" border="0" height="1" width="1" alt="Quantcast"/>
+</noscript>
+<!-- End Quantcast tag -->
+
+<!-- Reinvigorate -->
+<script type="text/javascript" src="http://include.reinvigorate.net/re_.js"></script>
+<script type="text/javascript">
+  try { reinvigorate.track("1k7q7-i0d7gsq187"); } catch(err) {}
+</script>
+
+</body>
+</html>
+
