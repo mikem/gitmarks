@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr">
+
+<head profile="http://gmpg.org/xfn/11">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title>Erfahrungen, Meinungen und Halluzinationen  &raquo; Blog Archive   &raquo; GNU make vs. BSD make - a practical problem experience</title>
+
+<link rel="stylesheet" href="http://www.wgdd.de/wp-content/themes/default/style.css" type="text/css" media="screen" />
+<link rel="alternate" type="application/rss+xml" title="Erfahrungen, Meinungen und Halluzinationen RSS Feed" href="http://www.wgdd.de/?feed=rss2" />
+<link rel="pingback" href="http://www.wgdd.de/xmlrpc.php" />
+
+<style type="text/css" media="screen">
+
+	#page { background: url("http://www.wgdd.de/wp-content/themes/default/images/kubrickbgwide.jpg") repeat-y top; border: none; }
+
+</style>
+
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.wgdd.de/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.wgdd.de/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 2.5.1" />
+
+</head>
+<body>
+<div id="page">
+
+
+<div id="header">
+	<div id="headerimg">
+		<h1><a href="http://www.wgdd.de/">Erfahrungen, Meinungen und Halluzinationen</a></h1>
+		<div class="description">ein kleines, privates blog</div>
+	</div>
+</div>
+<hr />
+
+	<div id="content" class="widecolumn">
+
+	
+		<div class="navigation">
+			<div class="alignleft">&laquo; <a href="http://www.wgdd.de/?p=26">Experiences with the &#8220;new&#8221; fglrx-driver 8.42.3 package</a></div>
+			<div class="alignright"><a href="http://www.wgdd.de/?p=29">LDFLAGS = &minus;Wl,&minus;&minus;as&minus;needed</a> &raquo;</div>
+		</div>
+
+		<div class="post" id="post-28">
+			<h2>GNU make vs. BSD make - a practical problem experience</h2>
+
+			<div class="entry">
+				<p>I&#8217;m currently evaluating Olivier Sessinks <a href="http://olivier.sessink.nl/jailkit/">jailkit</a> to maintain a small <a href="http://packages.debian.org/cvsd">cvsd</a> CHROOT with an included <a href="http://packages.debian.org/openssh-server">SSH  server</a>. The <tt>cvsd-buildroot</tt> command e.g. doesn&#8217;t handle the <a href="http://packages.debian.org/libpam-modules">libpam-modules</a> dependency in the CHROOT. So I tried to update the Debian packaging files included in the <tt>jailkit</tt> source. During this work I found some issues with the build environment - e.g. no <var>DESTDIR</var> support and some other stuff (another user <a href="http://lists.gnu.org/archive/html/jailkit-dev/2007-09/msg00000.html">already complained</a>, that there might be problems with the SUID installation part for <tt>jk_chrootsh</tt>, <tt>jk_uchroot</tt> and <tt>jk_procmailwrapper</tt> of the Makefiles).</p>
+<p>So I began to check and &#8220;fix&#8221; the Makefiles and the configure script and then sent everything to Olivier. I did not only add the <var>DESTDIR</var> variables. I also made use of built-in rules, common variables (also for implicit rules), &#8230; and such stuff to make the Makefiles shorter and easier to maintain. My fault: I tested everything with <a href="http://packages.debian.org/make">GNU make</a>. Now Olivier complained, that BSDs make doesn&#8217;t work anymore. So we began a short hack session to check for the problems.</p>
+<p>My first issue: I had to find some BSD make to test it myself. I found it in the <a href="http://packages.debian.org/freebsd5-buildutils">freebsd5-buildutils</a>, that contains the <tt>freebsd-make</tt> command. Then we began to check for incompatibilities and that&#8217;s the result:</p>
+<ol>
+<li><code>ifdef</code> statements differ in syntax
+<ul>
+<li>GNU make uses <code>ifdef VAR</code></li>
+<li>BSD make uses <code>.ifdef VAR</code></li>
+</ul>
+<p>solution: We replaced the statement with a construct similar to <code>AM_CONDITIONAL</code>. But we do not use this macro, because it would need to be shipped in <tt>aclocal.m4</tt>, which is currently not necessary. The code simply sets a variable <var>foo_TRUE</var> to &#8216;<code># </code>&#8216;, if the condition is wrong, or the variable is left empty, if the condition is true:</p>
+<pre title="configure.ac">
+if test "x$my_condition" != "xno" ; then
+    AC_SUBST([foo_TRUE], [])
+else
+    AC_SUBST([foo_TRUE], [# ])
+fi</pre>
+<pre title="Makefile.in">
+FILES = bar
+@foo_TRUE@FILES += foo</pre>
+</li>
+<li>prerequisite variables differ in syntax
+<ul>
+<li>GNU make uses <code>$&lt;</code>, <code>$^</code>, <code>$@</code>, &#8230;</li>
+<li>BSD make uses <code>${.IMPSRC}</code>, <code>${.ALLSRC}</code>, <code>${.TARGET}</code>, &#8230; (note, that both <var>*SRC</var> variables hold a <strong>list</strong> of source files)</li>
+</ul>
+<p>Unfortunately both make implementations don&#8217;t seem to share a variable for the list of prerequisites. So the only solution is to list all prerequisites in the rule again. A variable would be much more comfortable. Maybe one could write a function, that first tests <code>${.IMPSRC}</code> and falls back to <code>$^</code>. Maybe that&#8217;s an alternative, but it&#8217;s IMHO not a very good solution. We&#8217;ve chosen to write down all prerequisites in a rule instead of using a variable. This is a little bit &#8220;harder&#8221; to maintain, but it works.</p>
+</li>
+<li>built-in rules are not shared and do not use the same variables
+<ul>
+<li>GNU make ships built-in rules to build objects from sources <strong>and</strong> link them; rules consider <var>CPPFLAGS</var></li>
+<li>BSD make ships built-in rules to build objects from sources, but there are no rules to link them; rules do not consider <var>CPPFLAGS</var></li>
+</ul>
+<p>In the case of GNU make, one can simply write:</p>
+<pre title="Makefile.in">
+myprog: foo.o bar.o</pre>
+<p>and GNU make will automatically create <tt>foo.o</tt> from <tt>foo.c</tt> (<a href="http://www.gnu.org/software/make/manual/make.html#Catalogue-of-Rules"><code>.c.o:</code></a>, ditto for <tt>bar.o</tt>) and at least link <tt>myprog</tt> (<a href="http://www.gnu.org/software/make/manual/make.html#Catalogue-of-Rules"><code>.o:</code></a>). But BSD make will only create the object files. There is no final link-step. So we had to include the rule to link the program in the Makefile.</p>
+</li>
+</ol>
+<p>Finally we got it and it looks good now. I/We learned a lot of new things (I learnd a lot about BSD make) ;), <strong>but</strong> it took us 1-2 hours to understand and fix the problems.</p>
+<p>Here a list of URLs, that might give some more information about the programs, their syntax and limitations:</p>
+<ul>
+<li><a href="http://www.gnu.org/software/make/manual/make.html">GNU `make&#8217; manual</a></li>
+<li><a href="http://www.khmere.com/freebsd_book/html/ch01.html">FreeBSDs make</a></li>
+<li><a href="http://www.gnu.org/software/autoconf/manual/autoconf-2.57/html_node/autoconf_124.html">Autoconf: Limitations of make</a></li>
+</ul>
+
+								<p>Tags: <a href="http://www.wgdd.de/?tag=bsd-make" rel="tag">bsd make</a>, <a href="http://www.wgdd.de/?tag=cvsd" rel="tag">cvsd</a>, <a href="http://www.wgdd.de/?tag=debian" rel="tag">Debian</a>, <a href="http://www.wgdd.de/?tag=gnu-make" rel="tag">gnu make</a>, <a href="http://www.wgdd.de/?tag=jailkit" rel="tag">jailkit</a>, <a href="http://www.wgdd.de/?tag=make" rel="tag">make</a></p>
+				<p class="postmetadata alt">
+					<small>
+						This entry was posted
+												on Monday, November 12th, 2007 at 3:37 am						and is filed under <a href="http://www.wgdd.de/?cat=2" title="View all posts in Debian" rel="category">Debian</a>,  <a href="http://www.wgdd.de/?cat=1" title="View all posts in General" rel="category">General</a>,  <a href="http://www.wgdd.de/?cat=14" title="View all posts in Software" rel="category">Software</a>.
+						You can follow any responses to this entry through the <a href='http://www.wgdd.de/?feed=rss2&amp;p=28'>RSS 2.0</a> feed.
+
+													Both comments and pings are currently closed.
+
+						
+					</small>
+				</p>
+
+			</div>
+		</div>
+
+	
+<!-- You can start editing here. -->
+
+	<h3 id="comments">One Response to &#8220;GNU make vs. BSD make - a practical problem experience&#8221;</h3>
+
+	<ol class="commentlist">
+
+	
+		<li class="alt" id="comment-58">
+						<cite><a href='http://wgdd.de' rel='external nofollow'>Daniel Leidert</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-58" title="">November 13th, 2007 at 3:12 pm</a> </small>
+
+			<p>A comment I got proposed a switch in configure that defines the syntax in the Makefile depending on the make command found. Unfortunately this is not a solution, because configure can only determine, which make commands are available, but it cannot determine, which make command will be used to process the Makefile. The idea only works, if you can do the switch in the Makefile (during processing), but all make implementations then must understand and support such a syntax.</p>
+
+		</li>
+
+	
+	
+	</ol>
+
+ 
+
+
+	
+	</div>
+
+
+<hr />
+<div id="footer">
+<!-- If you'd like to support WordPress, having the "powered by" link somewhere on your blog is the best way; it's our only promotion or advertising. -->
+	<p>
+		Erfahrungen, Meinungen und Halluzinationen is proudly powered by
+		<a href="http://wordpress.org/">WordPress</a>
+		<br /><a href="http://www.wgdd.de/?feed=rss2">Entries (RSS)</a>
+		and <a href="http://www.wgdd.de/?feed=comments-rss2">Comments (RSS)</a>.
+		<!-- 17 queries. 0.500 seconds. -->
+	</p>
+</div>
+</div>
+
+<!-- Gorgeous design by Michael Heilemann - http://binarybonsai.com/kubrick/ -->
+
+		</body>
+</html>
