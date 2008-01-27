@@ -1,0 +1,898 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" 
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
+<head>
+<title>scie.nti.st &#187;  Capistrano 2.0 with Git shared repository </title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="/stylesheets/Pinder-Deluxe.css" rel="stylesheet" type="text/css" />
+<!-- { head.feed } -->
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://feeds2.feedburner.com/scientist-home" />
+
+<!-- begin: tweet! -->
+  <script language="javascript" src="/javascripts/jquery.min.js" type="text/javascript"></script>
+  <script language="javascript" src="/javascripts/jquery.tweet.js" type="text/javascript"></script>
+  <link href="/stylesheets/jquery.tweet.css" media="all" rel="stylesheet" type="text/css"/> 
+
+  <script type='text/javascript'>
+      $(document).ready(function(){
+          $(".tweet").tweet({
+              username: "up_the_irons",
+              join_text: "auto",
+              avatar_size: 32,
+              count: 5,
+              auto_join_text_default: "I said,",
+              auto_join_text_ed: "I",
+              auto_join_text_ing: "I was",
+              auto_join_text_reply: "I replied to",
+              auto_join_text_url: "I was checking out",
+              loading_text: "Loading tweets..."
+          });
+      });
+  </script> 
+<!-- end: tweet! -->
+
+</head>
+
+<body>
+<div id="maskingtape">
+<div id="top"><!-- Don't forget to put the lid on --></div>
+<div id="sitetitle"><a href="/">scie.nti.st <span id="sub"><strong>&#187;</strong> ruby, rails, programming, agile, productivity, systems</span></a></div>
+<div id="scene"><!-- pretty pic goes here --></div>
+<div id="content-box">
+<div class="content">
+<div class="single-article">
+<h1>Capistrano 2.0 with Git shared repository</h1>
+<div class="date-author">Posted: September 03, 2007, by garry</div>
+<div class="tags">Tags: <a href="/tags/capistrano">capistrano</a> <a href="/tags/git">git</a> </div>
+<div class="article-text">
+<p>
+As a follow-up to my previous article, <a href='http://scie.nti.st/2007/3/16/capistrano-with-git-shared-repository'>Capistrano with Git shared repository</a>, I will now post an updated version of my Git SCM module that works with Capistrano 2.0.  As with all modules that worked with 1.x, modifications are necessary to support 2.0.
+</p>
+<p>
+Parts of this plugin borrowed from Scott Chacon's version, which I found on the Capistrano mailing list but failed to be able to get working.  I'd rather eat my own dog food anyway.
+</p>
+<p>
+Features of this plugin include:
+<ul>
+<li>Very simple, only requiring 2 lines in your deploy.rb.</li>
+<li>Can deploy different branches, tags, or any SHA1 easily.</li>
+<li>Supports prompting for password / passphrase upon checkout.<br>
+(I am amazed at how some plugins don't do this)</li>
+<li>Supports :scm_command, :scm_password, :scm_passphrase Capistrano directives.</li>
+</ul>
+<p>
+Install like so:
+<pre><code>cd $GEMPATH/capistrano-2.0.0/lib/capistrano/recipes/deploy/scm/
+wget http://scie.nti.st/dist/git-2.0.rb
+mv git-2.0.rb git.rb</code></pre>
+Replace $GEMPATH with the path to where your Gems are installed.  Also change "capistrano-2.0.0" to whatever 2.x version you have.
+</p>
+<p>
+The head of the module includes full documentation on requirements and configuration.  The minimum you need is to place the following two lines in your config/deploy.rb:
+<pre><code>set :scm, :git
+set :repository, "someuser@somehost:/home/myproject"</code></pre>
+</p>
+<p>
+Refer to the head of the module for further configuration options.
+</p>
+<p>
+Here's the full code:
+<table class="CodeRay"><tr>
+  <td class="line_numbers" title="click to toggle" onclick="with (this.firstChild.style) { display = (display == '') ? 'none' : '' }"><pre>1<tt>
+</tt>2<tt>
+</tt>3<tt>
+</tt>4<tt>
+</tt>5<tt>
+</tt>6<tt>
+</tt>7<tt>
+</tt>8<tt>
+</tt>9<tt>
+</tt><strong>10</strong><tt>
+</tt>11<tt>
+</tt>12<tt>
+</tt>13<tt>
+</tt>14<tt>
+</tt>15<tt>
+</tt>16<tt>
+</tt>17<tt>
+</tt>18<tt>
+</tt>19<tt>
+</tt><strong>20</strong><tt>
+</tt>21<tt>
+</tt>22<tt>
+</tt>23<tt>
+</tt>24<tt>
+</tt>25<tt>
+</tt>26<tt>
+</tt>27<tt>
+</tt>28<tt>
+</tt>29<tt>
+</tt><strong>30</strong><tt>
+</tt>31<tt>
+</tt>32<tt>
+</tt>33<tt>
+</tt>34<tt>
+</tt>35<tt>
+</tt>36<tt>
+</tt>37<tt>
+</tt>38<tt>
+</tt>39<tt>
+</tt><strong>40</strong><tt>
+</tt>41<tt>
+</tt>42<tt>
+</tt>43<tt>
+</tt>44<tt>
+</tt>45<tt>
+</tt>46<tt>
+</tt>47<tt>
+</tt>48<tt>
+</tt>49<tt>
+</tt><strong>50</strong><tt>
+</tt>51<tt>
+</tt>52<tt>
+</tt>53<tt>
+</tt>54<tt>
+</tt>55<tt>
+</tt>56<tt>
+</tt>57<tt>
+</tt>58<tt>
+</tt>59<tt>
+</tt><strong>60</strong><tt>
+</tt>61<tt>
+</tt>62<tt>
+</tt>63<tt>
+</tt>64<tt>
+</tt>65<tt>
+</tt>66<tt>
+</tt>67<tt>
+</tt>68<tt>
+</tt>69<tt>
+</tt><strong>70</strong><tt>
+</tt>71<tt>
+</tt>72<tt>
+</tt>73<tt>
+</tt>74<tt>
+</tt>75<tt>
+</tt>76<tt>
+</tt>77<tt>
+</tt>78<tt>
+</tt>79<tt>
+</tt><strong>80</strong><tt>
+</tt>81<tt>
+</tt>82<tt>
+</tt>83<tt>
+</tt>84<tt>
+</tt>85<tt>
+</tt>86<tt>
+</tt>87<tt>
+</tt>88<tt>
+</tt>89<tt>
+</tt><strong>90</strong><tt>
+</tt>91<tt>
+</tt>92<tt>
+</tt>93<tt>
+</tt>94<tt>
+</tt>95<tt>
+</tt>96<tt>
+</tt>97<tt>
+</tt>98<tt>
+</tt>99<tt>
+</tt><strong>100</strong><tt>
+</tt>101<tt>
+</tt>102<tt>
+</tt>103<tt>
+</tt>104<tt>
+</tt>105<tt>
+</tt>106<tt>
+</tt>107<tt>
+</tt>108<tt>
+</tt>109<tt>
+</tt><strong>110</strong><tt>
+</tt>111<tt>
+</tt>112<tt>
+</tt>113<tt>
+</tt>114<tt>
+</tt>115<tt>
+</tt>116<tt>
+</tt>117<tt>
+</tt>118<tt>
+</tt>119<tt>
+</tt><strong>120</strong><tt>
+</tt>121<tt>
+</tt>122<tt>
+</tt>123<tt>
+</tt>124<tt>
+</tt>125<tt>
+</tt>126<tt>
+</tt>127<tt>
+</tt>128<tt>
+</tt>129<tt>
+</tt><strong>130</strong><tt>
+</tt>131<tt>
+</tt>132<tt>
+</tt>133<tt>
+</tt>134<tt>
+</tt>135<tt>
+</tt>136<tt>
+</tt>137<tt>
+</tt>138<tt>
+</tt>139<tt>
+</tt><strong>140</strong><tt>
+</tt>141<tt>
+</tt>142<tt>
+</tt>143<tt>
+</tt>144<tt>
+</tt>145<tt>
+</tt>146<tt>
+</tt>147<tt>
+</tt>148<tt>
+</tt>149<tt>
+</tt><strong>150</strong><tt>
+</tt>151<tt>
+</tt>152<tt>
+</tt>153<tt>
+</tt>154<tt>
+</tt>155<tt>
+</tt>156<tt>
+</tt>157<tt>
+</tt>158<tt>
+</tt>159<tt>
+</tt><strong>160</strong><tt>
+</tt>161<tt>
+</tt></pre></td>
+  <td class="code"><pre ondblclick="with (this.style) { overflow = (overflow == 'auto' || overflow == '') ? 'visible' : 'auto' }">require <span class="s"><span class="dl">'</span><span class="k">capistrano/recipes/deploy/scm/base</span><span class="dl">'</span></span><tt>
+</tt><tt>
+</tt><span class="r">module</span> <span class="cl">Capistrano</span><tt>
+</tt>  <span class="r">module</span> <span class="cl">Deploy</span><tt>
+</tt>    <span class="r">module</span> <span class="cl">SCM</span><tt>
+</tt><tt>
+</tt>      <span class="c"># An SCM module for using Git as your source control tool with Capistrano</span><tt>
+</tt>      <span class="c"># 2.0.  If you are using Capistrano 1.x, use this plugin instead:</span><tt>
+</tt>      <span class="c">#</span><tt>
+</tt>      <span class="c">#   http://scie.nti.st/2007/3/16/capistrano-with-git-shared-repository</span><tt>
+</tt>      <span class="c">#</span><tt>
+</tt>      <span class="c"># Assumes you are using a shared Git repository. </span><tt>
+</tt>      <span class="c">#</span><tt>
+</tt>      <span class="c"># Parts of this plugin borrowed from Scott Chacon's version, which I</span><tt>
+</tt>      <span class="c"># found on the Capistrano mailing list but failed to be able to get</span><tt>
+</tt>      <span class="c"># working.</span><tt>
+</tt>      <span class="c">#</span><tt>
+</tt>      <span class="c"># FEATURES:</span><tt>
+</tt>      <span class="c">#</span><tt>
+</tt>      <span class="c">#   * Very simple, only requiring 2 lines in your deploy.rb.</span><tt>
+</tt>      <span class="c">#   * Can deploy different branches, tags, or any SHA1 easily.</span><tt>
+</tt>      <span class="c">#   * Supports prompting for password / passphrase upon checkout. </span><tt>
+</tt>      <span class="c">#     (I am amazed at how some plugins don't do this)</span><tt>
+</tt>      <span class="c">#   * Supports :scm_command, :scm_password, :scm_passphrase Capistrano</span><tt>
+</tt>      <span class="c">#     directives.</span><tt>
+</tt>      <span class="c">#</span><tt>
+</tt>      <span class="c"># REQUIREMENTS</span><tt>
+</tt>      <span class="c"># ------------</span><tt>
+</tt>      <span class="c">#</span><tt>
+</tt>      <span class="c"># Git is required to be installed on your remote machine(s), because a</span><tt>
+</tt>      <span class="c"># clone and checkout is done to get the code up there.  This is the way</span><tt>
+</tt>      <span class="c"># I prefer to deploy; there is no alternative to this, so :deploy_via</span><tt>
+</tt>      <span class="c"># is ignored.</span><tt>
+</tt>      <span class="c">#</span><tt>
+</tt>      <span class="c"># INSTALLATION</span><tt>
+</tt>      <span class="c"># ------------</span><tt>
+</tt>      <span class="c">#</span><tt>
+</tt>      <span class="c"># Place this file in:</span><tt>
+</tt>      <span class="c">#</span><tt>
+</tt>      <span class="c">#   $GEMPATH/capistrano-2.x.x/lib/capistrano/recipes/deploy/scm/</span><tt>
+</tt>      <span class="c">#</span><tt>
+</tt>      <span class="c"># CONFIGURATION</span><tt>
+</tt>      <span class="c"># -------------</span><tt>
+</tt>      <span class="c">#</span><tt>
+</tt>      <span class="c"># Use this plugin by adding the following line in your config/deploy.rb:</span><tt>
+</tt>      <span class="c">#</span><tt>
+</tt>      <span class="c">#   set :scm, :git</span><tt>
+</tt>      <span class="c">#</span><tt>
+</tt>      <span class="c"># Set &lt;tt&gt;:repository&lt;/tt&gt; to the path of your Git repo:</span><tt>
+</tt>      <span class="c">#</span><tt>
+</tt>      <span class="c">#   set :repository, &quot;someuser@somehost:/home/myproject&quot;</span><tt>
+</tt>      <span class="c">#</span><tt>
+</tt>      <span class="c"># The above two options are required to be set, the ones below are</span><tt>
+</tt>      <span class="c"># optional.</span><tt>
+</tt>      <span class="c">#</span><tt>
+</tt>      <span class="c"># You may set &lt;tt&gt;:branch&lt;/tt&gt;, which is the reference to the branch, tag, </span><tt>
+</tt>      <span class="c"># or any SHA1 you are deploying, for example:</span><tt>
+</tt>      <span class="c"># </span><tt>
+</tt>      <span class="c">#   set :branch, &quot;origin/master&quot;</span><tt>
+</tt>      <span class="c">#</span><tt>
+</tt>      <span class="c"># Otherwise, HEAD is assumed.  I strongly suggest you set this.  HEAD is</span><tt>
+</tt>      <span class="c"># not always the best assumption.</span><tt>
+</tt>      <span class="c">#</span><tt>
+</tt>      <span class="c"># The &lt;tt&gt;:scm_command&lt;/tt&gt; configuration variable, if specified, will</span><tt>
+</tt>      <span class="c"># be used as the full path to the git executable on the *remote* machine:</span><tt>
+</tt>      <span class="c">#</span><tt>
+</tt>      <span class="c">#   set :scm_command, &quot;/opt/local/bin/git&quot;</span><tt>
+</tt>      <span class="c">#</span><tt>
+</tt>      <span class="c"># For compatibility with deploy scripts that may have used the 1.x</span><tt>
+</tt>      <span class="c"># version of this plugin before upgrading, &lt;tt&gt;:git&lt;/tt&gt; is still</span><tt>
+</tt>      <span class="c"># recognized as an alias for :scm_command.</span><tt>
+</tt>      <span class="c">#</span><tt>
+</tt>      <span class="c"># Set &lt;tt&gt;:scm_password&lt;/tt&gt; to the password needed to clone your repo</span><tt>
+</tt>      <span class="c"># if you don't have password-less (public key) entry:</span><tt>
+</tt>      <span class="c">#</span><tt>
+</tt>      <span class="c">#   set :scm_password, &quot;my_secret'</span><tt>
+</tt>      <span class="c">#</span><tt>
+</tt>      <span class="c"># Otherwise, you will be prompted for a password.</span><tt>
+</tt>      <span class="c">#</span><tt>
+</tt>      <span class="c"># &lt;tt&gt;:scm_passphrase&lt;/tt&gt; is also supported.</span><tt>
+</tt><tt>
+</tt>      <span class="r">class</span> <span class="cl">Git</span> &lt; <span class="co">Base</span><tt>
+</tt>        <span class="c"># Sets the default command name for this SCM on your *local* machine.</span><tt>
+</tt>        <span class="c"># Users may override this by setting the :scm_command variable.</span><tt>
+</tt>        default_command <span class="s"><span class="dl">&quot;</span><span class="k">git</span><span class="dl">&quot;</span></span><tt>
+</tt><tt>
+</tt>        <span class="c"># When referencing &quot;head&quot;, use the branch we want to deploy or, by</span><tt>
+</tt>        <span class="c"># default, Git's reference of HEAD (the latest changeset in the default</span><tt>
+</tt>        <span class="c"># branch, usually called &quot;master&quot;).</span><tt>
+</tt>        <span class="r">def</span> <span class="fu">head</span><tt>
+</tt>          configuration[<span class="sy">:branch</span>] || <span class="s"><span class="dl">'</span><span class="k">HEAD</span><span class="dl">'</span></span><tt>
+</tt>        <span class="r">end</span><tt>
+</tt><tt>
+</tt>        <span class="c"># Performs a clone on the remote machine, then checkout on the branch</span><tt>
+</tt>        <span class="c"># you want to deploy.</span><tt>
+</tt>        <span class="r">def</span> <span class="fu">checkout</span>(revision, destination)<tt>
+</tt>          git      = command<tt>
+</tt><tt>
+</tt>          branch   = head<tt>
+</tt><tt>
+</tt>          fail <span class="s"><span class="dl">&quot;</span><span class="k">No branch specified, use for example 'set :branch, </span><span class="ch">\&quot;</span><span class="k">origin/master</span><span class="ch">\&quot;</span><span class="k">' in your deploy.rb</span><span class="dl">&quot;</span></span> <span class="r">unless</span> branch<tt>
+</tt><tt>
+</tt>          execute  = <span class="s"><span class="dl">&quot;</span><span class="il"><span class="dl">#{</span>git<span class="dl">}</span></span><span class="k"> clone </span><span class="il"><span class="dl">#{</span>configuration[<span class="sy">:repository</span>]<span class="dl">}</span></span><span class="k"> </span><span class="il"><span class="dl">#{</span>destination<span class="dl">}</span></span><span class="k"> &amp;&amp; </span><span class="dl">&quot;</span></span><tt>
+</tt>          execute += <span class="s"><span class="dl">&quot;</span><span class="k">cd </span><span class="il"><span class="dl">#{</span>destination<span class="dl">}</span></span><span class="k"> &amp;&amp; </span><span class="il"><span class="dl">#{</span>git<span class="dl">}</span></span><span class="k"> checkout -b deploy </span><span class="il"><span class="dl">#{</span>branch<span class="dl">}</span></span><span class="dl">&quot;</span></span> <tt>
+</tt><tt>
+</tt>          execute<tt>
+</tt>        <span class="r">end</span><tt>
+</tt><tt>
+</tt>        <span class="c"># Returns a string of diffs between two revisions</span><tt>
+</tt>        <span class="r">def</span> <span class="fu">diff</span>(from, to=<span class="pc">nil</span>)<tt>
+</tt>          from &lt;&lt; <span class="s"><span class="dl">&quot;</span><span class="k">..</span><span class="il"><span class="dl">#{</span>to<span class="dl">}</span></span><span class="dl">&quot;</span></span> <span class="r">if</span> to<tt>
+</tt>          scm <span class="sy">:diff</span>, from<tt>
+</tt>        <span class="r">end</span><tt>
+</tt><tt>
+</tt>        <span class="c"># Returns a log of changes between the two revisions (inclusive).</span><tt>
+</tt>        <span class="r">def</span> <span class="fu">log</span>(from, to=<span class="pc">nil</span>)<tt>
+</tt>          from &lt;&lt; <span class="s"><span class="dl">&quot;</span><span class="k">..</span><span class="il"><span class="dl">#{</span>to<span class="dl">}</span></span><span class="dl">&quot;</span></span> <span class="r">if</span> to<tt>
+</tt>          scm <span class="sy">:log</span>, from<tt>
+</tt>        <span class="r">end</span><tt>
+</tt><tt>
+</tt>        <span class="c"># Getting the actual commit id, in case we were passed a tag</span><tt>
+</tt>        <span class="c"># or partial sha or something - it will return the sha if you pass a sha, too</span><tt>
+</tt>        <span class="r">def</span> <span class="fu">query_revision</span>(revision)<tt>
+</tt>          <span class="r">yield</span>(scm(<span class="s"><span class="dl">'</span><span class="k">rev-parse</span><span class="dl">'</span></span>, revision)).chomp<tt>
+</tt>        <span class="r">end</span><tt>
+</tt><tt>
+</tt>        <span class="r">def</span> <span class="fu">command</span><tt>
+</tt>          <span class="c"># For backwards compatibility with 1.x version of this module</span><tt>
+</tt>          configuration[<span class="sy">:git</span>] || <span class="r">super</span><tt>
+</tt>        <span class="r">end</span><tt>
+</tt><tt>
+</tt>        <span class="c"># Determines what the response should be for a particular bit of text</span><tt>
+</tt>        <span class="c"># from the SCM. Password prompts, connection requests, passphrases,</span><tt>
+</tt>        <span class="c"># etc. are handled here.</span><tt>
+</tt>        <span class="r">def</span> <span class="fu">handle_data</span>(state, stream, text)<tt>
+</tt>                logger.info <span class="s"><span class="dl">&quot;</span><span class="k">[</span><span class="il"><span class="dl">#{</span>stream<span class="dl">}</span></span><span class="k">] </span><span class="il"><span class="dl">#{</span>text<span class="dl">}</span></span><span class="dl">&quot;</span></span><tt>
+</tt>          <span class="r">case</span> text<tt>
+</tt>          <span class="r">when</span> <span class="rx"><span class="dl">/</span><span class="ch">\b</span><span class="k">password.*:</span><span class="dl">/</span><span class="mod">i</span></span><tt>
+</tt>            <span class="c"># git is prompting for a password</span><tt>
+</tt>            <span class="r">unless</span> pass = configuration[<span class="sy">:scm_password</span>]<tt>
+</tt>              pass = <span class="co">Capistrano</span>::<span class="co">CLI</span>.password_prompt<tt>
+</tt>            <span class="r">end</span><tt>
+</tt>            <span class="s"><span class="dl">&quot;</span><span class="il"><span class="dl">#{</span>pass<span class="dl">}</span></span><span class="ch">\n</span><span class="dl">&quot;</span></span><tt>
+</tt>          <span class="r">when</span> <span class="rx"><span class="dl">%r{</span><span class="ch">\(</span><span class="k">yes/no</span><span class="ch">\)</span><span class="dl">}</span></span><tt>
+</tt>            <span class="c"># git is asking whether or not to connect</span><tt>
+</tt>            <span class="s"><span class="dl">&quot;</span><span class="k">yes</span><span class="ch">\n</span><span class="dl">&quot;</span></span><tt>
+</tt>          <span class="r">when</span> <span class="rx"><span class="dl">/</span><span class="k">passphrase</span><span class="dl">/</span><span class="mod">i</span></span><tt>
+</tt>            <span class="c"># git is asking for the passphrase for the user's key</span><tt>
+</tt>            <span class="r">unless</span> pass = configuration[<span class="sy">:scm_passphrase</span>]<tt>
+</tt>              pass = <span class="co">Capistrano</span>::<span class="co">CLI</span>.password_prompt<tt>
+</tt>            <span class="r">end</span><tt>
+</tt>            <span class="s"><span class="dl">&quot;</span><span class="il"><span class="dl">#{</span>pass<span class="dl">}</span></span><span class="ch">\n</span><span class="dl">&quot;</span></span><tt>
+</tt>          <span class="r">when</span> <span class="rx"><span class="dl">/</span><span class="k">accept </span><span class="ch">\(</span><span class="k">t</span><span class="ch">\)</span><span class="k">emporarily</span><span class="dl">/</span></span><tt>
+</tt>            <span class="c"># git is asking whether to accept the certificate</span><tt>
+</tt>            <span class="s"><span class="dl">&quot;</span><span class="k">t</span><span class="ch">\n</span><span class="dl">&quot;</span></span><tt>
+</tt>          <span class="r">end</span><tt>
+</tt>        <span class="r">end</span><tt>
+</tt>      <span class="r">end</span><tt>
+</tt>    <span class="r">end</span><tt>
+</tt>  <span class="r">end</span><tt>
+</tt><span class="r">end</span></pre></td>
+</tr></table>
+
+</P>
+<p>
+Enjoy!
+</p>
+<p>
+Next I will tackle a Git plugin for <a href='http://rubyhitsquad.com/Vlad_the_Deployer.html'>Vlad the Deployer</a>.  Hit the green subscribe link at the top of this page to stay tuned!
+</p>
+<p>
+Comments, suggestions, bugs?  What did I miss?  Please leave a comment.
+</p>
+<p>
+<b>Update (09-23-07):</b> I've just modified this module to correct my use of :scm_command (it is for the *remote* machine, not local).  Additionally, an error in the log() method was fixed.  Anyone who downloads the module as instructed above will now get the new version.  I feel confident this is the 1.0 version and as such I've submitted a patch to Capistrano: <a href='http://dev.rubyonrails.org/ticket/9635'>http://dev.rubyonrails.org/ticket/9635</a>
+</p>
+<p>
+If this module works for you, please visit the ticket and leave a comment that says "+1".  This shows the core team that people are verifying the patch works, and before long, it should be included with Capistrano.
+</p>
+</div>
+<div>
+<script src="http://feeds.feedburner.com/~s/scientist-home?i=http://scie.nti.st/2007/9/4/capistrano-2-0-with-git-shared-repository" type="text/javascript" charset="utf-8"></script>
+</div>
+<div class="article-line"><!-- split the category, comment, links --></div>
+</div>
+
+<div class='small_heading_for_comments'>
+Comments
+</div>
+
+<!-- comments layout -->
+<div id="comments-box"> 
+<span class="user-postname"><span>Glenn Rempe</span></span><span class="user-date"> on September 17, 2007 03:50 PM</span>
+<div class="user-text">
+<p>Will try it out as I am busy converting to Git for my Rails app now.  Good timing.  My question is, do you have a public Git repo for your Git tool?  Would be nice to be able to always be able to pull the latest version using Git and drop it in the right folder.</p>
+
+
+	<p>Have you co-ordinated with Jamis Buck to see about adding this to the official Git release?</p>
+
+
+	<p>Thanks.</p>
+</div>
+<div class="add-comment-line"><!-- add line here --></div>
+</div>
+
+<!-- comments layout -->
+<div id="comments-box"> 
+<span class="user-postname"><span>Garry</span></span><span class="user-date"> on September 17, 2007 10:25 PM</span>
+<div class="user-text">
+<p>Hi Glenn,</p>
+
+
+	<p>Yeah, I&#8217;m just about to set up a Git repo for all the tools I create here.  So stay tuned for it.</p>
+
+
+	<p>I haven&#8217;t talked to Jamis yet, but will do so shortly.  I&#8217;m going to submit an official patch and hopefully it gets accepted.</p>
+</div>
+<div class="add-comment-line"><!-- add line here --></div>
+</div>
+
+<!-- comments layout -->
+<div id="comments-box"> 
+<span class="user-postname"><a href="http://nubyonrails.com">topfunky</a></span><span class="user-date"> on September 25, 2007 08:16 AM</span>
+<div class="user-text">
+<p>Thanks for the code. Here&#8217;s a way to make it even easier (without needing to mess with your Ruby installation).</p>
+
+
+	<p>1. Copy the code above to your Rails app as lib/capistrano/recipes/deploy/scm/git.rb
+2. Add this to the top of your config/deploy.rb: &#8221;$: &lt;&lt; File.dirname(<i><span class="caps">FILE</span></i>) + &#8217;/../lib&#8217;&#8221;</p>
+
+
+	<p>Now it will automatically discover the Git adapter and you won&#8217;t have to re-copy the adapter when the Capistrano gem is revised.</p>
+
+
+	<p>Or, you could make this into a RubyGem with the same directory structure for even easier distribution.</p>
+</div>
+<div class="add-comment-line"><!-- add line here --></div>
+</div>
+
+<!-- comments layout -->
+<div id="comments-box"> 
+<span class="user-postname"><a href="http://nubyonrails.com">topfunky</a></span><span class="user-date"> on September 25, 2007 08:52 AM</span>
+<div class="user-text">
+<p>I&#8217;ve also added the sync method so you can use the remote_cache strategy:</p>
+
+
+	<p>http://pastie.textmate.org/100640</p>
+</div>
+<div class="add-comment-line"><!-- add line here --></div>
+</div>
+
+<!-- comments layout -->
+<div id="comments-box"> 
+<span class="user-postname"><a href="http://jointheconversation.org">Scott Chacon</a></span><span class="user-date"> on September 26, 2007 10:41 AM</span>
+<div class="user-text">
+<p>Just wanted to say that this is a great module, and I now use it instead of the one I originally wrote &#8211; thanks.  I updated topfunky&#8217;s version of it to add shallow cloning, for those of us with really large repos (without that, mine takes over 5 minutes to clone for each deploy), which you can get here:</p>
+
+
+	<p>http://pastie.textmate.org/101098</p>
+
+
+	<p>Thanks to both of you guys for your work.</p>
+
+
+	<p>Scott</p>
+</div>
+<div class="add-comment-line"><!-- add line here --></div>
+</div>
+
+<!-- comments layout -->
+<div id="comments-box"> 
+<span class="user-postname"><span>Garry</span></span><span class="user-date"> on September 28, 2007 12:20 AM</span>
+<div class="user-text">
+<p>Thank you topfunky and Scott for your comments and contributions.  Much appreciated.</p>
+
+
+	<p>topfunky&#8212;I tried the method you described when I first wrote the module, yet the life of me, I could not get Capistrano to find git.rb unless I put it in its own directory tree.  Perhaps the &#8221;$: &lt;&lt; ...&#8221; is the thing I needed, I hadn&#8217;t thought of that.</p>
+</div>
+<div class="add-comment-line"><!-- add line here --></div>
+</div>
+
+<!-- comments layout -->
+<div id="comments-box"> 
+<span class="user-postname"><a href="http://jointheconversation.org">scott</a></span><span class="user-date"> on October 02, 2007 09:50 AM</span>
+<div class="user-text">
+<p>I saw that Jamis accepted your patch into 2.1 &#8211; sweet.  Btw, I didn&#8217;t notice it before, but I don&#8217;t think this section is accurate anymore.  Obviously &#8221;:deploy_via, :remote_cache<a href="deploy_via"> works now, and I just tested</a>, :copy&#8221; and it does too, which means that I&#8217;m pretty sure that git on the servers is not still necessary.</p>
+
+
+	<ol>
+	<li><span class="caps">REQUIREMENTS</span>
+ # <del>&#8212;</del>-<del>&#8212;</del>&#8212;-
+ #
+ # Git is required to be installed on your remote machine(s), because a
+ # clone and checkout is done to get the code up there.  This is the way
+ # I prefer to deploy; there is no alternative to this, so :deploy_via
+ # is ignored.
+ #</li>
+	</ol>
+</div>
+<div class="add-comment-line"><!-- add line here --></div>
+</div>
+
+<!-- comments layout -->
+<div id="comments-box"> 
+<span class="user-postname"><span>Garry</span></span><span class="user-date"> on October 02, 2007 12:13 PM</span>
+<div class="user-text">
+<p>Scott, thanks for the observation.  I&#8217;ll have to submit a new patch to change the requirements section.  Until then, most people won&#8217;t read the docs anyway (unfortunately)</p>
+</div>
+<div class="add-comment-line"><!-- add line here --></div>
+</div>
+
+<!-- comments layout -->
+<div id="comments-box"> 
+<span class="user-postname"><a href="http://hypercurious.net/">Michał Wronka</a></span><span class="user-date"> on October 03, 2007 01:24 PM</span>
+<div class="user-text">
+<p>Great module Garry, thanks. Perfect timing for me, as I was diving deep into git to make the switch.</p>
+
+
+	<p>One question from the trenches&#8230; As git it happily ignoring empty directories, it means that on deploy we may end up with incomplete structure of application. Most of the time irrelevant, but when log/ and tmp/ directories are missing, servers complain bitterly. Did you find any way (apart from creating .gitignore files inside) to work around this nasty git issue?</p>
+
+
+	<p>Michał</p>
+</div>
+<div class="add-comment-line"><!-- add line here --></div>
+</div>
+
+<!-- comments layout -->
+<div id="comments-box"> 
+<span class="user-postname"><span>Garry</span></span><span class="user-date"> on October 04, 2007 12:20 PM</span>
+<div class="user-text">
+<p>Git simply doesn&#8217;t track empty directories, b/c there&#8217;s no content inside, and git tracks content, not files.  So, while somewhat ugly, a perfectly easy solution is to just:</p>
+
+
+	<p>touch .placeholder
+git add .placeholder</p>
+
+
+	<p>in every empty directory.  That&#8217;s what I do and it works like a charm</p>
+</div>
+<div class="add-comment-line"><!-- add line here --></div>
+</div>
+
+<!-- comments layout -->
+<div id="comments-box"> 
+<span class="user-postname"><span>Garry</span></span><span class="user-date"> on October 04, 2007 12:21 PM</span>
+<div class="user-text">
+<p>Damn formatting, that command, again, is:</p>
+
+
+	<p>touch .placeholder</p>
+
+
+	<p>git add .placeholder</p>
+</div>
+<div class="add-comment-line"><!-- add line here --></div>
+</div>
+
+<!-- comments layout -->
+<div id="comments-box"> 
+<span class="user-postname"><span>Ryan Hanks</span></span><span class="user-date"> on October 14, 2007 10:11 PM</span>
+<div class="user-text">
+<p>Apparently this functionality is integrated into the newest (2.1) Capistrano release.</p>
+
+
+	<p>Nice work.</p>
+</div>
+<div class="add-comment-line"><!-- add line here --></div>
+</div>
+
+<!-- comments layout -->
+<div id="comments-box"> 
+<span class="user-postname"><span>Garry</span></span><span class="user-date"> on October 14, 2007 10:28 PM</span>
+<div class="user-text">
+<p>Ryan, yep it got accepted. :)</p>
+</div>
+<div class="add-comment-line"><!-- add line here --></div>
+</div>
+
+<!-- comments layout -->
+<div id="comments-box"> 
+<span class="user-postname"><a href="http://dir0.com/">Evan - Hardware Tests</a></span><span class="user-date"> on May 25, 2009 08:16 AM</span>
+<div class="user-text">
+<p>I find this blog to be quite interesting; I really wish that there were more of these such things from &#8220;inside the beast.&#8221; The timeliness of the perspectives is the real draw here. This blog is a very nice complement to the somewhat static content found on the official Capistrano company web pages.</p>
+</div>
+<div class="add-comment-line"><!-- add line here --></div>
+</div>
+
+
+<form id="comment-form" method="post" action="/2007/9/4/capistrano-2-0-with-git-shared-repository/comments#comment-form">
+<div class='small_heading'>
+Post a Comment
+</div>
+<!-- comment form -->
+<div class="comment-form">
+<dl class="comments-form">
+<dt class="comments-form"><label for="comment_author">Nick Name</label></dt>
+<dd class="comments-form"><input type="text" id="comment_author" name="comment[author]" value="" /></dd>
+<dt class="comments-form"><label for="comment_author_email">Email (optional)</label></dt>
+<dd class="comments-form"><input type="text" id="comment_author_email" name="comment[author_email]" value="" /></dd>
+<dt class="comments-form"><label for="comment_author_url">Website (optional)</label></dt>
+<dd class="comments-form"><input type="text" id="comment_author_url" name="comment[author_url]" value="" /></dd>
+<dt class="comments-form"><label for="comment_body">Let the thoughts flow...</label></dt>
+<dd class="comments-form"><textarea id="comment_body" name="comment[body]"></textarea></dd>
+<dd class="comments-form"><p><input type="submit" value="Add comment" /></p></dd>
+</dl>
+</div>
+</form>
+
+</div>
+</div>
+<!-- Side Bar -->
+<div id="sidebar-content">
+<form method="get" action="/search">
+<ul id="search">
+<li class="search"><input type="text" value="" name="q" id="q" size="27" /></li>
+</ul>
+</form>
+
+<ul class="sidebar-links">
+<li class="header">About</li>
+<li class="sidebar-links2" style='border-bottom: none'>
+<span>This is the personal blog of <b>Garry Dolley</b>.
+<br/><br/>
+I'm Director of Technology at <a href='http://digisynd.com'>DigiSynd</a> and provide data center services through <a href='http://www.arpnetworks.com'>ARP Networks, Inc.</a> in Los Angeles.  
+
+<br/><br/>I am <b>up_the_irons</b> in #git, #caboose, and #arpnetworks on Freenode.
+<br/><br/>You can follow me on Twitter <a href='http://twitter.com/up_the_irons'>@up_the_irons</a>
+</span></li>
+</ul>
+
+</ul>
+<ul class="sidebar-links">
+<li class="header">Subscribe</li>
+<li class="sidebar-links-chicklets" style="padding-top: 6px"><a href="http://feeds2.feedburner.com/scientist-home"><img src="http://feeds2.feedburner.com/~fc/scientist-home?bg=006600&amp;fg=FFFFFF&amp;anim=0" height="26" width="88" style="border:0" alt="" /></a>
+
+</li>
+</ul>
+
+<ul class="sidebar-links">
+<li class="header">Twitter</li>
+<li class="sidebar-links2" style='border-bottom: none'>
+<div class="tweet"></div>
+<br/>
+<script type="text/javascript" language="javascript" src="http://twittercounter.com/embed/?username=up_the_irons&style=white"></script>
+
+</li>
+</ul>
+
+<ul class="sidebar-links">
+<li class="header">Projects</li>
+<li class="sidebar-links"><a href="/2006/12/15/ebay4r">eBay4R</a><a href='http://pledgie.com/campaigns/19'><img alt='Click here to lend your support to: Support eBay4R and make a donation at www.pledgie.com !' src='http://www.pledgie.com/campaigns/19.png?skin_name=chrome' border='0' /></a></li>
+</ul>
+
+<!--
+<ul class="sidebar-links">
+<li class="header">Categories</li>
+
+<li class="sidebar-links"><a href="/">Home <strong>&#187;</strong> 80</a></li>
+
+<li class="sidebar-links"><a href="/ebay4r">eBay4R <strong>&#187;</strong> 1</a></li>
+
+<li class="sidebar-links"><a href="/home">Home <strong>&#187;</strong> 77</a></li>
+
+<li class="sidebar-links"><a href="/private">Private <strong>&#187;</strong> 1</a></li>
+
+</ul>
+-->
+
+<ul class="sidebar-links">
+<li class="header">People</li>
+<li class="sidebar-links"><a href="http://www.flavoredthunder.com/">Mark Daggett</a></li>
+<li class="sidebar-links"><a href="http://www.robmaigret.com/">Rob Maigret</a></li>
+<li class="sidebar-links"><a href="http://www.gregs-blog.com/">Greg Dolley</a></li>
+</ul>
+
+<ul class="sidebar-links">
+<li class="header">Places</li>
+<li class="sidebar-links"><a href="http://pledgie.com">Pledgie</a></li>
+<li class="sidebar-links"><a href="http://arpnetworks.com">ARP Networks</a></li>
+<li class="sidebar-links"><a href="http://freebsdvps.com">FreeBSD VPS</a></li>
+<li class="sidebar-links"><a href="http://openbsdvps.net">OpenBSD VPS</a></li>
+<li class="sidebar-links"><a href="http://onewilshirebandwidth.com">One Wilshire Bandwidth</a></li>
+<li class="sidebar-links"><a href="http://locusfoc.us">LocusFocus</a></li>
+<li class="sidebar-links"><a href="http://caboo.se">caboo.se</a></li>
+<li class="sidebar-links"><a href="http://eagain.net">eagain.net</a></li>
+<li class="sidebar-links"><a href="http://rst2a.com">rst2a.com</a></li>
+</ul>
+
+<ul class="sidebar-links">
+<li class="header">Archives</li>
+
+
+  
+  <li class="sidebar-links"><a href="/archives/2010/12">December 2010</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2010/11">November 2010</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2010/10">October 2010</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2010/9">September 2010</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2010/8">August 2010</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2010/7">July 2010</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2010/6">June 2010</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2010/5">May 2010</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2010/4">April 2010</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2010/3">March 2010</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2010/2">February 2010</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2010/1">January 2010</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2009/12">December 2009</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2009/11">November 2009</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2009/10">October 2009</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2009/9">September 2009</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2009/8">August 2009</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2009/7">July 2009</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2009/6">June 2009</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2009/5">May 2009</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2009/4">April 2009</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2009/3">March 2009</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2009/2">February 2009</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2009/1">January 2009</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2008/12">December 2008</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2008/11">November 2008</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2008/10">October 2008</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2008/9">September 2008</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2008/8">August 2008</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2008/7">July 2008</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2008/6">June 2008</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2008/5">May 2008</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2008/4">April 2008</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2008/3">March 2008</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2008/2">February 2008</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2008/1">January 2008</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2007/12">December 2007</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2007/11">November 2007</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2007/10">October 2007</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2007/9">September 2007</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2007/8">August 2007</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2007/7">July 2007</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2007/6">June 2007</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2007/5">May 2007</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2007/4">April 2007</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2007/3">March 2007</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2007/2">February 2007</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2007/1">January 2007</a></li>
+
+  
+  <li class="sidebar-links"><a href="/archives/2006/12">December 2006</a></li>
+
+</ul>
+
+<ul id="powered">
+<li id="mephisto"><a href="http://www.mephistoblog.com/"><img src="/images/mephisto.gif" width="69" height="18" alt="mephistoblog" /></a></li>
+</ul>
+
+</div>
+<!-- Footer -->
+<div class="clearing">&nbsp;</div>
+</div>
+</div>
+
+<div class='blogcata-verification' style='display:none'>6c12aa8c13e7d287e3b41faf303f60b109f81916</div>
+
+<!-- Pinder Deluxe, by sly -->
+</body>
+</html>
