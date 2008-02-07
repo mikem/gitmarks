@@ -1,0 +1,1155 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head id="ctl00_ctl00_Head1"><title>
+	Investopedia.com - Your Source For Investing Education
+</title><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /><meta id="ctl00_ctl00_metaDescription" name="description" content="Investopedia.com - Your Source For Investing Education. Includes the most comprehensive investing dictionary on the web as well as articles and tutorials on nearly any aspect of the market." /><meta id="ctl00_ctl00_metaKeywords" name="keywords" content="dictionary,glossary,education,investment,tutorials,investing,invest,investor,stocks,quotes,analysis,beginner,finance,financial,stocks,market,news,401k,IRA,personal,definitions,terms,mutual funds,ipo,options,analysis,Nasdaq,trader,trading" /><meta id="ctl00_ctl00_metaOgTitle" property="og:title" content="Investopedia.com - Your Source For Investing Education" /><meta property="og:site_name" content="Investopedia" /><meta property="og:image" content="http://i.investopedia.com/facebook/investopedia-facebook-image.gif" /><meta property="og:type" content="article" /><link rel="shortcut icon" href="http://i.investopedia.com/inv/general/favicon.ico" /><link rel="stylesheet" type="text/css" href="http://i.investopedia.com/inv/css/global/stylesheet.css" /><link rel="stylesheet" type="text/css" href="http://i.investopedia.com/inv/css/global/jquery-ui-1.8.2.custom.css" />
+     <!--[if IE 8]><style type="text/css">form{margin-top:-5px;}</style><![endif]-->
+    <!--[if IE 7]><style type="text/css">.inv-cont{margin-top:-15px;}</style><![endif]-->
+    <!--[if IE 6]><style type="text/css">.inv-cont{margin-top:-15px;}</style><![endif]-->
+    <link rel="alternate" type="application/rss+xml" title="Investopedia.com Headlines" href="http://feeds.investopedia.com/stockinvesting" />
+
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	<script type="text/javascript" src="http://i.investopedia.com/inv/js/jquery-ui-1.8.2.custom.min.js"></script>
+
+<script language="javascript" type="text/javascript">
+
+    $(function() {
+        if ($.fn.tabs)
+            $("#tabs").tabs();
+    });
+    </script>
+    <!--terms jumpbox-->
+ 
+    <script type="text/javascript">
+	function openSite(thisELE)
+	{
+	var index = thisELE.selectedIndex;
+	
+	if(index > 0)
+	{
+	window.location = thisELE.options[index].value;
+	}
+	}
+    </script>
+ 
+
+
+
+    <script type="text/javascript">
+        
+    jQuery(document).ready(function() {
+        jQuery("#ctl00_ctl00_txtTopSearch").click(function() {
+            if (jQuery(this).val() == 'keyword')
+                jQuery(this).val('');
+        });
+        jQuery("#ctl00_ctl00_txtTopQuoteSearch").click(function() {
+            if (jQuery(this).val() == 'symbol')
+                jQuery(this).val('');
+
+        });
+        jQuery("#ctl00_ctl00_btnTopSearch").click(function() {
+            var query = jQuery("#ctl00_ctl00_txtTopSearch").val();
+            
+            if (query == 'keyword' || query == '')
+                return false;
+
+        });        
+    });
+
+    </script>
+      <script type="text/javascript">
+sfHover = function() {
+	var sfEls = document.getElementById("nav").getElementsByTagName("LI");
+	for (var i=0; i<sfEls.length; i++) {
+		sfEls[i].onmouseover=function() {
+			this.className+=" sfhover";
+		}
+		sfEls[i].onmouseout=function() {
+			this.className=this.className.replace(new RegExp(" sfhover\\b"), "");
+		}
+	}
+}
+if (window.attachEvent) window.attachEvent("onload", sfHover);
+
+    </script>
+<!-- jquery for this page -->
+<script type="text/javascript">
+// initialize the jquery code
+ $(document).ready(function(){
+//close all the content divs on page load
+$('.srch-filter').hide();
+
+// toggle slide
+$('#slideToggle').click(function(){
+// by calling sibling, we can use same div for all demos
+$(this).siblings('.srch-filter').slideToggle();
+});
+
+
+
+
+
+});
+</script>
+   
+
+   
+    <!-- Nested Master Styles and script that need to be loaded in the head tag should go here -->
+    
+
+<script type="text/javascript" src="/common/js/stepcarousel.js"></script>
+<script type="text/javascript">
+    stepcarousel.setup({
+	    galleryid: 'mygallery', //id of carousel DIV
+	    beltclass: 'belt', //class of inner "belt" DIV containing all the panel DIVs
+	    panelclass: 'panel', //class of panel DIVs each holding content
+	    autostep: {enable:true, moveby:1, pause:3000},
+	    panelbehavior: {speed:500, wraparound:true, wrapbehavior:'slide', persist:true},
+	    defaultbuttons: {enable: false, moveby: 1, leftnav: ['http://i34.tinypic.com/317e0s5.gif', -5, 80], rightnav: ['http://i38.tinypic.com/33o7di8.gif', -20, 80]},
+	    statusvars: ['statusA', 'statusB', 'statusC'], //register 3 variables that contain current panel (start), current panel (last), and total panels
+	    contenttype: ['inline'] //content setting ['inline'] or ['ajax', 'path_to_external_file']
+    });
+</script>
+
+
+
+
+<script type="text/javascript">
+
+</script>
+
+
+<script type="text/javascript" src="http://i.investopedia.com/inv/092009/home/js/iframefix.js">;</script>
+
+<script type="text/javascript" language="javascript">
+        $(document).ready(function(){
+            var loginUrl = 'http://join.investopedia.com/login/login.aspx?ReturnUrl=';
+            var logoutUrl = 'http://join.investopedia.com/login/logout.aspx?ReturnUrl=';
+            var userProfileUrl = 'http://www.investopedia.com/Email/userprofile.aspx';
+            var currUrl = window.top.location.href;
+            if (currUrl.indexOf('localhost')!=-1) {
+                loginUrl = 'http://localhost:1760/login/login.aspx?ReturnUrl=';
+                logoutUrl = 'http://localhost:1760/login/logout.aspx?ReturnUrl=';
+                userProfileUrl = 'http://localhost:1760/Email/userprofile.aspx';
+            }
+            if (currUrl.indexOf('maintenance.invlocal')!=-1) {
+                loginUrl = 'http://join.maintenance.invlocal.com/login/login.aspx?ReturnUrl=';
+                logoutUrl = 'http://join.maintenance.invlocal.com/login/logout.aspx?ReturnUrl=';
+                userProfileUrl = 'http://investopedia.maintenance.invlocal.com/Email/userprofile.aspx';
+            }
+            if (currUrl.indexOf('teststage.invlocal')!=-1) {
+                loginUrl = 'http://join.teststage.invlocal.com/login/login.aspx?ReturnUrl=';
+                logoutUrl = 'http://join.teststage.invlocal.com/login/logout.aspx?ReturnUrl=';
+                userProfileUrl = 'http://investopedia.teststage.invlocal.com/Email/userprofile.aspx';
+            }
+            if (currUrl.indexOf('invwf')!=-1) {
+                loginUrl = 'http://join.livestage.invwf.com/login/login.aspx?ReturnUrl=';
+                logoutUrl = 'http://join.livestage.invwf.com/login/logout.aspx?ReturnUrl=';
+                userProfileUrl = 'http://investopedia.livestage.invwf.com/Email/userprofile.aspx';
+            }
+            $('#ctl00_ctl00_SignIn').attr('href',(loginUrl + currUrl));
+            $('#ctl00_ctl00_Logout').attr('href',logoutUrl + currUrl);
+            $('#ctl00_ctl00_aUsername').attr('href',userProfileUrl);
+         });
+</script>
+
+ <!--[if lt IE 7]><style>
+/* style for IE6 + IE5.5 + IE5.0 */
+.gainlayout { height: 0; }
+</style><![endif]-->
+ 
+<!--[if IE 7]><style>
+.gainlayout { zoom: 1; }
+</style><![endif]-->
+
+</head>
+
+<body>
+
+    <form name="aspnetForm" method="post" action="/" id="aspnetForm">
+<div>
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwULLTEwMDUyNjYzMjgPZBYCZg9kFgJmD2QWBAIBD2QWBgICDxYCHgdjb250ZW50Bb0BSW52ZXN0b3BlZGlhLmNvbSAtIFlvdXIgU291cmNlIEZvciBJbnZlc3RpbmcgRWR1Y2F0aW9uLiBJbmNsdWRlcyB0aGUgbW9zdCBjb21wcmVoZW5zaXZlIGludmVzdGluZyBkaWN0aW9uYXJ5IG9uIHRoZSB3ZWIgYXMgd2VsbCBhcyBhcnRpY2xlcyBhbmQgdHV0b3JpYWxzIG9uIG5lYXJseSBhbnkgYXNwZWN0IG9mIHRoZSBtYXJrZXQuZAIDDxYCHwAF7QFkaWN0aW9uYXJ5LGdsb3NzYXJ5LGVkdWNhdGlvbixpbnZlc3RtZW50LHR1dG9yaWFscyxpbnZlc3RpbmcsaW52ZXN0LGludmVzdG9yLHN0b2NrcyxxdW90ZXMsYW5hbHlzaXMsYmVnaW5uZXIsZmluYW5jZSxmaW5hbmNpYWwsc3RvY2tzLG1hcmtldCxuZXdzLDQwMWssSVJBLHBlcnNvbmFsLGRlZmluaXRpb25zLHRlcm1zLG11dHVhbCBmdW5kcyxpcG8sb3B0aW9ucyxhbmFseXNpcyxOYXNkYXEsdHJhZGVyLHRyYWRpbmdkAgQPFgIfAAU2SW52ZXN0b3BlZGlhLmNvbSAtIFlvdXIgU291cmNlIEZvciBJbnZlc3RpbmcgRWR1Y2F0aW9uZAIDEGRkFgpmD2QWAgIGDxYCHgRocmVmBX4vQ2xpY2tUcmFja2luZy9DbGljay5hc3B4P2Q9aHR0cCUyNTNhJTI1MmYlMjUyZmludmVzdG9wZWRpYS5hci53aWxpbmsuY29tJTI1MmYlMjUzZnVkJTI1M2RURzluVkhsd1pUMXZkWFJuYjJsdVp3JTI1MjUzZCUyNTI1M2RkAgIPFgIfAQV5L0NsaWNrVHJhY2tpbmcvQ2xpY2suYXNweD9kPWh0dHAlMjUzYSUyNTJmJTI1MmZpbnZlc3RvcGVkaWEuYXIud2lsaW5rLmNvbSUyNTNmdWQlMjUzZFRHOW5WSGx3WlQxdmRYUm5iMmx1WnclMjUyNTNkJTI1MjUzZGQCBA8PZBYCHglvbktleURvd24F7wFpZiAoZXZlbnQua2V5Q29kZSA9PSAxMykgeyBpZiAoZXZlbnQuc3RvcFByb3BhZ2F0aW9uKSBldmVudC5zdG9wUHJvcGFnYXRpb24oKTsgaWYgKGV2ZW50LnByZXZlbnREZWZhdWx0KSBldmVudC5wcmV2ZW50RGVmYXVsdCgpOyBldmVudC5yZXR1cm5WYWx1ZSA9IGZhbHNlOyBldmVudC5jYW5jZWwgPSB0cnVlOyBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnY3RsMDBfY3RsMDBfYnRuVG9wU2VhcmNoJykuY2xpY2soKTsgfWQCBg8PZBYCHwIF9AFpZiAoZXZlbnQua2V5Q29kZSA9PSAxMykgeyBpZiAoZXZlbnQuc3RvcFByb3BhZ2F0aW9uKSBldmVudC5zdG9wUHJvcGFnYXRpb24oKTsgaWYgKGV2ZW50LnByZXZlbnREZWZhdWx0KSBldmVudC5wcmV2ZW50RGVmYXVsdCgpOyBldmVudC5yZXR1cm5WYWx1ZSA9IGZhbHNlOyBldmVudC5jYW5jZWwgPSB0cnVlOyBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnY3RsMDBfY3RsMDBfYnRuVG9wUXVvdGVTZWFyY2gnKS5jbGljaygpOyB9ZAIJDxYCHwEFiAEvQ2xpY2tUcmFja2luZy9DbGljay5hc3B4P2Q9aHR0cCUyNTNhJTI1MmYlMjUyZnd3dy5kYWlseWZpbmFuY2UuY29tJTI1MmZtYXJrZXQtbmV3cyUyNTJmJTI1M2Z1ZCUyNTNkVEc5blZIbHdaVDF2ZFhSbmIybHVadyUyNTI1M2QlMjUyNTNkZBgBBR5fX0NvbnRyb2xzUmVxdWlyZVBvc3RCYWNrS2V5X18WCgUSY3RsMDAkY3RsMDAkb2ZmZXJzBRJjdGwwMCRjdGwwMCRiYXNpY3MFJWN0bDAwJGN0bDAwJGludmVzdG9wZWRpYV9hZHZpc29yX2ZyZWUFG2N0bDAwJGN0bDAwJHRlcm1fb2ZfdGhlX2RheQUmY3RsMDAkY3RsMDAkaW52ZXN0b3BlZGlhX3Byb2Zlc3Npb25hbHMFHWN0bDAwJGN0bDAwJGNoYXJ0YWR2aXNvcl9mcmVlBRVjdGwwMCRjdGwwMCRuZXdzdG91c2UFFmN0bDAwJGN0bDAwJGZvcmV4X2ZyZWUFGmN0bDAwJGN0bDAwJGZpbmFuY2lhbF9lZGdlBRxjdGwwMCRjdGwwMCRjb2F0dGFpbF9idWZmZXR0P6L9aqDtC1qazhN2yOsqP+AI6UU=" />
+</div>
+
+
+<script src="http://i.investopedia.com/inv/js/video/ova-companion_helper.js" type="text/javascript"></script>
+<script src="http://i.investopedia.com/inv/js/video/ova-companions-jquery.js" type="text/javascript"></script>
+<script src="http://i.investopedia.com/inv/js/video/flowplayer-3.2.2.min.js" type="text/javascript"></script>
+<script src="http://i.investopedia.com/inv/js/video/flowplayer.playlist-3.0.8.min.js" type="text/javascript"></script><script type='text/javascript'><!--
+	OAS_sitepage = "investopedia.com/homepage";
+	OAS_query = "IPST_HP=IP_sectionTag";
+--></script>
+<script type='text/javascript' src='http://www.investopedia.com/common/oas.aspx?pos=x70,x01,x31,x30,x91'></script>
+<!-- Start of DoubleClick Spotlight Tag: Please do not remove -->
+<!-- Activity Name for this tag is:IP_Dictionary -->
+<!-- Web site URL where tag should be placed: http://investopedia.com/dictionary/default.asp -->
+<!-- This tag must be placed within the opening <body> tag, as close to the beginning of it as possible -->
+<!-- Creation Date: Thu Jul 02 17:08:03 EDT 2009 -->
+<script language="JavaScript">
+	var axel = Math.random() + "";
+	var a = axel * 10000000000000;
+	document.write('<img src="http://ad.doubleclick.net/activity;src=2359949;type=ipd;cat=ipd;ord=1;num=' + a + '?" width="1" height="1" border="0">');
+</script>
+<noscript>
+	<img src="http://ad.doubleclick.net/activity;src=2359949;type=ipd;cat=ipd;ord=1;num=1?" width="1" height="1" border="0">
+</noscript>
+<!-- End of DoubleClick Spotlight Tag: Please do not remove -->
+<!-- SiteCatalyst code version: G.9. Copyright 1997-2004 Omniture, Inc. More info available at http://www.omniture.com --><script language="javascript"><!--
+var s_channel="misc"; var s_pageName="Inv_Home"; var s_hier1="Misc:Home";
+--></script>
+    <div style="float:right;">
+      <script src="http://i.investopedia.com/inv/omniture/s_code_forbesinvest.js" type="text/javascript"></script>
+    </div>
+	<div class="inv-cont">
+	<div class="login-inv-login-bar">
+            <div class="login-inv-small-logo">
+				<a href="http://www.investopedia.com"><img width="108" height="14" border="0" alt="Investopedia.com" src="http://i.investopedia.com/fxtrader/inv-small-logo.jpg"></a>
+			</div>
+            <div class="login-bar-links">
+                <a href="http://fxtrader.investopedia.com/">FXtrader</a> | <a href="http://simulator.investopedia.com/">Stock Simulator</a> | <a href="http://financialedge.investopedia.com">Financial Edge</a>
+			</div>
+            <div id="ctl00_ctl00_LoginBar" class="login-bar-login">
+                <a href="http://join.investopedia.com/login/login.aspx" id="ctl00_ctl00_SignIn" style="float:left;">Sign In | </a>
+                
+                <a href="http://join.investopedia.com/investopedia/join1?RegLink=Investopedia_Header&src=<%= GetRegistrationSrc() %>" id="ctl00_ctl00_Register">Register |</a><a href="/ClickTracking/Click.aspx?d=http%253a%252f%252finvestopedia.ar.wilink.com%252f%253fud%253dTG9nVHlwZT1vdXRnb2luZw%25253d%25253d" id="ctl00_ctl00__aExternalFreeArsHeader" target="_blank">Free Annual Reports</a>| 
+                <a href="http://join.investopedia.com/NewsLand.aspx?RegLink=Newsletter" id="ctl00_ctl00_lnkNewsletterHeader">Free Newsletters</a>
+            </div>
+	</div>
+	<div class="inv-leader-board" id="inv-leader-board">
+		<div class="inv-leader-board-logo"><a href="http://www.investopedia.com"><img src="http://i.investopedia.com/inv/leader-board/investopedia-logo.jpg" width="241" height="101"alt="Investopedia.com - Your Source for Investing Education" /></a></div>
+		<div class="inv-leader-board-ad">
+		<span id="ctl00_ctl00_cgiAdBigBanner"><script type="text/javascript" language="JavaScript">
+	<!--
+	OAS_AD('x70')
+	//-->
+</script>
+</span>
+         </div>
+	</div>
+<div class="clear"></div>
+	<div class="investopedia-navigation">
+	<ul id="nav">
+		<li class="nav-header"><a href="http://investopedia.com">Home</a></li>
+		<li class="nav-header"><a href="http://investopedia.com/video">Videos</a></li>
+		<li class="nav-header"><a href="/dictionary/">Dictionary</a>
+		  <ul class="drop">
+		  <li><a href="/categories/acronyms.asp">Acronyms</a></li>
+          <li><a href="/categories/bonds.asp">Bonds</a></li>
+          <li><a href="/categories/buzzwords.asp">Buzzwords</a></li>
+          <li><a href="/categories/forex.asp">FOREX</a></li>
+          <li><a href="/categories/mutualfunds.asp">Mutual Funds</a></li>
+          <li><a href="/categories/optionsandfutures.asp">Options &amp; Futures</a></li>
+          <li><a href="/categories/retirementplanning.asp">Retirement</a></li>
+          <li><a href="/categories/stocks.asp">Stocks</a></li>
+          <li><a href="/categories/taxes.asp">Taxes</a></li>
+          <li><a href="/categories/technicalanalysis.asp">Tech Analysis</a></li>
+          <li><a href="/categories/tradingterms.asp">Trading</a></li>
+		  </ul>
+		</li>
+		<li class="nav-header"><a href="/articles/">Articles</a>
+		<ul class="drop">
+		<li><a href="http://stocks.investopedia.com">Stock Analysis</a></li>
+		<li><a href="/features/">Special Features</a></li>
+		<li><a href="/articles/basics/">Investing Basics</a></li>
+		<li><a href="/articles/stocks/">Stocks</a></li>
+		<li><a href="/articles/mutualfund/">Mutual Funds</a></li>
+		<li><a href="/articles/forex/">FOREX</a></li>
+		<li><a href="/articles/exchangetradedfunds/" title="ETFs">ETFs</a></li>
+		<li><a href="/articles/trading/">Active Trading</a></li>
+		<li><a href="/articles/bonds/">Bonds</a></li>
+        <li><a href="/articles/financial-theory/">Financial Theory</a></li>
+		<li><a href="/articles/fundamental-analysis/">Fundamental Analysis</a></li>
+ 		<li><a href="/articles/optioninvestor/">Options &amp; Futures</a></li>
+        <li><a href="/articles/pf/">Personal Finance</a></li>
+		<li><a href="/articles/mortgages-real-estate/">Real Estate &amp; Mortgages</a></li>
+        <li><a href="/articles/retirement/">Retirement</a></li>
+        <li><a href="/ask/">FAQs</a></li>
+		<li><a href="/articles/">View All</a></li>
+		</ul>
+		</li>
+		<li class="nav-header"><a href="/university/">Tutorials</a>
+		<ul class="drop">
+		<li><a href="/university/features.asp">Special Features</a></li>
+		<li><a href="/university/buildingblocks.asp">Beginners</a></li>
+		<li><a href="/university/advanced.asp">Experienced Investors</a></li>
+        <li><a href="/university/activetrading.asp">Active Traders</a></li>
+        <li><a href="/retirement.asp">Retirement</a></li>
+		</ul>
+		</li>
+		<li class="nav-header"><a href="/professionals/">Exam Prep</a>
+		<ul class="drop">
+		<li><a href="/exam-prep-quizzes/">Quizzes</a></li>
+		<li><a href="/professionals/cfa/">CFA Level I</a></li>
+        <li><a href="/professionals/cfa/default2.asp">CFA Level II</a></li>
+        <li><a href="/professionals/cfa/default3.asp">CFA Level III</a></li>
+        <li><a href="/professionals/series6/">Series 6</a></li>
+        <li><a href="/professionals/series7/">Series 7</a></li>
+        <li><a href="/professionals/series26/">Series 26</a></li>
+        <li><a href="/professionals/series63/">Series 63</a></li>
+        <li><a href="/professionals/series65/">Series 65</a></li>
+        <li><a href="/professionals/series66/">Series 66</a></li>
+        <li><a href="/professionals/csc/">CSC</a></li>
+        <li><a href="/professionals/usarchive.asp">More Exams...</a></li>
+		</ul>
+		<li class="nav-header"><a href="http://fxtrader.investopedia.com">FXtrader</a>
+			 <ul class="drop">
+			 <li><a href="http://fxtrader.investopedia.com">Home</a></li>
+			 <li><a href="http://fxtrader.investopedia.com/secure/trade/trade.aspx">Trade Now</a></li>
+			 <li><a href="http://fxtrader.investopedia.com/secure/game/games.aspx">Challenges</a></li>
+			 <li><a href="http://join.investopedia.com/login/login.aspx?ReturnUrl=http://fxtrader.investopedia.com/">Login</a></li>
+			 </ul>
+		</li>
+		</li>
+		<li class="nav-header"><a href="http://simulator.investopedia.com">Simulator</a>
+		<ul class="drop">
+    	<li><a href="http://simulator.investopedia.com">Home</a></li>
+        <li><a href="http://simulator.investopedia.com/Portfolio/">My Portfolio</a></li>
+        <li><a href="http://simulator.investopedia.com/Trade/TradeStock.aspx">Trade Stock</a></li>
+        <li><a href="http://simulator.investopedia.com/Game/">Games</a></li>
+        <li><a href="http://simulator.investopedia.com/markets">Resources</a></li>
+        <li><a href="http://join.investopedia.com/login/login.aspx?ReturnUrl=http://simulator.investopedia.com/">Login</a></li>
+    	</ul>
+		</li>
+		<li class="nav-header"><a href="http://financialedge.investopedia.com">Financial Edge</a></li>
+		<li class="nav-header free-tools"><a href="/free/" class="nav-free-padding">Free Tools</a>
+		<ul class="drop nav-free-ul">
+		<li>
+			<div style="float:left;width:20px;padding:10px 10px;"><img alt="Free Annual Reports" src="http://i.investopedia.com/inv/nav/precision-ir-nav-icon.gif" style="border:0px;vertical-align:middle;"></div>
+			<div style="float:left;width:60px;"><a href="/ClickTracking/Click.aspx?d=http%253a%252f%252finvestopedia.ar.wilink.com%253fud%253dTG9nVHlwZT1vdXRnb2luZw%25253d%25253d" id="ctl00_ctl00__aExternalFreeArsFreeTools" target="_blank" style="padding:0px;">Free Annual Reports</a></div>
+			<div class="clear"></div>
+		</li>
+			
+		<li><a href="/stockadvice/">Stock Ideas</a></li>
+        <li><a href="/free/">Guides and Books</a></li>
+        <li><a href="/free/">Learn About Futures</a></li>
+        <li><a href="/free/">Mortgage Offers</a></li>
+        <li><a href="/calculator/">Financial Calculators</a></li>
+		</ul>
+
+
+</li>
+	</ul>
+	<div class="clear"></div>
+	
+	
+	<div class="srch-investopedia-search" id="search-bar">
+	<div class="srch-292"><span id="ctl00_ctl00_ctlOASx1"><script type="text/javascript" language="JavaScript">
+	<!--
+	OAS_AD('x01')
+	//-->
+</script>
+</span></div>
+	
+		<div class="right">
+		<input name="ctl00$ctl00$txtTopSearch" type="text" value="keyword" id="ctl00_ctl00_txtTopSearch" class="search srch-nav" onKeyDown="if (event.keyCode == 13) { if (event.stopPropagation) event.stopPropagation(); if (event.preventDefault) event.preventDefault(); event.returnValue = false; event.cancel = true; document.getElementById('ctl00_ctl00_btnTopSearch').click(); }" /><input type="submit" name="ctl00$ctl00$btnTopSearch" value=" " id="ctl00_ctl00_btnTopSearch" class="search-btn" />
+		<input name="ctl00$ctl00$txtTopQuoteSearch" type="text" value="symbol" maxlength="10" id="ctl00_ctl00_txtTopQuoteSearch" class="symbol srch-symbol" onKeyDown="if (event.keyCode == 13) { if (event.stopPropagation) event.stopPropagation(); if (event.preventDefault) event.preventDefault(); event.returnValue = false; event.cancel = true; document.getElementById('ctl00_ctl00_btnTopQuoteSearch').click(); }" /><input type="submit" name="ctl00$ctl00$btnTopQuoteSearch" value=" " id="ctl00_ctl00_btnTopQuoteSearch" class="symbol-btn" />
+		</div>
+
+	</div>
+	
+
+
+
+
+
+		
+
+	
+
+</div>
+	
+	<!--end header-->
+
+
+        
+
+         	<span id="ctl00_ctl00_MainContent_TAKEOVER_BANNER_ctl00_contentService0"><script type="text/javascript" src="http://i.investopedia.com/javascript/postmessage.js"></script><script type="text/javascript" src="http://i.investopedia.com/javascript/welcomead.js"></script><script type="text/javascript" src="http://i.investopedia.com/javascript/welcomeadredirect.js"></script></span><span id="ctl00_ctl00_MainContent_TAKEOVER_BANNER_ctl00_contentService1"><div class="takeover-banner" style="display: none;"><img></div>
+
+    <script type="text/javascript">
+    <!--
+    
+      var options = [
+              { 'title': 'Investopedia Holiday Banner', 'width': 1015, 'height': 79, 
+                'stylesheet': 'http://i.investopedia.com/inv/css/global/christmas-banner-one.css',
+                'banner-image': 'http://i.investopedia.com/inv/home/christmas/christmas-banner-one-100.jpg' },
+                
+              { 'title': 'Investopedia Holiday Banner', 'width': 1015, 'height': 78,  
+                'stylesheet': 'http://i.investopedia.com/inv/css/global/christmas-banner-two.css',
+                'banner-image': 'http://i.investopedia.com/inv/home/christmas/christmas-banner-two-100.jpg' }
+          ];
+    
+      var takeover = options[new Date().getTime() % options.length];
+      
+      jQuery('head').append('<link rel="stylesheet" type="text/css" href="' + takeover['stylesheet'] + '" />');
+      
+      jQuery('.takeover-banner img').attr({
+        'src' : takeover['banner-image'],
+        'alt' : takeover['title'],
+        'width' : takeover['width'],
+        'height' : takeover['height']
+      });
+      
+      jQuery('.takeover-banner').show();
+    
+    // -->
+    </script>
+
+    </span>
+        	<div class="inv-body">
+            <div class="left-638-col">
+            <span id="ctl00_ctl00_MainContent_TOP_FEATURE_ctl00_contentService0"><div id="mygallery" class="stepcarousel">
+  <div class="belt">
+    <div class="panel"><img width="638" height="210" border="0" src="http://i.investopedia.com/inv/articles/features/home/lottery-even-worth-playing.jpg" alt="The Lottery: Is It Ever Worth Playing?"><span class="hp-overlay-main"><h1 class="fontgeorgia marginbtm5 fontnormal linkwhite"><a href="http://financialedge.investopedia.com/financial-edge/1210/The-Lottery-Is-It-Ever-Worth-Playing.aspx">The Lottery: Is It Ever Worth Playing?</a></h1>
+        <div class="marginbtm5">Feeling lucky? You'd better be if you put your money here.</div>
+        <div class="clear"></div>
+        <div class="read-more left"><a href="http://financialedge.investopedia.com/financial-edge/1210/The-Lottery-Is-It-Ever-Worth-Playing.aspx">
+                  Read More
+                </a></div>
+        <div class="clear"></div>
+        <div class="font11" style="font-weight:bold;margin-top:5px;">PERSONAL FINANCE</div></span></div>
+    <div class="panel"><img width="638" height="210" border="0" src="http://i.investopedia.com/inv/articles/features/home/5-wild-ride-commodities.jpg" alt="5 Wild-Ride Commodities In 2010"><span class="hp-overlay-main"><h1 class="fontgeorgia marginbtm5 fontnormal linkwhite"><a href="http://financialedge.investopedia.com/financial-edge/1210/5-Wild-Ride-Commodities-In-2010.aspx">5 Wild-Ride Commodities In 2010</a></h1>
+        <div class="marginbtm5">With movements of more than 70% in some commodities, this market didn’t disappoint.</div>
+        <div class="clear"></div>
+        <div class="read-more left"><a href="http://financialedge.investopedia.com/financial-edge/1210/5-Wild-Ride-Commodities-In-2010.aspx">
+                  Read More
+                </a></div>
+        <div class="clear"></div>
+        <div class="font11" style="font-weight:bold;margin-top:5px;">INVESTING</div></span></div>
+    <div class="panel"><img width="638" height="210" border="0" src="http://i.investopedia.com/inv/articles/features/home/6-things-to-know-about-social-security.jpg" alt="6 Facts About Social Security In 2011"><span class="hp-overlay-main"><h1 class="fontgeorgia marginbtm5 fontnormal linkwhite"><a href="http://financialedge.investopedia.com/financial-edge/1210/6-Things-To-Know-About-Social-Security-In-2011.aspx">6 Facts About Social Security In 2011</a></h1>
+        <div class="marginbtm5">Find out what's changed and what it could mean for you.</div>
+        <div class="clear"></div>
+        <div class="read-more left"><a href="http://financialedge.investopedia.com/financial-edge/1210/6-Things-To-Know-About-Social-Security-In-2011.aspx">
+                  Read More
+                </a></div>
+        <div class="clear"></div>
+        <div class="font11" style="font-weight:bold;margin-top:5px;">RETIREMENT</div></span></div>
+    <div class="panel"><img width="638" height="210" border="0" src="http://i.investopedia.com/inv/articles/features/home/twas-the-night-before-christmas.jpg" alt="'Twas The Night Before Christmas"><span class="hp-overlay-main"><h1 class="fontgeorgia marginbtm5 fontnormal linkwhite"><a href="/articles/00/xmas.asp">'Twas The Night Before Christmas</a></h1>
+        <div class="marginbtm5">The stocks had been researched and purchased with care, in hopes that high returns soon would be there</div>
+        <div class="clear"></div>
+        <div class="read-more left"><a href="/articles/00/xmas.asp">
+                  Read More
+                </a></div>
+        <div class="clear"></div>
+        <div class="font11" style="font-weight:bold;margin-top:5px;">HAPPY HOLIDAYS!</div></span></div>
+  </div><span class="hp-nav"><div style="width:19px;float:left;"><a href="javascript:stepcarousel.stepBy('mygallery', -1)"><img src="http://i.investopedia.com/inv/home/feature-arw-l.jpg"></a></div>
+    <div id="mygallery-paginate" style="float:left;padding:0px 5px;"><img src="http://i.investopedia.com/inv/home/feature-arw-unactive.jpg" data-over="http://i.investopedia.com/inv/home/feature-arw-active.jpg" data-select="http://i.investopedia.com/inv/home/feature-arw-active.jpg" data-moveby="1" style="float:left;"></div><a href="javascript:stepcarousel.stepBy('mygallery', 1)"><img src="http://i.investopedia.com/inv/home/feature-arw-r.jpg"></a></span></div></span>
+            <div class="clear"></div>
+             <div class="left-312-col"><span id="ctl00_ctl00_MainContent_LEFT_INNER_COLUMN_ctl00_contentService0"><div class="font13 underlined-title fontbold"><a href="/articles/">Newest Articles</a></div>
+<div class="mod-stream-cont-312 font12" style="border:none;">
+  <div class="mod-article-stream-img-hp"><a href="http://www.investopedia.com/articles/05/XmasTerms.asp"><img height="43" width="65" border="0" class="opacity80" src="http://i.investopedia.com/inv/topics/images/retirement-lrg-3.jpg" alt="The Frosty, Festive World Of Investing"></a></div>
+  <div class="mod-stream-text-233 link-underline"><a class="bold" href="http://www.investopedia.com/articles/05/XmasTerms.asp" title="The Frosty, Festive World Of Investing">The Frosty, Festive World Of Investing</a><br>From Santa Claus rallies to evergreen loans, Wall Street can be a veritable w...</div>
+</div>
+<div class="mod-stream-cont-312 font12" style="border:none;">
+  <div class="mod-article-stream-img-hp"><a href="http://www.investopedia.com/articles/00/xmas.asp"><img height="43" width="65" border="0" class="opacity80" src="http://i.investopedia.com/inv/topics/images/bonds-lrg-3.jpg" alt="'Twas The Night Before Christmas"></a></div>
+  <div class="mod-stream-text-233 link-underline"><a class="bold" href="http://www.investopedia.com/articles/00/xmas.asp" title="'Twas The Night Before Christmas">'Twas The Night Before Christmas</a><br>Here's our investing adaptation of an old holiday classic.</div>
+</div>
+<div class="mod-stream-cont-312 font12" style="border:none;">
+  <div class="mod-article-stream-img-hp"><a href="http://www.investopedia.com/articles/02/050102.asp"><img height="43" width="65" border="0" class="opacity80" src="http://i.investopedia.com/inv/topics/images/options-lrg-3.jpg" alt="Financial Footnotes: Start Reading The Fine Print"></a></div>
+  <div class="mod-stream-text-233 link-underline"><a class="bold" href="http://www.investopedia.com/articles/02/050102.asp" title="Financial Footnotes: Start Reading The Fine Print">Financial Footnotes: Start Reading The Fine Print</a><br>Find out what could be hidden in this often-overlooked part of the financial ...</div>
+</div>
+<div class="mod-stream-cont-312 font12" style="border:none;">
+  <div class="mod-article-stream-img-hp"><a href="http://www.investopedia.com/articles/optioninvestor/07/meat_market.asp"><img height="43" width="65" border="0" class="opacity80" src="http://i.investopedia.com/inv/topics/images/forex-lrg-3.jpg" alt="Learn To Corral The Meat Markets"></a></div>
+  <div class="mod-stream-text-233 link-underline"><a class="bold" href="http://www.investopedia.com/articles/optioninvestor/07/meat_market.asp" title="Learn To Corral The Meat Markets">Learn To Corral The Meat Markets</a><br>Find out how to trade these hog-wild commodities.</div>
+</div>
+<div class="mod-stream-cont-312 font12" style="border:none;">
+  <div class="mod-article-stream-img-hp"><a href="http://www.investopedia.com/articles/pf/06/YearEndTax.asp"><img height="43" width="65" border="0" class="opacity80" src="http://i.investopedia.com/inv/topics/images/retirement-lrg.jpg" alt="10 Money-Saving Year-End Tax Tips"></a></div>
+  <div class="mod-stream-text-233 link-underline"><a class="bold" href="http://www.investopedia.com/articles/pf/06/YearEndTax.asp" title="10 Money-Saving Year-End Tax Tips">10 Money-Saving Year-End Tax Tips</a><br>Getting organized well before the deadline will curb your frustration and you...</div>
+</div>
+<div class="mod-stream-cont-312 font12" style="border:none;">
+  <div class="mod-article-stream-img-hp"><a href="http://www.investopedia.com/articles/forex/10/top-reasons-forex-traders-fail.asp"><img height="43" width="65" border="0" class="opacity80" src="http://i.investopedia.com/inv/topics/images/stocks-lrg-2.jpg" alt="Top Reasons Forex Traders Fail"></a></div>
+  <div class="mod-stream-text-233 link-underline"><a class="bold" href="http://www.investopedia.com/articles/forex/10/top-reasons-forex-traders-fail.asp" title="Top Reasons Forex Traders Fail">Top Reasons Forex Traders Fail</a><br>This market can be treacherous for unprepared investors. Find out how to avoi...</div>
+</div></span></div>
+             <div class="right-312-col"><span id="ctl00_ctl00_MainContent_RIGHT_INNER_COLUMN_ctl00_contentService0"><div class="font13 underlined-title fontbold"><a href="http://stocks.investopedia.com/">Stock Analysis</a></div>
+<div class="font12 pad-b5 link-underline"><a class="bold" href="http://stocks.investopedia.com/stock-analysis/2010/Heavy-Construction-Stocks-Round-up-FLR-SHAW-PIKE-MTZ-MDR1224.aspx">Heavy Construction Stocks Round-up</a><p class="hp-p">Heavy construction didn't have a bad year, but it wasn't great. However, that doesn't change the fact that the sector is solid.</p>
+</div>
+<div class="fontbold font12 lh18 link-underline marginl15">
+  <div class="pad-b5"><img width="5" height="7" border="0" class="read-more-arrow" style="padding-right:5px;" alt="Arrow" src="http://i.investopedia.com/inv/icons/red-arrow.gif"><a href="http://stocks.investopedia.com/stock-analysis/2010/Darden-Feasts-On-Growth-DRI-EAT-RT-KR-WMT1224.aspx">Darden Feasts On Growth</a></div>
+  <div class="pad-b5"><img width="5" height="7" border="0" class="read-more-arrow" style="padding-right:5px;" alt="Arrow" src="http://i.investopedia.com/inv/icons/red-arrow.gif"><a href="http://stocks.investopedia.com/stock-analysis/2010/Growth-In-Unusual-Countries-EWL-EPOL-INP-EPI1224.aspx">Growth In Unusual Countries</a></div>
+  <div class="pad-b5"><img width="5" height="7" border="0" class="read-more-arrow" style="padding-right:5px;" alt="Arrow" src="http://i.investopedia.com/inv/icons/red-arrow.gif"><a href="http://stocks.investopedia.com/stock-analysis/2010/Is-Netflix-Overvalued-NFLX-AMZN-NWS-GOOG-AAPL-TWC1224.aspx">Is Netflix Overvalued?</a></div>
+  <div class="pad-b5"><img width="5" height="7" border="0" class="read-more-arrow" style="padding-right:5px;" alt="Arrow" src="http://i.investopedia.com/inv/icons/red-arrow.gif"><a href="http://stocks.investopedia.com/stock-analysis/2010/Will-Facebook-Be-In-China-BIDU-GOOG-YHOO-AMZN-NFLX1224.aspx">Will Facebook Be In China?</a></div>
+</div></span>
+
+<div class="font13 underlined-title fontbold">Investopedia Video</div>
+
+<div style="height:176px;">
+    <a id="videoPlayer"></a>
+</div>
+                    
+<div class="rightcol_boxad" style="margin:5px;" id="companion-300x250-iframe-container">
+    <div id="companion-300x250-iframe" style="margin:0px; width:300px; height:auto;"></div>
+</div>
+
+<!-- video player setup -->
+<script language="javascript" type="text/javascript">
+    $(function() {
+        // setup video player
+        $f("videoPlayer", {src: "/video/assets/flowplayer.commercial-3.2.2.swf", wmode: "transparent"}, {
+        
+            key: "#$b0d7fa1ecbf6197574a", 
+            
+            "clip": {
+                "scaling": "fit",
+                "onStart": function(clip) {
+                    loopCompanionAdChecker();
+                    _tracker._trackEvent("Videos", "Play", clip.url);
+                },
+                "onPause": function(clip) {
+                    _tracker._trackEvent("Videos", "Pause", clip.url, parseInt(this.getTime()));
+                },
+                "onStop": function(clip) {
+                    _tracker._trackEvent("Videos", "Stop", clip.url, parseInt(this.getTime()));
+                },
+                "onFinish": function(clip) {
+                    _tracker._trackEvent("Videos", "Finish", clip.url);
+                }
+            },
+            
+            "play": {
+                "loop": true
+            },
+
+            "playlist": [
+                { "url": "http://v1.investopedia.com/thumbnails/live/45_DividendYield_421x236.jpg", "scaling": "fit" } , 
+{ "url": "http://v1.investopedia.com/45_DividendYield.flv", "scaling": "fit", "autoPlay": false, "autoBuffering": true  }, 
+{ "url": "http://v1.investopedia.com/52_BollingerBands.flv", "scaling": "fit", "autoPlay": true  }, 
+{ "url": "http://v1.investopedia.com/42_Annuity.flv", "scaling": "fit", "autoPlay": true  }, 
+{ "url": "http://v1.investopedia.com/27_IPO-_Investopedia timelines.flv", "scaling": "fit", "autoPlay": true  }, 
+{ "url": "http://v1.investopedia.com/24_Debt-To-Equity.flv", "scaling": "fit", "autoPlay": true  }
+            ],
+            
+            "canvas": {
+                "backgroundGradient": "none",
+                "backgroundColor": "#000000"
+            },
+            
+            "plugins": {
+                "controls": {
+                    "url": "/video/assets/flowplayer.controls-3.2.1.swf",
+                    "autoHide": "fullscreen",
+                    "all": false,
+                    "play": true,
+                    "volume": true,
+                    "time": false,
+                    "fastForward": false,
+                    "slowForward": false,
+                    "fullscreen": true,
+                    "playlist": true,
+                    "scrubber": true
+                },
+                
+                "ova": {
+                    "url": "/video/assets/ova.swf",
+                    "debug": {
+                        "debugger": "firebug",
+                        "levels": "fatals, config, vast_template"
+                    },
+                    "autoPlay": false,
+                    "ads": {
+                        "pauseOnClickThrough": true,
+                        "restoreCompanions": false,
+                        "processCompanionsExternally": true,
+                        "notice": { "textStyle": "smalltext" },
+	                    "companions": [
+                            {
+                                "id": "companion-300x250-iframe", 
+                                "width": "300", 
+                                "height": "250"
+                            }
+                        ],
+                        "servers": [
+                            {
+                                "type": "OAS",
+                                "apiAddress": "http://ops.investopedia.com/RealMedia/ads/adstream_sx.ads/"
+                            }
+                        ],
+                        "schedule": [
+                            {
+                                "zone": "investopedia.com/homepage@x95",
+                                "position": "pre-roll"
+                            }
+                        ]
+                    }
+                }
+            }
+        });
+    });
+    
+    function showCompanionAd() {
+        var contents = jQuery.trim($('#companion-300x250-iframe').html());
+        if ((contents == null) || (contents == "")) {
+            $('#companion-300x250-iframe-container').hide();
+        }
+        else {
+            $('#companion-300x250-iframe-container').show();
+        }
+    }
+    
+    // check multiple times if there's a companion ad
+    function loopCompanionAdChecker() {
+        for (var i = 0; i < 20; i++) {
+            setTimeout("showCompanionAd();", i * 1000);
+        }
+    }
+    
+    loopCompanionAdChecker();
+        
+</script> </div>
+             <div class="clear"></div>   
+              <span id="ctl00_ctl00_MainContent_EDITORS_PICKS_ctl00_contentService0"><div class="marginbtm5">
+  <div class="underlined-title font13" style="margin-bottom:0px;margin-top:0px;">Editors' Picks</div>
+  <div class="clear"></div>
+  <div class=" font12 left pad-t15" style="border:none;">
+    <div class="hp-editors-pick"><img src="http://i.investopedia.com/inv/092009/home/editorspickicon.gif"></div>
+    <div style="width:500px;" class="left link-underline"><a class="bold" href="http://www.investopedia.com/articles/00/xmas.asp" title="'Twas the Night Before Christmas">'Twas the Night Before Christmas</a><p class="hp-p">Here's our investing adaptation of an old holiday classic.</p>
+    </div>
+  </div>
+  <div class="clear"></div>
+  <div class="left-290-col font12 bold link-underline">
+    <div class="pad-b5"><img width="5" height="7" border="0" class="read-more-arrow" style="padding-right:5px;" alt="Arrow" src="http://i.investopedia.com/inv/icons/red-arrow.gif"><a href="http://www.investopedia.com/articles/pf/07/snowball.asp" title="Keep Holiday Debt From Snowballing">Keep Holiday Debt From Snowballing</a></div>
+    <div class="pad-b5"><img width="5" height="7" border="0" class="read-more-arrow" style="padding-right:5px;" alt="Arrow" src="http://i.investopedia.com/inv/icons/red-arrow.gif"><a href="http://www.investopedia.com/articles/06/wallstreetsaints.asp" title="The Christmas Saints Of Wall Street">The Christmas Saints Of Wall Street</a></div>
+    <div class="pad-b5"><img width="5" height="7" border="0" class="read-more-arrow" style="padding-right:5px;" alt="Arrow" src="http://i.investopedia.com/inv/icons/red-arrow.gif"><a href="http://www.investopedia.com/articles/pf/08/energy-savings-holidays.asp" title="Earn A Holiday Bonus Through Energy Savings">Earn A Holiday Bonus Through Energy Savings</a></div>
+  </div>
+  <div class="left-290-col font12 bold link-underline" style="padding-left:28px">
+    <div class="pad-b5"><img width="5" height="7" border="0" class="read-more-arrow" style="padding-right:5px;" alt="Arrow" src="http://i.investopedia.com/inv/icons/red-arrow.gif"><a href="http://www.investopedia.com/articles/05/XmasTerms.asp" title="The Frosty, Festive World Of Investing">The Frosty, Festive World Of Investing</a></div>
+    <div class="pad-b5"><img width="5" height="7" border="0" class="read-more-arrow" style="padding-right:5px;" alt="Arrow" src="http://i.investopedia.com/inv/icons/red-arrow.gif"><a href="http://financialedge.investopedia.com/financial-edge/1110/Santas-Financial-Naughty-List-For-2010.aspx" title="Santa's Financial Naughty List For 2010">Santa's Financial Naughty List For 2010</a></div>
+    <div class="pad-b5"><img width="5" height="7" border="0" class="read-more-arrow" style="padding-right:5px;" alt="Arrow" src="http://i.investopedia.com/inv/icons/red-arrow.gif"><a href="http://financialedge.investopedia.com/financial-edge/1110/6-Companies-That-Will-Save-Christmas.aspx" title="6 Companies That Will Save Christmas">6 Companies That Will Save Christmas</a></div>
+  </div>
+  <div class="clear"></div>
+</div></span>
+              <div class="clear"></div>
+            
+             <span id="ctl00_ctl00_MainContent_FINANCIAL_EDGE_COLUMN_ctl00_contentService0"><div class="overlined-title-grey fontbold" style="margin-top:15px;padding-top:5px;"><a href="http://financialedge.investopedia.com/">FINANCIAL EDGE</a></div>
+<div class="clear"></div>
+<div class="left-312-col font12 left" style="border:none;">
+  <div class="thumb-article-img-lrg left"><img height="113" width="130" border="0" class="opacity80" src="http://i.investopedia.com/inv/articles/financialedge/9-resolution-for-the-new-years.jpg" alt="9 Credit Card Resolutions For The New Year"></div>
+  <div style="width:150px;" class="left link-underline"><a class="bold" href="http://financialedge.investopedia.com/financial-edge/1210/9-Credit-Card-Resolutions-For-The-New-Year.aspx" title="9 Credit Card Resolutions For The New Year">9 Credit Card Resolutions For The New Year</a><p class="hp-p">The New Year is the perfect time to clean up your messy financial habits.</p>
+  </div>
+</div>
+<div class="right-312-col font12 bold link-underline">
+  <div class="pad-b5"><img width="5" height="7" border="0" class="read-more-arrow" style="padding-right:5px;" alt="Arrow" src="http://i.investopedia.com/inv/icons/red-arrow.gif"><a href="http://financialedge.investopedia.com/financial-edge/1210/5-Financial-Habits-To-Start-In-2011.aspx" title="5 Financial Habits To Start In 2011">5 Financial Habits To Start In 2011</a></div>
+  <div class="pad-b5"><img width="5" height="7" border="0" class="read-more-arrow" style="padding-right:5px;" alt="Arrow" src="http://i.investopedia.com/inv/icons/red-arrow.gif"><a href="http://financialedge.investopedia.com/financial-edge/1210/10-Reasons-Real-Estate-Could-Rebound-In-2011.aspx" title="10 Reasons Real Estate Could Rebound In 2011">10 Reasons Real Estate Could Rebound In 2011</a></div>
+  <div class="pad-b5"><img width="5" height="7" border="0" class="read-more-arrow" style="padding-right:5px;" alt="Arrow" src="http://i.investopedia.com/inv/icons/red-arrow.gif"><a href="http://financialedge.investopedia.com/financial-edge/1210/7-Expenses-You-Wont-Believe-Are-Deductible.aspx" title="7 Expenses You Won't Believe Are Deductible">7 Expenses You Won't Believe Are Deductible</a></div>
+  <div class="pad-b5"><img width="5" height="7" border="0" class="read-more-arrow" style="padding-right:5px;" alt="Arrow" src="http://i.investopedia.com/inv/icons/red-arrow.gif"><a href="http://financialedge.investopedia.com/financial-edge/1210/Twitter-The-Newest-Stock-Market-Indicator.aspx" title="Twitter: The Newest Stock Market Indicator">Twitter: The Newest Stock Market Indicator</a></div>
+  <div class="pad-b5"><img width="5" height="7" border="0" class="read-more-arrow" style="padding-right:5px;" alt="Arrow" src="http://i.investopedia.com/inv/icons/red-arrow.gif"><a href="http://financialedge.investopedia.com/financial-edge/1210/Your-Subsidized-Holiday-Feast.aspx" title="Your Subsidized Holiday Feast">Your Subsidized Holiday Feast</a></div>
+</div>
+<div class="clear"></div></span>
+             <div class="left-312-col font12"><span id="ctl00_ctl00_MainContent_LEFT_INNER_COLUMN_TWO_ctl00_contentService0"><div class="overlined-title fontbold">INVESTMENT</div>
+<div style="overflow:auto;">
+  <div class="thumb-article-img-sml left"><img height="40" width="62" border="0" class="opacity80" src="http://i.investopedia.com/inv/topics/images/investment-sml.jpg" alt="Beware False Signals From The P/E Ratio" title="Beware False Signals From The P/E Ratio"></div>
+  <div style="width: 231px;" class="left link-underline"><a class="bold" href="http://www.investopedia.com/articles/fundamental-analysis/10/false-signals-pe-ratio.asp" title="Beware False Signals From The P/E Ratio">Beware False Signals From The P/E Ratio</a><br>The P/E ratio is a simple tool for ev...</div>
+</div>
+<div class="lh18 bold link-underline pad-t10">
+  <div class="pad-b2"><img width="5" height="7" border="0" class="read-more-arrow" style="padding-right:5px;" alt="Arrow" src="http://i.investopedia.com/inv/icons/red-arrow.gif"><a href="http://www.investopedia.com/articles/forex/10/introduction-currency-futures.asp" title="Introduction To Currency Futures">Introduction To Currency Futures</a></div>
+  <div class="pad-b2"><img width="5" height="7" border="0" class="read-more-arrow" style="padding-right:5px;" alt="Arrow" src="http://i.investopedia.com/inv/icons/red-arrow.gif"><a href="http://www.investopedia.com/articles/financial-theory/10/introduction-to-the-dow.asp" title="An Introduction To The Dow Jones Industrial Average">An Introduction To The Dow Jones Industrial A...</a></div>
+  <div class="clear"></div>
+</div></span><span id="ctl00_ctl00_MainContent_LEFT_INNER_COLUMN_TWO_ctl00_contentService1"><div class="overlined-title fontbold">STOCKS</div>
+<div style="overflow:auto;">
+  <div class="thumb-article-img-sml left"><img height="40" width="62" border="0" class="opacity80" src="http://i.investopedia.com/inv/topics/images/stocks-sml.jpg" alt="3 Ways To Tell If Your Stock Has Bottomed" title="3 Ways To Tell If Your Stock Has Bottomed"></div>
+  <div style="width: 231px;" class="left link-underline"><a class="bold" href="http://www.investopedia.com/articles/basics/10/3-ways-tell-stock-bottom.asp" title="3 Ways To Tell If Your Stock Has Bottomed">3 Ways To Tell If Your Stock Has Bottomed</a><br>No one can call stock bottoms with ab...</div>
+</div>
+<div class="lh18 bold link-underline pad-t10">
+  <div class="pad-b2"><img width="5" height="7" border="0" class="read-more-arrow" style="padding-right:5px;" alt="Arrow" src="http://i.investopedia.com/inv/icons/red-arrow.gif"><a href="http://www.investopedia.com/articles/optioninvestor/07/evolvingoptions.asp" title="The Benefits And Value Of Stock Options">The Benefits And Value Of Stock Options</a></div>
+  <div class="pad-b2"><img width="5" height="7" border="0" class="read-more-arrow" style="padding-right:5px;" alt="Arrow" src="http://i.investopedia.com/inv/icons/red-arrow.gif"><a href="http://www.investopedia.com/articles/stocks/10/introduction-asian-financial-markets.asp" title="Introduction To Asian Financial Markets">Introduction To Asian Financial Markets</a></div>
+  <div class="clear"></div>
+</div></span><span id="ctl00_ctl00_MainContent_LEFT_INNER_COLUMN_TWO_ctl00_contentService2"><div class="overlined-title fontbold">ACTIVE TRADING</div>
+<div style="overflow:auto;">
+  <div class="thumb-article-img-sml left"><img height="40" width="62" border="0" class="opacity80" src="http://i.investopedia.com/inv/topics/images/active-trading-sml.jpg" alt="How To Trade Currency And Commodity Correlations" title="How To Trade Currency And Commodity Correlations"></div>
+  <div style="width: 231px;" class="left link-underline"><a class="bold" href="http://www.investopedia.com/articles/forex/10/trading-currency-commodity-correlations.asp" title="How To Trade Currency And Commodity Correlations">How To Trade Currency And Commodity Correlations</a><br>Relationships between currencies and ...</div>
+</div>
+<div class="lh18 bold link-underline pad-t10">
+  <div class="pad-b2"><img width="5" height="7" border="0" class="read-more-arrow" style="padding-right:5px;" alt="Arrow" src="http://i.investopedia.com/inv/icons/red-arrow.gif"><a href="http://www.investopedia.com/articles/trading/10/adaptive-price-zone-indicator-explained.asp" title="Adaptive Price Zone Technical Indicator Explained">Adaptive Price Zone Technical Indicator Expla...</a></div>
+  <div class="pad-b2"><img width="5" height="7" border="0" class="read-more-arrow" style="padding-right:5px;" alt="Arrow" src="http://i.investopedia.com/inv/icons/red-arrow.gif"><a href="http://www.investopedia.com/articles/forex/10/making-a-rule-based-trading-system.asp" title="6 Steps To A Rule-Based Forex Trading System">6 Steps To A Rule-Based Forex Trading System</a></div>
+  <div class="clear"></div>
+</div></span><span id="ctl00_ctl00_MainContent_LEFT_INNER_COLUMN_TWO_ctl00_contentService3"><div class="overlined-title fontbold">ETFS</div>
+<div style="overflow:auto;">
+  <div class="thumb-article-img-sml left"><img height="40" width="62" border="0" class="opacity80" src="http://i.investopedia.com/inv/topics/images/etfs-sml.jpg" alt="Introduction To Currency Futures" title="Introduction To Currency Futures"></div>
+  <div style="width: 231px;" class="left link-underline"><a class="bold" href="http://www.investopedia.com/articles/forex/10/introduction-currency-futures.asp" title="Introduction To Currency Futures">Introduction To Currency Futures</a><br>The forex market is not the only way ...</div>
+</div>
+<div class="lh18 bold link-underline pad-t10">
+  <div class="pad-b2"><img width="5" height="7" border="0" class="read-more-arrow" style="padding-right:5px;" alt="Arrow" src="http://i.investopedia.com/inv/icons/red-arrow.gif"><a href="http://www.investopedia.com/articles/exchangetradedfunds/08/etf-taxes-introduction.asp" title="How To Reduce Taxes On ETF Gains">How To Reduce Taxes On ETF Gains</a></div>
+  <div class="pad-b2"><img width="5" height="7" border="0" class="read-more-arrow" style="padding-right:5px;" alt="Arrow" src="http://i.investopedia.com/inv/icons/red-arrow.gif"><a href="http://www.investopedia.com/articles/fundamental-analysis/10/should-you-trust-pe-ratios.asp" title="Can Investors Trust The P/E Ratio?">Can Investors Trust The P/E Ratio?</a></div>
+  <div class="clear"></div>
+</div></span></div>
+             <div class="right-312-col font12"><span id="ctl00_ctl00_MainContent_RIGHT_INNER_COLUMN_TWO_ctl00_contentService0"><div class="overlined-title fontbold">PERSONAL FINANCE</div>
+<div style="overflow:auto;">
+  <div class="thumb-article-img-sml left"><img height="40" width="62" border="0" class="opacity80" src="http://i.investopedia.com/inv/topics/images/retirement-lrg.jpg" alt="10 Money-Saving Year-End Tax Tips" title="10 Money-Saving Year-End Tax Tips"></div>
+  <div style="width: 231px;" class="left link-underline"><a class="bold" href="http://www.investopedia.com/articles/pf/06/YearEndTax.asp" title="10 Money-Saving Year-End Tax Tips">10 Money-Saving Year-End Tax Tips</a><br>Getting organized well before the dea...</div>
+</div>
+<div class="lh18 bold link-underline pad-t10">
+  <div class="pad-b2"><img width="5" height="7" border="0" class="read-more-arrow" style="padding-right:5px;" alt="Arrow" src="http://i.investopedia.com/inv/icons/red-arrow.gif"><a href="http://www.investopedia.com/articles/pf/08/energy-efficiency-efficient-home.asp" title="Ways To Slash Your Home Energy Bill">Ways To Slash Your Home Energy Bill</a></div>
+  <div class="pad-b2"><img width="5" height="7" border="0" class="read-more-arrow" style="padding-right:5px;" alt="Arrow" src="http://i.investopedia.com/inv/icons/red-arrow.gif"><a href="http://www.investopedia.com/articles/pf/07/snowball.asp" title="How To Reduce Holiday Debt">How To Reduce Holiday Debt</a></div>
+  <div class="clear"></div>
+</div></span><span id="ctl00_ctl00_MainContent_RIGHT_INNER_COLUMN_TWO_ctl00_contentService1"><div class="overlined-title fontbold">RETIREMENT</div>
+<div style="overflow:auto;">
+  <div class="thumb-article-img-sml left"><img height="40" width="62" border="0" class="opacity80" src="http://i.investopedia.com/inv/topics/images/retirement-lrg-3.jpg" alt="The Frosty, Festive World Of Investing" title="The Frosty, Festive World Of Investing"></div>
+  <div style="width: 231px;" class="left link-underline"><a class="bold" href="http://www.investopedia.com/articles/05/XmasTerms.asp" title="The Frosty, Festive World Of Investing">The Frosty, Festive World Of Investing</a><br>From Santa Claus rallies to evergreen...</div>
+</div>
+<div class="lh18 bold link-underline pad-t10">
+  <div class="pad-b2"><img width="5" height="7" border="0" class="read-more-arrow" style="padding-right:5px;" alt="Arrow" src="http://i.investopedia.com/inv/icons/red-arrow.gif"><a href="http://www.investopedia.com/articles/00/xmas.asp" title="'Twas The Night Before Christmas">'Twas The Night Before Christmas</a></div>
+  <div class="pad-b2"><img width="5" height="7" border="0" class="read-more-arrow" style="padding-right:5px;" alt="Arrow" src="http://i.investopedia.com/inv/icons/red-arrow.gif"><a href="http://www.investopedia.com/articles/financialcareers/06/brokerdeductions.asp" title="Top Tax Deductions For Brokers">Top Tax Deductions For Brokers</a></div>
+  <div class="clear"></div>
+</div></span><span id="ctl00_ctl00_MainContent_RIGHT_INNER_COLUMN_TWO_ctl00_contentService2"><div class="overlined-title fontbold">FOREX</div>
+<div style="overflow:auto;">
+  <div class="thumb-article-img-sml left"><img height="40" width="62" border="0" class="opacity80" src="http://i.investopedia.com/inv/topics/images/forex-lrg-3.jpg" alt="Learn To Corral The Meat Markets" title="Learn To Corral The Meat Markets"></div>
+  <div style="width: 231px;" class="left link-underline"><a class="bold" href="http://www.investopedia.com/articles/optioninvestor/07/meat_market.asp" title="Learn To Corral The Meat Markets">Learn To Corral The Meat Markets</a><br>Find out how to trade these hog-wild ...</div>
+</div>
+<div class="lh18 bold link-underline pad-t10">
+  <div class="pad-b2"><img width="5" height="7" border="0" class="read-more-arrow" style="padding-right:5px;" alt="Arrow" src="http://i.investopedia.com/inv/icons/red-arrow.gif"><a href="http://www.investopedia.com/articles/forex/10/top-reasons-forex-traders-fail.asp" title="Top Reasons Forex Traders Fail">Top Reasons Forex Traders Fail</a></div>
+  <div class="pad-b2"><img width="5" height="7" border="0" class="read-more-arrow" style="padding-right:5px;" alt="Arrow" src="http://i.investopedia.com/inv/icons/red-arrow.gif"><a href="http://www.investopedia.com/articles/forex/10/trading-currency-commodity-correlations.asp" title="How To Trade Currency And Commodity Correlations">How To Trade Currency And Commodity Correlati...</a></div>
+  <div class="clear"></div>
+</div></span><span id="ctl00_ctl00_MainContent_RIGHT_INNER_COLUMN_TWO_ctl00_contentService3"><div class="overlined-title fontbold">INSURANCE</div>
+<div style="overflow:auto;">
+  <div class="thumb-article-img-sml left"><img height="40" width="62" border="0" class="opacity80" src="http://i.investopedia.com/inv/topics/images/insurance-sml.jpg" alt="The History Of Insurance" title="The History Of Insurance"></div>
+  <div style="width: 231px;" class="left link-underline"><a class="bold" href="http://www.investopedia.com/articles/08/history-of-insurance.asp" title="The History Of Insurance">The History Of Insurance</a><br>The first written policy appeared in ...</div>
+</div>
+<div class="lh18 bold link-underline pad-t10">
+  <div class="pad-b2"><img width="5" height="7" border="0" class="read-more-arrow" style="padding-right:5px;" alt="Arrow" src="http://i.investopedia.com/inv/icons/red-arrow.gif"><a href="http://www.investopedia.com/articles/pf/07/medicare-vs-medicaid.asp" title="What's The Difference Between Medicare And Medicaid?">What's The Difference Between Medicare And Me...</a></div>
+  <div class="pad-b2"><img width="5" height="7" border="0" class="read-more-arrow" style="padding-right:5px;" alt="Arrow" src="http://i.investopedia.com/inv/icons/red-arrow.gif"><a href="http://www.investopedia.com/articles/pf/07/holiday-budget.asp" title="Tips For Avoiding A Holiday Spending Hangover">Tips For Avoiding A Holiday Spending Hangover</a></div>
+  <div class="clear"></div>
+</div></span></div>
+             <div class="clear"></div>
+             <span id="ctl00_ctl00_MainContent_LEFT_COLUMN_ctl00_contentService0"><div class="underlined-title font13">Sponsored Links</div>
+<div class="ad-sponsored-links"><script type="text/javascript" src="http://jlinks.industrybrains.com/jsct?sid=361&num=3&amp;layt=3&amp;fmt=simp&ct=INVESTOPEDIA_HOMEPAGE_ROS&tr=LAYT2"></script></div>
+<div class="link-underline left marginl15"><a href="http://www.industrybrains.com/investopedia/" target="_blank"><div class="btn-red-txt margintb20" style="float:left;">Buy A Link Here</div></a></div>
+<div class="clear"></div><script type="text/javascript">
+        $(document).ready(function() {
+        $("a.ib_buylink").hide();
+        });
+      </script></span>
+            </div>
+            <div class="right-330-col"><span id="ctl00_ctl00_MainContent_RIGHT_COLUMN_ctl00_contentService0"><div class="mod-tod-hp" style="overflow:auto;height:15px;">
+  <div class="left"><a href="http://www.investopedia.com/terms/c/christmastree.asp">TERM OF THE DAY
+          </a></div>
+  <div class="right link-white"><a href="http://join.investopedia.com/freenewsletters/standard/step-1?RegLink=Newsletter_TOD_Landing">Subscribe</a></div>
+</div>
+<div class="mod-tod-hp-container left">
+  <div class="mod-tod-hp-container-left"><img src="http://i.investopedia.com/inv/modules/mod-tod-book-icon.jpg"></div>
+  <div class="mod-tod-hp-container-right">
+    <h2 class="mod-tod-title-hp link-underline"><a href="http://www.investopedia.com/terms/c/christmastree.asp">Christmas Tree</a></h2>An options trading strategy that is generally achieved by purc...<a class="read-all-sm link-underline" href="http://www.investopedia.com/terms/c/christmastree.asp">READ ALL
+         </a></div>
+</div>
+<div class="clear"></div></span><span id="ctl00_ctl00_MainContent_RIGHT_COLUMN_ctl00_contentService1"><div class="box-ad-grey"><script type="text/javascript" language="JavaScript">
+	<!--
+	OAS_AD('x30')
+	//-->
+</script>
+</div></span><span id="ctl00_ctl00_MainContent_RIGHT_COLUMN_ctl00_contentService2"><div class="mod-tod-hp margintop15"><a href="/ask/">ASK INVESTOPEDIA</a></div>
+<div class="mod-tod-hp-container left">
+  <div class="dotted-bg">Q</div>
+  <div style="width: 264px;" class="right">The security that offers the best protection against purchasing power risk or inflation is which of the following?</div>
+  <div class="clear"></div>
+  <div class="dotted-bg margintop15">A</div>
+  <div style="width: 264px;" class="right margintop10 fontbold link-underline"> a. fixed annuity b. common stock c. treasury bond d. certificate of deposit 
+<span style="white-space: nowrap;"><img width="5" height="7" border="0" class="read-more-arrow" alt="Arrow" src="http://i.investopedia.com/inv/icons/red-arrow.gif"><a href="http://www.investopedia.com/ask/answers/10/inflation-protection.asp">Read More
+         </a></span><div class="clear"></div><a href="http://www.investopedia.com/ask/"><div class="ask-btn"></div></a></div>
+</div></span><span id="ctl00_ctl00_MainContent_RIGHT_COLUMN_ctl00_contentService3"><iframe src="http://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2FInvestopedia&amp;width=330&amp;colorscheme=light&amp;connections=10&amp;stream=false&amp;header=true&amp;height=290" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:330px; height:290px;" allowTransparency="true"></iframe></span><span id="ctl00_ctl00_MainContent_RIGHT_COLUMN_ctl00_contentService4"><div class="font13 underlined-title fontbold"><a href="/university/">Investopedia Guides</a></div>
+<div class="fontbold fontdrkgrey font11 marginbtm15">Get your feet wet with investment basics by following these easy-to-follow guides:</div><a class="category-blue" href="http://www.investopedia.com/university/home">How To Buy Your First Home: A Step-By-Step Tutorial</a><div class="font12 mod-stream-cont margintop5 link-underline">Find out everything you need to know to tackle this major purchase without fear.</div><a class="category-blue" href="http://www.investopedia.com/university/safety-and-income/">Safety and Income Tutorial</a><div class="font12 mod-stream-cont margintop5 link-underline">Read on for some investment strategies that will allow you to protect your money, generate current income and grow the principal.</div><a class="category-blue" href="http://www.investopedia.com/university/banking/">All About Banking</a><div class="font12 mod-stream-cont margintop5 link-underline">This tutorial will tell you everything you need to know about how checking and savings accounts work.
+
+</div></span><span id="ctl00_ctl00_MainContent_RIGHT_COLUMN_ctl00_contentService5"><div class="marginbtm15"><a target="_blank" href="http://twitter.com/investopedia"><img border="0" width="320" height="39" alt="Follow us on Twitter" src="http://i.investopedia.com/inv/home/invtwitter.gif"></a></div></span><span id="ctl00_ctl00_MainContent_RIGHT_COLUMN_ctl00_contentService6"><div class="box-ad-grey"><script type="text/javascript" language="JavaScript">
+	<!--
+	OAS_AD('x31')
+	//-->
+</script>
+</div></span><span id="ctl00_ctl00_MainContent_RIGHT_COLUMN_ctl00_contentService7"><div class="partner-center">
+  <div class="fontbold">PARTNER CENTER</div>
+  <div style="width:120px; height:60px;" class="left pad-t10 pad-r20 pad-l25"><script type="text/javascript">
+            <!--
+            HOUSE_AD("IP_120x60");
+            // -->
+          </script></div>
+  <div style="width:120px; height:60px;" class="left pad-t10"><script language="JavaScript" type="text/javascript">
+            <!--
+            OAS_AD('x91');
+            //-->
+          </script></div>
+  <div class="clear"></div>
+</div></span><span id="ctl00_ctl00_MainContent_RIGHT_COLUMN_ctl00_contentService8"><div class="margintop15"><!-- var1:www.investopedia.com var2:/ --><!-- 1x081 ProtocolError --></div></span></div>
+            <div class="clear"></div>
+			<div><span id="ctl00_ctl00_MainContent_BOTTOM_COLUMN_ctl00_contentService0">
+      
+      <!--
+        jCarousel library
+      --> 
+      <script type="text/javascript" src="/common/js/jquery.jcarousel.js"></script> 
+      <!--
+        jCarousel skin stylesheet
+      --> 
+      <link rel="stylesheet" type="text/css" href="/common/jquery-ui/css/jcarousel/tango/skin2.css" /> 
+
+      <script type="text/javascript"> 
+       
+      jQuery(document).ready(function() {
+          jQuery('#moreInCarousel').jcarousel({scroll: 5});
+      });
+       
+      </script> 
+      
+    <div class="underlined-title fontbold font13">Around Investopedia</div>
+<div id="wrap">
+  <ul id="moreInCarousel" class="jcarousel-skin-tango">
+    <li>
+      <div class="more-in-cont">
+        <div><a href="http://www.investopedia.com/articles/03/042303.asp"><img height="95" width="175" border="0" class="opacity80" src="http://i.investopedia.com/inv/topics/images/bonds-lrg.jpg" alt="What Is The World Bank?"></a></div>
+        <div class="more-in-title" title="What Is The World Bank?"><strong>What Is The World B...</strong></div>
+        <div class="link-underline more-in-text"><a href="http://www.investopedia.com/articles/03/042303.asp">You've heard of the World Bank, now find out ho...</a></div>
+      </div>
+    </li>
+    <li>
+      <div class="more-in-cont">
+        <div><a href="http://www.investopedia.com/articles/03/030703.asp"><img height="95" width="175" border="0" class="opacity80" src="http://i.investopedia.com/inv/topics/images/stocks-lrg-2.jpg" alt="An Introduction To The International Monetary Fund (IMF)"></a></div>
+        <div class="more-in-title" title="An Introduction To The International Monetary Fund (IMF)"><strong>An Introduction To ...</strong></div>
+        <div class="link-underline more-in-text"><a href="http://www.investopedia.com/articles/03/030703.asp">Chances are you've heard of the IMF. But what d...</a></div>
+      </div>
+    </li>
+    <li>
+      <div class="more-in-cont">
+        <div><a href="http://www.investopedia.com/articles/03/012403.asp"><img height="95" width="175" border="0" class="opacity80" src="http://i.investopedia.com/inv/topics/images/active-trading-lrg-4.jpg" alt="The Nitty-Gritty Of Executing A Trade"></a></div>
+        <div class="more-in-title" title="The Nitty-Gritty Of Executing A Trade"><strong>The Nitty-Gritty Of...</strong></div>
+        <div class="link-underline more-in-text"><a href="http://www.investopedia.com/articles/03/012403.asp">Ever wonder what happens behind the scenes when...</a></div>
+      </div>
+    </li>
+    <li>
+      <div class="more-in-cont">
+        <div><a href="http://www.investopedia.com/articles/00/082800.asp"><img height="95" width="175" border="0" class="opacity80" src="http://i.investopedia.com/inv/topics/images/stocks-lrg-3.jpg" alt="Cyclical Versus Non-Cyclical Stocks"></a></div>
+        <div class="more-in-title" title="Cyclical Versus Non-Cyclical Stocks"><strong>Cyclical Versus Non...</strong></div>
+        <div class="link-underline more-in-text"><a href="http://www.investopedia.com/articles/00/082800.asp">Investing during an economic downturn simply me...</a></div>
+      </div>
+    </li>
+    <li>
+      <div class="more-in-cont">
+        <div><a href="http://www.investopedia.com/articles/00/111500.asp"><img height="95" width="175" border="0" class="opacity80" src="http://i.investopedia.com/inv/topics/images/bonds-lrg.jpg" alt="The Advantages Of Bonds"></a></div>
+        <div class="more-in-title" title="The Advantages Of Bonds"><strong>The Advantages Of B...</strong></div>
+        <div class="link-underline more-in-text"><a href="http://www.investopedia.com/articles/00/111500.asp">They may not be sexy, but bonds do have a place...</a></div>
+      </div>
+    </li>
+    <li>
+      <div class="more-in-cont">
+        <div><a href="http://www.investopedia.com/articles/fundamental/04/033104.asp"><img height="95" width="175" border="0" class="opacity80" src="http://i.investopedia.com/inv/topics/images/stocks-lrg-2.jpg" alt="Getting To Know Business Models"></a></div>
+        <div class="more-in-title" title="Getting To Know Business Models"><strong>Getting To Know Bus...</strong></div>
+        <div class="link-underline more-in-text"><a href="http://www.investopedia.com/articles/fundamental/04/033104.asp">Do you know how your companies really make thei...</a></div>
+      </div>
+    </li>
+    <li>
+      <div class="more-in-cont">
+        <div><a href="http://www.investopedia.com/articles/basics/05/diversification.asp"><img height="95" width="175" border="0" class="opacity80" src="http://i.investopedia.com/inv/topics/images/bonds-lrg-2.jpg" alt="Introduction To Diversification"></a></div>
+        <div class="more-in-title" title="Introduction To Diversification"><strong>Introduction To Div...</strong></div>
+        <div class="link-underline more-in-text"><a href="http://www.investopedia.com/articles/basics/05/diversification.asp">Reducing risk and increasing returns in your po...</a></div>
+      </div>
+    </li>
+    <li>
+      <div class="more-in-cont">
+        <div><a href="http://www.investopedia.com/articles/02/052202.asp"><img height="95" width="175" border="0" class="opacity80" src="http://i.investopedia.com/inv/topics/images/bonds-lrg-3.jpg" alt="Junk Bonds: Everything You Need To Know"></a></div>
+        <div class="more-in-title" title="Junk Bonds: Everything You Need To Know"><strong>Junk Bonds: Everyth...</strong></div>
+        <div class="link-underline more-in-text"><a href="http://www.investopedia.com/articles/02/052202.asp">Don't be fooled by the name - junk bonds may be...</a></div>
+      </div>
+    </li>
+    <li>
+      <div class="more-in-cont">
+        <div><a href="http://www.investopedia.com/articles/03/010303.asp"><img height="95" width="175" border="0" class="opacity80" src="http://i.investopedia.com/inv/topics/images/personal-finance-lrg.jpg" alt="Investing In Your Child's Education"></a></div>
+        <div class="more-in-title" title="Investing In Your Child's Education"><strong>Investing In Your C...</strong></div>
+        <div class="link-underline more-in-text"><a href="http://www.investopedia.com/articles/03/010303.asp">Overwhelmed by increasing tuition costs for you...</a></div>
+      </div>
+    </li>
+    <li>
+      <div class="more-in-cont">
+        <div><a href="http://www.investopedia.com/articles/03/050803.asp"><img height="95" width="175" border="0" class="opacity80" src="http://i.investopedia.com/inv/topics/images/bonds-lrg-2.jpg" alt="The Lowdown On Penny Stocks"></a></div>
+        <div class="more-in-title" title="The Lowdown On Penny Stocks"><strong>The Lowdown On Penn...</strong></div>
+        <div class="link-underline more-in-text"><a href="http://www.investopedia.com/articles/03/050803.asp">Think penny stocks will make you rich? If you d...</a></div>
+      </div>
+    </li>
+    <li>
+      <div class="more-in-cont">
+        <div><a href="http://www.investopedia.com/articles/retirement/04/033104.asp"><img height="95" width="175" border="0" class="opacity80" src="http://i.investopedia.com/inv/topics/images/retirement-lrg-3.jpg" alt="An Introduction To Ineligible IRA Contributions"></a></div>
+        <div class="more-in-title" title="An Introduction To Ineligible IRA Contributions"><strong>An Introduction To ...</strong></div>
+        <div class="link-underline more-in-text"><a href="http://www.investopedia.com/articles/retirement/04/033104.asp">Eager to save for retirement? Find out how to a...</a></div>
+      </div>
+    </li>
+    <li>
+      <div class="more-in-cont">
+        <div><a href="http://www.investopedia.com/articles/03/013103.asp"><img height="95" width="175" border="0" class="opacity80" src="http://i.investopedia.com/inv/topics/images/bonds-lrg-3.jpg" alt="The REIT Way"></a></div>
+        <div class="more-in-title" title="The REIT Way"><strong>The REIT Way</strong></div>
+        <div class="link-underline more-in-text"><a href="http://www.investopedia.com/articles/03/013103.asp">Ever considered investing in real estate? Read ...</a></div>
+      </div>
+    </li>
+    <li>
+      <div class="more-in-cont">
+        <div><a href="http://www.investopedia.com/articles/optioninvestor/05/TradingQQQQ.asp"><img height="95" width="175" border="0" class="opacity80" src="http://i.investopedia.com/inv/topics/images/etfs-lrg-4.jpg" alt="Trading The QQQQ With In-The-Money Put Spreads"></a></div>
+        <div class="more-in-title" title="Trading The QQQQ With In-The-Money Put Spreads"><strong>Trading The QQQQ Wi...</strong></div>
+        <div class="link-underline more-in-text"><a href="http://www.investopedia.com/articles/optioninvestor/05/TradingQQQQ.asp">Even beginners may use this strategy to trade a...</a></div>
+      </div>
+    </li>
+    <li>
+      <div class="more-in-cont">
+        <div><a href="http://www.investopedia.com/articles/05/042805.asp"><img height="95" width="175" border="0" class="opacity80" src="http://i.investopedia.com/inv/topics/images/stocks-lrg-3.jpg" alt="Introduction To Multi-Discipline Accounts"></a></div>
+        <div class="more-in-title" title="Introduction To Multi-Discipline Accounts"><strong>Introduction To Mul...</strong></div>
+        <div class="link-underline more-in-text"><a href="http://www.investopedia.com/articles/05/042805.asp">You get multiple managers, affordable diversifi...</a></div>
+      </div>
+    </li>
+    <li>
+      <div class="more-in-cont">
+        <div><a href="http://www.investopedia.com/articles/03/022603.asp"><img height="95" width="175" border="0" class="opacity80" src="http://i.investopedia.com/inv/topics/images/forex-lrg-3.jpg" alt="Dual And Multiple Exchange Rates 101"></a></div>
+        <div class="more-in-title" title="Dual And Multiple Exchange Rates 101"><strong>Dual And Multiple E...</strong></div>
+        <div class="link-underline more-in-text"><a href="http://www.investopedia.com/articles/03/022603.asp">Why would a country choose to implement dual or...</a></div>
+      </div>
+    </li>
+    <li>
+      <div class="more-in-cont">
+        <div><a href="http://www.investopedia.com/articles/forex/06/SevenFXFAQs.asp"><img height="95" width="175" border="0" class="opacity80" src="http://i.investopedia.com/inv/topics/images/forex-lrg-3.jpg" alt="Common Questions About Currency Trading"></a></div>
+        <div class="more-in-title" title="Common Questions About Currency Trading"><strong>Common Questions Ab...</strong></div>
+        <div class="link-underline more-in-text"><a href="http://www.investopedia.com/articles/forex/06/SevenFXFAQs.asp">Whether you're puzzled by pips or curious about...</a></div>
+      </div>
+    </li>
+  </ul>
+</div>
+<div class="clear"></div></span><span id="ctl00_ctl00_MainContent_BOTTOM_COLUMN_ctl00_contentService1"></span><span id="ctl00_ctl00_MainContent_BOTTOM_COLUMN_ctl00_contentService2"></span></div>
+        </div>
+		
+        
+            
+
+      
+    
+    
+    <!--footer-->
+    
+    <div>
+                <div class="ftr-bar link-underline">
+                    <a href="http://www.investopedia.com">
+                        <img width="108" height="14" border="0" alt="Investopedia.com" src="http://i.investopedia.com/fxtrader/inv-small-logo.jpg"></a></div>
+                <div class="inv-ftr link-underline">
+                    <div class="ftr-col1">
+                        <a href="http://www.investopedia.com/investing-topics/" class="ftr-blue-link">TOPICS</a><br>
+                        <a href="http://www.investopedia.com/investing-topics/Stocks">Stocks</a><br>
+                        <a href="http://www.investopedia.com/investing-topics/Mutual_Funds">Mutual Funds</a><br>
+                        <a href="http://www.investopedia.com/investing-topics/Forex">Forex</a><br>
+                        <a href="http://www.investopedia.com/investing-topics/ETFs">ETFs</a><br>
+                        <a href="http://www.investopedia.com/investing-topics/Active_Trading">Active Trading</a><br>
+                        <a href="http://www.investopedia.com/investing-topics/Bonds">Bonds</a><br>
+                        <a href="http://www.investopedia.com/investing-topics/Financial_Theory">Financial Theory</a><br>
+                        <a href="http://www.investopedia.com/investing-topics/">View All</a>
+                    </div>
+                    <div class="ftr-col2 link-underline">
+                        <a href="http://www.investopedia.com/dictionary/" class="ftr-blue-link">DICTIONARY</a><br>
+                        <div class="ftr-dictionary-dd link-underline">
+                            <select onchange="openSite(this)" name="terms">
+                                <option selected="selected">Financial Terms</option>
+                                <option value="http://www.investopedia.com/terms/1/">#</option>
+                                <option value="http://www.investopedia.com/terms/a/">A</option>
+                                <option value="http://www.investopedia.com/terms/b/">B</option>
+                                <option value="http://www.investopedia.com/terms/c/">C</option>
+                                <option value="http://www.investopedia.com/terms/d/">D</option>
+                                <option value="http://www.investopedia.com/terms/e/">E</option>
+                                <option value="http://www.investopedia.com/terms/f/">F</option>
+                                <option value="http://www.investopedia.com/terms/g/">G</option>
+                                <option value="http://www.investopedia.com/terms/h/">H</option>
+                                <option value="http://www.investopedia.com/terms/i/">I</option>
+                                <option value="http://www.investopedia.com/terms/j/">J</option>
+                                <option value="http://www.investopedia.com/terms/k/">K</option>
+                                <option value="http://www.investopedia.com/terms/l/">L</option>
+                                <option value="http://www.investopedia.com/terms/m/">M</option>
+                                <option value="http://www.investopedia.com/terms/n/">N</option>
+                                <option value="http://www.investopedia.com/terms/o/">O</option>
+                                <option value="http://www.investopedia.com/terms/p/">P</option>
+                                <option value="http://www.investopedia.com/terms/q/">Q</option>
+                                <option value="http://www.investopedia.com/terms/r/">R</option>
+                                <option value="http://www.investopedia.com/terms/s/">S</option>
+                                <option value="http://www.investopedia.com/terms/t/">T</option>
+                                <option value="http://www.investopedia.com/terms/u/">U</option>
+                                <option value="http://www.investopedia.com/terms/v/">V</option>
+                                <option value="http://www.investopedia.com/terms/w/">W</option>
+                                <option value="http://www.investopedia.com/terms/x/">X</option>
+                                <option value="http://www.investopedia.com/terms/y/">Y</option>
+                                <option value="http://www.investopedia.com/terms/z/">Z</option>
+                            </select>
+                        </div>
+                        <a href="http://www.investopedia.com/articles/" class="ftr-blue-link">ARTICLES</a><br>
+                        <a href="http://www.investopedia.com/articles/basics/">Investing Basics</a><br>
+                        <a href="http://www.investopedia.com/articles/stocks/">Stocks</a><br>
+                        <a href="http://www.investopedia.com/articles/mutualfund/">Mutual Funds</a><br>
+                        <a href="http://www.investopedia.com/articles/forex/">Forex</a><br>
+                        <a href="http://www.investopedia.com/articles/">View All</a>
+                    </div>
+                    <div class="ftr-col3 link-underline">
+                        <a href="http://www.investopedia.com/university/" class="ftr-blue-link">TUTORIALS</a><br>
+						<a href="http://www.investopedia.com/video/" class="ftr-blue-link">VIDEOS</a><br>
+                        <a href="http://www.investopedia.com/professionals/" class="ftr-blue-link">EXAM PREP</a><br>
+                        <a href="http://www.investopedia.com/ask/" class="ftr-blue-link">ASK US</a><br>
+                        <a href="http://www.investopedia.com/free/" class="ftr-blue-link">FREE TOOLS</a>
+                        <div class="clear">
+                        </div>
+                        <hr class="ftr-hr">
+                        <div class="clear">
+                        </div>
+                        <a href="http://simulator.investopedia.com/" class="ftr-blue-link">STOCK SIMULATOR</a><br>
+                        <a href="http://fxtrader.investopedia.com" class="ftr-blue-link">FX TRADER</a><br>
+                        <a href="http://financialedge.investopedia.com/" class="ftr-blue-link">FINANCIAL
+                            EDGE</a><br>
+                    </div>
+                    <div onclick="return DIV2_onclick()" id="DIV2" class="ftr-col4 link-underline">
+                        <a href="http://www.investopedia.com/rss">
+                            <img width="11" height="11" border="0" alt="Investopedia RSS Feed Icon" src="http://i.investopedia.com/fxtrader/footer-rss-icon.gif"></a> &nbsp;<a href="http://www.investopedia.com/rss" class="ftr-blue-link">INVESTOPEDIA NEWS &amp; ARTICLES</a><br>
+                        &copy; 2010 <a href="http://www.investopedia.com">Investopedia ULC.</a><br>
+                        <a href="http://www.investopedia.com/corp/copyright.asp">All Rights Reserved</a>
+                        | <a href="http://www.investopedia.com/corp/terms.asp">Terms of Use</a> | <a href="http://www.investopedia.com/corp/privacy.asp">
+                            Privacy Policy</a><br>
+                        <a href="http://www.investopedia.com/licensing/Dictionary.aspx">Dictionary Licensing</a>
+                        | <a href="http://www.investopedia.com/corp/advertise.asp">Advertise on Investopedia</a>
+                        <br>
+                        <a href="http://www.investopedia.com/contact.aspx">Contact Us</a><br>
+                        <!--<a href="/ClickTracking/Click.aspx?d=http%253a%252f%252fwww.dailyfinance.com%252fmarket-news%252f%253fud%253dTG9nVHlwZT1vdXRnb2luZw%25253d%25253d" id="ctl00_ctl00__aExternalStockNews">Stock News</a><br />-->
+						 <a href="http://investopedia.ar.wilink.com" target="_blank"><img src="http://i.investopedia.com/inv/nav/precision-ir-nav-icon.png" width="20" height="23" border="0" alt="Free Annual Reports Icon" /> Free Annual Reports</a><br />
+                        <a href="http://www.couponmountain.com/" target="_blank"><img src="http://i.investopedia.com/inv/ads/secondparty/coupon-mountain-white.jpg"/></a><br>
+                        <a href="http://www.couponmountain.com/" target="_blank">Coupon Codes</a>
+                    </div>
+                    <div class="ftr-col-newsletter link-underline">
+                        <img width="19" height="15" border="0" alt="Free Newsletter Icon" src="http://i.investopedia.com/fxtrader/footer-newsletter-envelope.gif" />
+                        <a href="http://join.investopedia.com/NewsLand.aspx?RegLink=Newsletter" id="ctl00_ctl00_lnkNewsletterFooter">FREE NEWSLETTERS</a><br>
+						 <input name="ctl00$ctl00$txtEmailAddress" type="text" id="ctl00_ctl00_txtEmailAddress" class="ftr-newsletter-input" value="Enter Your Email Address Here" onclick="this.value=''" maxlength="50" />
+                        <br>
+                        <div class="ftr-newsletter-lcol">
+                            <div class="ftr-newsletter-checkbox-dbl">
+                                <input name="ctl00$ctl00$offers" type="checkbox" id="ctl00_ctl00_offers" checked="checked" />
+                            </div>
+                            <label class="ftr-newsletter-label">
+                                Exclusive Offers</label>
+                            <div class="clear">
+                            </div>
+                            <div class="ftr-newsletter-checkbox">
+                                <input name="ctl00$ctl00$basics" type="checkbox" id="ctl00_ctl00_basics" />
+                            </div>
+                            <label class="ftr-newsletter-label">
+                                Investing Basics</label>
+                            <div class="clear">
+                            </div>
+                            <div class="ftr-newsletter-checkbox-dbl">
+                                <input name="ctl00$ctl00$investopedia_advisor_free" type="checkbox" id="ctl00_ctl00_investopedia_advisor_free" />
+                            </div>
+                            <label class="ftr-newsletter-label">
+                                Stock Watch Weekly</label>
+                            <div class="clear">
+                            </div>
+                            <div class="ftr-newsletter-checkbox">
+                                <input name="ctl00$ctl00$term_of_the_day" type="checkbox" id="ctl00_ctl00_term_of_the_day" />
+                            </div>
+                            <label class="ftr-newsletter-label">
+                                Term of the Day</label>
+                            <div class="clear">
+                            </div>
+                            <div class="ftr-newsletter-checkbox-dbl">
+                                <input name="ctl00$ctl00$investopedia_professionals" type="checkbox" id="ctl00_ctl00_investopedia_professionals" />
+                            </div>
+                            <label class="ftr-newsletter-label">
+                                Professionals in the Money</label>
+                            <div class="clear">
+                            </div>
+                            <div class="ftr-newsletter-checkbox">
+                                <input name="ctl00$ctl00$chartadvisor_free" type="checkbox" id="ctl00_ctl00_chartadvisor_free" />
+                            </div>
+                            <label class="ftr-newsletter-label">
+                                Chart Advisor Report</label>
+                            <div class="clear">
+                            </div>
+                        </div>
+                        <div class="ftr-newsletter-rcol">
+                            <div class="ftr-newsletter-checkbox">
+                                <input name="ctl00$ctl00$newstouse" type="checkbox" id="ctl00_ctl00_newstouse" />
+                            </div>
+                            <label class="ftr-newsletter-label">
+                                News To Use</label>
+                            <div class="clear">
+                            </div>
+                            <div class="ftr-newsletter-checkbox">
+                                <input name="ctl00$ctl00$forex_free" type="checkbox" id="ctl00_ctl00_forex_free" />
+                            </div>
+                            <label class="ftr-newsletter-label">
+                                Forex Weekly</label>
+                            <div class="clear">
+                            </div>
+                            <div class="ftr-newsletter-checkbox">
+                                <input name="ctl00$ctl00$financial_edge" type="checkbox" id="ctl00_ctl00_financial_edge" />
+                            </div>
+                            <label class="ftr-newsletter-label">
+                                Financial Edge</label>
+                            <div class="clear">
+                            </div>
+                            <div class="ftr-newsletter-checkbox-dbl">
+                                <input name="ctl00$ctl00$coattail_buffett" type="checkbox" id="ctl00_ctl00_coattail_buffett" />
+                            </div>
+                            <label class="ftr-newsletter-label">
+                                Warren Buffett Watch</label>
+                            <div class="clear">
+                            </div>
+                            <div>
+                                <input type="submit" name="ctl00$ctl00$btnFreeNewsletter" value=" " id="ctl00_ctl00_btnFreeNewsletter" class="ftr-green-submit-btn-ftr" />
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    
+                    
+                </div>
+                <div>
+                    <img width="1015" height="6" border="0" alt="footer Bottom" src="http://i.investopedia.com/inv/footer/footer-btm.gif"></div>
+            </div>
+			
+	</div>
+
+    <script type="text/javascript" language="javascript">
+        $(document).ready(function(){
+        
+            // set the default link paths
+            var loginUrl = 'http://join.investopedia.com/login/login.aspx?ReturnUrl=';
+            var logoutUrl = 'http://join.investopedia.com/login/logout.aspx?ReturnUrl=';
+            var registerUrl = 'http://join.investopedia.com/investopedia/join1?RegLink=Investopedia_Header&src=7&ReturnUrl=';
+            var currUrl = window.top.location.href;
+            
+            if (currUrl.indexOf('localhost') >= 0) {
+                loginUrl = 'http://localhost:1760/login/login.aspx?ReturnUrl=';
+                logoutUrl = 'http://localhost:1760/login/logout.aspx?ReturnUrl=';
+                registerUrl = 'http://localhost:1760/investopedia/join1?RegLink=Investopedia_Header&src=7&ReturnUrl=';
+            }
+            else if (currUrl.indexOf('maintenance.invlocal') >= 0) {
+                loginUrl = 'http://join.maintenance.invlocal.com/login/login.aspx?ReturnUrl=';
+                logoutUrl = 'http://join.maintenance.invlocal.com/login/logout.aspx?ReturnUrl=';
+                registerUrl = 'http://join.maintenance.invlocal.com/investopedia/join1?RegLink=Investopedia_Header&src=7&ReturnUrl=';
+            }
+            else if (currUrl.indexOf('teststage.invlocal') >= 0) {
+                loginUrl = 'http://join.teststage.invlocal.com/login/login.aspx?ReturnUrl=';
+                logoutUrl = 'http://join.teststage.invlocal.com/login/logout.aspx?ReturnUrl=';
+                registerUrl = 'http://join.teststage.invlocal.com/investopedia/join1?RegLink=Investopedia_Header&src=7&ReturnUrl=';
+            }
+            else if (currUrl.indexOf('invwf') >= 0) {
+                loginUrl = 'http://join.livestage.invwf.com/login/login.aspx?ReturnUrl=';
+                logoutUrl = 'http://join.livestage.invwf.com/login/logout.aspx?ReturnUrl=';
+                registerUrl = 'http://join.livestage.invwf.com/investopedia/join1?RegLink=Investopedia_Header&src=7&ReturnUrl=';
+            }
+            
+            // set the links
+            $('#ctl00_ctl00_SignIn').attr('href', (loginUrl + currUrl));
+            $('#ctl00_ctl00_Logout').attr('href', (logoutUrl + currUrl));
+            $('#ctl00_ctl00_Register').attr('href', (registerUrl + currUrl));
+         });
+    </script>
+
+<!-- Begin comScore Tag -->
+<script>
+  var _comscore = _comscore || [];
+  _comscore.push({ c1: "2", c2: "6034722", c4: "http://www.investopedia.com/" });
+  (function() {
+    var s = document.createElement("script"), el = document.getElementsByTagName("script")[0]; s.async = true;
+    s.src = (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js";
+    el.parentNode.insertBefore(s, el);
+  })();
+</script>
+<noscript>
+  <img src="http://b.scorecardresearch.com/p?c1=2&c2=6034722&c4=http%3a%2f%2fwww.investopedia.com%2f&cv=2.0&cj=1" />
+</noscript>
+<!-- End comScore Tag -->
+
+</form>
+</body>
+</html>
