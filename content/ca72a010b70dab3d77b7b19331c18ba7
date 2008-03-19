@@ -1,0 +1,217 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+
+<html lang='en'><head><meta http-equiv="Content-Type" content="text/html;charset=utf-8"><base href='http://nedbatchelder.com'><title>Ned Batchelder: Python code complexity micro-tool</title><link rel='stylesheet' href='/style.css' type='text/css'><link rel='stylesheet' href='/printstyle.css' type='text/css' media='print'><link rel="alternate" type="application/rss+xml" href="http://nedbatchelder.com/blog/rss.xml" title="RSS feed for Ned's blog"><script type='text/javascript' src='nedbatchelder.js'></script></head><body><center><table id='logo_banner' cellpadding='0' cellspacing='0' width='100%'><tr><td id='logo' align='center'><a href='/'><img src='dodeca3_100.gif' width='100' height='120' alt='[*]'></a></td><td id='banner'><span class='path'><a href='/'>Ned Batchelder</a> : <a href='/blog'>Blog</a> | <a href='/code'>Code</a> | <a href='/text'>Text</a> | <a href='/site'>Site</a></span><br><span class='headslug'>Python code complexity micro-tool</span><br><span class='path'>
+                    &#xbb; <a href='/'>Home</a> : <a href='/blog'>Blog</a> : <a href='blog/200803.html'>March 2008</a></span></td></tr></table><table id='content_menu' cellpadding='0' cellspacing='0'><tr><td id='content' valign='top'><div class='body'><div id='searchwelcome'></div><div class='blog-entry' id='e20080318T222049'><div class='head'><h3 class='title'><a class='s' href='blog/200803/python_code_complexity_microtool.html' rel='bookmark' title='Link to this post'>Python code complexity micro-tool</a></h3><p class='date'>Tuesday 18 <a class='s' href='blog/200803.html'>March 2008</a></p></div><p>One of the side-effects of going to Pycon is getting immersed in some side
+project or other.  Being immersed in all things Python for a few days away from
+the other usual complexities of life makes it a natural environment in which to
+dive deep.
+</p><p>This Pycon, I was ignited by a comment
+<a class="offsite" href="http://panela.blog-city.com/pycon_2008_managing_complexity_slides.htm">Matt Harrison</a>
+made about there not being a tool to find code paths in Python.  Having wrestled
+with the difficulty of analyzing Python code for coverage.py, I thought I could
+hack something together.</p><p>A few days later, the meager result is <a href="http://nedbatchelder.com/files/codepaths0.py">codepaths.py</a>.
+It's a command line script.  Give it a Python source file, and it will report
+on the McCabe complexity measure of the functions and class methods within.
+The -m option is a minimum complexity measure below which functions are too uninteresting
+to include in the output (default 2).  The -d option causes the output to be
+a <a class="offsite" href="http://www.graphviz.org/">Graphviz</a> dot file for drawing the code
+path graphs.  Without -d, the names and complexity measures are simply listed.</p><p>This will make a PNG file, for instance:</p><blockquote class="code"><tt>python codepaths.py -d mycode.py | dot -Tpng -o mycode.png</tt></blockquote><p>Weaknesses:</p><ul><li>The graphs are kind of wonky because I don't know how to control Graphviz.</li><li>Some Python constructs aren't handled yet (try/except, while/else) because I don't
+        know how to account for them in the complexity measure.</li><li>Files of any interesting size make graphs that are slow to draw and large to display.</li><li>The graphs could be streamlined: coalescing consecutive simple statements,
+        removing the join points after branches, and so on.</li></ul><p>It's a quick hack
+starting point.  If people are interested, it will go some place. If not, it was
+a fun weekend project.</p><div class='foot'><span class='via'>
+
+    
+    
+        tagged: 
+        <a href='blog/tag/python.html' rel='tag'>python</a>,
+    
+        
+        <a href='blog/tag/tools.html' rel='tag'>tools</a></span><span class='react'>&#xbb;&#xa0;3 reactions</span></div></div><div class='comments' id='comments'>
+<h1>Comments</h1>
+
+	<div class='comment'>
+		<img class='gravatar' src='http://www.gravatar.com/avatar/092fbda0a6ae59f1ed3072ceee6600d9.jpg?default=http%3A%2F%2Fnedbatchelder.com%2Fpix%2Favatar%2Fa278.jpg&amp;size=40' width='40' height='40' alt='[gravatar]'>
+		<div class='head'>
+			<span class='who'><b><a href='http://panela.blog-city.com/' rel='nofollow' target='_blank'>matt harrison</a></b></span>
+			<span class='when'><span class='adminlink'></span> 11:54 PM on 18 Mar 2008</span>
+		</div>
+		
+		<p class='commenttext'>
+			Ned - It was great to meet you in person.  This is awesome!  <a rel='nofollow' href="http://www.literateprogramming.com/mccabe.pdf">McCabe's 1976 paper</a> has a few of the graph structures.  We should collaborate on the missing ones.....  (Me pines for more hours in the day)
+		</p>
+	</div>
+	<div class='comment'>
+		<img class='gravatar' src='http://www.gravatar.com/avatar/5e5142d6a1a578f02e2d94c4d6d31088.jpg?default=http%3A%2F%2Fnedbatchelder.com%2Fpix%2Favatar%2Fa263.jpg&amp;size=40' width='40' height='40' alt='[gravatar]'>
+		<div class='head'>
+			<span class='who'><b><a href='http://tarekziade.wordpress.com' rel='nofollow' target='_blank'>tarek</a></b></span>
+			<span class='when'><span class='adminlink'></span> 6:13 AM on 19 Mar 2008</span>
+		</div>
+		
+		<p class='commenttext'>
+			That's a great tool, I am using McCabe metrics and this kind of output would be nice to compute a QA page for a Python package. I am also using trace2html (see <a rel='nofollow' href='http://pypi.python.org/pypi/trace2html'>http://pypi.python.org/pypi/trace2html</a>) for code coverage display, and I think your tool would be great if some similar kind of HTML file tree output could be generated.<br><br>A final usage in my work would be auto-generated QA pages done through svn commit hooks.
+		</p>
+	</div>
+	<div class='comment'>
+		<img class='gravatar' src='http://www.gravatar.com/avatar/1fbb86469aace687c46c3b60fe7d6cc4.jpg?default=http%3A%2F%2Fnedbatchelder.com%2Fpix%2Favatar%2Fa228.jpg&amp;size=40' width='40' height='40' alt='[gravatar]'>
+		<div class='head'>
+			<span class='who'><b>John M. Camara</b></span>
+			<span class='when'><span class='adminlink'></span> 11:47 AM on 19 Mar 2008</span>
+		</div>
+		
+		<p class='commenttext'>
+			It would be nice to have the output of this tool integrated with Bitten [1].  Bitten is a Trac plugin for collecting various software metrics via continuous integration.  See integration into Trac's timeline [2] (entries with hammers), recent history of a branch [3], results from an individual build [4] for example outputs of Bitten.<br><br>[1] <a rel='nofollow' href='http://bitten.edgewall.org/'>http://bitten.edgewall.org/</a><br>[2] <a rel='nofollow' href='http://bitten.edgewall.org/timeline'>http://bitten.edgewall.org/timeline</a><br>[3] <a rel='nofollow' href='http://bitten.edgewall.org/build/trunk'>http://bitten.edgewall.org/build/trunk</a><br>[4] <a rel='nofollow' href='http://bitten.edgewall.org/build/trunk/1237'>http://bitten.edgewall.org/build/trunk/1237</a>
+		</p>
+	</div>
+
+<div id='commentform'>
+<h2>Add a comment:</h2>
+<div>
+	<form method="post" action="http://nedbatchelder.com/blog/200803/python_code_complexity_microtool.html#commentform" id="commentformform">
+		<table width="100%" border="0" cellspacing="0" cellpadding="2">
+			<tr>
+				<td width="0%">
+					<div class='label'>name</div>
+				</td>
+				<td width="100%">
+					<input class='edit' type="text" name="f8759c9626c0952ace0d9e1c26126849a" id="f8759c9626c0952ace0d9e1c26126849a" size="40" value="">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div class='label'>email</div>
+				</td>
+				<td>
+					<div style="display:none">
+					Ignore this:
+					<input class='edit' type="email" name="f8f9f249bb7a720fa31cc875ecd92f297" id="f8f9f249bb7a720fa31cc875ecd92f297" size="40">
+					</div>
+					<input class='edit' type="email" name="fa85fe9bb0b793910217a6dd5d1d04b16" id="fa85fe9bb0b793910217a6dd5d1d04b16" size="40" value="">
+					<span class='notice'>not displayed and no spam.</span>
+					<div style="display:none">
+					Leave this empty:
+					<input class='edit' type="email" name="f5fbe7d81a5f3abb13a01b098b70fb28a" id="f5fbe7d81a5f3abb13a01b098b70fb28a" size="40">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div class='label'>www</div>
+				</td>
+				<td>
+					<input class='edit' type="url" name="f252778a5d237aa0a2a5803fc41b42e9e" id="f252778a5d237aa0a2a5803fc41b42e9e" size="40" value="">
+					<span class='notice'>not searched.</span>
+				</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>
+					<div class='notice'>Name and either email or www are required.</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<div align="center" style="display:none">
+						Don't put anything here:
+						<textarea name="f33b06b97232ffc2ec988126b36856757" id="f33b06b97232ffc2ec988126b36856757" rows="7" cols="77" style='width:100%'></textarea>
+					</div>
+					<div align="center">
+						<textarea name="ff6e42dd28db9d5b2958b0a1cdcef2ed6" id="ff6e42dd28db9d5b2958b0a1cdcef2ed6" rows="7" cols="77" style='width:100%'></textarea>
+					</div>
+					<div align="center" style="display:none">
+						Leave this empty:
+						<textarea name="f15fec947fabd9a367f7339809740b4a0" id="f15fec947fabd9a367f7339809740b4a0" rows="7" cols="77" style='width:100%'></textarea>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" class='notice' align='right'>
+					URLs auto-link and some tags are allowed: &lt;a>&lt;b>&lt;i>&lt;p>&lt;br>&lt;pre>.
+				</td>
+			</tr>
+			<tr valign="top">
+				<td colspan="2">
+					<div align="right">
+						<label for="cbnotify">
+							<input type="checkbox" name="f2010e34acd86d50389714fafe511a16a" id="cbnotify" >
+							<span class='label'>Email me future comments</span>
+						</label>&#160;&#160;
+						<input id="previewbtn" type="submit" name="f362ce6b4d60f521e9535a4e184af4907" value="preview >>">
+						<span style="display:none">
+						<input type="submit" name="f5ce505024572c41850c4f7637ddf08d9" value="I'm a spambot">
+						</span>
+					</div>
+				</td>
+			</tr>
+		</table>
+		<input type='hidden' name='f9bd45093313a5bf48ffa482c8d586e48' value='e20080318T222049'>
+		<input type='hidden' name='spinner' value='7ca4413f0e41353db1ac7bb4aa0acac4'>
+		<input type='hidden' name='fe1ceec1c3a03ae6f8fa4303cd0415aa4' value='1293266004'>
+
+
+
+	</form>
+</div>
+</div>
+
+</div>
+</div></td><td id='menu' valign='top'><div class='sidebar'>
+
+
+<div class='blogroll'><ul class='first'><li>Search this site:
+            
+<form action="http://www.google.com/cse" id="searchbox_007818501792991951010:s9hiibxg-ty" style="margin-top:6px;"><input type="hidden" name="cx" value="007818501792991951010:s9hiibxg-ty"><table cellpadding='0' cellspacing='0'><tr><td valign='middle'><input type="text" name="q" style='border:1px solid #7e9db9;padding:2px;width:144px;height:16px;'></td><td valign='middle'><input id="submit" type="image" title="Search" src="/pix/search.png"></td></tr></table></form><script type="text/javascript">
+    (function() {
+        var f = document.getElementById('searchbox_007818501792991951010:s9hiibxg-ty');
+        if (f && f.q) {
+            var q = f.q;
+            var b = function() {
+                if (q.value == '') {
+                    q.style.background = '#fff url(http:\x2F\x2Fwww.google.com\x2Fcoop\x2Fintl\x2Fen\x2Fimages\x2Fgoogle_custom_search_watermark.gif) left no-repeat';
+                }
+            };
+            var f = function() {
+                q.style.background = '#fff';
+            };
+            q.onfocus = f;
+            q.onblur = b;
+            if (!/[&?]q=[^&]/.test(location.search)) {
+                b();
+            }
+        }
+    })();
+</script></li><li class='first'><a href='/site/aboutned.html' rel='author'>About me</a></li><li>Commerce:
+            <ul class='compact'><li>&#xbb;&#xa0;<a href='http://www.amazon.com/exec/obidos/redirect-home/nedbatchelder-20'>Amazon</a></li><li>&#xbb;&#xa0;<a href='http://susansenator.com/survivalguide.html'>Susan's books</a><br><a href='http://susansenator.com/makingpeace.html'><img src='pix/makingpeacetiny.png' alt='Making Peace With Autism' width='83' height='127' style='margin: 10px 0 0 0'></a> <a href='http://susansenator.com/survivalguide.html'><img src='pix/survivalguidetiny.png' alt='Autism Mom&#39;s Survival Guide' width='86' height='121' style='margin: 10px 0 0 0'></a></li></ul></li><li><iframe src='tabblo_badge_favs.html' width='175' height='211' frameborder='0' scrolling='no'></iframe></li><li><a href='/blog/tags.html'>Tags</a>:
+            <ul class='compact'><li>
+                        &#xbb;&#xa0;<a href='blog/tag/autism.html'>Autism</a></li><li>
+                        &#xbb;&#xa0;<a href='blog/tag/books.html'>Books</a></li><li>
+                        &#xbb;&#xa0;<a href='blog/tag/funny.html'>Funny</a></li><li>
+                        &#xbb;&#xa0;<a href='blog/tag/movies.html'>Movies</a></li><li>
+                        &#xbb;&#xa0;<a href='blog/tag/parenting.html'>Parenting</a></li><li>
+                        &#xbb;&#xa0;<a href='blog/tag/politics.html'>Politics</a></li><li>
+                        &#xbb;&#xa0;<a href='blog/tag/python.html'>Python</a></li><li>
+                        &#xbb;&#xa0;<a href='blog/tag/type.html'>Typography</a></li><li>
+                    &#xbb;&#xa0;<a href='/blog/tags.html'>and 116 more...</a></li></ul></li><li><a href='/blog/archiveall.html'>Archives</a>:
+            <ul class='compact'><li>&#xbb;&#xa0;<a href='/blog/archive2010.html'>2010</a></li><li>&#xbb;&#xa0;<a href='/blog/archive2009.html'>2009</a></li><li>&#xbb;&#xa0;<a href='/blog/archive2008.html'>2008</a></li><li>&#xbb;&#xa0;<a href='/blog/archive2007.html'>2007</a></li><li>&#xbb;&#xa0;<a href='/blog/archive2006.html'>2006</a></li><li>&#xbb;&#xa0;<a href='/blog/archive2005.html'>2005</a></li><li>&#xbb;&#xa0;<a href='/blog/archive2004.html'>2004</a></li><li>&#xbb;&#xa0;<a href='/blog/archive2003.html'>2003</a></li><li>&#xbb;&#xa0;<a href='/blog/archive2002.html'>2002</a></li></ul></li><li><a
+                href='/blog/rss.xml'
+                type='application/rss+xml'
+                style='
+                    padding: 0 .4em;
+                    background: #F60;
+                    color: white;
+                    border: 1px solid;
+                    border-color: #FC9 #630 #330 #F96;
+                    font-weight: bold;
+                    text-decoration: none;
+                    '
+                >RSS</a>
+            (<a href='/site/whatisrss.html'>huh?</a>)</li></ul></div>
+
+</div></td></tr><tr><td id='copyright' colspan='2'><p class='copyright'><a rel='copyright license' href='/site/legal.html'>
+                            &#xa9; Copyright
+                            
+                                2008,
+                            
+                            Ned Batchelder
+                        </a></p></td></tr></table></center></body></html>
