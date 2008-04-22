@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+
+<!--  Version: Multiflex-5.3 / Overview                     -->
+<!--  Date:    January 22, 2008                             -->
+<!--  Design:  www.1234.info                                -->
+<!--  License: Fully open source without restrictions.      -->
+<!--           Please keep footer credits with the words    -->
+<!--           "Design by 1234.info". Thank you!            -->
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta http-equiv="cache-control" content="no-cache" />
+  <meta name="publisher" content="Peter Bulychev" />
+  <meta name="copyright" content="Peter Bulychev" />
+  <meta name="author" content="Designed by www.1234.info / Modified: Peter Bulychev" />
+  <meta name="distribution" content="global" />
+  <meta name="keywords" content="clone,software,duplicate,detection,python,java" />
+  <link rel="stylesheet" type="text/css" media="screen,projection,print" href="./css/mf53_reset.css" />
+  <link rel="stylesheet" type="text/css" media="screen,projection,print" href="./css/mf53_grid.css" />
+  <link rel="stylesheet" type="text/css" media="screen,projection,print" href="./css/mf53_content.css" />
+  <link rel="icon" type="image/x-icon" href="./img/favicon.ico" />
+  <title>Clone Digger | Overview |</title>
+</head>
+
+<!-- Global IE fix to avoid layout crash when single word size wider than column width -->
+<!-- Following line MUST remain as a comment to have the proper effect -->
+<!--[if IE]><style type="text/css"> body {word-wrap: break-word;}</style><![endif]-->
+
+<body>
+  <!-- CONTAINER FOR ENTIRE PAGE -->
+  <div class="container">
+
+    <!-- A. HEADER -->         
+    <div class="corner-top"></div>        
+    <div class="header">
+      <div class="header-top">
+        
+        <!-- A.1 SITENAME -->      
+        <a class="sitelogo" href="index.html" title="Home"></a>
+        <div class="sitename">
+          <h1 >Clone Digger</h1> 
+          <h2>&nbsp;discovers duplicate code in Python and Java</h2>
+        </div>
+    
+        <!-- A.2 BUTTON NAVIGATION -->
+        <div class="navbutton">
+          <ul>
+            <li><a href="index_ru.html"><img src="./img/icon_flag_ru.gif" alt="Flag"></a> </li>
+            <li><a href="index.html" title="English"><img src="./img/icon_flag_us.gif" alt="Flag" /></a></li>
+          </ul>
+        </div>
+
+        <!-- A.3 GLOBAL NAVIGATION -->
+        <div class="navglobal">
+<!--         <ul>
+            <li><a href="#" title="">About</a></li>
+            <li><a href="#" title="">Contact</a></li>								
+            <li><a href="#" title="">Sitemap</a></li>								                        
+            <li><a href="#" title="">Links</a></li>								            
+	</ul>
+	-->
+        </div>        
+      </div>
+    
+      <!-- A.4 BREADCRUMB and SEARCHFORM -->
+      <div class="header-bottom">
+
+        <!-- Breadcrumb -->
+        <ul>
+          <li class="nobullet">You are here:&nbsp;</li>
+          <li><a href="#">Overview</a></li>
+<!--          <li><a href="#">Page</a></li>
+          <li><a href="#">Sub-Page</a></li>
+	  <li><a href="#">Sub-Sub-Page</a></li>          -->
+        </ul>
+
+        <!-- Search form -->                  
+        <div class="searchform">
+          <form action="index.html" method="get">
+            <fieldset>
+              <input name="field" class="field"  value=" Enter search word ..." />
+              <input type="submit" name="button" class="button" value="Search" />
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>      
+    <div class="corner-bottom"></div>    
+    
+    <!-- B. NAVIGATION BAR -->
+    <div class="corner-top"></div>        
+    <div class="navbar">
+	
+      <!-- Navigation item -->
+      <ul>
+        <li><a href="index.html">Overview</a></li>
+      </ul>
+      <!-- Navigation item -->
+      <ul>
+        <li><a href="documentation.html">Documentation</a></li>
+    </ul>
+      <!-- Navigation item -->
+      <ul>
+        <li><a href="examples.html">Clone Examples</a></li>
+      </ul>
+    
+      <!-- Navigation item -->
+      <ul>
+        <li><a href="download.html">Download</a></li>
+    </ul>
+      <!-- Navigation item -->
+      <ul>
+        <li><a href="http://sourceforge.net/projects/clonedigger">SF.net Project Page</a></li>
+    </ul>    
+     <ul>
+        <li><a href="authors.html">Authors</a></li>
+    </ul>    
+      <ul>
+          <li><a href="features_requests.html">Features request</a></li>
+    </ul>    
+    </div>    
+  
+    <!-- C. MAIN SECTION -->      
+    <div class="main">
+
+      <!-- C.1 CONTENT -->
+      <div class="content">
+
+        <!-- CONTENT CELL -->                
+        <div class="content-cell-corner-top"></div>                        
+        <div class="content-cell">
+	    <h2>Overview</h2>
+	    <p>
+Clone Digger aimed to detect similar code in Python and Java programs.
+The synonyms for the term "similar code" are "clone" and "duplicate code".
+</p>
+
+<p>
+<b>What is software clone?</b><br>
+Two continuous fragments of code form clone if they are similar enough.
+</p>
+
+<p>
+<b>Why is it important to detect clones?</b> <br>
+The presence of clones can increase maintenance cost of the code. Detected clones can be refactored or just kept in mind.
+</p>
+
+<p>
+<b>Why should I use Clone Digger to detect clones?</b> <br>
+There are several clone detection tools, they are listed <a href="http://www.cis.uab.edu/tairasr/clones/literature/">here</a>.
+<br>The benefits of Clone Digger are:<ul>
+	<li>To our knowledge Clone Digger is the only one tool that works with Python sources (excluding tools working on the pure text level and the very simple implementaion in <a href="http://www.logilab.org/card/pylintfeatures#similarities-checker">pylint</a>).</li>
+<li>Variety of handled clone types. Strictly speaking, a pair of sequences of statements is considered a clone if one sequence can be obtained from the other by replacing some small subexpressions. Particularly, changes of variable and function names and constants are allowed.</li>
+<li>It's free (provided under the GPL license).</li>
+</ul>
+</p>
+
+	  <p>	   
+	  Clone Digger uses complex algorithm of finding duplicate code, consisting of several phases. The principles can be found in the paper <a href="duplicate_code_detection_bulychev_minea.pdf">"Duplicate code detection using anti-unification"</a>.
+	  </p>
+	<p>
+	<b>How to use Clone Digger?</b><br>
+	All allowed arguments are listed <a href="documentation.html">here</a>.
+	<br>In general, the process of finding clones can be compared to sieving. You should choose middle size of the mesh in order to find something interesting. There are two <i>dimensions</i> of the mesh in Clone Digger: the minimal size of clones (set by --length-threshold parameter) and the maximum distance between sequences, which are reported as clones (set by --distance-threshold).	
+	</p>
+	<p>
+	<i>Happy searching!</i>
+	</p>
+        </div> 
+        <div class="content-cell-corner-bottom"></div>                       
+
+
+      </div>   
+             	<div class="subcontent">
+        <!-- SUBCONTENT CELL -->
+        <div class="subcontent-cell-corner-top"></div>                        
+        <div class="subcontent-cell">
+            <p>
+                <a href="http://sourceforge.net/donate/index.php?group_id=219981"><img src="http://images.sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" alt="Support This Project" /> </a>
+            </p>
+	 </div>
+        <div class="subcontent-cell-corner-bottom"></div>                                                        
+	</div>
+
+
+</div>
+ 
+
+    <!-- D. FOOTER -->      
+    <div class="footer">
+		<p class="credits">Design by <a href="http://1234.info/" title="Designer Homepage">1234.info</a> | Digger image by <a href="http://www.woodentoystore.co.uk">www.woodentoystore.co.uk</a> | Powered by <a href="http://sourceforge.net"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=219981&amp;type=1" width="88" height="31" border="0" alt="SourceForge.net Logo" /></a></p>
+    </div>
+    <div class="corner-bottom"></div>        
+    </div>
+  </div> 
+  
+</body>
+</html>
+
+
+
