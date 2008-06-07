@@ -1,0 +1,347 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head id="ctl00_Head1"><title>
+	QUT | FaST | PLAS
+</title>
+        <script type="text/javascript" src="/javascript/menu.js"></script>
+        <script type="text/javascript" src="/javascript/default.js"></script>
+        <script type="text/javascript" src="/javascript/overlib.js"></script>
+        <script type="text/javascript">
+            <!--
+            numMenus = 1;
+            document.onmouseover = hideAllMenusTest;
+
+            function showMenuTest(menuNumber, eventObj, labelID) {
+                hideAllMenusTest();
+	            if (document.layers) {
+	                img = getImage("myImg" + menuNumber);
+ 	                x = getImagePageLeft(img);
+ 	                y = getImagePageTop(img);
+ 	                menuTop = y + 10; // LAYER TOP POSITION
+	                eval('document.layers["myMenu'+menuNumber+'"].top="'+menuTop+'"');
+ 	                eval('document.layers["myMenu'+menuNumber+'"].left="'+x+'"');
+	            }
+	            eventObj.cancelBubble = true;
+                var menuId = 'myMenu' + menuNumber;
+                if (changeObjectVisibility(menuId, 'visible')) {
+	                return true;
+                } else {
+	                return false;
+                }
+            }
+
+            function hideAllMenusTest() {
+                for (counter = 1; counter <= numMenus; counter++) {
+	                changeObjectVisibility('myMenu' + counter, 'hidden');
+                }
+            }
+            //-->
+        </script>
+        <meta name="robots" content="ALL" /><meta name="copyright" content="Copyright Queensland University of Technology 2005" /><meta http-equiv="bulletin-date" content="26/04/2005" /><meta name="description" content="Programming Languages and Systems." /><meta name="keywords" content="programming,languages,software,compilers" /><link rel="stylesheet" href="../stylesheets/common.css" type="text/css" /><link rel="stylesheet" href="../stylesheets/home_layout.css" type="text/css" /></head>
+    <body onload="MM_preloadImages('images/right_on.gif','images/left_on.gif','images/end2.gif','images/seam.gif')" topmargin="0" leftmargin="0" bgcolor="#ffffff" rightmargin="0" bottommargin="0">
+        <a name="top"></a>
+        <div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div> 
+        <table bgcolor="#003366" border="0" cellpadding="0" cellspacing="0" width="100%">
+            <tbody>
+            <tr>
+                <td valign="top" width="180" style="height: 50px"><a href="http://www.scitech.qut.edu.au/"><img src='/images/new_qut_logo.gif' alt="Faculty of Information Technology" border="0" height="50" width="285"/></a></td>
+                <td align="right" valign="top" width="100%" style="height: 50px"><img src='/images/plasbanner2.gif' alt="Programming Languages and Systems"/></td>
+            </tr>
+            <tr>
+                <td height="1"><img src="images/spacer.gif" alt="" height="1" width="116"/></td>
+                <td height="1"><img src="images/blank.gif" alt="" border="0" height="1" width="1"/><a href="#content" tabindex="1"><img src="images/blank.gif" alt="Skip to Content" border="0" height="1" width="1"/></a></td>
+            </tr>
+            </tbody>
+        </table>
+        <noscript>
+            <a href="Default.aspx">Home</a> | <a href="projects/Default.aspx">Projects</a> | <a href="People.aspx">People</a> | <a href="Contacts.aspx">Contacts</a>
+        </noscript>
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#CCCCCC" height="">
+            <tr>
+                <td>
+                    <a href="http://www.qut.edu.au/" class="topNav"><acronym title="Queensland University of Technology">QUT</acronym> Home</a> 
+                    <a href="http://www.scitech.qut.edu.au/" class="topNav"><acronym title="Faculty of Science and Technology">FaST</acronym> Home</a>  
+                    <a href="Default.aspx" class="topNav"><acronym title="Programming Languages and Systems">PLAS</acronym> Home</a>
+                    <a href="projects/Default.aspx" class="topNav">Projects</a>
+                    <a href="People.aspx" class="topNav">People</a>
+                    <a href="Contacts.aspx" class="topNav">Contacts</a>
+   	            </td>
+            </tr>
+        </table>
+        &nbsp; 
+        <form name="aspnetForm" method="post" action="Default.aspx" id="aspnetForm">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKMTY1NDU2MTA1MmRkWQZuG12v2YI75miFnRECLDtaXpY=" />
+
+            <table border="0" cellpadding="0" cellspacing="0" width="850">
+                <tbody>
+                <tr>
+                    <td valign="top" width="20">&nbsp;</td>
+                    <td valign="top" width="220">&nbsp;</td>
+                    <td valign="top" width="20">&nbsp;</td>
+                    <td align="left" valign="top" width="500">
+                        <a name="content"></a>
+                        
+    <h2>The Gardens Point Scanner Generator (GPLEX)</h2>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="2" valign="top" width="20">&nbsp;</td>
+                    <td height="1" valign="top" width="220"><img src="/images/blank.gif" alt="" height="1" width="1"/></td>
+                    <td rowspan="2" valign="top" width="20">&nbsp;</td>
+                    <td rowspan="2" valign="top" width="500">
+                        <p>
+                            
+    <h2>Overview</h2>
+    <p>
+        GPLEX is a generator for lexical scanners.  It accepts a “LEX-like” input 
+        specification and produces a C# output file.  The scanners that it produces 
+        are thread-safe, with all scanner state held within the scanner instance.
+    </p>
+    <p>
+        GPLEX scanners are designed to be used with parsers constructed with the 
+        Gardens Point Parser Generator (GPPG). Both GPLEX and the scanners which it 
+        produces use the generic types defined in C# 2.0.
+    </p>
+    <p>
+        GPLEX and GPPG are released in open source form under “Free-BSD” style 
+        licence arrangements. The distribution is a zip archive which contains 
+        executable files, source files, documentation and examples.
+    </p>
+    <p><b>Version 1.0 now supports unicode, including surrogate pairs and fallback codepages, and allows multiple input files using yywrap.</b></p>
+    <p><font color="green">UPDATED</font>: 19 March, 2009 - Version 1.1.1</p>
+    <p>
+      <font color="green">UPDATED</font>: 10th November, 2009 - <b>The definitive source for this distribution is now on <a href="http://gplex.codeplex.com/">CodePlex</a>.</b>
+    </p>
+
+    <p>
+        Version 1.1.1 is designed to match version 1.3.5 or later of GPPG.<br />
+    </p>
+    <p>
+        Download the licence from <a href="files/GPLEXcopyright.rtf">here</a><br />
+        Download the documentation from <a href="files/gplex.pdf">here</a><br />
+        Download the changelog from <a href="files/gplex-changelog.pdf">here</a><br />
+        Download unicode-specific documentation from <a href="files/Gplex-Unicode.pdf">here</a><br />
+        Download the input specification from <a href="files/gplex-input.pdf">here</a><br />
+        Download the complete package from <a href="Download.aspx">here</a><br />
+        Download old complete package from <a href="DownloadExperimental.aspx">here</a>
+    </p>
+    <h2>Changes in Version 1.1.1</h2>
+    <p>
+		<ul>
+			<li>Unicode scanners may use any encoding from .NET</li>
+			<li>Scanners are much faster on large input files</li>
+			<li>Scanners are FxCop friendly</li>
+			<li>User-defined character set predicates may be used via a plugin mechanism</li>
+			<li>Some existing applications may require porting because of some renaming of features</li>
+			<li>1.1.1 fixes an error in backtracking in 1.1.0</li>
+		</ul>
+    </p>
+    <h2>Limitations of Version 1.1.1</h2>
+    <p>
+        The following limitations may be important: GPLEX accepts only 
+        fixed-length right context, that is, in “R1/R2” where R1 and R2 
+        are regular expressions at least one of the expressions must 
+        define a language of fixed length strings.
+    </p>
+    <p>
+        See the documentation for a complete summary of the accepted language.
+    </p>
+    <h2>Origins</h2>
+    <p>
+        We gratefully acknowledge the support of Microsoft in the development of 
+        GPLEX.  The application is closely related to the “Managed Package LEX” 
+        application that forms part of the Visual Studio Managed Babel distribution, 
+        although MPLEX provides additional VS-specific interfaces.
+    </p>
+    <p>
+        GPLEX is copyright © 2008 John Gough and Queensland University of Technology.  
+        John may be contacted at <a href="mailto:j.gough@qut.edu.au">j.gough@qut.edu.au</a>
+    </p>
+    <p>&nbsp;</p>
+
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" width="220">
+                    <!-- QUTSidebar v0.1 -->
+<table width="220" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="10" height="1"><img width="10" height="1" src="/images/blank.gif" alt=""/></td>
+<td width="10" height="1"><img width="10" height="1" src="/images/blank.gif" alt=""/></td>
+<td width="10" height="1"><img width="10" height="1" src="/images/blank.gif" alt=""/></td>
+<td width="10" height="1"><img width="10" height="1" src="/images/blank.gif" alt=""/></td>
+<td width="180" height="1"><img width="210" height="1" src="/images/blank.gif" alt=""/></td>
+</tr>
+<tr>
+<td colspan="5" width="220"><a href="/" class="level1menu">PLAS</a>
+</td>
+</tr>
+<!-- Rendering level 0 -->
+<tr><td background="/images/menuline.gif" valign="top" width="10"><img alt="" src="/images/arrow_01.gif" name="arrow20" height="15" width="10"/></td><td colspan="5" width="210"><a href="/projects/" class="level2menu" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('arrow20','','/images/arrow_01_f3.gif',1)">Projects</a></td></tr><!-- Rendering level 1 -->
+<tr>
+<td width=10 background="/images/menuline.gif">&nbsp;</td>
+<td width=10 valign="top"><img alt="" width=10 height=15 border=0 src="/images/blank.gif" name="roll40"></td>
+<td colspan=4 width=200><a href="/activesheets/" class="level3menu" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('roll40','','/images/arrow.gif',1)">ActiveSheets</a></td>
+</tr>
+<!-- Rendering level 1 -->
+<tr>
+<td width=10 background="/images/menuline.gif">&nbsp;</td>
+<td width=10 valign="top"><img alt="" width=10 height=15 border=0 src="/images/blank.gif" name="roll40"></td>
+<td colspan=4 width=200><a href="/bio/" class="level3menu" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('roll40','','/images/arrow.gif',1)">Bioinformatics</a></td>
+</tr>
+<!-- Rendering level 1 -->
+<tr>
+<td width=10 background="/images/menuline.gif">&nbsp;</td>
+<td width=10 valign="top"><img alt="" width=10 height=15 border=0 src="/images/blank.gif" name="roll40"></td>
+<td colspan=4 width=200><a href="/concernmaps/" class="level3menu" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('roll40','','/images/arrow.gif',1)">ConcernMaps</a></td>
+</tr>
+<!-- Rendering level 1 -->
+<tr>
+<td width=10 background="/images/menuline.gif">&nbsp;</td>
+<td width=10 valign="top"><img alt="" width=10 height=15 border=0 src="/images/blank.gif" name="roll40"></td>
+<td colspan=4 width=200><a href="/elp/" class="level3menu" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('roll40','','/images/arrow.gif',1)">ELP</a></td>
+</tr>
+<!-- Rendering level 1 -->
+<tr>
+<td width=10 background="/images/menuline.gif">&nbsp;</td>
+<td width=10 valign="top"><img alt="" width=10 height=15 border=0 src="/images/blank.gif" name="roll40"></td>
+<td colspan=4 width=200><a href="/elpnet/" class="level3menu" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('roll40','','/images/arrow.gif',1)">ELP.NET</a></td>
+</tr>
+<!-- Rendering level 1 -->
+<tr>
+<td width=10 background="/images/menuline.gif">&nbsp;</td>
+<td width=10 valign="top"><img alt="" width=10 height=15 border=0 src="/images/blank.gif" name="roll40"></td>
+<td colspan=4 width=200><a href="/g2/" class="level3menu" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('roll40','','/images/arrow.gif',1)">G2 Cluster Computing</a></td>
+</tr>
+<!-- Rendering level 1 -->
+<tr>
+<td width=10 background="/images/menuline.gif">&nbsp;</td>
+<td width=10 valign="top"><img alt="" width=10 height=15 border=0 src="/images/blank.gif" name="roll40"></td>
+<td colspan=4 width=200><a href="/generics/" class="level3menu" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('roll40','','/images/arrow.gif',1)">Generics</a></td>
+</tr>
+<!-- Rendering level 1 -->
+<tr>
+<td width=10 background="/images/menuline.gif">&nbsp;</td>
+<td width=10 valign="top"><img alt="" width=10 height=15 border=0 src="/images/blank.gif" name="roll40"></td>
+<td colspan=4 width=200><a href="/gpcp/" class="level3menu" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('roll40','','/images/arrow.gif',1)">Gardens Point Component Pascal</a></td>
+</tr>
+<!-- Rendering level 1 -->
+<tr>
+<td width=10 background="/images/menuline.gif">&nbsp;</td>
+<td width=10 valign="top"><img alt="" width=10 height=15 border=0 src="/images/blank.gif" name="roll40"></td>
+<td colspan=4 width=200><a href="/gpflow/" class="level3menu" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('roll40','','/images/arrow.gif',1)">Gardens Point Flow</a></td>
+</tr>
+<!-- Rendering level 1 -->
+<tr>
+<td width=10 background="/images/menuline.gif">&nbsp;</td>
+<td width=10 valign="top"><img alt="" width=10 height=15 border=0 src="/images/blank.gif" name="roll40"></td>
+<td colspan=4 width=200><a href="/gpm/" class="level3menu" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('roll40','','/images/arrow.gif',1)">Gardens Point Modula</a></td>
+</tr>
+<!-- Rendering level 1 -->
+<tr>
+<td width=10 background="/images/menuline.gif">&nbsp;</td>
+<td width=10 valign="top"><img alt="" width=10 height=15 border=0 src="/images/blank.gif" name="roll40"></td>
+<td colspan=4 width=200><a href="/gpsl/" class="level3menu" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('roll40','','/images/arrow.gif',1)">Gardens Point Service Language</a></td>
+</tr>
+<!-- Rendering level 1 -->
+<tr>
+<td width=10 background="/images/menuline.gif">&nbsp;</td>
+<td width=10 valign="top"><img alt="" width=10 height=15 border=0 src="/images/blank.gif" name="roll40"></td>
+<td colspan=4 width=200><a href="/projects/LanguageProcessingTools.aspx" class="level3menu" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('roll40','','/images/arrow.gif',1)">Language Processing Tools</a></td>
+</tr>
+<!-- Rendering level 2 -->
+<tr>
+<td width=10 background="/images/menuline.gif">&nbsp;</td>
+<td width=10>&nbsp;</td>
+<td width=10 valign="top"><img alt="" width=10 height=15 border=0 src="/images/blank.gif" name="roll60"></td>
+<td colspan=3 width=180><a href="/gppg/" class="level4menu" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('roll30','','/images/arrow.gif',1)">Gardens Point Parser Generator</a></td>
+</tr>
+<!-- Rendering level 2 -->
+<tr>
+<td width=10 background="/images/menuline.gif">&nbsp;</td>
+<td width=10>&nbsp;</td>
+<td width=10 valign="top"><img alt="" width=10 height=15 border=0 src="/images/blank.gif" name="roll60"></td>
+<td colspan=3 width=180><a href="/gplex/" class="level4current" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('roll30','','/images/arrow.gif',1)">Gardens Point Scanner Generator</a></td>
+</tr>
+<!-- Rendering level 2 -->
+<tr>
+<td width=10 background="/images/menuline.gif">&nbsp;</td>
+<td width=10>&nbsp;</td>
+<td width=10 valign="top"><img alt="" width=10 height=15 border=0 src="/images/blank.gif" name="roll60"></td>
+<td colspan=3 width=180><a href="/perwapi/" class="level4menu" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('roll30','','/images/arrow.gif',1)">PE File Reader/Writer</a></td>
+</tr>
+<!-- Rendering level 1 -->
+<tr>
+<td width=10 background="/images/menuline.gif">&nbsp;</td>
+<td width=10 valign="top"><img alt="" width=10 height=15 border=0 src="/images/blank.gif" name="roll40"></td>
+<td colspan=4 width=200><a href="/mentok/" class="level3menu" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('roll40','','/images/arrow.gif',1)">Mentok</a></td>
+</tr>
+<!-- Rendering level 1 -->
+<tr>
+<td width=10 background="/images/menuline.gif">&nbsp;</td>
+<td width=10 valign="top"><img alt="" width=10 height=15 border=0 src="/images/blank.gif" name="roll40"></td>
+<td colspan=4 width=200><a href="/metaphor/" class="level3menu" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('roll40','','/images/arrow.gif',1)">Metaphor</a></td>
+</tr>
+<!-- Rendering level 1 -->
+<tr>
+<td width=10 background="/images/menuline.gif">&nbsp;</td>
+<td width=10 valign="top"><img alt="" width=10 height=15 border=0 src="/images/blank.gif" name="roll40"></td>
+<td colspan=4 width=200><a href="/mobilizer/" class="level3menu" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('roll40','','/images/arrow.gif',1)">Mobilizer</a></td>
+</tr>
+<!-- Rendering level 1 -->
+<tr>
+<td width=10 background="/images/menuline.gif">&nbsp;</td>
+<td width=10 valign="top"><img alt="" width=10 height=15 border=0 src="/images/blank.gif" name="roll40"></td>
+<td colspan=4 width=200><a href="/rikwik/" class="level3menu" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('roll40','','/images/arrow.gif',1)">RikWik</a></td>
+</tr>
+<!-- Rendering level 1 -->
+<tr>
+<td width=10 background="/images/menuline.gif">&nbsp;</td>
+<td width=10 valign="top"><img alt="" width=10 height=15 border=0 src="/images/blank.gif" name="roll40"></td>
+<td colspan=4 width=200><a href="/Ruby.NET/" class="level3menu" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('roll40','','/images/arrow.gif',1)">Ruby.NET</a></td>
+</tr>
+<!-- Rendering level 0 -->
+<tr><td background="/images/menuline.gif" valign="top" width="10"><img alt="" src="/images/arrow_01.gif" name="arrow70" height="15" width="10"/></td><td colspan="5" width="210"><a href="/People.aspx" class="level2menu" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('arrow70','','/images/arrow_01_f3.gif',1)">People</a></td></tr><!-- Rendering level 0 -->
+<tr><td background="/images/menuline.gif" valign="top" width="10"><img alt="" src="/images/arrow_01.gif" name="arrow120" height="15" width="10"/></td><td colspan="5" width="210"><a href="/Wiki/" class="level2menu" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('arrow120','','/images/arrow_01_f3.gif',1)">Wiki</a></td></tr><!-- Rendering level 0 -->
+<tr><td background="/images/menuline.gif" valign="top" width="10"><img alt="" src="/images/arrow_01.gif" name="arrow170" height="15" width="10"/></td><td colspan="5" width="210"><a href="/Contacts.aspx" class="level2menu" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('arrow170','','/images/arrow_01_f3.gif',1)">Contacts</a></td></tr></table>
+
+
+                    
+                    </td>
+                    <td valign="top">&nbsp;</td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+        <div class="footer_hr"></div>
+        <div class="footer_left">
+	        <p>
+		        <a href="Default.aspx">Home</a> |
+		        <a href="projects/Default.aspx">Projects</a> |
+		        <a href="People.aspx">People</a> |
+		        <a href="Contacts.aspx">Contacts</a>
+		        <br />
+		        <a href="http://www.qut.edu.au/">QUT Home</a> |
+		        <a href="http://www.scitech.qut.edu.au/">FaST Home</a> |
+		        <a href="http://searching.qut.edu.au/search/search.cgi?collection=allqut&form=simple&client=QUT">QUT search</a> 
+		        <br />
+            </p>
+        </div>
+        <div class="footer_right">
+            <p>
+		        <a href="http://www.qut.edu.au/general/privacy.jsp">Privacy</a> |
+		        <a href="http://www.qut.edu.au/general/copyright.jsp">Copyright</a> |
+		        <a href="http://www.qut.edu.au/general/accessibility.jsp">Accessibility</a>
+		        <br />
+		        Last modified 29-Jan-2007
+		        <br />
+		        <a href="/Contacts.aspx">Contact us</a> |
+		        <a href="mailto:fit.web@qut.edu.au">Feedback</a> |
+		        <a href="http://www.qut.edu.au/general/disclaimer.jsp">Disclaimer</a>
+            </p>
+        </div>
+    </body>
+</html>
