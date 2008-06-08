@@ -1,0 +1,1462 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head profile="http://gmpg.org/xfn/11">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>Photoshop Blend Mode Math</title>
+<script language="javascript" src="/wp-content/themes/black/script.js"></script>
+<meta name="generator" content="WordPress 3.0.3" /> 
+
+<link rel="stylesheet" href="http://www.nathanm.com/wp-content/themes/black/style.css" type="text/css" media="screen" />
+<link rel="alternate" type="application/rss+xml" title="Nathan RSS Feed" href="http://www.nathanm.com/feed/" />
+<link rel="pingback" href="http://www.nathanm.com/xmlrpc.php" />
+
+<link rel="alternate" type="application/rss+xml" title="Nathan &raquo; Photoshop Blend Mode Math Comments Feed" href="http://www.nathanm.com/photoshop-blending-math/feed/" />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.nathanm.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.nathanm.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='index' title='Nathan' href='http://www.nathanm.com/' />
+<link rel='start' title='Welcome' href='http://www.nathanm.com/welcome/' />
+<link rel='prev' title='Supporting Unicode' href='http://www.nathanm.com/supporting-unicode/' />
+<link rel='next' title='Alien vs Predator 2 &#8211; Sequels That Blow' href='http://www.nathanm.com/alien-vs-predator-2-sequels-that-blow/' />
+<meta name="generator" content="WordPress 3.0.3" />
+<link rel='canonical' href='http://www.nathanm.com/photoshop-blending-math/' />
+<link rel='shortlink' href='http://www.nathanm.com/?p=592' />
+
+<link rel="stylesheet" href="<?=$PixGlobal_Path?>pixgallery.css" type="text/css" />
+
+<meta id="syntaxhighlighteranchor" name="syntaxhighlighter-version" content="3.1.1" />
+</head>
+<body background="/wp-content/themes/black/images/background.gif"><center>
+
+<table cellpadding=0 cellspacing=0 border="0" align="center"><tr><td>
+<div id="page">
+<a href="/"><img src="/wp-content/themes/black/images/header.gif" alt="Programming magic, glory, and juices."></a>
+<table cellpadding=0 cellspacing=0 border="0">
+<tr>
+<td valign=top><div id="navbar">
+  <ul id="nav">
+	<li id="home-li"><a href="/"><img border="0" name="home" src="/wp-content/themes/black/images/home.gif"></a>	</li>
+	<li id="programming-li"><a href="/category/programming/"><img border="0" name="programming" src="/wp-content/themes/black/images/programming.gif"></a></li>
+	<li id="television-li"><a href="/category/television/"><img border="0" name="television" src="/wp-content/themes/black/images/television.gif"></a></li>
+<!--	<li id="photos-li"><a href="/wp-content/plugins/falbum/wp/album.php"><img border="0" name="photos" src="/wp-content/themes/black/images/photos.gif"></a></li> -->
+	<li id="about-li"><a href="/about/"><img border="0" name="about" src="/wp-content/themes/black/images/about.gif"></a></li>     
+  </ul><form method="get" id="searchform" action="http://www.nathanm.com/" style="float: right"><table cellpadding=0 cellspacing=0 border=0 id="searchtable"><tr><td><input type="text" value=""  id="s" name="s"  /></td><td><input type="image" src="/wp-content/themes/black/images/find.gif" id="searchsubmit" value="Search"/></td></tr></table></form></div>
+  </td>
+  <td rowspan=2><img src="/wp-content/themes/black/images/shadowright.gif"></td>
+</tr>
+<tr>
+	<td colspan=1 valign=top><img src="/wp-content/themes/black/images/shadow.gif"></td>
+  </tr>
+  </td>
+  </table>
+<br>
+<font size=1><ul class="hiddenul"><li><a href="http://www.nathanm.com/wp-login.php">Log in</a></li><li></li></ul></font>
+	<div id="content" class="widecolumn">
+
+  
+		<!-- <div class="navigation">
+			<div class="alignleft">&laquo; <a href="http://www.nathanm.com/supporting-unicode/" rel="prev">Supporting Unicode</a></div>
+			<div class="alignright"><a href="http://www.nathanm.com/alien-vs-predator-2-sequels-that-blow/" rel="next">Alien vs Predator 2 &#8211; Sequels That Blow</a> &raquo;</div>
+		</div>-->
+
+		<div class="post" id="post-592">
+				<h2><a href="http://www.nathanm.com/photoshop-blending-math/" rel="bookmark" title="Permanent Link to Photoshop Blend Mode Math">Photoshop Blend Mode Math</a></h2>
+				<small><div style="float: left">January 7th, 2008</div></small><small><div id="postinfo" style="float: right"><a href="http://www.nathanm.com/category/programming/c/" title="View all posts in C" rel="category tag">C</a>, <a href="http://www.nathanm.com/category/papers/" title="View all posts in Papers" rel="category tag">Papers</a>, <a href="http://www.nathanm.com/category/programming/" title="View all posts in Programming" rel="category tag">Programming</a> |   <a href="http://www.nathanm.com/photoshop-blending-math/#comments" title="Comment on Photoshop Blend Mode Math">Comments (48)</a> <img src="/wp-content/themes/black/images/comment.gif"></div></small>
+				<br><br>
+			<div class="entry">
+
+				<p>Been working on programmatically blending bitmaps. Below are the macros that I&#8217;ve come up, borrowing the some of the formulas from other websites (see sources at the bottom of this post).</p>
+<p><b>Channel blending</b></p>
+<pre class="brush: cpp; gutter: false; title: ;" title="">
+#define ChannelBlend_Normal(B,L)     ((uint8)(B))
+#define ChannelBlend_Lighten(B,L)    ((uint8)((L &gt; B) ? L:B))
+#define ChannelBlend_Darken(B,L)     ((uint8)((L &gt; B) ? B:L))
+#define ChannelBlend_Multiply(B,L)   ((uint8)((B * L) / 255))
+#define ChannelBlend_Average(B,L)    ((uint8)((B + L) / 2))
+#define ChannelBlend_Add(B,L)        ((uint8)(min(255, (B + L))))
+#define ChannelBlend_Subtract(B,L)   ((uint8)((B + L &lt; 255) ? 0:(B + L - 255)))
+#define ChannelBlend_Difference(B,L) ((uint8)(abs(B - L)))
+#define ChannelBlend_Negation(B,L)   ((uint8)(255 - abs(255 - B - L)))
+#define ChannelBlend_Screen(B,L)     ((uint8)(255 - (((255 - B) * (255 - L)) &gt;&gt; 8)))
+#define ChannelBlend_Exclusion(B,L)  ((uint8)(B + L - 2 * B * L / 255))
+#define ChannelBlend_Overlay(B,L)    ((uint8)((L &lt; 128) ? (2 * B * L / 255):(255 - 2 * (255 - B) * (255 - L) / 255)))
+#define ChannelBlend_SoftLight(B,L)  ((uint8)((L &lt; 128)?(2*((B&gt;&gt;1)+64))*((float)L/255):(255-(2*(255-((B&gt;&gt;1)+64))*(float)(255-L)/255))))
+#define ChannelBlend_HardLight(B,L)  (ChannelBlend_Overlay(L,B))
+#define ChannelBlend_ColorDodge(B,L) ((uint8)((L == 255) ? L:min(255, ((B &lt;&lt; 8 ) / (255 - L)))))
+#define ChannelBlend_ColorBurn(B,L)  ((uint8)((L == 0) ? L:max(0, (255 - ((255 - B) &lt;&lt; 8 ) / L))))
+#define ChannelBlend_LinearDodge(B,L)(ChannelBlend_Add(B,L))
+#define ChannelBlend_LinearBurn(B,L) (ChannelBlend_Subtract(B,L))
+#define ChannelBlend_LinearLight(B,L)((uint8)(L &lt; 128)?ChannelBlend_LinearBurn(B,(2 * L)):ChannelBlend_LinearDodge(B,(2 * (L - 128))))
+#define ChannelBlend_VividLight(B,L) ((uint8)(L &lt; 128)?ChannelBlend_ColorBurn(B,(2 * L)):ChannelBlend_ColorDodge(B,(2 * (L - 128))))
+#define ChannelBlend_PinLight(B,L)   ((uint8)(L &lt; 128)?ChannelBlend_Darken(B,(2 * L)):ChannelBlend_Lighten(B,(2 * (L - 128))))
+#define ChannelBlend_HardMix(B,L)    ((uint8)((ChannelBlend_VividLight(B,L) &lt; 128) ? 0:255))
+#define ChannelBlend_Reflect(B,L)    ((uint8)((L == 255) ? L:min(255, (B * B / (255 - L)))))
+#define ChannelBlend_Glow(B,L)       (ChannelBlend_Reflect(L,B))
+#define ChannelBlend_Phoenix(B,L)    ((uint8)(min(B,L) - max(B,L) + 255))
+#define ChannelBlend_Alpha(B,L,O)    ((uint8)(O * B + (1 - O) * L))
+#define ChannelBlend_AlphaF(B,L,F,O) (ChannelBlend_Alpha(F(B,L),B,O))
+</pre>
+<p>B is the base channel and L is the blend channel.  For example you to blend using Glow you simply call:</p>
+<pre class="brush: cpp; gutter: false; title: ;" title="">
+Target[i] = ChannelBlend_Glow(Base[i], Blend[i]);
+</pre>
+<p>The great thing about these macros is that you can apply the blending effect simply by passing in the channel value, without regard to which channel is red, green, or blue.</p>
+<p>To use the blending along with opacity you can use the following.</p>
+<pre class="brush: cpp; gutter: false; title: ;" title="">
+Target[i] = ChannelBlend_AlphaF(Base[i], Blend[i], Blend_Subtract, 0.5F)
+</pre>
+<p><b>Color blending</b></p>
+<p>To add certain blend modes that utilize hue, luminosity, and saturation we have to construct a per-color interface instead of per-channel interface. For these macros we assume that A and B are buffer pointers and they point to bytes with channels red, green, and blue in that order.</p>
+<pre class="brush: cpp; gutter: false; title: ;" title="">
+#define ColorBlend_Buffer(T,B,L,M)      (T)[0] = ChannelBlend_##M((B)[0], (L)[0]), \
+                                        (T)[1] = ChannelBlend_##M((B)[1], (L)[1]), \
+                                        (T)[2] = ChannelBlend_##M((B)[2], (L)[2])
+#define ColorBlend_Normal(T,B,L)        (ColorBlend_Buffer(T,B,L,Normal))
+#define ColorBlend_Lighten(T,B,L)       (ColorBlend_Buffer(T,B,L,Lighten))
+#define ColorBlend_Darken(T,B,L)        (ColorBlend_Buffer(T,B,L,Darken))
+#define ColorBlend_Multiply(T,B,L)      (ColorBlend_Buffer(T,B,L,Multiply))
+#define ColorBlend_Average(T,B,L)       (ColorBlend_Buffer(T,B,L,Average))
+#define ColorBlend_Add(T,B,L)           (ColorBlend_Buffer(T,B,L,Add))
+#define ColorBlend_Subtract(T,B,L)      (ColorBlend_Buffer(T,B,L,Subtract))
+#define ColorBlend_Difference(T,B,L)    (ColorBlend_Buffer(T,B,L,Difference))
+#define ColorBlend_Negation(T,B,L)      (ColorBlend_Buffer(T,B,L,Negation))
+#define ColorBlend_Screen(T,B,L)        (ColorBlend_Buffer(T,B,L,Screen))
+#define ColorBlend_Exclusion(T,B,L)     (ColorBlend_Buffer(T,B,L,Exclusion))
+#define ColorBlend_Overlay(T,B,L)       (ColorBlend_Buffer(T,B,L,Overlay))
+#define ColorBlend_SoftLight(T,B,L)     (ColorBlend_Buffer(T,B,L,SoftLight))
+#define ColorBlend_HardLight(T,B,L)     (ColorBlend_Buffer(T,B,L,HardLight))
+#define ColorBlend_ColorDodge(T,B,L)    (ColorBlend_Buffer(T,B,L,ColorDodge))
+#define ColorBlend_ColorBurn(T,B,L)     (ColorBlend_Buffer(T,B,L,ColorBurn))
+#define ColorBlend_LinearDodge(T,B,L)   (ColorBlend_Buffer(T,B,L,LinearDodge))
+#define ColorBlend_LinearBurn(T,B,L)    (ColorBlend_Buffer(T,B,L,LinearBurn))
+#define ColorBlend_LinearLight(T,B,L)   (ColorBlend_Buffer(T,B,L,LinearLight))
+#define ColorBlend_VividLight(T,B,L)    (ColorBlend_Buffer(T,B,L,VividLight))
+#define ColorBlend_PinLight(T,B,L)      (ColorBlend_Buffer(T,B,L,PinLight))
+#define ColorBlend_HardMix(T,B,L)       (ColorBlend_Buffer(T,B,L,HardMix))
+#define ColorBlend_Reflect(T,B,L)       (ColorBlend_Buffer(T,B,L,Reflect))
+#define ColorBlend_Glow(T,B,L)          (ColorBlend_Buffer(T,B,L,Glow))
+#define ColorBlend_Phoenix(T,B,L)       (ColorBlend_Buffer(T,B,L,Phoenix))
+#define ColorBlend_Hue(T,B,L)            ColorBlend_Hls(T,B,L,HueL,LuminationB,SaturationB)
+#define ColorBlend_Saturation(T,B,L)     ColorBlend_Hls(T,B,L,HueB,LuminationB,SaturationL)
+#define ColorBlend_Color(T,B,L)          ColorBlend_Hls(T,B,L,HueL,LuminationB,SaturationL)
+#define ColorBlend_Luminosity(T,B,L)     ColorBlend_Hls(T,B,L,HueB,LuminationL,SaturationB)
+
+#define ColorBlend_Hls(T,B,L,O1,O2,O3) {                                        \
+    float64 HueB, LuminationB, SaturationB;                                     \
+    float64 HueL, LuminationL, SaturationL;                                     \
+    Color_RgbToHls((B)[2],(B)[1],(B)[0], &amp;HueB, &amp;LuminationB, &amp;SaturationB);    \
+    Color_RgbToHls((L)[2],(L)[1],(L)[0], &amp;HueL, &amp;LuminationL, &amp;SaturationL);    \
+    Color_HlsToRgb(O1,O2,O3,&amp;(T)[2],&amp;(T)[1],&amp;(T)[0]);                           \
+    }
+
+int32 Color_HueToRgb(float64 M1, float64 M2, float64 Hue, float64 *Channel)
+{
+    if (Hue &lt; 0.0)
+        Hue += 1.0;
+    else if (Hue &gt; 1.0)
+        Hue -= 1.0;
+
+    if ((6.0 * Hue) &lt; 1.0)
+        *Channel = (M1 + (M2 - M1) * Hue * 6.0);
+    else if ((2.0 * Hue) &lt; 1.0)
+        *Channel = (M2);
+    else if ((3.0 * Hue) &lt; 2.0)
+        *Channel = (M1 + (M2 - M1) * ((2.0F / 3.0F) - Hue) * 6.0);
+    else
+        *Channel = (M1);
+
+    return TRUE;
+}
+
+int32 Color_RgbToHls(uint8 Red, uint8 Green, uint8 Blue, float64 *Hue, float64 *Lumination, float64 *Saturation)
+{
+    float64 Delta;
+    float64 Max, Min;
+    float64 Redf, Greenf, Bluef;
+
+    Redf    = ((float64)Red   / 255.0F);
+    Greenf  = ((float64)Green / 255.0F);
+    Bluef   = ((float64)Blue  / 255.0F); 
+
+    Max     = max(max(Redf, Greenf), Bluef);
+    Min     = min(min(Redf, Greenf), Bluef);
+
+    *Hue        = 0;
+    *Lumination = (Max + Min) / 2.0F;
+    *Saturation = 0;
+
+    if (Max == Min)
+        return TRUE;
+
+    Delta = (Max - Min);
+
+    if (*Lumination &lt; 0.5)
+        *Saturation = Delta / (Max + Min);
+    else
+        *Saturation = Delta / (2.0 - Max - Min);
+
+    if (Redf == Max)
+        *Hue = (Greenf - Bluef) / Delta;
+    else if (Greenf == Max)
+        *Hue = 2.0 + (Bluef - Redf) / Delta;
+    else
+        *Hue = 4.0 + (Redf - Greenf) / Delta;
+
+    *Hue /= 6.0; 
+
+    if (*Hue &lt; 0.0)
+        *Hue += 1.0;       
+
+    return TRUE;
+}
+
+int32 Color_HlsToRgb(float64 Hue, float64 Lumination, float64 Saturation, uint8 *Red, uint8 *Green, uint8 *Blue)
+{
+    float64 M1, M2;
+    float64 Redf, Greenf, Bluef;
+
+    if (Saturation == 0)
+        {
+        Redf    = Lumination;
+        Greenf  = Lumination;
+        Bluef   = Lumination;
+        }
+    else
+        {
+        if (Lumination &lt;= 0.5)
+            M2 = Lumination * (1.0 + Saturation);
+        else
+            M2 = Lumination + Saturation - Lumination * Saturation;
+
+        M1 = (2.0 * Lumination - M2);
+
+        Color_HueToRgb(M1, M2, Hue + (1.0F / 3.0F), &amp;Redf);
+        Color_HueToRgb(M1, M2, Hue, &amp;Greenf);
+        Color_HueToRgb(M1, M2, Hue - (1.0F / 3.0F), &amp;Bluef);
+        }
+
+    *Red    = (uint8)(Redf * 255);
+    *Blue   = (uint8)(Bluef * 255);
+    *Green  = (uint8)(Greenf * 255);
+
+    return TRUE;
+}
+</pre>
+<p>So now we can use the hue, saturation, color, and luminosity blend modes along with the rest of the blend modes. To use the ColorBlend macros we just position our bitmap&#8217;s pointers to the next RGB iteration and call,</p>
+<pre class="brush: cpp; gutter: false; title: ;" title="">
+ColorBlend_Glow(Target + iTarget, Base + iBase, Blend + iBlend);
+</pre>
+<p><b>Color macros</b></p>
+<p>Here are some color macros for combining and extracting channels colors out of an integer. One macro that I find a lot of use for is HexToRgb. With it I can copy and paste a hex color value out of the Photoshop color dialog and use the macro to do all the conversion for me to an rgb value.</p>
+<pre class="brush: cpp; gutter: false; title: ;" title="">
+#define COLOR_OPAQUE                (0)
+#define COLOR_TRANSPARENT           (127)
+
+#define RGB_SIZE                    (3)
+#define RGB_BPP                     (24)
+#define RGB_MAXRED                  (255)
+#define RGB_MAXGREEN                (255)
+#define RGB_MAXBLUE                 (255)
+
+#define ARGB_SIZE                   (4)
+#define ARGB_BPP                    (32)
+#define ARGB_MAXALPHA               (127)
+#define ARGB_MAXRED                 (RGB_MAXRED)
+#define ARGB_MAXGREEN               (RGB_MAXGREEN)
+#define ARGB_MAXBLUE                (RGB_MAXBLUE)
+
+/*********************************************************************/
+
+#define Color_GetChannel(c,shift)   ((uint8)((c) &gt;&gt; (shift)))
+#define Color_Reverse(c,bpp)        ((((uint8)(c) &lt;&lt; 24) | ((uint8)((c) &gt;&gt; 8 ) &lt;&lt; 16) | ((uint8)((c) &gt;&gt; 16) &lt;&lt; 8 ) | \
+                                    ((uint8)((c) &gt;&gt; 24))) &gt;&gt; (32 - (bpp)))
+
+#define Rgb_ByteWidth(width)        ((width) * RGB_SIZE)
+#define Rgb_PixelWidth(width)       ((width) / RGB_SIZE)
+
+#define Rgb_GetRed(rgb)             (Color_GetChannel(rgb, 0))
+#define Rgb_GetGreen(rgb)           (Color_GetChannel(rgb, 8))
+#define Rgb_GetBlue(rgb)            (Color_GetChannel(rgb, 16))
+
+#define Rgba_GetRed(rgba)           (Color_GetChannel(rgba, 24))
+#define Rgba_GetGreen(rgba)         (Color_GetChannel(rgba, 16))
+#define Rgba_GetBlue(rgba)          (Color_GetChannel(rgba, 8))
+#define Rgba_GetAlpha(rgba)         (Color_GetChannel(rgba, 0))
+
+#define Argb_GetAlpha(argb)         (Color_GetChannel(argb, 24))
+#define Argb_GetRed(argb)           (Color_GetChannel(argb, 16))
+#define Argb_GetGreen(argb)         (Color_GetChannel(argb, 8))
+#define Argb_GetBlue(argb)          (Color_GetChannel(argb, 0))
+
+#define MakeRgb(r,g,b)              (((uint32)(uint8)(b) &lt;&lt; 16) | ((uint16)(uint8)(g) &lt;&lt; 8 ) | (uint8)(r))
+#define MakeRgba(r,g,b,a)           (((uint32)(uint8)(r) &lt;&lt; 24) | ((uint16)(uint8)(g) &lt;&lt; 16) | ((uint16)(uint8)(b) &lt;&lt; 8 ) | (uint8)(a))
+#define MakeArgb(a,r,g,b)           (((uint32)(uint8)(a) &lt;&lt; 24) | ((uint32)(uint8)(r) &lt;&lt; 16) | ((uint16)(uint8)(g) &lt;&lt; 8 ) | (uint8)(b))
+
+#define HexToRgb(hex)               (MakeRgb(((hex &amp; 0xFF0000) &gt;&gt; 16), ((hex &amp; 0x00FF00) &gt;&gt; 8 ), (hex &amp; 0xFF)))
+</pre>
+<p><b>Image blending</b></p>
+<p>To show you what each effect does I&#8217;ve blended the following two photos.<br />
+<center><br />
+<table width=100% align=center>
+<tr>
+<td><a href="/images/posts/photoshop-blending-math/Base.jpg" rel='PixGallery' title="Photoshop Blending - Base Layer"><img src="/images/cache/Base_325x244.jpg" alt="Photoshop Blending - Base Layer" width=325 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Base Layer<br /><a href="http://cirose.deviantart.com/art/postcard-ish-74031253">Source</a></td>
+<td><a href="/images/posts/photoshop-blending-math/Blend.jpg" rel='PixGallery' title="Photoshop Blending - Upper Layer"><img src="/images/cache/Blend_325x244.jpg" width=325 style="margin-bottom: 4px" alt="Photoshop Blending - Upper Layer" class='PxgGlobalImage'></a><br />Blend Layer<br /><a href="http://peggyjean.deviantart.com/art/NY-74028311">Source</a></td>
+</tr>
+</table>
+<p></center>And the results..<br />
+<center><br />
+<table width=100% align=center>
+<tr>
+<td><a href="/images/posts/photoshop-blending-math/lighten.jpg" rel='PixGallery' title="Photoshop Blending - Lighten"><img src="/images/cache/lighten_250x188.jpg" alt="Photoshop Blending - Lighten" width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_Lighten</td>
+<td><a href="/images/posts/photoshop-blending-math/darken.jpg" rel='PixGallery' title="Photoshop Blending - Darken"><img src="/images/cache/darken_250x188.jpg" alt="Photoshop Blending - Darken"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_Darken</td>
+<td><a href="/images/posts/photoshop-blending-math/multiply.jpg" rel='PixGallery' title="Photoshop Blending - Multiply"><img src="/images/cache/multiply_250x188.jpg" alt="Photoshop Blending - Multiply"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_Multiply</td>
+</tr>
+<tr>
+<td><a href="/images/posts/photoshop-blending-math/average.jpg" rel='PixGallery' title="Photoshop Blending - Average"><img src="/images/cache/average_250x188.jpg" alt="Photoshop Blending - Average"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_Average</td>
+<td><a href="/images/posts/photoshop-blending-math/add.jpg" rel='PixGallery' title="Photoshop Blending - Add"><img src="/images/cache/add_250x188.jpg" alt="Photoshop Blending - Add"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_Add</td>
+<td><a href="/images/posts/photoshop-blending-math/subtract.jpg" rel='PixGallery' title="Photoshop Blending - Subtract"><img src="/images/cache/subtract_250x188.jpg" alt="Photoshop Blending - Subtract"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_Subtract</td>
+</tr>
+<tr>
+<td><a href="/images/posts/photoshop-blending-math/difference.jpg" rel='PixGallery' title="Photoshop Blending - Difference"><img src="/images/cache/difference_250x188.jpg" alt="Photoshop Blending - Difference"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_Difference</td>
+<td><a href="/images/posts/photoshop-blending-math/negation.jpg" rel='PixGallery' title="Photoshop Blending - Negation"><img src="/images/cache/negation_250x188.jpg" alt="Photoshop Blending - Negation"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_Negation</td>
+<td><a href="/images/posts/photoshop-blending-math/screen.jpg" rel='PixGallery' title="Photoshop Blending - Screen"><img src="/images/cache/screen_250x188.jpg" alt="Photoshop Blending - Screen"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_Screen</td>
+</tr>
+<tr>
+<td><a href="/images/posts/photoshop-blending-math/exclusion.jpg" rel='PixGallery' title="Photoshop Blending - Exclusion"><img src="/images/cache/exclusion_250x188.jpg" alt="Photoshop Blending - Exclusion"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_Exclusion</td>
+<td><a href="/images/posts/photoshop-blending-math/overlay.jpg" rel='PixGallery' title="Photoshop Blending - Overlay"><img src="/images/cache/overlay_250x188.jpg" alt="Photoshop Blending - Overlay"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_Overlay</td>
+<td><a href="/images/posts/photoshop-blending-math/softlight.jpg" rel='PixGallery' title="Photoshop Blending - Softlight"><img src="/images/cache/softlight_250x188.jpg" alt="Photoshop Blending - Softlight"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_SoftLight</td>
+</tr>
+<tr>
+<td><a href="/images/posts/photoshop-blending-math/hardlight.jpg" rel='PixGallery' title="Photoshop Blending - Hardlight"><img src="/images/cache/hardlight_250x188.jpg" alt="Photoshop Blending - Hardlight"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_HardLight</td>
+<td><a href="/images/posts/photoshop-blending-math/colordodge.jpg" rel='PixGallery' title="Photoshop Blending - ColorDodge"><img src="/images/cache/colordodge_250x188.jpg" alt="Photoshop Blending - ColorDodge"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_ColorDodge</td>
+<td><a href="/images/posts/photoshop-blending-math/colorburn.jpg" rel='PixGallery' title="Photoshop Blending - ColorBurn"><img src="/images/cache/colorburn_250x188.jpg" alt="Photoshop Blending - ColorBurn"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_ColorBurn</td>
+</tr>
+<tr>
+<td><a href="/images/posts/photoshop-blending-math/lineardodge.jpg" rel='PixGallery' title="Photoshop Blending - LinearDodge"><img src="/images/cache/lineardodge_250x188.jpg" alt="Photoshop Blending - LinearDodge"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_LinearDodge</td>
+<td><a href="/images/posts/photoshop-blending-math/linearburn.jpg" rel='PixGallery' title="Photoshop Blending - LinearBurn"><img src="/images/cache/linearburn_250x188.jpg" alt="Photoshop Blending - LinearBurn"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_LinearBurn</td>
+<td><a href="/images/posts/photoshop-blending-math/linearlight.jpg" rel='PixGallery' title="Photoshop Blending - LinearLight"><img src="/images/cache/linearlight_250x188.jpg" alt="Photoshop Blending - LinearLight"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_LinearLight</td>
+</tr>
+<tr>
+<td><a href="/images/posts/photoshop-blending-math/vividlight.jpg" rel='PixGallery' title="Photoshop Blending - VividLight"><img src="/images/cache/vividlight_250x188.jpg" alt="Photoshop Blending - VividLight"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_VividLight</td>
+<td><a href="/images/posts/photoshop-blending-math/pinlight.jpg" rel='PixGallery' title="Photoshop Blending - PinLight"><img src="/images/cache/pinlight_250x188.jpg" alt="Photoshop Blending - PinLight"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_PinLight</td>
+<td><a href="/images/posts/photoshop-blending-math/hardmix.jpg" rel='PixGallery' title="Photoshop Blending - HardMix"><img src="/images/cache/hardmix_250x188.jpg" alt="Photoshop Blending - HardMix"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_HardMix</td>
+</tr>
+<tr>
+<td><a href="/images/posts/photoshop-blending-math/reflect.jpg" rel='PixGallery' title="Photoshop Blending - Reflect"><img src="/images/cache/reflect_250x188.jpg" alt="Photoshop Blending - Reflect"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_Reflect</td>
+<td><a href="/images/posts/photoshop-blending-math/glow.jpg" rel='PixGallery' title="Photoshop Blending - Glow"><img src="/images/cache/glow_250x188.jpg" alt="Photoshop Blending - Glow"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_Glow</td>
+<td><a href="/images/posts/photoshop-blending-math/phoenix.jpg" rel='PixGallery' title="Photoshop Blending - Phoenix"><img src="/images/cache/phoenix_250x188.jpg" alt="Photoshop Blending - Phoenix"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_Phoenix</td>
+</tr>
+<tr>
+<td><a href="/images/posts/photoshop-blending-math/hue.jpg" rel='PixGallery' title="Photoshop Blending - Hue"><img src="/images/cache/hue_250x188.jpg" alt="Photoshop Blending - Hue"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_Hue</td>
+<td><a href="/images/posts/photoshop-blending-math/saturation.jpg" rel='PixGallery' title="Photoshop Blending - Saturation"><img src="/images/cache/saturation_250x188.jpg" alt="Photoshop Blending - Saturation"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_Saturation</td>
+<td><a href="/images/posts/photoshop-blending-math/color.jpg" rel='PixGallery' title="Photoshop Blending - Color"><img src="/images/cache/color_250x188.jpg" alt="Photoshop Blending - Color"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_Color</td>
+</tr>
+<tr>
+<td><a href="/images/posts/photoshop-blending-math/luminosity.jpg" rel='PixGallery' title="Photoshop Blending - Luminosity"><img src="/images/cache/luminosity_250x188.jpg" alt="Photoshop Blending - Luminosity"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_Luminosity</td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<p></center>And the gradients..<br />
+<center><br />
+<table width=100% align=center>
+<tr>
+<td><a href="/images/posts/photoshop-blending-math/gradientBase.jpg" rel='PixGallery' title="Photoshop Gradient Blending - Base Layer"><img src="/images/cache/gradientBase_325x244.jpg" width=325 style="margin-bottom: 4px" alt="Photoshop Gradient Blending - Base Layer" class='PxgGlobalImage'></a><br />Base Layer</td>
+<td><a href="/images/posts/photoshop-blending-math/gradientBlend.jpg" rel='PixGallery' title="Photoshop Gradient Blending - Blend Layer"><img src="/images/cache/gradientBlend_325x244.jpg" alt="Photoshop Gradient Blending - Blend Layer" width=325 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend Layer</td>
+</tr>
+</table>
+<p></center>And the results..<br />
+<center><br />
+<table width=100% align=center>
+<tr>
+<td><a href="/images/posts/photoshop-blending-math/gradientlighten.jpg" rel='PixGallery' title="Photoshop Gradient Blending - Lighten"><img src="/images/cache/gradientlighten_250x188.jpg" alt="Photoshop Gradient Blending - Lighten" width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_Lighten</td>
+<td><a href="/images/posts/photoshop-blending-math/gradientdarken.jpg" rel='PixGallery' title="Photoshop Gradient Blending - Darken"><img src="/images/cache/gradientdarken_250x188.jpg" alt="Photoshop Gradient Blending - Darken"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_Darken</td>
+<td><a href="/images/posts/photoshop-blending-math/gradientmultiply.jpg" rel='PixGallery' title="Photoshop Gradient Blending - Multiply"><img src="/images/cache/gradientmultiply_250x188.jpg" alt="Photoshop Gradient Blending - Multiply"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_Multiply</td>
+</tr>
+<tr>
+<td><a href="/images/posts/photoshop-blending-math/gradientaverage.jpg" rel='PixGallery' title="Photoshop Gradient Blending - Average"><img src="/images/cache/gradientaverage_250x188.jpg" alt="Photoshop Gradient Blending - Average"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_Average</td>
+<td><a href="/images/posts/photoshop-blending-math/gradientadd.jpg" rel='PixGallery' title="Photoshop Gradient Blending - Add"><img src="/images/cache/gradientadd_250x188.jpg" alt="Photoshop Gradient Blending - Add"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_Add</td>
+<td><a href="/images/posts/photoshop-blending-math/gradientsubtract.jpg" rel='PixGallery' title="Photoshop Gradient Blending - Subtract"><img src="/images/cache/gradientsubtract_250x188.jpg" alt="Photoshop Gradient Blending - Subtract"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_Subtract</td>
+</tr>
+<tr>
+<td><a href="/images/posts/photoshop-blending-math/gradientdifference.jpg" rel='PixGallery' title="Photoshop Gradient Blending - Difference"><img src="/images/cache/gradientdifference_250x188.jpg" alt="Photoshop Gradient Blending - Difference"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_Difference</td>
+<td><a href="/images/posts/photoshop-blending-math/gradientnegation.jpg" rel='PixGallery' title="Photoshop Gradient Blending - Negation"><img src="/images/cache/gradientnegation_250x188.jpg" alt="Photoshop Gradient Blending - Negation"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_Negation</td>
+<td><a href="/images/posts/photoshop-blending-math/gradientscreen.jpg" rel='PixGallery' title="Photoshop Gradient Blending - Screen"><img src="/images/cache/gradientscreen_250x188.jpg" alt="Photoshop Gradient Blending - Screen"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_Screen</td>
+</tr>
+<tr>
+<td><a href="/images/posts/photoshop-blending-math/gradientexclusion.jpg" rel='PixGallery' title="Photoshop Gradient Blending - Exclusion"><img src="/images/cache/gradientexclusion_250x188.jpg" alt="Photoshop Gradient Blending - Exclusion"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_Exclusion</td>
+<td><a href="/images/posts/photoshop-blending-math/gradientoverlay.jpg" rel='PixGallery' title="Photoshop Gradient Blending - Overlay"><img src="/images/cache/gradientoverlay_250x188.jpg" alt="Photoshop Gradient Blending - Overlay"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_Overlay</td>
+<td><a href="/images/posts/photoshop-blending-math/gradientsoftlight.jpg" rel='PixGallery' title="Photoshop Gradient Blending - Softlight"><img src="/images/cache/gradientsoftlight_250x188.jpg" alt="Photoshop Gradient Blending - Softlight"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_SoftLight</td>
+</tr>
+<tr>
+<td><a href="/images/posts/photoshop-blending-math/gradienthardlight.jpg" rel='PixGallery' title="Photoshop Gradient Blending - Hardlight"><img src="/images/cache/gradienthardlight_250x188.jpg" alt="Photoshop Gradient Blending - Hardlight"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_HardLight</td>
+<td><a href="/images/posts/photoshop-blending-math/gradientcolordodge.jpg" rel='PixGallery' title="Photoshop Gradient Blending - ColorDodge"><img src="/images/cache/gradientcolordodge_250x188.jpg" alt="Photoshop Gradient Blending - ColorDodge"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_ColorDodge</td>
+<td><a href="/images/posts/photoshop-blending-math/gradientcolorburn.jpg" rel='PixGallery' title="Photoshop Gradient Blending - ColorBurn"><img src="/images/cache/gradientcolorburn_250x188.jpg" alt="Photoshop Gradient Blending - ColorBurn"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_ColorBurn</td>
+</tr>
+<tr>
+<td><a href="/images/posts/photoshop-blending-math/gradientlineardodge.jpg" rel='PixGallery' title="Photoshop Gradient Blending - LinearDodge"><img src="/images/cache/gradientlineardodge_250x188.jpg" alt="Photoshop Gradient Blending - LinearDodge"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_LinearDodge</td>
+<td><a href="/images/posts/photoshop-blending-math/gradientlinearburn.jpg" rel='PixGallery' title="Photoshop Gradient Blending - LinearBurn"><img src="/images/cache/gradientlinearburn_250x188.jpg" alt="Photoshop Gradient Blending - LinearBurn"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_LinearBurn</td>
+<td><a href="/images/posts/photoshop-blending-math/gradientlinearlight.jpg" rel='PixGallery' title="Photoshop Gradient Blending - LinearLight"><img src="/images/cache/gradientlinearlight_250x188.jpg" alt="Photoshop Gradient Blending - LinearLight"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_LinearLight</td>
+</tr>
+<tr>
+<td><a href="/images/posts/photoshop-blending-math/gradientvividlight.jpg" rel='PixGallery' title="Photoshop Gradient Blending - VividLight"><img src="/images/cache/gradientvividlight_250x188.jpg" alt="Photoshop Gradient Blending - VividLight"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_VividLight</td>
+<td><a href="/images/posts/photoshop-blending-math/gradientpinlight.jpg" rel='PixGallery' title="Photoshop Gradient Blending - PinLight"><img src="/images/cache/gradientpinlight_250x188.jpg" alt="Photoshop Gradient Blending - PinLight"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_PinLight</td>
+<td><a href="/images/posts/photoshop-blending-math/gradienthardmix.jpg" rel='PixGallery' title="Photoshop Gradient Blending - HardMix"><img src="/images/cache/gradienthardmix_250x188.jpg" alt="Photoshop Gradient Blending - HardMix"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_HardMix</td>
+</tr>
+<tr>
+<td><a href="/images/posts/photoshop-blending-math/gradientreflect.jpg" rel='PixGallery' title="Photoshop Gradient Blending - Reflect"><img src="/images/cache/gradientreflect_250x188.jpg" alt="Photoshop Gradient Blending - Reflect"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_Reflect</td>
+<td><a href="/images/posts/photoshop-blending-math/gradientglow.jpg" rel='PixGallery' title="Photoshop Gradient Blending - Glow"><img src="/images/cache/gradientglow_250x188.jpg" alt="Photoshop Gradient Blending - Glow"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_Glow</td>
+<td><a href="/images/posts/photoshop-blending-math/gradientphoenix.jpg" rel='PixGallery' title="Photoshop Gradient Blending - Phoenix"><img src="/images/cache/gradientphoenix_250x188.jpg" alt="Photoshop Gradient Blending - Phoenix"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_Phoenix</td>
+</tr>
+<tr>
+<td><a href="/images/posts/photoshop-blending-math/gradienthue.jpg" rel='PixGallery' title="Photoshop Gradient Blending - Hue"><img src="/images/cache/gradienthue_250x188.jpg" alt="Photoshop Gradient Blending - Hue"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_Hue</td>
+<td><a href="/images/posts/photoshop-blending-math/gradientsaturation.jpg" rel='PixGallery' title="Photoshop Gradient Blending - Saturation"><img src="/images/cache/gradientsaturation_250x188.jpg" alt="Photoshop Gradient Blending - Saturation"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_Saturation</td>
+<td><a href="/images/posts/photoshop-blending-math/gradientcolor.jpg" rel='PixGallery' title="Photoshop Gradient Blending - Color"><img src="/images/cache/gradientcolor_250x188.jpg" alt="Photoshop Gradient Blending - Color"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_Color</td>
+</tr>
+<tr>
+<td><a href="/images/posts/photoshop-blending-math/gradientluminosity.jpg" rel='PixGallery' title="Photoshop Gradient Blending - Luminosity"><img src="/images/cache/gradientluminosity_250x188.jpg" alt="Photoshop Gradient Blending - Luminosity"  width=250 style="margin-bottom: 4px" class='PxgGlobalImage'></a><br />Blend_Luminosity</td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<p></center></p>
+<p><b>More blending resources</b></p>
+<p><a href="http://www.pegtop.net/delphi/articles/blendmodes/">PegTop blend modes</a><br />
+<a href="http://forensicphotoshop.blogspot.com/2007/09/blending-mode-math.html">Forensic Photoshop</a><br />
+<a href="http://dunnbypaul.net/blends/">Insight into Photoshop 7.0 Blending Modes</a><br />
+<a href="http://www.simplefilter.de/en/grundlagen/mixmods.html">SF &#8211; Basics &#8211; Blending Modes</a><br />
+<a href="http://dev.processing.org/bugs/show_bug.cgi?id=132">finish the blend() modes</a><br />
+<a href="http://blog.mouaif.org/2009/01/05/photoshop-math-with-glsl-shaders/">Romz blog</a><br />
+<a href="http://doxygen.reactos.org/d3/ddc/cardcolor_8cpp.html#89009af84cb267f8bd56977a4de4a4e9">ReactOS RGB/HLS conversion fucntions</a></p>
+
+				
+				<p class="postmetadata alt">
+					<small>This entry was posted on Monday, January 7th, 2008 at 11:56 pm and is filed under <a href="http://www.nathanm.com/category/programming/c/" title="View all posts in C" rel="category tag">C</a>, <a href="http://www.nathanm.com/category/papers/" title="View all posts in Papers" rel="category tag">Papers</a>, <a href="http://www.nathanm.com/category/programming/" title="View all posts in Programming" rel="category tag">Programming</a>. You can follow any responses to this entry through the <a href='http://www.nathanm.com/photoshop-blending-math/feed/'>RSS 2.0</a> feed. 
+
+													You can <a href="#respond">leave a response</a>, or <a href="http://www.nathanm.com/photoshop-blending-math/trackback/" rel="trackback">trackback</a> from your own site.
+
+						
+					</small>
+				</p>
+
+			</div>
+		</div>
+
+	
+<!-- You can start editing here. -->
+
+	<div id="comments">48 Responses to &#8220;Photoshop Blend Mode Math&#8221;</div> 
+
+	<ol class="commentlist">
+
+	
+		<li id="comment-59672">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=d41d8cd98f00b204e9800998ecf8427e&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            Pingback:<br><a href='http://www.nathanm.com/photoshop-blend-modes/' rel='external nofollow' class='url'>Photoshop Blend Modes</a>                                   <br>
+            <span class="commentmetadata"><a href="#comment-59672" title="">January 24th, 2008 at 7:43 pm</a> </span>
+            
+            </td></tr></table>
+           </li>
+
+	
+	
+		<li id="comment-66384">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=b5af8969494730ca28753376a5f85289&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            <a href='http://forensicphotoshop.blogspot.com' rel='external nofollow' class='url'>Jim Hoerricks</a>                                   <br>
+            <span class="commentmetadata"><a href="#comment-66384" title="">February 26th, 2008 at 3:04 pm</a> </span>
+            
+            </td></tr></table>
+                       <table width=100%><tr>
+            <tr><td width="68" align=center valign=top>&nbsp;</td><td>
+                        <p>Nice use of the math for some interesting effects. Glad to be of help.</p>
+<p>Jim Hoerricks<br />
+Author &#8211; Forensic Photoshop blog</p>
+            </td></tr></table></li>
+
+	
+	
+		<li id="comment-70531">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=d41d8cd98f00b204e9800998ecf8427e&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            Pingback:<br><a href='http://math-art.net/2008/04/14/heart-broken/' rel='external nofollow' class='url'>Math Art | Heart Broken</a>                                   <br>
+            <span class="commentmetadata"><a href="#comment-70531" title="">April 13th, 2008 at 3:34 pm</a> </span>
+            
+            </td></tr></table>
+           </li>
+
+	
+	
+		<li id="comment-73659">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=d41d8cd98f00b204e9800998ecf8427e&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            Pingback:<br><a href='http://mouaif.wordpress.com/2008/06/11/crossprocessing-shader/' rel='external nofollow' class='url'>CrossProcessing shader &laquo; Romz blog</a>                                   <br>
+            <span class="commentmetadata"><a href="#comment-73659" title="">June 11th, 2008 at 3:17 am</a> </span>
+            
+            </td></tr></table>
+           </li>
+
+	
+	
+		<li id="comment-74050">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=2950b557cce92ec689127f802a34414d&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            <a href='http://www.brad.stiritz.net' rel='external nofollow' class='url'>Brad Stiritz</a>                                   <br>
+            <span class="commentmetadata"><a href="#comment-74050" title="">June 16th, 2008 at 5:52 pm</a> </span>
+            
+            </td></tr></table>
+                       <table width=100%><tr>
+            <tr><td width="68" align=center valign=top>&nbsp;</td><td>
+                        <p>Nathan, this is a really great resource, thanks so much for publishing it <img src='http://www.nathanm.com/wp-includes/images/smilies/icon_smile.gif' alt=':)' class='wp-smiley' /> </p>
+            </td></tr></table></li>
+
+	
+	
+		<li id="comment-74080">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=cc307881f13b04b0b60022a8cb55400d&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            <a href='http://www.nathanm.com/' rel='external nofollow' class='url'>Nathan</a>                                   <br>
+            <span class="commentmetadata"><a href="#comment-74080" title="">June 17th, 2008 at 1:09 am</a> </span>
+            
+            </td></tr></table>
+                       <table width=100%><tr>
+            <tr><td width="68" align=center valign=top>&nbsp;</td><td>
+                        <p>No problemo. I couldn&#8217;t find any site out there that had EVERY photoshop blend mode. So I worked on getting the macros right and then put them all up here for everyone to use.</p>
+            </td></tr></table></li>
+
+	
+	
+		<li id="comment-82160">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=e7d988e0b5ad69bb0222ac8d7a21de87&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            purshoth                                   <br>
+            <span class="commentmetadata"><a href="#comment-82160" title="">September 16th, 2008 at 11:18 pm</a> </span>
+            
+            </td></tr></table>
+                       <table width=100%><tr>
+            <tr><td width="68" align=center valign=top>&nbsp;</td><td>
+                        <p>nice</p>
+            </td></tr></table></li>
+
+	
+	
+		<li id="comment-82788">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=4521119aeff85fb8eae7dac7bb75109e&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            nagacharan                                   <br>
+            <span class="commentmetadata"><a href="#comment-82788" title="">September 23rd, 2008 at 5:29 am</a> </span>
+            
+            </td></tr></table>
+                       <table width=100%><tr>
+            <tr><td width="68" align=center valign=top>&nbsp;</td><td>
+                        <p>thx for the links</p>
+            </td></tr></table></li>
+
+	
+	
+		<li id="comment-83123">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=b72a9a227e1576cc0996e5fb090a0683&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            <a href='http://del.icio.us/drwitt' rel='external nofollow' class='url'>drwitt</a>                                   <br>
+            <span class="commentmetadata"><a href="#comment-83123" title="">September 26th, 2008 at 1:09 am</a> </span>
+            
+            </td></tr></table>
+                       <table width=100%><tr>
+            <tr><td width="68" align=center valign=top>&nbsp;</td><td>
+                        <p>Thankyou very much, Nathan, this exactly answers what I&#8217;ve been wondering about these blend-modes&#8230; Great <img src='http://www.nathanm.com/wp-includes/images/smilies/icon_smile.gif' alt=':-)' class='wp-smiley' /> </p>
+            </td></tr></table></li>
+
+	
+	
+		<li id="comment-83675">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=d41d8cd98f00b204e9800998ecf8427e&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            Pingback:<br><a href='http://www.quadratura.info/2008/09/patchbox-r284/' rel='external nofollow' class='url'>PatchBox r284 | Quadratura</a>                                   <br>
+            <span class="commentmetadata"><a href="#comment-83675" title="">September 30th, 2008 at 7:07 am</a> </span>
+            
+            </td></tr></table>
+           </li>
+
+	
+	
+		<li id="comment-87395">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=d41d8cd98f00b204e9800998ecf8427e&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            Pingback:<br><a href='http://isaacbowen.com/blog/871/impress-your-friends-perform-an-isaac-edit-at-parties' rel='external nofollow' class='url'>impress your friends: perform an isaac-edit at parties! &laquo; isaac bowen</a>                                   <br>
+            <span class="commentmetadata"><a href="#comment-87395" title="">January 1st, 2009 at 11:23 am</a> </span>
+            
+            </td></tr></table>
+           </li>
+
+	
+	
+		<li id="comment-87659">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=d3e09c632d2de8c7e16d396d7b568778&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            Bart                                   <br>
+            <span class="commentmetadata"><a href="#comment-87659" title="">January 2nd, 2009 at 12:17 pm</a> </span>
+            
+            </td></tr></table>
+                       <table width=100%><tr>
+            <tr><td width="68" align=center valign=top>&nbsp;</td><td>
+                        <p>It seems you made a small error in the definition of Blend_Add(A,B): &#8220;max&#8221; should be &#8220;min&#8221;, so it reads &#8220;((uint8)(min(255, (A + B))))&#8221;. Great list by the way!</p>
+            </td></tr></table></li>
+
+	
+	
+		<li id="comment-87838">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=cc307881f13b04b0b60022a8cb55400d&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            <a href='http://www.nathanm.com/' rel='external nofollow' class='url'>Nathan</a>                                   <br>
+            <span class="commentmetadata"><a href="#comment-87838" title="">January 2nd, 2009 at 5:53 pm</a> </span>
+            
+            </td></tr></table>
+                       <table width=100%><tr>
+            <tr><td width="68" align=center valign=top>&nbsp;</td><td>
+                        <p>Thanks I fixed that. I made changes to it so it used min and max where needed and I guess that one got screwed up.</p>
+            </td></tr></table></li>
+
+	
+	
+		<li id="comment-89380">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=d41d8cd98f00b204e9800998ecf8427e&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            Pingback:<br><a href='http://mouaif.wordpress.com/2009/01/05/photoshop-math-with-glsl-shaders/' rel='external nofollow' class='url'>Photoshop math with GLSL shaders &laquo; Romz blog</a>                                   <br>
+            <span class="commentmetadata"><a href="#comment-89380" title="">January 5th, 2009 at 3:41 pm</a> </span>
+            
+            </td></tr></table>
+           </li>
+
+	
+	
+		<li id="comment-89469">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=cc307881f13b04b0b60022a8cb55400d&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            <a href='http://www.nathanm.com/' rel='external nofollow' class='url'>Nathan</a>                                   <br>
+            <span class="commentmetadata"><a href="#comment-89469" title="">January 5th, 2009 at 8:42 pm</a> </span>
+            
+            </td></tr></table>
+                       <table width=100%><tr>
+            <tr><td width="68" align=center valign=top>&nbsp;</td><td>
+                        <p>If anybody else has fixes or other blending code they would like to contribute, just add a comment with the code or fix.</p>
+            </td></tr></table></li>
+
+	
+	
+		<li id="comment-91035">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=19a6829daad771b326b97fdb34b86fce&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            <a href='http://blog.mouaif.org' rel='external nofollow' class='url'>Romz</a>                                   <br>
+            <span class="commentmetadata"><a href="#comment-91035" title="">January 9th, 2009 at 3:08 am</a> </span>
+            
+            </td></tr></table>
+                       <table width=100%><tr>
+            <tr><td width="68" align=center valign=top>&nbsp;</td><td>
+                        <p>Hey Nathan, you can check on my blog: <a href="http://blog.mouaif.org" rel="nofollow">http://blog.mouaif.org</a>, I&#8217;ve posted GLSL and now also HLSL code of all the Photoshop blending modes based on your code + other blending modes (like hue, saturation, luminosity, color) + other stuff. Thanks!</p>
+            </td></tr></table></li>
+
+	
+	
+		<li id="comment-91113">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=cc307881f13b04b0b60022a8cb55400d&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            <a href='http://www.nathanm.com/' rel='external nofollow' class='url'>Nathan</a>                                   <br>
+            <span class="commentmetadata"><a href="#comment-91113" title="">January 9th, 2009 at 9:41 am</a> </span>
+            
+            </td></tr></table>
+                       <table width=100%><tr>
+            <tr><td width="68" align=center valign=top>&nbsp;</td><td>
+                        <p>@Romz: Cool! Nice blog. I noticed in your code that you said you fixed HardMix, what was wrong with it? I updated my definition of HardMix so that it is the same as yours. I&#8217;ve also updated the my blog post with the per-color code and copied your blend definitions for hue, luminosity, saturation, and color. I like how you used vectors in your code. Very nice.</p>
+            </td></tr></table></li>
+
+	
+	
+		<li id="comment-92158">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=19a6829daad771b326b97fdb34b86fce&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            <a href='http://blog.mouaif.org' rel='external nofollow' class='url'>Romz</a>                                   <br>
+            <span class="commentmetadata"><a href="#comment-92158" title="">January 11th, 2009 at 3:59 pm</a> </span>
+            
+            </td></tr></table>
+                       <table width=100%><tr>
+            <tr><td width="68" align=center valign=top>&nbsp;</td><td>
+                        <p>Thank you for the link <img src='http://www.nathanm.com/wp-includes/images/smilies/icon_smile.gif' alt=':)' class='wp-smiley' /><br />
+Concerning hard mix I don&#8217;t remember where I saw the exact definition but after a quick search I found the same description (with less details):</p>
+<p>Hard Mix: This blend mode is a combination of the Vivid Light mode and a posterization effect (i.e., where the image appears more pixelated). It will posterize the bottom layer pixels through the blend layer and recolor the image using the specifications of the Vivid Light mode. A higher Fill Opacity on the top layer will increase the posterization effect on the image. <a href="http://www.uwec.edu/help/PhotoshopCS2/blendmodes.htm" rel="nofollow">http://www.uwec.edu/help/PhotoshopCS2/blendmodes.htm</a></p>
+            </td></tr></table></li>
+
+	
+	
+		<li id="comment-103994">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=d41d8cd98f00b204e9800998ecf8427e&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            Pingback:<br><a href='http://www.francois-tarlier.com/blog/?p=261' rel='external nofollow' class='url'>Photoshop Blend Mode Math &laquo; François Tarlier&#8217;s Blog</a>                                   <br>
+            <span class="commentmetadata"><a href="#comment-103994" title="">March 19th, 2009 at 4:27 pm</a> </span>
+            
+            </td></tr></table>
+           </li>
+
+	
+	
+		<li id="comment-115129">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=16c5c02bb372b6d4fccc9c6a2f84dd2e&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            <a href='http://www.digitalartform.com' rel='external nofollow' class='url'>Joseph Francis</a>                                   <br>
+            <span class="commentmetadata"><a href="#comment-115129" title="">June 13th, 2009 at 2:25 pm</a> </span>
+            
+            </td></tr></table>
+                       <table width=100%><tr>
+            <tr><td width="68" align=center valign=top>&nbsp;</td><td>
+                        <p>Here&#8217;s a good use for hard mix -</p>
+<p><a href="http://www.digitalartform.com/archives/2009/06/custom_halftone.html" rel="nofollow">http://www.digitalartform.com/archives/2009/06/custom_halftone.html</a></p>
+            </td></tr></table></li>
+
+	
+	
+		<li id="comment-115814">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=d41d8cd98f00b204e9800998ecf8427e&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            Pingback:<br><a href='http://www.cplotts.com/2009/06/15/blend-modes-part-i/' rel='external nofollow' class='url'>Cory Plotts&#8217; Blog &raquo; Blend Modes, Part I</a>                                   <br>
+            <span class="commentmetadata"><a href="#comment-115814" title="">June 16th, 2009 at 5:55 pm</a> </span>
+            
+            </td></tr></table>
+           </li>
+
+	
+	
+		<li id="comment-115824">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=d41d8cd98f00b204e9800998ecf8427e&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            Pingback:<br><a href='http://www.cplotts.com/2009/06/16/blend-modes-part-ii/' rel='external nofollow' class='url'>Cory Plotts&#8217; Blog &raquo; Blend Modes, Part II</a>                                   <br>
+            <span class="commentmetadata"><a href="#comment-115824" title="">June 16th, 2009 at 9:25 pm</a> </span>
+            
+            </td></tr></table>
+           </li>
+
+	
+	
+		<li id="comment-116577">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=cc307881f13b04b0b60022a8cb55400d&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            <a href='http://www.nathanm.com/' rel='external nofollow' class='url'>Nathan</a>                                   <br>
+            <span class="commentmetadata"><a href="#comment-116577" title="">June 21st, 2009 at 12:40 pm</a> </span>
+            
+            </td></tr></table>
+                       <table width=100%><tr>
+            <tr><td width="68" align=center valign=top>&nbsp;</td><td>
+                        <p>Today I updated a few of the blend modes and added gradient images.</p>
+            </td></tr></table></li>
+
+	
+	
+		<li id="comment-116578">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=cc307881f13b04b0b60022a8cb55400d&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            <a href='http://www.nathanm.com/' rel='external nofollow' class='url'>Nathan</a>                                   <br>
+            <span class="commentmetadata"><a href="#comment-116578" title="">June 21st, 2009 at 12:45 pm</a> </span>
+            
+            </td></tr></table>
+                       <table width=100%><tr>
+            <tr><td width="68" align=center valign=top>&nbsp;</td><td>
+                        <p>If anybody finds any problems with the blend modes or has a more accurate representation of the photoshop blend modes please let me know so I can update this post.</p>
+            </td></tr></table></li>
+
+	
+	
+		<li id="comment-117874">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=16c5c02bb372b6d4fccc9c6a2f84dd2e&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            <a href='http://www.digitalartform.com' rel='external nofollow' class='url'>Joseph Francis</a>                                   <br>
+            <span class="commentmetadata"><a href="#comment-117874" title="">June 29th, 2009 at 4:12 pm</a> </span>
+            
+            </td></tr></table>
+                       <table width=100%><tr>
+            <tr><td width="68" align=center valign=top>&nbsp;</td><td>
+                        <p>I think each blend mode is best demonstrated by at least one &#8216;killer app.&#8217;  I&#8217;m trying to collect them here:</p>
+<p><a href="http://www.digitalartform.com/archives/2009/06/photoshop_blend.html" rel="nofollow">http://www.digitalartform.com/archives/2009/06/photoshop_blend.html</a></p>
+            </td></tr></table></li>
+
+	
+	
+		<li id="comment-117877">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=cc307881f13b04b0b60022a8cb55400d&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            <a href='http://www.nathanm.com/' rel='external nofollow' class='url'>Nathan</a>                                   <br>
+            <span class="commentmetadata"><a href="#comment-117877" title="">June 29th, 2009 at 4:30 pm</a> </span>
+            
+            </td></tr></table>
+                       <table width=100%><tr>
+            <tr><td width="68" align=center valign=top>&nbsp;</td><td>
+                        <p>Cool!</p>
+            </td></tr></table></li>
+
+	
+	
+		<li id="comment-123129">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=d41d8cd98f00b204e9800998ecf8427e&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            Pingback:<br><a href='http://www.laurenscorijn.com/colormath-basics.html' rel='external nofollow' class='url'>Colormath Basics | Laurens Corijn</a>                                   <br>
+            <span class="commentmetadata"><a href="#comment-123129" title="">August 6th, 2009 at 2:56 pm</a> </span>
+            
+            </td></tr></table>
+           </li>
+
+	
+	
+		<li id="comment-127247">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=03817607d00990be9ac8ac7bec6f34a7&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            Tom Brinkman                                   <br>
+            <span class="commentmetadata"><a href="#comment-127247" title="">September 5th, 2009 at 11:26 pm</a> </span>
+            
+            </td></tr></table>
+                       <table width=100%><tr>
+            <tr><td width="68" align=center valign=top>&nbsp;</td><td>
+                        <p>Heres how I deal with RGB&#8217;s.</p>
+<p>template<br />
+struct rgb<br />
+{<br />
+	static const int alpha = (hex &amp; 0xFF000000) &gt;&gt; 24;<br />
+	static const int red = (hex &amp; 0xFF0000) &gt;&gt; 16;<br />
+	static const int green = (hex &amp; 0x00FF00) &gt;&gt; 8;<br />
+	static const int blue = hex &amp; 0x0000FF;<br />
+};</p>
+<p>typedef rgb black_t;<br />
+int red = black_t::red;<br />
+int green = black_t::green;<br />
+int blue = black_t::blue;</p>
+            </td></tr></table></li>
+
+	
+	
+		<li id="comment-129090">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=d41d8cd98f00b204e9800998ecf8427e&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            Pingback:<br><a href='http://wp.tifana.jp/1_photoshop/photoshop-%e3%83%96%e3%83%ac%e3%83%b3%e3%83%89%e3%83%a2%e3%83%bc%e3%83%89%e3%82%92%e4%bd%bf%e3%81%84%e3%81%93%e3%81%aa%e3%81%97%e3%81%a6%e3%83%af%e3%83%b3%e3%83%a9%e3%8' rel='external nofollow' class='url'>Photoshop ブレンドモードを使いこなしてワンランク上の画像合成 | WEB制作.Hack</a>                                   <br>
+            <span class="commentmetadata"><a href="#comment-129090" title="">October 2nd, 2009 at 5:46 am</a> </span>
+            
+            </td></tr></table>
+           </li>
+
+	
+	
+		<li id="comment-129650">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=0c6874aca3507a72a5f37b803f4c48fb&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            Lexus JC                                   <br>
+            <span class="commentmetadata"><a href="#comment-129650" title="">October 10th, 2009 at 2:29 pm</a> </span>
+            
+            </td></tr></table>
+                       <table width=100%><tr>
+            <tr><td width="68" align=center valign=top>&nbsp;</td><td>
+                        <p>In photoshop there are some additional bleding mode that missing here<br />
+1) Darker Color:<br />
+Get the color of color with min luminosity<br />
+float bgLuminosity = 0.3 * bg.Red + 0.59 * bg.Green + 0.11 * bg.Blue;<br />
+float fgLuminosity = 0.3 * fg.Red + 0.59 * fg.Green + 0.11 * fg.Blue;<br />
+if (bgLuminosity  fgLuminosity)<br />
+	result = bg;<br />
+else<br />
+	result = fg;</p>
+            </td></tr></table></li>
+
+	
+	
+		<li id="comment-129651">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=0c6874aca3507a72a5f37b803f4c48fb&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            Lexus JC                                   <br>
+            <span class="commentmetadata"><a href="#comment-129651" title="">October 10th, 2009 at 2:30 pm</a> </span>
+            
+            </td></tr></table>
+                       <table width=100%><tr>
+            <tr><td width="68" align=center valign=top>&nbsp;</td><td>
+                        <p>2) The second mode is Lighter color:<br />
+Get the color of color with max luminosity<br />
+float bgLuminosity = 0.3 * bg.Red + 0.59 * bg.Green + 0.11 * bg.Blue;<br />
+float fgLuminosity = 0.3 * fg.Red + 0.59 * fg.Green + 0.11 * fg.Blue;<br />
+if (bgLuminosity &gt; fgLuminosity)<br />
+	result = bg;<br />
+else<br />
+	result = fg;</p>
+            </td></tr></table></li>
+
+	
+	
+		<li id="comment-130217">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=0ba1ad844978fcd317aa0c5912f98d4d&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            <a href='http://karljensen.com' rel='external nofollow' class='url'>Karl Jensen</a>                                   <br>
+            <span class="commentmetadata"><a href="#comment-130217" title="">October 21st, 2009 at 9:08 am</a> </span>
+            
+            </td></tr></table>
+                       <table width=100%><tr>
+            <tr><td width="68" align=center valign=top>&nbsp;</td><td>
+                        <p>The overlay blend mode should be (B &lt; 128) instead of (L &lt; 128). If you look at my sample on <a href="http://karljensen.com/BitmapTest.html" rel="nofollow">http://karljensen.com/BitmapTest.html</a> the bottom left is sampling each pixel and redrawing using a similar equation. The right one is what happens when you select &quot;overlay&quot; blend mode within Flash. I think all that has happened is that you have mixed Overlay and Hard Light.</p>
+            </td></tr></table></li>
+
+	
+	
+		<li id="comment-131411">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=d3e52a71fb412d040913870a089d5397&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            <a href='http://www.cplotts.com' rel='external nofollow' class='url'>Cory</a>                                   <br>
+            <span class="commentmetadata"><a href="#comment-131411" title="">November 6th, 2009 at 2:35 pm</a> </span>
+            
+            </td></tr></table>
+                       <table width=100%><tr>
+            <tr><td width="68" align=center valign=top>&nbsp;</td><td>
+                        <p>It seems to me that the overlay, soft light, and hard light blend modes (at least the gradient squares and images above) have the layers reversed.</p>
+<p>That is, either the math is backwards or Base Layer should be Blend Layer and vice versa.</p>
+<p>The gradient squares do not match what comes out of Photoshop.</p>
+            </td></tr></table></li>
+
+	
+	
+		<li id="comment-134463">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=d2e77e3523c498d9177c5b2b4b9b5e40&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            Jack Hogan                                   <br>
+            <span class="commentmetadata"><a href="#comment-134463" title="">December 8th, 2009 at 8:19 am</a> </span>
+            
+            </td></tr></table>
+                       <table width=100%><tr>
+            <tr><td width="68" align=center valign=top>&nbsp;</td><td>
+                        <p>Excellent!  I would be rally interested in learning more about the math behind digital picture processing: RAW conversion, demosaicing, exposure, brightness, contrast, sharpening, etc. all the way to blend modes.  Suggestions for a good book?</p>
+            </td></tr></table></li>
+
+	
+	
+		<li id="comment-135017">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=7a10900534687c6d0162f35175cce03e&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            David Addis                                   <br>
+            <span class="commentmetadata"><a href="#comment-135017" title="">December 20th, 2009 at 6:03 pm</a> </span>
+            
+            </td></tr></table>
+                       <table width=100%><tr>
+            <tr><td width="68" align=center valign=top>&nbsp;</td><td>
+                        <p>The Soft Light blend code is not close to giving photoshop results.  After much checking,<br />
+&#8220;If b &lt;.5 THEN 2ab + a^2 (1-2b) ELSE sqrt(a) (2b &#8211; 1) + 2 a(1 &#8211; b)&quot; gives correct results where b is from the blend layer, (Units here are in percentages  of 255).</p>
+            </td></tr></table></li>
+
+	
+	
+		<li id="comment-138873">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=771829ba199997c8b57752183900afd7&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            Burkhard                                   <br>
+            <span class="commentmetadata"><a href="#comment-138873" title="">February 23rd, 2010 at 11:15 am</a> </span>
+            
+            </td></tr></table>
+                       <table width=100%><tr>
+            <tr><td width="68" align=center valign=top>&nbsp;</td><td>
+                        <p>Seems that Hue, Color, Saturation, Luminance blend modes in Photoshop use a color model different from HLS &#8211; Luminance  is defined differently, using an approximation of visual brightness. Probably something like as  0.3 * Red + 0.59 * Green + 0.11 * Blue or the like, maybe even taking color profile information into account.</p>
+            </td></tr></table></li>
+
+	
+	
+		<li id="comment-139506">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=11c2ddbd4911a84bcfbe3f78135a1b1f&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            mariospants                                   <br>
+            <span class="commentmetadata"><a href="#comment-139506" title="">March 6th, 2010 at 2:55 pm</a> </span>
+            
+            </td></tr></table>
+                       <table width=100%><tr>
+            <tr><td width="68" align=center valign=top>&nbsp;</td><td>
+                        <p>Awesome! Kudos for posting this, I was looking all over for these formulas and you&#8217;re about the only one who has it all in one simple, concise location. Congratulations: you&#8217;re a required resource!</p>
+            </td></tr></table></li>
+
+	
+	
+		<li id="comment-139615">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=e67480c4fe66e258727a4225361c789d&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            <a href='http://www.gonzobrains.com' rel='external nofollow' class='url'>Jeff</a>                                   <br>
+            <span class="commentmetadata"><a href="#comment-139615" title="">March 8th, 2010 at 4:55 pm</a> </span>
+            
+            </td></tr></table>
+                       <table width=100%><tr>
+            <tr><td width="68" align=center valign=top>&nbsp;</td><td>
+                        <p>These are awesome, man!  Thanks!  Can you give me an idea what effects I need in order to programmatically &#8220;bruise&#8221; an image?  For example, I want to darken colors on a photo to make a person appear to be injured.  I&#8217;m not quite sure how to blend the colors. I&#8217;ve tried just subtracting RGB values to darken it. I&#8217;ve tried to make the color go towards a shade of brown.  They don&#8217;t look quite that realistic.</p>
+<p>Any idea?  What&#8217;s the C code for that?  Thanks again!</p>
+<p>gonzobrains</p>
+            </td></tr></table></li>
+
+	
+	
+		<li id="comment-142940">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=d521be8abbdb8f0d748a67ddda487f3d&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            jauw                                   <br>
+            <span class="commentmetadata"><a href="#comment-142940" title="">May 10th, 2010 at 7:37 pm</a> </span>
+            
+            </td></tr></table>
+                       <table width=100%><tr>
+            <tr><td width="68" align=center valign=top>&nbsp;</td><td>
+                        <p>@gonzobrains</p>
+<p>I don&#8217;t know how to get the image to appear bruised by just using blending tools, but I have two suggestions. </p>
+<p>A. You could simple find another image that has bruises and mask the two images together, or<br />
+B. You could look for bruise brushes available for download (deviantart is usually a good source for that).</p>
+<p>Hope that helps. (:</p>
+            </td></tr></table></li>
+
+	
+	
+		<li id="comment-142986">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=65f3b4eb24df8cbcf22ac89ad98e6645&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            canjiang ren                                   <br>
+            <span class="commentmetadata"><a href="#comment-142986" title="">May 11th, 2010 at 8:04 pm</a> </span>
+            
+            </td></tr></table>
+                       <table width=100%><tr>
+            <tr><td width="68" align=center valign=top>&nbsp;</td><td>
+                        <p>hello, the the normal mode seems to be:<br />
+#define ChannelBlend_Normal(B,L)     ((uint8)(L))<br />
+the L is the source color (top layer, contrast to the backdrop color).</p>
+            </td></tr></table></li>
+
+	
+	
+		<li id="comment-145447">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=30a387a8097cb7e5f59c028692cdb639&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            <a href='http://www.andrewbritton.com' rel='external nofollow' class='url'>Andrew</a>                                   <br>
+            <span class="commentmetadata"><a href="#comment-145447" title="">June 21st, 2010 at 12:40 pm</a> </span>
+            
+            </td></tr></table>
+                       <table width=100%><tr>
+            <tr><td width="68" align=center valign=top>&nbsp;</td><td>
+                        <p>Thank You for this resource. This is very helpful.<br />
+I just graduated with a masters working in GPGPU programming. I&#8217;ve been wanting these algorithms for years.</p>
+            </td></tr></table></li>
+
+	
+	
+		<li id="comment-145448">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=30a387a8097cb7e5f59c028692cdb639&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            <a href='http://www.andrewbritton.com' rel='external nofollow' class='url'>Andrew</a>                                   <br>
+            <span class="commentmetadata"><a href="#comment-145448" title="">June 21st, 2010 at 12:42 pm</a> </span>
+            
+            </td></tr></table>
+                       <table width=100%><tr>
+            <tr><td width="68" align=center valign=top>&nbsp;</td><td>
+                        <p>@Burkhard: Photoshop may be converting colorspace to L.a.b. space and then desaturating. Once desaturated, the colors are probably converted back to RGB (or CMYK depending on preference).</p>
+            </td></tr></table></li>
+
+	
+	
+		<li id="comment-150138">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=e63a3838b94aaf632324be97dfac4bd1&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            Rider                                   <br>
+            <span class="commentmetadata"><a href="#comment-150138" title="">August 9th, 2010 at 11:42 am</a> </span>
+            
+            </td></tr></table>
+                       <table width=100%><tr>
+            <tr><td width="68" align=center valign=top>&nbsp;</td><td>
+                        <p>I would like to know what photosop does when blending two *.png images (or any format holding an alpha value). It seems to me that photoshop does something separatly with the alpha channel before applying the formulas. (Ex.: screen formula with two *.png does not reproduce the same blending result as photoshop)</p>
+<p>Or am I missing something ?</p>
+            </td></tr></table></li>
+
+	
+	
+		<li id="comment-157278">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=9f525ec80b88ce4a97c8cf2a14e45444&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            <a href='http://www.andrewrreed.com' rel='external nofollow' class='url'>Andrew</a>                                   <br>
+            <span class="commentmetadata"><a href="#comment-157278" title="">September 23rd, 2010 at 7:57 am</a> </span>
+            
+            </td></tr></table>
+                       <table width=100%><tr>
+            <tr><td width="68" align=center valign=top>&nbsp;</td><td>
+                        <p>Great site Nathan. I recently did a project for NASA / GISS requiring me to use layer blend modes to perform very specific image adjustments (degree of polarization between image pairs.) This calculation requires addition, subtraction &amp; division (a-b)/(a+b)<br />
+Only problem was that PS does not have a divide function so all the image pairs had to be processed in GIMP as well. Do you know any work around for this issue in PS ?</p>
+            </td></tr></table></li>
+
+	
+	
+		<li id="comment-172333">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=6537768d7590f89a0285b1b6316ef1c1&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            <a href='http://ray.blog.burgemeestre.net/' rel='external nofollow' class='url'>rayburgemeestre</a>                                   <br>
+            <span class="commentmetadata"><a href="#comment-172333" title="">November 27th, 2010 at 5:37 pm</a> </span>
+            
+            </td></tr></table>
+                       <table width=100%><tr>
+            <tr><td width="68" align=center valign=top>&nbsp;</td><td>
+                        <p>Hi Nathan, thank you for sharing. For the allegro graphics library I created some wrappers for your macro&#8217;s, and put everything in a library (al_blend.h). Just wanted to let you know this, and that the project homepage is: <a href="https://github.com/rayburgemeestre/AllegroBlenders" rel="nofollow">https://github.com/rayburgemeestre/AllegroBlenders</a> &#8211;This makes drawing in the specific blending modes quite easy, like: put_blended_pixel(&#8230;.., blender_lighten) or put_blended_pixel(&#8230;.., blender_hue), &#8230;</p>
+            </td></tr></table></li>
+
+	
+	
+		<li id="comment-172977">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=41a30b389a5ca1f769901b61376a12dd&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            Chris                                   <br>
+            <span class="commentmetadata"><a href="#comment-172977" title="">November 30th, 2010 at 6:34 am</a> </span>
+            
+            </td></tr></table>
+                       <table width=100%><tr>
+            <tr><td width="68" align=center valign=top>&nbsp;</td><td>
+                        <p>Nice work!  Thank you!!  I put your images in photoshop and compared.  It appears that overlay and hard light have been reversed.  Thanks for the great info!</p>
+            </td></tr></table></li>
+
+	
+	
+		<li id="comment-172989">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=41a30b389a5ca1f769901b61376a12dd&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            Chris                                   <br>
+            <span class="commentmetadata"><a href="#comment-172989" title="">November 30th, 2010 at 6:38 am</a> </span>
+            
+            </td></tr></table>
+                       <table width=100%><tr>
+            <tr><td width="68" align=center valign=top>&nbsp;</td><td>
+                        <p>After reading the comments, I see that this has already been mentioned.  Anyways&#8230;great info!!!</p>
+            </td></tr></table></li>
+
+	
+	
+		<li id="comment-173250">
+			
+            <table width=100% bgcolor="#181818"><tr>
+            <td width="68" align=center valign=top>
+            <img src="http://www.gravatar.com/avatar.php?gravatar_id=d41d8cd98f00b204e9800998ecf8427e&amp;rating=R&amp;size=60&amp;default=http%3A%2F%2Fnathanm.com%2Fwp-content%2Fthemes%2Fblack%2Fimages%2Fbum.gif&amp;border=FF0000" style="border: 1px solid #404040;">
+            </td>            
+            <td valign=top>
+            
+                            Pingback:<br><a href='http://www.barbato.us/2010/12/01/blimageblending-emulating-photoshops-blending-modes-opencv/' rel='external nofollow' class='url'>blImageBlending &#8212; Emulating photoshop&#8217;s blending modes in opencv | BarbatoLabs</a>                                   <br>
+            <span class="commentmetadata"><a href="#comment-173250" title="">November 30th, 2010 at 11:56 pm</a> </span>
+            
+            </td></tr></table>
+           </li>
+
+	
+	
+	</ol>
+
+ 
+
+
+<div id="respond">Leave a Reply</div>
+
+
+<form action="http://www.nathanm.com/wp-comments-post.php" method="post" id="commentform">
+<input type="hidden" name="spam" value="orange"/>
+
+<p><input type="text" name="author" id="author" value="" size="22" tabindex="1" />
+<label for="author"><small>Name (required)</small></label></p>
+
+<p><input type="text" name="email" id="email" value="" size="22" tabindex="2" />
+<label for="email"><small>Mail (will not be published) (required)</small></label></p>
+
+<p><input type="text" name="url" id="url" value="" size="22" tabindex="3" />
+<label for="url"><small>Website</small></label></p>
+
+
+<!--<p><small><strong>XHTML:</strong> You can use these tags: &lt;a href=&quot;&quot; title=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;acronym title=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote cite=&quot;&quot;&gt; &lt;cite&gt; &lt;code&gt; &lt;del datetime=&quot;&quot;&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=&quot;&quot;&gt; &lt;strike&gt; &lt;strong&gt; </small></p>-->
+
+<p><textarea name="comment" id="comment" cols="100%" rows="10" tabindex="4"></textarea></p>
+
+<p><input name="submit" type="submit" id="submit" tabindex="5" value="Submit Comment"/>
+<input type="hidden" name="comment_post_ID" value="592" />
+</p>
+
+</form>
+
+
+
+	
+	</div>
+
+
+<div id="footer">
+
+		<small>
+		<a href="http://wordpress.org/">WP</a> // 
+		<a href="feed:http://www.nathanm.com/feed/">RSS</a>
+		<!-- 15 queries. 2.838 seconds. -->
+		</small><br><br>
+</div>
+</div>
+</td></tr></table>
+<script type='text/javascript' src='http://www.nathanm.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shCore.js?ver=3.0.83b'></script>
+<script type='text/javascript' src='http://www.nathanm.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shBrushCpp.js?ver=3.0.83b'></script>
+<script type='text/javascript'>
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var corecssurl = "http://www.nathanm.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shCore.css?ver=3.0.83b";
+		if ( corecss.setAttribute ) {
+				corecss.setAttribute( "rel", "stylesheet" );
+				corecss.setAttribute( "type", "text/css" );
+				corecss.setAttribute( "href", corecssurl );
+		} else {
+				corecss.rel = "stylesheet";
+				corecss.href = corecssurl;
+		}
+		document.getElementsByTagName("head")[0].insertBefore( corecss, document.getElementById("syntaxhighlighteranchor") );
+		var themecssurl = "http://www.nathanm.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shThemeDjango.css?ver=3.0.83b";
+		if ( themecss.setAttribute ) {
+				themecss.setAttribute( "rel", "stylesheet" );
+				themecss.setAttribute( "type", "text/css" );
+				themecss.setAttribute( "href", themecssurl );
+		} else {
+				themecss.rel = "stylesheet";
+				themecss.href = themecssurl;
+		}
+		//document.getElementById("syntaxhighlighteranchor").appendChild(themecss);
+		document.getElementsByTagName("head")[0].insertBefore( themecss, document.getElementById("syntaxhighlighteranchor") );
+	})();
+	SyntaxHighlighter.config.strings.expandSource = '+ expand source';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t configured for html-script option: ';
+	SyntaxHighlighter.defaults['gutter'] = false;
+	SyntaxHighlighter.defaults['pad-line-numbers'] = false;
+	SyntaxHighlighter.all();
+</script>
+</center></body>
+</html>
