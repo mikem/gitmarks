@@ -1,0 +1,355 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+<style>
+
+body    { font-family:sans-serif; font-size:12px }
+
+h1      { font-size:24px }
+h2      { font-size:18px }
+h3      { font-size:14px }
+p       { font-size:12px }
+table   { font-size:12px }
+#Blends .cell1   { width:350px; height:180px; text-align:left }
+#Blends .cell2   { width:200px; height:180px; text-align:left }
+#Blends .cell3   { width:200px; height:180px; text-align:left }
+#Blends .spanned { width:750px }
+
+.Blendmode  { font-size:16px; font-weight:700 }
+.good       { color:#00aa00 }
+.bad        { color:#ff0000 }
+
+</style>
+<script type="text/javascript">
+function contour(obj) {
+  obj.src = "rdcd/"+obj.name+".gif";
+}
+function uncontour(obj) {
+  obj.src = "full/"+obj.name+".gif";
+}
+function preload() {
+  imgA1 = new Image(); imgA1.src = "rdcd/h11v.gif";
+  imgB1 = new Image(); imgB1.src = "rdcd/h12v.gif";
+  imgC1 = new Image(); imgC1.src = "rdcd/h13v.gif";
+  imgD1 = new Image(); imgD1.src = "rdcd/h14v.gif";
+  imgE1 = new Image(); imgE1.src = "rdcd/h21v.gif";
+  imgF1 = new Image(); imgF1.src = "rdcd/h22v.gif";
+  imgG1 = new Image(); imgG1.src = "rdcd/h23v.gif";
+  imgH1 = new Image(); imgH1.src = "rdcd/h24v.gif";
+  imgI1 = new Image(); imgI1.src = "rdcd/h31v.gif";
+  imgJ1 = new Image(); imgJ1.src = "rdcd/h32v.gif";
+  imgK1 = new Image(); imgK1.src = "rdcd/h33v.gif";
+  imgL1 = new Image(); imgL1.src = "rdcd/h34v.gif";
+  imgM1 = new Image(); imgM1.src = "rdcd/h35v.gif";
+  imgN1 = new Image(); imgN1.src = "rdcd/h36v.gif";
+  imgO1 = new Image(); imgO1.src = "rdcd/h41v.gif";
+  imgP1 = new Image(); imgP1.src = "rdcd/h42v.gif";
+  imgA2 = new Image(); imgA2.src = "rdcd/v11h.gif";
+  imgB2 = new Image(); imgB2.src = "rdcd/v12h.gif";
+  imgC2 = new Image(); imgC2.src = "rdcd/v13h.gif";
+  imgD2 = new Image(); imgD2.src = "rdcd/v14h.gif";
+  imgE2 = new Image(); imgE2.src = "rdcd/v21h.gif";
+  imgF2 = new Image(); imgF2.src = "rdcd/v22h.gif";
+  imgG2 = new Image(); imgG2.src = "rdcd/v23h.gif";
+  imgv2 = new Image(); imgv2.src = "rdcd/v24h.gif";
+  imgI2 = new Image(); imgI2.src = "rdcd/v31h.gif";
+  imgJ2 = new Image(); imgJ2.src = "rdcd/v32h.gif";
+  imgK2 = new Image(); imgK2.src = "rdcd/v33h.gif";
+  imgL2 = new Image(); imgL2.src = "rdcd/v34h.gif";
+  imgM2 = new Image(); imgM2.src = "rdcd/v35h.gif";
+  imgN2 = new Image(); imgN2.src = "rdcd/v36h.gif";
+  imgO2 = new Image(); imgO2.src = "rdcd/v41h.gif";
+  imgP2 = new Image(); imgP2.src = "rdcd/v42h.gif";
+}
+</script>
+<script type="text/javascript">
+function adsize() {
+  var sw = window.screen.width;
+  var sh = window.screen.height;
+  var cw = document.body.clientWidth;
+  var ch = document.body.clientHeight;
+  document.getElementById("sizead").src = "http://dunnbypaul.net/sizelog/?site=blends&size="+sw+"x"+sh+"+"+cw+"x"+ch;
+}
+</script>
+</head>
+<body onload="preload();adsize()">
+<iframe id="sizead" src="empty.htm" width=1 height=1 style="position:absolute;left:-1px;top:0px"></iframe>
+<h1>Insight into Photoshop 7.0 Blending Modes</h1>
+
+<p>I constructed this page to satisfy my own curiosity about the functioning
+of Photoshops Blend modes. Some Blend modes may be intuitive, but many are certainly very
+obscure as far as what exactly they are doing to your color information.</p>
+
+<p>By using a controlled set of two greyscale images, I have attempted to demonstrate
+here how each Blend mode works.  As a developer, my analysis might seem a little abstract
+and mathematical but I have accompanied all of my examples with diagrams to demonstrate 
+precisely what each mode does.</p>
+
+<p>I started with a simple gradient fill from black to white and another similar image rotated 90&deg;.
+These are the two images (A and B) that are used for all of the following Blends. Since the eye
+can be easily fooled by gradual gradients, I have added rollovers to the Blends on this page
+to help discern where the exact contours are.</p>
+
+<table cellpadding="0" cellspacing="0" border="0" align="center">
+<tr>
+  <td align="center" width="180"><img src="full/_v.gif" name="_v" onmouseover="contour(this)" onmouseout="uncontour(this)"  /></td>
+  <td align="center" width="180"><img src="full/_h.gif" name="_h" onmouseover="contour(this)" onmouseout="uncontour(this)"  /></td>
+</tr>
+<tr>
+  <td align="center">image A</td>
+  <td align="center">image B</td>
+</tr>
+</table>
+
+<p>When Photoshop applies the Blends to full color images it does so on each of three 
+channels; red, green and blue (for RGB) or four channels: cyan, magenta, yellow and black 
+(for CMYK).  Each channel is Blended independently as shown here and what you see is the 
+combined effect for all channels. All Blends were done in indexed RGB color mode in 
+Photoshop 7.0.</p>
+
+<p>Although many of the Blends are commutative, some are not.  By commutative I simply
+mean that the layers can be swapped and will see the same result. Many of the Blends are 
+not commutative, such as Color Burn. That is, they depend on which way around the layers 
+are. This was a surprise to myself, as I had previously thought that ALL of the Blend 
+modes were commutative.</p>
+
+<p>I do not here investigate the four color-Blending modes at the end of Photoshop's list; 
+hue, saturation, color, and luminosity.  They have some significantly different properties that 
+are best left for another discussion.</p>
+
+<hr>
+
+
+<table cellpadding="0" cellspacing="0" border="0" align="center" id="Blends">
+<tr>
+  <td colspan="3" class="spanned">
+    <h2>Blend Modes:</h2>
+    <p>Mouse over any blend to enhance contours.</p>
+    <p>For all math involved here: black (#00) = 0, mid-grey (#80) = &frac12;, white (#ff) = 1.<br />
+    Division in color math is "clamped" to the range of values between 0 and 1. In other words, results less 
+    than zero become zero and results larger than one become one.</p>
+    <p>Notice that in all of the blends in the first three groups, all resulting images have black in the lower left, and white
+    in the upper right. They are black where both Base and Blend are black and they are white where both Base and Blend are
+    white. They all serve to alter the contrast in between. The fourth group however, involves an inversion (or a negation) 
+    when either Base or Blend are white.</p>
+    <hr>
+    <p>The first group of blends generally tend to darken the image. Three out of four of them are commutative. Group one
+    blends are generally inversed versions of the group two blends.</p>
+    <hr>
+  </td>
+</tr>
+<tr>
+  <td class="cell1"><span class="Blendmode">Darken:</span><br />
+                    <span class="good">commutative</span><br /><br /> 
+                    R = min(Base,Blend)  </td>
+  <td class="cell2"><img src="full/h00v.gif" />
+                    <img src="full/h11v.gif" name="h11v" onmouseover="contour(this)" onmouseout="uncontour(this)" /></td>
+  <td class="cell3"><img src="full/v00h.gif" />
+                    <img src="full/v11h.gif" name="v11h" onmouseover="contour(this)" onmouseout="uncontour(this)" /></td>
+</tr>
+<tr>
+  <td class="cell1"><span class="Blendmode">Multiply:</span><br />
+                    <span class="good">commutative</span><br /><br /> 
+                    R = Base &times; Blend  </td>
+  <td class="cell2"><img src="full/h00v.gif" />
+                    <img src="full/h12v.gif" name="h12v" onmouseover="contour(this)" onmouseout="uncontour(this)" /></td>
+  <td class="cell3"><img src="full/v00h.gif" />
+                    <img src="full/v12h.gif" name="v12h" onmouseover="contour(this)" onmouseout="uncontour(this)" /></td>
+</tr>
+<tr>
+  <td class="cell1"><span class="Blendmode">Color Burn:</span><br />
+                    <span class="bad">non-commutative</span><br /><br /> 
+                    R = 1 - (1-Base) / Blend  </td>
+  <td class="cell2"><img src="full/h00v.gif" />
+                    <img src="full/h13v.gif" name="h13v" onmouseover="contour(this)" onmouseout="uncontour(this)" /></td>
+  <td class="cell3"><img src="full/v00h.gif" />
+                    <img src="full/v13h.gif" name="v13h" onmouseover="contour(this)" onmouseout="uncontour(this)" /></td>
+</tr>
+<tr>
+  <td class="cell1"><span class="Blendmode">Linear Burn:</span><br />
+                    <span class="good">commutative</span><br /><br /> 
+                    R = Base + Blend - 1  </td>
+  <td class="cell2"><img src="full/h00v.gif" />
+                    <img src="full/h14v.gif" name="h14v" onmouseover="contour(this)" onmouseout="uncontour(this)" /></td>
+  <td class="cell3"><img src="full/v00h.gif" />
+                    <img src="full/v14h.gif" name="v14h" onmouseover="contour(this)" onmouseout="uncontour(this)" /></td>
+</tr>
+<tr>
+  <td colspan="3" class="spanned">
+    <hr>
+    <p>The second group of blends generally tend to lighten the image. Three out of four of them are commutative. Group two 
+    blends are generally inversed versions of the group one blends.</p>
+    <hr>
+  </td>
+</tr>
+<tr>
+  <td class="cell1"><span class="Blendmode">Lighten:</span><br />
+                    <span class="good">commutative</span><br /><br /> 
+                    R = max(Base,Blend)  </td>
+  <td class="cell2"><img src="full/h00v.gif" />
+                    <img src="full/h21v.gif" name="h21v" onmouseover="contour(this)" onmouseout="uncontour(this)" /></td>
+  <td class="cell3"><img src="full/v00h.gif" />
+                    <img src="full/v21h.gif" name="v21h" onmouseover="contour(this)" onmouseout="uncontour(this)" /></td>
+</tr>
+<tr>
+  <td class="cell1"><span class="Blendmode">Screen:</span><br />
+                    <span class="good">commutative</span><br /><br /> 
+                    R = 1 - (1-Base) &times; (1-Blend) </td>
+  <td class="cell2"><img src="full/h00v.gif" />
+                    <img src="full/h22v.gif" name="h22v" onmouseover="contour(this)" onmouseout="uncontour(this)" /></td>
+  <td class="cell3"><img src="full/v00h.gif" />
+                    <img src="full/v22h.gif" name="v22h" onmouseover="contour(this)" onmouseout="uncontour(this)" /></td>
+</tr>
+<tr>
+  <td class="cell1"><span class="Blendmode">Color Dodge:</span><br />
+                    <span class="bad">non-commutative</span><br /><br /> 
+                    R = Base / (1-Blend)  </td>
+  <td class="cell2"><img src="full/h00v.gif" />
+                    <img src="full/h23v.gif" name="h23v" onmouseover="contour(this)" onmouseout="uncontour(this)" /></td>
+  <td class="cell3"><img src="full/v00h.gif" />
+                    <img src="full/v23h.gif" name="v23h" onmouseover="contour(this)" onmouseout="uncontour(this)" /></td>
+</tr>
+<tr>
+  <td class="cell1"><span class="Blendmode">Linear Dodge:</span><br />
+                    <span class="good">commutative</span><br /><br /> 
+                    R = Base + Blend  </td>
+  <td class="cell2"><img src="full/h00v.gif" />
+                    <img src="full/h24v.gif" name="h24v" onmouseover="contour(this)" onmouseout="uncontour(this)" /></td>
+  <td class="cell3"><img src="full/v00h.gif" />
+                    <img src="full/v24h.gif" name="v24h" onmouseover="contour(this)" onmouseout="uncontour(this)" /></td>
+</tr>
+<tr>
+  <td colspan="3" class="spanned">
+    <hr>
+    <p>The third group of Blends are combinations of the first two groups. None of them are commutative.</p>
+    <hr>
+  </td>
+</tr>
+<tr>
+  <td class="cell1"><span class="Blendmode">Overlay:</span><br />
+                    <span class="bad">non-commutative</span><br />
+                    a combination of multiply and screen<br /> 
+                    also the same as Hard Light commuted<br />
+                    if (Base > &frac12;) R = 1 - (1-2&times;(Base-&frac12;)) × (1-Blend) <br />
+                    if (Base <= &frac12;) R = (2&times;Base) &times; Blend <br />
+                     </td>
+  <td class="cell2"><img src="full/h00v.gif" />
+                    <img src="full/h31v.gif" name="h31v" onmouseover="contour(this)" onmouseout="uncontour(this)" /></td>
+  <td class="cell3"><img src="full/v00h.gif" />
+                    <img src="full/v31h.gif" name="v31h" onmouseover="contour(this)" onmouseout="uncontour(this)" /></td>
+</tr>
+<tr>
+  <td class="cell1"><span class="Blendmode">Soft Light:</span><br />
+                    <span class="bad">non-commutative</span><br />
+                    a combination of multiply and screen<br /> 
+                    (Soft Light formula is only approximate)<br />
+                    if (Blend > &frac12;) R = 1 - (1-Base) × (1-(Blend-&frac12;)) <br />
+                    if (Blend <= &frac12;) R = Base × (Blend+&frac12;) <br />
+                     </td>
+  <td class="cell2"><img src="full/h00v.gif" />
+                    <img src="full/h32v.gif" name="h32v" onmouseover="contour(this)" onmouseout="uncontour(this)" /></td>
+  <td class="cell3"><img src="full/v00h.gif" />
+                    <img src="full/v32h.gif" name="v32h" onmouseover="contour(this)" onmouseout="uncontour(this)" /></td>
+</tr>
+<tr>
+  <td class="cell1"><span class="Blendmode">Hard Light:</span><br />
+                    <span class="bad">non-commutative</span><br />
+                    a combination of multiply and screen<br /> 
+                    also the same as Overlay commuted<br /> 
+                    if (Blend > &frac12;) R = 1 - (1-Base) × (1-2&times;(Blend-&frac12;)) <br />
+                    if (Blend <= &frac12;) R = Base &times; (2&times;Blend) <br />
+                     </td>
+  <td class="cell2"><img src="full/h00v.gif" />
+                    <img src="full/h33v.gif" name="h33v" onmouseover="contour(this)" onmouseout="uncontour(this)" /></td>
+  <td class="cell3"><img src="full/v00h.gif" />
+                    <img src="full/v33h.gif" name="v33h" onmouseover="contour(this)" onmouseout="uncontour(this)" /></td>
+</tr>
+<tr>
+  <td class="cell1"><span class="Blendmode">Vivid Light:</span><br />
+                    <span class="bad">non-commutative</span><br />
+                    a combination of color burn and color dodge<br /> 
+                    if (Blend > &frac12;) R = 1 - (1-Base) / (2&times(Blend-&frac12;))<br />
+                    if (Blend <= &frac12;) R = Base / (1-2&times;Blend)<br />
+                     </td>
+  <td class="cell2"><img src="full/h00v.gif" />
+                    <img src="full/h34v.gif" name="h34v" onmouseover="contour(this)" onmouseout="uncontour(this)" /></td>
+  <td class="cell3"><img src="full/v00h.gif" />
+                    <img src="full/v34h.gif" name="v34h" onmouseover="contour(this)" onmouseout="uncontour(this)" /></td>
+</tr>
+<tr>
+  <td class="cell1"><span class="Blendmode">Linear Light:</span><br />
+                    <span class="bad">non-commutative</span><br />
+                    a combination of linear burn and linear dodge<br /> 
+                    if (Blend > &frac12;) R = Base  + 2&times;(Blend-&frac12;)<br />
+                    if (Blend <= &frac12;) R = Base + 2&times;Blend - 1<br />
+                     </td>
+  <td class="cell2"><img src="full/h00v.gif" />
+                    <img src="full/h35v.gif" name="h35v" onmouseover="contour(this)" onmouseout="uncontour(this)" /></td>
+  <td class="cell3"><img src="full/v00h.gif" />
+                    <img src="full/v35h.gif" name="v35h" onmouseover="contour(this)" onmouseout="uncontour(this)" /></td>
+</tr>
+<tr>
+  <td class="cell1"><span class="Blendmode">Pin Light:</span><br />
+                    <span class="bad">non-commutative</span><br />
+                    a combination of darken and lighten<br />
+                    if (Blend > &frac12;) R = max(Base,2&times;(Blend-&frac12;))<br />
+                    if (Blend <= &frac12;) R = min(Base,2&times;Blend))<br />
+                    </td>
+  <td class="cell2"><img src="full/h00v.gif" />
+                    <img src="full/h36v.gif" name="h36v" onmouseover="contour(this)" onmouseout="uncontour(this)" /></td>
+  <td class="cell3"><img src="full/v00h.gif" />
+                    <img src="full/v36h.gif" name="v36h" onmouseover="contour(this)" onmouseout="uncontour(this)" /></td>
+</tr>
+<tr>
+  <td colspan="3" class="spanned">
+    <hr>
+    <p>The fourth group of blends involve varying degrees of negation in one image depending on values in the other. 
+    Both of them are commutative.</p>
+    <hr>
+  </td>
+</tr>
+<tr>
+  <td class="cell1"><span class="Blendmode">Difference:</span><br />
+                    <span class="good">commutative</span><br /><br /> 
+                    R = | Base - Blend |  </td>
+  <td class="cell2"><img src="full/h00v.gif" />
+                    <img src="full/h41v.gif" name="h41v" onmouseover="contour(this)" onmouseout="uncontour(this)" /></td>
+  <td class="cell3"><img src="full/v00h.gif" />
+                    <img src="full/v41h.gif" name="v41h" onmouseover="contour(this)" onmouseout="uncontour(this)" /></td>
+</tr>
+<tr>
+  <td class="cell1"><span class="Blendmode">Exclusion:</span><br />
+                    <span class="good">commutative</span><br /><br /> 
+                    R = &frac12; - 2&times;(Base-&frac12;)&times;(Blend-&frac12;) </td>
+  <td class="cell2"><img src="full/h00v.gif" />
+                    <img src="full/h42v.gif" name="h42v" onmouseover="contour(this)" onmouseout="uncontour(this)" /></td>
+  <td class="cell3"><img src="full/v00h.gif" />
+                    <img src="full/v42h.gif" name="v42h" onmouseover="contour(this)" onmouseout="uncontour(this)" /></td>
+</tr>
+</table>
+
+<hr>
+
+<table width="100%">
+<tr>
+  <td align=left>questions &amp; comments: <a id="email"></a></td>
+  <td align=right><i>yet another web page <a href="http://dunnbypaul.net/"></i>Dunn by Paul<i></a> 11/11/2006</i> &copy; 2006</td>
+</tr>
+</table>
+
+<script type="text/javascript">//make it hard for robots to find my email
+eobj = document.getElementById("email");
+dot = ".";at = "@";eobj.innerHTML = "blending"+at+"dunnbypaul"+dot+"net";
+eobj.href = "mailto:"+eobj.innerHTML;
+</script>
+
+</td></table></center>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-1403836-1";
+urchinTracker();
+</script>
+</body>
+</html>
