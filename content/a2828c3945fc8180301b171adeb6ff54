@@ -1,0 +1,311 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><link rel="stylesheet" href="guide.css" type="text/css"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>SCIM-anthy: getting started</title></head>
+<body><table width="100%" id="top"><tr><th align="center">Let's type Japanese</th></tr><tr><th width="100%" align="center">SCIM-anthy: getting started</th></tr></table><hr>
+<table align="right" bgcolor="#BDCFFF"><tr><td><a href="http://www.h4.dion.ne.jp/~apricots/">HOME</a></td></tr></table>
+<h3>What makes things complicated</h3>   
+<p>There are three types of characters in Japanese: <a href="http://en.wikipedia.org/wiki/Kanji">Kanji</a> (漢字), <a href="http://en.wikipedia.org/wiki/Hiragana">Hiragana</a> (ひらがな) and <a href="http://en.wikipedia.org/wiki/Katakana">Katakana</a> (カタカナ).  As you can imagine, Kanji was borrowed from Chinese and each has (a) meaning(s) in itself.  Hiragana and Katakana are both developed from <a href="http://en.wikipedia.org/wiki/Manyogana">Manyogana</a> (万葉仮名) which came into use in the fifth century to represent sounds.  We also use <a href="http://en.wikipedia.org/wiki/Romaji">Romaji</a> (ローマ字) or Latin alphabets for various purposes.</p>
+<p>Hiragana alone has more than fifty letters and there are about 2,000 Kanji characters authorized by the Ministry of Education for common use.  It is possible to write Japanese using only Hiragana, but such sentences would be very difficult to read partly because Japanese does not put space between words.  So, in order to write easy-to-understand Japanese on computers, we need a special input method which usually converts Romaji into Hiragana and then into Kanji or Katakana when necessary.  This page tries to explain how to do it using scim-1.4.4 and scim-anthy-1.2.0 in Mandriva 2007.</p>
+<p><font color="grey" size="-1">For scim-anthy-0.6.1 included in Mandriva Linux 2006, please refer to <a href="http://www.h4.dion.ne.jp/~apricots/scim-anthy-0.6.1/howto.html">this page</a>.<br>
+For scim-anthy-0.3.1 included in Mandriva Linux Limited Edition 2005, please refer to <a href="http://www.h4.dion.ne.jp/~apricots/scim-anthy-0.3.1/howto.html">this page</a></font></p>
+
+<h3 id="co">Contents</h3>
+<ol>
+<li><a href="#pr">Preparations</a>
+<ol><li><a href="#pr1">Installation</a> (Mandriva specific)</li>
+<li><a href="#pr2">Environmental Variables</a> (Mandriva specific)</li>
+<li><a href="#pr3">SCIM Global Setup</a></li></ol>
+<li><a href="#jp">Basic Usage</a>
+<ol><li><a href="#jp1">How to write Hiragana</a></li>
+<li><a href="#jp2">How to write Katakana</a></li>
+<li><a href="#jp3">Convert Hiragana into Kanji</a></li>
+<li><a href="#jp4">Convert a sentence</a></li></ol>
+<li><a href="#cu">Customization</a>
+<ol>
+<li><a href="#cu1">Common Options</a></li>
+<li><a href="#cu2">Symbols</a></li>
+<li><a href="#cu3">Key Bindings</a></li>
+<li><a href="#cu4">Romaji Typing</a></li>
+<li><a href="#cu5">Learning</a></li>
+<li><a href="#cu6">Candidate Window</a></li>
+<li><a href="#cu7">Toolbar</a></li>
+<li><a href="#cu8">Appearance</a></li>
+</ol>
+<li><a href="#ad">Advanced Usage</a>
+<ol><li><a href="#ad1">Prediction</a></li>
+<li><a href="#ad2">Re-conversion</a></li></ol>
+<li><a href="#sk">Skim - KDE frontend for SCIM</a> (Mandriva specific)</li>
+<li><a href="#ka">Kasumi - Dictionary management tool</a></li>
+<li><a href="#tm">Tomoe - Handwriting recognition</a></li>
+
+<li><a href="#li">Links</a></li>
+</ol>
+<table style="background-color: #4B62AB; color: white; width: 100%; font-size: 150%; font-weight: bold; padding: 2px"><tr><td id="pr">1. Preparation</td></tr></table>
+
+<h3 id="pr1">1. Installation</h3>
+<p>First off, you need to install the following packages on your system.</p>
+<ul type="disc"><li>scim: Smart Common Input Method platform</li>
+<li>scim-anthy: a Japanese input method module for SCIM</li>
+<li>anthy: a Japanese kana-kanji conversion engine</li>
+<li>scim-qtimm: SCIM plugin to use Qt immodule support</li>
+<li>kasumi: a dictionary management tool for Anthy</li>
+<li>scim-input-pad: a nice add-on which enables you to input various symbols</li>
+<li>scim-tomoe: a Japanese handwriting recognition module for SCIM</li>
+</ul>
+<table border="0"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="note.png"></td><th align="left">Note</th></tr><tr><td colspan="2" align="left" valign="top">If you choose Japanese for your language(s) when you install/upgrade the distribution, those packages will be installed by default (as long as they are included in your install media).  As for scim-qtimm, it will be installed if you choose KDE.</td></tr></table><br>
+<table border="0"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="warning.png"></td><th align="left">Warning</th></tr><tr><td colspan="2" align="left" valign="top">If you have ~/.scim created by an older version of scim, it might be better to delete it and reconfigure scim/scim-anthy from scratch.</td></tr></table>
+
+<h3 id="pr2">2. Environmental Variables</h3>
+<p>As with other input methods, you need to set some environmental variables to make SCIM work.  Adding the following four lines to <tt>~/.i18n</tt> or <tt>/etc/sysconfig/i18n</tt> will make SCIM start with X and enable you to activate the input method in various applications simply by pressing <span class="keycap">Ctrl+Space</span>, whether it uses GTK-immodule, Qt-immodule or the XIM (X input method) protocol.</p>
+<table border="0" bgcolor="#E0E0E0"><tr><td><pre>
+GTK_IM_MODULE=scim
+QT_IM_MODULE=scim
+XIM_PROGRAM="scim -d"
+XMODIFIERS=@im=SCIM
+</pre></td></tr></table><br>
+<table border="0"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="note.png"></td><th align="left">Note</th></tr><tr><td colspan="2" align="left" valign="top">You do not need to manually edit the file.  You can use LocaleDrake from System -> Configuration -> Other in the menu.  If you select Japanese as the language or one of the SCIM input methods in LocaleDrake (User), those lines will be automatically added to <tt>~/.i18n</tt>.  LocaleDrake (System) will append them to <tt>/etc/sysconfig/i18n</tt>, which will be applied to the whole system unless overridden by <tt>~/.i18n</tt>.  The latter will also install required packages for the selected input method if they are not present on your system.  If you chose Japanese as the primary language when installing/upgrading the distribution, those lines are already in <tt>/etc/sysconfig/i18n</tt>.</td></tr></table><br>
+<table border="0"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="warning.png"></td><th align="left">Warning</th></tr><tr><td colspan="2" align="left" valign="top">In order to use SCIM input methods in Qt/KDE applications without scim-qtimm being installed, QT_IM_MODULE should be set to xim in <tt>~/.i18n</tt> or <tt>/etc/sysconfig/i18n</tt>.</td></tr></table><br>
+<table border="0"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="tip.png"></td><th align="left">Tip</th></tr><tr><td colspan="2" align="left" valign="top">If you use SCIM input methods in OpenOffice.org, install its GNOME extensions (openoffice.org-gnome) instead of KDE's (openoffice.org-kde).  It will enable you to use gtk-immodule instead of XIM in the program.  
+</td></tr></table>
+
+<p>In applications in which SCIM uses the GTK/Qt immodule, you can use all input methods regardless of your locale.  However, they are filtered by LC_CTYPE in applications in which SCIM uses the XIM protocol.  In other words, if LC_CTYPE is set to en_US, you cannot use Japanese input methods in such applications.  To make scim-anthy available in all applications in non-Japanese environments, a UTF-8 locale is required.</p>
+<table border="0"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="tip.png"></td><th align="left">Tip</th></tr><tr><td colspan="2" align="left" valign="top">To set up an account with French user interface with the ability to type Japanese, run LocaleDrake (User) from the menu, select French as the language, make sure the option 'Old compatibility (non UTF-8) encoding' is <b>not</b> checked (unless that is what you want), click Next and select your country and SCIM+ANTHY as the input method.  The input method selection is hidden in 'Other countries'.</td></tr></table><br>
+<table border="0"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="note.png"></td><th align="left">Note</th></tr><tr><td colspan="2" align="left" valign="top"><p>SCIM supports en_US.UTF-8 by default.  If you use other UTF-8 locale such as fr_FR.UTF-8, you need to add it to <tt>/etc/scim/global</tt> or <tt>~/.scim/global</tt> as follows.</p>
+<table border="0" bgcolor="#E0E0E0"><tr><td><pre>
+/SupportedUnicodeLocales = en_US.UTF-8,fr_FR.UTF-8
+</pre></td></tr></table></td></tr></table>
+ 
+<p>Ready.  When you start a new session, you will see a keyboard icon in your systray.</p>
+
+<h3 id="pr3">3. SCIM Global Setup</h3> 
+<p>Before starting to type Japanese, you might want to configure some global options in the SCIM setup panel.</p>
+<ul><li><p><b>Embed Preedit String into client window</b><br>
+If you prefer 'On The Spot', open <a href="global_setup.png">the FrontEnd Global Setup panel</a> and make sure that this option is enabled.   If you prefer 'Over The Spot', uncheck the checkbox.  The input style specified here will be applied to all applications as long as they support it.</p> 
+<p>On The Spot: Typed characters immediately appear in the client window and candidates are shown in the lookup table as below.</p>
+<p><img alt="On The Spot" src="on_the_spot.png" border="1"></p>
+<p>Over The Spot: Typed characters first appear in the input table as below and are sent to an application when committed.</p><p><img alt="Over The Spot" src="over_the_spot.png"></p></li></ul>
+
+<ul><li><p><b>Share the same input method among all applications</b><br>
+When this option is enabled, you can use the same input method in all applications without pressing <span class="keycap">Ctrl+Space</span> for each of them.  This feature should be very useful especially when you use Find (Ctrl+F) repeatedly on Japanese texts.</p></li>   
+<li><p><b>Vertical or horizontal lookup table</b><br>SCIM uses the horizontal lookup table by default.  If you prefer the vertical lookup table as below, which is probably more suitable for scim-anthy, open <a href="gtk.png">the GTK panel</a> and check 'Vertical lookup table'.</p><p><img alt="Vertical" src="vertical.png" border="1"></p></li>
+<li><p><b>Compose key support</b><br>If you use multi/dead keys, make sure that English/European is enabled in <a href="imengine.png">the IMEngine Global Setup panel</a>.  If you disable it, SCIM's built-in compose key support will be turned off and you will only be able to use those from gtk's compose table in gtk applications.</p></li></ul>
+<table border="0"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="tip.png"></td><th align="left">Tip</th></tr><tr><td colspan="2" align="left" valign="top"><p>In applications in which SCIM uses the XIM protocol, however, you still need to activate SCIM to use multi/dead keys.  From what I was told, this is because 'Dynamic Event Flow' is enabled by default.  You can disable it by editing ~/.scim/config as follows, which will enable you to use multi/dead keys without activating SCIM.</p>
+<table border="0" bgcolor="#E0E0E0"><tr><td><pre>
+/FrontEnd/X11/Dynamic = false</pre>
+</td></tr></table></td></tr></table> 
+<p>In order to make all changes take effect, you may need to start a new session.</p> 
+<p align=right><a href="#top">Top</a></p>
+
+
+<table style="background-color: #4B62AB; color: white; width: 100%; font-size: 150%; font-weight: bold; padding: 2px"><tr><td id="jp">2. Basic Usage</td></tr></table>
+<h3 id="jp1">1. How to write Hiragana</h3>
+<p>Open GEdit or an editor of your choice and press <span class="keycap">Ctrl+Space</span>, then you will see the SCIM toolbar at the bottom right corner of your screen.  If you do not see 'Anthy' on the toolbar as below, left-click on the input method label and select Japanese -> Anthy from the menu.  scim-anthy starts in the Hiragana input mode by default.</P>
+<p><img alt="Hiragana Mode" src="hiragana_mode.png"></P>
+<p>There are five vowels in Japanese: あいうえお.  In the Hiragana input mode, 'aiueo' turns into 'あいうえお' as you type.  All other Hiragana letters are generated by a combination of (a) consonant(s) and one of the five vowels.  'kakikukeko' turns into 'かきくけこ', 'sashisuseso' turns into 'さしすせそ' etc. etc.</p>
+<p><img alt="Hiragana" src="hiragana1.png" border="1"></p>
+<p>'ん' is exceptional.  A single 'n' turns into 'ん' when followed by a consonant.  For example, 'genki' turns into 'げんき (doing well)'.  To write 'こんにちは (hello)', however, you need to type 'ko<b>nn</b>nichiha' or 'ko<b>nn</b>nitiha'.</p>
+<p>The small tsu (っ) is defined as 'xtsu', 'xtu', 'ltsu' and 'ltu' in the default Romaji table of scim-anthy, but you can usually get it more easily by doubling the following consonant as in 'ni<b>pp</b>onn', which turns into 'にっぽん'.</p>
+<p>For more details about romaji-kana conversion, please refer to <a href="romakana.html">this page</a>.</p>
+
+<p><span class="keycap">Enter</span> or <span class="keycap">Ctrl+j</span> sends (commit) the underlined (preedit) string to the editor.  <span class="keycap">Esc</span> or <span class="keycap">Ctrl+g</span> clears it.</p>
+<p>When you need to edit part of the preedit string, you can use <span class="keycap">Left</span>, <span class="keycap">Right</span>, <span class="keycap">Home</span> and <span class="keycap">End</span> to move the caret.</p>
+<p>As in normal texts, <span class="keycap">Delete</span> deletes a character on the right; <span class="keycap">BackSpace</span> deletes a character on the left.</p>
+
+<h3 id="jp2">2. How to write Katakana</h3>
+<p>Words borrowed from foreign languages are usually written in Katakana.  Type 'aisukuri-mu' in the Hiragana input mode, then press <span class="keycap">F7</span>.  It will be converted into 'アイスクリーム (icecream)'.</p>
+<p><img alt="Katakana1" src="katakana1.png" border="1"></p>
+<p><img alt="Katakana2" src="katakana2.png" border="1"></p>
+<p>Press <span class="keycap">Enter</span> or <span class="keycap">Ctrl+j</span> to commit the word, or simply start typing a next word.  <span class="keycap">Esc</span> or <span class="keycap">Ctrl+g</span> reverts it to Hiragana.</p>
+<p>As you see, a hyphen turns into a prolonged sound mark.</p> 
+<p>For that matter, <span class="keycap">F8</span> converts a string into half-width characters (half-width Katakana or regular Latin alphabets depending on the previous state), <span class="keycap">Shift+F8</span> into half-width Katakana, <span class="keycap">F9</span> into wide-width Latin alphabets, <span class="keycap">F10</span> into regular Latin alphabets and <span class="keycap">F6</span> into Hiragana.  Also, pressing <span class="keycap">F9</span> or <span class="keycap">F10</span> in succession performs case conversion: home > HOME > Home.</p>
+<p>You can also get 'アイスクリーム' simply by pressing <span class="keycap">Space</span> after typing 'aisukuri-mu' since most common loan words are included in Anthy.</p>
+<p>When you want to type all words in Katakana, click on the 'あ' on the toolbar and select Katakana from the menu.</p>
+<p><img alt="Katakana Mode" src="katakana_mode.png"></p>
+<p>In the Katakana input mode, 'tachitsuteto' turns into 'タチツテト' instead of 'たちつてと' as you type.</p>
+<p>You may want to use keyboard shortcuts to change input modes more easily.  <span class="keycap">Ctrl+period</span> cycles through three Japanese input modes i.e. Hiragana, Katakana and Half-width Katakana whereas <span class="keycap">Ctrl+comma</span> cycles through all including Latin and Wide Latin.  You can switch between a Japanese input mode and Latin with <span class="keycap">Ctrl+j</span>.</p>
+
+<h3 id="jp3">3. Convert Hiragana into Kanji</h3>
+<p>There are lots of homonyms in Japanese, so you often need to select a right word from multiple candidates.  Type 'kikai' for example and press <span class="keycap">Space</span>.  It will turn into the first candidate.</p>
+<p><img alt="Kanji1" src="kanji1.png" border="1"></p>
+<p><img alt="Kanji2" src="kanji2.png" border="1"></p>
+<p>If that is the right one, press <span class="keycap">Enter</span> or <span class="keycap">Ctrl+j</span> to commit it, or simply start typing a next word.  Otherwise, press <span class="keycap">Space</span> again to get other candidates in the lookup table.</p>
+<p><img alt="Kanji3" src="kanji3.png" border="1"></p>
+<p><span class="keycap">Space</span>, <span class="keycap">Ctrl+n</span> or <span class="keycap">Down</span> selects a next candidate; <span class="keycap">Ctrl+p</span> or <span class="keycap">Up</span> selects a previous candidate.  You can also select a candidate directly by number shown in the lookup table.  (For your information, the five candidates mean machine, opportunity, grotesqueness, appliance/instrument and community of Go/Shogi players, respectively.)</p> 
+<p><span class="keycap">PageDown</span> shows a next page of candidates and <span class="keycap">PageUP</span> shows a previous page of candidates.  You can jump to the last candidate of the last page with <span class="keycap">End</span> and the first candidate of the first page with <span class="keycap">Home</span>.</p>
+<p><span class="keycap">Esc</span> or <span class="keycap">Ctrl+g</span> restores the previous state.  For example, when the lookup table is open, it first closes the window, reverts the converted string to Hiragana, then clears it.</p>
+
+<h3 id="jp4">4. Convert a sentence</h3>
+<p>Anthy is a kana-kanji conversion engine which converts a phrase or a sentence consisting of multiple segments as well.</p>
+<p>Type 'karehamisoshirugadaisukidesu. (He likes miso soup very much.)' and press <span class="keycap">Space</span>.</p>
+<p><img alt="Phrase1" src="phrase1.png" border="1"></p>
+<p><img alt="Phrase2" src="phrase2.png" border="1"></p>
+<p>If the whole string is converted as expected, press <span class="keycap">Enter</span> or <span class="keycap">Ctrl+j</span> to commit it, or simply start typing a next word.</p>
+<p>When you need to change part of the converted string, select the segment you want to edit using <span class="keycap">Right</span> or <span class="keycap">Ctrl+f</span> and press <span class="keycap">Space</span>.  
+<p><img alt="Phrase3" src="phrase3.png" border="1"></p>
+<p>Other candidates will be shown in the lookup table as above.  Select the one you want to use and press <span class="keycap">Ctrl+Down</span>, which commits the selected segment and those preceding it.</p>
+<p><img alt="Phrase4" src="phrase4.png" border="1"></p>  
+<p><span class="keycap">Enter</span> or <span class="keycap">Ctrl+j</span> commits the whole string no matter which segment is selected.</p>
+<p>You can select a previous segment with <span class="keycap">Left</span> or <span class="keycap">Ctrl+b</span>.  <span class="keycap">Home</span> or <span class="keycap">Ctrl+a</span> selects the first segment; <span class="keycap">End</span> or <span class="keycap">Ctrl+e</span> selects the last segment.</p>
+<P>When you need to shrink or broaden a segment to adjust conversion, use <span class="keycap">Shift+Left</span> or <span class="keycap">Ctrl+i</span> to shrink it and <span class="keycap">Shift+Right</span> or <span class="keycap">Ctrl+o</span> to broaden it.</p>
+<p>A period and a comma turn into double-byte Japanese punctuation marks (。、) by default.  A left bracket ([) and a right bracket (]) turn into Japanese quotation marks (「」).</p>
+<p align=right><a href="#top">Top</a></p>
+
+<table style="background-color: #4B62AB; color: white; width: 100%; font-size: 150%; font-weight: bold; padding: 2px"><tr><td id="cu">3. Customization</td></tr></table>
+<h3 id="cu1">1. Common Options</h3>
+<p>scim-anthy has a bunch of options which allow you to fine-tune its behaviors to suit your typing/writing habits.</p>
+<p><img alt="Option" src="option.png" border="0"></p>
+<ul>
+<li><p><b>Input mode:</b> You can specify the default input mode in which scim-anthy starts.</p></li>
+<li><p><b>Typing method:</b> Romaji typing method uses romaji-kana conversion as described in 'How to write Hiragana'.  scim-anthy supports Kana and Thumb-shift typing methods as well but they require a Japanese keyboard with Hiragana glyphs printed on key tops.</p></li>
+<li><p><b>Conversion mode:</b> When set to 'Multi segment', a preedit string automatically gets divided into segments when you start conversion and Anthy presents the first candidate for each of them as described in 'Convert a sentence'.  When set to 'Single segment', no division occurs and Anthy regards the whole string as one segment and presents candidates for it.  'Convert as you type' is available in both Multi segment and Single segment modes.  You can switch among the four modes from the toolbar if the 'Show conversion mode label' option is enabled under the Toolbar tab.  Those modes are represented as 連 (Multi segment), 単 (Single segment), 逐 連 (Convert as you type - Multi segment) and 逐 単 (Convert as you type - Single segment) on the toolbar.</p></li>
+<li><p><b>Behavior on focus out:</b> This option determines what to do with text in preedit when you move focus to other window.  When set to 'Commit', the text will be committed as it is; when set to 'Clear', the preedit will be cleared.</p></li></ul>
+
+<h3 id="cu2">2. Symbols</h3>
+<p>Here You can choose how some of the symbols should be used in Japanese input modes.</p>
+<p><img alt="Option" src="symbol_pref.png" border="0"></p>
+<ul>
+<li><p><b>Style of comma and period:</b> Four styles are available.  You can switch among them from the toolbar if the 'Show period style label' option is enabled under the Toolbar tab.</p></li>
+<li><p><b>Symbol input style:</b> The slash (/) can be used to input either a middle dot (・) or a double-byte slash (／) in Hiragana and Katakana modes.  The brackets ([]) are used for Japanese quotation marks (「」) by default but you may choose to convert them to double-byte brackets (［］).  You can switch among four styles from the toolbar if the 'Show symbol style label' option is enabled under the Toolbar tab.</p></li>
+<li><p><b>Space type:</b> When set to 'Wide', <span class="keycap">Space</span> always puts a double-byte space regardless of the input mode; when set to 'Half', it always puts a single-byte space; when set to 'Follow input mode', it puts a double-byte space in Hiragana and Katakana mode and a single-byte space in Latin and Half width Katakana mode.  <span class="keycap">Shift+Space</span> puts the alternative type of space.  For example, when Space type is set to 'Half', <span class="keycap">Shift+Space</span> always puts a double-byte space.</p></li>
+<li><p><b>Input from ten key:</b> As with Space type, three styles are available.  This is applied to numbers on the numeric pad that are defined as KP_1, KP_2 etc.</p></li>
+<li><p><b>Behavior on a comma or a period:</b> When set to 'Start conversion', scim-anthy automatically starts conversion when you type a comma or a period.  When set to 'Commit', preedit strings get committed with a comma or a period without being converted.</p></li></ul>
+
+<h3 id="cu3">3. Key Bindings</h3>
+<p>scim-anthy provides six themes (Default, ATOK, Canna, Microsoft IME, VJE-Delta and Wnn) and you can select one from the pulldown menu.  All key bindings are customizable and your modifications to one of the themes will be saved as 'User defined'.</p>
+<p><img alt="Hotkey1" src="hotkey1.png" border="0"></p>
+<p>Let's suppose that you use the default theme and want to bring up a next page of candidates with <span class="keycap">Ctrl+n</span>.  First, make sure that the key bindings theme is set to Default, then select 'Candidate keys' from the pulldown menu for 'Group' and double click on 'Page down' (or select 'Page down' and press 'Choose keys...').  Then the hotkey editor opens as below.</p> 
+<p><img alt="Hotkey2" src="hotkey2.png" border="0"></p>
+<p>Press the square button on the right of 'Key Code', then you will be prompted to grab a key.</p>
+<p><img alt="Hoteky3" src="hotkey3.png" border="0"></p>
+<p>Press <span class="keycap">n</span>, then it will appear in the Key Code field.  Check Ctrl as the modifier, then click 'Add'.</p>
+<p><img alt="Hoteky4" src="hotkey4.png" border="1"></p>
+<p>Note that in order to make it work for that action, you need to delete the same definition from 'Next candidate'.</p>
+<table border="0"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="tip.png"></td><th align="left">Tip</th></tr><tr><td colspan="2" align="left" valign="top">If you are using a French AZERTY keyboard, it may be a good idea to customize direct selection keys like <a href="selectionkey.png">this</a>.  Numbers on the numeric pad (KP_*) and those in the upper case (Shift+*) cannot be used for candidate selection.</td></tr></table><br>
+<table border="0"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="warning.png"></td><th align="left">Warning</th></tr><tr><td colspan="2" align="left" valign="top">If you reselect a theme from the pulldown menu and apply it, the user defined theme will be lost!  </td></tr></table>
+
+<h3 id="cu4">4. Romaji Typing</h3>
+<p>scim-anthy provides seven romaji tables (Default, ATOK, AZIK, Canna, Microsoft IME, VJE-Delta and Wnn) and you can select one from the pulldown menu.  You can see all definitions in each table by pressing the Customize button.  As with key bindings, you can customize them as you like.  Your modifications to one of the tables will be saved as 'User defined'.</p>
+<p><img alt="Romaji_typing" src="romaji_typing.png" border="0"></p>
+<p>I changed 'la/li/lu/le/lo' in the default table to 'ら/り/る/れ/ろ' so that I can type either 'remon' or 'lemon' to write 'レモン (lemon)'.</p>
+<p><img alt="Romaji" src="romaji.png" border="0"></p>
+<p>I also added several symbols to my table as below.  Those symbols can be input via <a href="input_pad.png">scim-input-pad</a>.</p>
+<p><img alt="symbol" src="symbol.png" border="0"></p>
+<table border="0"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="tip.png"></td><th align="left">Tip</th></tr><tr><td colspan="2" align="left" valign="top">You can sort sequences/results in ascending/descending order by clicking the relevant label.</td></tr></table><br>
+<table border="0"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="warning.png"></td><th align="left">Warning</th></tr><tr><td colspan="2" align="left" valign="top">If you reselect a romaji table from the pulldown menu and apply it, the user defined table will be lost!</td></tr></table>
+
+<p>There are several options that you can enable/disable according to your preference.</p>
+<ul>
+<li><p><b>Allow splitting romaji on editing preedit string:</b> This option determines the way you can edit preedit strings.  Let me give you an example.  'kyo' turns into 'きょ' in the Hiragana input mode.  When splitting is enabled, <span class="keycap">Left</span> moves the caret a character left i.e. before 'ょ'; when disabled, before 'き'.  Likewise, <span class="keycap">BackSpace</span> deletes 'ょ' when enabled; 'きょ' when disabled. </p></li>
+<li><p><b>Use half-width characters for symbols:</b> If this option is enabled, symbols (question mark, exclamation mark, ampersand, parenthesis etc.) will always be input in half-width regardless of the input mode.  This setting will not apply to the slash (/) and the brackets ([]); they will be converted into what you have chosen for them under the Symbols tab or from the toolbar.</p></li>
+<li><p><b>Use half-width characters for numbers:</b> If this option is enabled, numbers on the upper row of your keyboard will always be input in half-width regardless of the input mode. If you leave this option disabled and set 'Input from ten key' to 'Half', you can use numbers on the upper row of your keyboard for wide-width numbers and those on the numeric pad for half-width numbers in Hiragana and Katakana modes.</p></li>
+<li><p><b>Entering the pseudo ASCII input mode with capital letters:</b> This option enables you to type ASCII words without switching input modes.  Normally, typing 'linux' in the Hiragana input mode results in 'ぃぬx'.  If this option is enabled, you can avoid it by typing the first letter in upper case like 'Linux'.  Pressing <span class="keycap">F10</span> will do case conversion: Linux -> linux -> LINUX.  Additionally, the next option enables you to type more than one ASCII words with spaces in between.</p></li>
+</ul>
+
+<h3 id="cu5">5. Learning</h3>
+<p>With the default setting, Anthy learns from your selection of candidates whether you explicitly commit (a) candidate(s) with <span class="keycap">Enter</span> or <span class="keycap">Ctrl+j</span> (manual committing) or simply start typing a next word after getting (a) word(s) converted correctly (auto committing).  If you uncheck the two options, Anthy will stop learning and your selection will not affect the priority of candidates i.e. the order in which candidates are presented.  When the both options are enabled (default), you still can tell Anthy not to learn (a) specific word(s) by committing it/them with <span class="keycap">Shift+Enter</span>.  It is also possible to disable learning and use <span class="keycap">Shift+Enter</span> only for conversion results that you want Anthy to learn.  You can define key bindings to commit the first/selected segment in the same manner if you need them.</p>   
+<p><img alt="Learning" src="learning.png" border="0"></p>
+
+<h3 id="cu6">6. Candidate Window</h3>
+<p>The behavior of the candidate window (lookup table) can be configured in this panel.</p>
+<p><img alt="Candidates_window" src="candidates_window.png" border="0"></p>
+<ul>
+<li><p><b>Show "Candidates" label:</b> If you disable this option, the upper part of the lookup table where the total number of candidates is indicated will not be shown.</p></li>
+<li><p><b>Close candidate window when select a candidate directly:</b> When this option is enabled, the lookup table closes when you select a candidate by number.  When disabled, it stays open, from where you can reselect a candidate by number or using next/previous candidate keys. </p></li>
+<li><p><b>Number of candidates to show in a page:</b> If you use the horizontal lookup table, you do not always get the specified number of candidates in a page because of the maximum width of the lookup table set by scim.</p></li>
+<li><p><b>Number of triggers until show:</b> This value specifies how many times you are supposed to press <span class="keycap">Space</span> on a segment in preedit before the lookup table appears.  The descriptions in the previous chapter are based on the default setting i.e. 2.</p></li>
+</ul>
+<h3 id="cu7">7. Toolbar</h3>
+<p>You can specify which buttons to put on the toolbar depending on your needs.</P>
+<p><img alt="Toolbar" src="toolbar.png" border="0"></p>
+<p>When all the options are enabled, the toolbar looks like this. </p>
+<p><img alt="Toolbar" src="toolbar_full.png" border="0"></p>
+<h3 id="cu8">8. Appearance</h3>
+<p>You can also customize the appearance of strings in preedit/conversion although those settings are not respected in Qt/KDE and some other applications.</p>
+<p><img alt="Appearance" src="appearance.png" border="0"></p>
+<p>Below is a screenshot after changing 'Selected segment' to 'BG color' and setting it to #87CEFA in <a href="color_chooser.png">the built-in color chooser</a>.</p>         
+<p><img alt="BGcolor" src="bgcolor.png" border="1"></p>
+<p align=right><a href="#top">Top</a></p>
+
+<table style="background-color: #4B62AB; color: white; width: 100%; font-size: 150%; font-weight: bold; padding: 2px"><tr><td id="ad">4. Advanced Usage</td></tr></table>
+
+<h3 id="ad1">1. Prediction</h3>
+<p>Anthy (version 7100 or later) has the ability to predict what you are about to type from your conversion history.  You can configure its behavior under the Prediction tab of the Anthy setup panel.</p>
+<p><img alt="Prediction" src="prediction.png" border="0"></p>
+<p>When the 'Show predicted candidates while inputting letters' option is not checked, Anthy performs prediction on demand i.e. when you press <span class="keycap">Tab</span>.  For example, type 'kai' and press <span class="keycap">Tab</span>, then you will get a list of words and phrases starting with 'kai' that you ever converted.</p>
+<p><img alt="Prediction" src="predict1.png" border="1"></p>
+<p><img alt="Prediction" src="predict2.png" border="1"></p>
+<p>If you enable the first option, automatic prediction will be activated and the lookup table will appear as soon as Anthy finds a match in your conversion history.  While a desired candidate is not presented, just ignore the lookup table and type more.  If the 'Use direct select keys while predicting' option is checked, you can select a candidate from the lookup table directly by number.  Otherwise, press <span class="keycap">Tab</span>, which will select the first candidate, and then <span class="keycap">Space</span> to move the selection as in the normal conversion mode.  When you do not want to use predicted candidates at all, press <span class="keycap">Space</span> to do a normal conversion.</p>
+<h3 id="ad2">2. Re-conversion</h3>
+<p>This feature enables you to reconvert words that have already been committed.  Note that it only works in GTK applications at the moment.</p>
+<p>First, select a portion of text that you want to edit or correct.</p>
+<p><img alt="Reconvert" src="reconvert1.png" border="1"></p>
+<p>Press <span class="keycap">Ctrl+Henkan</span> or the keys that you defined for 'Reconvert' under the Key bindings tab, then you will be in the normal conversion mode.
+<p><img alt="Reconvert" src="reconvert3.png" border="1"></p>
+<p>Press <span class="keycap">Space</span> to get a next candidate.</p>
+<p><img alt="Reconvert" src="reconvert2.png" border="1"></p>
+
+<p align=right><a href="#top">Top</a></p>
+
+<table style="background-color: #4B62AB; color: white; width: 100%; font-size: 150%; font-weight: bold; padding: 2px"><tr><td id="sk">5. Skim - KDE frontend for SCIM</td></tr></table>
+<p>If you are a KDE fan, you might want to try out skim.  It respects KDE style and colour scheme of your choice. 
+</p>
+<p>First, you need to install skim-scim-anthy in addition to scim-anthy.  It is available from contrib, along with skim-scim-canna, skim-scim-honoka, skim-scim-skk and skim-scim-prime.  Then, issue the following command.</p>
+<table border="0" bgcolor="#E0E0E0"><tr><td><pre>
+scim-panel-kde -f
+</pre></td></tr></table>
+<p>You will see a new icon in your systray.  Right-click on it and select 'Configure', which will open the skim setup panel.  Go to 'Frontend' -> 'General SCIM' and select <b>scim-panel-kde</b> and <b>kconfig</b> in the Other tab as in the screenshot below.</p> 
+<p><img alt="skimsetup1" src="skim1.png" border="1"></p>
+Checking the Advanced checkbox will open Advanced Settings.  Here you can add other UTF-8 locales than en_US.UTF-8 to 'Supported Unicode Locales'. 
+<p><img alt="skimsetup3" src="skim3.png" border="1"></p>
+<p>Click the Edit button, which will open a small window as below, type in the input field and click Add.</p> 
+<p><img alt="skimsetup" src="skim4.png" border="0"></p>
+<p>Also, go to 'Frontend' -> 'X Window' and make sure the option 'Start skim automatically when KDE starts' is checked.</p>
+<p><img alt="skimsetup2" src="skim2.png" border="1"></p>
+<p>The option 'On the Spot' in this panel is only applied to XIM whereas the counterpart in the scim setup panel (Embed Preedit String into client window) is applied globally i.e. to GTK and Qt immodules as well as XIM.  The option 'Dynamic Event Flow' can also be enabled/disabled here.</p>
+
+<p>When you start a new KDE session, you will see the skim icon instead of scim's.</p> 
+
+<table border="0"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="note.png"></td><th align="left">Note</th></tr><tr><td colspan="2" align="left" valign="top">Skim does not read ~/.scim/config, so you need to reconfigure scim-anthy in the skim setup panel.  It stores your configurations in ~/.kde/share/config/skimrc.</td></tr></table><br>
+<table border="0"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="tip.png"></td><th align="left">Tip</th></tr><tr><td colspan="2" align="left" valign="top">If you encounter problems starting KDE sessions after switching to skim, try deleting XIM_PROGRAM="scim -d" from ~/.i18n.  It solved the problem for me and so far no side-effects. :)</td></tr></table><br>
+
+
+<p align=right><a href="#top">Top</a></p>
+
+<table style="background-color: #4B62AB; color: white; width: 100%; font-size: 150%; font-weight: bold; padding: 2px"><tr><td id="ka">6. Kasumi - Dictionary management tool</td></tr></table>
+
+<P>scim-anthy is <a href="dictionary.png">pre-configured</a> to use kasumi as the dictionary management tool.</p>
+<p>Let's suppose that you have a friend named 春花 (haruka) but it is not found in Anthy's dictionary.  You can convert 'haru' to 春 and then hana (ka) to 花 separately but it is boring.  You will be able to convert 'haruka' to 春花 by adding it to your dictionary.</p> <p>When scim-anthy is activated, pressing <span class="keycap">F12</span> launches kasumi in 'Adding mode'.  Fill in her name in Kanji in the Spelling field and its pronunciation in Hiragana in the Sound field.  Select '名詞 - 人名' for Word Type, adjust frequency if necessary and click 'Add'.</p>
+<p><img alt="kasumi" src="kasumi_add.png"></p>
+<table border="0"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="tip.png"></td><th align="left">Tip</th></tr><tr><td colspan="2" align="left" valign="top">
+If you copy a word and then press <span class="keycap">F12</span>, the text will be automatically added to the Spelling field.</tr></table>
+<p>When you want to see/modify other entries in your dictionary, click 'Edit'.  Pressing <span class="keycap">F11</span> launches kasumi in this mode.  Alternatively, you can start kasumi from the toolbar if the 'Show dictionary menu label' option is enabled under the Toolbar tab of the Anthy panel.</P>
+<p align=right><a href="#top">Top</a></p>
+
+<table style="background-color: #4B62AB; color: white; width: 100%; font-size: 150%; font-weight: bold; padding: 2px"><tr><td id="tm">7. Tomoe - Handwriting recognition</td></tr></table>
+
+<p>scim-tomoe is a writing pad for handwriting recognition.  It uses tomoe as the search engine.</p>
+<p>To start scim-tomoe, right-click on the SCIM toolbar or the SCIM icon in your systray and select 'Handwriting recognition' from the menu.</p>
+<p><img alt="tomoe" src="tomoe_menu.png" border="0"></p>
+<p>Write a character in the center of the pad using your mouse.  When the 'Use auto find' option is enabled in <a href="tomoe_pref.png">Preferences</a>, you will see candidates updated after each stroke at the buttom of the pad.  When disabled, press the Find button to see results.  If your character is too small or not in the right position, tomoe may fail to understand what you meant.  The Best Fit button can be used to adjust such characters so that tomoe can recognize them properly.  The Back button undoes a stroke and the Clear button erases the canvas.</p>
+<p><img alt="tomoe" src="tomoe.png" border="0"></p>
+<p>Click on a candidate, then it will be sent to the input field of an application which previously had the focus.  The 'Clear the canvas when select a candidate' option is also available.  The three buttons under the separator (Space, BackSpace and Enter) can be used to edit text in the application.</p>
+<table border="0"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="warning.png"></td><th align="left">Warning</th></tr><tr><td colspan="2" align="left" valign="top">Stroke order and number of strokes count!  If you draw a square in a single stroke, you will not get '口 (mouth)'.  It should be written in three strokes.</tr></table>
+<p>When the SCIM toolbar is active, the tomoe icon appears on it as below.  The icon will stay there until you close the pad and you can show/hide it by clicking on the icon.  The keyboard icon on the right is for scim-input-pad.</p>
+<p><img alt="scim-tomoe" src="toolbar_tomoe.png" border="0"></p>
+
+<p align=right><a href="#top">Top</a></p>
+
+
+<table style="background-color: #4B62AB; color: white; width: 100%; font-size: 150%; font-weight: bold; padding: 2px"><tr><td id="li">8. Links</td></tr></table>
+
+<ul type="disc"><li><a href="http://www.scim-im.org">SCIM Project Home Page</a></li>
+<li><a href="http://sourceforge.net/projects/scim/">SCIM at sourceforge.net</a></li>
+<li><a href="http://sourceforge.jp/projects/scim-imengine/">SCIM IMEngine</a> (Japanese IMEngines)</li>
+<li><a href="http://kasumi.sourceforge.jp/">kasumi at sourceforge.net</a></li>
+<li><a href="https://sourceforge.jp/projects/tomoe/">Tomoe at sourceforge.net</a></li>
+<li><a href="http://home.no.net/david/i18n.php">Linux Internationalization HOWTO</a> (by David Oftedal)</li>
+<li><a href="http://www.nihongobenkyo.org/">Nihongo Benkyo</a> (a Japanese dictionary and learning tool)
+<li><a href="http://aquablue.milkcafe.to/">Teardrops in Aquablue</a> (Aqua font: the Japanese font used in screenshots on this page)</li></ul>
+<hr>
+<b>Thanks to developers/contributors at SCIM, SCIM IMEngine, Anthy, Kasumi, Tomoe and Mandriva.</b><p>
+August 12th, 2005 by Yukiko BANDO --- Most recently updated: September 18th, 2006
+</body></html> 
