@@ -1,0 +1,289 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta name="keywords" content="ルート検索,地図,自動車,ドライブ,カーナビ,高速道路,料金,所要時間,距離,乗換案内">
+<meta name="description" content="「ルート検索」は、出発地から目的地までの最適なルートを地図でご案内します。自動車のドライブコースは、カーナビのように高速道路の料金や所要時間、距離も表示！電車や徒歩でのお出かけに便利な乗換案内も無料です！">
+<title>ルート検索 - MapFan Web（マップファン）</title>
+<link href="/css/header_footer.css" rel="stylesheet" type="text/css">
+<link href="css/route_set.css" rel="stylesheet" type="text/css" media="all">
+<script type="text/javascript" src="/MAP/libcmn.js" ></script>
+<script type="text/javascript" src="/MAP/libbtn.js" ></script>
+<script type="text/javascript" src="/MAP/scalectl.js"></script>
+<script type="text/javascript" src="/MAP/stopchecker.js"></script>
+<script type="text/javascript" src="/mfwcom.js"></script>
+<script type="text/javascript" src="js/mainmap.js"></script>
+<script type="text/javascript" src="/routemap/js/rail_stasrch.js"></script>
+<script type="text/javascript" src="js/route_set.js?v39"></script>
+<script type="text/javascript" src="js/keysearch.js"></script>
+<script type="text/javascript" src="js/mfw.js"></script>
+<script type="text/javascript">
+<!--
+var MAPKEY="2699-6b8c-8d5c-5028";
+var MAP="";
+var ZM="";
+var FileName = "";
+var MAPG_PRFCODE="00";
+var g_SearchTab = 1;
+var detailflag = 0;		// 歩行者　検索詳細設定表示フラグ
+var Year = "2010";
+var Day = new Array('12','25');
+var Time = new Array('17','3','1');
+var COND="";
+var HW="";
+var FR="";
+var WAY="";
+//-->
+</script>
+</head>
+<body onload="body_onload();">
+<div id="main">
+<!-- head -->
+<div id="head">
+<div id="head_a_l"><a href="/"><img src="/images/mapfan_web_logo.gif" width="159" height="32" border="0" alt="MapFan Web トップページへ"></a></div>
+<div id="head_a_c">
+<script language="javascript" type="text/javascript">
+<!--
+sp_01();
+//-->
+</script>
+</div>
+<div id="head_a_r"><a href="/sitemap.html">サイトマップ</a>｜<a href="/faq/index.html">ヘルプ</a></div>
+</div>
+<!-- head end -->
+<div id="banner01">
+<script language="javascript" type="text/javascript">
+<!--
+sp_02();
+//-->
+</script>
+<noscript>
+<a href="http://as.dc.impact-ad.jp/adclick/acc_random=1/SITE=MP.MAPFAN.DAC/AREA=ROUTE" target="_blank"><img src="http://as.dc.impact-ad.jp/nserver/acc_random=1/SITE=MP.MAPFAN.DAC/AREA=ROUTE" border="0"></a>
+</noscript>
+</div>
+<div id="banner02">
+<script language="javascript" type="text/javascript">
+<!--
+sp_03();
+//-->
+</script>
+</div>
+<div id="routenavibar">
+<table width="100%"><tr>
+<td>
+<a href="/">トップページ</a> ＞ ルート検索
+
+</td>
+</tr></table>
+</div>
+<div id="routetitlemain">
+<div class="routetitle">
+<img src="images/route.gif">
+</div>
+<div class="routetitilebun">
+「ルート検索」は出発地と目的地を指定するだけで、目的地までの最適なルートを簡単に検索できるサービスです。
+</div>
+<img src="images/title_line.gif">
+</div>
+<div class="changetab">
+<div id="cartab"><img style="float:left" src="images/car_btn_on.gif" width="200" height="50"></div>
+<div id="walktab"><a href="javascript:maintab2()"><img style="float:left" src="images/train_btn_off.gif" width="200" height="50"></a></div>
+<div class="tabsidetext">
+<script language="javascript" type="text/javascript">
+<!--
+sp_tabside();
+//-->
+</script>
+</div>
+<div class="mrlistlink" ><a href="javascript:open_map_mrlist();" onClick="mfwcom_count('f_myroutelist_srch','/routemap/routeset.cgi','');" >マイルート一覧へ</a></div>
+<div class="helplink" ><font color="#62A5E9">■</font><a href="/routemap/help.html">ルート検索のヘルプ</a></div>
+</div>
+<div id="srchdetailbtn">
+<div class="kensakujouken1" id="kensakujouken">
+<form name="RF">
+<div style="float: left;">　計算条件
+<select name="calcoption" style="width: 100px;" onchange="javascript:SearchSet()">
+<option value="normal" selected>標準</option>
+<option value="distance">最短距離</option>
+<option value="width">なるべく広い道</option>
+<option value="straight">曲がりを少なく</option>
+</select>
+</div>
+<div style="float:left">　高速道路<select name="hwoption" style="width: 100px;" onchange="javascript:SearchSet()">
+<option value="default">標準利用する</option>
+<option value="prior">優先利用する</option>
+<option value="avoid">利用しない</option>
+</select>
+</div>
+<div style="float:left">　移動手段<select name="wayoption" style="width: 240px;" onchange="javascript:SearchSet()">
+<option value="car" selected>自動車 [一般] 30km/h [有料] 80km/h</option>
+<option value="car_quick">自動車(速い) [一般] 40km/h [有料] 100km/h</option>
+<option value="car_slow">自動車(遅い) [一般] 20km/h [有料] 60km/h</option>
+<option value="bicycle">自転車 時速10km</option>
+<option value="walk">徒歩 時速3km</option></select>
+</select>
+</div>
+<div style="float:left">　<input id="ferry" name="froption" value="default" onchange="javascript:SearchSet()" checked="checked" type="checkbox"><label for="ferry">フェリーも使う</label></div>
+</form>
+</div>
+</div>
+<div id="setmap">
+<div style="float:left; padding:4px 2px 4px 2px;">
+<span id="btn_add_start">
+<a href="javascript:point_add('start',1);"><img  src="images/set_btn_s.gif"></a></span><span id="btn_add_keiyu"></span><span id="btn_add_goal"><a href="javascript:point_add('goal',1);"><img  src="images/set_btn_g.gif"></a></span><span id="btn_srch_route"><a href="javascript:set_param(); document.routeparam.submit();"><img  src="images/set_btn_makeroute.gif"></a></span></div>
+<div id="mainmap"><iframe scrolling="no" id="Map" width="451" height="354" frameborder="0" src="/MAP/map.html?MAPKEY=d75f-90e1-e323-ac4f"></iframe>
+<div class="addrbox"><span id="addrname">　</span></div>
+</div>
+<div id="pointlist">
+<div id="point_list">
+<form style="display:inline;" name="pointlist">
+<div class="point" id="pointall">
+<span class="point_allcheck">
+<input id="p0" class="point_delclass" type="checkbox" onclick="alldelchange();" name="alldel" disabled=""/>
+<label for="p0">全て選択</label>
+</span>
+<span class="point_allsort">
+<a href="javascript:sort_reverse();">
+<img  border="0" src="images/btn_reverse.gif"/>
+</a>
+</span>
+<span class="point_jumpclass">
+<a href="javascript:point_del();">
+<img border="0" src="images/btn_delpoint.gif"/>
+</a>
+</span>
+</div>
+<div id="point_box">
+<div class="point point_odd">
+<span id="p_del1" class="point_delcheck">
+<input id="p1" class="point_delclass" type="checkbox" disabled="" name="d">
+</span>
+<span id="p_mark1" class="point_markclass">
+&nbsp;<img width="16" height="16" border="0" src="images/start.gif">
+<img width="44" height="16" border="0" src="images/start_text.gif">
+</span>
+<span id="p_jump1" class="point_listclass">出発地が設定されていません</span>
+<span id="p_sort1" class="point_sort">
+<img width="16" height="16" border="0" alt="上に移動" src="images/btn_arrow_up_dis.gif">
+<img width="16" height="16" border="0" alt="下に移動" src="images/btn_arrow_dn_dis.gif">
+<img width="32" height="16" border="0" alt="削除" src="images/btn_delpointitem_dis.gif">
+</span>
+</div>
+<div class="point point_even">
+<span id="p_del2" class="point_delcheck"><input id="p2" class="point_delclass" type="checkbox" disabled="" name="d"></span>
+<span id="p_mark2" class="point_markclass">
+&nbsp;<img width="16" height="16" border="0" src="images/goal.gif">
+<img width="44" height="16" border="0" src="images/goal_text.gif">
+</span>
+<span id="p_jump2" class="point_listclass">目的地が設定されていません</span>
+<span id="p_sort2" class="point_sort">
+<img width="16" height="16" border="0" alt="上に移動" src="images/btn_arrow_up_dis.gif">
+<img width="16" height="16" border="0" alt="下に移動" src="images/btn_arrow_dn_dis.gif">
+<img width="32" height="16" border="0" alt="削除" src="images/btn_delpointitem_dis.gif">
+</span>
+</div>
+<div class="point point_odd"><span id="p_del3" class="point_delcheck"></span><span id="p_mark3" class="point_markclass"></span><span id="p_jump3" class="point_listclass"></span><span id="p_sort3" class="point_sort"></span></div>
+<div class="point point_even"><span id="p_del4" class="point_delcheck"></span><span id="p_mark4" class="point_markclass"></span><span id="p_jump4" class="point_listclass"></span><span id="p_sort4" class="point_sort"></span></div>
+<div class="point point_odd"><span id="p_del5" class="point_delcheck"></span><span id="p_mark5" class="point_markclass"></span><span id="p_jump5" class="point_listclass"></span><span id="p_sort5" class="point_sort"></span></div>
+<div class="point point_even"><span id="p_del6" class="point_delcheck"></span><span id="p_mark6" class="point_markclass"></span><span id="p_jump6" class="point_listclass"></span><span id="p_sort6" class="point_sort"></span></div>
+<div class="point point_odd"><span id="p_del7" class="point_delcheck"></span><span id="p_mark7" class="point_markclass"></span><span id="p_jump7" class="point_listclass"></span><span id="p_sort7" class="point_sort"></span></div>
+</div></form></div>
+</div>
+</div>
+<div id="keysearch">
+<div id="_item0" style="margin:0; padding:0; text-align:left; height:17px;">
+<a href="javascript:KeySearch.Select('_address')" onfocus="this.blur()"><img id="k_title0" name="_address" src='images/tab_add_on.gif' title="住所から検索"></a><a href="javascript:KeySearch.Select('_station')" onfocus="this.blur()"><img id="k_title1" name="_station" src='images/tab_tra_off.gif' title="駅名から検索"></a><a href="javascript:KeySearch.Select('_zipcode')" onfocus="this.blur()"><img id="k_title2" name="_zipcode" src='images/tab_zip_off.gif' title="郵便番号から検索"></a><a href="javascript:KeySearch.Select('_spot')" onfocus="this.blur()"><img id="k_title3" name="_spot" src='images/train_spot_off.gif' title="スポット名称から検索"></a></div>
+<div class="keywordinput">
+<form name='keybox' onsubmit='KeySearch.Search(1);return false;' style='margin:0;display:inline;'>
+<div style="float:left; margin:3px"><input type='text' name='param' style='width:190px;' maxlength='100' onfocus="this.style.backgroundColor='#fffce7';" onblur="this.style.backgroundColor='#ffffff';">
+</div><div style="float:left; margin:3px 0px 3px 0px;"><input type='image' src='images/btn_srch.gif' width='60' height='24' border='0'></div></form>
+</div>
+<div id="keysrch_result">
+<div id="tabbox2_title">
+<img  src="images/srch_info.gif"></div>
+<div id ="tabbox2_inputword"></div>
+<div id ="tabbox2_form"></div>
+<div id ="tabbox2_result"></div>
+<div id ="tabbox2_resize1"></div>
+<div id="tabhead2"></div>
+</div>
+<div class="kensakulist">
+<span id="listaddr"></span>　
+<span id="listtra"></span>　
+<span id="listcocomemo"></span>
+</div>
+<div id="koukoku_f">
+<script language="javascript" type="text/javascript">
+<!--
+sp_05();
+//-->
+</script>
+</div>
+</div>
+<div style="clear:left;">
+<div class="kensakujouken2" id="kensakujouken2">
+<form name="routeparam" action="/routemap/routeset.cgi" method="get" onsubmit="set_param();">
+<input type="hidden" name="Func" value="r">
+<input type="hidden" name="MAPS" value="">
+<input type="hidden" name="MAPK1" value="">
+<input type="hidden" name="MAPK2" value="">
+<input type="hidden" name="MAPK3" value="">
+<input type="hidden" name="MAPK4" value="">
+<input type="hidden" name="MAPK5" value="">
+<input type="hidden" name="MAPG" value="">
+<input type="hidden" name="COND" value="">
+<input type="hidden" name="HW" value="">
+<input type="hidden" name="FR" value="">
+<input type="hidden" name="REST" value="">
+<input type="hidden" name="WAY" value="">
+<a href="javascript:set_param(); document.routeparam.submit();">
+<img  src="images/btn_makeroute.gif">
+</a>
+</form>
+</div>
+</div>
+<div id="koukokuline">
+<script language="javascript" type="text/javascript">
+<!--
+sp_under_srchbtn_set();
+//-->
+</script>
+</div>
+<div id="routefoot">
+<a href="/">●MapFan Webトップページへ</a>
+</div>
+<!--▼▼通常フッタナビ▼▼-->
+<p id="endnavi">
+｜<a href="/agreement.html" target="_top">利用規約・ご注意</a>｜<a href="/info/index.html" target="_top">広告案内</a>｜<a href="http://www.incrementp.co.jp/topics/for_user.html" target="_blank">プライバシーポリシー</a>｜<a href="/howto/index.html" target="_top">MapFan Web の使い方</a> |
+</p>
+<!--▲▲通常フッタナビ▲▲-->
+<!-- ##750guide_menu## -->
+<div id="guide_menu">
+<h3>MapFanガイドメニュー</h3>
+<div class="guide_link">
+<a href="https://www.mapfan.com/mfid/">MapFan会員登録(無料)</a>｜<a href="https://www.mapfan.com/mfid/registadmin.cgi">会員情報編集・退会</a> | <a href="/add/index.html">住所一覧</a>｜<a href="/tra/index.html">駅名一覧</a>｜<a href="/routemap/routeset.cgi">ルート検索</a>｜<a href="/railway/exp.cgi">路線・乗り換え案内</a>｜<a href="/cocomemo/index.html">ココメモ</a>｜<a href="/kuchikomi/index.html">クチコミ特集</a>｜<a href="/kankou/index.html">観光楽地図（観光ガイド）</a>｜<a href="/shiori/index.html">旅のしおり工房</a>｜<a href="/tv/index.html">テレビ de み〜た</a>｜<a href="/moto/motoedit.cgi">地図の素</a>｜<a href="/touring/index.html">ツーリング・ビュー</a>｜<a href="/mini/index.html">MapFanミニ</a>｜<a href="http://realestate.mapfan.com/" rel="nofollow">賃貸・不動産</a>｜<a href="/mobile/index.html">携帯地図</a>｜<a href="/mobile/iphone/">iPhoneアプリ</a>｜<a href="/houjin/onpage/welcome/index.html">企業向け地図</a>｜<a href="/howto/index.html">詳細地図・記号の見方</a>｜<a href="/weathermap/map_a0_w">天気予報</a>｜<a href="/weathermap/map_a0_t">気温</a>｜<a href="/weathermap/map_a0_r">降水確率</a>｜<a href="/weathermap/map_a0_u">紫外線</a>
+</div>
+</div>
+<!-- ##end 750guide_menu## -->
+
+<!--▼▼コピーライト▼▼-->
+<div id="cpyright">
+<div>
+<a href="http://www.incrementp.co.jp/index.html" target="_blank"><img src="/images/footer/logo_ipc.gif" alt="インクリメントＰ" width="50" height="25" align="absmiddle" class="footer_logo"></a>
+<p><strong>インクリメント・ピー株式会社</strong><br>
+Copyright (C) 1996-<script type="text/javascript">
+<!--
+getyear();
+-->
+</script>
+ INCREMENT P CORP.</p>
+</div>
+</div>
+<!--▲▲コピーライト▲▲-->
+
+</div>
+</body>
+</head>
+</html>
