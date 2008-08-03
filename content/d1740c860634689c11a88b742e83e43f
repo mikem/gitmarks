@@ -1,0 +1,2207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>SpinRite 6.0 for Linux Users | Linux Journal</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="canonical" href="http://www.linuxjournal.com/article/7684" />
+<meta name="keywords" content="linux, open source, Ubuntu, Debian, Fedora, Madriva, suse, magazine, lamp, Reviews" />
+<meta name="description" content="SpinRite 6.0, released in June 2004, is not a Windows program. In fact,  SpinRite always has run in DOS. The Windows cachet comes from the previous releases, which work only on DOS FAT and FAT 32 partitions. What is new with SpinRite 6.0 is it now can test partitions and recover data on a Linux or multi-OS drive." />
+<meta name="revisit-after" content="1 day" />
+<link rel="shortcut icon" href="/files/linuxjournal.com/ufiles/linuxjournal_favicon.png" type="image/x-icon" />
+  <link type="text/css" rel="stylesheet" media="all" href="/files/linuxjournal.com/ufiles/css/css_9238dc28ab2af9013ded9c9945059341.css" />
+<link type="text/css" rel="stylesheet" media="print" href="/files/linuxjournal.com/ufiles/css/css_df566e361d608ff23da524a73b8f6bae.css" />
+<!--[if IE]>
+<link type="text/css" rel="stylesheet" media="all" href="/sites/linuxjournal.com/themes/zen/zen/ie.css?O" />
+<![endif]-->
+  <script type="text/javascript" src="/files/linuxjournal.com/ufiles/js/js_3133bfe57f5b7a1fcfa3990f2752cc85.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+jQuery.extend(Drupal.settings, { "basePath": "/", "user_relationships_ui": { "loadingimage": "/sites/linuxjournal.com/modules/user_relationships/user_relationships_ui/images/loadingAnimation.gif", "savingimage": "/sites/linuxjournal.com/modules/user_relationships/user_relationships_ui/images/savingimage.gif", "position": { "position": "absolute", "left": "0", "top": "0" } }, "quicktabs": { "qt_1": { "tabs": [ 0, 0, 0 ] } } });
+//--><!]]>
+</script>
+<!-- PUT THIS TAG IN THE head SECTION -->
+<script type="text/javascript" src="http://partner.googleadservices.com/gampad/google_service.js">
+</script>
+<script type="text/javascript">
+  GS_googleAddAdSenseService("ca-pub-3600556074671070");
+  GS_googleEnableAllServices();
+</script>
+<script type="text/javascript">
+  GA_googleAddSlot("ca-pub-3600556074671070", "Half_Banner336x90");
+  GA_googleAddSlot("ca-pub-3600556074671070", "Large_Rectangle336x280");
+  GA_googleAddSlot("ca-pub-3600556074671070", "Leaderboard728x90");
+GA_googleAddSlot("ca-pub-3600556074671070", "Desktop_LargeRectangle");
+GA_googleAddSlot("ca-pub-3600556074671070", "Desktop_Leaderboard");
+GA_googleAddSlot("ca-pub-3600556074671070", "Embedded_LargeRectangle");
+GA_googleAddSlot("ca-pub-3600556074671070", "Embedded_Leaderboard");
+GA_googleAddSlot("ca-pub-3600556074671070", "Mobile_LargeRectangle");
+GA_googleAddSlot("ca-pub-3600556074671070", "Mobile_Leaderboard");
+GA_googleAddSlot("ca-pub-3600556074671070", "Security_LargeRectangle");
+GA_googleAddSlot("ca-pub-3600556074671070", "Security_Leaderboard");
+GA_googleAddSlot("ca-pub-3600556074671070", "SysAdmin_LargeRectangle");
+GA_googleAddSlot("ca-pub-3600556074671070", "SysAdmin_Leaderboard");
+GA_googleAddSlot("ca-pub-3600556074671070", "Virtualization_LargeRectangle");
+GA_googleAddSlot("ca-pub-3600556074671070", "Virtualization_Leaderboard");
+GA_googleAddSlot("ca-pub-3600556074671070", "HPC_LargeRectangle");
+GA_googleAddSlot("ca-pub-3600556074671070", "HPC_Leaderboard");
+GA_googleAddSlot("ca-pub-3600556074671070", "WebDevelopment_LargeRectangle");
+GA_googleAddSlot("ca-pub-3600556074671070", "WebDevelopment_Leaderboard");
+</script>
+<script type="text/javascript">
+  GA_googleFetchAds();
+</script>
+<!-- END OF TAG FOR head SECTION -->
+
+ <!-- <script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script> -->
+ <!--<script type="text/javascript">_uacct = "UA-1117794-1"; urchinTracker();</script> -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-1117794-1");
+pageTracker._setDomainName(".linuxjournal.com");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+<!-- Start Quantcast tag -->
+<script type="text/javascript"
+src="http://edge.quantserve.com/quant.js"></script>
+<script
+type="text/javascript">_qacct="p-a3K3N6enFe9wA";quantserve();</script>
+<object>
+<noscript>
+<a href="http://www.quantcast.com/p-a3K3N6enFe9wA"
+target="_blank"><img
+src="http://pixel.quantserve.com/pixel/p-a3K3N6enFe9wA.gif"
+style="display: none;" border="0" height="1" width="1"
+alt="Quantcast"/></a>
+</noscript>
+</object>
+<!-- End Quantcast tag -->
+
+</head>
+<body class="not-front not-logged-in node-type-xmlnode one-sidebar sidebar-right page-node-7684 section-node">
+
+
+  <div id="page"><div id="page-inner">
+<div id="header-top">
+<div id="login">
+<form action="/?q=user&amp;destination=node%2F7684"  method="post" id="user-login">
+Username/Email:&nbsp;<input type="text" maxlength="60" name="name" id="edit-name" size="15" value="" class="form-text required" />
+Password:&nbsp;<input type="password" maxlength="" name="pass" id="edit-pass" size="15" class="form-text required" />
+<input type="submit" name="op" value="Login" class="form-submit" />
+
+
+<input type="hidden" name="form_id" id="edit-user-login" value="user_login" />
+
+</form>
+</div>
+<div id="login-links">
+<a href="/user/register">Register</a> | <a href="/user/password">Forgot your password?</a>
+
+
+
+</div>
+<div id="connect">
+<a href="http://www.twitter.com/linuxjournal" title="Follow us on Twitter"><img alt="Twitter" src="/files/linuxjournal.com/images/twittericon.jpg" /></a><a href="http://www.facebook.com/linuxjournal" title="Become a Fan on Facebook"><img alt="Facebook" src="/files/linuxjournal.com/images/fbicon.jpg" /></a><a href="http://www.flickr.com/groups/linuxjournal/pool/" title="Contribute to Our Flickr Pool"><img alt="Flickr" src="/files/linuxjournal.com/images/flickricon.jpg" /></a><a href="/rss_feeds" title="Subscribe to Our Feeds"><img alt="RSS" src="/files/linuxjournal.com/images/rssicon.jpg" /></a>
+</div>
+</div> <!-- /#header-top -->
+
+
+
+
+
+    <a name="top" id="navigation-top"></a>
+          <div id="skip-to-nav"><a href="#navigation">Skip to Navigation</a></div>
+    
+    <div id="header"><div id="header-inner" class="clear-block">
+
+              <div id="logo-title">
+
+                      <div id="logo"><a href="/" title="Home" rel="home"><img src="/files/linuxjournal.com/ufiles/logo-lj.jpg" alt="Home" id="logo-image" /></a></div>
+          
+          
+          
+	<div id="leaderboard-adblock" class="adblock leaderboard-adblock">
+       <div id="block-block-90" class="block block-block region-odd odd region-count-1 count-13"><div class="block-inner">
+
+  
+  <div class="content">
+    <!-- PUT THIS TAG IN DESIRED LOCATION OF SLOT Leaderboard728x90
+     -->
+<script type="text/javascript">
+  GA_googleFillSlot("Leaderboard728x90");
+</script>
+<!-- END OF TAG FOR SLOT Leaderboard728x90
+     -->
+  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+	</div>
+
+        </div> <!-- /#logo-title -->
+      
+
+
+      
+    </div></div> <!-- /#header-inner, /#header -->
+
+    <div id="main"><div id="main-inner" class="clear-block with-navbar">
+
+      <div id="content"><div id="content-inner">
+
+        
+        
+                  <div id="content-header">
+            <div class="breadcrumb"><a href="/">Home</a> › </div>                          <h1 class="title">SpinRite 6.0 for Linux Users</h1>
+                                                          </div> <!-- /#content-header -->
+        
+        <div id="content-area">
+          <div id="node-7684" class="node node-type-xmlnode"><div class="node-inner">
+
+
+
+  
+
+  
+  
+  
+
+
+  
+  
+
+  
+      <div class="meta">
+              <div class="submitted">
+		Jul 19, 2004		&nbsp;By&nbsp;<a href="/user/801368" title="View user profile.">Leon A. Goldstein</a>	</div>
+      
+              <div class="terms terms-inline">&nbsp;in<ul class="links inline"><li class="taxonomy_term_20 first last"><a href="/tag/reviews" rel="tag" title="">Reviews</a></li>
+</ul></div>
+      
+  	 </div>
+    <!-- how'd this get in here?</div> -->
+  
+  
+    	<div class="abstract">
+	SpinRite? What is a review of a Windows application doing on the <emphasis>Linux Journal</emphasis> Web site?	</div>
+    
+
+
+
+  <div class="content">
+
+    <div class="article" lang="en"><div class="simplesect" lang="en"><div class="titlepage"><a name="N0xa50890.0xb44ac0"></a></div><p>
+SpinRite 6.0, released in June 2004, is not a Windows program. In fact, 
+SpinRite always has run in DOS. The Windows cachet comes from the previous
+releases, which work only on DOS FAT and FAT 32 partitions. What is new
+with SpinRite 6.0 is it now can test partitions and recover data on
+a Linux or multi-OS drive. It also can test a new, unformatted drive.
+</p><p>
+SpinRite 6.0 now runs independently of any installed operating system and
+associated filesystem and can work on all Windows formats, DOS FAT 
+and Linux. Even Macintosh owners can use it, although they need 
+to cable the Mac drive to a PC.
+</p><p>
+Long-time SpinRite users need no introduction to the product. SpinRite is a utility for
+verifying, maintaining or repairing hard drives. Although Linux utilities
+such as chkdsk look at file integrity, SpinRite tests magnetic media for
+data integrity and can warn of impending failure. If SpinRite is used
+after data is lost, it may be able to recover data by coercing unreadable
+bits back to consciousness.  Other handy uses are identifying partitions
+on a multiple OS drive and benchmarking.
+</p><p>
+What distinguishes SpinRite from some other hard-drive tools is it
+works non-destructively. This is particularly important for newcomers
+to SpinRite; unfamiliarity with the mouse-less user interface cannot cause
+damage to data.  According to SpinRite's literature: "it first reads the
+data out of a region, then exercises that region with patterns of data
+that SpinRite has determined are the most difficult for the drive to read
+and write. In this way, any weak and failing areas within the region are
+located and removed from use while none of the drive's original data is
+being stored there. Only after the region has been made absolutely safe,
+will the drive's original data be restored to that area."
+</p></div><div class="simplesect" lang="en"><div class="titlepage"><a name="N0xa50890.0xb44cd0"></a>How to Get It</div><p>
+SpinRite 6.0 is available only by download from the 
+<a href="http://www.grc.com">SpinRite Web site</a>. The cost ranges from $89 for a first time buyer to $29
+for SpinRite 5.0 owners.  Owners of intermediate releases also receive a
+discounted price: $69 for owners of the original SpinRite or SpinRite
+II, $49 for owners of SpinRite 3.1 or 4.0.  You need the serial number
+from your original SpinRite floppy to qualify.
+</p></div><div class="simplesect" lang="en"><div class="titlepage"><a name="N0xa50890.0xb44e30"></a>How to Install It</div><p>
+The download is a small (170 KB) Windows executable.  This is a setup
+utility.  The utility can create a bootable floppy, CD ISO or install
+SpinRite directly on removable media.  The executable can run under WINE
+or CrossOver Office.  I was able to run it and create a burnable ISO with
+Libranet 2.8.1 and its bundled WINE version.  
+</p><div class="mediaobject"><a href="/files/linuxjournal.com/linuxjournal/articles/076/7684/7684f1.jpg"><img src="/files/linuxjournal.com/linuxjournal/articles/076/7684/7684f1.inline.jpg" /></a><div class="caption"><p>Figure 1. Starting with SpinRite</p></div></div><p>
+The ISO  already is bootable; it includes FreeDOS.  If you use XCDRoast,
+simply copy the ISO to your image directory and then select it and burn the
+track.  
+</p><p>
+I had a much harder time creating a bootable floppy.  Running
+the setup under WINE, the utility kept complaining that the floppies
+were defective.  Trying again in Windows 98, it finally made a floppy
+but only after rejecting a half-dozen other diskettes.  The installer
+claims that it does a media test of the floppy.  In fairness, I have been
+experiencing problems with recently bought floppies.  Quality control
+does not seem to be there any more.  The bootable CD is the way to go,
+however, and making one in a pure Linux environment is fast and easy.
+This, of course, depends on whether your particular WINE setup is up to
+it. YMMV.
+</p><div class="mediaobject"><a href="/files/linuxjournal.com/linuxjournal/articles/076/7684/7684f2.jpg"><img src="/files/linuxjournal.com/linuxjournal/articles/076/7684/7684f2.inline.jpg" /></a><div class="caption"><p>Figure 2. Creating the Boot Image</p></div></div></div><div class="simplesect" lang="en"><div class="titlepage"><a name="N0xa50890.0xb45358"></a>How to Use It</div><p>
+SpinRite needs direct control of the system, so it must boot to a clean
+configuration.  SpinRite installs a copy of FreeDOS on the bootable media 
+and works without resorting to any memory managers or device drivers.
+Insert either the bootable floppy or the CD, and you are greeted by a
+splash screen.
+</p><p>
+The splash screen switches to a nostalgic DOS title screen, bearing the
+owner's name.  Press any other key--other than Esc, which exits out
+of the program--and the copyright and license screen appears.  Here the
+owner's license key is displayed.  Another keystroke opens another
+screen that asks if you are running SpinRite 6.0 for data recovery or
+drive maintenance.  It describes two of the five operational levels, 
+level 2 for data recovery or level 4 for maintenance.  You can select
+any of the other operating levels; instructions are displayed.
+</p><p>
+You can begin running SpinRite 6.0 immediately and go to the Main Menu.  
+The options are:
+</p><div class="blockquote"><blockquote class="blockquote"><p>
+1.  Select Drives &amp; Partitions
+2.  View or Change Settings
+3.  Perform Drive Benchmarks
+4.  Exit
+</p></blockquote></div><p>
+If you select 1, two windows are displayed; the left side lists all of
+the partitions and free space ("gaps").  The right window displays 
+system information and status; you can toggle through BIOS info, Hardware,
+and S.M.A.R.T. Stat for details.
+</p><p>
+Getting back to the left window, scroll down to the partition(s)
+you want to examine and select it(them) by pressing the space bar.  Of course,
+you can select the entire drive, or you can test a floppy.
+</p><p>
+Next, go to 2. View or Change Settings and change the operational level 
+of testing if you want.  You can select logging either to a floppy or a
+connected printer.  Other settings concern the log format and content.
+The five operational levels, in order of increasing intensity and
+time required, are: 
+</p><div class="blockquote"><blockquote class="blockquote"><p>
+1. Examine surfaces.  This is the fastest test and is useful for checking out a new hard drive if time is short.  
+2. Recover unreadable data. 
+3. Refresh the surface.
+4. Locate surface defects.  
+5. Restore good sectors.
+</p></blockquote></div><div class="mediaobject"><a href="/files/linuxjournal.com/linuxjournal/articles/076/7684/7684f3.jpg"><img src="/files/linuxjournal.com/linuxjournal/articles/076/7684/7684f3.inline.jpg" /></a><div class="caption"><p>Figure 3. View or Change Settings</p></div></div><p>
+These tests are cumulative; for example, level 5 includes all of the tests, 
+level 4 includes level 1 through 3 tests and so on. For a more detailed 
+description of the various SpinRite tests and the technology, please
+visit the SpinRite Web site.
+</p><p>
+While SpinRite 6.0 is running, you can toggle through seven displays:
+</p><div class="blockquote"><blockquote class="blockquote"><p>
+1.  Graphic Status Display: shows the progress and condition of the
+medium under test.  Any bad sectors detected are coded.  FAT partitions
+display used and unused sectors; NTFS and Linux partitions do not
+distinguish between used and unused space, however.
+</p><div class="mediaobject"><a href="/files/linuxjournal.com/linuxjournal/articles/076/7684/7684f4.jpg"><img src="/files/linuxjournal.com/linuxjournal/articles/076/7684/7684f4.inline.jpg" /></a><div class="caption"><p>Figure 4. Graphic Status Display</p></div></div><p>
+2.  Real-Time Activities
+</p><div class="mediaobject"><a href="/files/linuxjournal.com/linuxjournal/articles/076/7684/7684f5.jpg"><img src="/files/linuxjournal.com/linuxjournal/articles/076/7684/7684f5.inline.jpg" /></a><div class="caption"><p>Figure 5. Real-Time Activities</p></div></div><p>
+3.  Detailed Technical Log: accumulates all of the results and can
+be copied either to a floppy or to an on-line printer. SpinRite is
+DOS, so don't expect it to work with a Winprinter.
+</p><div class="mediaobject"><a href="/files/linuxjournal.com/linuxjournal/articles/076/7684/7684f6.jpg"><img src="/files/linuxjournal.com/linuxjournal/articles/076/7684/7684f6.inline.jpg" /></a><div class="caption"><p>Figure 6. Technical Log</p></div></div><p>
+4.  S.M.A.R.T. System Monitor: includes temperature monitoring for those
+drives that support it.  Not all drives I tested reported temperatures.
+My Seagate 80 GB Barracuda reported temperature but not my Maxtor 20
+GB or Western Digital 80 GB "Jumbo" drives.  I performed all of the tests 
+with ATA 100 hard drives.
+</p><div class="mediaobject"><a href="/files/linuxjournal.com/linuxjournal/articles/076/7684/7684f7.jpg"><img src="/files/linuxjournal.com/linuxjournal/articles/076/7684/7684f7.inline.jpg" /></a><div class="caption"><p>Figure 7. S.M.A.R.T. System Monitor</p></div></div><p>
+5.  DynaStat Data Recovery: the jewel in the crown. If
+SpinRite detects possible data in a defective location, DynaStat goes
+to work to coax the data, bit by bit, out of hiding.  
+</p><div class="mediaobject"><a href="/files/linuxjournal.com/linuxjournal/articles/076/7684/7684f8.jpg"><img src="/files/linuxjournal.com/linuxjournal/articles/076/7684/7684f8.inline.jpg" /></a><div class="caption"><p>Figure 8. DynaStat Data Recovery</p></div></div><p>
+6.  Change Operational Level: here you can change from among the five
+test levels at any time.
+</p><p>
+7.  Screen Blanker: a small window dances slowly around the screen
+that indicates SpinRite 6.0 is running and lists the completion percentage
+of the partition under scrutiny.
+</p></blockquote></div><p>
+You can suspend or cancel any operation and resume later from where
+you left off.  SpinRite 6.0 reports progress as a percentage with four
+decimal places; you can note exactly where you left off and resume later.
+Because drives are big and getting bigger, and because the time to run
+SpinRite 6.0 can be considerable, this feature lets you examine the
+drive progressively, over several sessions, if necessary.
+</p><p>
+How long SpinRite needs to perform its tests depends on your hardware.
+From my tests with various computers and hard drives, a level-2 test run
+on a 10 GB partition can take from about four minutes to over 30 minutes.
+What determines how fast the test runs depends on, in descending
+order of influence: the motherboard, BIOS settings and interface; the 
+hard drive; and the CPU. For example, my Compaq 5151 Presario, upbrained from a K6-2 350MHz to
+K6-III+ overclocked to 500MHz, ran the tests faster than my Celeron
+1GHz.  The Presario has an add-on Promise ATA100 PCI interface card,
+while the Celeron box supports only ATA66.  The hard drives in both are
+of equivalent performance.  At level-4 testing, CPU power becomes more
+important, because more SpinRite operations are in play.  My Presario with
+the 500MHz K6-III+ needs 59 minutes to complete a level-4 test on a 10GB
+partition, while my P4 2.2GHz system can do the same job in 18 minutes.
+</p><p>
+SpinRite 6.0 is a new product, so new in fact that there is no
+documentation for it yet.  Check the SpinRite Web site for further
+developments. Because SpinRite 6.0 is an evolutionary development, previous
+users should feel right at home.  For newcomers, the extensive downloadable
+documentation for the previous release will provide useful help until
+the new user's guide is posted.  As mentioned earlier, SpinRite is 
+simple to use, and it has no hidden barbs or traps.
+</p><p>
+From the SpinRite newsgroup and confirmed in a private e-mail from Steve
+Gibson, any future  dot  updates to SpinRite 6.0 will be available to
+owners at no additional cost.
+</p><p>
+Spending $89 for a measly 170KB of code may seem extravagant, but you
+need to lose data only one time to realize the real cost.  For previous
+SpinRite owners, the update is a double good deal: a SpinRite you can use
+on your Linux system with no learning curve and at a prorated discount
+to boot.
+</p></div></div><div class="links"><div class="item-list"><ul class="pager"><li class="pager-current first">1</li>
+<li class="pager-item"><a href="/article/7684?page=0,1" title="Go to page 2" class="active">2</a></li>
+<li class="pager-next"><a href="/article/7684?page=0,1" title="Go to next page" class="active">next ›</a></li>
+<li class="pager-last last"><a href="/article/7684?page=0,1" title="Go to last page" class="active">last »</a></li>
+</ul></div></div>
+  </div>
+      <div class="user-signature clear-block">
+______________________
+	<p>
+        <!--paging_filter-->	</p>
+      </div>
+   
+
+
+  <ul class="links inline"><li class="flag-anon first"><a href="/u?destination=node%2F7684">Login to save this as favorite</a></li>
+<li class="service-links-delicious"><a href="http://del.icio.us/post?url=http%3A%2F%2Fwww.linuxjournal.com%2Farticle%2F7684&amp;title=SpinRite+6.0+for+Linux+Users" title="Bookmark this post on del.icio.us." id="service-links-delicious-1" class="service-links-delicious" rel="nofollow"><img src="/sites/linuxjournal.com/modules/service_links/images/delicious.png" alt="del.icio.us" title="" width="16" height="16" /></a></li>
+<li class="service-links-digg"><a href="http://digg.com/submit?phase=2&amp;url=http%3A%2F%2Fwww.linuxjournal.com%2Farticle%2F7684&amp;title=SpinRite+6.0+for+Linux+Users" title="Digg this post on digg.com" id="service-links-digg-1" class="service-links-digg" rel="nofollow"><img src="/sites/linuxjournal.com/modules/service_links/images/digg.png" alt="Digg" title="" width="16" height="16" /></a></li>
+<li class="service-links-facebook"><a href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fwww.linuxjournal.com%2Farticle%2F7684&amp;t=SpinRite+6.0+for+Linux+Users" title="Share on Facebook." id="service-links-facebook-1" class="service-links-facebook" rel="nofollow"><img src="/sites/linuxjournal.com/modules/service_links/images/facebook.png" alt="Facebook" title="" width="16" height="16" /></a></li>
+<li class="service-links-reddit"><a href="http://reddit.com/submit?url=http%3A%2F%2Fwww.linuxjournal.com%2Farticle%2F7684&amp;title=SpinRite+6.0+for+Linux+Users" title="Submit this post on reddit.com." id="service-links-reddit-1" class="service-links-reddit" rel="nofollow"><img src="/sites/linuxjournal.com/modules/service_links/images/reddit.png" alt="Reddit" title="" width="16" height="16" /></a></li>
+<li class="service-links-slashdot"><a href="http://slashdot.org/bookmark.pl?url=http%3A%2F%2Fwww.linuxjournal.com%2Farticle%2F7684&amp;title=SpinRite+6.0+for+Linux+Users" title="Bookmark this post on SlashDot" id="service-links-slashdot-1" class="service-links-slashdot" rel="nofollow"><img src="/sites/linuxjournal.com/modules/service_links/images/slashdot.png" alt="SlashDot" title="" width="16" height="16" /></a></li>
+<li class="service-links-stumbleupon"><a href="http://www.stumbleupon.com/submit?url=http%3A%2F%2Fwww.linuxjournal.com%2Farticle%2F7684&amp;title=SpinRite+6.0+for+Linux+Users" title="Thumb this up at StumbleUpon" id="service-links-stumbleupon-1" class="service-links-stumbleupon" rel="nofollow"><img src="/sites/linuxjournal.com/modules/service_links/images/stumbleit.png" alt="StumbleUpon" title="" width="16" height="16" /></a></li>
+<li class="tweet_Twitter last"><a href="http://twitter.com/home?status=+SpinRite+6.0+for+Linux+Users%3A+http%3A/%2Fwww.linuxjournal.com/article/7684" class="tweet" rel="nofollow" target="_blank"><img src="/sites/linuxjournal.com/modules/tweet/twitter.png" alt="Post to Twitter" title="Post to Twitter" width="16" height="16" /></a></li>
+</ul>
+ <!-- <div class="contentad">
+
+  </div>
+  -->
+
+
+
+
+</div></div> <!-- /node-inner, /node -->
+
+
+  <div id="comments">
+          <h2 id="comments-title">Comments</h2>
+        <form action="/article/7684"  accept-charset="UTF-8" method="post" id="comment-controls">
+<div><div class="box"><div class="box-inner">
+
+      <h2 class="title">Comment viewing options</h2>
+  
+  <div class="content">
+    <div class="container-inline"><input type="hidden" name="form_build_id" id="form-ea600a93f15a4b812cb85c0d76a5c78d" value="form-ea600a93f15a4b812cb85c0d76a5c78d"  />
+<input type="hidden" name="form_id" id="edit-comment-controls" value="comment_controls"  />
+<div class="form-item" id="edit-mode-wrapper">
+ <select name="mode" class="form-select" id="edit-mode" ><option value="1">Flat list - collapsed</option><option value="2">Flat list - expanded</option><option value="3">Threaded list - collapsed</option><option value="4" selected="selected">Threaded list - expanded</option></select>
+</div>
+<div class="form-item" id="edit-order-wrapper">
+ <select name="order" class="form-select" id="edit-order" ><option value="1" selected="selected">Date - newest first</option><option value="2">Date - oldest first</option></select>
+</div>
+<div class="form-item" id="edit-comments-per-page-wrapper">
+ <select name="comments_per_page" class="form-select" id="edit-comments-per-page" ><option value="10">10 comments per page</option><option value="30">30 comments per page</option><option value="50" selected="selected">50 comments per page</option><option value="70">70 comments per page</option><option value="90">90 comments per page</option><option value="150">150 comments per page</option><option value="200">200 comments per page</option><option value="250">250 comments per page</option><option value="300">300 comments per page</option></select>
+</div>
+<input type="submit" name="op" id="edit-submit" value="Save settings"  class="form-submit" />
+</div><div class="description">Select your preferred way to display the comments and click "Save settings" to activate your changes.</div>  </div>
+
+</div></div> <!-- /box-inner, /box -->
+
+</div></form>
+<a id="comment-353890"></a>
+<div class="comment comment-published odd first comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-353890" class="active">Good product</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Anonymous&#039;s picture" title="Anonymous&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Anonymous (not verified) on Sat, 07/17/2010 - 12:43.  </div>
+
+  <div class="content">
+    <p>This product has recovered my drive that's been corrupting and causing windows to crash. However it took a long time for it to get started as it seems to freezes at a certain percent. Only after a low level format was spinrite able to complete a Hitachi 160GB drive in 11hrs. Not sure if I was inpatient or if it did freeze as the remaining time and time elapsed was frozen as well as everything else. However I'm not very knowledgeable with HDD and how they work exactly.</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<a id="comment-347852"></a>
+<div class="comment comment-published even comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-347852" class="active">Assembly is the most powerful programming language</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Anonymous&#039;s picture" title="Anonymous&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Anonymous (not verified) on Thu, 01/28/2010 - 14:57.  </div>
+
+  <div class="content">
+    <p>I am not a specialist in hard drive but as a programmer I know the power of assembly language.The best Music Production software which is by the way not the most popular is written in assembly.I have used it and I can tell you it sounds like a hardware.I will not mention names.Interestingly most assembly written software/applications seems to be mocked at, because according to many its an old language.I believe that if Technology was more geared at giving people the best than making money then our powerful computers today will have been about 30x more powerful if the assembly language or similar very low level programming were developed.But because of laziness and fast cash making we have gone the way of high level languages.By the way many hackers and crackers understand and use assembly to do their job and if any one claims assembly is not the most powerful language that can perform wonders then I hope he /she is not planning to release the next big brand software which will be cracked using assembly.Please there is also no need of cursing and abusing people in this forum of comments.Please give honor to whom honor is due and to God what belong to him.Stay blessed.</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<a id="comment-345352"></a>
+<div class="comment comment-published odd comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-345352" class="active">SpinRite saved my day... three times!</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="E. Florac&#039;s picture" title="E. Florac&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by E. Florac (not verified) on Tue, 11/17/2009 - 11:08.  </div>
+
+  <div class="content">
+    <p>In at least three occurrences, SpinRite saved my life by reviving a failed Maxtor 250GB drive! In fact, the drive after a while failed... just at the beginning of the root partition, corrupting the reiserfs filesystem beyond any repair! Fortunately SpinRite was able to restore the bad blocks, allowing reiserfsck to repair the FS and me to save the data.<br />
+After I had backed up the whole thing, I made a low level format and put this drive elsewhere... when it failed again! SpinRite repaired it once, but this time I threw the drive away :)</p>
+<p>On another windows XP system, a badblock occurred on some very important system dll, preventing the system to boot even in failsafe mode. Fortunately, SpinRite was able to restore the bad block and the lost file!</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<a id="comment-340092"></a>
+<div class="comment comment-published even comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-340092" class="active">Article Suggestion</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="fppvta_linux&#039;s picture" title="fppvta_linux&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by fppvta_linux (not verified) on Tue, 07/28/2009 - 12:21.  </div>
+
+  <div class="content">
+    <p>Along the lines of disk recovery...an alternative to the commercial, but useful, SpinRite would be GNU ddrescue.  (Please note that this is a different product than the similarly named dd_rescue which is in many distro package mgrs).<br />
+<a href="http://www.gnu.org/software/ddrescue/ddrescue.html" title="http://www.gnu.org/software/ddrescue/ddrescue.html">http://www.gnu.org/software/ddrescue/ddrescue.html</a>.  It uses the concept of "splitting errors," when an areas of bad sectors is encountered, the errors are split until the "good" areas are properly imaged to a new drive, and the unreadable areas are found.  So, it doesn't stress a possibly failing drive by "grinding" through unreadable areas before the good areas are gathered.  You may have only one chance to image a failing drive, and this tool is gentle with original disk.</p>
+<p>Only then, after the good areas are written, does it try to recover the "bad" areas by re-reading them until we get data or fail after a specified number of attempts. This is why ddrescue is better to use than straight dd with the conv=noerror,sync option (dd makes no attempts to get the unreadable data, it just writes zeros to the corresponding image sector).</p>
+<p>If the imaging fails (expect it to w with bad disks), on restart, areas that are imaged successfully need not be read more than once due to robust logging. It will pick up where it left off. Hence multiple runs can be done. Any areas that it can't get data from can be filled with a character of your choice - unlike the dd command's conv=noerror,sync option which only writes zeros to the "unreadable" areas. This can be handy, if you've already zeroed the destination drive before imaging, and want to be able to identify where the bad sectors were on the original, to identify what may be missing.</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<a id="comment-334216"></a>
+<div class="comment comment-published odd comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-334216" class="active">CHKDSK is the best utility !</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="neil&#039;s picture" title="neil&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by neil (not verified) on Thu, 03/05/2009 - 22:54.  </div>
+
+  <div class="content">
+    <p>waiting for the flames now...</p>
+<p>No seriously, i just wanted to save lots of data from an external usb hdd that become corrupt (Seagate 500GB less than 1 year old). Both Vista and Server2k3 would prompt about inconsistencies, and would run chkdsk for a long time (i gave up after 5 days/nights of furious spinning), plus as a program CHKDSK sux because minimal to no feedback.</p>
+<p>Enter SpinRite, simple instructions, get it running and i get feedback that something is happening (although some screens don't seem right, so what), i just want to recover most of my data. The hard disk is the least of my concerns, couldn't care less if it's written in assembly, basic, or some exotic linux language, or whether it's Raid-1 or -5 or -10,000.</p>
+<p>To the lots of linux heads around the place, can you point to a linux program that tries to recover data in a similar way? To the critics, can i pay you to recover my data, or are you just too jealous?</p>
+<p>Happy user, my alternative was to bin the hardisks and the data... ouch!</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<a id="comment-331742"></a>
+<div class="comment comment-published even comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-331742" class="active">Addendum for  Critical High End Computers</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Richard V. Hale&#039;s picture" title="Richard V. Hale&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Richard V. Hale (not verified) on Fri, 01/16/2009 - 18:47.  </div>
+
+  <div class="content">
+    <p>******************************************************<br />
+SpinRite  has proven itself Statistically by literally improving the reliability and performance of the Hard Drive MTBF Bathtub Curve.</p>
+<p>An absolute must helping New Drives burn in and extending the life of old ones.    It is also highly recommended to ensure critical system safety and the reliability of safety systems.</p>
+<p>I have no financial interest in this product other than it has saved us a significant amount of money by cutting both hardware and labor costs.</p>
+<p>Physicists can rest assured these extremely high density quantum devices (depending on electron spin) can be made all but bullet proof.</p>
+<p>As proof I offer this, having come across a drive corrupted so badly nothing (including OEM utilities) could fix spinrite was put to the task.   It sounded like that the bit error rate had over-whelmed the device controller and was clicking frantically (typical of a drive about to burn up from excessive seeks).</p>
+<p>Within several hours of quick scanning the Large Block Addressing (LBA) of a very bad cluster of  blocks was located.  The drive was re-partitioned to isolate the bad blocks in a small area (10 or 20 Gigs).  Spinrite was the run in its highest recovery-maintenance mode for several hours. The bad blocks were identified by the controller, properly marked and sectors isolated by the firmware.</p>
+<p>That drive has been running non-stopped four four years with little if any problems. Please note that all drives are constantly monitored via S.M.A.R.T. for temperature and possible failure indicators.</p>
+<p>This product has been proven to work well with TestDisk<br />
+  ref ...cgsecurity.org/wiki/TestDisk<br />
+      ...forensicswiki.org/wiki/TestDisk<br />
+      ...opensourceforensics.org/tools/windows.html<br />
+      ...en.wikipedia.org/wiki/Boot_sector<br />
+      ...support.microsoft.com/kb/122221<br />
+      ...cftt.nist.gov/DFF-Apr-07.ppt<br />
+      ... etc.</p>
+<p>****************************************************</p>
+<p>This poster echos my experience:</p>
+<p>Run a real diagnostic<br />
+by Gsteele - 2/25/05 6:42 PM In reply to: Similar problem with early IBM drives by davmax<br />
+I'd suggest running Spinrite from Gibson Research. It will really get down and dirty with the drive, refresh all data and sector formatting, and look for cross-sector bit pattern interactions. By reading the log, you'll see how the drive is behaving, and whether there are bad sectors that were either recoverable, or that had to be mapped out.</p>
+<p>My experience with clicking in hard drives is that there are low-level (servo) problems that are causing the drive controller to re-seek because either the heads are out of alignment or the servo patterns are weak. After all, the user data, formatting data, low-level format, as well as the servo (location) data are all stored magnetically on the disk surface. Hard drive disk surfaces can grow defects. They typically start off as point defects, and owing to galvanic interactions expand over time. If the defect is large enough, the drive's ECC won't be able to correct the data any longer - or the drive won't be able to find the sector, or ... you get the point.</p>
+<p>After running spinrite, if it still clicks - as in multiple seeks per read - that's incipient failure no matter how you slice it, and no drive price bargain compensates for the loss of important data, or for that matter, the loss of time spent futzing with the thing reformatting, reinstalling OS, apps, data, yadda yadda. Do you work for $2.00/hour? Count how long you spend rebuilding a hard drive and you'll realize that a few dollars saved on a bogus hard drive are gone in a puff when it goes toes up.</p>
+<p>After spinrite (<a href="http://www.grc.com" title="www.grc.com">www.grc.com</a>), if it still clicks, send it back. At least you'll have a spinrite log to prove to Maxtor what's going on.</p>
+<p>Hope this helps.<br />
+Ref ...forums.cnet.com/5208-7591_102-0.html?forumID=26&amp;threadID=59017&amp;messageID=1118549</p>
+<p>***************************************************</p>
+<p>All the Best,</p>
+<p>R.</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<a id="comment-329249"></a>
+<div class="comment comment-published odd comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-329249" class="active">SpinRite 6</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Anonymous&#039;s picture" title="Anonymous&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Anonymous (not verified) on Wed, 11/26/2008 - 11:53.  </div>
+
+  <div class="content">
+    <p>Spinrite is snake oil. THere are a great deal on tools that do the same thing. While it may be effective on a working drive with monor trouble - wit will not do anything on a damaged drive. This makes it pointless. The whole reason people go looking fo ritis they have a drive thats so seriously corrupt they cannt get files off it. Soinrite will not do anything for these disks. It will work with drives that you can already access but then why would you bother with Spinrite?</p>
+<p>My tests showd that Spinrite 6 is alos buggy. For half an hour it said that it had been running for 0 mintues and had 312 hours to go!</p>
+<p>Then it stated it had been running 17 minutes and had 312 to go. I left the machine running overnight. The next afternoon it still said it had been runnig 17 minutes and had 312 hours to go.</p>
+<p>Hmmm, you would think it was stalled right? But it wasnt. It had read a whole 1.5 MB of data according to another of its screens and that number was indeed slowly increasing. </p>
+<p>On its other screens it was stuck displaying it was investigating the very first sector. Interesting. 12 hours and it didnt seem to do anything and according to itself has been running 17 minutes. </p>
+<p>That IMO is not a great peice of kit! Its interesting when searching forums you will find what appears to be paid praise for Spinrite 6. Very strange indeed since I have yet to find one IT professional in real life that claims to have used it.</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<div class="indented"><a id="comment-349185"></a>
+<div class="comment comment-published even comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-349185" class="active">In Reply</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Anonymous&#039;s picture" title="Anonymous&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Anonymous on Fri, 03/05/2010 - 22:02.  </div>
+
+  <div class="content">
+    <p>Your review would be considerably more believable if it were written with at least passable language and grammar.  You seem to be in a minority of one anyhow, and as for IT professionals who use the product: I personally know several.</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+</div><a id="comment-320438"></a>
+<div class="comment comment-published odd comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-320438" class="active">SpinRite</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="mikusek&#039;s picture" title="mikusek&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by mikusek (not verified) on Fri, 03/28/2008 - 12:12.  </div>
+
+  <div class="content">
+    <p>I am very low level IT and I have seen SpinRite recover Laptop HDDs that were considered hopeless. It works, I am pleased that Gibson Research created a product that WORKS, I am more than satisfied! The first two "hopeless" HDDs recovered more than paid for SpinRite. NO complaints from this direction.</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<a id="comment-155850"></a>
+<div class="comment comment-published even comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-155850" class="active">Wonderful Article</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Asma&#039;s picture" title="Asma&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by <a href="http://www.optimumrecovery.com" rel="nofollow">Asma</a> (not verified) on Mon, 08/14/2006 - 23:29.  </div>
+
+  <div class="content">
+    <p>You've explained everything here just wonderfully ... specially about the operations part ...!</p>
+<p>Thanks!!</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<a id="comment-143961"></a>
+<div class="comment comment-published odd comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-143961" class="active">Spinrite foolishly depends on BIOS</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Joshua Rodman&#039;s picture" title="Joshua Rodman&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Joshua Rodman (not verified) on Tue, 06/27/2006 - 11:01.  </div>
+
+  <div class="content">
+    <p>The creaking nature of an assembly-written dos-only program is showing.  I commend the entrepreneurial effort to create this special floppy-and-cdrom making package to run the old dos environment, but the approach has serious limitations.</p>
+<p>I booted SpinRite 6 from cdrom only to have it tell me that the hard drive which is having problems cannot be addressed in its entirety by the BIOS, and therefore cannot be salvaged. (This disk has 22 specific unreadable sectors and they're in the bios-visible window.)</p>
+<p>My system uses the entirety of this disk without a problem because my operating system does not rely on the BIOS for disk access.  There are countless other computers where this will be a limitation.  The insult to injury issue is that the GRC website does not warn about this issue in the FAQ, and thus it is likely that you will discover the problem post-purchase, as Linux has little care for BIOS disk access.  I suspect they may be good gents and refund people caught out, but it is still irritating.</p>
+<p>If this technology is worth using, it is worth packaging into a more modern form.</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<div class="indented"><a id="comment-144231"></a>
+<div class="comment comment-published even comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-144231" class="active">SpinRite and the BIOS</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Steve Gibson&#039;s picture" title="Steve Gibson&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by <a href="http://www.GRC.com" rel="nofollow">Steve Gibson</a> (not verified) on Sat, 07/01/2006 - 14:01.  </div>
+
+  <div class="content">
+    <p>For what it's worth ...</p>
+<p>I understand what this poster is saying, and he's not entirely wrong, but neither are things as hopeless as he implies. I dislike SpinRite v6.0's continuing use of the motherboard's BIOS, and changing that is the next thing I'm going to do with SpinRite (which will be a free upgrade to all v6.0 owners). But as you can see from browsing the recent unsolicited user feedback we continually receive (<a href="http://spinrite.info/" rel="nofollow">http://spinrite.info/</a>), this in no way prevents people from using SpinRite right now, today.</p>
+<p>The only time someone would encounter a problem would be running a drive larger than 137 gigabytes on an old motherboard whose BIOS was limited to "28-bit LBA" access. If your BIOS shows your drive's full size, SpinRite will see it too and run perfectly.</p>
+<p>The new standard is "48-bit LBA" which supports ridiculously large drives and many older motherboards can have their BIOS "flashed" to update them to full 48-bit LBA capability.</p>
+<p>So the only place where SpinRite's current use of the BIOS causes trouble is when a drive larger than 137 gigabytes is used on a very old 28-bit LBA limited motherboard for which no BIOS upgrade is available. Users who have hit this trouble, and who need SpinRite's magic, typically put their troubled drive into a more recent motherbaord and turn SpinRite loose for data recovery and repair. But I dislike requiring that, so I'm going to fix it next. (I don't know when, but, as I said earlier, it won't cost anyone anything.)</p>
+<p>Steve Gibson,<br />
+SpinRite's proud father. :)</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<div class="indented"><a id="comment-356680"></a>
+<div class="comment comment-published odd comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-356680" class="active">R-r-right. And meantime it&#039;s</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Anonymous&#039;s picture" title="Anonymous&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Anonymous (not verified) on Thu, 10/07/2010 - 18:22.  </div>
+
+  <div class="content">
+    <p>R-r-right. And meantime it's now more than four years later and Mr. Gibson is still content to rest on his laurels and peddle a woefully out of date product. Try using Spinright on a 1 or 2tb drive. Or a 750mb. SpinRite hasn't been updated for several years. It was and is a great program that does exactly what it claims. But the frustration level among long term users has been rising exponentially as drive size continues to increase while SpinRite seems to be perpetually stuck in the era of tiny drives.</p>
+<p>Sorry to be negative Steve (and I have written many positive reviews for SpinRite over the years) but the years and technology have marched on. Will SpinRite 7 ever be written? Will loyal users finally be able to use SpinRite on modern hard drives? Will Steve Gibson ever get off his butt, stop selling an obsolete version, and modernize this software to work with today's hardware?</p>
+<p>Who knows? I do know one thing. I will be the first to sing the praises of SpinRite again if he does.</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<a id="comment-150052"></a>
+<div class="comment comment-published even comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-150052" class="active">SpinRite and the BIOS</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Richard V. Hale Jr&#039;s picture" title="Richard V. Hale Jr&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Richard V. Hale Jr (not verified) on Sat, 07/22/2006 - 16:15.  </div>
+
+  <div class="content">
+    <p>Using the BIOS, not having the best Packaging or Interface has not appeared to be much of a limitation (up to this point) for spinrite (which besides best of class does not seem to have any competition).</p>
+<p>Drive Reliability seems to follow an upside down bathtub curve with<br />
+bad blocks most likely to occur in the first six months and/or after four years.  This assumes heat is kept to a minimum and carefully monitored with smart (sustained Drive to Dive Cloning can make toast in the morning - not a good thing for reliability without lots of fans).</p>
+<p>Spinrite needs complete control over the machine and does seem to be CPU sensitive (a 2Ghz P4 will complete in half the time of a 1Ghz Machine).  Running at night (or dedicating a machine to spinrite on<br />
+an as needed basis) seems to make sense.</p>
+<p>Whats amazing is when a disk gone wild (with bad blocks) is reformatted and small partitions are created intentionally over the bad block problem areas and Spinrite is run on those bad partitions (level 4 or higher) the bad blocks disappear, never to be seen again (with very little space given up) while IO takes less time.</p>
+<p>Perhaps of more significance is how spinrite magically recovers partition (and boot block) data when chkdsk fails. That it can restore good data from surface media going bad is a life saver.</p>
+<p>So instead of focusing on packaging (or perceived design weakness) it is imperative that spinrite's most critical attributes continue to take priority *IF* the best possible drive reliability is the customer's most important goal.</p>
+<p>For example, running spinrite continuously can overheat a drive (laptops are big toasters without fans) and spinrite will pause giving the hardware a chance to cool down (and perhaps avoid damaging the media).  It would be nice if spinrite were to continue once the temperature has cooled down below and operator specified threshold (this be a not be an issue in the newer version and might even be configurable now, this is just to illustrate a point).</p>
+<p>The use of Spinrite allows drives to operate at a much higher level of reliability than would otherwise be possible (even with new drives).  Given the ever present pressure on drive OEMs to slash pricing keeping spinrite focused on the game ball would appear to be prudent.  </p>
+<p>Hold a good deal development bandwidth in reserve for critical operations (perhaps super cluster drive cycling and/or multi-core-cpu io issues).</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+</div></div><a id="comment-141533"></a>
+<div class="comment comment-published odd comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-141533" class="active">sectors, tracks and clusters! oh my!</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Anthony&#039;s picture" title="Anthony&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Anthony (not verified) on Sun, 06/04/2006 - 23:54.  </div>
+
+  <div class="content">
+    <p>SpinRite is not just for data recovery, in fact, data recovery should always be your secondary use for this product. Any sysadmin or software engineer worth their salt knows the importance of backing up data - no system is completely fool-proof and the more redundancy, the better. </p>
+<p>From personal experience, my recommendations in decreasing order of importance:</p>
+<p>1. Incremental backups every day or second day (depending on data dynamics)</p>
+<p>2. RAID-1 configuration for data redundancy</p>
+<p>3. Weekly or fortnightly full backups or system imaging onto dedicate retained storage media </p>
+<p>4. Full backup media stored and maintained off-site</p>
+<p>5. Mirroring of data stores (such as databases) at a regular interval within the day (for example, updates made hourly, or every three hours)</p>
+<p>Even with these full 5 steps data can be lost. The best you may be able to hope for is to roll back to the last update. SpinRite will help you recover data from failed media - including your off-site backups which may suffer degradation due to storage conditions and media life limitations. It will help recover data in the advent of a RAID failure. For these reasons alone it is a great purchase - however, the primary use for SpinRite is preventative maintenance.</p>
+<p>Run regularly, SpinRite WILL keep your drives not just in good condition, but excellent condition. The drives themselves will operate faster and more reliably with bad sectors blocked out and surface flux enhancement. SpinRite even updates the drives internal SMART tables, keeping the drive technology in-sync with the changes being made. Any time a sector is read that contains areas where the flux strength is waning the operating system/drive BIOS resort to multiple reads of the same location. On an aging drive, or one that experiences heavy activity, this loss of clarity can perceptibly slow drive operation. IMHO this is the preeminent use for SpinRite! By aligning each sector optimally, even prior to failure or corruption, SpinRite keeps your drives operating at their best - RAID or not.</p>
+<p>Even if you are never faced with a data recovery situation that requires SpinRites unique talents, the ability to optimize and maintain drive health is worth the asking price alone!</p>
+<p>Cheers!</p>
+<p>Anthony</p>
+<p>Anthony</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<a id="comment-124828"></a>
+<div class="comment comment-published even comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-124828" class="active">My favourite Linux Resource</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Anonymous&#039;s picture" title="Anonymous&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by <a href="http://www.stellarinfo.com" rel="nofollow">Anonymous</a> (not verified) on Thu, 09/08/2005 - 05:47.  </div>
+
+  <div class="content">
+    <p>This magazine helped me a lot in understanding the technical detalis which a professional only knows.<br />
+Thank to you.</p>
+<p><a href="http://www.stellarinfo.com" rel="nofollow">File Recovery Software</a><br />
+<a href="http://www.stellar-info.it" rel="nofollow">Recupero di Dati</a><br />
+<a href="http://www.stellar-info.de" rel="nofollow">Datenrettungs Software</a></p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<a id="comment-64635"></a>
+<div class="comment comment-published odd comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-64635" class="active">Anyone who&#039;s used Spinrite to recover faulty drives is very ha</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="J_A_F&#039;s picture" title="J_A_F&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by J_A_F (not verified) on Tue, 06/14/2005 - 22:52.  </div>
+
+  <div class="content">
+    <p>To those that haven't used it.</p>
+<p>There are many peole out there who have never used the products they ridicule. I used to be a computer support engineer, (many years ago) and I first came across Spinrite in the late 80s early 90s, (version one I think) it was so good I immediately purchased [at that time] the latest product version three. </p>
+<p>I have used several versions since and they have NEVER failed to recover data from drives ALL other software reported back were effectively dead. This includes many of the utilities supplied by the manufacturers. </p>
+<p>Personally, I believe that all hard drives should be supplied with a copy, so that if required the user could then recover otherwise 'failing' drives. I still have many drives [total of about approx' 20] that were all seated in, using Spinrite, and continue to work perfectly.</p>
+<p>The only drive that I had that had to be returned to the manufacturer, was one I had not had the time to do it with. </p>
+<p>Keep going Steve, I don't want to know the atomic, or nano levels of what your product does, I just want to use it, and keep on using it to continue to have healthy hard drives, ever since my first purchase.</p>
+<p>It is simple to use and does what Steve say it does, it works (unlike lots of other software about) and that is all I care about! I am now retired, and I continue to use it for my own hard drives and systems.</p>
+<p>Cheers<br />
+John</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<a id="comment-37429"></a>
+<div class="comment comment-published even comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-37429" class="active">S.M.A.R.T test tools under Linux</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Anonymous&#039;s picture" title="Anonymous&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Anonymous (not verified) on Fri, 04/29/2005 - 22:29.  </div>
+
+  <div class="content">
+    <p>For those who like the idea of what Spinrite is written to achieve, I'd suggest also having a read of the following LJ article, which describes how to monitor and test HDDs using their built in Self-Monitoring, Analysis and Reporting Technology (SMART) system.</p>
+<p><a href="http://www.linuxjournal.com/article/6983" rel="nofollow">Monitoring Hard Disks with SMART</a></p>
+<p>I think it would be interesting to know if Spinrite interacts with the HDD hardware at a similar level and capability that S.M.A.R.T oriented utilties such as smartmontools do.</p>
+<p>Regarding this specific text in the article </p>
+<p><cite><br />
+These self-tests do not interfere with the normal functioning of the disk, so the commands may be used for mounted disks on a running system. On our computing cluster nodes, a long self-test is run with a cron job early every Sunday morning. The entries in Listing 5 all are self-tests that completed without errors; the LifeTime column shows the power-on age of the disk when the self-test was run. If a self-test finds an error, the Logical Block Address (LBA) shows where the error occurred on the disk. The Remaining column shows the percentage of the self-test remaining when the error was found. If you suspect that something is wrong with a disk, I strongly recommend running a long self-test to look for problems.</cite></p>
+<p>it is now possible to have the smart monitoring daemon, smartd, execute those tests periodically itself, rather than creating cron job that calls smartctl. I use this facility to execute a short test on my  HDDs daily, and a long test weekly. </p>
+<p>For reference, here are my HDD lines from my /etc/smartd.conf file :</p>
+<p><code><br />
+/dev/hda -a -o on -S on -s (S/../.././02|L/../../6/03) -I 7<br />
+/dev/hdc -a -o on -S on -s (S/../.././02|L/../../6/03) -I 7<br />
+</code></p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<div class="indented"><a id="comment-320700"></a>
+<div class="comment comment-published odd comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-320700" class="active">Real Time Display</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Anonymous&#039;s picture" title="Anonymous&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Anonymous (not verified) on Thu, 04/10/2008 - 03:02.  </div>
+
+  <div class="content">
+    <p>What use is the real time display and why does it not display in some useful format like hexadecimal?  Hexdump is a better tool to agnostically look at a device from end to end.</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<a id="comment-286030"></a>
+<div class="comment comment-published even comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-286030" class="active">SMART not so smart?</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="EricE&#039;s picture" title="EricE&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by EricE (not verified) on Wed, 09/19/2007 - 06:17.  </div>
+
+  <div class="content">
+    <p>SMART just tells you what the drives built in diagnostics are up to.</p>
+<p>I can guarantee you the drives built in diagnostics are no where near as thorough as Spinrite's.  Nor are they as smart.  I've had Spinrite return "bad" sectors to use, and had no problems with the drive afterwards.</p>
+<p>As others have pointed out, it's not magic - just some very complex and clever algorithms implemented very well in a tiny program that just works.  As I pointed out in another post, the main reason hard drive firmware isn't as good as Spinrite is practical - speed.  It would slow data transfers to a crawl.</p>
+<p>For $80 it's a steal, even if you do have to boot to DOS to use it (boot from CD and go - really not that big of a deal).</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+</div><a id="comment-13664"></a>
+<div class="comment comment-published odd comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-13664" class="active">Hard Drive Formats &amp; Architecture Info</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Anonymous&#039;s picture" title="Anonymous&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Anonymous (not verified) on Sat, 12/04/2004 - 05:52.  </div>
+
+  <div class="content">
+    <p>1:  Does SpinRite work with SATA / SCSI hard drives and, </p>
+<p>2:  Given that it is written in assembly, is their any plans to make a 64 bit version (for systems that aren't backwards compatible with 32 bit processors) - a 64 bit same version number free upgrade for previous buyers?. Or something like that.</p>
+<p>(sorry if stupid questions, but I can't find answer)</p>
+<p>Tk</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<div class="indented"><a id="comment-94241"></a>
+<div class="comment comment-published even comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-94241" class="active">SpinRite was designed for HDD</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="DM&#039;s picture" title="DM&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by DM (not verified) on Mon, 07/04/2005 - 13:28.  </div>
+
+  <div class="content">
+    <p>SpinRite was designed for HDD's - NOT processors, so your second question is irrelevant in terms of 64 bit systems.  A HDD is a HDD &lt; . &gt;</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<div class="indented"><a id="comment-124808"></a>
+<div class="comment comment-published odd comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-124808" class="active">Spinrite at the moment is 32</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Anonymous&#039;s picture" title="Anonymous&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Anonymous (not verified) on Tue, 09/06/2005 - 06:40.  </div>
+
+  <div class="content">
+    <p>Spinrite at the moment is 32 bit if I am not mistaken, and processors that cannot run native 32 bit code would not be able to use spinrite, which is what question 2 related to.</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<div class="indented"><a id="comment-196570"></a>
+<div class="comment comment-published even comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-196570" class="active">U R Correct Sir !!!</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Anonymous&#039;s picture" title="Anonymous&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Anonymous (not verified) on Fri, 11/24/2006 - 00:43.  </div>
+
+  <div class="content">
+    <p>U R Correct Sir !!! (SpinRite is a 32Bit Intel Hardware - SOFTWARE PROGRAM) ... OF COURSE IT WONT WORK ON 64bit Native CPUs (This Guy talking about H D D's IS MY IDIOT OF MONTH !!! ( It is Truly Scary that He thinks there is no difference between HDD's an CPU's )</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<div class="indented"><a id="comment-237443"></a>
+<div class="comment comment-published odd comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-237443" class="active">Yes - it runs on x86/x64 machines</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Anonymous&#039;s picture" title="Anonymous&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Anonymous (not verified) on Sun, 04/29/2007 - 21:30.  </div>
+
+  <div class="content">
+    <p>The program is a 32-bit x86 binary and so will run on any system that supports that.  This includes AMD64 and Intel Core2 systems as they both can run 32-bit apps</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+</div></div></div><a id="comment-94238"></a>
+<div class="comment comment-published even comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-94238" class="active">Many of the newer motherboard</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="DM&#039;s picture" title="DM&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by DM (not verified) on Mon, 07/04/2005 - 13:21.  </div>
+
+  <div class="content">
+    <p>Many of the newer motherboards provide a few adjustments in the BIOS to bypass the need for SATA drivers.  This will often times allow OS installs without drivers and may or may not allow you to run SpinRite on a SATA drive.  Logically it should work, but haven't tried it yet.</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+</div><a id="comment-12683"></a>
+<div class="comment comment-published odd comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-12683" class="active">Re: SpinRite 6.0 for Linux Users</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Anonymous&#039;s picture" title="Anonymous&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Anonymous on Sun, 08/01/2004 - 01:00.  </div>
+
+  <div class="content">
+    <p>I am glad that this program is available, but I just bought two 120 GB HDs for $110, which are going to be in Raid 1. If one fails, the other oen goes on. I additionally make offsite backups to DVD, which is now cheap and fast enough.</p>
+<p>I think this is the best recovery utility you can have. It's the most fool proof and fastest. It takes me 20 minutes to reinstall Mandrake and 10 minutes to get all my data back. </p>
+<p>I would rather have redundancy than a program to help recover my data when my drive fails.</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<div class="indented"><a id="comment-30212"></a>
+<div class="comment comment-published even comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-30212" class="active">Never-fail versus &quot;get the backup&quot;.</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Michael Walsh&#039;s picture" title="Michael Walsh&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by <a href="http://listserver.info/mercury" rel="nofollow">Michael Walsh</a> (not verified) on Mon, 04/11/2005 - 18:41.  </div>
+
+  <div class="content">
+    <p>&gt;I would rather have redundancy than a program<br />
+&gt;to help recover my data when my drive fails.</p>
+<p>Reading all the materials, it's clear that Spinright is for those who would rather have no failures in the first place, and therefor not need to go get the back ups.  </p>
+<p>As nicely as I can say it, it sounds like you only read about (or concentrated on) Level 2 which resurrects failed drives and, right, a good back-up is better.  But <em>there are three more levels in Spinrite which make your back up a redundancy of a redundancy and although you may continue to make backups etc, using Sprinrite level 5 pretty much makes it so you'll never make use of those backups -- since the drive will be "repaired" by Spinrite BEFORE failure.</em>  That is to say, the failure won't happen and you won't need your backup.  Whether you make backups or not. </p>
+<p>&gt;which are going to be in Raid 1. If one fails, the other oen goes<br />
+&gt;on. I additionally make offsite backups to DVD, which is now<br />
+&gt;cheap and fast enough.<br />
+&gt;<br />
+&gt;I think this is the best recovery utility you can have. It's<br />
+&gt;the most fool proof and fastest. It takes me 20 minutes to<br />
+&gt;reinstall Mandrake and 10 minutes to get all my data back.</p>
+<p>Quesion:  What are you going to re-install that data TO?  The dead hardrive?  A new one?<br />
+This might be a good time to run Spinright on the "bad" drive and if Spinrite sez it's ok, put it back online.  Most often it was one or two 'bad' sectors which are now blocked out.<br />
+Of course, you could buy a new drive -- and maybe go through the whole thing again.  :-)</p>
+<p>OH.  One thing about Raid; -- it gives you twice as many sectors to go "bad".  *grin*  Sounds like the more RAID you have the more you'll appreciate Spinrite!</p>
+<p>Peace!</p>
+<p>Michael</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<div class="indented"><a id="comment-124355"></a>
+<div class="comment comment-published odd comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-124355" class="active">Spinrite which make your back</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Anonymous&#039;s picture" title="Anonymous&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Anonymous (not verified) on Sat, 08/20/2005 - 04:25.  </div>
+
+  <div class="content">
+    <p>Spinrite which make your back up a redundancy of a redundancy and although you may continue to make backups etc, using Sprinrite level 5 pretty much makes it so you'll never make use of those backups -- since the drive will be "repaired" by Spinrite BEFORE failure. That is to say, the failure won't happen and you won't need your backup. Whether you make backups or not. </p>
+<p>There are still moving parts within the harddrive that can fail at any time, heads can crash on the platters, components can fry, which even Sprinrite cannot fix. So to be safe backups are a must!</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<div class="indented"><a id="comment-128779"></a>
+<div class="comment comment-published even comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-128779" class="active">Backups still necessary</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="DunxD&#039;s picture" title="DunxD&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by DunxD (not verified) on Fri, 02/03/2006 - 06:24.  </div>
+
+  <div class="content">
+    <p>This is rather a dangerous suggestion.  As a user of SpinRite, I HAVE found hard-drives that it could not recover data from, and even those that I have managed to recover data from have taken several DAYS of running SpinRite - it certainly isn't faster than installing Windows on a new hard drive then restoring from backup.</p>
+<p>To make a long story short, SpinRite offers NO guarantees of recovery and, depending on how much you value your time, it may turn out to be more cost effective to buy a new harddrive and restore.  If you value your data you might buy both.  Nothing beats backing up!</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+</div></div></div><a id="comment-12682"></a>
+<div class="comment comment-published odd comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-12682" class="active">Re: SpinRite 6.0 for Linux Users</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Anonymous&#039;s picture" title="Anonymous&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Anonymous on Fri, 07/23/2004 - 01:00.  </div>
+
+  <div class="content">
+    <p>And how this will go work with Server/Storage configured in RAID ( array and containers ) mode ?<br />
+Anybody already test make this ?</p>
+<p>MhM (Marcio " Head " Maisonette)</p>
+<p>Regards,</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<a id="comment-12679"></a>
+<div class="comment comment-published even comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-12679" class="active">Re: SpinRite 6.0 for Linux Users</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Anonymous&#039;s picture" title="Anonymous&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Anonymous on Fri, 07/23/2004 - 01:00.  </div>
+
+  <div class="content">
+    <p>And how this will go work with configured in RAID ( array and containers ) mode ?<br />
+Anybody already test make this ?</p>
+<p>MhM</p>
+<p>Regards,</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<div class="indented"><a id="comment-12680"></a>
+<div class="comment comment-published odd comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-12680" class="active">Re: SpinRite 6.0 for Linux Users</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Anonymous&#039;s picture" title="Anonymous&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Anonymous on Fri, 07/23/2004 - 01:00.  </div>
+
+  <div class="content">
+    <p>SpinRite 6.0 runs in DOS; if your RAID drives can be seen by DOS, then SpinRite can see them.  If you need a driver, you will need to find out if your RAID controller provides a DOS device driver.  If so, you can add it to the config.sys file on the SpinRite boot floppy.</p>
+<p>Leon A. Goldstein</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<div class="indented"><a id="comment-12681"></a>
+<div class="comment comment-published even comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-12681" class="active">Re: SpinRite 6.0 for Linux Users</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Anonymous&#039;s picture" title="Anonymous&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Anonymous on Mon, 07/26/2004 - 01:00.  </div>
+
+  <div class="content">
+    <p>Because Spinrite operates at the physical level of the disks you are not going to want to run this against an array.  It would be recommended to run spinrite against each individual drive before you build the array.</p>
+<p>There are comments from Steve Gibson about this issue in his news groups.</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+</div></div><a id="comment-12678"></a>
+<div class="comment comment-published odd comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-12678" class="active">Re: SpinRite 6.0 for Linux Users</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Anonymous&#039;s picture" title="Anonymous&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Anonymous on Thu, 07/22/2004 - 01:00.  </div>
+
+  <div class="content">
+    <p>One comment.</p>
+<p>The downloaded file from grc.com is the actual spinrite application not a setup file.  When it is run in windows it offers to create the iso's/floppy.  If you copied that same file to a currently working DOS boot floopy it would run in DOS mode and could scan your hard drive.</p>
+<p>Ciao</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<a id="comment-12675"></a>
+<div class="comment comment-published even comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-12675" class="active">Which Linux file systems?</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Anonymous&#039;s picture" title="Anonymous&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Anonymous on Wed, 07/21/2004 - 01:00.  </div>
+
+  <div class="content">
+    <p>It wasn't clear to me from the article which Linux file systems are supported.  ext2, ext3, reiserfs, etc?  Or is this something somehow filesystem independent?</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<div class="indented"><a id="comment-12676"></a>
+<div class="comment comment-published odd comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-12676" class="active">Re: Which Linux file systems?</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Anonymous&#039;s picture" title="Anonymous&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Anonymous on Wed, 07/21/2004 - 01:00.  </div>
+
+  <div class="content">
+    <p>SpinRite 6.0 does not "support" any file system per se.  It does not depend on any file system.  It operates at the bit/byte level when it does its tests and recovery.</p>
+<p>My tests were on Linux partitions with Reiser FS, and one partition with ext2.  As I mention in my report, SpinRite 6.0 will display used sectors (in contrast to unused space) on DOS and FAT 32 partitions when testing, but not NTFS or Linux.   Other than that, there is no difference in the way it works on a drive with various OS's installed.</p>
+<p>Leon A. Goldstein</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<div class="indented"><a id="comment-12677"></a>
+<div class="comment comment-published even comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-12677" class="active">Re: Which Linux file systems?</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Anonymous&#039;s picture" title="Anonymous&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Anonymous on Mon, 10/11/2004 - 01:00.  </div>
+
+  <div class="content">
+    <p>Disclaimer: I'm anonymous, but I'm not a flamester -- I'm putting forth a factual observation and a request for an explanation.<br />
+-----<br />
+What always struck me as, um, peculiar, is that SR claims to be "donw to the bits-and-bytes level", yet somehow is constrained by partitions and filesystems.<br />
+I don't see how that could make sense -- if you really are looking at individual bits, a one is a one regardless of what (type of) partition it is in, or what file(system) it may be part of.</p>
+<p>If you can explain this to me, I'd sure appreciate it.</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<div class="indented"><a id="comment-128223"></a>
+<div class="comment comment-published odd comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-128223" class="active">Why SpinRite must understand your file system</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="demerson3&#039;s picture" title="demerson3&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by demerson3 (not verified) on Fri, 01/20/2006 - 17:12.  </div>
+
+  <div class="content">
+    <p>I think this is a good question, and that it deserves a reasonable and concise answer here, which many people can understand.</p>
+<p>You're absolutely right -- a one is a one, no matter what partition or file system. If your hard drive is in good shape, and will read and write to any sector without error, then the file system type should be irrelevant.</p>
+<p>However, the file system type becomes extremely relevant if there's an error. Is that questionable bit a part of a text file, or is it something else? It could be part of a file attribute, permissions or ownership information, or a timestamp; or in the MBR, partition information! It could be part of a directory listing, describing the locations of other files, or quite a number of other things.</p>
+<p>Since SpinRite DOES understand these different filesystems, it is able to move files (or fragments of files) within the filesystem, in case bad sectors are found that should be freed from use.</p>
+<p>Regarding the flame war... one guy says one mean thing, criticizing linux journal and steve gibson without touching on the merits or demerits of spinrite, and it ruffles everyone's feathers... why? Let's get back on topic, eh? We're discussing SpinRite here, not Gibson as a person, and not system security. Just hard drive recovery -- let's drop the other topics.</p>
+<p>Hope the semi-technical explanation was helpful...</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<a id="comment-31047"></a>
+<div class="comment comment-published even comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-31047" class="active">Why do you say SR is constrained by file systems?</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Anonymous&#039;s picture" title="Anonymous&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Anonymous (not verified) on Fri, 04/22/2005 - 16:54.  </div>
+
+  <div class="content">
+    <p>Not trying to be a prick, but if you have to answer the question, you probably aren't going to understand the answer.  the best place for you to start, if you really want to know, is with the ATA/ATAPI specification.  If you learn something about the host interface for AT attachment devices, then do some investigation about how an OS manages the disk, you'll have your answer.</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<div class="indented"><a id="comment-124421"></a>
+<div class="comment comment-published odd comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-124421" class="active">So, Spinwrite is going to rec</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Anonymous&#039;s picture" title="Anonymous&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Anonymous (not verified) on Mon, 08/22/2005 - 13:43.  </div>
+
+  <div class="content">
+    <p>So, Spinwrite is going to recover anything that depends on file system information except for fat32 partitions? It will take make the data on the disk nice and clean, fixup bad sectors, etc. correct?</p>
+<p>Having Spinrite is useful to make sure your surfaces are clean, but if you the disk is in good shape but you have reformatted the drive and you want to recover your data you need another tool. Is this correct?</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<div class="indented"><a id="comment-286028"></a>
+<div class="comment comment-published even comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-286028" class="active">Not quite...</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="EricE&#039;s picture" title="EricE&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by EricE (not verified) on Wed, 09/19/2007 - 06:04.  </div>
+
+  <div class="content">
+    <p>Spinrite interacts with the drives built in error correcting features.  This is what makes it partition/file system agnostic.</p>
+<p>When it finds bad blocks, it moves the data and marks the bad blocks using the same mechanisms that the drive firmware uses when it detects bad data.  </p>
+<p>The OS asks for sector 12, for example - and if sector 12 is bad and the data that was in it has been moved to sector 23,495 the drive handles the request at a hardware level and hands the contents of sector 23,495 to the OS as fulfillment of the request for sector 12.  This happens in the controller on the hard drive itself - if you had an analyzer on the IDE or SATA cable between the drive and the computer, you would see the drive respond with the equivalent of "here's the contents of sector 12" even though the drive is physically storing that data on sector 23,495.  It's done at an extremely low level inside the hard drive itself.</p>
+<p>Yes, drives have error correcting built in - but Spinrite is much more thorough then any drives built in error correcting diagnostics.  It's not necessarily because Steve Gibson is a genius (although I do think he is brilliant) and hard drive makers are stupid (sometimes I wonder) it's just that people wouldn't tolerate the speed delays that the intensive algorithm's that Spinrite uses in the day to day usage of their drives.  People want their hard drives to be speedy :)</p>
+<p>I've had Spinrite recover Tivo hard drives with no problem.  Tivo uses a completely proprietary file system (MFS) to store recorded shows on.  Spinrite handles Tivo drives with *no* problems, many times (before I wised up and quit buying maxtor and western digital hard drives for my Tivo's) allowing me to copy data of the drives before they totally died.</p>
+<p>I've been using Spinrite since the MFM PC XT and PC AT days.  It's an indispensable tool, and this article is a good reminder that it does far more then data recovery - I think I will run it on my drives tonight for some good preventative maintenance.</p>
+<p>Thanks for an awesome product, Steve!</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+</div></div></div></div></div><a id="comment-12668"></a>
+<div class="comment comment-published odd comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-12668" class="active">What a nice advertisement for a shyster</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Anonymous&#039;s picture" title="Anonymous&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Anonymous on Tue, 07/20/2004 - 01:00.  </div>
+
+  <div class="content">
+    <p>I'd expect more than some cheap advertisement crap posing as an article from a site like Linux Journal.</p>
+<p>Steve Gibson's nothing more than a marketing buffoon. Claims he's made about computer security and what he's "invented" have been shot down time and time again by a host of knowledgable people. I'd no more trust him to "save my hard drive" than I would to have him "probe my ports".<br />
+He's a snakeoil salesman at best.<br />
+<a href="http://grcsucks.com/" title="http://grcsucks.com/">http://grcsucks.com/</a></p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<div class="indented"><a id="comment-106173"></a>
+<div class="comment comment-published even comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-106173" class="active">knowledgable</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Anonymous&#039;s picture" title="Anonymous&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Anonymous (not verified) on Mon, 07/11/2005 - 20:06.  </div>
+
+  <div class="content">
+    <p>"knowledgable"</p>
+<p>(SP)</p>
+<p>I think that S-P-E-L-L-S to out, don't you?</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<a id="comment-51658"></a>
+<div class="comment comment-published odd comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-51658" class="active">Steve Gibson is not a sheiste</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Anonymous&#039;s picture" title="Anonymous&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Anonymous (not verified) on Thu, 06/02/2005 - 05:48.  </div>
+
+  <div class="content">
+    <p>Steve Gibson is not a sheister by any reasonable definition of the word.  The guy who's bashing him on here is one of those guys who likes easy answers to everything.  It's not hard to tell.</p>
+<p>Some people have a problem with Steve because he's very smart and they disagree with him (and generally, are less smart).  People usually disagree with Steve's definitions of what represents "secure" versus "insecure."  He has VERY high standards for what "secure" means, partly because as a smart low-level programmer he knows how to exploit security holes that even most hackers can't.  Most of the people who complain about Steve are high-level people who don't see the holes he can see.  Still, they have a point that exploiting the holes Steve can see is generally not easy.  (Thus, you could say some of his advice may be slightly over-the-top for the average user.)</p>
+<p>He likes Zone Alarm as a secure, easy-to-use product.  So what?  That's a pretty common sentiment.  He's tested a bunch of these things and he's right that some of the products have big holes (or at least they used to -- most are a bit better now).  I remember him writing at one point that he recommended Zone Alarm for the average user, but that he himself used TINY Firewall because it allowed him to configure it to the tee.  I doubt he would have said that if he was just doing a sales pitch routine.</p>
+<p>The bottom line is that whoever this poster is who's bashing Steve, he's got a flimsy grasp of the facts about both computer engineering and Steve Gibson, so feel free to ignore him.</p>
+<p>p.s. Saying that assembly language isn't useful or in demand is pretty funny.  It's not that it isn't needed.  It's that few people can do it worth a darn, so most employers know better than to request it.  (It's also overkill for certain applications; it would be impractical to write Microsoft Word entirely in assembly.)  However, for a low-level disk utility like SpinRite, you don't want the guy writing in Visual BASIC.  If this doesn't make sense to you, just ignore it.  I write it for people who are here for level-headed analysis rather than "Ooh, look at me!" teenage rants.  If you want to post shallow rants about topics you barely understand, there are plenty of other places on the web that are well suited for that.</p>
+<p>Oh, and p.p.s. If Steve Gibson is a sheister, he's a bad one.  He makes a lot of free utilities, and I found one of them so useful I tried to make a donation.  He returned the check.</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<a id="comment-14758"></a>
+<div class="comment comment-published even comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-14758" class="active">Whinging Shyster</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="The Truth&#039;s picture" title="The Truth&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by The Truth (not verified) on Sat, 01/08/2005 - 06:47.  </div>
+
+  <div class="content">
+    <p>A very authorititive post, on what do you base your authority?  Someone elses webpage about whom you equally have little or no real knowledge.    It is easy to criticise someone elses creativity, try creating something useful yourself first.  OK Steve Gibson has repeatedly predicted the end of the Internet every couple of years due to various things (Various Virii, Raw Sockets) that doesn't make him a villain.  Spinrite actually works and who knows maybe he will predict the end of the Internet again next year, so what.</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<a id="comment-12674"></a>
+<div class="comment comment-published odd comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-12674" class="active">What a nice anon post from a moron who knows very little</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Anonymous&#039;s picture" title="Anonymous&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Anonymous on Wed, 07/28/2004 - 01:00.  </div>
+
+  <div class="content">
+    <p>Oh dear, did you read the review at all, or just zip straight down to the bottom to copy and paste your diatribe?</p>
+<p>Obviously you've never used spinrite, I expect you wave a magnet in front of your failed HDs...</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<a id="comment-12673"></a>
+<div class="comment comment-published even comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-12673" class="active">Re: What a nice advertisement for a shyster</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Anonymous&#039;s picture" title="Anonymous&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Anonymous on Sun, 07/25/2004 - 01:00.  </div>
+
+  <div class="content">
+    <p>Shyster?  HELL NO!  </p>
+<p>I have been using Steve Gibson's SPINRITE since version 1.0<br />
+with great success, and occasionally with gratitude.  Steve<br />
+wrote SPINRITE in assembly lnguage -- more difficult but far<br />
+faster, more compact and less prone to compiler surprises.<br />
+I'm glad to learn I can now use it in Linux.</p>
+<p>That complaint sounds like just more planted FUD.</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<a id="comment-12672"></a>
+<div class="comment comment-published odd comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-12672" class="active">Re: What a nice advertisement for a shyster</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Anonymous&#039;s picture" title="Anonymous&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Anonymous on Fri, 07/23/2004 - 01:00.  </div>
+
+  <div class="content">
+    <p>Well obviously this guy has never used Spinrite. Ignorance is bliss, they say.</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<a id="comment-12671"></a>
+<div class="comment comment-published even comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="/article/7684#comment-12671" class="active">Re: What a nice advertisement for a shyster</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="/files/linuxjournal.com/images/personicon.jpg" alt="Anonymous&#039;s picture" title="Anonymous&#039;s picture"  /></div>
+
+  <div class="submitted">
+    Submitted by Anonymous on Thu, 07/22/2004 - 01:00.  </div>
+
+  <div class="content">
+    <p>Admittedly Steve Gibson may sometimes sound a little extravagant about his claims, but if you read his comments on his website, you'll notice that he makes such comments not only about his own work but also the work of others too. It seems to me that it's only part of his personality and his way of expression. Yes he's sometimes been wrong in the past (who hasn't?), but that doesn't make him a bad person. His free ShieldsUp port-probing facility is extremely useful to test the effectiveness of one's firewall (see <a href="https://www.grc.com/x/ne.dll?bh0bkyd" title="https://www.grc.com/x/ne.dll?bh0bkyd">https://www.grc.com/x/ne.dll?bh0bkyd</a>. Another useful one is at blackcode.com). I feel that it's unfair to criticize so virulently a person that continues to render useful and free service to the Internet comunity at large.</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+</div><div class="item-list"><ul class="pager"><li class="pager-current first">1</li>
+<li class="pager-item"><a href="/article/7684?page=1" title="Go to page 2" class="active">2</a></li>
+<li class="pager-next"><a href="/article/7684?page=1" title="Go to next page" class="active">next ›</a></li>
+<li class="pager-last last"><a href="/article/7684?page=1" title="Go to last page" class="active">last »</a></li>
+</ul></div>  </div>
+        </div> <!-- /#content-area -->
+
+        
+        
+      </div></div> <!-- /#content-inner, /#content -->
+
+              <div id="navbar"><div id="navbar-inner" class="clear-block region region-navbar">
+
+          <a name="navigation" id="navigation"></a>
+
+          
+                      <div id="primary">
+              <ul class="links"><li class="menu-1783 first"><a href="/video">Video</a></li>
+<li class="menu-1800"><a href="/news">News</a></li>
+<li class="menu-150"><a href="/blog">Blogs</a></li>
+<li class="menu-1802"><a href="/tag/reviews" title="">Reviews</a></li>
+<li class="menu-187"><a href="/tag/how-tos">HOWTOs</a></li>
+<li class="menu-1803"><a href="/participate" title="">Participate</a></li>
+<li class="menu-71"><a href="/magazine">Magazine</a></li>
+<li class="menu-181"><a href="/getlinux">How to Get Linux</a></li>
+<li class="menu-184 last"><a href="/gettinghelp">Getting Help</a></li>
+</ul> <div id="searchbox">
+  <!-- Google CSE Search Box Begins  -->
+<form action="http://www.linuxjournal.com/googlesearch" id="searchbox_014164207538395607518:w82fvojcgcu">
+  <input type="hidden" name="cx" value="014164207538395607518:w82fvojcgcu" />
+  <input type="hidden" name="cof" value="FORID:11" />
+  <input type="text" name="as_q" size="25" />
+  <input type="submit" name="sa" value="Search" />
+</form>
+<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=searchbox_014164207538395607518%3Aw82fvojcgcu&lang=en"></script>
+<!-- Google CSE Search Box Ends -->
+</div>
+            </div> <!-- /#primary -->
+          
+          
+          
+        </div></div> <!-- /#navbar-inner, /#navbar -->
+      
+      
+              <div id="sidebar-right"><div id="sidebar-right-inner" class="region region-right">
+          <div id="block-block-44" class="block block-block region-odd even region-count-1 count-4"><div class="block-inner">
+
+  
+  <div class="content">
+    <!-- PUT THIS TAG IN DESIRED LOCATION OF SLOT Large_Rectangle336x280
+     -->
+<script type="text/javascript">
+  GA_googleFillSlot("Large_Rectangle336x280");
+</script>
+<!-- END OF TAG FOR SLOT Large_Rectangle336x280
+     -->  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-block-61" class="block block-block region-even odd region-count-2 count-5"><div class="block-inner">
+
+  
+  <div class="content">
+    
+<div id="subsblock">
+  
+  
+  <div class="cover">
+    <a href="/on-newsstands"><img alt="Linux Journal cover" src="/files/linuxjournal.com/linuxjournal/issues/201/cover201.small.jpg" /></a>
+  </div>
+<div id="subsright">
+  <div id="substitle">
+<h2><a href="/magazine">The Magazine</a></h2>
+<p><em>Linux Journal</em> is the premier source for how-tos, projects, product reviews, expert advice and opinions for everything Linux.</p>
+  </div>
+  <div id="subsmenu">
+   <ul>
+<li>
+<a href="/on-newsstands">New Issue/Podcast</a>
+</li><li>
+<a href="/lj-lite">Issue Excerpt</a>
+</li><li>
+<a href="/magazine">Archives</a>
+</li><li>
+<a href="https://www.pubservice.com/Subnew2page.aspx?PC=LJ" class="last">Subscribe</a>
+  </li>
+</ul>
+  </div>
+</div>
+</div>
+
+  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-menu-menu-channels" class="block block-menu region-odd even region-count-3 count-6"><div class="block-inner">
+
+      <h2 class="title">Trending Topics</h2>
+  
+  <div class="content">
+    <ul class="menu"><li class="leaf first"><a href="/tag/desktop" title="">Desktop</a></li>
+<li class="leaf"><a href="/tag/embedded" title="">Embedded</a></li>
+<li class="leaf"><a href="/tag/hpc" title="">HPC</a></li>
+<li class="leaf"><a href="/tag/mobile" title="">Mobile</a></li>
+<li class="leaf"><a href="/tag/security" title="">Security</a></li>
+<li class="leaf"><a href="/tag/sysadmin" title="">SysAdmin</a></li>
+<li class="leaf"><a href="/tag/virtualization" title="">Virtualization</a></li>
+<li class="leaf last"><a href="/tag/web-development" title="">Web Development</a></li>
+</ul>  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-quicktabs-1" class="block block-quicktabs region-even odd region-count-4 count-7"><div class="block-inner">
+
+  
+  <div class="content">
+    <div id="quicktabs-1" class="quicktabs_wrapper quicktabs-style-zen"><ul class="quicktabs_tabs quicktabs-style-zen"><li class="qtab-0 active first"><a href="/article/7684?quicktabs_1=0#quicktabs-1" id="quicktabs-tab-1-0" class="qt_tab active">The Latest</a></li><li class="qtab-1"><a href="/article/7684?quicktabs_1=1#quicktabs-1" id="quicktabs-tab-1-1" class="qt_tab active">Popular</a></li><li class="qtab-2 last"><a href="/article/7684?quicktabs_1=2#quicktabs-1" id="quicktabs-tab-1-2" class="qt_tab active">Recent Comments</a></li></ul><div id="quicktabs_container_1" class="quicktabs_main quicktabs-style-zen"><div id="quicktabs_tabpage_1_0" class="quicktabs_tabpage"><div id="block-views-latest_stories-block_1" class="block block-views region-odd odd region-count-1 count-1"><div class="block-inner">
+
+  
+  <div class="content">
+    <div class="view view-latest-stories view-id-latest_stories view-display-id-block_1 view-dom-id-1">
+    
+  
+  
+      <div class="view-content">
+      <table class="views-table cols-6">
+    <thead>
+    <tr>
+              <th class="views-field views-field-title">
+                  </th>
+              <th class="views-field views-field-created">
+                  </th>
+          </tr>
+  </thead>
+  <tbody>
+          <tr class="odd views-row-first">
+                  <td class="views-field views-field-title">
+            <a href="/content/do-you-google-yourself">Do you &quot;google&quot; yourself?</a>          </td>
+                  <td class="views-field views-field-created">
+            Dec 24, 2010          </td>
+              </tr>
+          <tr class="even">
+                  <td class="views-field views-field-title">
+            <a href="/content/android-sneaks-out-awesome-gmail-upgrade">Android Sneaks Out An Awesome Gmail Upgrade</a>          </td>
+                  <td class="views-field views-field-created">
+            Dec 23, 2010          </td>
+              </tr>
+          <tr class="odd">
+                  <td class="views-field views-field-title">
+            <a href="/content/allegations-openbsd-backdoors-may-be-true">Allegations of OpenBSD Backdoors May be True, Updated</a>          </td>
+                  <td class="views-field views-field-created">
+            Dec 22, 2010          </td>
+              </tr>
+          <tr class="even">
+                  <td class="views-field views-field-title">
+            <a href="/content/behind-cloud-its-still-just-computers">Behind the Cloud It&#039;s Still Just Computers</a>          </td>
+                  <td class="views-field views-field-created">
+            Dec 21, 2010          </td>
+              </tr>
+          <tr class="odd">
+                  <td class="views-field views-field-title">
+            <a href="/content/jolicloud-cloud-enabled-and-not-just-netbooks">Jolicloud: Cloud enabled and not just for netbooks</a>          </td>
+                  <td class="views-field views-field-created">
+            Dec 20, 2010          </td>
+              </tr>
+          <tr class="even views-row-last">
+                  <td class="views-field views-field-title">
+            <a href="/content/wi-fi-command-line">Wi-Fi on the Command Line</a>          </td>
+                  <td class="views-field views-field-created">
+            Dec 17, 2010          </td>
+              </tr>
+      </tbody>
+</table>
+    </div>
+  
+  
+  
+      
+<div class="more-link">
+  <a href="/latest">
+    more  </a>
+</div>
+  
+  
+  
+</div>   </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+</div><div id="quicktabs_tabpage_1_1" class="quicktabs_tabpage quicktabs-hide"><div id="block-views-popular-block_1" class="block block-views region-even even region-count-2 count-2"><div class="block-inner">
+
+  
+  <div class="content">
+    <div class="view view-popular view-id-popular view-display-id-block_1 view-dom-id-2">
+    
+  
+  
+      <div class="view-content">
+      <div class="item-list">
+    <ul>
+          <li class="views-row views-row-1 views-row-odd views-row-first">  
+  <span class="views-field-title">
+                <span class="field-content"><a href="/content/do-you-google-yourself">Do you &quot;google&quot; yourself?</a></span>
+  </span>
+</li>
+          <li class="views-row views-row-2 views-row-even">  
+  <span class="views-field-title">
+                <span class="field-content"><a href="/article/2082">Linux--The Internet Appliance?</a></span>
+  </span>
+</li>
+          <li class="views-row views-row-3 views-row-odd">  
+  <span class="views-field-title">
+                <span class="field-content"><a href="/content/allegations-openbsd-backdoors-may-be-true">Allegations of OpenBSD Backdoors May be True, Updated</a></span>
+  </span>
+</li>
+          <li class="views-row views-row-4 views-row-even">  
+  <span class="views-field-title">
+                <span class="field-content"><a href="/content/android-sneaks-out-awesome-gmail-upgrade">Android Sneaks Out An Awesome Gmail Upgrade</a></span>
+  </span>
+</li>
+          <li class="views-row views-row-5 views-row-odd">  
+  <span class="views-field-title">
+                <span class="field-content"><a href="/article/4622">Boot with GRUB</a></span>
+  </span>
+</li>
+          <li class="views-row views-row-6 views-row-even">  
+  <span class="views-field-title">
+                <span class="field-content"><a href="/content/wi-fi-command-line">Wi-Fi on the Command Line</a></span>
+  </span>
+</li>
+          <li class="views-row views-row-7 views-row-odd">  
+  <span class="views-field-title">
+                <span class="field-content"><a href="/rss_feeds">RSS Feeds</a></span>
+  </span>
+</li>
+          <li class="views-row views-row-8 views-row-even">  
+  <span class="views-field-title">
+                <span class="field-content"><a href="/article/9266">Chapter 16: Ubuntu and Your iPod</a></span>
+  </span>
+</li>
+          <li class="views-row views-row-9 views-row-odd">  
+  <span class="views-field-title">
+                <span class="field-content"><a href="/content/jolicloud-cloud-enabled-and-not-just-netbooks">Jolicloud: Cloud enabled and not just for netbooks</a></span>
+  </span>
+</li>
+          <li class="views-row views-row-10 views-row-even views-row-last">  
+  <span class="views-field-title">
+                <span class="field-content"><a href="/content/behind-cloud-its-still-just-computers">Behind the Cloud It&#039;s Still Just Computers</a></span>
+  </span>
+</li>
+      </ul>
+</div>    </div>
+  
+  
+  
+      
+<div class="more-link">
+  <a href="/popular/today">
+    more  </a>
+</div>
+  
+  
+  
+</div>   </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+</div><div id="quicktabs_tabpage_1_2" class="quicktabs_tabpage quicktabs-hide"><div id="block-comment-0" class="block block-comment region-odd odd region-count-3 count-3"><div class="block-inner">
+
+  
+  <div class="content">
+    <div class="item-list"><ul><li class="first"><a href="/content/linux-distribution-lightweight-portable-security#comment-360877">Hardware keylogger</a><br />4 hours 10 min ago</li>
+<li><a href="/content/has-novell-deal-hampered-opensuse#comment-360876">good</a><br />5 hours 27 min ago</li>
+<li><a href="/content/autokey-desktop-automation-utility-linux#comment-360875">good</a><br />5 hours 27 min ago</li>
+<li><a href="/content/autokey-desktop-automation-utility-linux#comment-360874">good</a><br />5 hours 28 min ago</li>
+<li><a href="/content/ubuntu-indicators-opensuse#comment-360870">good</a><br />5 hours 31 min ago</li>
+<li><a href="/content/text-frames-scribus#comment-360868">good</a><br />5 hours 34 min ago</li>
+<li><a href="/content/spotlight-linux-zevenos-neptune-191#comment-360867">good</a><br />5 hours 34 min ago</li>
+<li><a href="/content/wi-fi-command-line#comment-360866">good</a><br />5 hours 34 min ago</li>
+<li><a href="/content/jolicloud-cloud-enabled-and-not-just-netbooks#comment-360865">good</a><br />5 hours 37 min ago</li>
+<li class="last"><a href="/content/wi-fi-command-line#comment-360864">gfdgfdgf</a><br />8 hours 25 min ago</li>
+</ul></div>  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+</div></div></div>  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-block-67" class="block block-block region-odd even region-count-5 count-8"><div class="block-inner">
+
+  
+  <div class="content">
+    <!--paging_filter--><p><a href="/enewsletters"><img alt=" Linux Newsletter" src="/files/linuxjournal.com/images/NewsletterBanner_T3b.jpg" /></a></p>
+<p> <a href="/buyersguide"><img alt="Linux Buyers Guide" src="/files/linuxjournal.com/images/LJBuyersGuide.png" /></a> </p>
+  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-views-linux_minute-block_2" class="block block-views region-even odd region-count-6 count-9"><div class="block-inner">
+
+  
+  <div class="content">
+    <div class="view view-linux-minute view-id-linux_minute view-display-id-block_2 view-dom-id-3">
+    
+  
+  
+      <div class="view-content">
+        <div class="views-row views-row-1 views-row-odd views-row-first views-row-last">
+      
+  <div class="views-field-field-embed-video-embed">
+                <span class="field-content"><div class="emvideo emvideo-preview emvideo-youtube"><div class="emfield-emvideo emfield-emvideo-youtube">        <div id="emvideo-youtube-flash-wrapper-1"><object type="application/x-shockwave-flash" height="250" width="300" data="http://www.youtube.com/v/dOnXnslxxW0&amp;rel=0&amp;enablejsapi=1&amp;playerapiid=ytplayer&amp;fs=1" id="emvideo-youtube-flash-1">
+          <param name="movie" value="http://www.youtube.com/v/dOnXnslxxW0&amp;rel=0&amp;enablejsapi=1&amp;playerapiid=ytplayer&amp;fs=1" />
+          <param name="allowScriptAccess" value="sameDomain"/>
+          <param name="quality" value="best"/>
+          <param name="allowFullScreen" value="true"/>
+          <param name="bgcolor" value="#FFFFFF"/>
+          <param name="scale" value="noScale"/>
+          <param name="salign" value="TL"/>
+          <param name="FlashVars" value="playerMode=embedded" />
+          <param name="wmode" value="transparent" />
+        </object></div></div></div></span>
+  </div>
+  
+  <div class="views-field-title">
+                <span class="field-content"><a href="/video/google-tasks-tray">Google Tasks Tray</a></span>
+  </div>
+  </div>
+    </div>
+  
+  
+  
+  
+  
+  
+</div>   </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-views-linux_minute-block_3" class="block block-views region-odd even region-count-7 count-10"><div class="block-inner">
+
+  
+  <div class="content">
+    <div class="view view-linux-minute view-id-linux_minute view-display-id-block_3 view-dom-id-4">
+    
+  
+  
+      <div class="view-content">
+      <table class="views-view-grid">
+  <tbody>
+                <tr class="row-1 row-first row-last">
+                  <td class="col-1">
+              
+  <div class="views-field-field-embed-video-embed">
+                <span class="field-content"><a href="/video/working-mdb-files-linux"><img src="http://img.youtube.com/vi/8B8cs_KkmfQ/0.jpg" alt="See video" title="See video"  width="300" height="225" /></a></span>
+  </div>
+  
+  <div class="views-field-title">
+                <span class="field-content"><a href="/video/working-mdb-files-linux">Working with MDB Files in Linux</a></span>
+  </div>
+          </td>
+                  <td class="col-2">
+              
+  <div class="views-field-field-embed-video-embed">
+                <span class="field-content"><a href="/video/nautilus-location-bar-lucid"><img src="http://a.images.blip.tv/Linuxjournal-NautilusLocationBarInLucid469-436.jpg" alt="See video" title="See video"  width="300" height="225" /></a></span>
+  </div>
+  
+  <div class="views-field-title">
+                <span class="field-content"><a href="/video/nautilus-location-bar-lucid">Nautilus Location Bar in Lucid</a></span>
+  </div>
+          </td>
+                  <td class="col-3">
+                      </td>
+              </tr>
+      </tbody>
+</table>
+    </div>
+  
+  
+  
+  
+      <div class="view-footer">
+      <!--paging_filter--><div id="more-vids"><a href="/video">Click here for more videos</a></div>
+    </div>
+  
+  
+</div>   </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-views-distro_spotlight-block_1" class="block block-views region-even odd region-count-8 count-11"><div class="block-inner">
+
+      <h2 class="title">Distro Spotlight</h2>
+  
+  <div class="content">
+    <div class="view view-distro-spotlight view-id-distro_spotlight view-display-id-block_1 view-dom-id-5">
+    
+  
+  
+      <div class="view-content">
+        <div class="views-row views-row-1 views-row-odd views-row-first views-row-last">
+      
+  <div class="views-field-title">
+                <span class="field-content"><a href="/content/spotlight-linux-zevenos-neptune-191">Spotlight on Linux:  ZevenOS-Neptune 1.9.1</a></span>
+  </div>
+  
+  <div class="views-field-teaser">
+                <div class="field-content"><p><a href="http://www.zevenos.de">ZevenOS</a> is a German-born project that offers Debian-based and Ubuntu-based versions of their BeOS-like system.  ZevenOS is based on Ubuntu (Xubuntu) and ZevenOS-Neptune is based on Debian Testing.  The main purpose is to preserve some of the features of <a href="http://en.wikipedia.org/wiki/BeOS">BeOS</a> in a modern, capable operating system.</p></div>
+  </div>
+  
+  <div class="views-field-view-node">
+                <span class="field-content"><a href="/content/spotlight-linux-zevenos-neptune-191">more&gt;&gt;</a></span>
+  </div>
+  </div>
+    </div>
+  
+  
+  
+      
+<div class="more-link">
+  <a href="/distro-spotlight">
+    previous distros  </a>
+</div>
+  
+  
+  
+</div>   </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-poll-0" class="block block-poll region-odd even region-count-9 count-12"><div class="block-inner">
+
+      <h2 class="title">Poll</h2>
+  
+  <div class="content">
+    <form action="/article/7684"  accept-charset="UTF-8" method="post" id="poll-view-voting">
+<div><div class="poll">
+  <div class="vote-form">
+    <div class="choices">
+              <div class="title">Do you &quot;google&quot; yourself?:</div>
+            <div class="form-radios"><div class="form-item" id="edit-choice-0-wrapper">
+ <label class="option" for="edit-choice-0"><input type="radio" id="edit-choice-0" name="choice" value="0"   class="form-radio" /> Yes, daily.</label>
+</div>
+<div class="form-item" id="edit-choice-1-wrapper">
+ <label class="option" for="edit-choice-1"><input type="radio" id="edit-choice-1" name="choice" value="1"   class="form-radio" /> Yes, weekly.</label>
+</div>
+<div class="form-item" id="edit-choice-2-wrapper">
+ <label class="option" for="edit-choice-2"><input type="radio" id="edit-choice-2" name="choice" value="2"   class="form-radio" /> Yes, monthly.</label>
+</div>
+<div class="form-item" id="edit-choice-3-wrapper">
+ <label class="option" for="edit-choice-3"><input type="radio" id="edit-choice-3" name="choice" value="3"   class="form-radio" /> Yes, once or twice a year.</label>
+</div>
+<div class="form-item" id="edit-choice-4-wrapper">
+ <label class="option" for="edit-choice-4"><input type="radio" id="edit-choice-4" name="choice" value="4"   class="form-radio" /> Better yet, I have Google Alerts set up for my name.</label>
+</div>
+<div class="form-item" id="edit-choice-5-wrapper">
+ <label class="option" for="edit-choice-5"><input type="radio" id="edit-choice-5" name="choice" value="5"   class="form-radio" /> No, I did it once. Never again.</label>
+</div>
+<div class="form-item" id="edit-choice-6-wrapper">
+ <label class="option" for="edit-choice-6"><input type="radio" id="edit-choice-6" name="choice" value="6"   class="form-radio" /> No. I don&#039;t want to know.</label>
+</div>
+</div>    </div>
+    <input type="submit" name="op" id="edit-vote" value="Vote"  class="form-submit" />
+  </div>
+    <input type="hidden" name="form_build_id" id="form-dd08dc39c96bb7375694f44c27340bbb" value="form-dd08dc39c96bb7375694f44c27340bbb"  />
+<input type="hidden" name="form_id" id="edit-poll-view-voting" value="poll_view_voting"  />
+</div>
+
+</div></form>
+  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+        </div></div> <!-- /#sidebar-right-inner, /#sidebar-right -->
+      
+    </div></div> <!-- /#main-inner, /#main -->
+
+          <div id="footer"><div id="footer-inner" class="region region-footer">
+
+        
+        <div id="block-block-62" class="block block-block region-odd even region-count-1 count-14"><div class="block-inner">
+
+  
+  <div class="content">
+    <!--paging_filter--><div id="subsform">  
+     
+        
+	<form  method="post" name="form" action= "https://www.pubservice.com/subnew2page.aspx?PC=LJ&amp;PK&amp;FC=" class="subform">
+        
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <td valign="top">First Name</td>
+
+            <td valign="top" colspan="2">Last Name</td>
+          </tr>
+
+    
+          <tr>
+            <td valign="top"><input type="text" value="" name="FN" size= "18" maxlength="" class="form1" /></td>
+
+            <td valign="top" colspan="2"><input type="text" name="LN" value="" size= "18" class="form1" /></td>
+          </tr>
+          <tr>
+            <td valign="top" >Address 1</td>
+
+            <td valign="top" colspan="2">Address 2</td>
+
+
+          </tr>
+          <tr>
+            <td valign="top"><input type="text" value="" name="A1" size= "18" maxlength="" class="form1" /></td>
+
+            <td valign="top" colspan="2"><input type="text" value="" name="A2" size= "18" class="form1" /></td>
+
+  
+          </tr>
+          <tr>
+            <td valign="top">City</td>
+
+            <td valign="top">State</td>
+
+            <td valign="top">Zip</td>
+          </tr>
+
+    
+          <tr>
+            <td valign="top"><input type="text" value="" name="CT" size= "18" maxlength="" class="form1" /></td>
+
+            <td valign="top"><input type="text" value="" name="ST" size="2" class="form2" /></td>
+
+            <td valign="top"><input type="text" value="" name="ZP" size="5" maxlength="5" class="form3" /></td>
+          </tr>
+       <tr>
+            <td valign="top" colspan="3">Email</td>
+       </tr>
+       <tr>
+<td valign="top" colspan="3"><input type="text" value="" name="EM" size="40" class="form4" /></td>
+        </tr>
+        </table>
+        
+        <div align="center">
+         <input type="image" src="/files/linuxjournal.com/images/clickhere.jpg" />
+        </div>
+
+      </form>
+       <div class="subslinks">
+          <a href="https://www.pubservice.com/subnew2page.aspx?PC=LJ&amp;PK=MPUB911&amp;FC=CANADA&amp;SA=P">Canadian Residents</a> | <a href="https://www.pubservice.com/Subnew1.aspx?PC=LJ&amp;PK=MPUB911&amp;FC=UNITED%20STATES&amp;ref=1&amp;SA=P">Foreign Residents</a> | <a href="https://www.pubservice.com/subgift.aspx?PC=LJ">Gift Subscriptions</a> | <a href="http://www.linuxjournal.com/subs/customer_service">Customer Service</a> | <a href="/content/privacystatement">Privacy Policy</a>
+
+          </div>
+ 		</div> 
+  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-block-63" class="block block-block region-even odd region-count-2 count-15"><div class="block-inner">
+
+  
+  <div class="content">
+    <p><em>Linux Journal</em>, currently celebrating its 17th year of publication, is the original magazine of the global Linux community, delivering readers the advice and inspiration they need to get the most out of their Linux systems.</p>
+<p>In-depth information provides a full 360-degree look at featured topics relating to Linux, giving a comprehensive source of everything readers need for creating and completing their own projects -- not just tools they will use today, but relevant and encompassing information they will turn to in future months and years. In addition to how-to content, <em>Linux Journal</em> includes opinions, new product information, profiles of leaders making major contributions in Open Source and product reviews. It also covers business, social and technical news and developments in order to fulfill its mission as the central forum and advocate for the greater Linux community throughout the world.</p>
+  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-menu-menu-about" class="block block-menu region-odd even region-count-3 count-16"><div class="block-inner">
+
+      <h2 class="title">About Us</h2>
+  
+  <div class="content">
+    <ul class="menu"><li class="leaf first"><a href="/advertising" title="Advertise in Linux Journal">Advertise</a></li>
+<li class="leaf"><a href="/author" title="Write for Us">Author Info</a></li>
+<li class="leaf"><a href="/contact" title="Write a Letter to the Editor">Write a Letter</a></li>
+<li class="leaf"><a href="/aboutus/FAQ" title="Frequently Asked Questions">FAQ</a></li>
+<li class="leaf last"><a href="/staff" title="Masthead">Masthead</a></li>
+</ul>  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-menu-menu-subscriptions" class="block block-menu region-even odd region-count-4 count-17"><div class="block-inner">
+
+      <h2 class="title">Subscriptions</h2>
+  
+  <div class="content">
+    <ul class="menu"><li class="leaf first"><a href="https://www.pubservice.com/subnew1.aspx?PC=LJ" title="Subscribe to Linux Journal">Subscribe/Renew</a></li>
+<li class="leaf"><a href="https://www.pubservice.com/subinfo.aspx?PC=LJ&amp;DO=P" title="Pay Your Subscription Bill">Pay My Bill</a></li>
+<li class="leaf"><a href="/subs/customer_service" title="">Customer Service</a></li>
+<li class="leaf"><a href="http://www.linuxjournal.com/digital" title="">Digital Downloads</a></li>
+<li class="leaf last"><a href="https://www.pubservice.com/subgift.aspx?PC=LJ" title="Give a Subscription to Linux Journal">Gift Subscriptions</a></li>
+</ul>  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-menu-menu-store" class="block block-menu region-odd even region-count-5 count-18"><div class="block-inner">
+
+      <h2 class="title">The Store</h2>
+  
+  <div class="content">
+    <ul class="menu"><li class="leaf first"><a href="http://lj.mybigcommerce.com/categories/Buttons-%26-Stickers/" title="Buttons &amp; Stickers">Stickers</a></li>
+<li class="leaf"><a href="http://lj.mybigcommerce.com/categories/T%252dShirts-%26-Apparel/" title="T-shirts and Apparel">T-shirts</a></li>
+<li class="leaf"><a href="http://lj.mybigcommerce.com/categories/Posters/" title="Posters">Posters</a></li>
+<li class="leaf"><a href="http://lj.mybigcommerce.com/categories/Back-Issues-%252d-Print/" title="Buy Back Issues of Linux Journal">Back Issues</a></li>
+<li class="leaf last"><a href="http://linuxjournal.com/archive_cd" title="Archive CD">Archive CD</a></li>
+</ul>  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-menu-menu-linux-resources" class="block block-menu region-even odd region-count-6 count-19"><div class="block-inner">
+
+      <h2 class="title">Linux Resources</h2>
+  
+  <div class="content">
+    <ul class="menu"><li class="leaf first"><a href="/forum" title="Forums">Forums</a></li>
+<li class="leaf"><a href="/events" title="Industry Events">Industry Events</a></li>
+<li class="leaf"><a href="/buyersguide" title="">Buyers Guide</a></li>
+<li class="leaf"><a href="/getlinux" title="How to Get Linux">How to Get Linux</a></li>
+<li class="leaf last"><a href="/gettinghelp" title="Getting Help">Getting Help</a></li>
+</ul>  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-menu-menu-the-site" class="block block-menu region-odd even region-count-7 count-20"><div class="block-inner">
+
+      <h2 class="title">The Site</h2>
+  
+  <div class="content">
+    <ul class="menu"><li class="leaf first"><a href="/content/copyright" title="Copyright">Copyright</a></li>
+<li class="leaf"><a href="/rss_feeds" title="RSS Feeds">RSS Feeds</a></li>
+<li class="leaf"><a href="/content/privacy-statement" title="Privacy Statement">Privacy Policy</a></li>
+<li class="leaf"><a href="MAILTO:webmaster@linuxjournal.com" title="Report Problems">Report Problems</a></li>
+<li class="leaf last"><a href="/aboutus" title="Contact Us">Contact Us</a></li>
+</ul>  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-block-70" class="block block-block region-even odd region-count-8 count-21"><div class="block-inner">
+
+  
+  <div class="content">
+    <!--paging_filter--><div id="copyright">Copyright © 1994 - 2010 <em>Linux Journal</em>. All rights reserved.</div>
+  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+
+      </div></div> <!-- /#footer-inner, /#footer -->
+    
+  </div></div> <!-- /#page-inner, /#page -->
+
+  
+  <div id="user_relationships_popup_form" class="user_relationships_ui_popup_form"></div><script type="text/javascript" src="/files/linuxjournal.com/ufiles/js/js_a5d9eb11522c07991019d8a4e87bbb97.js"></script>
+<script type="text/javascript" src="http://s3.amazonaws.com/new.cetrk.com/pages/scripts/0010/8219.js"> </script>
+
+</body>
+</html>
