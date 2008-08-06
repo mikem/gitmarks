@@ -1,0 +1,923 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en" dir="ltr">
+  <head>
+<base href="https://launchpad.net/drizzle/+index" />
+
+    <title>A Lightweight SQL Database for Cloud Infrastructure and Web Applications in Launchpad</title>
+    <link rel="shortcut icon" href="/@@/launchpad.png" />
+
+    
+      <link rel="alternate" type="application/atom+xml"
+            href="http://feeds.launchpad.net/drizzle/announcements.atom"
+            title="Announcements for Drizzle" />
+      <link rel="alternate" type="application/atom+xml"
+            href="http://feeds.launchpad.net/drizzle/latest-bugs.atom"
+            title="Latest Bugs for Drizzle" />
+      <link rel="alternate" type="application/atom+xml"
+            href="http://feeds.launchpad.net/drizzle/branches.atom"
+            title="Latest Branches for Drizzle" />
+      <link rel="alternate" type="application/atom+xml"
+            href="http://feeds.launchpad.net/drizzle/revisions.atom"
+            title="Latest Revisions for Drizzle" />
+    
+
+    
+  
+  <link type="text/css" rel="stylesheet"
+        media="screen, print"
+        href="/+icing/rev12138/combo.css" />
+
+
+    
+
+    
+    <style type="text/css">
+      fieldset.collapsed div, fieldset div.collapsed {display: none;}
+    </style>
+    <noscript>
+      <style type="text/css">
+        fieldset.collapsible div, fieldset div.collapsed {display: block;}
+      </style>
+    </noscript>
+
+    
+  
+
+  
+
+  
+  
+  <script type="text/javascript"
+          src="/+icing/rev12138/MochiKit.js"></script>
+
+  
+  
+    <script type="text/javascript"
+            src="/+icing/rev12138/build/launchpad.js"></script>
+  
+
+  <script type="text/javascript">var cookie_scope = '; Path=/; Secure; Domain=.launchpad.net';</script>
+  <script type="text/javascript">
+    // Define a global YUI sandbox that should be used by everyone.
+    var LPS = YUI({
+      // Don't try to fetch the loader module.
+      bootstrap: false,
+      // Don't try to fetch CSS files.
+      fetchCSS: false,
+      // Turn off combo loading.
+      combine: false,
+      // For paranoia, set a low timeout to not wait on loading a resource.
+      timeout: 50
+      });
+  </script>
+
+
+  <script id="base-layout-load-scripts" type="text/javascript">
+    LPS.use('node', 'lp', function(Y) {
+        Y.on('load', function(e) {
+            sortables_init();
+            initInlineHelp();
+            Y.lp.activate_collapsibles();
+            activateFoldables();
+            activateConstrainBugExpiration();
+        }, window);
+
+        // Hook up the function that dismisses the help window if we click
+        // anywhere outside of it.
+        Y.on('click', handleClickOnPage, window);
+    });
+
+    LPS.use('lp.app.links',
+      function(Y) {
+        Y.on('load', function(e) {
+            Y.lp.app.links.check_valid_lp_links();
+        }, window);
+    });
+  </script>
+
+    
+    <style type="text/css">
+      div.collapsible {
+        border:medium none;
+        margin:0;
+        padding:16px 0 0;
+      }
+
+      div.collapsed {
+        display: None
+      }
+    </style>
+
+    <noscript>
+      <style type="text/css">
+        div.collapsible, div.collapsed {display: block;}
+      </style>
+    </noscript>
+
+        <script type="text/javascript">
+          LPS.use('lp.registry.pillar', function(Y) {
+              Y.on('load',
+                  function(e) {
+                      Y.lp.registry.pillar.activate_collapsible_div();
+                  },
+                  window);
+          });
+        </script>
+  
+  </head>
+
+  <body id="document"
+        class="tab-overview
+      main_side
+      public
+      yui3-skin-sam">
+        <script type="text/javascript">
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-12833497-1']);
+          _gaq.push(['_setDomainName', '.launchpad.net']);
+          _gaq.push(['_setAllowHash', false]);
+          _gaq.push(['_trackPageview']);
+
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+          })();
+        </script>
+    <div class="yui-d0">
+      <div id="locationbar" class="login-logout">
+        
+
+<div id="logincontrol"><a href="https://launchpad.net/drizzle/+login">Log in / Register</a></div>
+
+
+
+      </div><!--id="locationbar"-->
+
+      <div id="watermark" class="watermark-apps-portlet">
+        <div class="flowed-block">
+          <img alt="" width="64" height="64" src="https://launchpadlibrarian.net/20582657/drizzle64.png" />
+        </div>
+        <div class="flowed-block wide">
+          <h1 id="product-title"><span
+    class="yui3-editable_text-text">A Lightweight SQL Database for Cloud Infrastructure and Web Applications</span>
+    
+</h1>
+
+
+          
+  <!-- Application Menu -->
+  <ul class="facetmenu">
+    
+      <li class="overview active"
+          title="General information about Drizzle"><span>Overview</span></li>
+      
+      
+    
+    
+      
+      <li class="branches" title="Branches for Drizzle"><a
+    href="https://code.launchpad.net/drizzle">Code</a></li>
+      
+    
+    
+      
+      <li class="bugs" title="Bugs reported about Drizzle"><a
+    href="https://bugs.launchpad.net/drizzle">Bugs</a></li>
+      
+    
+    
+      
+      <li class="specifications"
+          title="Feature specifications for Drizzle"><a
+    href="https://blueprints.launchpad.net/drizzle">Blueprints</a></li>
+      
+    
+    
+      
+      <li class="translations"
+          title="Translations of Drizzle in Launchpad"><a
+    href="https://translations.launchpad.net/drizzle">Translations</a></li>
+      
+    
+    
+      
+      <li class="answers" title="Questions for Drizzle"><a
+    href="https://answers.launchpad.net/drizzle">Answers</a></li>
+      
+    
+  </ul>
+
+        </div>
+      </div>
+
+      <div class="yui-t4">
+        <div id="maincontent" class="yui-main">
+          <div class="yui-b" dir="ltr">
+            <div class="context-publication">
+              
+              
+
+              <div id="registration" class="registering">
+                
+    Registered
+    2008-05-12
+    by
+    <a href="/~drizzle-developers" class="bg-image" style="background-image: url(https://launchpadlibrarian.net/41808406/drizzle14.png)">Drizzle-developers</a>
+  
+              </div>
+            </div>
+
+            
+            
+              
+      <div class="top-portlet">
+        
+
+        <div class="summary">The Drizzle project is building a database optimized for Cloud and Net applications. It is being designed for massive concurrency on modern multi-cpu/core architecture. The code is originally derived from MySQL. </div>
+
+        <div class="description"><p>The project is focused on making a database that is:<br />
+1) Reliable<br />
+2) Fast and scalable on modern architecture<br />
+3) Simple design for ease of installation and management</p>
+<p>Wanna help out? Hit some low hanging fruit bugs...<br />
+<a rel="nofollow" href="https://bugs.edge.launchpad.net/drizzle/+bugs?field.tag=low-hanging-fruit">https:/<wbr></wbr>/bugs.edge.<wbr></wbr>launchpad.<wbr></wbr>net/drizzle/<wbr></wbr>+bugs?field.<wbr></wbr>tag=low-<wbr></wbr>hanging-<wbr></wbr>fruit</a></p>
+<p>Mailing lists:<br />
+<a rel="nofollow" href="https://launchpad.net/~drizzle-discuss/">https:/<wbr></wbr>/launchpad.<wbr></wbr>net/~drizzle-<wbr></wbr>discuss/</a> - General Drizzle discussion<br />
+<a rel="nofollow" href="https://launchpad.net/~drizzle-benchmark">https:/<wbr></wbr>/launchpad.<wbr></wbr>net/~drizzle-<wbr></wbr>benchmark</a> - Email benchmark results after each run<br />
+<a rel="nofollow" href="https://launchpad.net/~drizzle-builds">https:/<wbr></wbr>/launchpad.<wbr></wbr>net/~drizzle-<wbr></wbr>builds</a> - Email build information after each run<br />
+<a rel="nofollow" href="https://launchpad.net/~drizzle-advocacy">https:/<wbr></wbr>/launchpad.<wbr></wbr>net/~drizzle-<wbr></wbr>advocacy</a> -  Sharing of information through conferences, workshops, classes, blogs<br />
+<a rel="nofollow" href="https://launchpad.net/~drizzle-operations">https:/<wbr></wbr>/launchpad.<wbr></wbr>net/~drizzle-<wbr></wbr>operations</a> - Discussion on operational issues (machines, configurations, etc.)</p></div>
+
+        
+        <ul id="external-links" class="horizontal">
+          
+          <li>
+            <a href="http://freshmeat.net/projects/drizzle"
+     class="menu-link-None sprite external-link">Freshmeat record</a>
+          </li>
+          <li>
+            <a href="http://drizzle.org/wiki/Main_Page"
+     class="menu-link-None sprite external-link">Wiki</a>
+          </li>
+          <li>
+            <a href="http://wiki.drizzle.org/Compiling"
+     class="menu-link-None sprite external-link">External downloads</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="yui-g">
+        <div class="yui-u first">
+          <div id="project-info" class="portlet">
+            <h2>Project information</h2>
+
+            <div class="two-column-list">
+              <dl id="partof">
+                <dt>Part of:</dt>
+                <dd><a href="/drizzle-umbrella" class="bg-image" style="background-image: url(https://launchpadlibrarian.net/41808431/drizzle14.png)">Drizzle Umbrella Project</a></dd>
+              </dl>
+
+              <dl id="owner">
+                <dt>Maintainer:</dt>
+                <dd>
+                  <a href="/~drizzle-developers" class="bg-image" style="background-image: url(https://launchpadlibrarian.net/41808406/drizzle14.png)">Drizzle-developers</a>
+                  
+                </dd>
+              </dl>
+
+              
+
+              <dl id="driver">
+                <dt>Driver:</dt>
+                <dd>
+
+                  
+                  <a href="/~drizzle-developers" class="bg-image" style="background-image: url(https://launchpadlibrarian.net/41808406/drizzle14.png)">Drizzle-developers</a>
+                  
+                  
+
+                  
+
+                  <a target="help" href="/+help/driver.html" class="sprite maybe">&nbsp;<span class="invisible-link">Driver help</span></a>
+                </dd>
+              </dl>
+
+              <dl id="dev-focus">
+                <dt>Development focus:</dt>
+                <dd>
+                  <p>
+                  <a href="/drizzle/elliott">elliott series</a>&nbsp;
+                  </p>
+                  <p>
+                    <a href="https://code.launchpad.net/~drizzle-developers/drizzle/elliot" class="sprite branch">lp:drizzle</a>&nbsp;
+                    
+                    <br />
+                    <a href="http://bazaar.launchpad.net/~drizzle-developers/drizzle/elliot/files"
+     class="menu-link-source sprite info">View the branch content</a>
+                  </p>
+                </dd>
+              </dl>
+
+              <dl id="product-languages">
+                <dt>Programming Languages:</dt>
+                <dd><span id="programminglang"><span
+    class="yui3-editable_text-text">C++</span>
+    
+</span>
+
+</dd>
+              </dl>
+
+              <dl id="licences">
+                <dt>Licenses:</dt>
+                <dd>
+                  
+                    Simplified BSD License,
+                  
+                  
+                    GNU GPL v2
+                  
+                  
+                  
+                </dd>
+                
+                
+              </dl>
+            </div>
+
+            <p>
+              <a href="https://launchpad.net/drizzle/+rdf"
+     class="menu-link-rdf sprite download"><abbr title="Resource Description Framework">RDF</abbr> metadata</a>
+            </p>
+
+            
+          </div>
+        </div>
+
+        <div class="yui-u">
+          <div class="portlet">
+            <h2>
+              <span class="see-all"><a href="https://launchpad.net/drizzle/+series"
+     class="menu-link-series sprite info">View full history</a></span>
+              Series and milestones
+            </h2>
+
+            
+  
+  <div id="timeline-loading" style="display: none">
+    <img src="/@@/spinner" /> Loading graph...
+  </div>
+
+  <!-- Opera ignores overflow:hidden for iframe, so use scrolling=no. -->
+  <iframe id="timeline-iframe" name="timeline-iframe" class="timeline-iframe" style="display: none; border: 0" scrolling="no" width="100%" height="216px"></iframe>
+  <script>
+  <!--
+  function timeline_iframe(auto_resize, include_inactive, start, size) {
+      var timeline_url = "+timeline-graph?";
+      if (include_inactive == 'true') {
+          timeline_url += "include_inactive=true&";
+      }
+
+      if (auto_resize == 'true') {
+          timeline_url += 'resize_frame=timeline-iframe&';
+      }
+
+      start = parseInt(start);
+      size = parseInt(size);
+      if (start != NaN && start >= 0) {
+          timeline_url += "start=" + start + "&";
+      }
+      if (size != NaN && size >= 1) {
+          timeline_url += "size=" + size + "&";
+      }
+      LPS.use('node', function(Y) {
+          if (Y.UA.ie) {
+              return;
+          }
+          var loading_el = Y.one('#timeline-loading');
+          loading_el.setStyle('display', 'block');
+          var iframe = Y.one('#timeline-iframe');
+          iframe.set('src', timeline_url);
+          Y.on('load', function(e) {
+              loading_el.setStyle('display', 'none');
+              iframe.setStyle('display', 'block');
+          }, iframe);
+      });
+  }
+  -->
+  </script>
+  <script>
+      timeline_iframe(
+        'None',
+        'None',
+        'None',
+        'None'
+        );
+      </script>
+
+
+            <p id="development-focus">
+              <a href="/drizzle/elliott">Drizzle elliott series</a>
+              is the current focus of development
+            </p>
+
+            <ul class="horizontal">
+              
+              <li>
+                <a href="https://launchpad.net/drizzle/+milestones"
+     class="menu-link-milestones sprite info">View milestones</a>
+              </li>
+              
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      
+
+      <div class="yui-g">
+        <div class="yui-u first">
+          <div><div class="portlet" id="portlet-latest-faqs">
+  <h2>
+    <span class="see-all"><a href="https://answers.launchpad.net/drizzle/+faqs"
+     class="menu-link-list_all sprite info">All FAQs</a></span>
+    FAQs for Drizzle
+  </h2>
+
+  <form id="question-search-form" method="get"
+        accept-charset="UTF-8"
+        action="https://answers.launchpad.net/drizzle/+faqs">
+    <p>
+      <input class="textType" id="field.search_text" name="field.search_text" size="20" type="text" value=""  />
+      <input type="submit" id="field.actions.search" name="field.actions.search" value="Search" class="button" />
+    </p>
+  </form>
+
+  <ul>
+    <li>
+      <a class="sprite question"
+         href="https://answers.launchpad.net/drizzle/+faq/135">Can I embed the Drizzle server in my non-GPL-licensed application?</a>
+    </li>
+    <li>
+      <a class="sprite question"
+         href="https://answers.launchpad.net/drizzle/+faq/134">Can I use Drizzle with non-GPL-licensed applications?</a>
+    </li>
+    <li>
+      <a class="sprite question"
+         href="https://answers.launchpad.net/drizzle/+faq/133">How is Drizzle licensed?</a>
+    </li>
+  </ul>
+
+  <ul class="horizontal">
+    <li>
+      
+    </li>
+  </ul>
+</div>
+</div>
+
+          <div><div class="portlet" id="portlet-latest-bugs">
+  <h2><span class="see-all"><a
+    href="https://bugs.launchpad.net/drizzle">All bugs</a></span>
+    Latest bugs reported</h2>
+
+  <ul>
+    <li>
+      <a href="https://bugs.launchpad.net/drizzle/+bug/693633" class="sprite bug-low">Bug #693633: configure fails to find some libraries</a>
+      <br /><span class="registered">
+        Reported on 2010-12-23
+      </span>
+    </li>
+    <li>
+      <a href="https://bugs.launchpad.net/drizzle/+bug/693309" class="sprite bug-high">Bug #693309: crash-in-cmpfunc</a>
+      <br /><span class="registered">
+        Reported on 2010-12-22
+      </span>
+    </li>
+    <li>
+      <a href="https://bugs.launchpad.net/drizzle/+bug/693253" class="sprite bug-medium">Bug #693253: drizzleadmin needs a manpage</a>
+      <br /><span class="registered">
+        Reported on 2010-12-22
+      </span>
+    </li>
+    <li>
+      <a href="https://bugs.launchpad.net/drizzle/+bug/693130" class="sprite bug-low">Bug #693130: Tests depending on archive engine should be skipped if archive isn't enabled</a>
+      <br /><span class="registered">
+        Reported on 2010-12-21
+      </span>
+    </li>
+    <li>
+      <a href="https://bugs.launchpad.net/drizzle/+bug/692419" class="sprite bug-undecided">Bug #692419: possible bug: Execution of a query that uses index merge returns a wrong result</a>
+      <br /><span class="registered">
+        Reported on 2010-12-20
+      </span>
+    </li>
+  </ul>
+</div>
+</div>
+
+          <div>
+  <div class="portlet" id="portlet-top-contributors">
+  <h2>
+    <span class="see-all"><a href="https://launchpad.net/drizzle/+topcontributors"
+     class="menu-link-top_contributors sprite info">More contributors</a></span>
+    Top contributors
+  </h2>
+
+  <ul>
+    
+      <li>
+        <a href="/~kalebral" class="sprite person">Lee Bieber</a>
+        115182 points
+      </li>
+    
+    
+      <li>
+        <a href="/~stewart" class="sprite person">Stewart Smith</a>
+        57349 points
+      </li>
+    
+    
+      <li>
+        <a href="/~brianaker" class="sprite person">Brian Aker</a>
+        25771 points
+      </li>
+    
+    
+      <li>
+        <a href="/~mordred" class="sprite person">Monty Taylor</a>
+        24173 points
+      </li>
+    
+    
+      <li>
+        <a href="/~jaypipes" class="sprite person">Jay Pipes</a>
+        21077 points
+      </li>
+    
+  </ul>
+</div>
+
+</div>
+
+          <div>
+
+<div class="portlet" id="portlet-packages">
+  <h2>
+    <span class="see-all"><a href="https://launchpad.net/drizzle/+packages">
+      All packages</a></span>
+    Packages in Distributions
+  </h2>
+
+  
+
+    <ul>
+      
+        <li>
+          <a class="sprite package-source"
+             href="/ubuntu/natty/+source/drizzle">“drizzle” source package in Natty</a>
+          <br />
+          <span class="registered">
+          <strong>Version
+            2010.12.06-0ubuntu3</strong>
+          uploaded on 2010-12-22
+          </span>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+</div>
+        </div>
+
+        <div class="yui-u">
+          <div><div class="portlet" id="portlet-latest-questions">
+  <h2>
+    <span class="see-all"><a href="https://answers.launchpad.net/drizzle">All questions</a></span>
+    Latest questions
+  </h2>
+
+  <ul>
+    <li>
+      <a href="https://answers.launchpad.net/drizzle/+question/138490"
+         class=" sprite question">I am getting a warning while trying to compile drizzle7-2010.12.05</a>
+      <br /><span class="registered">
+        Posted on 2010-12-20
+      </span>
+    </li>
+    <li>
+      <a href="https://answers.launchpad.net/drizzle/+question/135548"
+         class=" sprite question">How does Drizzle handle parallel "things"?</a>
+      <br /><span class="registered">
+        Posted on 2010-11-26
+      </span>
+    </li>
+    <li>
+      <a href="https://answers.launchpad.net/drizzle/+question/135547"
+         class=" sprite question">Are there alternatives to bit-wise operators?</a>
+      <br /><span class="registered">
+        Posted on 2010-11-26
+      </span>
+    </li>
+    <li>
+      <a href="https://answers.launchpad.net/drizzle/+question/135434"
+         class=" sprite question">Quick Build</a>
+      <br /><span class="registered">
+        Posted on 2010-11-25
+      </span>
+    </li>
+    <li>
+      <a href="https://answers.launchpad.net/drizzle/+question/129758"
+         class=" sprite question">no .gcda files found</a>
+      <br /><span class="registered">
+        Posted on 2010-10-16
+      </span>
+    </li>
+  </ul>
+</div>
+</div>
+
+          <div>
+
+<div class="portlet" id="portlet-blueprints">
+  <h2>
+    <span class="see-all"><a href="https://blueprints.launchpad.net/drizzle">All blueprints</a></span>
+    Latest blueprints</h2>
+
+  <ul>
+    <li>
+      <a href="https://blueprints.launchpad.net/drizzle/+spec/haildb-rec-per-key" class="sprite blueprint-undefined">HailDB: rec_per_key index statistics</a>
+      <br /><span class="registered">
+        Registered on 2010-12-24
+      </span>
+    </li>
+    <li>
+      <a href="https://blueprints.launchpad.net/drizzle/+spec/haildb-analyze" class="sprite blueprint-undefined">HailDB: ANALYZE table</a>
+      <br /><span class="registered">
+        Registered on 2010-12-24
+      </span>
+    </li>
+    <li>
+      <a href="https://blueprints.launchpad.net/drizzle/+spec/test-set-and-tuple-types" class="sprite blueprint-undefined">Test set and tuple types</a>
+      <br /><span class="registered">
+        Registered on 2010-12-11
+      </span>
+    </li>
+    <li>
+      <a href="https://blueprints.launchpad.net/drizzle/+spec/create-lock-barrier" class="sprite blueprint-undefined">Extend CREATE/DROP for additional types</a>
+      <br /><span class="registered">
+        Registered on 2010-12-09
+      </span>
+    </li>
+    <li>
+      <a href="https://blueprints.launchpad.net/drizzle/+spec/add-constraints-to-kernel-sysvars" class="sprite blueprint-high">Use constrained_check&lt;&gt; classes on kernel sysvars</a>
+      <br /><span class="registered">
+        Registered on 2010-12-05
+      </span>
+    </li>
+  </ul>
+</div>
+
+</div>
+
+          <div>
+</div>
+        </div>
+      </div>
+    
+          </div><!-- yui-b -->
+        </div><!-- yui-main -->
+
+        <div id="side-portlets" class="yui-b side">
+          
+      <div id="global-actions" class="portlet vertical">
+  <ul>
+    <li>
+      <a href="https://launchpad.net/drizzle/+subscribe"
+     class="menu-link-subscribe sprite add">Subscribe to bug mail</a>
+    </li>
+  </ul>
+</div>
+
+
+      <div id="involvement" class="portlet">
+  <h2>Get Involved</h2>
+
+  <ul class="involvement">
+    <li>
+      <a href="https://bugs.launchpad.net/drizzle/+filebug"
+     class="menu-link-report_bug sprite bugs">Report a bug</a>
+    </li>
+    <li>
+      <a href="https://answers.launchpad.net/drizzle/+addquestion"
+     class="menu-link-ask_question sprite answers">Ask a question</a>
+    </li>
+    <li>
+      <a href="https://translations.launchpad.net/drizzle"
+     class="menu-link-help_translate sprite translations">Help translate</a>
+    </li>
+    <li>
+      <a href="https://code.launchpad.net/drizzle/+addbranch"
+     class="menu-link-submit_code sprite code">Submit code</a>
+    </li>
+    <li>
+      <a href="https://blueprints.launchpad.net/drizzle/+addspec"
+     class="menu-link-register_blueprint sprite blueprints">Register a blueprint</a>
+    </li>
+  </ul>
+
+  
+    
+    
+  
+
+  
+</div>
+
+
+      <div id="downloads" class="top-portlet downloads">
+        <h2>Downloads</h2>
+
+        
+          
+  <div class="version">
+    Latest version is 2010-12-20
+  </div>
+
+  <ul>
+    <li>
+      <a href="http://launchpad.net/drizzle/elliott/2010-12-20/+download/drizzle7-2010.12.06.tar.gz"
+         title="Source tarball - version 2010.12.06">drizzle7-20...2.06.tar.gz</a>
+    </li>
+  </ul>
+
+  <div class="released">
+    released on 2010-12-21
+  </div>
+
+
+        
+
+        <p class="alternate">
+          <a class="sprite info"
+             href="https://launchpad.net/drizzle/+download">All downloads</a>
+           
+        </p>
+      </div>
+
+      
+
+<div id="portlet-latest-announcements"
+     class="portlet announcements">
+  <h2>
+    <span style="float: right;"><a title="Atom 1.0 feed"
+    href="http://feeds.launchpad.net/drizzle/announcements.atom"><img src="/@@/rss.png" /></a></span>
+    Announcements
+  </h2>
+
+  
+
+  
+    <ul>
+      <li>
+        <div class="latest-announcement">
+          
+          <a href="/drizzle/+announcement/7448">Drizzle 2010.12.06 has been released</a>
+          <strong>on 2010-12-21</strong>
+          <br /> * The InnoDB plugin is now based on innodb 1.1.3 from mysql 5.5.7
+* New UUID ...
+        </div>
+      </li>
+      <li>
+        
+          
+          <a href="/drizzle/+announcement/7356">Drizzle 2010.12.05 tarball has been released</a>
+          <strong>on 2010-12-08</strong>
+          <br /> Latest beta release, version 2010.12.05.
+        
+      </li>
+      <li>
+        
+          
+          <a href="/drizzle/+announcement/7273">Drizzle 2010.11.04 tarball has been released</a>
+          <strong>on 2010-11-24</strong>
+          <br /> Drizzle source tarball, version 2010.11.04 has been released.
+beta-quality re...
+        
+      </li>
+      <li>
+        
+          
+          <a href="/drizzle/+announcement/7076">Drizzle 2010.10.02 tarball has been released</a>
+          <strong>on 2010-10-27</strong>
+          <br /> Version 2010.10.02 tarball is out.  This is a beta-quality release, so please...
+        
+      </li>
+      <li>
+        
+          
+          <a href="/drizzle/+announcement/7075">HailDB 2.3.1 Baghdad has been released</a>
+          <strong>on 2010-10-27</strong>
+          <br /> We no longer conflict with Innodb symbols
+        
+      </li>
+    </ul>
+
+    <div class="see-all"><a href="https://launchpad.net/drizzle/+announcements"
+     class="menu-link-announcements sprite info">Read all announcements</a></div>
+  
+
+  <div class="actions"></div>
+</div>
+
+
+
+    
+        </div><!-- yui-b side -->
+      </div><!-- yui-t4 -->
+
+      
+  <div id="footer" class="footer">
+    <div class="lp-arcana">
+        <div class="lp-branding">
+          <a href="https://launchpad.net/"><img src="/@@/launchpad-logo-and-name-hierarchy.png" alt="Launchpad" /></a>
+          &nbsp;&bull;&nbsp;
+          <a href="https://launchpad.net/+tour">Take the tour</a>
+          &nbsp;&bull;&nbsp;
+          <a href="https://help.launchpad.net/">Read the guide</a>
+          &nbsp;
+          <form id="globalsearch" method="get"
+                accept-charset="UTF-8"
+                action="https://launchpad.net/+search">
+            <input type="search" id="search-text" name="field.text" />
+            <input type="submit" value="" class="icon-only sprite search-icon" />
+          </form>
+        </div>
+        
+  
+
+    </div>
+
+    <div class="colophon">
+      &copy; 2004-2010
+      <a href="http://canonical.com/">Canonical&nbsp;Ltd.</a>
+      &nbsp;&bull;&nbsp;
+      <a href="https://launchpad.net/legal">Terms of use</a>
+      &nbsp;&bull;&nbsp;
+      <a href="/feedback">Contact Launchpad Support</a>
+      
+      &nbsp;&bull;&nbsp;
+      <a href="http://identi.ca/launchpadstatus">System status</a>
+      <span id="lp-version">
+      &nbsp;&bull;&nbsp;
+        r12138
+        
+        
+        (<a href="https://code.launchpad.net/~launchpad-pqm/launchpad/stable/">get the code</a>)
+      </span>
+    </div>
+  </div>
+
+    </div><!-- yui-d0-->
+
+    <div id="help-pane" class="invisible">
+      <div id="help-body">
+        
+        <iframe id="help-pane-content" class="invisible" src="javascript:void(0);"></iframe>
+      </div>
+      <div id="help-footer">
+        <span id="help-close"></span>
+      </div>
+    </div>
+
+    
+  
+
+  <script>LP.client.cache['context'] =
+                 {"project_group_link": "https://launchpad.net/api/devel/drizzle-umbrella", "license_reviewed": "tag:launchpad.net:2008:redacted", "license_info": null, "remote_product": null, "development_focus_link": "https://launchpad.net/api/devel/drizzle/elliott", "bug_supervisor_link": "https://launchpad.net/api/devel/~drizzle-developers", "official_bug_tags": ["client", "low-hanging-fruit", "replication", "storage-engine-api", "valgrind"], "active_milestones_collection_link": "https://launchpad.net/api/devel/drizzle/active_milestones", "commercial_subscription_is_due": false, "all_specifications_collection_link": "https://launchpad.net/api/devel/drizzle/all_specifications", "translation_focus_link": null, "licenses": ["Simplified BSD License", "GNU GPL v2"], "all_milestones_collection_link": "https://launchpad.net/api/devel/drizzle/all_milestones", "bug_reported_acknowledgement": null, "display_name": "Drizzle", "wiki_url": "http://drizzle.org/wiki/Main_Page", "title": "A Lightweight SQL Database for Cloud Infrastructure and Web Applications", "homepage_url": null, "download_url": "http://wiki.drizzle.org/Compiling", "is_permitted": "tag:launchpad.net:2008:redacted", "reviewer_whiteboard": "tag:launchpad.net:2008:redacted", "self_link": "https://launchpad.net/api/devel/drizzle", "resource_type_link": "https://launchpad.net/api/devel/#project", "programming_language": "C++", "description": "The project is focused on making a database that is:\n1) Reliable\n2) Fast and scalable on modern architecture\n3) Simple design for ease of installation and management \n\nWanna help out? Hit some low hanging fruit bugs...\nhttps://bugs.edge.launchpad.net/drizzle/+bugs?field.tag=low-hanging-fruit\n\n\nMailing lists:\nhttps://launchpad.net/~drizzle-discuss/ - General Drizzle discussion\nhttps://launchpad.net/~drizzle-benchmark - Email benchmark results after each run \nhttps://launchpad.net/~drizzle-builds - Email build information after each run \nhttps://launchpad.net/~drizzle-advocacy -  Sharing of information through conferences, workshops, classes, blogs\nhttps://launchpad.net/~drizzle-operations - Discussion on operational issues (machines, configurations, etc.)\n", "valid_specifications_collection_link": "https://launchpad.net/api/devel/drizzle/valid_specifications", "security_contact_link": "https://launchpad.net/api/devel/~drizzle-developers", "brand_link": "https://launchpad.net/api/devel/drizzle/brand", "sourceforge_project": null, "http_etag": "\"e5c2ec4614bfc0184a18a8d3ec4b3f1a5724919b-c1ef963ac5b4675e51439ebe21fd365c8678f00a\"", "date_next_suggest_packaging": null, "bug_reporting_guidelines": null, "active": true, "bug_tracker_link": null, "name": "drizzle", "license_approved": "tag:launchpad.net:2008:redacted", "driver_link": "https://launchpad.net/api/devel/~drizzle-developers", "freshmeat_project": "drizzle", "screenshots_url": null, "registrant_link": "https://launchpad.net/api/devel/~drizzle-developers", "summary": "The Drizzle project is building a database optimized for Cloud and Net applications. It is being designed for massive concurrency on modern multi-cpu/core architecture. The code is originally derived from MySQL. ", "logo_link": "https://launchpad.net/api/devel/drizzle/logo", "owner_link": "https://launchpad.net/api/devel/~drizzle-developers", "qualifies_for_free_hosting": true, "releases_collection_link": "https://launchpad.net/api/devel/drizzle/releases", "date_created": "2008-05-12T17:30:52.217472+00:00", "series_collection_link": "https://launchpad.net/api/devel/drizzle/series", "commercial_subscription_link": null, "icon_link": "https://launchpad.net/api/devel/drizzle/icon"};</script>
+
+  </body>
+</html>
+
+
+  <!--
+    Facet name: overview
+    Page type: main_side
+    Has global search: True
+    Has application tabs: True
+    Has side portlets: True
+
+    At least 54 queries/external actions issued in 4.85 seconds
+
+    Features: {'memcache': None, u'code.recipes_enabled': None, 'hard_timeout': u'15000'} 
+    in scopes {'pageid:BugTask:+create-question': False, 'pageid:Archive:+packages': False, 'default': True, 'pageid:Distribution:+bugs': False, 'pageid:Archive:EntryResource:getBuildSummariesForSourceIds': False, 'pageid:MailingListApplication:MailingListAPIView': False, 'pageid:POFile:+translate': False, 'pageid:ProjectGroup:+milestones': False, 'pageid:Person:+commentedbugs': False, 'pageid:Archive:+index': False, 'pageid:BugTask:+index': False, 'pageid:CodeImportSchedulerApplication:CodeImportSchedulerAPI': False, 'pageid:Person:+bugs': False, 'team:launchpad-recipe-beta': False, 'pageid:Milestone:+index': False} 
+
+    r12138
+  -->
+
+
