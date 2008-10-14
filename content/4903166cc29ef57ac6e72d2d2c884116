@@ -1,0 +1,3109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>the { buckblogs :here }: Coming home to Vim</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link href="/stylesheets/base.css" rel="stylesheet" type="text/css" />
+  <link href="/stylesheets/syntax.css" rel="stylesheet" type="text/css" />
+  <script src="/javascripts/mephisto/prototype.js" type="text/javascript"></script>
+  <script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    _uacct = "UA-718320-1";
+    urchinTracker();
+  </script>
+  <link href="/feed/atom.xml" rel="alternate" type="application/atom+xml" />
+</head>
+
+<body>
+<a href="http://github.com/jamis"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub" /></a>
+
+<div id="header">
+  <h1><a href="/">the { buckblogs :here }</a></h1>
+  <h2>assorted_ramblings.by JamisBuck</h2>
+</div>
+
+<div id="content">
+  <div class="post">
+    <div class="header">
+      <h1>Coming home to Vim</h1>
+      <p class="auth">
+         Posted by Jamis 
+
+         on October 10, 2008 @ 10:16 AM
+
+       </p>
+    </div>
+    <div class="body">
+       
+      <a name="article_body"></a>
+       <p>Over three years ago, <a href="http://weblog.jamisbuck.org/2005/4/10/text-editing-dilemma">I was faced with a dilemma</a>. I had recently switched to the Mac (from Linux) and was still using my text editor of choice (<a href="http://www.vim.org">vim</a>), but at the time, vim&#8217;s &#8220;integration&#8221; with <span class="caps">OS X</span> was pretty minimal (and that&#8217;s putting it optimistically). I experimented with emacs, but it never clicked for me, and honestly, emacs on <span class="caps">OS X</span> wasn&#8217;t all that better than vim at the time. Sadly, reluctantly, I said good-bye to vim and switched to <a href="http://www.macromates.com">TextMate</a>.</p>
+
+
+	<p>TextMate was (and certainly still is) a fantastic text editor. The project drawer was awesome, finding files via cmd-T was super powerful, and smarter auto-completion and snippets promised a new and faster way to pound code. After a couple of months of reteaching my fingers how to edit text, I was happy.</p>
+
+
+	<p>Sometimes, though, late at night, I would think again of vim.</p>
+
+
+	<p>Fast forward three years. The vim landscape is different now. There is actually a Mac-friendly <span class="caps">GUI</span> version of vim now, <a href="http://code.google.com/p/macvim">MacVim</a>, which actually looks like it belongs on <span class="caps">OS X</span>. Vim 7 supports UI tabs, and a much more powerful auto-completion mechanism than before. And plugins like <a href="http://www.vim.org/scripts/script.php?script_id=1567">rails.vim</a> and <a href="http://www.vim.org/scripts/script.php?script_id=1984">fuzzyfinder.vim</a> mean that TextMate no longer has a corner on powerful project navigation.</p>
+
+
+	<p>For the last few weeks I&#8217;ve been toying with switching back to vim. TextMate&#8217;s &#8220;snippet&#8221; feature never clicked for me, and the only times I used it were by accident (when it annoyed me more than it helped me), but I really was hooked on the project browser, and cmd-T, and a few other things. I realized that, with a little work, perhaps a way could be found to reimplement most of the things I loved about TextMate, in vim.</p>
+
+
+	<p>This last week I&#8217;ve worked exclusively in vim, to test that theory. It&#8217;s like coming home. As I said, TextMate is a powerful and wonderful editor, too, but <em>differently</em> powerful and wonderful. Vim&#8217;s wonderfulness and power is the wonderfulness and power of git, or linux, where the learning curve is steep (ridiculously steep at times), but the rewards of mastery are sublime. I didn&#8217;t even realize I had missed a sane shift-J, or using the dot key to repeat the last command. Fix transposition typos with &#8216;xp&#8217;. Select a single word with &#8216;viw&#8217;. Drop bookmarks with &#8216;m&#8217;, and jump right back to them with single quote.</p>
+
+
+	<p>If any of that makes your stomach roil, then vim is not for you. :) But to me, it&#8217;s like being embraced by a long-lost friend after years apart. And vim holds no grudges.</p>
+
+
+	<p>There was still the issue of the TextMate features that I had particularly come to love. First to tackle was cmd-T, since my workflow had become so dependent on that for finding files. Takeshi <span class="caps">NISHIDA</span>&#8217;s <a href="http://www.vim.org/scripts/script.php?script_id=1984">fuzzyfinder.vim</a> script seemed like exactly what I wanted&#8230;at first. It&#8217;s definitely a powerful tool, but the fuzzy finder for files was not TextMate&#8217;s cmd-T, and my instinctive attempts to treat it so were causing me a lot of aggravation.</p>
+
+
+	<p>So I took an evening and wrote <a href="http://github.com/jamis/fuzzy_file_finder/tree/master">fuzzy_file_finder</a>, a Ruby library that mimics (and improves on, if I do say so myself) TextMate&#8217;s cmd-T functionality. Then, I extended fuzzyfinder.vim with <a href="http://github.com/jamis/fuzzyfinder_textmate/tree/master">fuzzyfinder_textmate</a>, which bound the fuzzy_file_finder to vim. The result?</p>
+
+
+	<p>See for yourself: <a href="http://s3.amazonaws.com/buckblog/videos/fuzzyfinder_textmate.mov">http://s3.amazonaws.com/buckblog/videos/fuzzyfinder_textmate.mov</a> (600K, QuickTime video).</p>
+
+
+	<p>I&#8217;m still working on a solution for the project browser. Yes, I know there are several (&#8220;countless&#8221; might be a more accurate term) vim plugins that present a project drawer in a split window, but even before being spoiled by TextMate those didn&#8217;t feel right to me. I&#8217;m experimenting with a cocoa tree view that sends files to a specific vim server, and it mostly works, but I&#8217;m still not sure it&#8217;s the right solution. If I do come up with something, I&#8217;ll definitely open it up and share it. (On the other hand, if any of you out there in readerland already know of such a thing, please point me at it!)</p>
+
+
+	<p>So, I&#8217;m still reacquaiting myself with all my old muscle memories, but here are some commands I wasn&#8217;t previously very familiar with which are proving useful in conquering my TextMate habits:</p>
+
+
+	<ul>
+	<li>:e [file]. This is great if you don&#8217;t want to use fuzzy finding. Vim will even do tab completion to make things easier.</li>
+		<li>:ls. Shows all of your buffers.</li>
+		<li>:buffer [file]. Fantastic for quickly switching between buffers. You can give it just part of a file name and it will jump to the buffer that matches.</li>
+		<li>The ctrl-6 (technically ctrl-caret) key is awesome for switching back and forth between two buffers. For instance, if I just need to quickly look at one buffer, I can jump right back to where I was with ctrl-caret.</li>
+		<li>ctrl-W introduces a whole host of options for working with split windows.</li>
+	</ul>
+
+
+	<p>And lastly, can I just say that Vim is seriously the poster-child for documentation? I recommend spending 15-30 minutes, every day, in :help, just exploring. There is a <span class="caps">LOT</span> there, and all excellently documented.</p>
+
+
+	<p>So, all you vimsters out there: what commands do <em>you</em> frequently use? What features of vim are you so dependent on that you&#8217;d be useless without them? Do share!</p>
+    </div>
+
+    <p class="meta">
+      
+        Posted in <a class="selected" href="/essays-and-rants" title="Essays and Rants">Essays and Rants</a> 
+      
+    </p>
+
+    <div class="comments">
+      <a name="comments" id="comments"></a>
+
+      <div class="header">
+        <h1>Comments</h1>
+        <h2>Have something to add? <a href="#respond">Click here to leave a comment</a>.</h2>
+      </div>
+
+      <div class="commentlist">
+        
+        <div id="comment-4986" class="comment">
+          <a name="comment-4986"></a> 
+
+          <div class="date">
+            <span class="day">10</span>
+            <span class="month">Oct</span>
+            <span class="year">2008</span>
+          </div>
+
+          <h3>1. Tim Harper said...</h3>
+          <div class="body"><p>Jamis,</p>
+
+
+	<p>This is super-rocking.  Way to go!</p>
+
+
+	<p>I use textile.vim like crazy:</p>
+
+
+	<p>http://www.vim.org/scripts/script.php?script_id=2305</p>
+
+
+	<p>I also use surround.vim, taglist.vim, bufexplorer.vim, and fuzzyfinder.vim.</p>
+
+
+	<p>I keep gravitating between TextMate and <span class="caps">VIM</span>.  I&#8217;ve landed, for now, at using TextMate for everything rails, and <span class="caps">VIM</span> for everything else.  The bundles in TextMate are hard to beat, and I&#8217;ve been able to use macros to overcome some TextMate pain felt by learning (and loving) <span class="caps">VIM</span>.</p></div>
+        </div>
+        
+        <div id="comment-4987" class="comment">
+          <a name="comment-4987"></a> 
+
+          <h3>2. atmos said...</h3>
+          <div class="body"><p>I actually experimented with going back to <span class="caps">VIM</span> recently too, the missing feature for me was cmd-T also.  I&#8217;ll definitely be giving this a try, thanks!</p></div>
+        </div>
+        
+        <div id="comment-4988" class="comment">
+          <a name="comment-4988"></a> 
+
+          <h3>3. James H said...</h3>
+          <div class="body"><p>I first switched to Vim from TextMate after losing access to my usual set up of Macbook + external display and only having the Macbook.  TextMate is lovely, but it&#8217;s a hog on the screen.</p>
+
+
+	<p>I had been playing with Vim before that and was in love with how quickly I could move around in a file.  Buffer Explorer and  Surround (mentioned in another comment) make my Vim life complete.</p>
+
+
+	<p>I don&#8217;t miss the snippets.  I found them to be a crutch and they were inhibiting my knowledge of a language or <span class="caps">API</span>.  I spent more time trying to remember triggers than the <span class="caps">API</span> itself.</p></div>
+        </div>
+        
+        <div id="comment-4989" class="comment">
+          <a name="comment-4989"></a> 
+
+          <h3>4. Tom said...</h3>
+          <div class="body"><p>One of my favorite command is ~</p>
+
+
+	<p>It converts the underlying character from upper case to lower case and vice versa.</p>
+
+
+	<p>Like all VI commands, it takes while to get it into your fingers and I really had to force myself into using it, but now it&#8217;s this really good friend that I love to have around.</p>
+
+
+	<p>I&#8217;m using Emacs in VI mode. It gives me the best of both worlds (though sure some would it the worst of both&#8230;)</p></div>
+        </div>
+        
+        <div id="comment-4990" class="comment">
+          <a name="comment-4990"></a> 
+
+          <h3>5. Rimantas said...</h3>
+          <div class="body"><p>Looks like you either did not explore Textmate deep enough, or you do not like modifier keys.
+&#8220;Sane Shift-J&#8221; exists in TM as  control+shift+j; you can transpose characters with simple ctrl+t; select one word with alt+shift+arrow (there is a bunch of nice standard keyboard shortcuts in <span class="caps">OS X</span> too).</p></div>
+        </div>
+        
+        <div id="comment-4991" class="comment">
+          <a name="comment-4991"></a> 
+
+          <h3>6. Jamis said...</h3>
+          <div class="body"><p>@Rimantas, please, this post was not an attack on TM users. I explored TM plenty deep. I know about control-shift-J, and to me, it is not sane. Every time I used it I had to insert a space&#8212;vim is smart enough to do that for you. And I know about alt-shift-arrow, etc.</p>
+
+
+	<p>If that all works for you, that&#8217;s great! Stay with TextMate. I&#8217;m definitely not suggesting everybody move to vim. But for me, I love vim. I always have. TM was a stopgap for me until vim&#8217;s <span class="caps">OS X</span> presence improved.</p></div>
+        </div>
+        
+        <div id="comment-4992" class="comment">
+          <a name="comment-4992"></a> 
+
+          <h3>7. grantr said...</h3>
+          <div class="body"><p>My favorite vim command is definitely :s. Nothing beats vim for easy replace:</p>
+
+
+	<p>:%s/typo/correction/g</p>
+
+
+	<p>and you can use &#38; to repeat the last substitution.</p>
+
+
+	<p>Other highlights:</p>
+
+
+	<p>Ctrl-] to jump to a tag, and Ctrl-T to jump back.  Try the rails.vim :Rtags command for dead simple taglists!</p>
+
+
+	<p>do and dp for getting and putting changes in diff mode.  Who needs a fancy merge tool?</p>
+
+
+	<p>surround.vim.  Awesome stuff:
+ysiwttag&gt; : wrap the current word with &lt;tag>&lt;/tag>
+cs&#8217;&#8221; : change surrounding &#8217; to &#8221; 
+http://www.vim.org/scripts/script.php?script_id=1697</p>
+
+
+	<p>rails.vim.  Priceless!  The smart gf alone is worth it.
+http://rails.vim.tpope.net/</p>
+
+
+allml.vim.  Great for editing rhtml. And if you have surround.vim, it adds the rhtml tags as surround types!
+&lt;insert>Ctrl-= : wrap cursor in &lt;%=  %&gt;
+&lt;insert>Ctrl&#8212;: wrap cursor in &lt;%  -%&gt;
+http://www.vim.org/scripts/script.php?script_id=1896
+
+	<p>Basically anything Tim Pope has ever done.  He&#8217;s making all other editors obsolete!</p></div>
+        </div>
+        
+        <div id="comment-4993" class="comment">
+          <a name="comment-4993"></a> 
+
+          <h3>8. Rich said...</h3>
+          <div class="body"><p>You are a rockstar.  I&#8217;ve wanted something like this for a long, long time.  Coincidentally, just today, I googled for another solution and found something similar:</p>
+
+
+	<p>http://www.visnup.com/entries/8705-textmate-go-to-file-in-vim</p>
+
+
+	<p>... but it&#8217;s nowhere as slick as your solution.  I love it.  Thank you.  This is worth the amt of money I paid for TextMate alone!</p></div>
+        </div>
+        
+        <div id="comment-4994" class="comment">
+          <a name="comment-4994"></a> 
+
+          <h3>9. Doug Barth said...</h3>
+          <div class="body"><p>After countless times of accidentally hitting the &#8216;q&#8217; key and enabling recording mode, I finally read up on it and found it immensely useful for complex repetitive tasks. q&lt;letter> starts recording into a named register. @&lt;letter> replays the actions you did. Priceless once you start using it.</p></div>
+        </div>
+        
+        <div id="comment-4995" class="comment">
+          <a name="comment-4995"></a> 
+
+          <h3>10. Ovidiu C. said...</h3>
+          <div class="body"><p>I actually like snippets and I use them a lot (see the SnippetsEmu Vim plugin). I am a <span class="caps">PHP</span> coder and I like the fact that I can switch effortlessly between different coding standards (just by setting a variable and loading a different set of snippets).</p>
+
+
+	<p>An piece of advice not really related to text editing, but here goes: give Vimperator (Firefox extension) a try. I&#8217;ve never looked back. :)</p></div>
+        </div>
+        
+        <div id="comment-4996" class="comment">
+          <a name="comment-4996"></a> 
+
+          <h3>11. Rich said...</h3>
+          <div class="body"><p>One thing&#8230; I just tried this on my app and got this error:</p>
+
+
+	<p>Error detected while processing function &lt;snr>22_CompleteFunc..68:
+line   17:
+FuzzyFileFinder::TooManyEntries: FuzzyFileFinder::TooManyEntries</p>
+
+
+	<p>Any ideas?</p></div>
+        </div>
+        
+        <div id="comment-4997" class="comment">
+          <a name="comment-4997"></a> 
+
+          <h3>12. Brian Phillips said...</h3>
+          <div class="body"><p>I&#8217;ve recently gotten hooked on Vim&#8217;s integration with ctags and cscope.  I&#8217;m not too experienced yet but the following macros are very powerful:</p>
+
+
+	<ul>
+	<li>&lt;ctrl>-] takes you straight to the definition of the method/function/type/class/struct/sub/whatever your cursor is on. </li>
+		<li>&lt;ctrl>-\ + s shows you every usage of that same item in the codebase</li>
+		<li>&lt;ctrl>-T takes you back to where you were before you jumped with either of the above</li>
+	</ul></div>
+        </div>
+        
+        <div id="comment-4998" class="comment">
+          <a name="comment-4998"></a> 
+
+          <h3>13. Rich said...</h3>
+          <div class="body"><p>Re: the file count ceiling of 10000 files&#8230; (comment #11 above), you can change the ceiling in the fuzzyfinder_textmate.vim file (line 39):</p>
+
+
+	<p>ruby def finder; @finder ||= FuzzyFileFinder.new(&#8221;.&#8221;,50000); end</p></div>
+        </div>
+        
+        <div id="comment-5000" class="comment">
+          <a name="comment-5000"></a> 
+
+          <h3>14. Don said...</h3>
+          <div class="body"><p>Cmd-T is the only thing I missed from TextMate when I forced myself to learn ViM.  I can&#8217;t wait to try this out!</p>
+
+
+	<p>I don&#8217;t miss the project drawer much, but NERDTree is a pretty decent text emulation: http://www.vim.org/scripts/script.php?script_id=1658</p></div>
+        </div>
+        
+        <div id="comment-5001" class="comment">
+          <a name="comment-5001"></a> 
+
+          <h3>15. Jonathan LaCour said...</h3>
+          <div class="body"><p>I switched to TextMate upon coming to the Mac from Linux.  I had been a die-hard vim user for many many years, but TextMate won me over for two reasons: the project drawer, and tabs.</p>
+
+
+	<p>MacVim is getting there, it appears, but until it has a real answer for the project drawer, I&#8217;m sticking it out with TextMate, and eagerly anticipating both editors improving in future versions.</p>
+
+
+	<p>Thanks for the heads up on this! Its making me so nostalgic :)</p></div>
+        </div>
+        
+        <div id="comment-5002" class="comment">
+          <a name="comment-5002"></a> 
+
+          <h3>16. Mark Wilden said...</h3>
+          <div class="body"><p>My most frequently used rails.vim feature is :AS. This opens up the test/spec for the current file (or vice versa), and puts it in its own window.</p>
+
+
+	<p>I wish I could get :Rtags to work, but ctags barfs on one of my JS files.</p>
+
+
+	<p>project.vim + <span class="caps">MRU</span>.vim are acceptable. rails.vim will set up your project file with :Rproject.</p>
+
+
+	<p>Vimperator seemed great until I started using it. Probably the most irritating thing is that it seems to turn of my font size preferences for each website.</p>
+
+
+	<p>Cmd-T is the <em>only</em> thing I&#8217;ve ever liked about TextMate. TextMate is the worst program people love that I&#8217;ve ever used. I switched to Mac, at least partially based on the raves about TextMate. Yuck!</p></div>
+        </div>
+        
+        <div id="comment-5003" class="comment">
+          <a name="comment-5003"></a> 
+
+          <h3>17. Adam McCrea said...</h3>
+          <div class="body"><p>Thank you so much for fuzzyfinder_textmate, Jamis.  This has been something I&#8217;ve always longed for in Vim, and you&#8217;ve really nailed it.</p>
+
+
+	<p>Is there a way to reset the index without quitting and restarting Vim (if I :cd or otherwise alter the directory structure)?</p></div>
+        </div>
+        
+        <div id="comment-5004" class="comment">
+          <a name="comment-5004"></a> 
+
+          <h3>18. frew said...</h3>
+          <div class="body"><p>awesome vim features (for me:)</p>
+
+
+	<p>ciw, ci&#8217;, cit (html tags) which are of course related to the viw you mentioned in your post.</p>
+
+
+	<p>splits!  ^w ^s will split horizontally, ^w ^v will do vertically and then ^w (h,j,k,l) will move among the splits and if you do a shift on those it will move the split you are in in that direction.</p></div>
+        </div>
+        
+        <div id="comment-5006" class="comment">
+          <a name="comment-5006"></a> 
+
+          <h3>19. Chris Gaffney said...</h3>
+          <div class="body"><p>Here are a couple custom commands from my vim config. I wish I could take credit for these but I picked them up during my internship at Atomic Object a few years ago.</p>
+
+
+<table class="CodeRay"><tr>
+  <td title="click to toggle" class="line_numbers"><pre>1<tt>
+</tt>2<tt>
+</tt>3<tt>
+</tt>4<tt>
+</tt><strong>5</strong><tt>
+</tt>6<tt>
+</tt>7<tt>
+</tt>8<tt>
+</tt>9<tt>
+</tt><strong>10</strong><tt>
+</tt>11<tt>
+</tt>12<tt>
+</tt>13<tt>
+</tt>14<tt>
+</tt><strong>15</strong><tt>
+</tt>16<tt>
+</tt>17<tt>
+</tt>18<tt>
+</tt>19<tt>
+</tt><strong>20</strong><tt>
+</tt></pre></td>
+  <td class="code"><pre>&quot; Make ',e' (in normal mode) give a prompt for opening files<tt>
+</tt>&quot; in the same dir as the current buffer's file.<tt>
+</tt>if has(&quot;unix&quot;)<tt>
+</tt>  map ,e :e &lt;C-R&gt;=expand(&quot;%:p:h&quot;) . &quot;/&quot; &lt;CR&gt;<tt>
+</tt>else<tt>
+</tt>  map ,e :e &lt;C-R&gt;=expand(&quot;%:p:h&quot;) . &quot;\\&quot; &lt;CR&gt;<tt>
+</tt>endif<tt>
+</tt><tt>
+</tt>&quot;Vertical split then hop to new buffer<tt>
+</tt>:noremap ,v :vsp^M^W^W<tt>
+</tt>:noremap ,h :split^M^W^W<tt>
+</tt>&quot;Make current window the only one<tt>
+</tt>:noremap ,O :only^M:tabo^M<tt>
+</tt>:noremap ,o :only^M<tt>
+</tt><tt>
+</tt>&quot;Buffer next,previous (ctrl-{n,p})<tt>
+</tt>:noremap ^N :bn^M<tt>
+</tt>:noremap ^P :bp^M<tt>
+</tt>&quot;Buffer delete (ctrl-c)<tt>
+</tt>:noremap ^C :bd^M<tt>
+</tt></pre></td>
+</tr></table></div>
+        </div>
+        
+        <div id="comment-5007" class="comment">
+          <a name="comment-5007"></a> 
+
+          <h3>20. Jamis said...</h3>
+          <div class="body"><p>@Adam, currently, to rescan the tree, you can do this:</p>
+
+
+	<pre><code>:ruby finder.rescan!</code></pre>
+
+
+	<p>I meant to add a more convenient way to do that before I announced, and forgot. Ah, well!</p></div>
+        </div>
+        
+        <div id="comment-5009" class="comment">
+          <a name="comment-5009"></a> 
+
+          <h3>21. Paul Betts said...</h3>
+          <div class="body"><p>Awesome article! There&#8217;s a lot of good stuff here &#8211; I did find a typo, it&#8217;s Ctrl-^ (i.e. Ctrl-Shift-6), not Shift-6; ^ takes you to the beginning of the line</p></div>
+        </div>
+        
+        <div id="comment-5010" class="comment">
+          <a name="comment-5010"></a> 
+
+          <h3>22. Guillaume B. said...</h3>
+          <div class="body"><p>There&#8217;s VimMate (http://vimmate.rubyforge.org/) but it probably won&#8217;t work as well on <span class="caps">OS X</span> (it&#8217;s for Linux). There&#8217;s even a git repository: http://github.com/niklas/vimmate/commits/master &#8230;</p></div>
+        </div>
+        
+        <div id="comment-5011" class="comment">
+          <a name="comment-5011"></a> 
+
+          <h3>23. SeanG said...</h3>
+          <div class="body"><p>I know how it feels to &#8220;come home to Vim.&#8221; I&#8217;ve done it several times, and I always get that warm, wonderful feeling. Vim is where it&#8217;s at; it&#8217;s like some archetype of the programming experience that&#8217;s unique unto itself.</p>
+
+
+	<p>Anyway :-)  I started using other editors because I found it hard to navigate classes that had a ton of functions (I essentially had to just scroll around, or do a &#8221;/&#8221;-find). Then one day, after missing Vim sufficiently, I was trying to find solutions online, and I ran across the <a href="http://vim-taglist.sourceforge.net/">taglist plugin</a>.</p>
+
+
+	<p>Taglist will identify classes, functions, and variables, and display them in a vertical window to the side of your main editing environment. After binding &lt;f4> to turn taglist on, and &lt;f5> to refresh it, I&#8217;m in paradise.</p>
+
+
+	<p>I haven&#8217;t really been looking for a solution to TextMate&#8217;s project file viewer. Instead, I just leave a Windows Explorer window open, and open all my files in separate Vim instances. It works out beautifully.</p></div>
+        </div>
+        
+        <div id="comment-5012" class="comment">
+          <a name="comment-5012"></a> 
+
+          <h3>24. David Frey said...</h3>
+          <div class="body"><p>zt, zb and zz are commands that I use pretty frequently.  They keep the cursor on the current line, but re-position the cursor at the top, bottom or middle of the screen.</p></div>
+        </div>
+        
+        <div id="comment-5013" class="comment">
+          <a name="comment-5013"></a> 
+
+          <h3>25. Todd said...</h3>
+          <div class="body"><p>I use these a lot:</p>
+
+
+	<p>editing:</p>
+
+
+	<p>ct+&lt;key> =&gt; [c]change [t]to &lt;key>, where &lt;key> is the next letter from the cursor.</p>
+
+
+	<p>column editing:</p>
+
+
+	<p>cntrl+v (select columns) s type away and hit j</p>
+
+
+	<p>multiple line select for copy+paste</p>
+
+
+	<p>shift+v (select rows) y copied selected lines</p>
+
+
+	<p>those are the new tricks I learned a few years ago&#8230; still haven&#8217;t picked up tabs from vim 7</p></div>
+        </div>
+        
+        <div id="comment-5014" class="comment">
+          <a name="comment-5014"></a> 
+
+          <h3>26. Philip Hallstrom said...</h3>
+          <div class="body"><p>I&#8217;ve never used Textmate, but a friend who does sent me a link to ViMate awhile back&#8230; might be worth looking at to get more VI into TM&#8230;</p>
+
+
+	<p>http://sourceforge.net/projects/tm-vi-plugin/</p>
+
+
+	<p>Also, if you&#8217;re really arcane (like me) and happen to use iTerm, gnu screen, and the command line vim and want decent colors, read this.  Doesn&#8217;t work with Terminal though.</p>
+
+
+	<p>http://pjkh.com/articles/osx-iterm-screen-vim-256-colors.html</p></div>
+        </div>
+        
+        <div id="comment-5015" class="comment">
+          <a name="comment-5015"></a> 
+
+          <h3>27. Jamis said...</h3>
+          <div class="body"><p>@Paul, good catch. I&#8217;ve corrected the article.</p></div>
+        </div>
+        
+        <div id="comment-5016" class="comment">
+          <a name="comment-5016"></a> 
+
+          <h3>28. Rob Orsini said...</h3>
+          <div class="body"><p>I second the NERDTree plugin recommendation. Deal with Rails or any deep nest without a project drawer is a waste of mental energy. NERDTree really is pretty bad-ass. Just the fact that I use the hell out of it <span class="caps">WITH NO MOUSE</span> puts it far ahead of any <span class="caps">GUI</span>.</p></div>
+        </div>
+        
+        <div id="comment-5017" class="comment">
+          <a name="comment-5017"></a> 
+
+          <h3>29. Mike McNally said...</h3>
+          <div class="body"><p>Here&#8217;s something that regularly sends me into a killin&#8217; rage.  Iwork with a big application. It&#8217;s not uncommon for a gvim session to have 100 or more buffers open.</p>
+
+
+	<p>Now lets say I sit down to work on a bug. I surf around through my buffers, figuring out what needs to be fixed.  Not often, but sometimes, I&#8217;ll accidentally modify a buffer when the file hasn&#8217;t yet been checked out of perforce.</p>
+
+
+	<p>After a few minutes of fixing stuff, I click the F8 key, which is mapped to a command to do a :wa and run a build.  However, that modified buffer can&#8217;t be written because I didn&#8217;t check the file out. So what does gvim do?  It tells me that it can&#8217;t write the file, but it <span class="caps">DOESN</span>&#8217;T <span class="caps">TELL ME WHICH FUCKING FILE IT IS</span>.  I have to do a :buffers and try to remember what the cryptic little markers mean in order to find the buffer.  Please, <span class="caps">PLEASE</span> make the error message better.</p>
+
+
+	<p>Here&#8217;s another one: I sync from the source code repository. Then I go back to my gvim window. Oh, look!  50 of the files in open buffers have been updated!  Guess how many popups I get to deal with? 50!  <span class="caps">I HAVE TO CLICK</span> &#8220;OK&#8221; 50 <span class="caps">TIMES</span>!!  For christs sake just give me a &#8220;do this for all updated files&#8221; option.</p>
+
+
+	<p>I&#8217;ve been using vi since about 1983, so I&#8217;m definitely a fan otherwise.</p></div>
+        </div>
+        
+        <div id="comment-5018" class="comment">
+          <a name="comment-5018"></a> 
+
+          <h3>30. michele said...</h3>
+          <div class="body"><p>I&#8217;ve switched to the mac some months ago (from linux), I was so impatient to try out this wonderful thing, TextMate, so I immediately downloaded it, tried it out and&#8230; trashed it.</p>
+
+
+	<p>(Mac)Vim rules my world, I don&#8217;t think it&#8217;s entirely TextMate fault is just that vim commands feel so natural, I&#8217;ve been using it since 2001 and I can&#8217;t really stand other editors&#8230; no way. ;-)</p></div>
+        </div>
+        
+        <div id="comment-5019" class="comment">
+          <a name="comment-5019"></a> 
+
+          <h3>31. Jamis said...</h3>
+          <div class="body"><p>@Mike, does :bmodified not list the buffers that need saving?</p></div>
+        </div>
+        
+        <div id="comment-5020" class="comment">
+          <a name="comment-5020"></a> 
+
+          <h3>32. Jamis said...</h3>
+          <div class="body"><p>or, not list, sorry. Find. :bmodified [N] takes you to the Nth modified buffer, or the next one if you don&#8217;t give an argument.</p></div>
+        </div>
+        
+        <div id="comment-5021" class="comment">
+          <a name="comment-5021"></a> 
+
+          <h3>33. Kevin said...</h3>
+          <div class="body"><p>This is awesome! I still need it to do one thing, though&#8212;can I define a list of source directories for it to scan/search for files in?</p>
+
+
+	<p>I&#8217;ve got source in 7 different places that I&#8217;d like to be searching. A quick look through the fuzzy*.vims and I didn&#8217;t see anything obvious&#8230;</p></div>
+        </div>
+        
+        <div id="comment-5022" class="comment">
+          <a name="comment-5022"></a> 
+
+          <h3>34. Anatol said...</h3>
+          <div class="body"><p>cool. Two suggestions though: the video is too fast when you&#8217;re actually showing your plugin &#8211; you should slow down these parts a bit next time. Second, why not use a separate color instead of parens to show the matching part? I think it would be both easier to see and 2 characters shorter :)</p></div>
+        </div>
+        
+        <div id="comment-5023" class="comment">
+          <a name="comment-5023"></a> 
+
+          <h3>35. Jamis said...</h3>
+          <div class="body"><p>@Kevin, the key to scanning a different directory is in passing a new parameter to FuzzyFileFinder.new&#8230;but it currently only supports a single source. Could be a nice patch to allow a collection of root directories.</p>
+
+
+	<p>@Anatol, please do consider a patch for that! I&#8217;m not familiar at all with specifying colors in vim.</p></div>
+        </div>
+        
+        <div id="comment-5024" class="comment">
+          <a name="comment-5024"></a> 
+
+          <h3>36. justin said...</h3>
+          <div class="body"><p>Anyone figure out how to remap the esc key on the mac ?</p></div>
+        </div>
+        
+        <div id="comment-5025" class="comment">
+          <a name="comment-5025"></a> 
+
+          <h3>37. Jamis said...</h3>
+          <div class="body"><p>@justin, if you&#8217;re using macvim, snapshot 36 (the most recent, as of this writing) changelog says &#8220;modifier key can be used as Esc (useful for turning Caps Lock into Esc, see :h macvim-esc)&#8221;.</p></div>
+        </div>
+        
+        <div id="comment-5026" class="comment">
+          <a name="comment-5026"></a> 
+
+          <h3>38. dmitry said...</h3>
+          <div class="body"><p>My god, thanks for pointing out MacVim for me!</p></div>
+        </div>
+        
+        <div id="comment-5027" class="comment">
+          <a name="comment-5027"></a> 
+
+          <h3>39. Daniel said...</h3>
+          <div class="body"><p>Just a simple one: the &#8216;f&#8217; and &#8217;;&#8217; keys.  If you&#8217;re editing a long line, use f&lt;char> to jump to a character and repeat with &#8217;;&#8217;.  This goes back to vi.  You can combine with c and d etc  &#8216;F&#8217; is reverse.</p>
+
+
+	<p>I wrote a shell script one time which grepped all my rails files for some name or searched their file names, then created a bunch of sym links in a tmp directory which I then opened in vim.  You can then open each file by using &#8216;o&#8217; which splits the window into the original sym link list and the file name.
+But I&#8217;ve been using netbeans and its jvi plugin at the moment.</p>
+
+
+	<p>Occasionally also use in-built tabbing of vim (as opposed to split or vsplit): &#8221;:tabnew .&#8221;  will open a tab of the current directory etc</p>
+
+
+	<p>If you&#8217;re in a directory in vim, use &#8217;-&#8217; to go up to the parent dir; &#8216;o&#8217; to open a subdir or file in split window, or just plain &lt;return>.</p></div>
+        </div>
+        
+        <div id="comment-5028" class="comment">
+          <a name="comment-5028"></a> 
+
+          <h3>40. Erik Kastner said...</h3>
+          <div class="body"><p>&#8221;.&#8221; is the command I miss the most in TextMate. The TxM command I was really pining for was <span class="caps">ESC</span> (complete word found previously). I did some digging and found the Vim version: &lt;ctrl>-N. So that&#8217;s my tip :)</p></div>
+        </div>
+        
+        <div id="comment-5029" class="comment">
+          <a name="comment-5029"></a> 
+
+          <h3>41. Greg said...</h3>
+          <div class="body"><p>I don&#8217;t know what cmd-T does, but from your description I thought you might be interested in the plan9 editor<a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.44.8094&quot;&gt;">acme</a>, in which selecting/using files names from text paramount.</p></div>
+        </div>
+        
+        <div id="comment-5030" class="comment">
+          <a name="comment-5030"></a> 
+
+          <h3>42. Marius Gedminas said...</h3>
+          <div class="body"><p>Chris, thank you for the ,e mapping (comment #19)!</p>
+
+
+	<p>Mike (#29), :set autoread to avoid those popups and complain to bugs@vim.org about the unclear error message.</p>
+
+
+	<p>Kevin (#33), :set path.</p>
+
+
+My favourite vim features: keyword completion (^P/^N in insert mode), jumping to tags (^]), split windows (^W s, ^W v), vim's diff mode (vimdiff file1, file2), vcscommand.vim (for :VCSVimDiff), bufexplorer.vim.  And everything else.</div>
+        </div>
+        
+        <div id="comment-5031" class="comment">
+          <a name="comment-5031"></a> 
+
+          <h3>43. Doug said...</h3>
+          <div class="body"><p>It sounds like a lot of us Vim guys don&#8217;t know what Cmd-T does, but it sounds like it finds a filename.</p>
+
+
+	<p>I haven&#8217;t found a real need for that, but if I need to I can use / in my project buffer (http://www.vim.org/scripts/script.php?script_id=69).  It&#8217;s a little old but I&#8217;ve found it quite useful.</p>
+
+
+	<p>NERDTree looks cool and I&#8217;ll be giving it a try.  But the project plugin listed above lets me organize my files in &#8216;working groups&#8217;, whereas they are separated on the filesystem.</p>
+
+
+	<p>fwiw.</p></div>
+        </div>
+        
+        <div id="comment-5033" class="comment">
+          <a name="comment-5033"></a> 
+
+          <h3>44. Scott said...</h3>
+          <div class="body"><p>@Mike McNally</p>
+
+
+	<p>1. :set autoread</p>
+
+
+	<p>2. Install http://www.vim.org/scripts/script.php?script_id=240</p></div>
+        </div>
+        
+        <div id="comment-5034" class="comment">
+          <a name="comment-5034"></a> 
+
+          <h3>45. jason said...</h3>
+          <div class="body"><p>great Jamis, please inform us when you have a solution for the project browser!</p></div>
+        </div>
+        
+        <div id="comment-5035" class="comment">
+          <a name="comment-5035"></a> 
+
+          <h3>46. Brad said...</h3>
+          <div class="body"><p>MacVIM is a joy to use, I&#8217;ve been on it for the past 6 months.</p>
+
+
+	<p>BufExplorer is a must have plugin.</p>
+
+
+	<p>Then adding the following key mappings has made vim a much more pleasant for me.</p>
+
+
+	<p>:imap jj &lt;esc>
+:imap kk &lt;esc></p>
+
+
+	<p>Makes it very easy when I get moving after editing text.</p></div>
+        </div>
+        
+        <div id="comment-5036" class="comment">
+          <a name="comment-5036"></a> 
+
+          <h3>47. Basil said...</h3>
+          <div class="body"><p>I have a plugin which is similar to what you are trying to achieve (http://www.vim.org/scripts/script.php?script_id=2013).</p>
+
+
+	<p>The difference is that it relies upon a pre-generated ctags file to be loaded in your Vim instance.</p>
+
+
+	<p>It then allows you to perform a drill down search much like yours does.  My inspiration however came from Eclipse.</p>
+
+
+	<p>Keep up the good work.</p></div>
+        </div>
+        
+        <div id="comment-5037" class="comment">
+          <a name="comment-5037"></a> 
+
+          <h3>48. John said...</h3>
+          <div class="body"><p>FuzzyFinderTextMate seems a bit slow when looking through even a 200 file project&#8212;Perhaps I am missing some caching options though.</p>
+
+
+	<p>Another alternative is ProjectBrowse(http://www.vim.org/scripts/script.php?script_id=943), though you have to use regular vim search&#8212;which I haven&#8217;t had a problem with.</p></div>
+        </div>
+        
+        <div id="comment-5038" class="comment">
+          <a name="comment-5038"></a> 
+
+          <div class="date">
+            <span class="day">11</span>
+            <span class="month">Oct</span>
+            <span class="year">2008</span>
+          </div>
+
+          <h3>49. Joseph said...</h3>
+          <div class="body"><p>I&#8217;m not sure a Cocoa tree view would be the right approach for me&#8212;I like to search and navigate a file system using the same vim commands I use for navigating a source file. And to be able to do it on remote systems the same as locally.</p>
+
+
+	<p>This is my set-up: http://make-believe.org/in-words/post/vim-is-forever</p>
+
+
+	<p>If the screenshot appeals to anyone, drop a line and I can send you a zip. (It&#8217;s probably too rough-and-ready for a proper release.)</p>
+
+
+	<p>FuzzyFinder looks great, I&#8217;m going to try it out now.</p></div>
+        </div>
+        
+        <div id="comment-5039" class="comment">
+          <a name="comment-5039"></a> 
+
+          <h3>50. Andrew said...</h3>
+          <div class="body">So, my version of the file find+tree view is to map "_" to ":b 0", then make sure that I always open up a "files.txt" file (or some other file that has a list of file names in it) which was usually made by just running "find . -type f -not -path '.*/.svn/.*' > files.txt".
+
+	<p>It shows all the files in a tree-like view, I can search through them with &#8221;/&#8221;, and when I find the one that I want I can just type &#8220;gf&#8221;.</p>
+
+
+	<p>Another <span class="caps">IMHO</span> underrated keystroke is shift+ctrl+6, which is to switch between the last two buffers. Super handy.</p></div>
+        </div>
+        
+        <div id="comment-5040" class="comment">
+          <a name="comment-5040"></a> 
+
+          <h3>51. Arjen said...</h3>
+          <div class="body"><p>Hi,</p>
+
+
+	<p>Even though I am from that other editor I found your story very similar to my own&#8230;. great that you jumped back to where you feel comfortable!</p>
+
+
+	<p>Regards,</p>
+
+
+	<p>Arjen</p></div>
+        </div>
+        
+        <div id="comment-5041" class="comment">
+          <a name="comment-5041"></a> 
+
+          <h3>52. Max said...</h3>
+          <div class="body"><p>Things I use a lot in vim:</p>
+
+
+"ciw" "ci{" "ci(" : change a word, scope, condition, etc. Absolute gold.
+
+":s///g" : yay, substitution! combine with visual mode or % for great justice.
+
+	<p>cscope : fantastic project navigation tool. find all places which call a function, all definitions of a function, etc etc. it&#8217;s powerful.</p>
+
+
+	<p>lookupfile.vim : plugin to find files easily. seems to do something similar to your fuzzyfile thing; I am going to check out your one tomorrow to see what the differences are.</p>
+
+
+	<p>ctags : I don&#8217;t actually use this for tags, I use cscope, above, for that. Instead I use ctags and some sed/awk magic to generate a custom syntax file which highlights my own definitions and types and stuff.</p>
+
+
+":sp" ":tabnew" : I like having all my code in one window; I make the current buffer fill the screen apart from 1 line of text and 1 line of status bar for all other buffers; group similar files in a tab together. really easy to navigate.
+
+	<p>That&#8217;s about it, beyond another million or so muscle memory commands I can&#8217;t recall right now. :)</p>
+
+
+	<p>Max</p></div>
+        </div>
+        
+        <div id="comment-5042" class="comment">
+          <a name="comment-5042"></a> 
+
+          <h3>53. Travis Jeffery said...</h3>
+          <div class="body"><p>At first I used Vim for all my editing because I liked the keybindings and it was a lot easier than learning Emacs. Then I tried TextMate for a bit but it&#8217;s powerful in a different way than Vim or Emacs are powerful. It&#8217;s very young and fundamentally less powerful than Vim or Emacs and the only features that I really like are the ones people add-on with Bundles that have limited control.</p>
+
+
+	<p>Then I decided to just go for it and learn Emacs, and it&#8217;s been a very good decision and I&#8217;ll never go back. It&#8217;s literally the most extensible software ever made and very enjoyable with it&#8217;s Lisp dialect; Emacs-Lisp.</p></div>
+        </div>
+        
+        <div id="comment-5043" class="comment">
+          <a name="comment-5043"></a> 
+
+          <h3>54. Vasudev Ram said...</h3>
+          <div class="body"><p>Interesting post &#8230; and good info in the comments too.</p>
+
+
+	<p>Yes, vim is great &#8211; and as others said, it has a huge number of commands and pretty good documentation.</p>
+
+
+	<p>@Jamis:</p>
+
+
+<blockquote>
+	<p>Drop bookmarks with ‘m’, and jump right back to them with single quote.</p>
+
+</blockquote>
+
+
+
+
+	<p>You might know this already, but, if instead of single quote, you use the backquote key to go back to your mark, the cursor goes back to the exact cursor position you were at when you marked the line with the m command, not just to the beginning of that line (as it does with single quote).</p>
+
+
+	<p>One of my favorite vim commands, and a powerful one, is this:</p>
+
+
+	<p>If you prefix most vim commands that would move the cursor (through some part of the file) with an exclamation mark (!), and suffix the movement command with a call to an external shell command, like sort, ls, etc, vim pipes the range of text (that would have been moved through) to that shell command, and then <strong>replaces</strong> that text (in the file) with the output of that command. The command should be a filter (a command that reads standard input and writes to standard output). This also worked in vi.</p>
+
+
+	<p>Example:</p>
+
+
+	<p>Take this simple file, called a, created by redirecting the output of the ls command while in some directory (I&#8217;ve deleted the filenames at the end of each line, as they are not relevant, and also the &#8220;total&#8221; line that ls adds at the top):</p>
+
+
+<pre>
+  --------- Contents of file a --------------------
+  -rw-r--r-- 1 ubuntu ubuntu   0 2008-10-11 15:18 
+  drwx------ 3 ubuntu ubuntu  60 2008-10-11 11:21 
+  srwxr-xr-x 1 ubuntu ubuntu   0 2008-10-11 11:44 
+  drwx------ 2 ubuntu ubuntu  60 2008-10-11 11:21 
+  srwxr-xr-x 1 ubuntu ubuntu   0 2008-10-11 11:21 
+  drwx------ 2 ubuntu ubuntu 580 2008-10-11 11:44 
+  drwx------ 2 ubuntu ubuntu  60 2008-10-11 11:21 
+  drwx------ 2 ubuntu ubuntu  40 2008-10-11 11:21 
+  -------------------------------------------------
+</pre>
+
+	<p>I opened it in vi, then gave this command:</p>
+
+
+	<p>!Gsort -n -k 5</p>
+
+
+	<p>Then saved the file as file b:</p>
+
+
+<pre>
+  --------- Contents of file b --------------------
+  -rw-r--r-- 1 ubuntu ubuntu   0 2008-10-11 15:18 
+  srwxr-xr-x 1 ubuntu ubuntu   0 2008-10-11 11:21 
+  srwxr-xr-x 1 ubuntu ubuntu   0 2008-10-11 11:44 
+  drwx------ 2 ubuntu ubuntu  40 2008-10-11 11:21 
+  drwx------ 2 ubuntu ubuntu  60 2008-10-11 11:21 
+  drwx------ 2 ubuntu ubuntu  60 2008-10-11 11:21 
+  drwx------ 3 ubuntu ubuntu  60 2008-10-11 11:21 
+  drwx------ 2 ubuntu ubuntu 580 2008-10-11 11:44 
+  -------------------------------------------------
+</pre>
+
+	<p>The lines in the file are now sorted by file sizes.</p>
+
+
+	<p>The command sort -n -k 5 sorts whatever is in its standard input, in numerical order (-n), using the 5th column or field (space-separated  fields are the default) as the key to sort on (-k 5). Since the G command moves to the end of the file being edited, and I was on the first line when I gave the overall command, the full command results in the entire file being sorted by the file sizes (the 5th field of ls output), and that sorted output replaces the contents of the entire file. By just changing the column number (and dropping the -n if you want alphabetical sorting), you can also sort by number of links, modification date,  file name, file owner, etc. Of course, this technique works on any text file, including program code, program input data, etc., not just on ls listings.</p>
+
+
+	<p>Instead of sort, you can use uniq, awk, sed, tr or any other standard Linux/UNIX filter. Or any one that you wrote.</p>
+
+
+	<p>- Vasudev</p></div>
+        </div>
+        
+        <div id="comment-5045" class="comment">
+          <a name="comment-5045"></a> 
+
+          <h3>55. Vasudev Ram said...</h3>
+          <div class="body"><p>And yes &#8211; while all the readers here seem to be familiar with vim, here&#8217;s a tutorial on vi that I wrote for Linux For You magazine a while ago &#8211; feel free to share it with any friends learning vim. Couple of Windows sysadmin friends told me it helped them get up to speed on vi/vim pretty fast. Its quite short and clear, that&#8217;s why. Thought it&#8217;s for vi, everything in it works for vim (except the bit about vedit).</p></div>
+        </div>
+        
+        <div id="comment-5046" class="comment">
+          <a name="comment-5046"></a> 
+
+          <h3>56. Vasudev Ram said...</h3>
+          <div class="body"><p>Oops, forgot to give the vi tutorial link &#8211; here it is:</p>
+
+
+	<p>http://www.dancingbison.com/writings/vi_quickstart.txt</p>
+
+
+	<p>- Vasudev</p></div>
+        </div>
+        
+        <div id="comment-5047" class="comment">
+          <a name="comment-5047"></a> 
+
+          <h3>57. Garry said...</h3>
+          <div class="body"><p>I haven&#8217;t learned this much about vim in a long time!  Great comments.  And great plugin, I&#8217;ve already installed it.</p>
+
+
+	<p>A couple maps I can&#8217;t live without are:</p>
+
+
+	<p>:nnoremap &lt;c-l> gt</p>
+
+
+	<p>:nnoremap &lt;c-h> gT</p>
+
+
+	<p>I use tabs a lot, so this makes it real easy to navigate left and right across tabs.</p></div>
+        </div>
+        
+        <div id="comment-5048" class="comment">
+          <a name="comment-5048"></a> 
+
+          <h3>58. Alex Young said...</h3>
+          <div class="body"><p>I really like the Project plugin (http://vim.sourceforge.net/scripts/script.php?script_id=69).  Vim 7 added tab support so I no longer need a plugin for that.</p>
+
+
+	<p>vcscommand.vim is pretty good as well.</p></div>
+        </div>
+        
+        <div id="comment-5049" class="comment">
+          <a name="comment-5049"></a> 
+
+          <h3>59. Garry said...</h3>
+          <div class="body"><p>Forgot to add,</p>
+
+
+	<p>Welcome home, Jamis :)</p></div>
+        </div>
+        
+        <div id="comment-5050" class="comment">
+          <a name="comment-5050"></a> 
+
+          <h3>60. infakt said...</h3>
+          <div class="body"><p>Why dont you use any of bigger <span class="caps">IDE</span> like Eclipse or Netbeans?
+All developers in 37signals are using simple editors?</p></div>
+        </div>
+        
+        <div id="comment-5051" class="comment">
+          <a name="comment-5051"></a> 
+
+          <h3>61. Stephen Celis said...</h3>
+          <div class="body"><p>Thanks for this! Command-T was the biggest thing preventing me from using MacVim regularly.</p></div>
+        </div>
+        
+        <div id="comment-5052" class="comment">
+          <a name="comment-5052"></a> 
+
+          <h3>62. Joe said...</h3>
+          <div class="body"><p>Is cmd-T like the :sfind command?</p></div>
+        </div>
+        
+        <div id="comment-5053" class="comment">
+          <a name="comment-5053"></a> 
+
+          <h3>63. Tara said...</h3>
+          <div class="body"><p>This is a fantastic post. I found it on Reddit, and am glad. Welcome home to Vim! Love it.</p></div>
+        </div>
+        
+        <div id="comment-5054" class="comment">
+          <a name="comment-5054"></a> 
+
+          <h3>64. ttaveira said...</h3>
+          <div class="body"><p>Hi. Thanks for this, works pretty nicely :-)
+Although I have a problem when I use an &#8216;autocmd&#8217; to keep the working path to the file being edited&#8230; For example, with the following structure:</p>
+
+
+	<p>project/file1.c
+project/tests/in1</p>
+
+
+	<p>If my path is project/ and I use the plugin to edit project/tests/in1, the next time I use it to navigate to file1.c it tries to edit a &#8220;new&#8221; file in project/tests/.</p>
+
+
+	<p>Any way to fix it?</p>
+
+
+	<p>Thanks!</p></div>
+        </div>
+        
+        <div id="comment-5055" class="comment">
+          <a name="comment-5055"></a> 
+
+          <h3>65. Jamis said...</h3>
+          <div class="body"><p>@Joe, cmd-T is similar to :sfind, except it lets you match loosely on the pattern you enter. With sfind, for instance, the characters you enter must be exactly adjacent to one another in the file name. With cmd-T, they simply need to exist in the file name, in order, but not necessarily adjacent.</p>
+
+
+	<p>Also, cmd-T gives you real-time autocompletion of the files that match the pattern, as you type, which feels less like guesswork than sfind (and friends).</p></div>
+        </div>
+        
+        <div id="comment-5056" class="comment">
+          <a name="comment-5056"></a> 
+
+          <h3>66. Jamis said...</h3>
+          <div class="body"><p>@ttaveira, that&#8217;s really odd, I don&#8217;t see that behavior. I wonder if you have a plugin or something that is setting the working directory when you open a file?</p></div>
+        </div>
+        
+        <div id="comment-5058" class="comment">
+          <a name="comment-5058"></a> 
+
+          <h3>67. Adfm said...</h3>
+          <div class="body"><p>@Mike, Have you tried using tabs? :tabn &lt;tabname>   will give you a named tab. Cycle through tabs with gt&#8230; or use screen if you&#8217;re using a terminal.</p></div>
+        </div>
+        
+        <div id="comment-5059" class="comment">
+          <a name="comment-5059"></a> 
+
+          <h3>68. Keith said...</h3>
+          <div class="body"><p>I was never a huge vim guy, but tried it out again recently because I really like modal editing, etc. I abandoned it again because rails.vim (or some other plugin) was making it so that when I did a git checkin I got an error. At any rate&#8230;</p>
+
+
+	<p>Being a neophyte at setting <span class="caps">VIM</span> up, I was wondering if you would share your plugins and configuration (file, directory, whatever).</p></div>
+        </div>
+        
+        <div id="comment-5061" class="comment">
+          <a name="comment-5061"></a> 
+
+          <h3>69. Risto said...</h3>
+          <div class="body"><p>The fuzzy finder textmate is exactly what I had been looking for!  I have been using rails.vim, buffexplorer and a few others.  I also wanted to thank you for turning me onto MacVim&#8212;I&#8217;d been using the carbon version for a while and was not happy with the font rendering at all.  MacVim is beautiful.</p>
+
+
+	<p>We need some place to share our entire vimrc+plugin configuration, I would love to see how you, and others (say Tim Pope) have everything set up.</p></div>
+        </div>
+        
+        <div id="comment-5062" class="comment">
+          <a name="comment-5062"></a> 
+
+          <h3>70. Eric said...</h3>
+          <div class="body"><p>Your fuzzy_file_finder code reminded me of the Quicksilver string ranking algorithm, which has been ported to JavaScript:</p>
+
+
+	<p>http://rails-oceania.googlecode.com/svn/lachiecox/qs_score/trunk/qs_score.js</p></div>
+        </div>
+        
+        <div id="comment-5063" class="comment">
+          <a name="comment-5063"></a> 
+
+          <h3>71. Martin said...</h3>
+          <div class="body"><p>Interesting. Last month, I did the same&#8212;only moving back to Emacs after having abondoned it for TextMate after switching to <span class="caps">OS X</span>. So I share your feelings of &#8220;homecoming&#8221; and rediscovery.</p></div>
+        </div>
+        
+        <div id="comment-5064" class="comment">
+          <a name="comment-5064"></a> 
+
+          <h3>72. moshen said...</h3>
+          <div class="body"><p>Might I suggest trying out Komodo Edit:
+http://www.activestate.com/Products/komodo_ide/komodo_edit.mhtml</p>
+
+
+	<p>Has an awesome <span class="caps">VIM</span> mode, some great auto-completion and syntax checking features, plus much much more.</p></div>
+        </div>
+        
+        <div id="comment-5065" class="comment">
+          <a name="comment-5065"></a> 
+
+          <h3>73. Bill Mill said...</h3>
+          <div class="body"><p>Thirding the NERDTree recommendation! I love that plugin.</p></div>
+        </div>
+        
+        <div id="comment-5066" class="comment">
+          <a name="comment-5066"></a> 
+
+          <h3>74. Kael said...</h3>
+          <div class="body"><p>Kudos, this is great work!  How hard would it be to extend this script to fuzzy match cscope or ctags tag symbols?  If I had that, I could finally stop using Slickedit.</p></div>
+        </div>
+        
+        <div id="comment-5067" class="comment">
+          <a name="comment-5067"></a> 
+
+          <h3>75. Joseph Javier Perla said...</h3>
+          <div class="body"><p>Does anybody know why this happens, and how to fix it?</p>
+
+
+	<p>In Debian/Ubuntu, after I install the vim-python packages (possibly before, too) whenever I am editing a python file, and want to write out a comment, I type the # (hash) symbol.  But vim <strong>always</strong> moves the # to the beginning of the line on a new line.  It ignores the smart autoindenting when I start to write a new comment.  Why?  How do I fix this?</p></div>
+        </div>
+        
+        <div id="comment-5068" class="comment">
+          <a name="comment-5068"></a> 
+
+          <h3>76. Joseph Javier Perla said...</h3>
+          <div class="body"><p>Nevermind, I found one solution:</p>
+
+
+	<p>http://vim.wikia.com/wiki/VimTip644</p>
+
+
+	<p>But it doesn&#8217;t work with &gt;&gt; to reindent.</p></div>
+        </div>
+        
+        <div id="comment-5069" class="comment">
+          <a name="comment-5069"></a> 
+
+          <h3>77. Stephen Waits said...</h3>
+          <div class="body"><p>@Mike.. I set files which are readonly (in the filesystem) to be non-modifiable buffers like this:</p>
+
+
+	<p>&#8221; set modifiable state of buffer to match readonly state (unless overridden
+&#8221; manually)
+function UpdateModifiable() 
+    if &#38;readonly 
+        setlocal nomodifiable 
+    else 
+        setlocal modifiable 
+    endif 
+endfunction</p>
+
+
+	<p>autocmd BufReadPost * call UpdateModifiable()</p></div>
+        </div>
+        
+        <div id="comment-5070" class="comment">
+          <a name="comment-5070"></a> 
+
+          <h3>78. Neil Wilson said...</h3>
+          <div class="body"><p>One of my favourite vi commands is</p>
+
+
+	<p>:%sg</p>
+
+
+	<p>and another is to select a set of text and then run</p>
+
+
+	<p>:!fmt</p>
+
+
+	<p>Great for making sure comments are nicely word wrapped in a file.</p></div>
+        </div>
+        
+        <div id="comment-5071" class="comment">
+          <a name="comment-5071"></a> 
+
+          <h3>79. Per Melin said...</h3>
+          <div class="body"><p>I love Vim, but the thing that keeps me from using it as my primary editor is the scripting language. It drives me to a rage every time.</p></div>
+        </div>
+        
+        <div id="comment-5072" class="comment">
+          <a name="comment-5072"></a> 
+
+          <h3>80. jbj said...</h3>
+          <div class="body"><p>Vim is definitely my #1 choice, nevermind on which platform!
+For those who wants vim commands, I have listed 100 on my blog.
+http://www.catswhocode.com/blog/web-development/100-vim-commands-every-programmer-should-know-11</p></div>
+        </div>
+        
+        <div id="comment-5074" class="comment">
+          <a name="comment-5074"></a> 
+
+          <h3>81. Nico said...</h3>
+          <div class="body"><p>MacVim supports a <span class="caps">GUI</span> plugin system, so you could add the project drawer right to the MacVim window. See http://groups.google.com/group/vim_mac/browse_thread/thread/d74a9ede4a5a8155/a003c75521f0d14f?lnk=gst&#38;q=FileBrowser#a003c75521f0d14f for an example. Post to the vim_mac list if you need changes to the <span class="caps">API</span>.</p>
+
+
+	<p>Nico</p></div>
+        </div>
+        
+        <div id="comment-5075" class="comment">
+          <a name="comment-5075"></a> 
+
+          <div class="date">
+            <span class="day">12</span>
+            <span class="month">Oct</span>
+            <span class="year">2008</span>
+          </div>
+
+          <h3>82. Mark said...</h3>
+          <div class="body"><p>Awesome plugin. One thing that I would like is predefined filters to reduce the match list, e.g. by filtering out binary files (like *.o) and other generated formats. By predefined i mean you put them in your .vimrc or similar&#8230;</p></div>
+        </div>
+        
+        <div id="comment-5077" class="comment">
+          <a name="comment-5077"></a> 
+
+          <h3>83. Damien said...</h3>
+          <div class="body"><p>I&#8217;ll definitely look at it :)
+I personnaly use project.vim and minibufexplorer.vim for file and buffers browsing.</p></div>
+        </div>
+        
+        <div id="comment-5078" class="comment">
+          <a name="comment-5078"></a> 
+
+          <h3>84. Thomas David Baker said...</h3>
+          <div class="body"><p>Just what the doctor ordered!</p>
+
+
+	<p>Unfortunately I can&#8217;t quite get it to work.  I&#8217;ve installed the gem and in irb everything works swell.  In a standalone program I can</p>
+
+
+	<p>require &#8216;rubygems&#8217;
+reqiure &#8216;fuzzy_file_finder&#8217;</p>
+
+
+	<p>and again all is good.</p>
+
+
+	<p>But MacVim no likey.</p>
+
+
+	<p>The error while loading is:</p>
+
+
+	<p>Error detected while processing function InstantiateTextMateMode:
+line   17:
+LoadError: /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/rubygems/custom_require.rb:27:in `gem_original_require&#8217;: no such file to load&#8212;fuzzy_file_finder</p>
+
+
+	<p>It&#8217;s as though the &#8216;require &#8220;rubygems&#8221;&#8217; does not fire?</p>
+
+
+	<p>It works fine if I move the .rb file to my ~/.vim/plugin/ directory, but only if I launch MacVim from that directory!</p>
+
+
+	<p>I&#8217;ve spent fifteen minutes poking at it and moving &#8220;require &#8216;rubygems&#8217;&#8221; around in the file but to no avail.</p>
+
+
+	<p>Any hints gratefully received &#8230;</p></div>
+        </div>
+        
+        <div id="comment-5079" class="comment">
+          <a name="comment-5079"></a> 
+
+          <h3>85. Ted Henry said...</h3>
+          <div class="body"><p>The only reason I&#8217;m still using TextMate and not either Emacs or Vim is TextMate has Command-Shift-F and I use it at least every five minutes. Without that command, and the necessary idea of project (probably per window) to make it work, I think I&#8217;m stuck in TextMate.</p></div>
+        </div>
+        
+        <div id="comment-5080" class="comment">
+          <a name="comment-5080"></a> 
+
+          <h3>86. Jamis said...</h3>
+          <div class="body"><p>re #84, most likely you installed a different ruby (via macports, etc.), while macvim tries to use the ruby that ships with <span class="caps">OS X</span>.</p>
+
+
+	<p>Simple solution: take fuzzy_file_finder.rb and put it in ~/.vim/ruby (you&#8217;ll probably have to create the directory).</p>
+
+
+	<p>Harder solution: find the ruby executable that ships with <span class="caps">OS X</span>, and the corresponding &#8216;gem&#8217; script, and use that to install the fuzzy_file_finder gem.</p></div>
+        </div>
+        
+        <div id="comment-5081" class="comment">
+          <a name="comment-5081"></a> 
+
+          <h3>87. Thomas David Baker said...</h3>
+          <div class="body"><p>Not only do I get the plugin I&#8217;ve been dreaming of but I get personalized tech support, too?!</p>
+
+
+	<p>Great!</p>
+
+
+	<p>That was exactly my problem, and now it works superbly.  Thanks!</p>
+
+
+	<p>I notice that you don&#8217;t ignore internal spaces in the search string like Cmd-T does.  Is that an intentional change on aesthetic grounds?  I kinda liked it.  I may slip it in.</p></div>
+        </div>
+        
+        <div id="comment-5085" class="comment">
+          <a name="comment-5085"></a> 
+
+          <h3>88. Tom said...</h3>
+          <div class="body"><p>This is easily the best blog post + comment thread I&#8217;ve read this year&#8230;</p></div>
+        </div>
+        
+        <div id="comment-5087" class="comment">
+          <a name="comment-5087"></a> 
+
+          <h3>89. David Lee said...</h3>
+          <div class="body"><p>Anyone have a good suggestion for comment #85 concerning find in all files? The :grep command automatically opens the first file and you can only edit other files by typing in the number found in :clist. It would be better if it was like fuzzyfinder where you just scroll down to the file you want and start editing by pressing enter.</p>
+
+
+	<p>Also, I found a bug in fuzzyfinder_textmate where if you run FuzzyFinderTextMate in one directory then cd into another directory, FuzzyFinderTextMate still only searches among the files in the previous directory.</p>
+
+
+	<p>+1 vote for comment #34 where the pattern matches should be colorized instead of parenthesized.</p>
+
+
+	<p>Thank you, Jamis, for this great plugin!</p></div>
+        </div>
+        
+        <div id="comment-5088" class="comment">
+          <a name="comment-5088"></a> 
+
+          <div class="date">
+            <span class="day">13</span>
+            <span class="month">Oct</span>
+            <span class="year">2008</span>
+          </div>
+
+          <h3>90. Garry said...</h3>
+          <div class="body"><p>Another plugin I just found, that I can&#8217;t live without, is CSApprox:</p>
+
+
+	<p>http://www.vim.org/scripts/script.php?script_id=2390</p>
+
+
+	<p>It let&#8217;s you use Gvim themes in console Vim.  It&#8217;s a new plugin, it seems (released 2008-10-05).  The amount of <strong>good</strong> <strong>looking</strong> themes that I can use now is enormous!</p></div>
+        </div>
+        
+        <div id="comment-5090" class="comment">
+          <a name="comment-5090"></a> 
+
+          <h3>91. Si said...</h3>
+          <div class="body"><p>Great post and comments!</p>
+
+
+	<p>I am also coming home to Vim with MacVim. I&#8217;ll check out the plugin &#8211; thanks Jamis!</p>
+
+
+	<p>Currently using BufExplorer, Project, Rails.vim, SimpleFold, <span class="caps">VCS</span> and have integrated Javascript Lint checking based on http://thomas.tanrei.ca/javascript-lint-and-vim/ (but with &#8220;new&#8221; instead of &#8220;tabnew&#8221; in the function so that I can keep report and code together).</p></div>
+        </div>
+        
+        <div id="comment-5091" class="comment">
+          <a name="comment-5091"></a> 
+
+          <h3>92. Arnaud Berthomier said...</h3>
+          <div class="body"><p>Hey thanks, that&#8217;s a great idea. I love it. :)</p>
+
+
+	<p>Also, this really-tiny patch should silently avoid errors when the plugin hits directories it cannot read : http://cyprio.net/check_readable.patch</p>
+
+
+	<p><span class="caps">HTH</span>.</p></div>
+        </div>
+        
+        <div id="comment-5092" class="comment">
+          <a name="comment-5092"></a> 
+
+          <h3>93. DanTakk said...</h3>
+          <div class="body"><p>Something you might already know, running &#8217;&#8217; instead of specifying a mark will move to your position before the last jump.  Then you can run &#8217;&#8217; again to jump back.  Useful if you make an edit, then snoop around some code and want to jump back quickly.</p></div>
+        </div>
+        
+        <div id="comment-5094" class="comment">
+          <a name="comment-5094"></a> 
+
+          <h3>94. Ho-Sheng Hsiao said...</h3>
+          <div class="body"><p>I use NERDTree.vim when I develop Rails apps. I only use it half of the time. I never used TextMate, so I have no idea if it is a good project drawer replacement or not. I do know it does what I want it to do: I can browse the project tree, and when I open up files from the tree, it does not collapse the drawer. It does use split-window though, so it might not be something acceptable for people who want native-Cocoa widgets.</p></div>
+        </div>
+        
+        <div id="comment-5095" class="comment">
+          <a name="comment-5095"></a> 
+
+          <h3>95. jmoiron said...</h3>
+          <div class="body"><p>Is there a way to set a list of ignore regex/suffixes?  If not, there should be :)</p>
+
+
+	<p>I&#8217;m a pythonista, and a web developer, which means I always have plenty of files lying around I couldn&#8217;t care less about editing.  For now just ignoring pyc would be enough, but adding &#8217;.svn&#8217;, known binary extensions, etc, would be nice.  Couldn&#8217;t figure out how, so I added this change to the code in `fuzzyfinder_textmate.vim` for now:</p>
+
+
+	<p>after the `matches.sort_by &#8230;` line:</p>
+
+
+	<pre><code>word = match[:path]
+if not /\.pyc$/.match(word)
+   abbr = ...
+   menu = ...
+   VIM.eval ...
+end</code></pre></div>
+        </div>
+        
+        <div id="comment-5096" class="comment">
+          <a name="comment-5096"></a> 
+
+          <h3>96. Jamis said...</h3>
+          <div class="body"><p>@jmoiron, grab the latest version of both fuzzyfinder_textmate.vim and fuzzy_file_finder. I committed a change late last night that adds support for ignore patterns. See the <span class="caps">README</span> for <a href="http://github.com/jamis/fuzzyfinder_textmate/tree/master">fuzzyfinder_textmate.vim</a> for a list of variables you can set (including g:fuzzy_ignore).</p></div>
+        </div>
+        
+        <div id="comment-5097" class="comment">
+          <a name="comment-5097"></a> 
+
+          <h3>97. jmoiron said...</h3>
+          <div class="body"><p>@Jamis: Fantastic!  You read my mind, then :)  Great work on this plugin; and thanks for your contribution to the community!</p></div>
+        </div>
+        
+        <div id="comment-5098" class="comment">
+          <a name="comment-5098"></a> 
+
+          <h3>98. Adam McCrea said...</h3>
+          <div class="body"><p>@Jamis, I just updated the gem and plugin.  The ignore option works great, but find.rescan! seems to do nothing now.  Is it just me?</p></div>
+        </div>
+        
+        <div id="comment-5099" class="comment">
+          <a name="comment-5099"></a> 
+
+          <h3>99. Garry said...</h3>
+          <div class="body"><p>Just found out something else cool.  If you read the docs for fuzzyfinder.vim, you will find some cool keystrokes (which in turn also work for fuzzyfinder_textmate).</p>
+
+
+	<p>When you have the file you want selected, you can do:</p>
+
+
+	<p><span class="caps">CTRL</span>-] &#8211; open in new tab.</p>
+
+
+	<p><span class="caps">CTRL</span>-j &#8211; open in split window.</p>
+
+
+	<p><span class="caps">CTRL</span>-k &#8211; open in vertical split window.</p>
+
+
+	<p>I use tabs a <span class="caps">LOT</span>, so <span class="caps">CTRL</span>-] is <span class="caps">AWESOME</span>.</p></div>
+        </div>
+        
+        <div id="comment-5100" class="comment">
+          <a name="comment-5100"></a> 
+
+          <h3>100. Yvonne said...</h3>
+          <div class="body"><p>I have to echo the &#8220;Macvim is awesome&#8221; remarks.</p>
+
+
+	<p>Not only that, the Macvim <strong>developer</strong> is awesome. He single handedly improved my Mac programming productivity about 50%.</p>
+
+
+	<p>I&#8217;m a blind programmer. Originally I ran on Linux in, believe it or not, Emacs. Then I switched to the Mac. But do you think I could find a decent editor? BBedit? No. It won&#8217;t work with the accessibility stuff for <span class="caps">OS X</span> and the author claimed to have no intention of it ever doing so. Textmate? No. Same problem, and the author said it was incredibly hard and he didn&#8217;t know if he&#8217;d ever do it. Emacs? No. same problem <strong>again</strong>. So I languished. I used Smultron. I used subethaedit. I hacked and struggled with applescript and tiny shell scripts and Quicksilver to get basic editors to be even slightly adequate. I even had to give up programming in python altogether due to the lack of really good indent and navigation support.</p>
+
+
+	<p>Admittedly that wasn&#8217;t all bad, it let me find Ruby, but still, that hurt. But then I found Macvim. At first it didn&#8217;t work, no cursor tracking, but one query on the Macvim list and a patch, and it worked brilliantly. And I love it. And I&#8217;m going to be committing heresy, but Vim fits my brain better than Emacs ever did. Talk about coming home to an editor.</p></div>
+        </div>
+        
+        <div id="comment-5101" class="comment">
+          <a name="comment-5101"></a> 
+
+          <h3>101. Jamis said...</h3>
+          <div class="body"><p>@Yvonne, that is an <strong>awesome</strong> story. Thanks for sharing that!</p></div>
+        </div>
+        
+        <div id="comment-5102" class="comment">
+          <a name="comment-5102"></a> 
+
+          <div class="date">
+            <span class="day">14</span>
+            <span class="month">Oct</span>
+            <span class="year">2008</span>
+          </div>
+
+          <h3>102. OJ said...</h3>
+          <div class="body"><p>I&#8217;d be screwed without the likes of</p>
+
+
+	<p>di)
+ya}
+da}
+... etc.</p>
+
+
+	<p>== is a winner since i deal with a lot of generated <span class="caps">XML</span></p>
+
+
+	<p>I love macros and repeating commands via &#8217;.&#8217;</p>
+
+
+	<p>I&#8217;m also a fan of <span class="caps">CTRL</span>-]</p>
+
+
+	<p>I have to say that I need to get better at just general movement. I&#8217;m quick but need to get quicker.</p>
+
+
+	<p>Great post, praise be to <span class="caps">VIM</span>!</p>
+
+
+	<p>OJ</p></div>
+        </div>
+        
+        <div id="comment-5103" class="comment">
+          <a name="comment-5103"></a> 
+
+          <h3>103. Jens said...</h3>
+          <div class="body"><p>Excuse the newbie question&#8230; But how do I set the new variables in .vimrc? I can&#8217;t figure out the syntax.</p></div>
+        </div>
+        
+        <div id="comment-5106" class="comment">
+          <a name="comment-5106"></a> 
+
+          <h3>104. ttaveira said...</h3>
+          <div class="body"><p>&lt;&lt; @ttaveira, that’s really odd, I don’t see that behavior. I wonder if you have a plugin or something that is setting the working directory when you open a file? &gt;&gt;</p>
+
+
+	<p>Yep, I have
+autocmd BufEnter * exec &#8221;:lcd %:p:h&#8221; 
+to keep the path on the file being edited.</p>
+
+
+	<p>Any quick &#38; dirty fix to that? :)
+Perhaps absolute paths?</p></div>
+        </div>
+        
+        <div id="comment-5107" class="comment">
+          <a name="comment-5107"></a> 
+
+          <h3>105. David Lee said...</h3>
+          <div class="body"><p>I found a similar plugin named lookupfile.vim.
+If you haven&#8217;t seen it yet, it would be nice to take a look to see how else to improve fuzzyfinder_textmate.</p>
+
+
+	<p>@Jens:</p>
+
+
+	<p>to set variable &#8216;asdf&#8217; to 1, you can put this in your .vimrc:</p>
+
+
+	<p>let asdf=1</p></div>
+        </div>
+        
+        <div id="comment-5110" class="comment">
+          <a name="comment-5110"></a> 
+
+          <div class="date">
+            <span class="day">15</span>
+            <span class="month">Oct</span>
+            <span class="year">2008</span>
+          </div>
+
+          <h3>106. Jens said...</h3>
+          <div class="body"><p>@David Lee:</p>
+
+
+	<p>Thanks! What tripped me up was that Jamis had misspelled the variables in the documentation. g:fuzzy_match_limit should be g:fuzzy_matching_limit.</p></div>
+        </div>
+        
+        <div id="comment-5111" class="comment">
+          <a name="comment-5111"></a> 
+
+          <h3>107. Si said...</h3>
+          <div class="body"><p>Had a chance to play with this now, and it&#8217;s working great.</p>
+
+
+	<p>One of the things that annoyed me about TextMate&#8217;s cmd-T, and of course exacerbated by RESTful Rails projects, was the inability to filter the path as well as the file name. I usually have a lot of index files, sometimes under multiple namespaces, and the ability to slap in say &#8220;a/j/i&#8221; to drill to admin/jobs/index is a godsend.</p>
+
+
+	<p>I don&#8217;t have too many views outside of the typical <span class="caps">REST</span> action collection, so abbrebiated controller paths + first letter of action is a much more attractive proposition than scrolling down lists of index files in TextMate.</p>
+
+
+	<p>Nice one Jamis!</p></div>
+        </div>
+        
+        <div id="comment-5112" class="comment">
+          <a name="comment-5112"></a> 
+
+          <h3>108. savvy said...</h3>
+          <div class="body"><p>Im getting the following error when invoking &#8221;:FuzzyFinderTextMate&#8221;</p>
+
+
+	<p>Error detected while processing function FuzzyFinderTextMateLauncher..InstantiateTextMateMode:
+line   53:
+<span class="caps">E121</span>: Undefined variable: g:FuzzyFinderMode
+<span class="caps">E116</span>: Invalid arguments for function copy(g:FuzzyFinderMode.Base)
+<span class="caps">E15</span>: Invalid expression: copy(g:FuzzyFinderMode.Base)
+line   64:
+<span class="caps">E121</span>: Undefined variable: g:FuzzyFinderMode
+line   65:
+<span class="caps">E121</span>: Undefined variable: a:findstart
+<span class="caps">E15</span>: Invalid expression: a:findstart
+line   70:
+<span class="caps">E121</span>: Undefined variable: self
+<span class="caps">E116</span>: Invalid arguments for function &lt;snr>10_HighlightPrompt
+line   77:
+<span class="caps">E121</span>: Undefined variable: self
+<span class="caps">E15</span>: Invalid expression: self.matching_limit
+line   91:
+<span class="caps">E121</span>: Undefined variable: self
+<span class="caps">E15</span>: Invalid expression: self.remove_prompt(a:base)
+<span class="caps">E121</span>: Undefined variable: l:limit
+<span class="caps">E15</span>: Invalid expression: l:limit
+NoMethodError: undefined method `strip!&#8217; for nil:NilClass
+Error detected while processing function FuzzyFinderTextMateLauncher:
+line    4:
+<span class="caps">E127</span>: Cannot redefine function FuzzyFinderTextMateLauncher: It is in use
+line    5:
+<span class="caps">E121</span>: Undefined variable: g:FuzzyFinderMode</p>
+
+
+	<p>I did the gem install, and added the .vim script in my ~/.vim/plugin dir.</p>
+
+
+	<p>When i run &#8216;vim&#8212;version&#8217; I see that i have ruby support.</p>
+
+
+	<p>I&#8217;m running Linux with vim 7.1.</p></div>
+        </div>
+        
+        <div id="comment-5114" class="comment">
+          <a name="comment-5114"></a> 
+
+          <h3>109. Jamis said...</h3>
+          <div class="body"><p>@Jens, whoops. I&#8217;ll fix the docs today.</p>
+
+
+	<p>@savvy, did you install the fuzzyfinder.vim script, as well as the fuzzyfinder_textmate.vim script?</p></div>
+        </div>
+        
+        <div id="comment-5115" class="comment">
+          <a name="comment-5115"></a> 
+
+          <h3>110. Rich said...</h3>
+          <div class="body"><p>I noticed that a few people above were asking for a set of Rails based Vim plugins/configurations.  I store my Vim config on github.  Here it is if anyone&#8217;s interested:</p>
+
+
+	<p><a href="http://github.com/manalang/vim-config/tree/master">http://github.com/manalang/vim-config/tree/master</a></p>
+
+
+	<p>It includes everything you need for Rails dev (JS, <span class="caps">HTML</span>, CSS included).  It also includes Jamis&#8217; supercool fuzzy_finder_textmate plugin.  Just do a:</p>
+
+
+	<p>git clone git@github.com:manalang/vim-config.git</p>
+
+
+	<p>Then:</p>
+
+
+	<p>mv vim-config ~/.vim
+mv ~/.vim/.vimrc ~/.vimrc</p>
+
+
+	<p>Enjoy!</p></div>
+        </div>
+        
+        <div id="comment-5117" class="comment">
+          <a name="comment-5117"></a> 
+
+          <h3>111. Cristi Balan said...</h3>
+          <div class="body"><p>My vim tip:</p>
+
+
+	<p>Searching with / takes an offset. The offset allows to move the cursor after a match is made. This is very handy when combined with .</p>
+
+
+	<p>Given this string: &#8220;blah blah blah&#8221;.</p>
+
+
+	<p>Let&#8217;s say we want to replace the first and third occurence of ah, with AH.</p>
+
+
+	<p>/bl/b+2 # =&gt; searches for bl and moves the cursor on top of a
+cwAH&lt;esc> # =&gt; changes the ah to AH
+n # =&gt; go to second match
+n # =&gt; go to third match
+. # =&gt; change third match</p>
+
+
+	<p>:h /</p></div>
+        </div>
+        
+        <div id="comment-5118" class="comment">
+          <a name="comment-5118"></a> 
+
+          <h3>112. Cristi Balan said...</h3>
+          <div class="body"><p>Err, silly formatting. That should be:</p>
+
+
+	<pre><code>/bl/b+2 # =&gt; searches for bl and moves the cursor on top of a
+cwAH&lt;esc> # =&gt; changes the ah to AH
+n # =&gt; go to second match
+n # =&gt; go to third match
+. # =&gt; change third match</code></pre></div>
+        </div>
+        
+        <div id="comment-5121" class="comment">
+          <a name="comment-5121"></a> 
+
+          <div class="date">
+            <span class="day">16</span>
+            <span class="month">Oct</span>
+            <span class="year">2008</span>
+          </div>
+
+          <h3>113. savvy said...</h3>
+          <div class="body"><p>@jamis, i indeed forgot to install fuzzyfinder.vim script.</p>
+
+
+	<p>I however still with a problem, when i open up the :FuzzyFinderTextMate and select a file from the list get the following error instead of vim opening up that file:</p>
+
+
+	<p>&#8212;User defined completion (<sup>U^N</sup>P) Pattern not found</p>
+
+
+	<p>I must be doing something wrong :)</p></div>
+        </div>
+        
+        <div id="comment-5122" class="comment">
+          <a name="comment-5122"></a> 
+
+          <h3>114. trevor said...</h3>
+          <div class="body"><p>Good vim integration in bash as well:</p>
+
+
+	<p>set -o vi</p>
+
+
+	<p>export <span class="caps">FCEDIT</span>=vim
+[ctrl-x-e]   # press ctrl-x-e keys</p>
+
+
+	<p>see http://codesnippets.joyent.com/posts/show/1625</p></div>
+        </div>
+        
+        <div id="comment-5124" class="comment">
+          <a name="comment-5124"></a> 
+
+          <h3>115. Brian said...</h3>
+          <div class="body"><p>This is great. One thing I can&#8217;t figure out is how to get it to learn about newly created files. Is there something simple I&#8217;m missing? Thanks.</p></div>
+        </div>
+        
+        <div id="comment-5125" class="comment">
+          <a name="comment-5125"></a> 
+
+          <h3>116. Jamis said...</h3>
+          <div class="body"><p>@Brian, you need to tell it to rescan the project:</p>
+
+
+<pre>:ruby finder.rescan!</pre>
+
+	<p>It doesn&#8217;t automatically rescan, unfortunately.</p></div>
+        </div>
+        
+        <div id="comment-5128" class="comment">
+          <a name="comment-5128"></a> 
+
+          <h3>117. Andy Watts said...</h3>
+          <div class="body"><p>Vim + NERDTree works great.</p>
+
+
+	<p>Tabs and a file tree all in one vim plugin</p></div>
+        </div>
+        
+        <div id="comment-5135" class="comment">
+          <a name="comment-5135"></a> 
+
+          <div class="date">
+            <span class="day">17</span>
+            <span class="month">Oct</span>
+            <span class="year">2008</span>
+          </div>
+
+          <h3>118. Dave Smylie said...</h3>
+          <div class="body"><p>This is very cool =)</p>
+
+
+	<p>Only issue I&#8217;m having is trying to alternate different g:fuzzy_roots
+- I can let and unlet g:fuzzy_roots, but FuzzyFinderTextMate seems to only search what every directory tree&#8217;s were in g:fuzzy_roots when it was initially loaded.</p>
+
+
+	<p>I&#8217;ve tried 
+  :ruby finder.rescan!
+but that didn&#8217;t seem to make any difference.
+Any ideas?</p></div>
+        </div>
+        
+        <div id="comment-5138" class="comment">
+          <a name="comment-5138"></a> 
+
+          <div class="date">
+            <span class="day">18</span>
+            <span class="month">Oct</span>
+            <span class="year">2008</span>
+          </div>
+
+          <h3>119. Jamis said...</h3>
+          <div class="body"><p>@Dave, the fuzzy_roots are set when the finder is instantiated, and once instantiated, the instance is cached. You can force it to be reinstantiated by doing something like this:</p>
+
+
+<pre>:ruby @finder = nil</pre>
+
+	<p>And then running the fuzzy finder again.</p></div>
+        </div>
+        
+        <div id="comment-5139" class="comment">
+          <a name="comment-5139"></a> 
+
+          <h3>120. Dave Smylie said...</h3>
+          <div class="body"><p>Cool. Exactly what I was after. Thanks for that =)</p>
+
+
+	<p>I&#8217;m not sure if you&#8217;ve already looked at Project? (http://www.vim.org/scripts/script.php?script_id=69), but I&#8217;ve been using that for a while, and find it pretty handy.</p>
+
+
+	<p>Instead of just browsing fs directories, you set up the specific files in the project you&#8217;re interested in, and you can set it to run arbitrary scripts when you enter/exit a working directory.
+This lets it integrate very well with FuzzyFinderTextMate &#8211; I&#8217;ve created an &#8220;in.vim&#8221; for each project that looks something like:</p>
+
+
+<code>
+  let code='/home/dgs/code/uwh/'
+  let g:fuzzy_roots=[code."app", code."config"] 
+  ruby @finder = nil
+</code>
+
+	<p>Which will automatically flip it to the new fuzzy_roots dependent on what files you&#8217;re currently working on. Very handy =)</p></div>
+        </div>
+        
+        <div id="comment-5143" class="comment">
+          <a name="comment-5143"></a> 
+
+          <h3>121. Don said...</h3>
+          <div class="body"><p>Unfortunately it doesn&#8217;t look like colorizing the matching bits is even a possibility.  I spent quite a while trying to get it working, and it turns out that there aren&#8217;t any real options for colorizing specific parts of the text in that autocompletion popup menu.  More info here: http://vim.dindinx.net/vim7/html/insert.txt.php#popupmenu-keys</p>
+
+
+	<p>For fun, I asked around in #vim, and got the same answer.  I tried even tried using the terminal escape codes for colors, even though that would be a pretty poor solution, and those get ignored when the menu is generated.</p>
+
+
+	<p>Oh well, maybe in a future version of Vim.  Thanks for the plugin!</p></div>
+        </div>
+        
+        <div id="comment-5147" class="comment">
+          <a name="comment-5147"></a> 
+
+          <div class="date">
+            <span class="day">20</span>
+            <span class="month">Oct</span>
+            <span class="year">2008</span>
+          </div>
+
+          <h3>122. hintman said...</h3>
+          <div class="body"><p>The last Vim color scheme you&#8217;ll ever need</p>
+
+
+	<p>http://blog.infinitered.com/entries/show/8</p>
+
+
+	<p>Just my two cents.</p></div>
+        </div>
+        
+        <div id="comment-5151" class="comment">
+          <a name="comment-5151"></a> 
+
+          <h3>123. Mahlon E. Smith said...</h3>
+          <div class="body"><p>@jamis:  Thanks for the post.  It echos much of my same feelings re: Textmate and Vim for <span class="caps">OSX</span> peeps.</p>
+
+
+	<p>http://www.martini.nu/blog/2008/07/vim.html</p>
+
+
+	<p>One of my standby tricks when dedicating a vim session to a particular project is to always do a &#8220;set path=**&#8221; and :chdir to the project&#8217;s location.</p>
+
+
+	<p>Then, I rarely (if ever) use the regular :e and :sp commands for opening buffers, instead using :find and :sf, which search against the path variable.  Very handy.</p>
+
+
+	<p>Where this falls short is when you&#8217;ve got two files with the same name&#8212;:find only gives you the first.  I&#8217;ll definitely be checking out your plugin to get around this (I&#8217;m using the regular fuzzyFinder at the moment.)</p>
+
+
+	<p>While I&#8217;m here, I&#8217;ll pimp two other creations&#8230;  ;)</p>
+
+
+	<p>A different RSpec integration with Vim (that capitalized on what I describe above):
+http://www.vim.org/scripts/script.php?script_id=2286</p>
+
+
+	<p>Automated Vim plugin builds using Vimball+Make:
+http://vim.wikia.com/wiki/Using_VimBall_with_%27Make%27</p>
+
+
+	<p>The last thing I&#8217;m looking for that I feel would really make things &#8220;complete&#8221;&#8212;is a &#8220;find in project&#8221; for Vim.  I can&#8217;t seem to find one that allows cherry-picking files to apply the search/replace to.  :vimgrep is close, but no easy &#8220;multi-select and apply.&#8221;  If anyone here knows of something that replicates that sweet shift-cmd-F action&#8230; holler at me.  :)</p></div>
+        </div>
+        
+        <div id="comment-5154" class="comment">
+          <a name="comment-5154"></a> 
+
+          <h3>124. Anko said...</h3>
+          <div class="body"><p>sorry to come late to the party but shouldn&#8217;t</p>
+
+
+	<p>def initialize(directories=[&#8217;.&#8217;], ceiling=10_000, ignores=nil)</p>
+
+
+	<p>be</p>
+
+
+	<p>def initialize(directories=[&#8217;.&#8217;], ceiling=10000, ignores=nil)</p>
+
+
+	<p>???</p>
+
+
+	<p>http://github.com/jamis/fuzzy_file_finder/tree/master/lib/fuzzy_file_finder.rb</p>
+
+
+	<p>Anko</p></div>
+        </div>
+        
+        <div id="comment-5156" class="comment">
+          <a name="comment-5156"></a> 
+
+          <h3>125. Anko said...</h3>
+          <div class="body"><p>nevermind, they are equivilent &#8211; my directory was just really really big!</p></div>
+        </div>
+        
+        <div id="comment-5164" class="comment">
+          <a name="comment-5164"></a> 
+
+          <div class="date">
+            <span class="day">21</span>
+            <span class="month">Oct</span>
+            <span class="year">2008</span>
+          </div>
+
+          <h3>126. D said...</h3>
+          <div class="body"><p>Great article&#8230; but&#8230; an <span class="caps">OSX GUI</span> version of Vim called MacVim ?  Hmmm&#8230; my initial <span class="caps">WTF</span>&#8217;s:</p>
+
+
+	<p>1.  I use Vim, as it is portable.  Jump into any machine, and you&#8217;re good to go.  Getting comfortable with a specific machines <span class="caps">GUI</span> version of the program seems odd.</p>
+
+
+	<p>2.  Any programmatic sequences that you could set in MacVim could be done in Vim, albeit, probably not as easy I&#8217;m assuming.  But&#8230; if Vim is your primary editor, it is a good idea to be familiar with it&#8217;s configuration and customization options.</p>
+
+
+	<p>3.  Vim works fine on <span class="caps">OSX</span>.  Why use something else ?  anti-aliasing ?</p>
+
+
+	<p>Any feedback that could possibly point a Vim purist in another direction would be appreciated ;)</p></div>
+        </div>
+        
+        <div id="comment-5165" class="comment">
+          <a name="comment-5165"></a> 
+
+          <h3>127. Jamis said...</h3>
+          <div class="body"><p>@D, MacVim works exactly like Vim, as you said. If I &#8220;get comfortable&#8221; with macvim, I&#8217;m not digging myself into any holes, as I&#8217;ll be using the same key bindings and same config options via any command-line vim.</p>
+
+
+	<p>The benefit of a <span class="caps">GUI</span> version, as I see it, is the ability to differentiate multiple open vim windows from my multiple open console windows. If I only use console windows, then everything looks like a console window, both in the alt-tab switcher, and in the dock. Using a <span class="caps">GUI</span>, MacVim has it&#8217;s own icon.</p>
+
+
+	<p>Then again, if you&#8217;ve not felt this particular pain, then you&#8217;re definitely not the target audience for MacVim. Don&#8217;t go lording it over us lesser vim users, though. Let&#8217;s just agree that different people have different preferred development environments.</p></div>
+        </div>
+        
+        <div id="comment-5168" class="comment">
+          <a name="comment-5168"></a> 
+
+          <h3>128. pedro mg said...</h3>
+          <div class="body"><p>I use vimblog.vim (vim ruby script, based on Brad Choate&#8217;s Textmate blogging bundle) to post, edit, del, list, publish/draft blog articles, so that when you are coding and have an urge to post something, related or not, do:</p>
+
+
+	<p>:new # new window
+:Blog np # new &#8220;blank&#8221; formated post
+#write&#8230;
+:Blog publish # publish article and receive formatted article from server</p>
+
+
+	<p>Or if you need to get a quick list of articles from the blog:
+:Blog rp # get 10 (default) most recent posts
+:Blog rp 15 # get 15 recent posts
+:Blog gp 144 # get (fetch) post 144</p>
+
+
+	<p>screenshots: 
+http://www.flickr.com/photos/keynote/446153651
+http://www.flickr.com/photos/keynote/397369388/</p>
+
+
+	<p>script here: http://blog.tquadrado.com/?page_id=146
+or at vim&#8217;s: http://www.vim.org/scripts/script.php?script_id=2030</p></div>
+        </div>
+        
+        <div id="comment-5171" class="comment">
+          <a name="comment-5171"></a> 
+
+          <div class="date">
+            <span class="day">22</span>
+            <span class="month">Oct</span>
+            <span class="year">2008</span>
+          </div>
+
+          <h3>129. phil said...</h3>
+          <div class="body"><p>MacVim as part of a cross-platform desktop workflow setup:</p>
+
+
+	<p>http://writequit.org/blog/?p=171</p></div>
+        </div>
+        
+        <div id="comment-5177" class="comment">
+          <a name="comment-5177"></a> 
+
+          <div class="date">
+            <span class="day">23</span>
+            <span class="month">Oct</span>
+            <span class="year">2008</span>
+          </div>
+
+          <h3>130. Rafael said...</h3>
+          <div class="body"><p>Man, your script is awesome! I&#8217;ve never had heard about fuzzyfinder before, and now I love it! Fuzzyfinder_textmate just makes me even happier with that!</p>
+
+
+	<p>Thank you very much!</p></div>
+        </div>
+        
+        <div id="comment-5178" class="comment">
+          <a name="comment-5178"></a> 
+
+          <h3>131. Kevin P. Taylor said...</h3>
+          <div class="body"><p>Jamis,</p>
+
+
+	<p>:e [file] has been fine for me to find files but I&#8217;ll be taking fuzzy_file_finder for a test drive now. Thanks for your work on that!</p>
+
+
+	<p>If you like the project drawer of TextMate, as many of us do, NERDTree is a great alternative (as others have mentioned). Here is a screen shot of it, from one of my old posts:
+http://www.ktaylor.name/2007/03/crossplatform_t.html</p>
+
+
+Regarding favorite commands, that would be my mappings for moving between split windows using <span class="caps">CTRL</span>+h,j,k,l keys!:
+<pre>
+map &lt;C-J&gt; &lt;C-W&gt;j
+map &lt;C-K&gt; &lt;C-W&gt;k
+map &lt;C-H&gt; &lt;C-W&gt;h
+map &lt;C-L&gt; &lt;C-W&gt;l
+</pre>
+
+	<p>Cheers!</p></div>
+        </div>
+        
+        <div id="comment-5179" class="comment">
+          <a name="comment-5179"></a> 
+
+          <h3>132. cryso said...</h3>
+          <div class="body"><p>TextMate Footnotes With <span class="caps">VIM</span> Support</p>
+
+
+	<p>http://blog.commonthread.com/2008/6/11/textmate-footnotes-with-vim-support</p>
+
+
+	<p>(from yet another vim switcher)</p></div>
+        </div>
+        
+        <div id="comment-5181" class="comment">
+          <a name="comment-5181"></a> 
+
+          <h3>133. jomt said...</h3>
+          <div class="body"><p>:set gdefault</p></div>
+        </div>
+        
+        <div id="comment-5185" class="comment">
+          <a name="comment-5185"></a> 
+
+          <h3>134. Adulteratedjedi said...</h3>
+          <div class="body"><p>Whenever I start MacVim through the mvim command I get this output on the terminal:</p>
+
+
+	<p>Error detected while processing function InstantiateTextMateMode:
+line   17:
+NoMethodError: undefined method `-@&#8217; for nil:NilClass
+~/config[master]% Error detected while processing function InstantiateTextMateMode:
+line   17:
+NoMethodError: undefined method `-@&#8217; for nil:NilClass</p>
+
+
+	<p>any idea&#8217;s??</p></div>
+        </div>
+        
+        <div id="comment-5190" class="comment">
+          <a name="comment-5190"></a> 
+
+          <div class="date">
+            <span class="day">24</span>
+            <span class="month">Oct</span>
+            <span class="year">2008</span>
+          </div>
+
+          <h3>135. viming.blogspot.com said...</h3>
+          <div class="body"><p>I added an extension similar to yours, but I think it might be more functional and more buggy :(</p>
+
+
+	<p>http://viming.blogspot.com/2008/10/file-lookups.html</p></div>
+        </div>
+        
+        <div id="comment-5191" class="comment">
+          <a name="comment-5191"></a> 
+
+          <h3>136. joel@cinergisolutions.com said...</h3>
+          <div class="body"><p>Jamis, couldn&#8217;t find a way to contact you otherwise, so here goes. Don&#8217;t suppose you&#8217;d be willing to share your original code for the <span class="caps">NPC</span> generator that used to be hosted at arrg? I&#8217;m a web developer with too much time on my hands, a new group of folks I RPGee with and a need to populate the world I&#8217;ve developed with NPCs. Drop me a line if you&#8217;re interested in passing the torch, or, even if I could host the script and get in back into the public domain. Thanks!</p>
+
+
+	<p>Joel Bailey</p></div>
+        </div>
+        
+        <div id="comment-5192" class="comment">
+          <a name="comment-5192"></a> 
+
+          <h3>137. Jamis said...</h3>
+          <div class="body"><p>@Joel, the code for the <span class="caps">NPC</span> generator (and my other generators, fwiw) is all on github: <a href="http://github.com/jamis/dnd-npc/tree/master">http://github.com/jamis/dnd-npc/tree/master</a>. I&#8217;ve released it all into the public domain, so do what you will with it. Enjoy!</p></div>
+        </div>
+        
+        <div id="comment-5202" class="comment">
+          <a name="comment-5202"></a> 
+
+          <div class="date">
+            <span class="day">27</span>
+            <span class="month">Oct</span>
+            <span class="year">2008</span>
+          </div>
+
+          <h3>138. Nate said...</h3>
+          <div class="body"><p>I have a &#8220;Best Of Vim&#8221; page on my wiki:</p>
+
+
+	<p>http://notesmine.com/vim_best_of</p>
+
+
+	<p>I also have my Vim config files on github:</p>
+
+
+	<p>https://github.com/Tookelso/vim-dotfiles/tree</p>
+
+
+	<p>I do a lot of Groovy/Grails programming, which has a lot of the same needs as Ruby/Rails.  I can&#8217;t stand how slow IDEs are, and Textmate really never did it for me, either.</p></div>
+        </div>
+        
+        <div id="comment-5203" class="comment">
+          <a name="comment-5203"></a> 
+
+          <div class="date">
+            <span class="day">28</span>
+            <span class="month">Oct</span>
+            <span class="year">2008</span>
+          </div>
+
+          <h3>139. Justin said...</h3>
+          <div class="body"><p>Not sure what I&#8217;m doing wrong here but How do exclude the vendor/rails directory ?</p>
+
+
+	<p>Thought this would work :</p>
+
+
+	<p>let g:fuzzy_ignore=&#8217;vendor/rails/&#8217;</p>
+
+
+	<p>Great plugin <span class="caps">BTW</span></p>
+
+
+	<p>Thanks</p></div>
+        </div>
+        
+        <div id="comment-5204" class="comment">
+          <a name="comment-5204"></a> 
+
+          <h3>140. Rich said...</h3>
+          <div class="body"><p>@cryso You no longer need this with the latest MacVim. The latest MacVim supports a <span class="caps">URL</span> handler:</p>
+
+
+	<p>mvim://open?&lt;arguments></p>
+
+
+	<p>Just add this to your environment.rb:</p>
+
+
+	<p>Footnotes::Filter.prefix ||= &#8216;mvim://open?url=file://&#8217; if <span class="caps">RUBY</span>_PLATFORM.include?(&#8216;darwin&#8217;)</p></div>
+        </div>
+        
+        <div id="comment-5205" class="comment">
+          <a name="comment-5205"></a> 
+
+          <h3>141. Jamis said...</h3>
+          <div class="body"><p>@Justin, the fuzzy_ignore setting only ignores files, not directories. (Insane, I know, but the feature was originally intended to ignore things like *.o or *.pyc, etc. You can maybe try setting g:fuzzy_ignore to &#8216;vendor/rails/**&#8217;, until someone submits a patch to improve the ignore support.</p></div>
+        </div>
+        
+        <div id="comment-5209" class="comment">
+          <a name="comment-5209"></a> 
+
+          <div class="date">
+            <span class="day">29</span>
+            <span class="month">Oct</span>
+            <span class="year">2008</span>
+          </div>
+
+          <h3>142. justin said...</h3>
+          <div class="body"><p>Thanks Jamis , great work as always. $20 bucks in the tip jar for this and cap.
+Justin</p></div>
+        </div>
+        
+        <div id="comment-5210" class="comment">
+          <a name="comment-5210"></a> 
+
+          <h3>143. Karmen said...</h3>
+          <div class="body"><p>I cannot get this work without getting FuzzyFileFinder::TooManyEntries.  I thought ignoring files would do it, or setting a high ceiling would do it, but no dice.  Any suggestions?</p></div>
+        </div>
+        
+        <div id="comment-5211" class="comment">
+          <a name="comment-5211"></a> 
+
+          <h3>144. Jamis said...</h3>
+          <div class="body"><p>@Justin, thanks! You rock.</p>
+
+
+	<p>@Karmen, setting a high ceiling will do it. Either you&#8217;re not setting the ceiling right, or you&#8217;re not setting it high enough.</p></div>
+        </div>
+        
+        <div id="comment-5212" class="comment">
+          <a name="comment-5212"></a> 
+
+          <h3>145. Karmen said...</h3>
+          <div class="body"><p>@jamis, I bumped it ridiculously high and yes it did work.  Now, I&#8217;ll fine tune it for speed.  Thanks!!</p></div>
+        </div>
+        
+        <div id="comment-5214" class="comment">
+          <a name="comment-5214"></a> 
+
+          <h3>146. Karmen said...</h3>
+          <div class="body"><p>I got a tremendous speedup after I set g:fuzzy_roots to specific locations.  This is awesome stuff!</p></div>
+        </div>
+        
+        <div id="comment-5230" class="comment">
+          <a name="comment-5230"></a> 
+
+          <div class="date">
+            <span class="day">31</span>
+            <span class="month">Oct</span>
+            <span class="year">2008</span>
+          </div>
+
+          <h3>147. Nathan Fisher said...</h3>
+          <div class="body"><p>Hi Jamis,</p>
+
+
+	<p>Just thought I&#8217;d throw my setup into the fray;</p>
+
+
+	<ul>
+	<li>project.vim: Has nice file filtering so you can include only the file types and folders you want.</li>
+		<li>minibufexpl.vim: Shows the open files with buffer number.</li>
+		<li>vcscommand.vim: <span class="caps">SVN</span>/GIT integration amongst others.</li>
+		<li>rails.vim: Does it need an introduction?</li>
+	</ul>
+
+
+	<p>I&#8217;ve set my make program to rake and mapped tests to &#8221;;mt&#8221;.  I think I will have to sit down and look at your plugin for sure!</p>
+
+
+	<p>Cheers,</p>
+
+
+	<p>Nathan</p></div>
+        </div>
+        
+        <div id="comment-5282" class="comment">
+          <a name="comment-5282"></a> 
+
+          <div class="date">
+            <span class="day">01</span>
+            <span class="month">Nov</span>
+            <span class="year">2008</span>
+          </div>
+
+          <h3>148. Dan said...</h3>
+          <div class="body"><p>A number of people I know have been having similar thoughts.  With erb I was loving me the snippets, but now that I&#8217;ve switched to haml I don&#8217;t use snippets <strong>at all</strong>.</p></div>
+        </div>
+        
+        <div id="comment-5367" class="comment">
+          <a name="comment-5367"></a> 
+
+          <div class="date">
+            <span class="day">03</span>
+            <span class="month">Nov</span>
+            <span class="year">2008</span>
+          </div>
+
+          <h3>149. Adam Soltys said...</h3>
+          <div class="body"><p>I recently copied my vimrc and plugins from my home machine to my work machine and started getting the following error when I ran the textmate fuzzy finder:</p>
+
+
+	<p>Error detected while processing function &lt;snr>11_CompleteFunc&#8230;160:
+Line 27:
+NoMethodError: undefined method `times&#8217; for nil:NilClass</p>
+
+
+	<p>Turns out the problem was that I had some directories defined in the g:fuzzy_roots array in my vimrc that existed at home but not at work.</p>
+
+
+	<p>Just figured I&#8217;d post this here in case it saves someone some headscratching.</p></div>
+        </div>
+        
+        <div id="comment-5419" class="comment">
+          <a name="comment-5419"></a> 
+
+          <div class="date">
+            <span class="day">11</span>
+            <span class="month">Nov</span>
+            <span class="year">2008</span>
+          </div>
+
+          <h3>150. Bob said...</h3>
+          <div class="body"><p>As I told you tonight on Twitter, I&#8217;m trying to keep going with the same transition. Right now I use Vim for all of my text editing and find it enjoyable, but what you have here might just push it over the edge to a full &#8220;love/love&#8221; relationship between the two of us.</p></div>
+        </div>
+        
+        <div id="comment-5444" class="comment">
+          <a name="comment-5444"></a> 
+
+          <div class="date">
+            <span class="day">14</span>
+            <span class="month">Nov</span>
+            <span class="year">2008</span>
+          </div>
+
+          <h3>151. Josh said...</h3>
+          <div class="body"><p>This is a fantastic plugin. Thank you!</p></div>
+        </div>
+        
+        <div id="comment-5476" class="comment">
+          <a name="comment-5476"></a> 
+
+          <div class="date">
+            <span class="day">17</span>
+            <span class="month">Nov</span>
+            <span class="year">2008</span>
+          </div>
+
+          <h3>152. D said...</h3>
+          <div class="body"><p>@Jamis said:  &#8220;Don’t go lording it over us lesser vim users, though. Let’s just agree that different people have different preferred development environments.&#8221;</p>
+
+
+	<p>Aha !  I wasn&#8217;t lording at all, but sincerely wanting to know how MacVim helped out, and why you prefer it.</p>
+
+
+	<p>Another case toward the belief that editor threads seem to be the case of highest flame-age, and quick to chap someone&#8217;s hide :)</p>
+
+
+	<p>I do love these Vim posts.  It&#8217;s great to see someone of your stature posting about it, and getting more people involved&#8230; in the best editor in the world !</p>
+
+
+	<p>:)</p></div>
+        </div>
+        
+        <div id="comment-5501" class="comment">
+          <a name="comment-5501"></a> 
+
+          <div class="date">
+            <span class="day">18</span>
+            <span class="month">Nov</span>
+            <span class="year">2008</span>
+          </div>
+
+          <h3>153. jz said...</h3>
+          <div class="body"><p>wow, you had to go and just <span class="caps">ABSOLUTELY MAKE MY DAY</span>!</p>
+
+
+	<p>Here is the absolute best feature of Vim. An&#8217; ya&#8217;ll just remember how jz hooked you up aight? big ups!</p>
+
+
+	<p>Mac users that ssh to where they use vim make sure you have X11Forwarding enabled on the /etc/ssh/sshd_config (ubuntu) and then when you log in to your shell you&#8217;ll be using the <span class="caps">REAL</span> Vim. None of this hax0red MacVim cocoa garbage. I&#8217;ve written cocoa, i&#8217;ve written rails, I know all about you girly frameworks, I also know this little language .. his name is C. Vim is written in C. Let your girlfriend make the cocoa!</p>
+
+
+	<p>So yeah, the tip!</p>
+
+
+(in sshd_config)
+X11Forwarding yes
+X11UseLocalHost no
+&lt;leave>
+
+	<p>make sure you slap her with some <span class="caps">SUDO</span>!</p>
+
+
+	<p>sudo /etc/init.d/sshd restart</p>
+
+
+	<p>From the leopard you will no longer use the pitiful and defunct Terminal.App. Me and my crew spit on Terminal.App. That is, one we got wit mz. iTerm. Yeah, man, iTerm got this naughty feature- check it. With iTerm the mouse actually works in x11 apps properly so I go to write me some c0d3z with a :</p>
+
+
+	<p>vim newMasonsKrew.nf0y0</p>
+
+
+	<p>now checkz it:</p>
+
+
+	<p>:set mouse=a</p>
+
+
+	<p>bingo-bango-shake-yo-thang-yo cuz now you cookin wit gazolin3.</p>
+
+
+<hr />
+
+
+	<p>please people change your default port, don&#8217;t make us hax0r your boxes</p>
+
+
+	<p>..</p>
+
+
+	<p>again.</p>
+
+
+	<p>..</p>
+
+
+	<p>if you need our help, we are a l3@d3r$ of the pack .. that is .. we are extremely sarcastic programmers that love vim and the far out places it takes our minds. find us on our irc server eyearesee.saur.us.</p>
+
+
+	<p>move with it shake with it. aight.</p>
+
+
+	<p>jz</p></div>
+        </div>
+        
+        <div id="comment-5503" class="comment">
+          <a name="comment-5503"></a> 
+
+          <h3>154. Max said...</h3>
+          <div class="body"><p>My favorite command for editing emails is &#8216;v+a+p+g+q&#8217;.</p></div>
+        </div>
+        
+        <div id="comment-5586" class="comment">
+          <a name="comment-5586"></a> 
+
+          <div class="date">
+            <span class="day">24</span>
+            <span class="month">Nov</span>
+            <span class="year">2008</span>
+          </div>
+
+          <h3>155. Sami said...</h3>
+          <div class="body"><p>Awesome!</p></div>
+        </div>
+        
+        <div id="comment-5591" class="comment">
+          <a name="comment-5591"></a> 
+
+          <div class="date">
+            <span class="day">25</span>
+            <span class="month">Nov</span>
+            <span class="year">2008</span>
+          </div>
+
+          <h3>156. Garry said...</h3>
+          <div class="body"><p>After using this plugin for several weeks, I gotta say it still is rockin&#8217; my world.  Thank you Jamis.</p></div>
+        </div>
+        
+        <div id="comment-5593" class="comment">
+          <a name="comment-5593"></a> 
+
+          <div class="date">
+            <span class="day">26</span>
+            <span class="month">Nov</span>
+            <span class="year">2008</span>
+          </div>
+
+          <h3>157. Adulteratedjedi said...</h3>
+          <div class="body"><p>Jamis, still getting this &#8220;error&#8221;on the commandline after starting MacVim with the mvim command</p>
+
+
+	<p>Error detected while processing function InstantiateTextMateMode:
+line   17:
+NoMethodError: undefined method `-@&#8217; for nil:NilClass</p>
+
+
+	<p>Any Ideas?</p></div>
+        </div>
+        
+        <div id="comment-5605" class="comment">
+          <a name="comment-5605"></a> 
+
+          <div class="date">
+            <span class="day">30</span>
+            <span class="month">Nov</span>
+            <span class="year">2008</span>
+          </div>
+
+          <h3>158. flevour said...</h3>
+          <div class="body"><p>Hi Jamis,
+is there a way to issue a refresh of files indexed by the plugin? Whenever you :cd away from the starting :pwd, it won&#8217;t find the files inside the new :pwd. Do you see what I mean?
+This post and this plugin are 2 big reasons I&#8217;m back to Vim after years of pointless wondering in the land of Productive Editors&#8482;.
+Cheers,
+Francesco</p></div>
+        </div>
+        
+        <div id="comment-5610" class="comment">
+          <a name="comment-5610"></a> 
+
+          <div class="date">
+            <span class="day">02</span>
+            <span class="month">Dec</span>
+            <span class="year">2008</span>
+          </div>
+
+          <h3>159. Jamis said...</h3>
+          <div class="body"><p>@AdulteratedJedi, I&#8217;m afraid I&#8217;ve no idea why that&#8217;s happening. If you figure it out, please post an update.</p>
+
+
+	<p>@flevour, you can refresh the index by issuing this vim command:</p>
+
+
+<table class="CodeRay"><tr>
+  <td title="click to toggle" class="line_numbers"><pre><tt>
+</tt></pre></td>
+  <td class="code"><pre>:ruby finder.rescan!</pre></td>
+</tr></table>
+
+
+	<p>I need to package that in a more sane vim function, but in the meantime it&#8217;s not hard to map that to something yourself.</p></div>
+        </div>
+        
+        <div id="comment-5617" class="comment">
+          <a name="comment-5617"></a> 
+
+          <div class="date">
+            <span class="day">04</span>
+            <span class="month">Dec</span>
+            <span class="year">2008</span>
+          </div>
+
+          <h3>160. AdulteratedJedi said...</h3>
+          <div class="body"><p>I&#8217;ve found out that one can do this</p>
+
+
+	<p>mvim&#8212;remote-send &#8217;:ruby finder.rescan!&lt;cr>&#8216;</p>
+
+
+	<p>Just trying to create a Daemon to watch for files/dir and send that command when there are new ones.</p>
+
+
+	<p>Should make for a better textmate like experience :-)</p></div>
+        </div>
+        
+        <div id="comment-5621" class="comment">
+          <a name="comment-5621"></a> 
+
+          <h3>161. ek said...</h3>
+          <div class="body"><p>This is great, thanks! Small <span class="caps">FYI</span>, seems that fuzzyfinder.vim has renamed the matching_limit variable in the latest (12-02-08) release, which breaks fuzzyfinder_textmate.  Using fuzzyfinder.vim V2.13 works just fine though.  Thanks again1</p></div>
+        </div>
+        
+        <div id="comment-5689" class="comment">
+          <a name="comment-5689"></a> 
+
+          <div class="date">
+            <span class="day">15</span>
+            <span class="month">Dec</span>
+            <span class="year">2008</span>
+          </div>
+
+          <h3>162. Jasper said...</h3>
+          <div class="body"><p>This is a really cool idea! It&#8217;s not a function I really used in TextMate because the drawer was excellent, but I&#8217;ve not been able to find something so versatile for Vim. However, as ek says, this doesn&#8217;t work with the latest version of fuzzyfinder.vim (2.16).</p>
+
+
+	<p>I&#8217;m a relative beginner to Vim. I&#8217;m primarily a web developer and I do a lot of my work over secure shell connections. This obviously means that TextMate doesn&#8217;t play (without great pain on my part), so I took to installing Vim and having a play around. Needless to say, it blew nano out of the water and after having played with MacVim and reading the docs to add support for things I want (NERDTree, fuzzyfinder, surround, closetag) I really love it. I&#8217;m trialling it as my full time editor right now, and it&#8217;s going very well.</p>
+
+
+	<p>The only thing that annoys me now is that I find myself hitting escape and trying to navigate text in other apps now. Mildly annoying, but more &#8220;damn, I&#8217;m stupid&#8221;!</p></div>
+        </div>
+        
+        <div id="comment-5691" class="comment">
+          <a name="comment-5691"></a> 
+
+          <h3>163. Jasper said...</h3>
+          <div class="body"><p>One thing, it only seems to ever search through the highest directory it&#8217;s indexed. For example, if it&#8217;s indexed from ~/, then I can only ever perform searches from there, which is obvious slower if I&#8217;ve :cd into ~/Freelance/ and only want to be looking for files in that directory. Have I missed/misunderstood something obvious?</p></div>
+        </div>
+        
+        <div id="comment-5774" class="comment">
+          <a name="comment-5774"></a> 
+
+          <div class="date">
+            <span class="day">24</span>
+            <span class="month">Dec</span>
+            <span class="year">2008</span>
+          </div>
+
+          <h3>164. Ahad said...</h3>
+          <div class="body"><p>@Jamis:   I have been thinking of switching over to another operating system besides Windows (most prob Linux even though the learning curve is steep).  I was just wondering why you switched over to the Mac after Linux (good insight on vim, but you didn&#8217;t mention the reasons for switching)?</p>
+
+
+	<p>In my limited knowledge i assume the Rails Core Team developers use <span class="caps">MACS</span> and deploy on <span class="caps">LINUX</span> servers.</p></div>
+        </div>
+        
+        <div id="comment-5811" class="comment">
+          <a name="comment-5811"></a> 
+
+          <div class="date">
+            <span class="day">04</span>
+            <span class="month">Jan</span>
+            <span class="year">2009</span>
+          </div>
+
+          <h3>165. Cássio Marques said...</h3>
+          <div class="body"><p>@Jamis: On Ubuntu, I&#8217;m trying to use FuzzyFinderTextMate but it gives me an error saying:</p>
+
+
+	<p><span class="caps">E492</span>: Not an editor command: FuzzyFinderTextMate</p>
+
+
+	<p>Do u know what the problem be? I&#8217;ve installed everything just like the <span class="caps">README</span> says at your GitHub page.</p>
+
+
+	<p>Thank you very much!</p></div>
+        </div>
+        
+      </div>
+
+    </div>
+  
+  <div class="comment-box">
+
+  </div>
+</div>
+
+</div>
+
+<div id="sidebar">
+  <div class="item">
+    <h1>Search</h1>
+    <div class="content">
+      <form action="/search" id="sform" method="get">
+        <input type="text" id="q" name="q" value="" size="15" />
+      </form>
+    </div>
+  </div>
+
+  <div class="item">
+    <h1>About</h1>
+    <div class="content">
+        I am <strong>Jamis Buck</strong>, and I'm currently employed as a programmer by
+        <a href="http://37signals.com">37signals</a>.
+        Life is good! If you're feeling particularly nosy, you can
+        <a href="http://family.jamisbuck.org/">follow my family blog</a>. Contact me at
+        jamis at jamisbuck dot org. I'm <a href="http://twitter.com/jamis">@jamis</a> on Twitter.
+    </div>
+  </div>
+
+  <div class="item">
+    <h1>Subscribe</h1>
+    <div class="content">
+      <a href="http://feeds.feedburner.com/buckblog"><img src="http://feeds.feedburner.com/~fc/buckblog?bg=99CCFF&amp;fg=444444&amp;anim=0" height="26" width="88" style="border:0" alt="" /></a>
+    </div>
+  </div>
+
+<div class="item">
+<h1>Advertisements</h1>
+<div class="content">
+  <div id="adzerk">
+      <div id="adzerk_ad_div">
+          <script type="text/javascript" src="http://rubyrow.net/AdServer/RUBY/BUCK/VERT"></script>
+      </div>
+      <p id="adzerk_by">
+          <a href='http://rubyrow.net'>Ads from Ruby Row</a>
+      </p>
+  </div>
+</div>
+</div>
+
+  <div class="item">
+    <h1>Sections</h1>
+    <div class="content">
+      <table class="archives">
+
+        <tr class="odd">
+          <td class="date"><a href="/" title="Home">Home</a></td>
+          <td class="count">322</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/announcements" title="Announcements">Announcements</a></td>
+          <td class="count">60</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/essays-and-rants" title="Essays and Rants">Essays and Rants</a></td>
+          <td class="count">32</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/under-the-hood" title="Under the Hood">Under the Hood</a></td>
+          <td class="count">22</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/tips-and-tricks" title="Tips &amp; Tricks">Tips &amp; Tricks</a></td>
+          <td class="count">57</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/spotlight" title="Spotlight">Spotlight</a></td>
+          <td class="count">5</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/reviews" title="Reviews">Reviews</a></td>
+          <td class="count">22</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/redirect" title="Redirect">Redirect</a></td>
+          <td class="count">14</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/projects" title="Projects">Projects</a></td>
+          <td class="count">55</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/life" title="Life">Life</a></td>
+          <td class="count">23</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/metablog" title="Metablog">Metablog</a></td>
+          <td class="count">9</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/odds-and-ends" title="Odds &amp; Ends">Odds &amp; Ends</a></td>
+          <td class="count">32</td>
+        </tr>
+
+      </table>
+    </div>
+  </div>
+
+  <div class="item">
+    <h1>Archives</h1>
+    <div class="content">
+      <table class="archives">
+
+        <tr class="odd">
+          <td class="date"><a href="/archives/2010/12">December 2010</a></td>
+          <td class="count">1</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/archives/2010/11">November 2010</a></td>
+          <td class="count">5</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/archives/2010/10">October 2010</a></td>
+          <td class="count">3</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/archives/2010/3">March 2010</a></td>
+          <td class="count">1</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/archives/2010/1">January 2010</a></td>
+          <td class="count">1</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/archives/2009/10">October 2009</a></td>
+          <td class="count">1</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/archives/2009/9">September 2009</a></td>
+          <td class="count">3</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/archives/2009/5">May 2009</a></td>
+          <td class="count">1</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/archives/2009/4">April 2009</a></td>
+          <td class="count">2</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/archives/2009/3">March 2009</a></td>
+          <td class="count">1</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/archives/2009/2">February 2009</a></td>
+          <td class="count">2</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/archives/2009/1">January 2009</a></td>
+          <td class="count">1</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/archives/2008/12">December 2008</a></td>
+          <td class="count">1</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/archives/2008/11">November 2008</a></td>
+          <td class="count">3</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/archives/2008/10">October 2008</a></td>
+          <td class="count">1</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/archives/2008/8">August 2008</a></td>
+          <td class="count">6</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/archives/2008/7">July 2008</a></td>
+          <td class="count">2</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/archives/2008/6">June 2008</a></td>
+          <td class="count">3</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/archives/2008/5">May 2008</a></td>
+          <td class="count">2</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/archives/2008/4">April 2008</a></td>
+          <td class="count">4</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/archives/2008/3">March 2008</a></td>
+          <td class="count">5</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/archives/2008/2">February 2008</a></td>
+          <td class="count">4</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/archives/2008/1">January 2008</a></td>
+          <td class="count">2</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/archives/2007/11">November 2007</a></td>
+          <td class="count">2</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/archives/2007/10">October 2007</a></td>
+          <td class="count">1</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/archives/2007/9">September 2007</a></td>
+          <td class="count">3</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/archives/2007/8">August 2007</a></td>
+          <td class="count">2</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/archives/2007/7">July 2007</a></td>
+          <td class="count">3</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/archives/2007/6">June 2007</a></td>
+          <td class="count">5</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/archives/2007/5">May 2007</a></td>
+          <td class="count">4</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/archives/2007/4">April 2007</a></td>
+          <td class="count">3</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/archives/2007/3">March 2007</a></td>
+          <td class="count">4</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/archives/2007/2">February 2007</a></td>
+          <td class="count">14</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/archives/2007/1">January 2007</a></td>
+          <td class="count">27</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/archives/2006/12">December 2006</a></td>
+          <td class="count">1</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/archives/2006/11">November 2006</a></td>
+          <td class="count">9</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/archives/2006/10">October 2006</a></td>
+          <td class="count">15</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/archives/2006/9">September 2006</a></td>
+          <td class="count">11</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/archives/2006/8">August 2006</a></td>
+          <td class="count">3</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/archives/2006/5">May 2006</a></td>
+          <td class="count">1</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/archives/2006/4">April 2006</a></td>
+          <td class="count">1</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/archives/2006/3">March 2006</a></td>
+          <td class="count">7</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/archives/2006/2">February 2006</a></td>
+          <td class="count">2</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/archives/2006/1">January 2006</a></td>
+          <td class="count">5</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/archives/2005/12">December 2005</a></td>
+          <td class="count">10</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/archives/2005/11">November 2005</a></td>
+          <td class="count">4</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/archives/2005/10">October 2005</a></td>
+          <td class="count">5</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/archives/2005/9">September 2005</a></td>
+          <td class="count">2</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/archives/2005/8">August 2005</a></td>
+          <td class="count">5</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/archives/2005/7">July 2005</a></td>
+          <td class="count">3</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/archives/2005/6">June 2005</a></td>
+          <td class="count">2</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/archives/2005/5">May 2005</a></td>
+          <td class="count">8</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/archives/2005/4">April 2005</a></td>
+          <td class="count">3</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/archives/2005/3">March 2005</a></td>
+          <td class="count">7</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/archives/2005/2">February 2005</a></td>
+          <td class="count">7</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/archives/2005/1">January 2005</a></td>
+          <td class="count">7</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/archives/2004/12">December 2004</a></td>
+          <td class="count">4</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/archives/2004/11">November 2004</a></td>
+          <td class="count">8</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/archives/2004/10">October 2004</a></td>
+          <td class="count">15</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/archives/2004/9">September 2004</a></td>
+          <td class="count">9</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/archives/2004/6">June 2004</a></td>
+          <td class="count">2</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/archives/2004/5">May 2004</a></td>
+          <td class="count">3</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/archives/2004/4">April 2004</a></td>
+          <td class="count">7</td>
+        </tr>
+
+        <tr class="even">
+          <td class="date"><a href="/archives/2004/3">March 2004</a></td>
+          <td class="count">23</td>
+        </tr>
+
+        <tr class="odd">
+          <td class="date"><a href="/archives/2004/2">February 2004</a></td>
+          <td class="count">9</td>
+        </tr>
+
+      </table>
+    </div>
+  </div>
+
+  <div class="item">
+    <h1>License</h1>
+    <div class="content">
+<!--Creative Commons License--><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.5/"><img alt="Creative Commons License" style="border-width: 0" src="http://creativecommons.org/images/public/somerights20.png"/></a>
+<br /><br />
+<small>This work is licensed under a<br />
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.5/">Creative Commons Attribution-NonCommercial-ShareAlike 2.5  License</a>.</small><!--/Creative Commons License--><!-- <rdf:RDF xmlns="http://web.resource.org/cc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+	<Work rdf:about="">
+		<license rdf:resource="http://creativecommons.org/licenses/by-nc-sa/2.5/" />
+	<dc:date>2006</dc:date>
+	<dc:creator><Agent><dc:title>Jamis Buck</dc:title></Agent></dc:creator>
+	<dc:rights><Agent><dc:title>Jamis Buck</dc:title></Agent></dc:rights>
+	<dc:type rdf:resource="http://purl.org/dc/dcmitype/Text" />
+	<dc:source rdf:resource="http://weblog.jamisbuck.org" />
+	</Work>
+	<License rdf:about="http://creativecommons.org/licenses/by-nc-sa/2.5/"><permits rdf:resource="http://web.resource.org/cc/Reproduction"/><permits rdf:resource="http://web.resource.org/cc/Distribution"/><requires rdf:resource="http://web.resource.org/cc/Notice"/><requires rdf:resource="http://web.resource.org/cc/Attribution"/><prohibits rdf:resource="http://web.resource.org/cc/CommercialUse"/><permits rdf:resource="http://web.resource.org/cc/DerivativeWorks"/><requires rdf:resource="http://web.resource.org/cc/ShareAlike"/></License></rdf:RDF> -->
+    </div>
+  </div>
+
+</div>
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" id="paypal-form">
+  <input type="hidden" name="cmd" value="_xclick" />
+  <input type="hidden" name="business" value="&#106;&#97;&#109;&#105;&#115;&#64;&#106;a&#109;i&#115;&#98;&#117;c&#107;&#46;&#111;&#114;&#103;" />
+  <input type="hidden" id="paypal-item-name" name="item_name" value="Donation" />
+  <input type="hidden" name="no_note" value="0" />
+  <input type="hidden" name="currency_code" value="USD" />
+  <input type="hidden" name="tax" value="0" />
+</form>
+
+<script src="http://static.getclicky.com/js" type="text/javascript"></script>
+<script type="text/javascript">clicky.init(265146);</script>
+<noscript><p><img alt="Clicky" width="1" height="1" src="http://in.getclicky.com/265146ns.gif" /></p></noscript>
+
+</body>
+</html>
