@@ -1,0 +1,975 @@
+
+
+
+
+
+
+
+<html>
+
+
+
+
+
+
+<head>
+
+
+
+
+	<title>Data Modeling & Profiling Tool: SQL Power Architect | SQL Power Software</title> 
+	<link REL="SHORTCUT ICON" HREF="http://www.sqlpower.ca/favicon.ico">
+	
+	
+
+	
+	
+	
+
+	
+	<!-- google tracker (standard) -->
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-2736824-1']);
+  _gaq.push(['_setDomainName', '.sqlpower.ca']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+	
+	
+	
+	
+	
+	
+	
+		<script type="text/javascript" src="../swfobject.js"></script>
+		<script type="text/javascript" src="../drawingScripts.js"></script>
+	
+
+	<link rel="stylesheet" type="text/css" href="../software.css" />
+	
+
+	
+	
+</head>
+<body>
+
+
+
+
+<!-- new stuff start -->
+
+
+<img src="../images/shim.gif" width="2" height="2"><a name="top"></a><br>
+<table width="100%" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top" align="center">
+ <table width="957" border="0" cellpadding="0" cellspacing="0">
+ <tr>
+ <td align="right" width="10"><a name="top"></a><img src="../images/menus/slice-topleft2.jpg"></td>
+ <td valign="bottom" align="left" colspan="5" bgcolor="#FFFFFF" style="background-image:url(../images/menus/slice-top3.jpg); background-repeat:no-repeat; background-position:-2px -2px;"><a href="../page/splash"><img 
+ border="0" style="margin: 9px 0 7px 6px;" alt="SQL Power Business Intelligence Productivity Tools" title="SQL Power Business Intelligence Productivity Tools" src="../images/menus/slice-logo.png"><img border="0" src="../images/menus/slice-tagline.png"></a></td>
+ <td align="left" width="10"><img src="../images/menus/slice-topright2.jpg"></td>
+ </tr>
+ <tr>
+ <td rowspan="7" background="../images/menus/slice-left.jpg"></td>
+ <td bgcolor="#ffffff" align="left" colspan="5" background="../images/menus/slice-buttonbar.jpg"><a href="../page/company" onMouseOut="MM_swapImgRestore();" onMouseOver=" MM_swapImage('company','','../images/menus/menu_over_company.gif',1);"><img name="company" border="0" src="../images/menus/menu_off_company.gif" alt="Company Overview" title="Company Overview"></a><a href="../page/products"><img name="products" border="0" src="../images/menus/menu_on_products.gif" alt="Business Intelligence Productivity Tools" title="Business Intelligence Productivity Tools"></a><a href="../page/serviceandsupport" onMouseOut="MM_swapImgRestore();" onMouseOver=" MM_swapImage('serviceandsupport','','../images/menus/menu_over_serviceandsupport.gif',1);"><img name="serviceandsupport" border="0" src="../images/menus/menu_off_serviceandsupport.gif" alt="Quick-Start Implementation Services" title="Quick-Start Implementation Services"></a><a href="../page/demos" onMouseOut="MM_swapImgRestore();" onMouseOver=" MM_swapImage('demos','','../images/menus/menu_over_demos.gif',1);"><img name="demos" border="0" src="../images/menus/menu_off_demos.gif" alt="Demos & Turotials" title="Demos & Turotials"></a><a href="../page/FAQ" onMouseOut="MM_swapImgRestore();" onMouseOver=" MM_swapImage('FAQ','','../images/menus/menu_over_FAQ.gif',1);"><img name="FAQ" border="0" src="../images/menus/menu_off_FAQ.gif" alt="Frequently Asked Questions (FAQ)" title="Frequently Asked Questions (FAQ)"></a><a href="../page/resources" onMouseOut="MM_swapImgRestore();" onMouseOver=" MM_swapImage('resources','','../images/menus/menu_over_resources.gif',1);"><img name="resources" border="0" src="../images/menus/menu_off_resources.gif" alt="Open Source Community Resources" title="Open Source Community Resources"></a><a href="enter_forum" onMouseOut="MM_swapImgRestore();" onMouseOver=" MM_swapImage('forum','','../images/menus/menu_over_forum.gif',1);"><img name="forum" border="0" src="../images/menus/menu_off_forum.gif" alt="SQL Power Forum" title="SQL Power Forum"></a><a href="../page/partners" onMouseOut="MM_swapImgRestore();" onMouseOver=" MM_swapImage('partners','','../images/menus/menu_over_partners.gif',1);"><img name="partners" border="0" src="../images/menus/menu_off_partners.gif" alt="Implementation & Technology Partners" title="Implementation & Technology Partners"></a><a href="getarchitect" onMouseOut="MM_swapImgRestore();" onMouseOver=" MM_swapImage('store','','../images/menus/menu_over_store.gif',1);"><img name="store" border="0" src="../images/menus/menu_off_store.gif" alt="Get SQL Power Software" title="Get SQL Power Software"></a><a href="../page/info" onMouseOut="MM_swapImgRestore();" onMouseOver=" MM_swapImage('contact','','../images/menus/menu_over_contact.gif',1);"><img name="contact" border="0" src="../images/menus/menu_off_contact.gif" alt="Contact Us" title="Contact Us"></a></td>
+ <td rowspan="7" background="../images/menus/slice-right.jpg"></td>
+ </tr>
+ <tr>
+ <td align="left" colspan="5" bgcolor="#ffffff" background="../images/menus/slice-stripe.jpg"><img src="../images/shim.gif" height="5" width="5"></td>
+ </tr>
+ <tr>
+ <td align="left" colspan="5" valign="middle" class="navbar" background="../images/menus/navbarFade.gif" bgcolor="#FFFFFF">
+ 
+ 
+ <!-- navbar start -->
+ 
+ <!--  for store page, categories can go in the navbar -->
+ 
+ 
+
+ 
+
+ 
+ 
+ <!-- normal navbar -->
+ 
+ 
+ <div class="navBlock"><a href="products" alt="All&nbsp;Products" title="All&nbsp;Products">All&nbsp;Products</a></div><div class="navBlock"><a href="wabit" alt="SQL Power Wabit<br>BI Reporting" title="SQL Power Wabit<br>BI Reporting">SQL Power Wabit<br>BI Reporting</a></div><div class="navBlock"><a href="dqguru" alt="SQL Power DQguru<br>Data Cleansing" title="SQL Power DQguru<br>Data Cleansing">SQL Power DQguru<br>Data Cleansing</a></div><div class="navBlock"><a class="currentPage" href="architect" alt="SQL Power Architect<br>Data Modeling" title="SQL Power Architect<br>Data Modeling">SQL Power Architect<br>Data Modeling</a></div><div class="navBlock"><a href="Dashboard" alt="SQL Power Dashboard<br>Executive Dashboard" title="SQL Power Dashboard<br>Executive Dashboard">SQL Power Dashboard<br>Executive Dashboard</a></div><div class="navBlock"><a href="powerloader" alt="SQL Power Loader<br>ETL Tool" title="SQL Power Loader<br>ETL Tool">SQL Power Loader<br>ETL Tool</a></div><div class="navBlock"><a href="xbrlforms" alt="SQL Power<br>XBRL Forms" title="SQL Power<br>XBRL Forms">SQL Power<br>XBRL Forms</a></div><div class="navBlock"><a href="sysreq" alt="System<br>Requirements" title="System<br>Requirements">System<br>Requirements</a></div>
+	
+	
+	
+	
+ 
+ 
+ 
+ 
+ <!-- 
+ navbar end --><br>
+ </td>
+ </tr>
+
+ 
+  <tr>
+ <td bgcolor="#FFFFFF"></td><td bgcolor="#FFFFFF"></td>
+ <td align="left" valign="bottom" bgcolor="#FFFFFF">
+ 
+ 
+  <div id="bigtitle"><h1 class="bigtitle">Data Modeling & Profiling Tool: SQL Power Architect</h1></div>
+ </td>
+ <td bgcolor="#FFFFFF" colspan="2"></td>
+ </tr>
+   <tr>
+ <td align="left" colspan="5" bgcolor="#DDDDDD"><img src="../images/shim.gif" height="1" width="1"></td>
+
+ 
+  </tr>
+ <tr>
+ <td height="1" valign="top" class="paddedcontentLeft" width="100" bgcolor="#FAFAFA"><div id="leftimage"><img src="../images/shim.gif" height="0" width="150"></div>
+<div class="leftMarginContent">
+
+
+
+<A href=
+    "whyarchitect"><IMG src=
+		"../images/bb/button-why-off.gif" border="0" id=
+		"why" onmouseover=
+		"MM_swapImage('why','','../images/bb/button-why-on.gif',1)" 
+		onmouseout="MM_swapImgRestore()" alt="Why Architect?"><br>Why Architect?</A>
+
+
+
+<p><A href=
+    "tryarchitect"><IMG src=
+		"../images/bb/button-try-off.gif" border="0" id=
+		"try" onmouseover=
+		"MM_swapImage('try','','../images/bb/button-try-on.gif',1)" 
+		onmouseout="MM_swapImgRestore()" alt="Try Architect!"><br>Try Architect!</A></p>
+
+<p><A href=
+    "getarchitect"><IMG src=
+		"../images/bb/button-get-off.gif" border="0" id=
+		"get" onmouseover=
+		"MM_swapImage('get','','../images/bb/button-get-on.gif',1)" 
+		onmouseout="MM_swapImgRestore()" alt="Get Architect."><br>Get Architect.</A>
+
+</p>
+
+
+<p><A href=
+    "architect-demos"><IMG src=
+		"../images/bb/button-demo-off.gif" border="0" id=
+		"pade" onmouseover=
+		"MM_swapImage('pade','','../images/bb/button-demo-on.gif',1)" 
+		onmouseout="MM_swapImgRestore()" alt="View Demos"><br>View Demos</A>
+
+</p>
+<!--
+<p><A href=
+    "architect-e"><IMG src=
+		"../images/bb/button-ent-off.gif" border="0" id=
+		"enterprise" onmouseover=
+		"MM_swapImage('enterprise','','../images/bb/button-ent-on.gif',1)" 
+		onmouseout="MM_swapImgRestore()" alt="Enterprise Edition"><br>Enterprise Edition</A>
+
+</p>
+-->
+<p><A href=
+    "architect-userguide"><IMG src=
+		"../images/bb/button-doc-off.gif" border="0" id=
+		"usg" onmouseover=
+		"MM_swapImage('usg','','../images/bb/button-doc-on.gif',1)" 
+		onmouseout="MM_swapImgRestore()" alt="User Guide"><br>SQL Power Architect User&nbsp;Guides</A>
+
+</p>
+
+
+
+
+
+
+
+<p><A href=
+    "aug-signup"><IMG src=
+		"../images/bb/button-group-off.gif" border="0" id=
+		"paag" onmouseover=
+		"MM_swapImage('paag','','../images/bb/button-group-on.gif',1)" 
+		onmouseout="MM_swapImgRestore()" alt="User Group Meeting"><br>User Group Meeting</A>
+
+</p>
+
+
+
+
+
+
+
+
+
+<div id="leftmenu">
+<table border="0" cellspacing="0" cellpadding="0">		   
+				
+				
+				
+				
+				
+				
+					<tr id="cellLeft2"> 
+					<td>
+						<a href="../page/architect
+									?slide=0" target="_blank"" class="leftmenu">
+							Screenshots</a><br><img src="../images/shim.gif" width="1" height="6"><br></td>
+						
+					</tr>
+				
+					<tr id="cellLeft3"> 
+					<td><a href="#reviews" class="leftmenu">News and Reviews</a><br><img src="../images/shim.gif" width="1" height="6"><br></td>
+						
+					</tr>
+				
+					<tr id="cellLeft4"> 
+					<td><a href="#updates" class="leftmenu">Upcoming Releases</a><br><img src="../images/shim.gif" width="1" height="6"><br></td>
+						
+					</tr>
+				
+					<tr id="cellLeft5"> 
+					<td><a href="http://code.google.com/p/power-architect/" class="leftmenu">Google Code Project</a><br><img src="../images/shim.gif" width="1" height="6"><br></td>
+						
+					</tr>
+				
+					<tr id="cellLeft6"> 
+					<td>
+						<a href="../page/sysreq" class="leftmenu">
+							System Requirements</a><br><img src="../images/shim.gif" width="1" height="6"><br></td>
+						
+					</tr>
+				
+					<tr id="cellLeft7"> 
+					<td><a href="../documents/powerArchitect.pdf" class="leftmenu">SQL Power Architect [PDF]</a><br><img src="../images/shim.gif" width="1" height="6"><br></td>
+						
+					</tr>
+				
+				
+				
+				
+  </table>
+ </div>
+ 
+ 
+ 
+ </div>
+ 
+ </td>
+ <td bgcolor="#DDDDDD"><img src="../images/shim.gif" width="1" height="1"></td>
+ <td class="maincontent" bgcolor="#FFFFFF">
+ 
+ 
+
+	
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div align="center">
+  
+	  <!-- header image case (does not link to full size preview) -->
+	  <div id="headerimage"><img title="Data Modeling & Profiling Tool: SQL Power Architect" alt="Data Modeling & Profiling Tool: SQL Power Architect" src="../images/headings/pa-header600.jpg" border=0  /></div>
+ 
+  
+
+</div>
+
+
+
+
+<table width="100%" summary="Data Modelling and Profiling Tool" title="Data Modelling and Profiling Tool" cellpadding="0" cellspacing="0" border="0"><tr valign="middle">
+<td><p>&nbsp;</p><h1>SQL Power Architect</h1>
+<h3>Data Modeling &amp; Profiling&nbsp;Tool</h3>
+
+                      <P>The SQL Power Architect data modeling tool was created by data warehouse
+                      designers and has many unique features
+                      geared specifically for the data warehouse
+                      architect. It allows users to
+                      reverse-engineer existing databases, perform
+                      data profiling on source databases, and
+                      auto-generate ETL metadata.</P>
+
+<p>&nbsp;</p>
+
+</td>
+<td><img style="float:right; margin-top: 15px; margin-right: -15px;" 
+src="../images/pa-250.jpg" title="Data Modelling Tool" alt="image: Data Modelling Tool"></td></tr></table>
+
+
+
+			
+                      <H2>Features<br><HR size="1" color="cccccc" noshade="yes"></H2>
+
+                      <ul style="list-style-image: url(../images/accept.png);">
+
+                        <LI>Accesses source databases via JDBC</LI>
+
+                        <LI>Connects to multiple source databases
+                        concurrently</LI>
+
+                        <LI>Compares data models &amp; database
+                        structures and identifies
+                        discrepancies</LI>
+
+                        <LI>Drag-and-drop source tables &amp;
+                        columns into the playpen</LI>
+
+                        <LI>Remembers the origin of each
+                        column</LI>
+
+                        <LI>Generates source-to-target visual
+                        Mapping Reports</LI>
+
+                        <LI>Forward/reverse engineers PostgreSQL,
+                        Oracle, MS SQL Server &amp; more</LI>
+
+                        <LI>Saves source data structure snapshots
+                        in the project, so you can work
+                        remotely</LI>
+
+                        <LI>All project data is stored in an
+                        easy-to-parse XML format</LI>
+
+			<li>OLAP schema modeling: Cubes, Measures, Dimensions, Hierarchies &amp; Levels</li>
+
+                        <LI>Free Download (Open Source, <a target="_blank" href="http://www.gnu.org/licenses/gpl-3.0.html">GPL v.3</a> licensed) (Community Edition)</LI>
+
+<li>Multi-user collaboration (Enterprise Edition)</li>
+<li>Full User &amp; Group Level Security (Enterprise Edition)</li>
+<li>Support for Data Domains &amp; Types (Enterprise Edition)</li>
+<li>Java Web Start deployment (Enterprise Edition)</li>
+                      </UL>
+
+ <P>&nbsp;</P>
+
+<P><A href=
+                      "tryarchitect">
+                      <IMG style="margin:0px 10px 10px 34px;" src="../images/comein-GPLv3.jpg" alt=
+                      "open source" align="right" border="0" title="Open Source" alt="image: Open Source"></A>
+                      Data Architects, DBA's, Analysts and
+                      Designers rely on Data Modeling tools to
+                      facilitate and simplify their data Modeling
+                      efforts, while maximizing the use of their
+                      resources. The SQL Power Architect allows these
+                      busy highly technical resources to perform
+                      this most intricate part of their job in a
+                      fraction of the time.</P>
+
+                      <P>Plus, SQL Power Architect has the ability
+                      to <B>take snapshots of database structures,
+                      allowing users to design DW data models while
+                      working offline.</B></P>
+
+                      <P>Whether you are building a Data Warehouse
+                      or using data models to communicate business
+                      rules, SQL Power Architect will facilitate
+                      and automate your data modeling efforts.</P>
+
+
+
+              
+
+  <P>&nbsp;</P>
+   
+                  <TABLE width="100%" border="0" cellpadding="10"
+                  summary="" valign="top">
+                    <TR valign="top">
+                      <TD width="50" valign="top"><a href="architect-demos"><IMG 
+border="0" src="../images/pa1-300.jpg" title="Playpen Design Workspace" alt="image: Playpen Design Workspace"></a></TD>
+<td><H4>"Playpen" Design Workspace</h4>
+<p>The tree view
+                      makes it easy to navigate through the
+                      database. Drag schemas or tables into the
+                      playpen, then adjust the layout manually or
+                      with the Auto-Layout function.</p></td></tr>
+<TR valign="top">
+<TD valign="top"><a href="architect-demos"><IMG border="0" 
+src="../images/pa2-300.jpg" alt="image: Data Profiling" title="Data Profiling"></a></TD>
+
+<td><h4>Quick &amp; Easy Data&nbsp;Profiling</h4><p>The Data
+                      Profiling feature is useful for exploring new
+                      or unfamiliar databases... you can see
+                      information about the size of the data in
+                      each column, maximum &amp; minimum values,
+                      frequency distribution of values in a column
+                      and more.</p></td>
+                    </TR>
+                  </TABLE>
+
+
+    <P>&nbsp;</P>
+
+<p>
+
+SQL Power Architect can also open multiple source databases concurrently, 
+even if they are from competing database vendors. 
+Another key feature of the SQL Power Architect that sets it apart 
+from other data modeling tools, is that it remembers the origin 
+of each column and is capable of automatically generating the 
+source-to-target data mappings.</p>
+
+<p>Whether you're building or maintaining your Data Warehouse 
+data model, SQL Power Architect will provide you a complete 
+view of all required database structures and will expedite 
+every aspect of your data warehouse design.</p>
+
+   <P>&nbsp;</P>
+
+
+
+
+
+
+
+<a name="reviews"></a>
+    <H2>SQL Power Architect News, Reviews &amp; Blogs<br><HR size="1" color="cccccc" noshade="yes"></H2>
+
+
+
+<script language="javascript">
+
+drawSpeechBubble("The SQL Power Architect is our tool of choice for this book... Multi-database support, Forward engineering, Reverse engineering, Model comparison... it is one of the few or maybe even the only open source tool available that supports the four functions in the preceding list... In fact, there are a couple of unique features not available in any other tool, such as the ETL and OLAP options.", 
+"Pentaho Solutions by Roland Bouman &amp; Jos van Dongen", 
+"pentahoSolutions");
+
+drawSpeechBubble("What I'm using now, and recommend, is SQL Power Architect... I think SQL Power Architect has a better interface than Mogwai, creating models and generating SQL is quite easy and takes just a few clicks.", 
+"Ventanazul Webzine", 
+"http://ventanazul.com/webzine/articles/open-source-app-for-database-modelling");
+
+drawSpeechBubble("SQL Power Architect delivered an ERD which is as well laid out as I have seen: even high end tools I've tried couldn't make any better job of it in the first pass.", 
+"Diary of a Database Geek", 
+"http://blogs.ittoolbox.com/database/geek/archives/powerarchitect-is-open-source-17720");
+
+drawSpeechBubble("SQL Power Architect is the best ERD drawing tool I've found", 
+"Jon's Code Blog", 
+"http://www.jhbproductions.com/blog/2007/10/power-architect-is-best-erd-drawing.html");
+
+drawSpeechBubble("Thank you for making my software development work a little bit more enjoyable and productive with your SQL Power Architect tool.", 
+"Tomislav Nakic-Alfirevic", 
+"null");
+
+drawSpeechBubble("I love this application... SQL Power Architect fills a gap in available free database modelling software, particularly in light of the native Linux version. You have helped raise standards of development, and made the software world a better place.", 
+"Sam Tuke, Web Developer", 
+"null");
+
+drawSpeechBubble("Now you can get hold of a data modelling tool that is open source rather than having to buy Erwin", 
+"Andy on Enterprise Software", 
+"http://andyonenterprisesoftware.com/2007/07/open-source-data-modelling/");
+
+</script>
+
+
+
+
+
+
+
+
+
+
+    <P>&nbsp;</P>
+
+
+
+
+
+
+
+
+
+<a name="updates"></a>
+
+
+
+<H2>Recent &amp; Upcoming Releases<br><HR size="1" color="cccccc" noshade="yes"></H2>
+
+
+
+<TABLE summary="SQL Power Architect Upcoming Releases" title="SQL Power Architect Upcoming Releases" class="pointstable" valign="top">
+
+
+
+
+
+<TR valign="top">
+
+<TD bgcolor="eeeeee"><B>Version</B></TD>
+
+<TD bgcolor="eeeeee"><B>Release&nbsp;Date</B></TD>
+
+
+
+<TD bgcolor="eeeeee"><b>Enhancements</b>
+
+
+
+<ul style="margin:0px; padding-left:1.5em;">
+
+
+
+<li style="list-style-image:url('../images/bullet_new.png');">New Features&nbsp;&emsp;&nbsp;<img alt="IMPROVED" src="../images/bullet_imp.png">&nbsp;&nbsp;Improved Functionality</li>
+
+</ul>
+
+</TD>
+
+
+
+</TR>
+
+
+
+
+
+
+
+<tr valign="top">
+
+
+
+<td>1.1.0</td>
+
+
+<td>TBA</td>
+
+
+
+<td>
+
+<ul style="margin:0px; padding-left:1.5em;">
+
+<li style="list-style-image:url('../images/bullet_new.png');">Full thin-client offering</li>
+
+
+</ul></td></tr>
+
+
+
+
+
+
+<tr bgcolor="#fafafa" valign="top">
+
+
+
+<td><a href="tryarchitect">1.0.5&nbsp;<img border="0" src="../images/accept.png"></a></td>
+
+
+<td>Dec.&nbsp;10&nbsp;2010</td>
+
+
+
+<td>
+
+<ul style="margin:0px; padding-left:1.5em;">
+
+<li style="list-style-image:url('../images/bullet_imp.png');">Performance enhancements &amp; bug fixes</li>
+
+
+</ul><small><a target="_blank" href="http://download.sqlpower.ca/architect/1.0.5/enterprise/doc/ReleaseNotes.txt">detailed release notes</a></small>
+</td></tr>
+
+
+
+
+
+
+
+
+<tr valign="top">
+
+
+
+<td>1.0.4</td>
+
+
+<td>Sept.&nbsp;28&nbsp;2010</td>
+
+
+
+<td>
+
+<ul style="margin:0px; padding-left:1.5em;">
+
+<li style="list-style-image:url('../images/bullet_imp.png');">UI enhancements &amp; bug fixes</li>
+
+
+</ul>
+</td></tr>
+
+
+
+
+
+<tr bgcolor="#fafafa" valign="top">
+
+
+
+<td>1.0.3</td>
+
+
+<td>Aug.&nbsp;27&nbsp;2010</td>
+
+
+
+<td>
+
+<p style="margin-top:0;"><b>SQL Power Architect Enterprise</b></p>
+
+<ul style="margin:0px; padding-left:1.5em;">
+
+<li style="list-style-image:url('../images/bullet_new.png');">'Import Project' feature</li>
+
+<li style="list-style-image:url('../images/bullet_new.png');">Support for H2 as server database backend</li>
+
+<li style="list-style-image:url('../images/bullet_imp.png');">Several bug fixes</li>
+
+
+</ul>
+</td></tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<tr  valign="top">
+
+
+
+<td>1.0.0</td>
+
+
+<td>Aug.&nbsp;17&nbsp;2010</td>
+
+
+
+<td>
+
+<p style="margin-top:0;"><b>SQL Power Architect Enterprise (Production Edition)</b></p>
+
+<ul style="margin:0px; padding-left:1.5em;">
+
+<li style="list-style-image:url('../images/bullet_new.png');">Proofreader/critic system for relational &amp; OLAP modeling</li>
+
+<li style="list-style-image:url('../images/bullet_new.png');">Meta Data Repository Maintenance screens</li>
+
+<li style="list-style-image:url('../images/bullet_new.png');">ERD Diagram labelling via Text box</li>
+
+
+</ul>
+
+</td></tr>
+
+
+
+
+
+
+
+
+
+<!--
+
+
+
+
+<tr valign="top">
+
+<td>1.0.0&nbsp;<small>Preview</small></td>
+
+
+
+<td>May&nbsp;11&nbsp;2010</td>
+
+
+
+<td>
+
+<p style="margin-top:0;"><b>SQL Power Architect Enterprise (Preview Edition)</b></p>
+
+<ul style="margin:0px; padding-left:1.5em;">
+
+<li style="list-style-image:url('../images/bullet_new.png');">Server-based offering</li>
+
+
+
+<li style="list-style-image:url('../images/bullet_new.png');">Multi-user Data Model Collaboration</li>
+
+<li style="list-style-image:url('../images/bullet_new.png');">Full user-level &amp; group-level security</li>
+
+<li style="list-style-image:url('../images/bullet_new.png');">Support for data domains &amp; types</li>
+
+
+
+<li style="list-style-image:url('../images/bullet_imp.png');">OLAP designer improvements</li>
+
+</ul>
+
+
+
+
+
+</td></tr>
+
+
+
+
+
+
+-->
+
+
+
+</TABLE>
+
+
+
+<img alt="Yes" src="../images/accept.png"> indicates this release is available for download
+
+
+
+
+
+<p><a href="http://www.sqlpower.ca/page/enter_forum">To request changes or feature additions to SQL Power Architect, please visit our Forum.</a></p>
+
+
+
+
+
+
+
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+
+<div align="center">
+
+<h2><HR size="1" color="cccccc" noshade="yes"><br>Data Modeling &amp; Profiling have never been easier...
+<a href="architect_download">download the SQL&nbsp;Power&nbsp;Architect</a></span> today!</h2>
+
+<table cellpadding="10" cellspacing="0" border="0"><tr>
+
+<td class="bottomLinks"><A href=
+    "whyarchitect"><IMG src=
+		"../images/bb/button-why-off.gif" border="0" id=
+		"pad0" onmouseover=
+		"MM_swapImage('pad0','','../images/bb/button-why-on.gif',1)" 
+		onmouseout="MM_swapImgRestore()" alt="Why Architect?"><br>Why&nbsp;Architect?</A></td>
+
+<td class="bottomLinks"><A href=
+    "tryarchitect"><IMG src=
+		"../images/bb/button-try-off.gif" border="0" id=
+		"pad2" onmouseover=
+		"MM_swapImage('pad2','','../images/bb/button-try-on.gif',1)" 
+		onmouseout="MM_swapImgRestore()" alt="Try Architect!"><br>Try&nbsp;Architect!</A></td>
+<td class="bottomLinks"><A href=
+    "getarchitect"><IMG src=
+		"../images/bb/button-get-off.gif" border="0" id=
+		"pas2" onmouseover=
+		"MM_swapImage('pas2','','../images/bb/button-get-on.gif',1)" 
+		onmouseout="MM_swapImgRestore()" alt="Get Architect."><br>Get&nbsp;Architect.</A></td>
+
+<td class="bottomLinks"><A href=
+    "architect-demos"><IMG src=
+		"../images/bb/button-demo-off.gif" border="0" id=
+		"pade2" onmouseover=
+		"MM_swapImage('pade2','','../images/bb/button-demo-on.gif',1)" 
+		onmouseout="MM_swapImgRestore()" alt="View Demos"><br>View&nbsp;Demos</A></td>
+</tr></table>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+ <img src="../images/shim.gif" width="530" height="1">
+ </td>
+ <td bgcolor="#DDDDDD"><img src="../images/shim.gif" width="1" height="1"></td>
+ <td valign="top" width="100" class="paddedcontent" bgcolor="#FAFAFA">
+ <div id="leftimage"><img src="../images/shim.gif" height="0" width="150"></div>
+ <div id="rightmenu">
+ <form action="../page/search"><input type="image" valign="middle" border="0" src="../images/searcher.gif"><input style="border: 1px solid #cccccc;" type="text" size="10" maxlength="40" name="q" value="Search" onFocus='doClear(this);'><br><input type="hidden" value="Search"></form>
+  <table border="0" cellspacing="0" cellpadding="0">
+    
+  
+  
+  
+ <tr><td class="emailthiscell">
+ <a href="#" target="_blank" 
+  onclick="MM_openBrWindow('../emailthis.jsp?pageId=architect&pageTitle=Data+Modeling+%26+Profiling+Tool%3A+SQL+Power+Architect','email','width=550,height=550');return false"><img src="../images/email.gif" border="0">Email this page</a><br>
+  
+  
+  
+  <a target="_blank" href="../page/architect?print=yes"><img src="../images/printer.gif" border="0">Print&#8209;friendly&nbsp;version</a><br>
+  
+  
+  <img src="../images/shim.gif" width="1" height="12"></td></tr> 
+  <tr><td><a class="rightmenu" href="../page/info?topic=Data+Modeling+%26+Profiling+Tool%3A+SQL+Power+Architect">Contact SQL&nbsp;Power</a><br><img src="../images/shim.gif" width="1" height="6"></td></tr>
+  <!--<tr><td><a class="rightmenu" href="../page/Demos?product=Data+Modeling+%26+Profiling+Tool%3A+SQL+Power+Architect">Demo Request</a><br><img src="../images/shim.gif" width="1" height="6"></td></tr>-->
+  
+ 
+
+
+ 
+  		
+			<tr><td><img src="../images/shim.gif" width="1" height="15"><br><form method="post" action="login">
+			<input type="hidden" name="nextUri" value="architect" />
+<div class="rightmenulabel">Member Log-In<br>
+<input style="border: 1px solid #cccccc;" type="text" name="username" value="Email" size="12" maxlength="50" onFocus='highlight(this);'/><br>
+<input style="border: 1px solid #cccccc;" type="password" name="password" value="Password" size="12" maxlength="30" id="password" onFocus='highlight(this);'/><br>
+<input type="submit" name="doLogin" value="Log In" id="button"><br>
+<br>Need an account?<br><a href="register">Register for free</a><br><!--<br><a href="javascript:forgotPassword()">Reset Password</a>-->
+<!-- <br>Looking for SQL&nbsp;Power&nbsp;Consulting?<br><a href="http://www.sqlpower.ca/consulting/page/login">Log-In Here</a><br>--></div>
+ </form></td></tr>
+		 
+ 
+  </table>
+		<img src="../images/shim.gif" width="125" height="6"><br>			
+		</div>
+		
+		<!-- 
+ 
+ 		<div class="socialNetworks">
+
+Follow SQL Power:<br>
+<a target="_blank" href="http://www.linkedin.com/companies/524417"><IMG border="0" src="../images/socialNetworks-in.png"></a>
+<a target="_blank" href="http://www.facebook.com/pages/SQL-Power-Group/336206597448"><IMG border="0" src="../images/socialNetworks-f.png"></a>
+<a target="_blank" href="http://twitter.com/sql_power"><IMG border="0" src="../images/socialNetworks-t.png"></a>
+
+</div>
+		
+	-->		
+		
+		<!-- global flash ad can go here -->
+	
+		
+		<!--  -->
+		
+		
+		
+		
+		 <div class="rightMarginContent">
+		  
+		</div>
+ 
+ 
+
+ 
+ 
+ <!-- right links end -->
+ 
+ 
+
+ </td></tr>
+
+ <tr>
+ <td colspan="5" height="1" bgcolor="#DDDDDD"><img src="../images/shim.gif" height="1" width="1"></td>
+ </tr>
+ 
+ 
+ 
+ 
+
+ <tr>
+ <td colspan="1" align="right" style="background-image:url(../images/menus/slice-bottomleft1a.jpg); background-repeat:no-repeat; background-position:right;"></td>
+ <td colspan="4" bgcolor="#ffffff" align="left"><img src="../images/menus/slice-tagline-unleash.png"></td>
+ <td colspan="1" bgcolor="#ffffff" align="right" style="background-image:url(../images/menus/slice-bottomright1a.jpg); background-repeat:no-repeat; background-position: bottom right;"></td>
+ <td colspan="1" align="left" style="background-image:url(../images/menus/slice-bottomright1b.jpg); background-repeat:no-repeat; background-position:left;"></td>
+ </tr>
+ 
+ 
+  <tr>
+ <td colspan="5" align="left" 
+style="background-image:url(../images/menus/slice-bottom2.jpg);"><img src="../images/menus/slice-bottomleft2.jpg"></td>
+ <td colspan="3" align="right"
+background="../images/menus/slice-bottom2.jpg"><img 
+src="../images/menus/slice-bottomright2.jpg"></td>
+ </tr>
+ 
+ 
+ 
+ 
+ 
+  <tr>
+  <td colspan="7" align="center"><div id="copyright">Copyright &copy; 2010 <a href="http://www.sqlpower.ca">SQL Power Group Inc.</a>&emsp;|&emsp;<a 
+  href="../page/privacy_policy">Privacy Policy</a>&emsp;|&emsp;Follow SQL Power:
+<a target="_blank" href="http://www.linkedin.com/companies/524417"><IMG title="SQL Power on LinkedIn" alt="SQL Power on LinkedIn"
+style="vertical-align:text-bottom; margin-bottom:-2px;" border="0" src="../images/socialNetworks-in.png"></a>
+<a target="_blank" href="http://www.facebook.com/pages/SQL-Power-Group/336206597448"><IMG title="SQL Power on Facebook" alt="SQL Power on Facebook"
+style="vertical-align:text-bottom; margin-bottom:-2px;" border="0" src="../images/socialNetworks-f.png"></a>
+<a target="_blank" href="http://twitter.com/SQLPowerGroup"><IMG title="SQL Power on Twitter" alt="SQL Power on Twitter"
+style="vertical-align:text-bottom; margin-bottom:-2px;" border="0" src="../images/socialNetworks-t.png"></a>
+<a target="_blank" href="http://sqlpowergroup.blogspot.com"><IMG title="SQL Power Official Blog" alt="SQL Power Official Blog"
+style="vertical-align:text-bottom; margin-bottom:-2px;" border="0" src="../images/socialNetworks-b.png"></a>
+</div></td>
+ </tr>
+  
+  
+  
+ </table>
+</td></tr>
+</table>
+<p>&nbsp;</p>
+
+
+
+
+
+
+
+</body>
+
+
+</html>
