@@ -1,0 +1,241 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<title>Unix / Linux Bourne / Bash Shell Scripting Tutorial [ steve-parker.org ]</title>
+<link rel="stylesheet" type="text/css" href="/2010.css" />
+<!-- http://google-code-prettify.googlecode.com/svn/trunk/README.html -->
+<link href="/prettify/prettify.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="/prettify/prettify.js"></script>
+<!-- end of prettyprint stuff -->
+</head>
+<body onload="prettyPrint()">
+<div id="maincontainer">
+<div id="topsection"><div class="innertube">
+<h1>Steve's Bourne / Bash shell scripting tutorial</h1></div></div>
+<div id="contentwrapper">
+<div id="contentcolumn">
+<div class="innertube">
+
+<h2>Steve's Bourne / Bash shell scripting tutorial</h2>
+<table width="100%" border="0">
+<tr>
+<td align="left" width="50%">
+A Bourne Shell Programming/Scripting Tutorial for learning about using the Unix shell. Learn Linux / Unix shell scripting by example along with the theory. We'll have you mastering Unix shell scripting in no time! Available <a href="intro.shtml">right here on the World Wide Web</a>.
+<a href="/sh/readers.shtml">Comments</a> <a href="/mail/">Welcome</a>.<br/>
+</td>
+<td align="right" width="50%">
+	Version: <b>1.1c</b>
+<br/>
+<b>&copy;</b> 2000 - 2010 Steve Parker.
+<br/>
+Mail To: <a href="/mail/">steve at steve-parker.org</a>
+<br/>
+Canonical URL:
+<a href="http://steve-parker.org/sh/sh.shtml">
+http://steve-parker.org/sh/sh.shtml</a>
+<br/>
+You are free to take copies of these pages for <a href="license.shtml">personal use</a>.
+<br/>
+Last Updated: <b>8th Nov 2010</b>
+</td> </tr> </table>
+<h2>Contents</h2>
+<center>
+<img border="0" width="80" height="20" alt="" title="" src="/images/prevd.png"/>
+<a href="intro.shtml"><img src="/images/1.png" border="0" width="20" height="20" alt="1. Intro" title="1. Intro"/></a>
+<a href="philosophy.shtml"><img src="/images/2.png" border="0" width="20" height="20" alt="2. Philosophy" title="2. Philosophy"/></a>
+<a href="first.shtml"><img src="/images/3.png" border="0" width="20" height="20" alt="3. A First Script" title="3. A First Script"/></a>
+<a href="variables1.shtml"><img src="/images/4.png" border="0" width="20" height="20" alt="4. Variables - Part I" title="4. Variables - Part I"/></a>
+<a href="wildcards.shtml"><img src="/images/5.png" border="0" width="20" height="20" alt="5. Wildcards" title="5. Wildcards"/></a>
+<a href="escape.shtml"><img src="/images/6.png" border="0" width="20" height="20" alt="6. Escape Characters" title="6. Escape Characters"/></a>
+<a href="loops.shtml"><img src="/images/7.png" border="0" width="20" height="20" alt="7. Loops" title="7. Loops"/></a>
+<a href="test.shtml"><img src="/images/8.png" border="0" width="20" height="20" alt="8. Test" title="8. Test"/></a>
+<a href="case.shtml"><img src="/images/9.png" border="0" width="20" height="20" alt="9. Case" title="9. Case"/></a>
+<a href="variables2.shtml"><img src="/images/10.png" border="0" width="20" height="20" alt="10. Variables - Part II" title="10. Variables - Part II"/></a>
+<a href="variables3.shtml"><img src="/images/11.png" border="0" width="20" height="20" alt="11. Variables - Part III" title="11. Variables - Part III"/></a>
+<a href="external.shtml"><img src="/images/12.png" border="0" width="20" height="20" alt="12. External Programs" title="12. External Programs"/></a>
+<a href="functions.shtml"><img src="/images/13.png" border="0" width="20" height="20" alt="13. Functions" title="13. Functions"/></a>
+<a href="hints.shtml"><img src="/images/14.png" border="0" width="20" height="20" alt="14. Hints and Tips" title="14. Hints and Tips"/></a>
+<a href="quickref.shtml"><img src="/images/15.png" border="0" width="20" height="20" alt="15. Quick Reference" title="15. Quick Reference"/></a>
+<a href="interactive.shtml"><img src="/images/16.png" border="0" width="20" height="20" alt="16. Interactive" title="16. Interactive"/></a>
+<a href="exercises.shtml"><img src="/images/17.png" border="0" width="20" height="20" alt="17. Exercises" title="17. Exercises"/></a>
+<a href="intro.shtml"><img src="/images/next.png" border="0" width="80" height="20" alt="1. Intro" title="1. Intro"/></a>
+</center>
+<table border="0" width="100%" cellpadding="40"><tr><td rowspan="2" width="200px">
+<ol>
+<li><a href="intro.shtml">Intro</a></li>
+<li><a href="philosophy.shtml">Philosophy</a></li>
+<li><a href="first.shtml">A First Script</a></li>
+<li><a href="variables1.shtml">Variables - Part I</a></li>
+<ul><li><a href="variables1.shtml#scope">Scope of Variables</a></li></ul>
+<li><a href="wildcards.shtml">Wildcards</a></li>
+<li><a href="escape.shtml">Escape Characters</a></li>
+<li><a href="loops.shtml">Loops</a></li>
+<ul><li><a href="loops.shtml#for">For Loops</a></li><li><a href="loops.shtml#while">While Loops</a></li></ul>
+<li><a href="test.shtml">Test</a></li>
+<li><a href="case.shtml">Case</a></li>
+<li><a href="variables2.shtml">Variables - Part II</a></li>
+<ul><li><a href="variables2.shtml">Pre-set Variables</a></li></ul>
+<li><a href="variables3.shtml">Variables - Part III</a></li>
+<ul><li><a href="variables3.shtml#default">Default Values</a></li></ul>
+<li><a href="external.shtml">External Programs</a></li>
+<li><a href="functions.shtml">Functions</a></li>
+<ul><li><a href="functions.shtml#scope">Scope of Variables</a></li><li><a href="functions.shtml#recursion">Recursion</a></li><li><a href="functions.shtml#exit">Exit Codes</a></li></ul>
+<li><a href="hints.shtml">Hints And Tips</a></li>
+<ul><li><a href="hints.shtml#awk">Cheating with awk</a></li><li><a href="hints.shtml#sed">Cheating with sed</a></li><li><a href="hints.shtml#telnet">Telnet Hint</a></li></ul>
+<li><a href="quickref.shtml">Quick Reference</a></li>
+<li><a href="interactive.shtml">Interactive Shell</a></li>
+<li><a href="exercises.shtml">Exercises</a></li>
+<ul><li><a href="exercises.shtml#addressbook">Addressbook</a></li><li><a href="exercises.shtml#directories">Directory Traversal</a></li></ul>
+</ol>
+</p>
+<p>
+
+</p>
+</td><td valign="top" width="350px">
+<div>
+	<center>Doug Kramer (Java, Google.com) says:</center>
+	                </div>
+			"When I started writing CGI script in Bourne shell on the Java team at Sun,
+			I scoured the Internet for a good tutorial and used Steve Parker's
+			guide, which I really like.  Now that I've moved to Google and switched
+			to Linux and bash, I've decided to use it as the basis for an in-house
+			introductory course on bash scripting here at Google for our tech writers.
+			I highly recommend it as accurate and written at the right level,
+			plus it includes a useful reference"<br/>
+			<br/>
+			<br/>
+			<br/>
+<div>
+	<center>Feedback</center>
+</div>
+<ul><li><a href="/sh/readers.shtml">See readers' comments</a><br/>
+	<li><a href="/mail/">Send feedback</a></ul>
+<br/>
+</td></tr><tr><td>
+</td></tr></table>
+<h2>
+Links To Other Resources
+</h2>
+<ul>
+<li><a target="_blank" href="http://en.wikipedia.org/wiki/Bourne_shell">Wikipedia Entry</a> on Bourne Shell
+<li>Local mirror of <a href="bourne.shtml">Steve Bourne's Introduction to the Unix Shell</a> - written by the great man himself.
+</li>
+<li><a target="_blank" href="http://www.ooblick.com/text/sh/">ooblick</a> - another good tutorial.</li>
+<li><a target="_blank" href="http://www.shelldorado.com/">Shelldorado</a> - and another one.</li>
+<li><a target="_blank" href="http://www.mpi-inf.mpg.de/~uwe/lehre/unixffb/quoting-guide.html">quoting-guide.html</a> - a pretty definitive document on quoting and escape characters.</li>
+<li><a target="_blank" href="http://programming.newsforge.com/article.pl?sid=04/03/01/1554205&amp;mode=nested">What to watch out for when writing portable shell scripts</a></li>
+<li>ss64.com have a <a target="_blank" href="http://www.ss64.com/bash/">great list of commands</a>, with links to man pages for most of them.</li>
+<li>See also <a target="_blank" href="http://bhami.com/rosetta.html">The Rosetta Stone for Unix</a>.
+</li>
+<li><a target="_blank" href="http://www.amazon.co.uk/exec/obidos/redirect?link_code=ur2&amp;tag=steveparkeror-21&amp;camp=1634&amp;creative=6738&amp;path=external-search%3Fsearch-type=ss%26index=books%26keyword=unix%20shell">Amazon have a good number of books on the Unix Shell</a> - As a general rule, I'd go for (say) O'Reilly books (Addison-Wesley tend to be pretty good, too) in preference to the "in 24 hours" or "for dummies" books - in my experience these tend to be rather glib and just rush you through the basics, without the real information you actually need. Of course, you can also <a href="http://steve-parker.org/sh/buy/">buy this tutorial as a PDF</a>.</li>
+<li><a target="_blank" href="http://code.dogmap.org/lintsh/">lintsh</a> has a lot of useful information about script
+portability.</li>
+</ul>
+</div>
+<center>You can also get this tutorial in
+<a title="view sample" target="_blank" href="/sh/buy/shellscriptingbook-sample.pdf">PDF form</a>:
+<center>	<!--<strong>Shell Scripting Tutorial: Buy The Book</strong><br/>-->
+	<!--<img border=0 src="/sh/buy/cc.jpg" width=210 height=18 align=center> -->
+	<table border="0">
+		<!--<tr><td align=center colspan=3>Select your preferred currency</td></tr>-->
+		<tr><td valign="top" width="200" align="center">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<input type="hidden" name="cmd" value="_s-xclick" />
+<input type="image" src="uk4.99.gif" border="0" name="submit" alt="£4.99" />
+<input type="image" src="/images/pdf.gif" height="75" width="75" alt="Download PDF" />
+<img alt="" border="0" src="https://www.paypal.com/en_GB/i/scr/pixel.gif" width="1" height="1" />
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
+" />
+</form>
+</td>
+<td valign="top" width="200" align="center">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<input type="hidden" name="cmd" value="_s-xclick" />
+<input type="image" src="eur6.99.gif" border="0" name="submit" alt="€6.99" />
+<input type="image" src="/images/pdf.gif" height="75" width="75" alt="Download PDF" />
+<img alt="" border="0" src="https://www.paypal.com/en_GB/i/scr/pixel.gif" width="1" height="1" />
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
+" />
+</form>
+ </td><td valign="top" width="200" align="center">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<input type="hidden" name="cmd" value="_s-xclick" />
+<input type="image" src="usd9.99.gif" border="0" name="submit" alt="$9.99" />
+<input type="image" src="/images/pdf.gif" height="75" width="75" alt="Download PDF" />
+<img alt="" border="0" src="https://www.paypal.com/en_GB/i/scr/pixel.gif" width="1" height="1" />
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
+" />
+</form>
+</td></tr>
+<!--<tr><td align=center>&pound;4.99</td><td align=center>&euro;6.99</td><td align=center>$9.99</td></tr>-->
+</table></center>
+
+<hr/>
+<img src="/images/share.gif" title="share with social media" alt="share with social media" width="50" height="50">&nbsp;&nbsp;
+<a href="http://www.facebook.com/share.php?u=http://steve-parker.org/sh/sh.shtml?&t=Unix/Linux+Bourne/Bash+Shell+Tutorial"><img src="/images/facebook.jpg" alt="share this tutorial on Facebook" title="share this tutorial on Facebook" width="50" height="50" border="0"></a> &nbsp; &nbsp;
+<a href="http://identi.ca/notice/new?status_textarea=http://steve-parker.org/sh/sh.shtml"><img src="/images/identi.ca.jpg" width="50" height="50" alt="share this tutorial on identi.ca" title="share this tutorial on identi.ca" border="0"></a> &nbsp; &nbsp;
+<a href="http://www.linkedin.com/shareArticle?mini=true&url=http://steve-parker.org/sh/sh.shtml&title=Unix/Linux+Bourne/Bash+Shell+Tutorial&summary=A Bourne Shell Programming/Scripting Tutorial for learning about using the Unix shell. Learn Linux / Unix shell scripting by example along with the theory. We'll have you mastering Unix shell scripting in no time!"><img src="/images/linkedin.jpg" width="191" height="50" alt="share this tutorial on LinkedIN" title="share this tutorial on LinkedIN" border="0"></a> &nbsp; &nbsp;
+<a href="http://www.stumbleupon.com/submit?url=http://steve-parker.org/sh/sh.shtml&title=Unix/Linux+Bourne/Bash+Shell+Tutorial"><img src="/images/stumbleupon.png" width="50" height="50" title="StumbleUpon" alt="StumbleUpon" border="0"></a> &nbsp; &nbsp;
+<a href="http://twitter.com/home?status=Unix/Linux Bourne/Bash Shell Tutorial - http://steve-parker.org/sh/sh.shtml"><img src="/images/twitter.png" width="50" height="50" alt="Tweet this Tutorial" title="Tweet this Tutorial" border="0"></a>
+<img src="/images/erahs.gif" title="share with social media" alt="share with social media" width="50" height="50">&nbsp;&nbsp;
+<br/>
+
+</center>
+</div>
+</div>
+<div id="leftcolumn">
+<div class="innertube">
+<div class="navpadder">
+Navigation<br/>
+&raquo;<a class="title" href="/">Home</a><br />
+&raquo;<a class="title" href="http://sgpit.com/">SGP IT</a>
+<br/>&nbsp;<br/>
+Unix Stuff<br />
+&raquo;<a class="nav" href="/sh/sh.shtml">Shell Tutorial</a><br />
+&raquo;<a class="nav" href="/networking/">Networking Tutorial</a><br />
+&raquo;<a class="nav" href="/logic/">Logic Gates</a><br />
+&raquo;<a class="nav" href="/vxvm/">VxVM</a><br />
+<!--
+&raquo;<a class="nav" href="/code/c/">C Code</a><br />
+&raquo;<a class="nav" href="/code/sh/idx.shtml">Shell Code</a><br />
+-->
+<br/>&nbsp;<br/>
+<a class="title" href="/cv/">My CV</a><br />
+<br/>&nbsp;<br/>
+My Blogs<br/>
+&raquo;<a class="title" href="/urandom/">uRandom</a><br/>
+&raquo;<a target="_blank" href="http://nixshell.wordpress.com/">*nixshell</a>
+<br/>&nbsp;<br/>
+Other<br />
+&raquo;<a class="title" href="/articles/">Articles</a><br />
+&raquo;<a class="title" href="/speedtouchconf/">SpeedTouch</a><br />
+&raquo;<a class="title" href="/wishlist/">WishList</a><br />
+<!--<div class="subtext">Tell your Friends and Family what you really want.</div>-->
+
+<br/>&nbsp;<br/>
+&raquo;<a class="title" href="/mail/">Mail Me</a><br />
+<br/>&nbsp;<br/>
+&raquo;Hosted by<br/><a class="title" target="_blank" href="http://webqualityhost.net/">WebQualityHost</a><br />
+<br/>&nbsp;<br/>
+<br/>&nbsp;<br/>
+<br/>&nbsp;<br/>
+</div>
+
+
+<ul style="margin: 0; list-style: none; padding: 0; overflow: hidden; border: 1px solid #000000; border-spacing: 0px; background-color: #F0F0F0; width: 100%;">
+<li style="float: left; width: 100%; padding: 0; display: inline; margin: 0; clear: none;"><span style="padding: 3px; width: 100%; font-size: 12px; margin: 0; color: #000000; display: block;">  <a style="font-size: 12px; color: #000000;" href="http://www.dooyoo.co.uk/laser-printer/">Good laser printers</a>  </span></li>
+<li style="float: left; width: 100%; padding: 0; display: inline; margin: 0; clear: none;"><span style="padding: 3px; width: 100%; font-size: 12px; margin: 0; color: #000000; display: block;">  <a style="font-size: 12px; color: #000000;" href="http://www.superwarehouse.com">Printers</a>  </span></li>
+<li style="float: left; width: 100%; padding: 0; display: inline; margin: 0; clear: none;"><span style="padding: 3px; width: 100%; font-size: 12px; margin: 0; color: #000000; display: block;">  <a style="font-size: 12px; color: #000000;" href="http://www.cpu.com/deals/lenovo/">Lenovo Coupons</a>  </span></li>
+<li style="float: left; width: 100%; padding: 0; display: inline; margin: 0; clear: none;"><span style="padding: 3px; width: 100%; font-size: 12px; margin: 0; color: #000000; display: block;">  <a style="font-size: 12px; color: #000000;" href="http://cityfile.com/profiles/holly-peterson">Rick Kimball Goldman Sachs</a>  </span></li>
+</ul>
+</div>
+</div>
+<div id="footer">
+&copy; Steve Parker 2000 - 2010 unless otherwise noted.
+</div>
+</div>
+</body>
+</html>
+
