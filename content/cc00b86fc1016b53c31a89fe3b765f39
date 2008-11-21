@@ -1,0 +1,239 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+
+  <head>
+    <title>
+      pacopablo/blog/set-assign-to-drop-down – Casa de Pacopablo
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="search" href="/search" />
+        <link rel="help" href="/wiki/TracGuide" />
+        <link rel="alternate" href="/wiki/pacopablo/blog/set-assign-to-drop-down?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="up" href="/wiki/pacopablo/blog" title="View parent page" />
+        <link rel="start" href="/wiki" />
+        <link rel="stylesheet" href="/chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="/chrome/common/css/wiki.css" type="text/css" />
+        <link rel="shortcut icon" href="/chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="/chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="/search/opensearch" title="Search Casa de Pacopablo" />
+    <script type="text/javascript" src="/chrome/common/js/jquery.js"></script><script type="text/javascript" src="/chrome/common/js/trac.js"></script><script type="text/javascript" src="/chrome/common/js/search.js"></script><script type="text/javascript" src="/chrome/common/js/folding.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor("Link to this section");
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor("Link to #"+$(this).attr('id'))
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://pacopablo.com"><img src="/chrome/site/casa_de_pacopablo.png" alt="Casa de Pacopablo" height="74" width="415" /></a>
+      </div>
+      <form id="search" action="/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="/login">Login</a></li><li><a href="/wiki/TracGuide">Help/Guide</a></li><li><a href="/about">About Trac</a></li><li class="last"><a href="/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="/wiki">Wiki</a></li><li><a href="/browser">Browse Source</a></li><li><a href="/search">Search</a></li><li><a href="/blog">Blog</a></li><li><a href="/irclogs/bitten">#bitten</a></li><li class="last"><a href="/irclogs">#trac</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="/wiki/pacopablo/blog">Up</a></li><li><a href="/wiki/WikiStart">Start Page</a></li><li><a href="/wiki/TitleIndex">Index</a></li><li class="last"><a href="/wiki/pacopablo/blog/set-assign-to-drop-down?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="pagepath" class="noprint">
+      <a class="pathentry first" title="View WikiStart" href="/wiki">wiki:</a>
+      <a class="pathentry" title="View pacopablo" href="/wiki/pacopablo">pacopablo</a><span class="pathentry sep">/</span><a class="pathentry" title="View pacopablo/blog" href="/wiki/pacopablo/blog">blog</a><span class="pathentry sep">/</span><a class="pathentry" title="View pacopablo/blog/set-assign-to-drop-down" href="/wiki/pacopablo/blog/set-assign-to-drop-down">set-assign-to-drop-down</a>
+    </div>
+    <br style="clear: both" />
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          <h1 id="PopulatingAssignToDropDowninTrac">Populating <i>Assign To</i> Drop Down in Trac</h1>
+<p>
+When configuring a <a class="ext-link" href="http://trac.edgewall.org"><span class="icon"> </span>Trac</a> environment, you can set the following option:
+</p>
+<pre class="wiki">[ticket]
+restrict_owner = true
+</pre><p>
+This will change the <i>Assign To</i> ticket filed into a select box that only contains existing users.  However as it says on the <a class="ext-link" href="http://trac.edgewall.org/wiki/TracTickets#Assign-toasDrop-DownList"><span class="icon"> </span>TracTickets</a> page, the user must have logged, in at least once, and set their email address.
+</p>
+<p>
+If you run multiple Trac sites, and have a set of common users across all Trac sites, it gets annoying to have to log into each one and set the email.
+</p>
+<p>
+So, what is one to do?  Well, there are two things that need to be entered into the database: a session record, and an email record.
+</p>
+<p>
+To enter a session record, we need to add a row to the <tt>session</tt> table.  The schema for the <tt>session</tt> table looks like
+</p>
+<pre class="wiki">         Table "session"
+    Column     |  Type   | Modifiers 
+---------------+---------+-----------
+ sid           | text    | not null
+ authenticated | integer | not null
+ last_visit    | integer | 
+</pre><p>
+The <tt>sid</tt> is the username, <tt>authenticated</tt> will simply be <tt>1</tt>, and <tt>last_visit</tt> needs to be set to a date, expressed as seconds since the epoch.
+</p>
+<p>
+For example:
+</p>
+<div class="code"><pre><span class="k">INSERT</span> <span class="k">INTO</span> <span class="k">session</span> <span class="p">(</span>sid<span class="p">,</span> authenticated<span class="p">,</span> last_visit<span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'pacopablo'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1195926785</span><span class="p">);</span>
+</pre></div><p>
+Now, to set the actual email address.  That will go in the <tt>session_attribute</tt> table.
+</p>
+<p>
+The schema for the <tt>session_attribute</tt> table is as follows:
+</p>
+<pre class="wiki">    Table "session_attribute"
+    Column     |  Type   | Modifiers 
+---------------+---------+-----------
+ sid           | text    | not null
+ authenticated | integer | not null
+ name          | text    | not null
+ value         | text    | 
+</pre><p>
+Once again, <tt>sid</tt> is the username, <tt>authenticated</tt> will be 1, <tt>name</tt> refers to the type of attribute this is, <tt>email</tt> in this case, and <tt>value</tt> will be the actual email adress.
+</p>
+<p>
+For example:
+</p>
+<div class="code"><pre><span class="k">INSERT</span> <span class="k">INTO</span> session_attribute <span class="p">(</span>sid<span class="p">,</span> authenticated<span class="p">,</span> name<span class="p">,</span> value<span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'pacopablo'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'email'</span><span class="p">,</span> <span class="s1">'pacopablo@pacopablo.com'</span><span class="p">);</span>
+</pre></div><p>
+There is also a <tt>name</tt> attribute that is used which can be set:
+</p>
+<div class="code"><pre><span class="k">INSERT</span> <span class="k">INTO</span> session_attribute <span class="p">(</span>sid<span class="p">,</span> authenticated<span class="p">,</span> name<span class="p">,</span> value<span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'pacopablo'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'name'</span><span class="p">,</span> <span class="s1">'Pacopablo Parangaricutirimicuaro'</span><span class="p">);</span>
+</pre></div><p>
+Of course, going into a SQL interface to do this isn't really any better than logging into the Trac site and setting it yourself.  It's also more error prone.
+</p>
+<p>
+<a class="ext-link" href="http://python.org"><span class="icon"> </span>Python</a> to the rescue!  We'll just whip up a simple little script that parses a command line, loads up the Trac environment, and creates the records for us.  Behold:
+</p>
+<div class="code"><pre><span class="k">from</span> <span class="nn">trac.env</span> <span class="k">import</span> Environment
+<span class="k">from</span> <span class="nn">optparse</span> <span class="k">import</span> OptionParser
+<span class="k">import</span> <span class="nn">sys</span>
+<span class="k">import</span> <span class="nn">os</span>
+
+<span class="k">def</span> <span class="nf">doArgs</span><span class="p">():</span>
+    <span class="sd">"""Parse command line options"""</span>
+    description <span class="o">=</span> <span class="s">"%prog is used to seed the user's full name and email."</span>
+
+    parser <span class="o">=</span> OptionParser<span class="p">(</span>usage<span class="o">=</span><span class="s">"usage: %prog [options] [username]"</span><span class="p">,</span>
+                          version<span class="o">=</span><span class="s">"1.0"</span><span class="p">,</span> description<span class="o">=</span>description<span class="p">)</span>
+    parser<span class="o">.</span>add_option<span class="p">(</span><span class="s">"-e"</span><span class="p">,</span> <span class="s">"--env"</span><span class="p">,</span> dest<span class="o">=</span><span class="s">"envpath"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">"string"</span><span class="p">,</span>
+                      help<span class="o">=</span><span class="s">"Path to Trac environment"</span><span class="p">,</span> metavar<span class="o">=</span><span class="s">"&lt;path&gt;"</span><span class="p">,</span>
+                      default<span class="o">=</span><span class="s">"."</span><span class="p">)</span>
+    parser<span class="o">.</span>add_option<span class="p">(</span><span class="s">"-m"</span><span class="p">,</span> <span class="s">"--email"</span><span class="p">,</span> dest<span class="o">=</span><span class="s">"email"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">"string"</span><span class="p">,</span>
+                      help<span class="o">=</span><span class="s">"Emal address"</span><span class="p">,</span> metavar<span class="o">=</span><span class="s">"&lt;email&gt;"</span><span class="p">,</span> default<span class="o">=</span><span class="s">" "</span><span class="p">)</span>
+    parser<span class="o">.</span>add_option<span class="p">(</span><span class="s">"-f"</span><span class="p">,</span> <span class="s">"--fullname"</span><span class="p">,</span> dest<span class="o">=</span><span class="s">"fullname"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">"string"</span><span class="p">,</span>
+                      help<span class="o">=</span><span class="s">"Full Name"</span><span class="p">,</span> metavar<span class="o">=</span><span class="s">"&lt;name&gt;"</span><span class="p">,</span> default<span class="o">=</span><span class="s">" "</span><span class="p">)</span>
+    <span class="p">(</span>options<span class="p">,</span> args<span class="p">)</span> <span class="o">=</span> parser<span class="o">.</span>parse_args<span class="p">()</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span>args<span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">"You must specify a username"</span>
+        sys<span class="o">.</span>exit<span class="p">(</span><span class="mf">1</span><span class="p">)</span>
+    options<span class="o">.</span>user <span class="o">=</span> args<span class="p">[</span><span class="mf">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> os<span class="o">.</span>path<span class="o">.</span>exists<span class="p">(</span>options<span class="o">.</span>envpath<span class="p">):</span>
+        <span class="k">print</span> <span class="s">"The path &gt;</span><span class="si">%s</span><span class="s">&lt; does not exist.  Please specify an existing path."</span> <span class="o">%</span> options<span class="o">.</span>envpath
+        sys<span class="o">.</span>exit<span class="p">(</span><span class="mf">1</span><span class="p">)</span>
+    options<span class="o">.</span>args <span class="o">=</span> args
+    <span class="k">return</span> options
+
+
+<span class="k">if</span> __name__ <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    opts <span class="o">=</span> doArgs<span class="p">()</span>
+    env <span class="o">=</span> Environment<span class="p">(</span>opts<span class="o">.</span>envpath<span class="p">)</span>
+    cnx <span class="o">=</span> env<span class="o">.</span>get_db_cnx<span class="p">()</span>
+    cur <span class="o">=</span> cnx<span class="o">.</span>cursor<span class="p">()</span>
+    cur<span class="o">.</span>execute<span class="p">(</span><span class="s">"INSERT INTO session (sid, authenticated, last_visit) "</span>
+                <span class="s">"VALUES (</span><span class="si">%s</span><span class="s">, 1, 1195926785)"</span><span class="p">,</span> <span class="p">[</span>opts<span class="o">.</span>user<span class="p">])</span>
+    cur<span class="o">.</span>execute<span class="p">(</span><span class="s">"INSERT INTO session_attribute (sid, authenticated, name, "</span>
+                <span class="s">"value) VALUES (</span><span class="si">%s</span><span class="s">, 1, 'name', </span><span class="si">%s</span><span class="s">)"</span><span class="p">,</span>
+                <span class="p">[</span>opts<span class="o">.</span>user<span class="p">,</span> opts<span class="o">.</span>fullname<span class="p">])</span>
+    cur<span class="o">.</span>execute<span class="p">(</span><span class="s">"INSERT INTO session_attribute (sid, authenticated, name, "</span>
+                <span class="s">"value) VALUES (</span><span class="si">%s</span><span class="s">, 1, 'email', </span><span class="si">%s</span><span class="s">)"</span><span class="p">,</span>
+                <span class="p">[</span>opts<span class="o">.</span>user<span class="p">,</span> opts<span class="o">.</span>email<span class="p">])</span>
+    cnx<span class="o">.</span>commit<span class="p">()</span>
+    cnx<span class="o">.</span>close<span class="p">()</span>
+    sys<span class="o">.</span>exit<span class="p">()</span>
+</pre></div><p>
+Most of the script is doing validation on input, and even then, it's not that much. So, save the script as <tt>trac_set_email.py</tt>, or some other such memorable name, fire it up<sup class="footnote"><a href="#FootNote1" id="FootNoteRef1" title="If you're crazy like me, and install Trac into a ...">1</a></sup>.
+</p>
+<pre class="wiki">dev ~ # python trac_set_email.py -help                                                                                   
+Usage: trac_set_email.py [options] [username]
+
+trac_set_email.py is used to seed the user's full name and email.
+
+Options:
+  --version             show program's version number and exit
+  -h, --help            show this help message and exit
+  -e &lt;path&gt;, --env=&lt;path&gt;
+                        Path to Trac environment
+  -m &lt;email&gt;, --email=&lt;email&gt;
+                        Emal address
+  -f &lt;name&gt;, --fullname=&lt;name&gt;
+                        Full Name
+
+
+dev ~ # python trac_set_email.py --env /srv/trac/env/dev/ --fullname "Test User" --email pacopablo@pacopablo.com testuser
+</pre><p>
+And there you have it.  Enjoy<sup class="footnote"><a href="#FootNote2" id="FootNoteRef2" title="And here's to hoping that Trac 0.12 has a better ...">2</a></sup>
+</p>
+<p>
+</p><div class="footnotes"><hr /><ol><li id="FootNote1"><a class="sigil" href="#FootNoteRef1">1.</a> If you're crazy like me, and install Trac into a different location than the system <tt>site-packages</tt> directory, you'll need to specify the <tt>PYTHON_PATH</tt> environment variable.  For example:  <tt>PYTHONPATH="/var/trac-0.11dev/lib/python2.5/site-packages/" \</tt>   <tt>python trac_set_email.py --env /srv/trac/env/dev/ --fullname "Test User" --email pacopablo@pacopablo.com testuser</tt></li><li id="FootNote2"><a class="sigil" href="#FootNoteRef2">2.</a> And here's to hoping that Trac 0.12 has a better user management interface so that we don't have to manually enter records into the database</li></ol></div><p>
+</p>
+
+          <div class="trac-modifiedby"><a href="/wiki/pacopablo/blog/set-assign-to-drop-down?action=diff&amp;version=1" title="">Last modified</a>
+            by pacopablo on 12/14/07 10:46:13 (<a class="timeline" href="/timeline?from=2007-12-14T10%3A46%3A13-08%3A00&amp;precision=second" title="2007-12-14T10:46:13-08:00 in Timeline">3 years</a> ago)</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <script type="text/javascript">
+        jQuery.loadStyleSheet("/pygments/trac.css", "text/css");
+        jQuery.loadStyleSheet("/chrome/footnote/footnote.css", "text/css");
+    </script>
+    <script type="text/javascript" src="/chrome/footnote/footnote.js"></script>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="/wiki/pacopablo/blog/set-assign-to-drop-down?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="/chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">
+        Powered by <a href="/about"><strong>Trac 0.12dev-r9275</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.
+      </p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.com/">http://trac.edgewall.com/</a></p>
+    </div>
+  </body>
+</html>
