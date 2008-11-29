@@ -1,0 +1,1710 @@
+<?xml version="1.0" encoding="iso-8859-15"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>TBFKAYIBYNYAAYB   </title>
+<style type="text/css">
+body { color: black; background-color: white;  max-width: 1080px; margin-left: 0; margin-right: auto; padding-left: 15px; padding-right: 15px }
+hr { background-color: #aaaaaa; border: 0px; }
+pre { background-color: #e0e0e0; padding: 0.4cm; overflow: auto; }
+.grey { color: #8f8f8f; font-size: 100%; font-style:italic; }
+.author { color: #8f8f8f; font-size: 100%; font-style:italic; }
+.links { padding-bottom: 0.2cm; }
+.syndicate { color: #8f8f8f; font-size: 100%; font-style:italic; }
+.archive { color: #8f8f8f; font-size: 100%; font-style:italic; }
+.date { font-size: 80%; color: #aaaaaa; font-family: sans-serif; margin: 0px; }
+li { margin-top:.5em; margin-bottom:.5em }
+dd { margin-top:.5em; margin-bottom:.5em }
+h1 { font-family: 'Vollkorn' }
+h2 { font-family: 'Vollkorn' }
+h3 { font-family: 'Vollkorn' }
+h4 { font-family: 'Vollkorn' }
+.subtext { font-family: 'Vollkorn' }
+</style>
+<link rel="alternate" type="application/rss+xml" title="TBFKAYIBYNYAAYB RSS Feed" href="/blog/index.rss2"/>
+<link href='http://fonts.googleapis.com/css?family=Vollkorn' rel='stylesheet' type='text/css'/>
+</head>
+<body>
+<h1>&#x30EC;&#x30CA;&#x30FC;&#x30C8; &nbsp; TBFKAYIBYNYAAYB &nbsp; &#xFEDF;&#xFEF4;&#xFEE8;&#xFE8E;&#xFEAD;&#xFE95;</h1>
+<p class="date">  </p>
+
+
+<h2>Wed, 24 Sep 2008</h2>
+<h3><a name="guide-to-sound-apis">A Guide Through The Linux Sound API Jungle</a></h3>
+<div class="blosxomStory">
+
+<p>At the <a href="http://lwn.net/Articles/299211/">Audio MC</a> at the <a
+href="http://linuxplumbersconf.org/">Linux Plumbers Conference</a> one
+thing became very clear: it is very difficult for programmers to
+figure out which audio API to use for which purpose and which API not
+to use when doing audio programming on Linux. So here's my try to
+guide you through this jungle:</p>
+
+<h3>What do you want to do?</h3>
+
+<dl>
+<dt style="padding-top:8pt"><i>I want to write a media-player-like application!</i></dt>
+<dd>Use GStreamer! (Unless your focus is only KDE in which cases Phonon might be an alternative.)</dd>
+
+<dt style="padding-top:8pt"><i>I want to add event sounds to my application!</i></dt>
+<dd>Use libcanberra, install your sound files according to the XDG Sound Theming/Naming Specifications! (Unless your focus is only KDE in which case KNotify might be an alternative although it has a different focus.)</dd>
+
+<dt style="padding-top:8pt"><i>I want to do professional audio programming, hard-disk recording, music synthesizing, MIDI interfacing!</i></dt>
+<dd>Use JACK and/or the full ALSA interface.</dd>
+
+<dt style="padding-top:8pt"><i>I want to do basic PCM audio playback/capturing!</i></dt>
+<dd>Use the <i>safe</i> ALSA subset.</dd>
+
+<dt style="padding-top:8pt"><i>I want to add sound to my game!</i></dt>
+<dd>Use the audio API of SDL for full-screen games, libcanberra for simple games with standard UIs such as Gtk+.</dd>
+
+<dt style="padding-top:8pt"><i>I want to write a mixer application!</i></dt>
+<dd>Use the layer you want to support directly: if you want to support enhanced desktop software mixers, use the PulseAudio volume control APIs. If you want to support hardware mixers, use the ALSA mixer APIs.</dd>
+
+<dt style="padding-top:8pt"><i>I want to write audio software for the plumbing layer!</i></dt>
+<dd>Use the full ALSA stack.</dd>
+
+<dt style="padding-top:8pt"><i>I want to write audio software for embedded applications!</i></dt>
+<dd>For technical appliances usually the <i>safe</i> ALSA subset is a good choice, this however depends highly on your use-case.</dd>
+</dl>
+
+<h3>You want to know more about the different sound APIs?</h3>
+
+<dl>
+<dt style="padding-top:8pt"><i>GStreamer</i></dt>
+<dd><a href="http://www.gstreamer.net/">GStreamer</a> is the de-facto
+standard media streaming system for Linux desktops. It supports decoding and
+encoding of audio and video streams. You can use it for a wide range of
+purposes from simple audio file playback to elaborate network
+streaming setups. GStreamer supports a wide range of CODECs and audio
+backends. GStreamer is not particularly suited for basic PCM playback
+or low-latency/realtime applications. GStreamer is portable and not
+limited in its use to Linux. Among the supported backends are ALSA, OSS, PulseAudio. [<a href="http://gstreamer.freedesktop.org/documentation/">Programming Manuals and References</a>]</dd>
+
+<dt style="padding-top:8pt"><i>libcanberra</i></dt>
+<dd><a
+href="http://0pointer.de/lennart/projects/libcanberra/">libcanberra</a>
+is an abstract event sound API. It implements the <a
+href="http://www.freedesktop.org/wiki/Specifications/sound-theme-spec">XDG
+Sound Theme and Naming Specifications</a>. libcanberra is a blessed
+GNOME dependency, but itself has no dependency on GNOME/Gtk/GLib and can be
+used with other desktop environments as well. In addition to an easy
+interface for playing sound files, libcanberra provides caching
+(which is very useful for networked thin clients) and allows passing
+of various meta data to the underlying audio system which then can be
+used to enhance user experience (such as positional event sounds) and
+for improving accessibility. libcanberra supports multiple backends
+and is portable beyond Linux. Among the supported backends are ALSA, OSS, PulseAudio, GStreamer. [<a href="http://0pointer.de/lennart/projects/libcanberra/gtkdoc/">API Reference</a>]</dd>
+
+<dt style="padding-top:8pt"><i>JACK</i></dt>
+
+<dd><a href="http://jackaudio.org/">JACK</a> is a sound system for
+connecting professional audio production applications and hardware
+output. It's focus is low-latency and application interconnection. It
+is not useful for normal desktop or embedded use. It is not an API
+that is particularly useful if all you want to do is simple PCM
+playback. JACK supports multiple backends, although ALSA is best
+supported. JACK is portable beyond Linux. Among the supported backends are ALSA, OSS. [<a href="http://jackaudio.org/files/docs/html/index.html">API Reference</a>]</dd>
+
+<dt style="padding-top:8pt"><i>Full ALSA</i></dt>
+
+<dd><a href="http://www.alsa-project.org/">ALSA</a> is the Linux API
+for doing PCM playback and recording. ALSA is very focused on
+hardware devices, although other backends are supported as well (to a
+limit degree, see below). ALSA as a name is used both for the Linux
+audio kernel drivers and a user-space library that wraps these. ALSA -- the library -- is
+comprehensive, and portable (to a limited degree). The full ALSA API
+can appear very complex and is large. However it supports almost
+everything modern sound hardware can provide. Some of the
+functionality of the ALSA API is limited in its use to actual hardware
+devices supported by the Linux kernel (in contrast to software sound
+servers and sound drivers implemented in user-space such as those for
+Bluetooth and FireWire audio -- among others) and Linux specific
+drivers. [<a href="http://www.alsa-project.org/alsa-doc/alsa-lib/">API
+Reference</a>]</dd>
+
+<dt style="padding-top:8pt"><i>Safe ALSA</i></dt>
+
+<dd>Only a subset of the full ALSA API works on all backends ALSA
+supports. It is highly recommended to stick to this <i>safe</i> subset
+if you do ALSA programming to keep programs portable, future-proof and
+compatible with sound servers, Bluetooth audio and FireWire audio. See
+below for more details about which functions of ALSA are considered
+safe. The <i>safe</i> ALSA API is a suitable abstraction for basic,
+portable PCM playback and recording -- not just for ALSA kernel driver
+supported devices. Among the supported backends are ALSA kernel driver
+devices, OSS, PulseAudio, JACK.</dd>
+
+<dt style="padding-top:8pt"><i>Phonon</i> and <i>KNotify</i></dt>
+
+<dd><a href="http://phonon.kde.org/">Phonon</a> is high-level
+abstraction for media streaming systems such as GStreamer, but goes a
+bit further than that. It supports multiple backends. KNotify is a
+system for "notifications", which goes beyond mere event
+sounds. However it does not support the XDG Sound Theming/Naming
+Specifications at this point, and also doesn't support caching or
+passing of event meta-data to an underlying sound system. KNotify
+supports multiple backends for audio playback via Phonon. Both APIs
+are KDE/Qt specific and should not be used outside of KDE/Qt
+applications. [<a href="http://api.kde.org/4.0-api/kdelibs-apidocs/phonon/html/index.html">Phonon API Reference</a>] [<a href="http://api.kde.org/4.x-api/kdebase-runtime-apidocs/knotify/html/index.html">KNotify API Reference</a>] </dd>
+
+<dt style="padding-top:8pt"><i>SDL</i></dt>
+
+<dd><a href="http://www.libsdl.org/">SDL</a> is a portable API
+primarily used for full-screen game development. Among other stuff it
+includes a portable audio interface. Among others SDL support OSS,
+PulseAudio, ALSA as backends. [<a
+href="http://www.libsdl.org/cgi/docwiki.cgi">API Reference</a>]</dd>
+
+<dt style="padding-top:8pt"><i>PulseAudio</i></dt>
+
+<dd><a href="http://pulseaudio.org/">PulseAudio</a> is a sound system
+for Linux desktops and embedded environments that runs in user-space
+and (usually) on top of ALSA. PulseAudio supports network
+transparency, per-application volumes, spatial events sounds, allows
+switching of sound streams between devices on-the-fly, policy
+decisions, and many other high-level operations. PulseAudio adds a <a
+href="http://0pointer.de/blog/projects/pulse-glitch-free.html">glitch-free</a>
+audio playback model to the Linux audio stack. PulseAudio is not
+useful in professional audio production environments. PulseAudio is
+portable beyond Linux. PulseAudio has a native API and also supports
+the <i>safe</i> subset of ALSA, in addition to limited,
+LD_PRELOAD-based OSS compatibility. Among others PulseAudio supports
+OSS and ALSA as backends and provides connectivity to JACK. [<a
+href="http://0pointer.de/lennart/projects/pulseaudio/doxygen/">API
+Reference</a>]</dd>
+
+<dt style="padding-top:8pt"><i>OSS</i></dt>
+
+<dd>The <a href="http://www.opensound.com/">Open Sound System</a> is a
+low-level PCM API supported by a variety of Unixes including Linux. It
+started out as the standard Linux audio system and is supported on
+current Linux kernels in the API version 3 as OSS3. OSS3 is considered
+obsolete and has been fully replaced by ALSA. A successor to OSS3
+called OSS4 is available but plays virtually no role on Linux and is
+not supported in standard kernels or by any of the relevant
+distributions. The OSS API is very low-level, based around direct
+kernel interfacing using ioctl()s. It it is hence awkward to use and
+can practically not be virtualized for usage on non-kernel audio
+systems like sound servers (such as PulseAudio) or user-space sound
+drivers (such as Bluetooth or FireWire audio). OSS3's timing model
+cannot properly be mapped to software sound servers at all, and is
+also problematic on non-PCI hardware such as USB audio. Also, OSS does
+not do sample type conversion, remapping or resampling if
+necessary. This means that clients that properly want to support OSS
+need to include a complete set of converters/remappers/resamplers for
+the case when the hardware does not natively support the requested
+sampling parameters. With modern sound cards it is very common to
+support only S32LE samples at 48KHz and nothing else. If an OSS client
+assumes it can always play back S16LE samples at 44.1KHz it will thus
+fail. OSS3 is portable to other Unix-like systems, various differences
+however apply. OSS also doesn't support surround sound and other
+functionality of modern sounds systems properly. <b>OSS should be
+considered obsolete and not be used in new applications.</b> ALSA and
+PulseAudio have limited LD_PRELOAD-based compatibility with OSS. [<a
+href="http://www.opensound.com/pguide/oss.pdf">Programming Guide</a>]</dd>
+
+</dl>
+
+<p>All sound systems and APIs listed above are supported in all
+relevant current distributions. For libcanberra support the newest
+development release of your distribution might be necessary.</p>
+
+<p>All sound systems and APIs listed above are suitable for
+development for commercial (read: closed source) applications, since
+they are licensed under LGPL or more liberal licenses or no client
+library is involved.</p>
+
+<h3>You want to know why and when you should use a specific sound API?</h3>
+
+<dl>
+
+<dt style="padding-top:8pt"><i>GStreamer</i></dt>
+
+<dd>GStreamer is best used for very high-level needs: i.e. you want to
+play an audio file or video stream and do not care about all the tiny
+details down to the PCM or codec level.</dd>
+
+<dt style="padding-top:8pt"><i>libcanberra</i></dt>
+
+<dd>libcanberra is best used when adding sound feedback to user input
+in UIs. It can also be used to play simple sound files for
+notification purposes.</dd>
+
+<dt style="padding-top:8pt"><i>JACK</i></dt>
+
+<dd>JACK is best used in professional audio production and where interconnecting applications is required.</dd>
+
+<dt style="padding-top:8pt"><i>Full ALSA</i></dt>
+
+<dd>The full ALSA interface is best used for software on "plumbing layer" or when you want to make use of very specific hardware features, which might be need for audio production purposes.</dd>
+
+<dt style="padding-top:8pt"><i>Safe ALSA</i></dt>
+
+<dd>The <i>safe</i> ALSA interface is best used for software that wants to output/record basic PCM data from hardware devices or software sound systems.</dd>
+
+<dt style="padding-top:8pt"><i>Phonon</i> and <i>KNotify</i></dt>
+
+<dd>Phonon and KNotify should only be used in KDE/Qt applications and only for high-level media playback, resp. simple audio notifications.</dd>
+
+<dt style="padding-top:8pt"><i>SDL</i></dt>
+
+<dd>SDL is best used in full-screen games.</dd>
+
+<dt style="padding-top:8pt"><i>PulseAudio</i></dt>
+
+<dd>For now, the PulseAudio API should be used only for applications
+that want to expose sound-server-specific functionality (such as
+mixers) or when a PCM output abstraction layer is already available in
+your application and it thus makes sense to add an additional backend
+to it for PulseAudio to keep the stack of audio layers minimal.</dd>
+
+<dt style="padding-top:8pt"><i>OSS</i></dt>
+
+<dd>OSS should not be used for new programs.</dd>
+
+</dl>
+
+<h3>You want to know more about the <i>safe</i> ALSA subset?</h3>
+
+<p>Here's a list of DOS and DONTS in the ALSA API if you care about
+that you application stays future-proof and works fine with
+non-hardware backends or backends for user-space sound drivers such as
+Bluetooth and FireWire audio. Some of these recommendations apply for
+people using the full ALSA API as well, since some functionality
+should be considered obsolete for all cases.</p>
+
+<p>If your application's code does not follow these rules, you must have
+a very good reason for that. Otherwise your code should simply be considered
+<b>broken</b>!</p>
+
+<p>DONTS:</p>
+
+<ul>
+
+<li>Do <b>not</b> use "async handlers", e.g. via
+<tt>snd_async_add_pcm_handler()</tt> and friends. Asynchronous
+handlers are implemented using POSIX signals, which is a very
+questionable use of them, especially from libraries and plugins. Even
+when you don't want to limit yourself to the <i>safe</i> ALSA subset
+it is highly recommended not to use this functionality. <a
+href="http://mailman.alsa-project.org/pipermail/alsa-devel/2008-May/008030.html">Read
+this for a longer explanation why signals for audio IO are
+evil.</a></li>
+
+<li>Do <b>not</b> parse the ALSA configuration file yourself or with
+any of the ALSA functions such as <tt>snd_config_xxx()</tt>. If you
+need to enumerate audio devices use <tt>snd_device_name_hint()</tt>
+(and related functions). That
+is the only API that also supports enumerating non-hardware audio
+devices and audio devices with drivers implemented in userspace.</li>
+
+<li>Do <b>not</b> parse any of the files from
+<tt>/proc/asound/</tt>. Those files only include information about
+kernel sound drivers -- user-space plugins are not listed there. Also,
+the set of kernel devices might differ from the way they are presented
+in user-space. (i.e. sub-devices are mapped in different ways to
+actual user-space devices such as <tt>surround51</tt> an suchlike.</li>
+
+<li>Do <b>not</b> rely on stable device indexes from ALSA. Nowadays
+they depend on the initialization order of the drivers during boot-up
+time and are thus not stable.</li>
+
+<li>Do <b>not</b> use the <tt>snd_card_xxx()</tt> APIs. For
+enumerating use <tt>snd_device_name_hint()</tt> (and related
+functions). <tt>snd_card_xxx()</tt> is obsolete. It will only list
+kernel hardware devices. User-space devices such as sound servers,
+Bluetooth audio are not included. <tt>snd_card_load()</tt> is
+completely obsolete in these days.</li>
+
+<li>Do <b>not</b> hard-code device strings, especially not
+<tt>hw:0</tt> or <tt>plughw:0</tt> or even <tt>dmix</tt> -- these devices define no channel
+mapping and are mapped to raw kernel devices. It is highly recommended
+to use exclusively <tt>default</tt> as device string. If specific
+channel mappings are required the correct device strings should be
+<tt>front</tt> for stereo, <tt>surround40</tt> for Surround 4.0,
+<tt>surround41</tt>, <tt>surround51</tt>, and so on. Unfortunately at
+this point ALSA does not define standard device names with channel
+mappings for non-kernel devices. This means <tt>default</tt> may only
+be used safely for mono and stereo streams. You should probably prefix
+your device string with <tt>plug:</tt> to make sure ALSA transparently
+reformats/remaps/resamples your PCM stream for you if the
+hardware/backend does not support your sampling parameters
+natively.</li>
+
+<li>Do <b>not</b> assume that any particular sample type is supported
+except the following ones: U8, S16_LE, S16_BE, S32_LE, S32_BE,
+FLOAT_LE, FLOAT_BE, MU_LAW, A_LAW.</li>
+
+<li>Do <b>not</b> use <tt>snd_pcm_avail_update()</tt> for
+synchronization purposes. It should be used exclusively to query the
+amount of bytes that may be written/read right now. Do <b>not</b> use
+<tt>snd_pcm_delay()</tt> to query the fill level of your playback
+buffer. It should be used exclusively for synchronisation
+purposes. Make sure you fully understand the difference, and note that
+the two functions return values that are not necessarily directly
+connected!</li>
+
+<li>Do <b>not</b> assume that the mixer controls always know dB information.</li>
+
+<li>Do <b>not</b> assume that all devices support MMAP style buffer access.</li>
+
+<li>Do <b>not</b> assume that the hardware pointer inside the (possibly mmaped) playback buffer is the actual position of the sample in the DAC. There might be an extra latency involved.</li>
+
+<li>Do <b>not</b> try to recover with your own code from ALSA error conditions such as buffer under-runs. Use <tt>snd_pcm_recover()</tt> instead.</li>
+
+<li>Do <b>not</b> touch buffering/period metrics unless you have
+specific latency needs. Develop defensively, handling correctly the
+case when the backend cannot fulfill your buffering metrics
+requests. Be aware that the buffering metrics of the playback buffer
+only indirectly influence the overall latency in many
+cases. i.e. setting the buffer size to a fixed value might actually result in
+practical latencies that are much higher.</li>
+
+<li>Do <b>not</b> assume that <tt>snd_pcm_rewind()</tt> is available and works and to which degree.</li>
+
+<li>Do <b>not</b> assume that the time when a PCM stream can receive
+new data is strictly dependant on the sampling and buffering
+parameters and the resulting average throughput. Always make sure to
+supply new audio data to the device when it asks for it by signalling
+"writability" on the fd. (And similarly for capturing)</li>
+
+<li>Do <b>not</b> use the "simple" interface <tt>snd_spcm_xxx()</tt>.</li>
+
+<li>Do <b>not</b> use any of the functions marked as "obsolete".</li>
+
+<li>Do <b>not</b> use the timer, midi, rawmidi, hwdep subsystems.</li>
+
+</ul>
+
+<p>DOS:</p>
+
+<ul>
+
+<li>Use <tt>snd_device_name_hint()</tt> for enumerating audio devices.</li>
+
+<li>Use <tt>snd_smixer_xx()</tt> instead of raw <tt>snd_ctl_xxx()</tt></li>
+
+<li>For synchronization purposes use <tt>snd_pcm_delay()</tt>.</li>
+
+<li>For checking buffer playback/capture fill level use <tt>snd_pcm_update_avail()</tt>.</li>
+
+<li>Use <tt>snd_pcm_recover()</tt> to recover from errors returned by any of the ALSA functions.</li>
+
+<li>If possible use the largest buffer sizes the device supports to maximize power saving and drop-out safety. Use <tt>snd_pcm_rewind()</tt> if you need to react to user input quickly.</li>
+
+</ul>
+
+<h3>FAQ</h3>
+
+<dl>
+
+<dt style="padding-top:8pt">What about ESD and NAS?</dt>
+
+<dd>ESD and NAS are obsolete, both as API and as sound daemon. Do not develop for it any further.</dd>
+
+<dt style="padding-top:8pt">ALSA isn't portable!</dt>
+
+<dd>That's not true! Actually the user-space library is relatively portable, it even includes a backend for OSS sound devices. There is no real reason that would disallow using the ALSA libraries on other Unixes as well.</dd>
+
+<dt style="padding-top:8pt">Portability is key to me! What can I do?</dt>
+
+<dd>Unfortunately no truly portable (i.e. to Win32) PCM API is
+available right now that I could truly recommend. The systems shown
+above are more or less portable at least to Unix-like operating
+systems. That does not mean however that there are suitable backends
+for all of them available. If you care about portability to Win32 and
+MacOS you probably have to find a solution outside of the
+recommendations above, or contribute the necessary
+backends/portability fixes. None of the systems (with the exception of
+OSS) is truly bound to Linux or Unix-like kernels.</dd>
+
+<dt style="padding-top:8pt">What about PortAudio?</dt>
+
+<dd>I don't think that PortAudio is very good API for Unix-like operating systems. I cannot recommend it, but it's your choice.</dd>
+
+<dt style="padding-top:8pt">Oh, why do you hate OSS4 so much?</dt>
+
+<dd>I don't hate anything or anyone. I just don't think OSS4 is a
+serious option, especially not on Linux. On Linux, it is also
+completely redundant due to ALSA.</dd>
+
+<dt style="padding-top:8pt">You idiot, you have no clue!</dt>
+
+<dd>You are right, I totally don't. But that doesn't hinder me from recommending things. Ha!</dd>
+
+<dt style="padding-top:8pt">Hey I wrote/know this tiny new project which is an awesome abstraction layer for audio/media!</dt>
+
+<dd>Sorry, that's not sufficient. I only list software here that is known to be sufficiently relevant and sufficiently well maintained.</dd>
+
+</dl>
+
+<h3>Final Words</h3>
+
+<p>Of course these recommendations are very basic and are only intended to
+lead into the right direction. For each use-case different necessities
+apply and hence options that I did not consider here might become
+viable. It's up to you to decide how much of what I wrote here
+actually applies to your application.</p>
+
+<p>This summary only includes software systems that are considered
+stable and universally available at the time of writing. In the
+future I hope to introduce a more suitable and portable replacement
+for the <i>safe</i> ALSA subset of functions. I plan to update this text
+from time to time to keep things up-to-date.</p>
+
+<p>If you feel that I forgot a use case or an important API, then
+please contact me or leave a comment. However, I think the summary
+above is sufficiently comprehensive and if an entry is missing I most
+likely deliberately left it out.</p>
+
+<p>(Also note that I am upstream for both PulseAudio and libcanberra and did some minor contributions to ALSA, GStreamer and some other of the systems listed above. Yes, I am biased.)</p>
+
+<p>Oh, and please syndicate this, digg it. I'd like to see this guide to be well-known all around the Linux community. Thank you!</p>
+
+<p class="subtext">
+  posted at: 21:52 | path: <a href="http://0pointer.de/blog/projects" title="path">/projects</a> | <a href="http://0pointer.de/blog/projects/guide-to-sound-apis.html">permanent link to this entry</a> | <a href="http://0pointer.de/blog/projects/guide-to-sound-apis.html#comments">101 comments</a>
+</p>
+</div>
+
+<hr/>
+<div class="blosxomComments">
+<a name="comments"/>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222289984.5"></a>
+<i>Posted by <b>Stoffe</b> at Wed Sep 24 22:59:44 2008</i><br />
+OpenAL?<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222290266.91"></a>
+<i>Posted by <b>marcandre.lureau@gmail.com</b> at Wed Sep 24 23:04:26 2008</i><br />
+A decent notification daemon should also support sound hint: <a rel="nofollow" href="http://www.galago-project.org/specs/notification/0.9/x344.html">http://www.galago-project.org/specs/notification/0.9/x344.html</a>. <br />
+<br />
+This, the notification can lead to different outcome: bubble, sound, arbitrary action, whatsnot..<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222291024.46"></a>
+<i>Posted by <b>ignacio</b> at Wed Sep 24 23:17:04 2008</i><br />
+libao?<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222291138.05"></a>
+<i>Posted by <b>Anon</b> at Wed Sep 24 23:18:58 2008</i><br />
+You mention it at the end, but it deserves to be said more prominently: you are "upstream for both PulseAudio and libcanberra".<br />
+<br />
+I don't know if you realize how massively biased your summary is:<br />
+- you omit to say that libcanberra is about as GNOME-specific as KNotify is KDE-specific. Having no dependency is a moot point here, a notifications system is only useful if it integrates in the user's environment.<br />
+- XDG is supposed to stand for cross-desktop. GNOME developers should quit putting unilaterally the XDG label on GNOME-specific stuff without timely discussion with KDE, and later using this as a selling point, "libcanberra impls a XDG spec, KNotify is KDE-specific, lalala".<br />
+- you completely avoid mentioning Xine, which is still GStreamer's main competitor on the unices; many distros still favor xine-lib over gstreamer as phonon-backend and only by using a higher-level abstraction like phonon can one avoid having to worry about which of gstreamer or xine-lib distros choose.<br />
+- Saying that "Unless your focus is only KDE in which cases Phonon might be an alternative." is totally twisted.<br />
+a) Phonon is released with Qt so I don't even know why you say KDE here.<br />
+b) Qt/Phonon is a library like any other. Any app may use it. It's not limited to usage under KDE as you imply.<br />
+Following your logic it seems that you recommend to avoid anything that comes from KDE or depends on libQtCore, but warmly recommend stuff coming from GNOME(libcanberra) and stuff depending on GLib (gstreamer).<br />
+<br />
+Everything would be fine if you stated your pro-GNOME, anti-KDE bias prominently.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222291320.16"></a>
+<i>Posted by <b>Nix</b> at Wed Sep 24 23:22:00 2008</i><br />
+Very nice: I'll be pointing people at this. The safe ALSA subset stuff is particularly gold-dustish, being entirely undocumented anywhere to date as far as I know. (The only bit I don't understand is what's wrong with the midi and timer subsystems. rawmidi and hwdep are obvious, but I thought midi and timer worked with anything.)<br />
+<br />
+(ultra-pedantic points: 'it will hence fail' should probably be 'it will thus fail'. 'hinder me to recommend' should be 'hinder me from recommending')<br />
+<br />
+(Outright typos: 'wich', 'recieve', 'relavant')<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222291633.44"></a>
+<i>Posted by <b>Lennart</b> at Wed Sep 24 23:27:13 2008</i><br />
+OpenAL is probably worth adding here, but I have not much experience with it and am not sure about the backend situation and how well it actually is established in the Linux community.<br />
+<br />
+libao is nice and small, but doesn't even including timing interfaces and stuff. For almost all uses it is too simple (i.e. everything beyond use in the terminal). Also last time I checked it was still GPL licensed which makes it only useful for Free Software applications. I chose to ignore it here, to minimize distraction.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222292200.65"></a>
+<i>Posted by <b>Lennart</b> at Wed Sep 24 23:36:40 2008</i><br />
+Nix: thanks for pointing out the errors. I think I fixed them all now.<br />
+<br />
+The reason why I don't recommend to use the timer/midi interfaces in ALSA for the safe subset is that they are not supported by the plugins for libasound. <br />
+<br />
+If you want to use the full ALSA API (i.e. including the part that will not necessarily work with the bt, pa, oss, ... plugins) then you are welcome to use both.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222292395.49"></a>
+<i>Posted by <b>anon</b> at Wed Sep 24 23:39:55 2008</i><br />
+Good guide.&nbsp; It could also include OpenAL to complete the mix.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222292889.61"></a>
+<i>Posted by <b>Colin Guthrie</b> at Wed Sep 24 23:48:09 2008</i><br />
+Re: Anon.<br />
+<br />
+libcanberra could fairly easily be plugged into Qt and bring the same functionality to KDE as a result. Lennart developed it this way so that <b>specifically</b> so there would be little to no barrier for adoption by as many people/project as possible. I am a KDE developer and have hacked on phonon (specifically the gstreamer backend) and I've also followed closely Lennart's attempts to rouse interest in the KDE community. People didn't get it and were defensive and hostile to towards any suggestions he made. Quite frankly I was embarrassed at the reactions of some people (as any generalisation goes, not everyone was hostile and derisive). To be honest, I think Lennart should have spoken to Qt people rather than KDE but that's beside the point.<br />
+<br />
+This article is not-biased. I really don't know what kind of closed mind you were reading it with, but please take a few minutes to read it over again.<br />
+<br />
+Just for clarity, you make one major point about xine and the phonon-xine backend then go on to clain that phonon is not KDE specific... you neglect to state that the phonon-xine backend is shipped in kdebase4-runtime and it is the phonon-gstreamer backend that is actually shipped with phonon.<br />
+<br />
+In all honesty, I've had several discussions with the developers of phonon in recent days and it's still very immature and there are many things it does not yet adequately support. Your claims that Lennart is not recommending because he's a Glib fanboi are quite frankly laughable. Even the amarok devs were talking about phonon in a "it may just be another amarok engine fiasco but at a higher level" way the other day on IRC.<br />
+<br />
+So Anon, please try to be more open minded and rather than flame anonymously, provide constructive feedback. The word you're looking for is "collaboration".<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222293070.35"></a>
+<i>Posted by <b>bks</b> at Wed Sep 24 23:51:10 2008</i><br />
+"Portability is key to me! What can I do?"<br />
+<br />
+Use Qt and Phonon. Phonon has backends for GStreamer and xine-lib on *nix, DirectShow on Windows, QuickTime on Mac, and the old WINMM waveOut() API's on Windows CE. Code written using Phonon is therefore portable to all four platforms. Of course, your media playback functionality is more limited than, say, writing directly to GStreamer or DirectShow, but if all you want to do is play back a .wav file, Phonon a great option.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222293377.21"></a>
+<i>Posted by <b>Lennart</b> at Wed Sep 24 23:56:17 2008</i><br />
+Anon: I tried to be biased only to a limited degree. Calling me "massively" biased is unfair.<br />
+<br />
+Anyway, libcanberra is not GNOME-specific. It doesn't use GLib or anything. Maybe KDE didn't choose to adopt it this time, but that doesn't make it GNOME-specific. If it all it is "not-KDE-specific" if you so wish.<br />
+<br />
+The KDE people were invited to the discussions about the theming/naming specs. I even started a discussion about that myself on the KDE MLs. Not much input came from you guys, but in the end the general consensus seemed to be that KDE will eventually support those specs. Stop whining, we did talk to KDE. But if there's not much coming from your side that's your problem. Deal with it.<br />
+<br />
+I don't think Xine is viable as a development API. Also, most of its functionality is available in Phonon anyway. So why mention both? Also this list is not about listing alternatives. It is about listing recommendations. And since Xine and GStreamer have very similar purposes, I chose to recommend GStreamer, since afaics it is more accepted, better maintained, more actively developed in the free software community.<br />
+<br />
+Last time I checked Qt on Linux is nowadays linked against glib anyway. Hence using GLib APIs from Qt is straightforward, while the other way round is not really true. Also Phonon/Qt are C++ APIs, while GStreamer is a C API. Using C APIs from C++ is straightforward but the other way around is awkward, to say the least.<br />
+<br />
+It seems to me you are feeling attacked for no reason. Calm down. If you do think I am so /massively/ biased, than sit down, write your own biased guide if you feel so.<br />
+<br />
+And yes again, I do admit I am biased. I work for RH which is not exactly being known to be a KDE shop. I am a GNOME Foundation member. I tried to be fair, I mentioned my bias, used the word "I" everywhere to make clear that these are just <b>my</b> recommendtions. I mentioned KDE stuff, acknowledged their usefulness for certain cases. What else do you expect me to write on my blog? I mean, blogs usually are filled with opinions of the blogger, aren't they?<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222301779.18"></a>
+<i>Posted by <b>Joachim Schiele</b> at Thu Sep 25 02:16:19 2008</i><br />
+&gt; OpenAL is probably worth adding here, but I have not much experience with it and am not sure about the backend situation and how well it actually is established in the Linux community.<br />
+<br />
+OpenAl is one of the libraries which really make use of multi speaker setups. And it is used quite often in all kind of games which use 3d positional audio. <br />
+<br />
+Wikipedia quote of some games using it:<br />
+<br />
+America's Army: Operations<br />
+Armed Assault<br />
+Battlefield 2<br />
+BioShock<br />
+Call of Juarez<br />
+Cold War<br />
+Doom 3<br />
+FlightGear<br />
+Hitman 2<br />
+Jedi Knight 2, Jedi Knight: Jedi Academy<br />
+Postal 2<br />
+Prey<br />
+Quake 4<br />
+Race Driver: GRID<br />
+Stalker: Shadow of Chernobyl<br />
+Unreal 2<br />
+Unreal Tournament 2003/2004 und Unreal Tournament 3<br />
+Vanguard: Saga of Heroes<br />
+<br />
+TASpring (not listed on the wikipedia)<br />
+<br />
+Using openAl and watching DVD are one of the 'real' few use cases for a multi speaker setup. (Except some stereo to surround mixing effects for normal stereo music).<br />
+<br />
+That said: openAl is a standard for gamedevelopers using more than stereo (which normally is done using libsdl) as you already pointed out. Compared to other libraries openAl is already a cross platform library used in windows / linux / osX / and others and which is not limited for game-backend use.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222303859.22"></a>
+<i>Posted by <b>mnk</b> at Thu Sep 25 02:50:59 2008</i><br />
+This may be quite a bit off-topic, but does anybody<br />
+know a non-Gnome, non-KDE GStreamer-based video player (or at least one that doesn't .... so much<br />
+as totem when it comes to configuring anything outside the basic Gnome configuring (aka. non-configuring)) ?<br />
+Cause, xine bashing aside, gxine does allow it (even if some of its options are quite a bit vague).<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222308242.0"></a>
+<i>Posted by <b>Dmytro</b> at Thu Sep 25 04:04:02 2008</i><br />
+GStreamer API is very alien to Qt, and using it in Qt based applications ( not only KDE ) is not less awkward than using C++ API from C applications,<br />
+<br />
+imho you should write at least<br />
+<br />
+Use GStreamer! (Unless you are developing an Qt based application or portability is desired, in which cases Phonon is better alternative.)<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222310594.78"></a>
+<i>Posted by <b>Ted Percival</b> at Thu Sep 25 04:43:14 2008</i><br />
+Aaron Seigo posted a follow-up with more details about the KDE angle: <a rel="nofollow" href="http://aseigo.blogspot.com/2008/09/linux-audio-layers.html">http://aseigo.blogspot.com/2008/09/linux-audio-layers.html</a><br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222311473.6"></a>
+<i>Posted by <b>david</b> at Thu Sep 25 04:57:53 2008</i><br />
+phonon is awesome!<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222327661.49"></a>
+<i>Posted by <b>Anon</b> at Thu Sep 25 09:27:41 2008</i><br />
+@Colin Guthrie:<br />
+I love how a guy who did 27 commits in total in the KDE codebase, with an average of one per month (all of those commits not relating in any way to the sound system) try to present himself like someone having any clue on Phonon or the status of sound handling.<br />
+<br />
+I have also a word for you, it's not "collaboration" (which apparently you know nothing about anyway) but "honesty". Don't present yourself as an expert when you're obviously not.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222334828.15"></a>
+<i>Posted by <b>Pau Garcia i Quiles</b> at Thu Sep 25 11:27:08 2008</i><br />
+Next time you write an article, clearly state "I'm a Gnome fan and I don't like Qt/KDE" instead of trying to convince us Gnome, Gtk+ or its dependencies have some sort of technical advantage. Saying GStreamer is cross-platform is almost a joke (have you ever tried to build it on Win32? What a nightmare!). And you don't even mention Phonon is cross-platform.<br />
+<br />
+There are so many mistakes and FUD in your article I will stop writing now and point you to this article by Aaron J. Seigo: <a rel="nofollow" href="http://aseigo.blogspot.com/2008/09/linux-audio-layers.html">http://aseigo.blogspot.com/2008/09/linux-audio-layers.html</a><br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222335765.58"></a>
+<i>Posted by <b>Kevin Kofler</b> at Thu Sep 25 11:42:45 2008</i><br />
+@Anon: Fedora is actually among the distributions currently defaulting to the Phonon xine-lib backend, because the Phonon GStreamer backend currently requires manual configuration to work with PulseAudio.<br />
+<br />
+@Lennart:<br />
+&gt; The reason why I don't recommend to use the timer/midi interfaces in ALSA for the safe subset is that they are not supported by the plugins for libasound.<br />
+It is possible to start a software sequencer such as TiMidity++ in a mode which listens to an ALSA MIDI port and outputs to PulseAudio (for TiMidity++, either through libao or through PulseAudio's ESD protocol emulation).<br />
+<br />
+@Colin Guthrie: The Phonon xine-lib backend will be part of the next major release of Phonon (presumably Phonon 4.3, probably to coincide with KDE 4.2). It currently has a dependency on kdelibs (which is why it's in kdebase-runtime - it doesn't depend on the rest of kdebase-runtime though), that's being sorted out.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222337667.53"></a>
+<i>Posted by <b>Chris Lord</b> at Thu Sep 25 12:14:27 2008</i><br />
+Portability is key to me! What can I do?<br />
+<br />
+SDL's audio API is quite raw and works on all the major platforms. SDL-mixer can make it a bit easier too. I'd also mention OpenAL for more advanced stuff.<br />
+<br />
+From a games-oriented point of view anyway.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222347108.93"></a>
+<i>Posted by <b>John</b> at Thu Sep 25 14:51:48 2008</i><br />
+@Anon (Thu Sep 25 09:27:41 2008):<br />
+<br />
+Check out Colin's work on Mandriva - specifically, the integration of KDE and PulseAudio. Then make an informed comment.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222347190.22"></a>
+<i>Posted by <b>Lennart</b> at Thu Sep 25 14:53:10 2008</i><br />
+Dmytro: Uh? GStreamer is portable. So even if yu care about portability GStreamer is the right choice.<br />
+<br />
+Pau: I already mentioned my bias in the article. That's all you will get from me. But why point this out anyway. If I don't recommend KDE technolog than you guys think I am unfairly biased anyway. That's not fight I could ever win. Also, I don't think that normal users should build their software, hence arguing that you need a complex toolchain to build GStreamer doesn't matter to me. In the end users should use prebuilt versions. So yes, GStreamer is cross-platform and portable. If you claim I made mistakes, then please tell me which. Your accusations are more fud'ish than anything I ever wrote here.<br />
+<br />
+Kevin: not sure if I really want to recommend this, nonetheless. MIDI is only relevant for pro-audio stuff anyway. So recommending MIDI support in the safe subset does not make too much sense, especially since TiMidity is not installed by default on distribution.<br />
+<br />
+Chris: SDL's audio API is not generic enough I would say. That's why I don't want to recommend it as general API. It's fine for games. But as a general API it doesn't appear to be stellar choice to me. But yes, OpenAL I should add to this list (as already pointed out).<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222353652.04"></a>
+<i>Posted by <b>teejay</b> at Thu Sep 25 16:40:52 2008</i><br />
+mplayer? cross platform, supports tons of codecs, efficient... maybe not specifically an api but i use it for a cross platform media player and it works great for that.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222357664.36"></a>
+<i>Posted by <b>Mauricio Piacentini</b> at Thu Sep 25 17:47:44 2008</i><br />
+A slight rewrite of the first two topics would probably address the perception of bias, imo. With the exception of OpenAL not being mentioned for games, I think that the recommendations for all the remaining application categories are spot on. Just the first two ones, the ones that mention Phonon specifically, might be more elaborate imo.<br />
+<br />
+I think it is safe to assume that if we would ask Lennart which toolkit/widget set to use for a media player application (or a desktop application), he would answer GTK+, his preferred choice. Nothing wrong with that, it is a personal choice. And for applications built with GTK and no dependancy of Qt/KDELibs, GStreamer for playing sond files and libcanberra for user notification seem like sensible recommendations. On the other hand, for applications that do not use GTK+, Qt or Qt/KDELibs are very good options , and in this case Phonon is the natural choice.<br />
+<br />
+So, I would rewrite the desktop applications portion of the recommendations to indicate that you must first choose your toolkit: Qt, Qt/KDELibs, or GTK+. Based on this, the choice of audio library becomes more natural: if using Qt you would probably use Phonon and abstract the backend, while using GStreamer directly might be better for applications that are pure GTK and do not want to add an additional dependancy on Qt libs.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222357966.68"></a>
+<i>Posted by <b>Lennart</b> at Thu Sep 25 17:52:46 2008</i><br />
+teejay: you are missing the point. MPlayer is useless as a media API. Also, this is not about listing alternatives. It is about listing recommendations.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222361307.31"></a>
+<i>Posted by <b>kde user</b> at Thu Sep 25 18:48:27 2008</i><br />
+tipical gnome/gtk+ troll<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222364799.23"></a>
+<i>Posted by <b>Mauricio Piacentini</b> at Thu Sep 25 19:46:39 2008</i><br />
+Re-reading my comment, I want to stress one scenario: the one where your application is in the planning stages, and currently does not use either GTK or Qt. <br />
+I think (in my own biased way) that using Phonon via Qt libs makes more sense, as Phonon helps you abstract the backend, and you automatically gain DirectShow and CoreAudio/Quicktime backends on Windows and Mac, and can switch between Xine/GST and in the future other backends as well on Linux. As far as portability is concerned, this lets your options opened for the future.<br />
+So, rewriting:<br />
+Your app uses GTK+ already? Maybe add sound with GST or libcanberra<br />
+Your app uses Qt or Qt/KDELibs? Phonon seems to be the natural choice<br />
+You are starting to planning an app and are not married yet to any toolkit? Consider the advantages of abstracting the backend via Phonon, versus the finer control you might get when writing for GST (or Xine) directly.<br />
+<br />
+Disclaimer: the comments do not show the email affiliation, but I am a KDE developer.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222367009.95"></a>
+<i>Posted by <b>tack</b> at Thu Sep 25 20:23:29 2008</i><br />
+I disagree, I find xine-lib to be a perfectly cromulent API for development.&nbsp; Also, most critically for us, it supports features that gstreamer is only just now catching up on (but not quite there), which is namely DVD menus, AC3 passthrough, and adaptive film and video deinterlacing.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222371522.91"></a>
+<i>Posted by <b>hade alhira</b> at Thu Sep 25 21:38:42 2008</i><br />
+I was searching for article describing linux sound systems.<br />
+<br />
+Thank you.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222372683.36"></a>
+<i>Posted by <b>Steve Clark</b> at Thu Sep 25 21:58:03 2008</i><br />
+I like to listen to the radio broadcast of football games while watching on tv with the sound turned down. The problem is the sound on the radio is sometimes as much as 5 seconds ahead of the game on tv. If I wanted to loop the sound out of the radio thru a linux box that was performing a delay and then back into my amplifier, what interface would be appropriate? Or does this already exists?<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222373748.85"></a>
+<i>Posted by <b>Wertigon</b> at Thu Sep 25 22:15:48 2008</i><br />
+I really must disagree with OSS being deprecated - OSS3 is, but OSS4 isn't, and it's the thing the BSDs and Solaris and so on run on, and for that reason alone it cannot be deprecated.<br />
+<br />
+The most interesting part with the entire sound scene; instead of doing the proper thing, which is to redesign the entire sound core so that it works well (which imo is precisely what the OSS people have tried with OSS4) everyone keeps on with the turd polish that is the Linux sound systems.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222374916.72"></a>
+<i>Posted by <b>Nate</b> at Thu Sep 25 22:35:16 2008</i><br />
+&gt; I like to listen to the radio broadcast of football games while watching on tv with the sound turned down. The problem is the sound on the radio is sometimes as much as 5 seconds ahead of the game on tv. If I wanted to loop the sound out of the radio thru a linux box that was performing a delay and then back into my amplifier, what interface would be appropriate? Or does this already exists?<br />
+<br />
+<br />
+For something like that I would use existing applications instead of trying to program it myself.<br />
+<br />
+If you wanted to program it yourself then probably some high level language like python and SDL or gstreamer would probably be fine.<br />
+<br />
+But I wouldn't do that. What I would do is use Jack. Jack is used for 'pro-audio', realtime audio editing, midi routing, and other things. <br />
+<br />
+You can 'chain' applications together and route sound information in and out of multiple sound card interfaces and all that happy stuff.<br />
+<br />
+So I'd setup Jackd and control it through the qjackctl GUI.&nbsp; Then I'd start up Alsa Modular Synth and use one of it's filters.<br />
+<br />
+<a rel="nofollow" href="http://alsamodular.sourceforge.net/">http://alsamodular.sourceforge.net/</a><br />
+<br />
+It's all a bit awkward and over the top, but for a one-off special purpose thing then it's probably worth it.<br />
+<br />
+Plus alsamodularsynth is a fun application to play around with. <br />
+<br />
+Then there is LADSPA plugins for doing special effects that you can plug into Jack and applications and whatnot, and there is various mixers and other applications for realtime sound manipulation, but I am not familiar with those like I am with AMS.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222375030.83"></a>
+<i>Posted by <b>Lennart</b> at Thu Sep 25 22:37:10 2008</i><br />
+Wertigon: if you look closely you'll see that I explained the situation with OSS4 in my text.<br />
+<br />
+Also, my focus is Linux, the title already makes that clear. Calling ALSA turd and thinking OSS is good is a bit unworldly if you ask me.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222377483.82"></a>
+<i>Posted by <b>Peter</b> at Thu Sep 25 23:18:03 2008</i><br />
+Regarding the "there was no imput from KDE": KDE guys should really get back into collaboration!<br />
+<br />
+Gnome people have a bad and aggressive attitude of marketing their ideas and Gnome/glib code as freedesktop standards and claiming they invented the better approach to problems solved before, instead of helping to improve them, see dcop, kio etc., but in the end you have to just let go of your bad experience with what they call "collaboration" and work the same way. Promote you technology aggressively and tell everybody you're the best, that's how they work, that how you have to work with them.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222378982.27"></a>
+<i>Posted by <b>wertigon</b> at Thu Sep 25 23:43:02 2008</i><br />
+Lennart: I never called ALSA a turd, I just said that the entire situation reeks of turd polish.<br />
+<br />
+I am not a sound programmer, so I'm not too much into the technical stuff, all I know is that OSS4 more or less fixed all my problems (low volume in speakers; can't have my music player running while listening to youtube vids and so on), and that my BSD-using friends seems to prefer it. Pulseaudio has turned out to be very unstable for me. This is on Ubuntu 8.04. Gonna do a complete reinstall with 8.10, if that hasn't fixed the problems... Not to mention, the key selling points of PulseAudio feels, to me, like something 0.01 percent of the users need.<br />
+<br />
+Not saying that OSS4 is perfect, it isn't, but really... <a rel="nofollow" href="http://insanecoding.blogspot.com/2007/05/sorry-state-of-sound-in-linux.html">http://insanecoding.blogspot.com/2007/05/sorry-state-of-sound-in-linux.html</a> This is what it looks like to an outsider like me. It's a mess, and people keep adding to it. Stop. Reboot. Do it properly. Please?<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- Responses to my Audio API Guide -->
+<a name="1222387930.3"></a>
+<i>Posted by <b>ignacio</b> at Fri Sep 26 02:12:10 2008</i><br />
+"Anyway, I humbly take this as a sign that people do consider this guide to be relevant and much needed. ;-)"<br />
+<br />
+Absolutely. The worst reaction would have been none whatsoever.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222388397.88"></a>
+<i>Posted by <b>dacc</b> at Fri Sep 26 02:19:57 2008</i><br />
+gnome people are always spreading FUD - why do you not sell gnome to microsoft? so you you get a&nbsp; more powerful FUD gun.<br />
+<br />
+sorry Lennart but there is not reason for this anti-kde-blogpost. Again, freedesktop people are atacking KDE without reason.<br />
+<br />
+IHMO freedesktop should disappear or rename it to gnomefreedektop. whatever<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222389184.75"></a>
+<i>Posted by <b>Pedro Lima</b> at Fri Sep 26 02:33:04 2008</i><br />
+Before trusting in the section about OSS, please read this thread in the mailing list:<br />
+<br />
+<a rel="nofollow" href="http://mailman.opensound.com/pipermail/oss-devel/2008-September/000732.html">http://mailman.opensound.com/pipermail/oss-devel/2008-September/000732.html</a><br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- Responses to my Audio API Guide -->
+<a name="1222398853.64"></a>
+<i>Posted by <b>Aaron Seigo</b> at Fri Sep 26 05:14:13 2008</i><br />
+&gt; Anyway, I humbly take this as a sign that people do consider this <br />
+&gt; guide to be relevant and much needed.<br />
+<br />
+that much is certainly not in question =)<br />
+<br />
+take care and have a great weekend!<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222402179.75"></a>
+<i>Posted by <b>$</b> at Fri Sep 26 06:09:39 2008</i><br />
+&gt; The reason why I don't recommend to use the timer/midi interfaces in ALSA for the safe subset is that they are not supported by the plugins for libasound.<br />
+<br />
+<br />
+$ timidity -Os&nbsp; test.mid<br />
+Requested buffer size 32768, fragment size 8192<br />
+ALSA pcm 'default' set buffer size 32768, period size 8192 bytes<br />
+Playing test.mid<br />
+<br />
+<br />
+<br />
+$ export TIMIDITY_PCM_NAME=hw:0,0<br />
+$ timidity -iA -Os<br />
+Requested buffer size 32768, fragment size 8192<br />
+ALSA pcm 'hw:0,0' set buffer size 32768, period size 4096 bytes<br />
+TiMidity starting in ALSA server mode<br />
+Opening sequencer port: 129:0 129:1 129:2 129:3<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222403569.92"></a>
+<i>Posted by <b>Arbee</b> at Fri Sep 26 06:32:49 2008</i><br />
+Thank you for the info on the safe subset of ALSA.&nbsp; I've driven myself nuts trying to write relatively simple code that actually works on more than one kind of sound card.&nbsp; It's ridiculous that no two ALSA hardware drivers behave the same and it's worse that those differences are clearly visible to userland.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222404885.97"></a>
+<i>Posted by <b>$</b> at Fri Sep 26 06:54:45 2008</i><br />
+timidity use ALSA default , it fall back to use OSS /dev/dsp if it cannot connect to pulseaudio server <br />
+so pulseaudio server cannot open alsa device after timidity open /dev/dsp through OSS emulation<br />
+<br />
+ timidity&nbsp; test.mid<br />
+*** PULSEAUDIO: Unable to connect: Connection refused<br />
+Warning: Audio buffer is too small.<br />
+Playing test.mid<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222410183.26"></a>
+<i>Posted by <b>patrick W</b> at Fri Sep 26 08:23:03 2008</i><br />
+How does ecasound fit in in this picture? Just curious...<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222415881.57"></a>
+<i>Posted by <b>Dan</b> at Fri Sep 26 09:58:01 2008</i><br />
+Can I ask why you think PortAudio is not a very good API for Unix-like operating systems? How about RtAudio?<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222425532.17"></a>
+<i>Posted by <b>Martin-Éric</b> at Fri Sep 26 12:38:52 2008</i><br />
+I'm curious of what you would recommend that a VoIP application like Skype should use as an audio API?<br />
+<br />
+If your answer happens to be the Safe ALSA API, I'd really like to see some documentation about which subset of the full ALSA spec is considered safe.<br />
+<br />
+I'm in a position to forward this info to the right Skype developers, towards finally make Skype safe for a PulseAudio-enabled desktop.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222431159.71"></a>
+<i>Posted by <b>Lennart</b> at Fri Sep 26 14:12:39 2008</i><br />
+patrick: ecasound is an audio production application for HDR. <br />
+<br />
+Martin-Eric: yes, that would be the safe ALSA subset. In the guide I explained in great detail what the DOS and DONTS are when you want to develop for the safe ALSA subset. What else do you request?<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- Responses to my Audio API Guide -->
+<a name="1222431880.17"></a>
+<i>Posted by <b>Damjan</b> at Fri Sep 26 14:24:40 2008</i><br />
+&gt;&gt; It wasn't my intention to start another GNOME-vs.-KDE flamefest. <br />
+<br />
+I beleive you in your intentions. <br />
+<br />
+But still, your comments do sound like KDE-trolling sometimes, and I'm not even a KDE fanboy... maybe you just need to doublecheck whenever you mention KDE that you are not beeing to terse.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222432539.76"></a>
+<i>Posted by <b>Lennart</b> at Fri Sep 26 14:35:39 2008</i><br />
+Pedro: that thread on oss-devel is very much amusing. Let me respond to the claims made in there:<br />
+<br />
+- Yair claims I judge OSS by the standards of OSS3. That is absolutely correct, since OSS4 plays virtually no role on Linux which I explicitly pointed out. Please note however that I am very critical of OSS4 too, though the reasons of course differ.<br />
+<br />
+- Yair claims that all implementations of OSS3 would do sample type conversion. This claim is certainly wrong: in the Linux kernel it is strictly verboten to do stuff like that -- the OSS implementations that are part of the Linux kernel do not do conversions like that.<br />
+<br />
+- Yair, Dev: Multichannel sound is supported in OSS3. However it is completely useless since there is no function to query (or even set) the channel mapping. I.e. you can enable 4ch sound, but it is never clear whether that shall mean a 3.1 or a 4.0 setup and so on. The Linux kernel includes support for USB devices and makes them available via the OSS3 API. However that wrapping in the OSS3 API is very questionnable because the extra latency USB has after the data left the playback buffer cannot be exposed in OSS3. That means that timing on OSS3 is always a bit off from the truth on USB devices and other devices that have an extra latency "behind" the playback buffer.<br />
+<br />
+- Yair: I wrote a couple of virtualizations for OSS3 myself. And mine were certainly much further reaching than any before. However: from that experience I know that it is always far from perfect. At most 80% of applications you can get to work at all like this. And then due to the limits of the timing model in OSS3 your timing will always be messed up with virtualizations like that. Also note the difficulties of LD_PRELOAD and static binaries. OSS is practically not virtualizable. It's always a hack that only works in particular cases. And often enough you need to sit down and make one particular case working -- while breaking another one.<br />
+<br />
+- Yair: The ALSA documentation is certainly not stellar. But nonetheless the ALSA API is certainly a much more natural API than the one of OSS. And the claim "most of the ALSA API is not documented" is completely bogus.<br />
+<br />
+- Yair: The only reason I advocate ALSA is the lack of anything better. But if you head read my guide closely you'd have found the sentence "In the future I hope to introduce a more suitable and portable replacement for the safe ALSA subset of functions." which is an acknowledgment that using the ALSA API for this is not that great a choice and needs replacement. But it's still the best we got.<br />
+<br />
+- Yair: Many modern HDA cards only do 24bit audio and no 16bit audio anymore and also do without volume control hw.<br />
+<br />
+- Hannu: the question is the choice about the API for application developers. And OSS is bad choice for that. ALSA is not perfect but certainly much better.<br />
+<br />
+- others: yes you are right, I don't care about other Unixes. I am a Linux hacker, working for a Linux company. If portability matters at all, then it matters it to Win32 and MacOS, but OSS doesn't offer anything in that area.<br />
+<br />
+Also, let me express my irritation that the Dev guy posted my private email on a public forum like this without asking before.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222432904.07"></a>
+<i>Posted by <b>$</b> at Fri Sep 26 14:41:44 2008</i><br />
+&gt;&gt; PulseAudio supports , per-application volumes<br />
+<br />
+does it mean that an application can open two pcm playback streams concurrently using pulse-plugin? <br />
+<br />
+and there will be two volume controls in the pulseaudio volume control for this application<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222432956.42"></a>
+<i>Posted by <b>Lennart</b> at Fri Sep 26 14:42:36 2008</i><br />
+$: yes<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222439578.31"></a>
+<i>Posted by <b>mnk</b> at Fri Sep 26 16:32:58 2008</i><br />
+- Lennart: as it seems that both ALSA and OSS4 sides<br />
+spread their own brands of FUD and fanboyism,<br />
+could you please elaborate on "I am very critical of OSS4 too, though the reasons of course differ".<br />
+Are there any real reasons why OSS4 can't be i.e.<br />
+adopted into the kernel (any license (or similar) aside) ?<br />
+<br />
+Also, while it was off-topic, I'd still like to hear about any really configurable video player<br />
+based on GStreamer.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222441461.93"></a>
+<i>Posted by <b>Lennart</b> at Fri Sep 26 17:04:21 2008</i><br />
+mnk: I don't see much fanboyism on the ALSA side. <br />
+<br />
+OSS4 does a lot of signal processing (resampling, mixing) in the kernel. That is a big no-no, it's verboten in the Linux world. The kernel is supposed to include drivers, not processing algorithms. In its current form OSS4 would have exactly zero chance to even be considered by the Linux kernel people. If you'd rip out all the mixing, resampling, conversion, remapping then not much would be left of OSS4, except that a slightly updated OSS3 API. Then, the driver support in ALSA these days is actually much better than OSS4 since a lot of hw manufacturers nowadays work with the Linux community to improve the in-kernel drivers. OSS4 doesn't have that advantage. The ALSA people work well together with the rest of the kernel people, the OSS people absolutely don't. Then, the fact that the OSS API is a kernel API is one of the biggest issues, due to its ioctl-caused awkwardness and the impracticability to virtualize. It's also not extensible. Let's say I wanted to add DRC to the mixing code: I'd have to code that in kernel space -- and floating point calculations aren't even allowed in kernel space! It's just the wrong place to do these processing tasks in the kernel. Also on Linux interfacing with FireWire or Bluetooth audio happens in userspace and can thus never be covered by OSS4. And let's not even touch RAOP or UPnP audio devices! And this list goes on and on and on. There are so many fundentamental issues with OSS, it's an endless list. OSS4 is not just the worse system, it's a <b>fundamentally</b> wrong system. (At least on Linux. On niche Unixes different requirements apply)<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222457520.68"></a>
+<i>Posted by <b>mnk</b> at Fri Sep 26 21:32:00 2008</i><br />
+As it's always the hardest to see your own faults,<br />
+can we get an opinion on OSS4 from one of the kernel developers NOT involved with ALSA team ?<br />
+<br />
+Cause some of of the arguments look like:<br />
+ALSA team got a lot of .... before it got adopted into the kernel, so now it's really happy to give it back. After all, it wasn't that long ago,<br />
+when a lot of programs advised to be run by alsa-oss to get better results than native ALSA.<br />
+Perhaps Lennart is correct here, but it would be good to hear from a neutral party.<br />
+<br />
+I've only seen last battles of UTF-8 adoption<br />
+(though a few pockets of resistance exist to this day), but this looks quite a bit alike.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222559087.68"></a>
+<i>Posted by <b>me</b> at Sun Sep 28 01:44:47 2008</i><br />
+mnk:<br />
+&gt; can we get an opinion on OSS4 from one of the kernel developers NOT involved with ALSA team ?<br />
+<br />
+Lennart clearly made some points like "floating point calculations aren't even allowed in kernel space". Isn't that enough? Did you actually read his post? Thanks for the informative posting, Lennart - and please ignore those who feel stepped on their toes because they are<br />
+a) stupid and don't understand what you wrote<br />
+b) ignorant, i.e. they don't <b>want</b> to understand what you wrote<br />
+c) biased [often combined with b)]<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222584996.21"></a>
+<i>Posted by <b>max</b> at Sun Sep 28 08:56:36 2008</i><br />
+Lennart<br />
+It seems to me that "ALSA-thekerneldrivers" is pretty much well implemented, and that "ALSA-thelib" is what might be a bit messy and in need of re-work. Would that be a correct assumption?<br />
+(If not perhaps it would be nonetheless useful to "separate" both efforts)<br />
+If so, wouldn't perhaps be best to melt all the efforts of alsalib, jack and pulseaudio into one coherent future proof portable api?<br />
+Perhaps such an API could even merge with X.org now that video cards are getting involved with audio too (i.e. HDMI, LPCM etc). And being an X.org standard would probably help universal adoption across the board...<br />
+With such a new library, alsalib could be left untouched for compatibility sake and it could then go on to die a natural and peaceful death.<br />
+It might sound like a lot of work, but it could pay off, and the Fedora team could be well suited for the task, since you guys don't really seem to be affraid of change...<br />
+The people working on alsalib, jack and pulseaudio probably represent the perfect mix of hardware, pro-audio and the end-user/desktop folks, and if some of them could get involved, well it just seems like the perfect opportunity...<br />
+Just my 2 cents i guess...<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222598508.98"></a>
+<i>Posted by <b>nicolas</b> at Sun Sep 28 12:41:48 2008</i><br />
+Hi, guys,<br />
+<br />
+I am not a kernel developer and I am highly incompetent about sound stuff.<br />
+<br />
+However, I have installed and maintained linux desktop systems for a final user (my father) to whom sound recording and playing does matter. I could never get good sound quality and major features were missing (line recording) with ALSA.<br />
+<br />
+Installing OSS4 from 4 Front website made an enormous difference in sound quality, and line recording went to work.<br />
+<br />
+This is an aging Nvidia NForce-2 based hardware system, but it used to be quite popular a few years ago. The linux distro is Mandriva from 2007.0 to the last 2008.1. This is not the only hardware system on which I have seen problems with ALSA.<br />
+<br />
+From a user point of view, OSS4 seems to work good, and ALSA is not fulfilling its promises.<br />
+<br />
+What's the point of designing it right (I cannot judge on that), but letting the real support lagging?<br />
+<br />
+Just a (OSS4 happy) user point of view...<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222599351.08"></a>
+<i>Posted by <b>jospoortvliet</b> at Sun Sep 28 12:55:51 2008</i><br />
+Martin-Eric: The Skype developers should use Phonon. It's build in in Qt (which they use anyway) and abstracts their audiolayer. For them much less work than any other API, and it supports Windows and Mac transparently without the user having to install anything (unlike eg Gstreamer or Xine).<br />
+<br />
+So with Phonon they just need a couple of lines of code, and support Alsa/Gstreamer and soon Xine &amp; PulseAudio on linux, and directsound &amp; coreaudio on win &amp; mac. Not sure if phonon already supports everything they need, but it is LGPL so if not I'm sure it would be way less work to add the features they need (which will then be officially supported by Qt Software!) than create their own platform-independend abstraction layer!<br />
+<br />
+In other words - not using phonon would be pretty stupid.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222623040.53"></a>
+<i>Posted by <b>Nate</b> at Sun Sep 28 19:30:40 2008</i><br />
+&gt; So with Phonon they just need a couple of lines of code<br />
+<br />
+Look. <br />
+<br />
+There is a fundamental thing about Phonon you people need to understand from the get-go that your not just 'getting'. <br />
+<br />
+So the goal of Phonon is to have a easily used API that is common across all platforms that QT supports. This makes it easy to make applications have sound capabilities.. notification sounds, media playback and the like. <br />
+<br />
+All of this is absolutely fabulous and I am sure that it'll do a very good job. <br />
+<br />
+Well the approach they take is to support all sorts of different backends at the same time. Gstreamer, Xine, CoreAudio, DirectSound, etc etc. This, again, is very good and correct. <br />
+<br />
+Now the fundamental issue that you run into is that unless everything is supported on all backends then you:<br />
+<br />
+A. Simply don't support features that are not supported equally well across all APIs<br />
+<br />
+B. Behave differently based on which backend that Phonon happens to be using. <br />
+<br />
+As you can imagine having something that is very diverse and supports upwards to half a dozen different backends the amount of functionality that is common across all systems is going to be fairly basic. <br />
+<br />
+<br />
+You can see the same issues with anything that is suppose to be very diverse. <br />
+<br />
+For example: WXWidgets vs QT. <br />
+<br />
+WxWidgets is very portable and takes on the native look-n-feel of whatever platform your running on. Which is very nice. However because it is suppose to run and look native on all these different platforms (Windows, OS X, Gnome, KDE) then the amount of functionality that it can provide is limited to the subset of Widget features that are available to all those platforms equally. <br />
+<br />
+Were as QT itself provides fairly low-level functionality on all the platforms it supports then it can be very full featured, but it will never have the native look-n-feel (beyond cosmetic theming) of Windows or OS X.<br />
+<br />
+<br />
+I don't know if Skype audio requirements can be met with the lowest common denominator approach to API design that Phonon will offer. More then likely, like any other sophisticated audio application in QT, they will probably be able to use Phonon for some things, but otherwise will have to have platform-specific code for some functionality.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222623287.28"></a>
+<i>Posted by <b>Lennart</b> at Sun Sep 28 19:34:47 2008</i><br />
+mnk: I got involved with the ALSA people because I think it is the better, heck only solution for Linux. It's not that other way round!<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222623407.42"></a>
+<i>Posted by <b>Lennart</b> at Sun Sep 28 19:36:47 2008</i><br />
+jospoortvliet: This is absolute nonsense -- Phonon is not low-level enough to be useful as an abstraction layour that is useful for writing VoIP applications. Before you publicly give technical advice, please get your facts right! Thank you.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222629439.3"></a>
+<i>Posted by <b>Frank Miller</b> at Sun Sep 28 21:17:19 2008</i><br />
+I've been using a small subset of the OSS interface that has been supported by ALSA for a long time and appears to be likely continued for some time.&nbsp; What's wrong with that?<br />
+<br />
+FM<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222631018.73"></a>
+<i>Posted by <b>Lennart</b> at Sun Sep 28 21:43:38 2008</i><br />
+Frank: a lot is wrong with that. Is it that difficult to read the guide I wrote above? Apparently it is, so here's the relavant part for you again:<br />
+<br />
+&lt;/snip&gt;<br />
+The OSS API is very low-level, based around direct kernel interfacing using ioctl()s. It it is hence awkward to use and can practically not be virtualized for usage on non-kernel audio systems like sound servers (such as PulseAudio) or user-space sound drivers (such as Bluetooth or FireWire audio). OSS3's timing model cannot properly be mapped to software sound servers at all, and is also problematic on non-PCI hardware such as USB audio. Also, OSS does not do sample type conversion, remapping or resampling if necessary. This means that clients that properly want to support OSS need to include a complete set of converters/remappers/resamplers for the case when the hardware does not natively support the requested sampling parameters. With modern sound cards it is very common to support only S32LE samples at 48KHz and nothing else. If an OSS client assumes it can always play back S16LE samples at 44.1KHz it will thus fail. <br />
+&lt;/snip&gt;<br />
+<br />
+I.e. your stuff is in the end not compatible with anything but kernel sound drivers. No FireWire/Bluetooth, no sound servers such as PulseAudio. And unless you ship your stuff with converters/resamplers/remappers for all kinds of hardware capabilities your program is brken even for many cards supported be the in-kernel drivers.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222632291.14"></a>
+<i>Posted by <b>notme</b> at Sun Sep 28 22:04:51 2008</i><br />
+You stated that OSS cannot do resampling/conversion -- I'm not sure about OSS v3, but I know for a fact that OSS v4 can definitely do conversions to and from different encodings as well as arbitrary resampling.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222632664.95"></a>
+<i>Posted by <b>mnk</b> at Sun Sep 28 22:11:04 2008</i><br />
+Well, back in days I started to follow UTF-8 debate,<br />
+I thought too that 'there's no other way' (actually,<br />
+I still think it's the only sane solution).<br />
+But there are still programs that fail to support it even now (i.e. for midnight, I have to use Redhat<br />
+patches + a few fixes for the bugs in those patches).<br />
+<br />
+My point is: has any of the kernel devs not involved with ALSA team produced a doc, which <br />
+while staying as technical as possible, explains<br />
+the general public what is exactly wrong with OSS4,<br />
+one just about OSS4, not going into ALSA vs OSS4 ?<br />
+PS.: @author of the comment from Sun Sep 28 01:44:47 2008 - I consider you a troll.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222645435.21"></a>
+<i>Posted by <b>Lennart</b> at Mon Sep 29 01:43:55 2008</i><br />
+notme: Yes, OSS4 does all kinds of resampling/converting in kernel space. Which is one of the major problems in OSS4 actually as I already pointed out (see above). The OSS implementation in the Linux kernel does not do that, so if you develop against OSS you cannot assume you have this functionality in the kernel, heck it is more likely that it isn't in the kernel than it might be (since Linux is certainly the most important OS with OSS).<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222660781.36"></a>
+<i>Posted by <b>ewc</b> at Mon Sep 29 05:59:41 2008</i><br />
+To mnk:<br />
+<br />
+I suspect that "kernel devs not involved with ALSA team" would preclude almost all kernel devs that know anything about sound in Linux.&nbsp; By definition, knowledgable sound devs working on Linux are all almost certainly working on, or associated with, ALSA.<br />
+<br />
+Besides you don't need a technical answer to your question of "what is exactly wrong with OSS4".&nbsp; Its simple: it violates Linux's policy of not doing "data processing" (audio conversion/manipulation) inside the kernel.&nbsp; The part of ALSA that is in the kernel does not do any data manipulation, which is why "ALSA" is technically 2 different components: the kernelspace drivers and API, and a userspace library part which actually does the data processing.&nbsp; If OSS4 were split up this way, there would be no technical problem with it being included in the Linux kernel, except for the obvious point that it would now be essentially duplicating part of ALSA, i.e., it would be redundant, but if the OSS4 devs were willing to do the work of splitting out the data manipulation part from the kernelspace side...<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222661042.48"></a>
+<i>Posted by <b>shoegoo</b> at Mon Sep 29 06:04:02 2008</i><br />
+Just wanted to make a quick note that OSS4 provides the best support for Soundblaster X-Fi cards right now.&nbsp; The Alsa project does not have usable code for the X-Fi, and the cards were first released over 3 years ago.&nbsp; I understand that Alsa is doing their best and that Creative is to blame for the slow development (since the X-Fi is a completely new architecture and Creative is not being as helpful as they could be), but when you have one of these sound cards and you want to use it, it becomes much harder to say which one of these architectures is superior.&nbsp; Also, I know Creative has released beta Alsa drivers for the X-Fi, but from what I have read, you are asking for problems if you install those.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222687550.25"></a>
+<i>Posted by <b>mnk</b> at Mon Sep 29 13:25:50 2008</i><br />
+ewc: If you say it's that simple,<br />
+what do OSS4 devs say about this problem ?<br />
+Mind you, I'm neither attacking nor defending OSS4,<br />
+I'm just curios what is really the problem,<br />
+that causes the discord between those two teams -<br />
+why can't they cooperate ?<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222690601.67"></a>
+<i>Posted by <b>dHa</b> at Mon Sep 29 14:16:41 2008</i><br />
+From an end-user point of view, recently switching from Windows, ALSA was the main reason I almost switched back! Fortunately, a friend suggested OSS4 instead, so I'm still using Ubuntu. Through him, I know other people that has tried Ubuntu but returned to Windows due to crappy sound quality! Is that really the best thing for Linux?<br />
+<br />
+Until the problem(s) with ALSA are solved, hearing that the only working alternative (that I'm aware of) should be dismissed - does not sound promising for the future.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222690695.55"></a>
+<i>Posted by <b>Lennart</b> at Mon Sep 29 14:18:15 2008</i><br />
+mnk: Then go, ask them on the oss-devel ML.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222700701.02"></a>
+<i>Posted by <b>Frank Miller</b> at Mon Sep 29 17:05:01 2008</i><br />
+I read the guide.&nbsp; The problem you don't seem to address is portability.&nbsp; I've written and released my app with an ALSA API and I got feedback from users saying they weren't getting sound.&nbsp; When I release it using this small OSS subset, I get no such complaints.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222708958.66"></a>
+<i>Posted by <b>JefferyRLC</b> at Mon Sep 29 19:22:38 2008</i><br />
+I don't seem to understand why there are so many sound APIs to begin with. It would seem more efficient and effective to adhere to one sound standard, and make that standard work.<br />
+<br />
+I'm no fan of Microsoft or Windows, but DirectSound just works. MacOSX and Coreaudio, it just works. In Linux however, there's an entire page of when where and what APIs to use.<br />
+<br />
+Perhaps I'm being just noobish, but isn't that counter productive? Who in their right mind would want to make any sort of audio system for Linux with a mess like this?<br />
+<br />
+Personally I could care less if it's OSS4 ALSA or OpenAL. I'm more interested in the devs picking something that works, documenting it for everyone to use and it being the defacto standard.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222709327.28"></a>
+<i>Posted by <b>Lennart</b> at Mon Sep 29 19:28:47 2008</i><br />
+Jeffrey: this is not really fair. On Windows there are winmm calls, directsound calls, directshow calls, winapi calls and asio calls that make up rughly the same area of usage as the ALSA, GStreamer, libcanberra and JACK APIs listed above. (And I didn't even mention SDL and OpenAL which are available on Windows too.)<br />
+<br />
+On the Windows world the list of necessary audio APIs is not smaller than on Linux.<br />
+<br />
+And CoreAudio is roughly the same. It's a little bit more streamlined, but still quite some set of different APIs put together.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222825147.38"></a>
+<i>Posted by <b>Paul Perkins</b> at Wed Oct  1 03:39:07 2008</i><br />
+I am a long-time consumer of sound-stuff on Linux, lately Ubuntu &amp; Kubuntu and before that mostly SUSE. My experience the last few years has been that when sound gets messed up, the #1 cause is apps that try to use the OSS API. The #2 cause for me is apps that use the ALSA API but can't cope with the quirks of a Delta (ice1712) as exposed by ALSA.ALSA also frustrates me because it has features that might be useful if only they were not such a pain to configure (.asoundrc is EVIL!!!). I like JACK and use it when possible, but most apps will never support it. From where I sit PulseAudio is trying to fix the right problems with the right architecture, but a lot of legacy mess has to get cleaned up before it will do me much good.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222891822.66"></a>
+<i>Posted by <b>sklp</b> at Wed Oct  1 22:10:22 2008</i><br />
+btw, In Ubuntu, even though PulseAudio is included by default since 8.04, pulse is not yet the default alsa pcm. https://bugs.launchpad.net/ubuntu/+source/pulseaudio/+bug/198453 <br />
+This means that the "safe alsa" subset cannot be used sucessfully under Ubuntu.<br />
+I'm a bit annoyed that the ubuntu devs havent fixed it yet, partly because it's giving pulseaudio a bad name (since most people's audio worked better before the inclusion of pulseaudio)<br />
+I switched to fedora in part because of the ubuntu devs silly attitude to this problem, which just needs to be fixed ASAP!!<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222914649.51"></a>
+<i>Posted by <b>$</b> at Thu Oct  2 04:30:49 2008</i><br />
+speaker-test still fail for latest yum update&nbsp; of fedora 9 since speaker-test using maximum buffer size which returned by pulse plugin.<br />
+<br />
+upgrade alsa-plugins to 1.0.18rc3 solve this bug but recording through pulseaudio is now broken since fedora 9 still using 0.9.10.2 but pulse plugin in 1.0.18rc3 only work with pulseaudio 0.9.12<br />
+<br />
+The pulseaudio server is autostarted in GNOME session but fail to start in KDE session in FC9<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1222948860.52"></a>
+<i>Posted by <b>Lennart</b> at Thu Oct  2 14:01:00 2008</i><br />
+$: if you think you found a bug then report it at the appropriate places, not on my blog.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- Responses to my Audio API Guide -->
+<a name="1223020304.3"></a>
+<i>Posted by <b>Pizuz</b> at Fri Oct  3 09:51:44 2008</i><br />
+Congratulations. You just managed to make an appearance on LH's site:<br />
+<br />
+<a rel="nofollow" href="http://linuxhaters.blogspot.com/2008/10/pulse-my-audio.html">http://linuxhaters.blogspot.com/2008/10/pulse-my-audio.html</a><br />
+<br />
+And please be sure to read the comments to his article, as well ;)<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1223034850.2"></a>
+<i>Posted by <b>Emil</b> at Fri Oct  3 13:54:10 2008</i><br />
+Uh, isn't libsydney missing? I came here from the LWN article, expecting to see something that puts Sydney into the big picture, but it's not even mentioned? Obviously I'm missing more than I thought. :) Nice document anyway, though, thanks for publishing it.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1223306853.97"></a>
+<i>Posted by <b>Daniel Thompson</b> at Mon Oct  6 17:27:33 2008</i><br />
+&gt; DOS:<br />
+&gt; &lt;snip&gt;<br />
+&gt; * Use snd_smixer_xx() instead of raw snd_ctl_xxx()<br />
+<br />
+Looking at latest alsa-lib documentation there is not snd_smixer_xx() interfaces:<br />
+<a rel="nofollow" href="http://www.alsa-project.org/alsa-doc/alsa-lib/globals_0x73.html#index_s">http://www.alsa-project.org/alsa-doc/alsa-lib/globals_0x73.html#index_s</a><br />
+<br />
+There are snd_mixer_xx() and there are snd_sctl_xx(). For now I'm going to guess this bullet point meant snd_mixer_xx()...<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1223418759.71"></a>
+<i>Posted by <b>miro</b> at Wed Oct  8 00:32:39 2008</i><br />
+I just spent 4 hours last night trying to make sound on brand new install of Ubuntu Hardy work. I succeeded at the end but I would characterize it as "inspite of pulse" rather than because of it. From my point of view for regular Linux user Pulse doesn't solve any real life problem, breaks many things that used to work and just give Linux bad name. I bet you haven't thought about it from this side before? I am not sure where you have learned software engineering trade but one of the mantras you have missed was to put the users first. If you don't then please stop pushing your code on innocent people who use their computer for real work or pleasure rather than spent their time fixing stuff that some hot-head messed up. (Now please imagine this post with all the expletives I intentionally left out even though the last night experience makes me feel that way)<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1223572289.13"></a>
+<i>Posted by <b>Paul Perkins</b> at Thu Oct  9 19:11:29 2008</i><br />
+miro,<br />
+<br />
+Blame Ubuntu, not Pulse. It's Ubuntu that shoved an early version of PulseAudio on you, and Ubuntu that configured its audio setup in a dumb way. Hardy was a way messed up release, I stayed on the previous release 2 or 3 months after Hardy escaped, waiting for it to settle down. As far as I can tell, upgrading from the previous release means that even though PulseAudio is installed, it isn't being used on my systems.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1223686294.98"></a>
+<i>Posted by <b>Albert</b> at Sat Oct 11 02:51:34 2008</i><br />
+Sound hasn't been reliable and easy on Linux since the mixer daemon was first introduced, and ALSA somehow managed to make things even worse.<br />
+<br />
+This is all I expect:<br />
+<br />
+1. a /dev device for easy library-free programming<br />
+<br />
+2. 44100 Hz 16-bit, and maybe 48000 Hz 16-bit<br />
+<br />
+3. stack-based audio source selection, so that I can have background sound interrupted (not "mixed" a.k.a. mangled) by other stuff<br />
+<br />
+4. microphone input would be nice<br />
+<br />
+5. stereo would be nice (clearly unimportant)<br />
+<br />
+6. no userspace crap running in the background<br />
+<br />
+That's it. It's really simple. It should be damn easy. Instead I get:<br />
+<br />
+1. USB speakers (my ONLY sound device) not selected, because some ALSA anus decided that USB couldn't possibly be allowed to be the default device. I have to go hack complicated config files to fix it.<br />
+<br />
+2. Stuff refuses to run because ALSA won't allow multi-open. As noted above, I don't even desire mixing.<br />
+<br />
+3. I never know how sound is being routed. It seems that every app demands a different sound server or audio device.<br />
+<br />
+4. It seems I have to run many sound servers at once. Of course, they fight each other for the hardware.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1224036017.61"></a>
+<i>Posted by <b>$</b> at Wed Oct 15 04:00:17 2008</i><br />
+alsa does allow mult-open if the soundcard support multiple DMA or multiple streaming (e.g. emu10k1, ymfpci, trident, au88x0, cs46xx and HDA )<br />
+<br />
+ALSA driver allow you to capture from three subdevices concurrently (e.g mic, front mic and line in ) if the HDA codec support <br />
+<br />
+For any recording application should at least allow user to select "hw:x,0" in addition to "default" if you find out that hw:x,0 have more than one subdevices<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1226939476.67"></a>
+<i>Posted by <b>Pingkai</b> at Mon Nov 17 17:31:16 2008</i><br />
+I think this is the lamest "guide to xxx" I have ever seen. <br />
+<br />
+The author seems know damn sh<b>t about OSS. Sorry for the strong words, but you don't know sh</b>t.<br />
+Some of your claims are so wrong that I could not believe that you actually used OSS in your life.<br />
+<br />
+1.there is simply no such an resample problem exists in OSS driver.<br />
+2. You do not need to resort to ALSA to support<br />
+surround sound. Back then there is few sound card<br />
+with that capability. And for emu10k1, there is a OSS module that supports 5.1 playback and worked better than alsa drivers for a quite long period of time.<br />
+<br />
+And it is really bold to write something like this:<br />
+"OSS should be considered obsolete and not be used in new applications."<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1229027380.85"></a>
+<i>Posted by <b>Kriston</b> at Thu Dec 11 21:29:40 2008</i><br />
+Did you notice that there are kernel modules for encryption?&nbsp; There is certainly a precedent set for algorithms and data processing in the kernel.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1229698286.9"></a>
+<i>Posted by <b>xvx</b> at Fri Dec 19 15:51:26 2008</i><br />
+It is sad that such a nicely written guide is in fact so wrong about so many things.&nbsp; Especially&nbsp; regarding alsa and oss4.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1234225580.02"></a>
+<i>Posted by <b>alsa pulse plugin</b> at Tue Feb 10 01:26:20 2009</i><br />
+Did pulseaudio/alsa-pulse plugin support snd_pcm_pause() ?<br />
+<br />
+<br />
+It seem that many media players (e.g. mplayer , amarok, ...&nbsp; ) freeze when the user use the pause/resume button to pause/restart the playing audio stream<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1235452653.93"></a>
+<i>Posted by <b>alsa-time-test</b> at Tue Feb 24 06:17:33 2009</i><br />
+<a rel="nofollow" href="http://www.pulseaudio.org/wiki/BrokenSoundDrivers">http://www.pulseaudio.org/wiki/BrokenSoundDrivers</a><br />
+<br />
+./alsa-time-test pulse <br />
+<br />
+fail immediately , <br />
+<br />
+does it mean that the functions used by alsa-time-test are unsafe ?<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1236441298.16"></a>
+<i>Posted by <b>John Gruenenfelder</b> at Sat Mar  7 16:54:58 2009</i><br />
+Wow... I am truly surprised at the amount of hate and vitriol in these comments and in those of linked pages/posts.&nbsp; I've been using Linux for 13 years and I never knew about this flamewar.&nbsp; Lennart makes a nice FAQ on where to start and gets attacked.&nbsp; I guess no good deed goes unpunished.<br />
+<br />
+My Linux sound experience was partially simplified when I finally removed my Audigy 2 card.&nbsp; Not because it didn't work in Linux, but because it failed miserably in Vista.&nbsp; But things got very complicated again when I tried to get my nice Bluetooth headphones working in a seamless manner.<br />
+<br />
+But, through this doc (and others by Lennart), at least I now know why I'm having such problems with BT working with some apps and not others.&nbsp; And, next time I need to add audio to an app, I'll have a good place to start.<br />
+<br />
+Also, regarding the huge amount of anecdotal evidence being presented by posters.&nbsp; Just because you did x-y-z and audio magically worked again doesn't mean it was the <b>right</b> solution.&nbsp; For example, while OSS4 might work for a simple setup (one audio card, one set of speakers, one sound producing app), it still makes a number of very poor implementation decisions.&nbsp; There <b>are</b> things which just don't belong in kernel-space.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1236583023.88"></a>
+<i>Posted by <b>Cygwin Ports</b> at Mon Mar  9 08:17:03 2009</i><br />
+Based on your assertions that the ALSA userspace is portable to other *NIX platforms, I'm trying to do that right now.&nbsp; What I have been unable to find is a guide to configuring ALSA (presumably with .asoundrc) to run on a OSS3-only platform.&nbsp; Any pointers?<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1238366393.47"></a>
+<i>Posted by <b>Vadim P.</b> at Mon Mar 30 00:39:53 2009</i><br />
+Where do non-fullscreen games go?<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1239750538.32"></a>
+<i>Posted by <b>Jonathan C.</b> at Wed Apr 15 01:08:58 2009</i><br />
+Sorry but I have to blow of some steam about lennart's stubbornes.<br />
+I understand that ALSA is kinda like lennart's child, but how can you postulate that OSS is dead and plays no role in *NIX.<br />
+If OSS was deprecated, why is it still used in BSD and Solaris?<br />
+And isn't it a proof of bad quality if you have to write a guide about which parts of ALSA you shouldn't use because they're broke?<br />
+And I really don't want to know why ALSA needs so many kernel modules...<br />
+<br />
+I can understand that it's really hard to realize that ALSA was born dead, paticularly when you worked so long thereon.<br />
+But even someone who's not a codeguru sees that ALSA can't compete with for example OSS4.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1239760904.27"></a>
+<i>Posted by <b>Lennart</b> at Wed Apr 15 04:01:44 2009</i><br />
+Jonathan. You got almost everything wrong. First of all I am not really an ALSA developer. The patches I contributed are very much numbered.<br />
+<br />
+Also note that in Fedora 11 the kernel OSS support has finally been disabled by default. There is no more /dev/dsp. And that's a great achievement! It's even one step further than being deprecated. It's gone!<br />
+<br />
+BSD and Solaris use OSS because they simply don't have no other option since they don't want GPL'ed ALSA code in their kernels.<br />
+<br />
+Also, I am not saying that those ALSA parts you mentioned are boken. All I say is that you shouldn't use them if you care about virtualizable audio. <br />
+<br />
+Finally, maybe only someone who's not a codeguru would think that OSS4 could compete with ALSA. ;-)<br />
+<br />
+Hmm, or to put more directly: hey, what about a good cup of stfu when you obviously have no clue what you are talking about and even admit to that! Thank you very much!<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1241485892.02"></a>
+<i>Posted by <b>Jonathan C.</b> at Tue May  5 03:11:32 2009</i><br />
+Hello again!<br />
+<br />
+I'm sorry to have to correct you, but Sun DOES want GPLed code in their kernels. Thats almost the only reason why they started OpenSolaris, so that they openly work on the sourcecode to fullfill the requirements of GPL license.<br />
+<br />
+And I want to remark that its quite embarassing for an adult to resort to personal insult, when hes left without arguments.<br />
+<br />
+Have a nice day.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1241659233.4"></a>
+<i>Posted by <b>Tony S.</b> at Thu May  7 03:20:33 2009</i><br />
+When you read support forums of all bigger distris, you would have seen that there really is much trouble with ALSA, mainly about compatibility.<br />
+Many people get sound only by using OSS4.<br />
+<br />
+Why dont you accept that there is an alternative to ALSA. Maybe not so good, but for some its the only thing that works.<br />
+<br />
+Couldnt you be so kind and upgrade the support for OSS to the new version?<br />
+I'd really love to have the nice features of pulseaudio.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1242899887.7"></a>
+<i>Posted by <b>Subrat</b> at Thu May 21 11:58:07 2009</i><br />
+Discussions about better or worse API design aside, can anyone explain why I experience better sound "quality" than ALSA using OSS4?<br />
+<br />
+PS: I understand this is purely subjective but I have been using oss4 for more than a year now and it really does sound better with oss4!<br />
+<br />
+PPS: FWIW my sound chip is an HDA compliant integrated chip.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1251223079.25"></a>
+<i>Posted by <b>a.lukin</b> at Tue Aug 25 19:57:59 2009</i><br />
+PulseAudio as for me is ugly and raw. Only real audio server is Jack. I do not even understand why people of different distro putting such a trouble maker as PulseAudio into mainstream... And Lenard is so brave that says "Jack is not needed" Hah!<br />
+<br />
+I do not hate or dislike anybody. I just sick and tired of removing PulseAudio every time I install any Linux dist.<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1251988552.81"></a>
+<i>Posted by <b>LinuxAUDIO IsaMESS</b> at Thu Sep  3 16:35:52 2009</i><br />
+I'm takin' any Vanilla Linux "Desktop" here.<br />
+ But in 1997 I had a better chance of getting my audio to work in Linux than I did my Graphics cards. !!!???<br />
+<br />
+ and of course many moons later atleast "OSS" was getting somewhere ?<br />
+ok nevermind.<br />
+<br />
+ Read your own garble, or just google "Linux audio mess ..." and know that its going to be 2010 in a few more months and "STILL" Linux audio is a convuluted mess. IT ZUCKS big time !!!<br />
+-Its useless for many apps.<br />
+<br />
+"...Apple and Microsoft each have a single sound server that does both desktop and pro audio, but nobody at the session seemed to have much interest in that direction for Linux...."<br />
+<br />
+ YA ?,&nbsp; well WHY THE <em>__</em> NOT !!!???<br />
+<br />
+"...If someone comes and says, 'I want to write an audio application. Which API should I use?' I don't have a good answer," -Lenard said.<br />
+ And that my freinds was from the guy that worked for Redhat and did the main work for "libpulse"<br />
+<br />
+ Now how &lt;PATHETIC&gt; is that. ?<br />
+:)<br />
+<br />
+ And yet still Linux users today can't even get&nbsp; somethin' like "SKYPE" to work nicely audio-wise.<br />
+ Unless they are smart enough to remove PulseAudio just so that it does work !!!<br />
+<br />
+ Linux -audio-wise is an utter joke.<br />
+<br />
+ Can we just get this audio in Linux working ?<br />
+<br />
+JUST PICK ONE !!!! I don't care if its OSS4 "Jack"ing off ALSA, or its ALSA "Jack"ing off OSS4, ...<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1251988686.73"></a>
+<i>Posted by <b>LinuxAudio IsaMESS</b> at Thu Sep  3 16:38:06 2009</i><br />
+and NO, pleeez, we don't need yet another new and improved,... "libsydney" audio mess.<br />
+ for gawd sakes, here we go again ???<br />
+:)<br />
+<br />
+</div>
+<div class="blosxomComment">
+<!-- A Guide Through The Linux Sound API Jungle -->
+<a name="1277371772.44"></a>
+<i>Posted by <b>jordan18</b> at Thu Jun 24 11:29:32 2010</i><br />
+good<br />
+<br />
+</div>
+<p>
+<a name="comment_anchor">
+  <b></b>
+</a>
+</p>
+<p><b>Leave a Comment:</b></p>
+<div class="blosxomCommentForm">
+<form method="post" action="http://0pointer.de/blog/projects/guide-to-sound-apis#comment_anchor">
+<p>
+<input type="hidden" name="secretToken" value="pleaseDontSpam" />
+<input name="parent" type="hidden" value="projects/guide-to-sound-apis" />
+<input name="title" type="hidden" value="A Guide Through The Linux Sound API Jungle" />
+Your Name:<br />
+<input maxlength="50" name="author" size="50" type="text" value="" /><br />
+<br />
+Your E-mail (optional):<br />
+<input maxlength="75" name="email" size="50" type="text" value="" /><br />
+<br />
+Comment:<br />
+<textarea cols="50" name="body" rows="12"></textarea><br />
+<br />
+
+As a protection against comment spam, please type the following number into the field on the right:<br/>
+<img style="vertical-align: top; border: 0" src="http://0pointer.de/blog/nospam.png" alt="Secret Number Image" title="Type this number into the field on the right"/>
+<input name="nospam" id="nospam" type="text" value="" maxlength="5" style="width:5em" /><br/>
+<br/>
+
+<b>Please note that this is neither a support forum nor a bug tracker! Support questions or bug reports posted here will be ignored and not responded to!</b><br/>
+
+<input name="Submit" type="submit" value="Submit" />
+</p>
+</form>
+</div> <!-- ends blosxomCommentForm div -->
+
+</div> <!-- ends blosxomComments div -->
+<hr/>
+
+<p><i>It should be obvious but in case it isn't: the opinions reflected here
+are my own. They are not the views of my employer, or Ronald McDonald, or anyone
+else.</i></p>
+
+<p><i>Please note that I take the liberty to <b>delete</b> any comments posted
+here that I deem <b>inappropriate</b>, <b>off-topic</b>, or <b>insulting</b>.
+And I excercise this liberty quite agressively. So yes, if you comment here, I
+might censor you. If you don't want to be censored your are welcome to comment
+on your own blog instead.</i></p>
+
+<hr/>
+<div class="links"><a href="http://0pointer.de/blog">Lennart's Blog</a> | <a href="http://0pointer.de/lennart/">Lennart's Homepage</a> | <a href="http://0pointer.de/photos/">Lennart's Photos</a> | <a href="http://0pointer.de/imprint">Impressum/Imprint</a></div>
+<div class="author">Lennart Poettering &lt;mzoybt (at) 0pointer (dot) net&gt;</div>
+<div class="syndicate">Syndicated on <a href="http://planet.gnome.org/">Planet GNOME</a>, <a href="http://planet.fedoraproject.org/">Planet Fedora</a>, <a href="http://planet.freedesktop.org/">planet.freedesktop.org</a>, <a href="http://updo.debian.net/">Planet Debian Upstream</a>. <img src="http://www.mozilla.org/images/feed-icon-14x14.png" style="vertical-align: bottom" alt="feed" width="14" height="14"/> <a href="/blog/index.rss">RSS 0.91</a>, <a href="/blog/index.rss20">RSS 2.0</a></div>
+<div class="archive">Archives: <a href="http://0pointer.de/blog/2005">2005</a>, <a href="http://0pointer.de/blog/2006">2006</a>, <a href="http://0pointer.de/blog/2007">2007</a>, <a href="http://0pointer.de/blog/2008">2008</a>, <a href="http://0pointer.de/blog/2009">2009</a>, <a href="http://0pointer.de/blog/2010">2010</a></div>
+<p>
+<a href="http://validator.w3.org/check?uri=referer"><img style="border:0;width:88px;height:31px" src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0 Strict!" height="31" width="88" /></a>
+&nbsp;
+<a href="http://jigsaw.w3.org/css-validator/check/referer"><img style="border:0;width:88px;height:31px" src="http://jigsaw.w3.org/css-validator/images/vcss" alt="Valid CSS!"/></a>
+</p>
+</body>
+</html>
