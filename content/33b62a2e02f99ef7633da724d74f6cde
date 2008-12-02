@@ -1,0 +1,587 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en-us" xmlns="http://www.w3.org/1999/xhtml">
+ <head profile="http://gmpg.org/xfn/11">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Language" content="en-us" />
+  <meta http-equiv="X-UA-Compatible" content="IE-5" />
+  <link rel="pingback" href="http://software.intel.com/en-us/services/comment/pingback/" />
+  <link rel="shortcut icon" href="/common/images/favicon.ico" />
+  <link rel="stylesheet" href="/common/css/master-global.css?v=7470" type="text/css" media="screen" />
+  <link rel="stylesheet" href="/common/css/style.css?v=7470" type="text/css" media="screen" />
+  <link rel="stylesheet" href="/common/css/style_print.css?v=7470" type="text/css" media="print" />
+  <script type="text/javascript" src="/common/js/jquery.min.js?v=7470"></script>
+ <link href="/media/js/tooltip/jquery.cluetip.css"  rel="stylesheet" type="text/css" /> <script src="/media/js/tooltip/jquery.hoverIntent.js" type="text/javascript"></script> <script src="/media/js/tooltip/jquery.cluetip.js" type="text/javascript"></script>  <script type="text/javascript" src="/common/js/jquery.bgiframe.min.js?v=7470"></script>
+  <script type="text/javascript" src="/common/js/jqmodal.js?v=7470"></script>
+  <script type="text/javascript" src="/common/js/ufo.js?v=7470"></script>
+  <script type="text/javascript" src="/common/js/isn/combined.js?v=7470"></script>
+  <script type="text/javascript" src="/common/js/isn/search.js?v=7470"></script>
+  <script type="text/javascript">var _sf_startpt=(new Date()).getTime()</script>
+<link rel="stylesheet" href="/media/css/SyntaxHighlighter.css?v=7470" type="text/css" media="screen" />
+<link rel="stylesheet" href="/media/css/widget.css?v=7470" type="text/css" media="screen" />
+<link rel="stylesheet" href="/media/css/jquery.rating.css?v=7470" type="text/css" media="screen" />
+<script type="text/javascript" src="/lang/en-us/services/alerts.js?v=7470"></script><script type="text/javascript" src="/media/js/ajaxfileupload.js?v=7470"></script>
+<script type="text/javascript" src="/media/js/select.js?v=7470"></script>
+<script type="text/javascript" src="/media/js/jquery.rating.js?v=7470"></script>
+<script type="text/javascript" src="/media/js/isncommentsapi.js?v=7470"></script>
+<script type="text/javascript" src="/media/js/isnratingapi.js?v=7470"></script>
+<script type="text/javascript" src="/media/js/isnpollapi.js?v=7470"></script>
+<script type="text/javascript" src="/media/js/isncategoryapi.js?v=7470"></script>
+<script type="text/javascript" src="/media/js/file_folder.js?v=7470"></script>
+<script type="text/javascript" src="/media/js/shCore.js?v=7470"></script>
+<script type="text/javascript" src="/media/js/shCode.js?v=7470"></script>
+<script type="text/javascript" src="/media/js/querystring.js?v=7470"></script>
+<script type="text/javascript" src="/media/js/academicpop.js?v=7470"></script>  <link rel="alternate" type="application/rss+xml" title="Intel Software Network Blogs RSS Feed" href="http://software.intel.com/en-us/blogs/feed/" />
+  <meta name="generator" content="WordPress 2.9.2" />
+  <script src="/media/js/isncommentsapi.js" type="text/javascript"></script>
+  <style type="text/css">.dp-highlighter { width: 98% }</style>
+<script type="text/javascript" src="/common/js/constants/en-us.js?v=7470"> </script>
+<link rel="stylesheet" type="text/css" id="HAT-linkStyle" href="/common/css/ltr_header.css?v=7470" />
+  <title>Timing locks in C# &#8211; Intel Software Network Blogs</title>
+  <script type="text/javascript">   $(document).ready(function() {    $("#loginForm").cluetip({ activation: "click", dropShadow: false,sticky: true, arrows: false, showTitle: false,local:true, cursor: "pointer" });    $("a.basic").cluetip({ sticky:false, width:"165px", dropShadow: false,arrows: false, showTitle: false });   });  </script> </head>
+ <body>
+	<noscript><center><strong>Javascript is disabled on your browser. In order to use this platform effeciently, please enable javascript from your browser settings or contact your system administrator.</strong></center></noscript>  <div id="container" class="main-outer" style="width:1003px">
+<!-- start corp header -->
+<div class="con con-hdr"> 
+<script type="text/javascript"> 
+  /*<![CDATA[*/
+  //GAAT40 namespace definition
+  var GAAT40 = (typeof GAAT40 == "undefined" || !GAAT40) ? {} : GAAT40;
+
+  //Page specific render settings
+  GAAT40.renderSettings = {
+    pageWidth: "w1024", //w800 | w1024
+    renderMode: "standards", //quirks | standards
+    textDirection: "ltr", //ltr | rtl
+    protocol: "http", //http | https
+    culture: "en_US",
+    enableShareWidget: false,
+    enableEmailWidget: true,
+    enablePrintWidget: true,
+    shareTxt: "Share",
+    changeTxt: "Change",
+    searchTxt: "Search",
+    printTxt: "Print",
+    emailTxt: "Email A Friend",
+    sitewidePath: "/sites/sitewide/hat/40recode"
+    };
+  
+    // construct asset paths to dependencies
+    GAAT40.ProtocolType = (function(){
+      var protocol = (GAAT40.renderSettings.protocol == "https")?"https://ssl.":"http://www.";			
+      return protocol;
+    })();
+
+    GAAT40.FileType = (function(){
+      var extension = (document.location.search.indexOf("filemax=1") != -1)?"-master":"";			
+      return extension;
+    })();
+ 
+    //Use assets depending on the url - test environment serves a route relative version of assets
+    GAAT40.AssetPath = (function() {
+      var testUrls = ["int-gaat40-output-tests.mrmw.co.uk", "int-40recode.mrmpweb.co.uk", "int-40recode2.mrmpweb.co.uk", "proto-cps.cps.intel.com", "preview-cps.cps.intel.com"];
+
+      var defaultUrl = GAAT40.ProtocolType + "intel.com";
+      var liveUrl = defaultUrl;
+
+      var setincookie = (document.location.search.indexOf("assetcookie=1") != -1)
+      
+      if (document.location.search.indexOf("assetcookie=0") != -1) {
+        document.cookie = "GAATAssetPath=; expires=Thu, 01-Jan-70 00:00:01 GMT;";
+      }
+        
+      if ((document.location.search.indexOf("assetpath=proto") != -1) || document.cookie.indexOf("GAATAssetPath=proto") != -1) {
+        liveUrl = (GAAT40.renderSettings.protocol == "https") ? "https://" : "http://";
+        liveUrl += "proto-cps.cps.intel.com";
+        if (setincookie) {
+          document.cookie = "GAATAssetPath=proto; path=/";
+        }
+      }
+
+      if ((document.location.search.indexOf("assetpath=preview") != -1) || document.cookie.indexOf("GAATAssetPath=preview") != -1) {
+        liveUrl = (GAAT40.renderSettings.protocol == "https") ? "https://" : "http://";
+        liveUrl += "preview-cps.cps.intel.com";
+        if (setincookie) {
+          document.cookie = "GAATAssetPath=preview; path=/";
+        }
+      }
+ 
+      if (testUrls.join().indexOf(document.location.host) != -1 || document.location.search.indexOf("assetpath=rel") != -1 || (document.cookie.indexOf("GAATAssetPath=rel") != -1)) {
+        liveUrl = "";
+        if (setincookie) {
+          document.cookie = "GAATAssetPath=rel; path=/";
+        }
+      }
+ 
+      if (document.location.search.indexOf("assetpath=live") != -1 || document.cookie.indexOf("GAATAssetPath=live") != -1) {
+        liveUrl = defaultUrl;
+        if (setincookie) {
+          document.cookie = "GAATAssetPath=live; path=/";
+      }
+    }
+
+    return liveUrl;
+  })();
+ 
+  // add CSS
+
+  // hide the header while it is worked on
+  document.write('<style type="text/css">#gaat40-header {height:91px;overflow:hidden;visibility:hidden;}</style>')
+ 
+  //dynamically add header css
+  document.write('<link id="gaat-linkstyle" href="' + GAAT40.AssetPath + GAAT40.renderSettings.sitewidePath + '/css/' + GAAT40.renderSettings.textDirection + '_header.css?v=7470" rel="stylesheet" type="text/css" />');
+
+ 
+
+// add INTEL JavaScript
+  if(typeof(INTEL) == "undefined") {
+    document.write('<scr' + 'ipt type="text/javascript" src="' + GAAT40.AssetPath + '/sites/js/INTEL.js"><\/scr' + 'ipt>');			
+  }
+		
+GAAT40.SearchFilterLUT = { head:"Filter Your Results", inputName:"category",
+qs:[ { filter:"Products", term:"Products" },
+    { filter:"SuppDown", term:"Support &amp; Downloads" },
+    { filter:"BlogComm", term:"Blogs &amp; Communities" },
+    { filter:"Reseller", term:"Reseller" },
+    { filter:"Software", term:"Software" },
+    { filter:"AboutIntel", term:"About Intel" },
+    { filter:"HAT-adv1", term:"Advanced Search" }
+   ]
+};
+/*]]>*/
+</script>
+
+<div id="gaat40-header" class="gaat40-reset">
+  <a class="gaat40-logo" title="" href="http://www.intel.com"><img src="http://www.intel.com/sites/sitewide/HAT/40recode/pix/main-logo.png" alt="Logo - Intel" /></a>
+  <ul class="gaat40-locale gaat40-first">
+    <li class="gaat40-first" id="gaat40-gohome">
+      <a href="http://www.intel.com">Go to Intel.com</a>
+    </li>
+  </ul>
+  <ul class="gaat40-search">
+    <li>
+      <form method="get" id="FORMSearchHeader" action="http://mysearch.intel.com/corporate/default.aspx">
+        <fieldset>
+          <input type="hidden" id="culture" name="culture" value="en_US" />
+          <input type="hidden" name="category" id="category" />
+          <input type="hidden" name="adv" id="adv" />
+          <input type="hidden" name="value" id="value" />
+          <label id="lbl_search" for="q">Search</label>
+          <input id="q" name="q" type="text" class="gaat40-inptsearch" />
+          <input type="submit" value="Search" id="input-submit" class="gaat40-btnsearch" />
+          <div id="HAT-filtermenu-container" class="gaat40-hide"></div>
+        </fieldset>
+      </form>
+    </li>
+  </ul>
+  <div class="gaat40-nav">
+    <ul class="gaat40-mainnav">
+      <li class="gaat40-first gaat40-selected" id="gaat40-hdr_link_bus">
+        <a href="/en-us/">Intel&#174; Software Network</a>
+      </li>
+    </ul>
+    <div class="gaat40-lower">
+      <ul id="gaat40-subnav" class="gaat40-subnav">
+<!-- start menu -->
+        <li class="gaat40-first">
+          <a href="/en-us/articles/intel-software-network-communities/">Communities</a>
+          <div class="gaat40-subsubnav gaat40-hide">
+            <ul class="gaat40-first">
+              <li class="gaat40-first"><a href="http://appdeveloper.intel.com/">AppUp&#8480; developer program</a></li>
+              <li><a href="/en-us/visual-computing/">Visual Computing</a></li>
+              <li><a href="/en-us/parallel/">Parallel Programming</a></li>
+              <li><a href="/en-us/manageability/">Manageability</a></li>
+              <li><a href="/en-us/academic/">Academic</a></li>
+              <li><a href="/en-us/articles/blackbelt/">Earn Reputation &mdash; Intel&reg; Black Belt Program</a></li>
+              <li><a href="/en-us/articles/intel-software-network-communities/">More...</a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="">
+          <a href="http://www.intel.com/cd/software/partner/asmo-na/eng/index.htm">Partners</a>
+          <div class="gaat40-subsubnav gaat40-hide">
+            <ul class="gaat40-first">
+              <li class="gaat40-first"><a href="http://www.intel.com/cd/software/partner/asmo-na/eng/index.htm">Intel&reg; Software Partner Program</a></li>
+              <li><a href="http://www.intel.com/cd/software/partner/asmo-na/eng/285233.htm">Member Benefits</a></li>
+              <li><a href="http://www.intel.com/cd/software/partner/asmo-na/eng/431095.htm">Software Checkers</a></li>
+              <li><a href="http://www.intel.com/cd/software/partner/asmo-na/eng/293533.htm">Program News</a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="">
+          <a href="javascript:void(0);">Tools & Downloads</a>
+          <div class="gaat40-subsubnav gaat40-hide">
+            <ul class="gaat40-first">
+              <li><h5>Tools</h5></li>
+              <li><a href="/en-us/intel-sdp-home/">Intel&reg; Software Development Products</a></li>
+              <li><a href="/en-us/intel-parallel-studio-home/">Intel&reg; Parallel Studio</a></li>
+              <li><a href="/en-us/articles/intel-software-evaluation-center/">Free Evaluations</a></li>
+              <li><a href="/en-us/articles/tools/">Tools Knowledge Base</a></li>
+              <li><a href="/en-us/articles/intel-academic-developer-program/">Academic</a></li>
+            </ul>
+            <ul>
+              <li><h5>Downloads</h5></li>
+              <li><a href="/en-us/articles/code-downloads/">Code & Downloads</a></li>
+              <li><a href="/en-us/articles/non-commercial-software-development/">Free Non-Commercial</a></li>
+              <li><a href="/en-us/whatif/">"WhatIf" Experimental Software</a></li>
+              <li><a href="http://downloadcenter.intel.com/">Drivers</a></li>
+              <li><a href="http://www.intel.com/support/detect.htm">Intel&reg; Driver Update Utility</a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="">
+          <a href="javascript:void(0);">Forums & Support</a>
+          <div class="gaat40-subsubnav gaat40-hide">
+            <ul class="gaat40-first">
+              <li class="gaat40-first"><a href="/en-us/forums/">Software Forums</a></li>
+              <li><a href="http://appdeveloper.intel.com/en-us/forum/">AppUp&#8480; developer program Forums</a></li>
+              <li><a href="/en-us/articles/all/1/">Knowledge Base</a></li>
+              <li><a href="/en-us/articles/intel-software-developer-support/">Support Resources</a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="">
+          <a href="javascript:void(0);">Blog</a>
+          <div class="gaat40-subsubnav gaat40-hide">
+            <ul class="gaat40-first">
+              <li class="gaat40-first"><a href="/en-us/blogs/">Intel&reg; Software Network blog</a></li>
+              <li><a href="http://appdeveloper.intel.com/en-us/blog">AppUp&#8480; developer program blog</a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="">
+          <a href="javascript:void(0);">Resources</a>
+          <div class="gaat40-subsubnav gaat40-hide">
+            <ul class="gaat40-first">
+              <li class="gaat40-first"><a href="/en-us/tv/">Intel&reg; Software Network TV</a></li>
+              <li><a href="/en-us/videos/list/1/1/">Take-5 Videos</a></li>
+              <li><a href="/en-us/articles/intel-software-network-events-calendar/">Events Calendar</a></li>
+              <li><a href="/en-us/articles/intel-software-network-news-archive/">Intel&reg; Software Network Newsletter</a></li>
+              <li><a href="http://www.intel.com/intelpress/">Intel&reg; Press</a></li>
+              <li><a href="/en-us/articles/intel-software-insight-magazine/">Insight Magazine</a></li>
+              <li><a href="http://software.intel.com/sites/billboard/va-magazines/">Visual Adrenaline</a></li>
+            </ul>
+          </div>
+        </li>
+<!-- end menu -->
+      </ul>
+      <ul id="gaat40-subnav" class="gaat40-subnav" style="float: right">
+       <li class="gaat40-first">
+        <a href="http://www.intel.com/products/sitemap.htm">Product Index</a>
+       </li>
+       <li id="gaat40-locale">
+        <a href="javascript:;">United States (English)</a>
+        <div class="gaat40-subsubnav gaat40-hide">
+         <ul>
+          <li><a href="http://software.intel.com/en-us/">English</a></li>
+          <li><a href="http://software.intel.com/zh-cn/">中文</a></li>
+          <li><a href="http://software.intel.com/ru-ru/">Русский</a></li>
+          <li><a href="http://software.intel.com/fr-fr/">Français</a></li>
+         </ul>
+        </div>
+       </li>
+      </ul>
+  </div>
+</div>
+<div class="gaat40-share"><div id="ishare_icon"></div></div>
+<div class="gaat40-clear"></div>
+</div>
+<script type="text/javascript">/*<![CDATA[*/
+  document.write('<scr' + 'ipt type="text/javascript" src="' + GAAT40.AssetPath + GAAT40.renderSettings.sitewidePath + '/js/header2' + GAAT40.FileType +'.js"><\/scr' + 'ipt>');
+/*]]>*/</script> 
+</div> 
+<!-- end corp header -->
+  <link rel="stylesheet" href="/common/css/tweaks.css?v=7470" type="text/css" media="screen" />
+<div id="right">
+<div class="box" id="buttons">
+ <div class="boxBody" id="icons">
+  <div id="sprn" onclick="print();" onmouseout="window.status=''" onmouseover="window.status='Print'" title="Print"></div>
+  <div id="seaf" onclick="eaf();" onmouseout="window.status=''" onmouseover="window.status='Email to a friend'" title="Email to a friend"></div>
+  <div id="ssfb" onclick="sfb();" onmouseout="window.status=''" onmouseover="window.status='Support'" title="Support"></div>
+  <div id="snew" onclick="document.location='http://software.intel.com/en-us/articles/intel-software-network-news-archive/';" onmouseout="window.status=''" onmouseover="window.status='http://software.intel.com/en-us/articles/intel-software-network-news-archive/'" title="Newsletter"></div>
+  <div id="srss" onclick="document.location='/en-us/blogs/feed/'" onmouseout="window.status=''" onmouseover="window.status=document.location.protocol + '//' + document.location.hostname + '/en-us/blogs/feed/'" title="RSS"></div>
+  <div id="sdig" onclick="digg();" onmouseout="window.status=''" onmouseover="window.status='Digg this'" title="Digg this"></div>
+  <div id="sdel" onclick="delicious();" onmouseout="window.status=''" onmouseover="window.status='del.icio.us'" title="del.icio.us"></div>
+  <div id="ssrc" onclick="window.open('http://software.intel.com/en-us/articles/advanced-search/','_blank');" onmouseout="window.status=''" onmouseover="window.status='Search'" title="Search"></div>
+ </div>
+</div>
+<div class="box">
+ <div class="boxHeader">Login</div>
+ <div class="boxBody">
+  <form action="https://ssl.software.intel.com/en-us/login/?Lang=ENG&amp;TARGET=http://software.intel.com/en-us/blogs/2008/12/02/timing-locks-in-c" method="post">
+   <input type="hidden" name="qlogin" value="true" />
+   <div class="row">
+    <div class="key">Login ID:</div>
+    <div class="value"><input id="txtUserName" name="txtUserName" class="login" size="12" type="text" /></div>
+   </div>
+   <div class="row">
+    <div class="key">Password:</div>
+    <div class="value"><input id="txtPassword" name="txtPassword" class="login" size="12" type="password" /></div>
+   </div>
+   <div class="row">
+    <div class="key">Remember Me?</div><div class="value"><input id="chkRememberMe" type="checkbox" name="chkRememberMe" value="on" /></div>
+   </div>
+   <div style="clear: both"></div>
+   <input type="submit" class="login" value="Login" /><br />
+  </form>
+  <br />
+	<b><a id="new_reg" href="/en-us/articles/intel-software-network-login-id-faq/">New Registration?</a></b><br />
+  <a href="https://welcome.intel.com/forgot_loginid.aspx?Lang=ENG">Forgot Login ID?</a><br />
+  <a href="https://welcome.intel.com/forgot_password.aspx?Lang=ENG">Forgot Password?</a><br />
+ </div>
+</div>
+     <p>3,963 Posts served</p>
+     <p>9,713 Conversations started</p>
+	<div class="box">
+		<div class="boxHeader">Navigation</div>
+		<div class="boxBody">
+			<div class="rbc2">
+				<ul>
+					<li><a href="http://software.intel.com/en-us/blogs/categories/">Blog Categories</a></li>
+					<li><a href="http://software.intel.com/en-us/blogs/authors/">Meet The Bloggers</a></li>
+					<li><a href="http://software.intel.com/en-us/blogs/archives/">Archives</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="box">
+		<div class="boxHeader">Posts By Category</div>
+		<div class="boxBody">
+			<div class="rbc2">
+				<ul>
+					<li><a href="http://software.intel.com/en-us/blogs/category/academic/">Academic</a> <a href="http://software.intel.com/en-us/blogs/category/academic/feed/"><img height="16" alt="RSS" class="rss" src="/common/images/icons/rss.gif" width="16" border="0" /></a></li>
+<li><a href="http://software.intel.com/en-us/blogs/category/artmusicanimation/">Art, Music, &amp; Animation</a> <a href="http://software.intel.com/en-us/blogs/category/artmusicanimation/feed/"><img height="16" alt="RSS" class="rss" src="/common/images/icons/rss.gif" width="16" border="0" /></a></li>
+<li><a href="http://software.intel.com/en-us/blogs/category/embedded-computing/">Embedded Computing</a> <a href="http://software.intel.com/en-us/blogs/category/embedded-computing/feed/"><img height="16" alt="RSS" class="rss" src="/common/images/icons/rss.gif" width="16" border="0" /></a></li>
+<li><a href="http://software.intel.com/en-us/blogs/category/events/">Events</a> <a href="http://software.intel.com/en-us/blogs/category/events/feed/"><img height="16" alt="RSS" class="rss" src="/common/images/icons/rss.gif" width="16" border="0" /></a></li>
+<li><a href="http://software.intel.com/en-us/blogs/category/game-development/">Game Development</a> <a href="http://software.intel.com/en-us/blogs/category/game-development/feed/"><img height="16" alt="RSS" class="rss" src="/common/images/icons/rss.gif" width="16" border="0" /></a></li>
+<li><a href="http://software.intel.com/en-us/blogs/category/graphics-media/">Graphics &amp; Media</a> <a href="http://software.intel.com/en-us/blogs/category/graphics-media/feed/"><img height="16" alt="RSS" class="rss" src="/common/images/icons/rss.gif" width="16" border="0" /></a></li>
+<li><a href="http://software.intel.com/en-us/blogs/category/partner-program/">Intel SW Partner Program</a> <a href="http://software.intel.com/en-us/blogs/category/partner-program/feed/"><img height="16" alt="RSS" class="rss" src="/common/images/icons/rss.gif" width="16" border="0" /></a></li>
+<li><a href="http://software.intel.com/en-us/blogs/category/appdeveloper/">Intel® AppUp Developer Program</a> <a href="http://software.intel.com/en-us/blogs/category/appdeveloper/feed/"><img height="16" alt="RSS" class="rss" src="/common/images/icons/rss.gif" width="16" border="0" /></a></li>
+<li><a href="http://software.intel.com/en-us/blogs/category/manageability-security/">Manageability &amp; Security</a> <a href="http://software.intel.com/en-us/blogs/category/manageability-security/feed/"><img height="16" alt="RSS" class="rss" src="/common/images/icons/rss.gif" width="16" border="0" /></a></li>
+<li><a href="http://software.intel.com/en-us/blogs/category/mobility/">Mobility</a> <a href="http://software.intel.com/en-us/blogs/category/mobility/feed/"><img height="16" alt="RSS" class="rss" src="/common/images/icons/rss.gif" width="16" border="0" /></a></li>
+<li><a href="http://software.intel.com/en-us/blogs/category/open-source/">Open Source</a> <a href="http://software.intel.com/en-us/blogs/category/open-source/feed/"><img height="16" alt="RSS" class="rss" src="/common/images/icons/rss.gif" width="16" border="0" /></a></li>
+<li><a href="http://software.intel.com/en-us/blogs/category/parallel/">Parallel Programming</a> <a href="http://software.intel.com/en-us/blogs/category/parallel/feed/"><img height="16" alt="RSS" class="rss" src="/common/images/icons/rss.gif" width="16" border="0" /></a></li>
+<li><a href="http://software.intel.com/en-us/blogs/category/performance-optimization/">Performance &amp; Optimization</a> <a href="http://software.intel.com/en-us/blogs/category/performance-optimization/feed/"><img height="16" alt="RSS" class="rss" src="/common/images/icons/rss.gif" width="16" border="0" /></a></li>
+<li><a href="http://software.intel.com/en-us/blogs/category/power/">Power Efficiency</a> <a href="http://software.intel.com/en-us/blogs/category/power/feed/"><img height="16" alt="RSS" class="rss" src="/common/images/icons/rss.gif" width="16" border="0" /></a></li>
+<li><a href="http://software.intel.com/en-us/blogs/category/site-news-announcements/">Site News &amp; Announcements</a> <a href="http://software.intel.com/en-us/blogs/category/site-news-announcements/feed/"><img height="16" alt="RSS" class="rss" src="/common/images/icons/rss.gif" width="16" border="0" /></a></li>
+<li><a href="http://software.intel.com/en-us/blogs/category/software-tools/">Software Tools</a> <a href="http://software.intel.com/en-us/blogs/category/software-tools/feed/"><img height="16" alt="RSS" class="rss" src="/common/images/icons/rss.gif" width="16" border="0" /></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="box">
+		<div class="boxHeader">Popular Posts</div>
+		<div class="boxBody">
+			<div class="rbc2">
+				<ul>
+					<li><a href="http://software.intel.com/en-us/blogs/2008/12/11/intel-releases-preproduction-windows-7-graphics-driver/" rel="bookmark" title="Permanent Link: Intel Releases Preproduction Windows 7 Graphics Driver">Intel Releases Preproduction Windows 7 Graphics Driver</a></li><li><a href="http://software.intel.com/en-us/blogs/2007/05/07/update-on-the-915-graphics-wddm-vista-driver-issue/" rel="bookmark" title="Permanent Link: Update on the 915 Graphics WDDM Vista Driver Issue">Update on the 915 Graphics WDDM Vista Driver Issue</a></li><li><a href="http://software.intel.com/en-us/blogs/2009/03/30/the-c-programming-language-version-40/" rel="bookmark" title="Permanent Link: The C# Programming Language Version 4.0">The C# Programming Language Version 4.0</a></li><li><a href="http://software.intel.com/en-us/blogs/2008/02/12/windows-server-2008-aero-enabled-workstation-edition/" rel="bookmark" title="Permanent Link: Windows Server 2008 &quot;Aero Enabled&quot; Workstation Edition">Windows Server 2008 &quot;Aero Enabled&quot; Workstation Edition</a></li><li><a href="http://software.intel.com/en-us/blogs/2007/04/02/video-why-intel-915-graphics-dont-have-a-wddm-driver-for-vista/" rel="bookmark" title="Permanent Link: Video: Why Intel 915 graphics don't have a WDDM driver for Vista">Video: Why Intel 915 graphics don't have a WDDM driver for Vista</a></li>				</ul>
+			</div>
+		</div>
+	</div>
+<!--
+commented out, since comments come from another place
+	<div class="box">
+		<div class="boxHeader">Recent Comments <a href="http://software.intel.com/en-us/blogs/comments/feed/"><img height="16" alt="RSS" class="rss" src="/common/images/icons/rss.gif" width="16" border="0" /></a></div>
+		<div class="boxBody">
+			<div class="rbc2">
+				<ul>
+									</ul>
+			</div>
+		</div>
+	</div>
+-->
+        <div class="box">
+                <div class="boxHeader">Blog Roll</div>
+                <div class="boxBody">
+                        <div class="rbc2">
+                                <ul>
+<li><a href="http://technews.acm.org/" target="_blank">Association for Computing Machinery TechNews (ACM)</a></li>
+<li><a href="http://www.ddj.com/go-parallel/" target="_blank">Go Parallel! (Dr. Dobbs)</a></li>
+<li><a href="http://www.hpcwire.com/news/" target="_blank">HPCwire (Tabor Communications, Inc.)</a></li>
+<li><a href="http://insidehpc.com/" target="_blank">insideHPC (John West)</a></li>
+<li><a href="http://www.bluebytesoftware.com/" target="_blank">Joe Duffy's Weblog (Microsoft)</a></li>
+<li><a href="http://msdn.microsoft.com/de-de/concurrency/default.aspx" target="_blank">Microsoft Parallel Programming Development Center (Microsoft Germany)</a></li>
+<li><a href="http://www.multicoreinfo.com/" target="_blank">MultiCoreInfo.com</a></li>
+<li><a href="http://scalability.org/" target="_blank">scalability.org (Scalable Informatics) </a></li>
+<li><a href="http://www.software-dev-blog.de/" target="_blank">Software Dev Blog (Intel Germany)</a> </li>
+<li><a href="http://softtalkblog.wordpress.com/" target="_blank">Soft Talk Blog (Intel United Kingdom)</a></li>
+<li><a href="http://www.danielmoth.com/Blog/" target="_blank">The Moth (Microsoft)</a></li>
+                                </ul>
+                        </div>
+                </div>
+        </div>
+</div>
+    <div id="body">
+     <div id="breadcrumb"><a href="http://www.intel.com/software/">Home</a> &rsaquo; <a href="http://software.intel.com/en-us/blogs/">Software Blogs</a> &rsaquo;</div>
+ <h1><a href="http://software.intel.com/en-us/blogs/2008/12/02/timing-locks-in-c/" rel="bookmark" title="Permanent Link: Timing locks in C#">Timing locks in C#</a></h1>
+ <h3>
+   By <a href="http://software.intel.com/en-us/blogs/author/john-hurliman/">John Hurliman (Intel)</a> (2 posts)
+ on December 2, 2008 at 12:28 pm </h3>
+ <div class="tweetmeme_button" style="float: right; margin-left: 10px;"><iframe src="http://api.tweetmeme.com/button.js?url=http%3A%2F%2Fsoftware.intel.com%2Fen-us%2Fblogs%2F2008%2F12%2F02%2Ftiming-locks-in-c%2F&amp;source=intelswblog&amp;style=normal&amp;service=bit.ly&amp;b=2" height="61" width="50" frameborder="0" scrolling="no"></iframe></div>
+<p>A recent <a href="https://lists.berlios.de/pipermail/opensim-dev/2008-November/003708.html">post</a> to the <a href="https://lists.berlios.de/mailman/listinfo/opensim-dev">opensim-dev</a> mailing list highlighted a common problem in debugging complex C# code. Somewhere, a lock is being held for a long period of time and holding up other threads, bringing the entire system to a halt while the task completes. Debugging with Mono and gdb has the useful <a href="http://www.mono-project.com/Debugging#Debugging_Managed_Lock_Deadlocks">mono_locks_dump</a>, but this is better suited for resolving deadlock situations. If you have a thread that is holding a lock for "only" 500ms, it's very difficult to dump all the lock information at the correct time. Even if you do manage to get the timing right, there's no way to know which of the current locks is taking too long. The solution I came up with is to inject code that measures the length of time locks are held.</p>
+<h2>LockTime</h2>
+<pre><code>&gt;LockTime.exe
+-a, --assembly=VALUE       assembly to insert lock timers into
+-v, --verbose              be verbose
+-h, -?, --help             show this help
+</code></pre>
+<p></p>
+<p>LockTime is a small snippet of code I wrote to measure the amount of time spent inside locks. It uses <a href="http://www.mono-project.com/Cecil">Mono.Cecil</a> to load a managed assembly, look for locks, and inject CIL that measures lock timing. The usage is very simple. You feed it the name of an assembly, and it will produce a new assembly alongside the original that contains lock timing code. For example, if you run the command <em>LockTime.exe -a LockTest.exe</em>, it will produce a new <em>LockTest-LockTime.exe</em> binary. This program works on any managed assembly, including both .exes and .dlls. If a lock using a measurable amount of time is detected, the injected code will print out a line to the console similar to this:</p>
+<pre><code>*** LOCK in System.Void MyNamespace.MyApp::MyFunction(): 15
+</code></pre>
+<p></p>
+<p>LockTime is provided free of charge under the <a href="http://en.wikipedia.org/wiki/BSD_license">BSD license</a>. It includes the Mono.Cecil library and <a href="http://www.ndesk.org/Options">Mono.Options</a> code which are both released under the <a href="http://en.wikipedia.org/wiki/MIT_License">MIT/X11</a> license.</p>
+<p>Download <a href="http://software.intel.com/file/8037">LockTime v1.0</a></p>
+<h2>How It Works</h2>
+<p>In C#, locking is accomplished through the <em>System.Threading.Monitor</em> class. The following code:</p>
+<pre><code>lock (object)
+{
+    ...
+}
+</code></pre>
+<p></p>
+<p>is shorthand syntax for:</p>
+<pre><code>Monitor.Enter(object);
+try
+{
+    ...
+}
+finally
+{
+    Monitor.Exit(object);
+}
+</code></pre>
+<p></p>
+<p>In CIL, this looks roughly like:</p>
+<pre><code>// Store the object to lock to a local variable
+stloc.0
+// Load our local variable onto the evaluation stack
+ldloc.0
+// Call Monitor.Enter() with our object
+call void [mscorlib]System.Threading.Monitor::Enter(object)
+.try
+{
+    // Leave the try block. Usually there would be other code here as well
+    leave.s    IL_001c
+}
+finally
+{
+    // Load our local variable onto the evaluation stack again
+    ldloc.0
+    // Call Monitor.Exit() with our object to free the lock
+    call void [mscorlib]System.Threading.Monitor::Exit(object)
+    // Leave the finally block
+    endfinally
+}
+</code></pre>
+<p></p>
+<p>LockTime injects code right after the <em>Monitor.Enter()</em> and <em>Monitor.Exit()</em> calls. The first injected code block simply stores <em>Environment.TickCount</em> to a new local variable that is created with Mono.Cecil. The second block of injected code gets the current <em>Environment.TickCount</em> again and subtracts the previous value. The result is stored where the original TickCount was previously stored. If the result is not zero, then <em>Console.Write()</em> and <em>Console.WriteLine()</em> are called to print out a string containing the current method name and the stored difference between the two TickCounts (length of time in milliseconds spent in the lock). If the result is zero, then the printing code is skipped. Since the time comparison is calculated after the lock is released, only two opcodes are injected inside the lock (reading <em>Environment.TickCount</em> and storing to a local variable). In other words, the new code will not measure itself in any significant way. However, one branching instruction is added after every lock, and if the lock was held for a non-zero number of milliseconds, it will call two print statements that add to the time spent in that method. Additionally, injecting strings for every function name that contains a lock can add a significant amount of data to the assembly.</p>
+<h2>Future Improvements</h2>
+<ul>
+<li><em>Environment.TickCount</em> is not the most accurate measurement device for execution timing. If slow locks in your program are not taking at least 100ms to execute, those slow locks will fail to print warnings consistently. Changing to <em>System.Diagnostics.StopWatch</em> will yield much more accurate timing.</li>
+<li>Any locks that take a (measured) non-zero amount of time to execute will print to the console. I implemented the measurement this way because it's very convenient to test for at the CIL level (loading the variable onto the evaluation stack and branching with brfalse). It would be nice to add a comparison with a user-specified threshold.</li>
+</ul>
+ <h5>
+  Categories: <a href="http://software.intel.com/en-us/blogs/category/open-source/" title="View all posts in Open Source" rel="category tag">Open Source</a>,  <a href="http://software.intel.com/en-us/blogs/category/software-tools/" title="View all posts in Software Tools" rel="category tag">Software Tools</a> </h5>
+ Refer to our <a href="http://software.intel.com/en-us/articles/optimization-notice/">Optimization Notice</a> for more information regarding performance and optimization choices in Intel software products.<br /><br /><div id="comments"></div>
+<style type="text/css">td.comment .dp-highlighter { width: 525px; }</style>
+<script type="text/javascript">
+function comment_form_check(full) {
+	if(full == 'true') {
+		if($("#comment_name").val().length < 1) {
+			alert('Name required is a required field!');
+			$("#comment_name").focus();
+			return false;
+		}
+		if(!validate_email($("#comment_email").val())) {
+			alert('Email required is a required field!');
+			$("#comment_email").focus();
+			return false;
+		}
+	}
+	if($("#comment_text").val().length < 1) {
+		alert('comment text is a required field');
+		$("#comment_text").focus();
+		return false;
+	}
+	return true;
+}
+</script>
+<h3 class="pagesection">Comments (0)</h3><div class="seperator"></div>
+<h3 class="pagesection">Trackbacks (0)</h3><div class="seperator"></div><br />
+<h3 class="pagesection">Leave a comment&nbsp;&nbsp;<a target="_blank" href="http://software.intel.com/en-us/articles/comments-help-guide/"><img src="/media/images/help.gif" border="0" style="height:19px;width:19px;vertical-align:middle;"></a></h3><div>To obtain technical support, please go to <a href="http://software.intel.com/sites/support/">Software Support</a>.</div><div class="seperator"></div>
+<form action="/services/comment/post/" method="post" onsubmit="return comment_form_check('true');">
+Name (required)*<br /><input id="comment_name" name="n" size="45" type="text" /><br />
+Email (required; will not be displayed on this page)*<br /><input id="comment_email" name="e" size="45" type="text" /><br />
+Your URL (optional)<br /><input name="u" size="45" type="text" /><br />
+<br />
+Comment*<br />
+<input name="t" type="hidden" value="1293265673|227d2f1f842a6c18d3a31cc08f7c8236" />
+<input name="m" type="hidden" value="4" />
+<input name="s" type="hidden" value="4323" />
+<input name="c" type="hidden" value="6" />
+<input name="l" type="hidden" value="1" />
+<input name="a" type="hidden" value="408823" />
+<input name="p" type="hidden" value="http://software.intel.com/en-us/blogs/2008/12/02/timing-locks-in-c/" />
+<textarea id="comment_text" name="c" rows="10" style="width: 97%"></textarea><br />
+<input class="button" type="submit" value="submit" />
+</form>
+   </div>
+<!-- begin footer -->
+<div class="con con-ftr">
+  <div class="gaat40-clear"></div>
+  <div id="gaat40-footer" class="gaat40-reset">
+    <div class="gaat40-cr">
+      <ul class="gaat40-first">
+        <li class="gaat40-first">©Intel Corporation</li>
+      </ul>
+    </div>
+    <div class="gaat40-main">
+      <ul class="gaat40-first">
+        <li class="gaat40-first"><a href="http://www.intel.com/siteindex.htm?iid=ftr+map">Site Map</a></li>
+        <li><a href="http://www.intel.com/intel/rss.htm?iid=ftr+rss">RSS</a></li>
+        <li><a href="http://www.intel.com/jobs/index.htm?iid=ftr+jobs">Jobs</a></li>
+        <li><a href="http://www.intc.com/index.cfm?iid=ftr+invrel">Investor Relations</a></li>
+        <li><a href="http://www.intel.com/pressroom/index.htm?iid=ftr+press">Press Room</a></li>
+        <li><a href="http://www.intel.com/feedback.htm?iid=ftr+contact">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="gaat40-terms">
+      <ul class="gaat40-first">
+        <li class="gaat40-first"><a href="http://www.intel.com/sites/corporate/termsofuse.htm?iid=ftr+terms">Terms of Use</a></li>
+        <li><a class="gaat40-trademark" href="http://www.intel.com/sites/corporate/tradmarx.htm?iid=ftr+trademark">*Trademarks</a></li>
+        <li><a href="http://www.intel.com/sites/corporate/privacy.htm?iid=ftr+privacy">Privacy</a></li>
+      </ul>
+    </div>
+    <div class="clear"></div>
+  </div> 
+</div>
+<!-- end footer -->
+  </div>
+  <div style="display: none">
+  </div>
+  <div style="display: none">
+   <script type="text/javascript" src="/common/js/wa_setup.js?v=20101225"></script>
+   <script type="text/javascript"><!--
+    var wa_pageName='Timing locks in C#';
+    var wa_geo='asmo-na';
+    var wa_language='en-us';
+    var wa_org1='sw';
+    var wa_org2='isn';
+    var wa_org3='swblogs';
+    var wa_org4='Timing locks in C#';
+    var wa_orgX='';
+    var wa_custom01='John Hurliman (Intel)';
+    var wa_custom03='opens';
+    var wa_custom04='.net,C++,code,locks,mono,programming,timing';
+    var wa_urlQueryString="all";
+    var wa_reportSuites='intelcorpsw,intelcorpblog,intelcorpisnsource';
+    var s_charSet='UTF-8';
+    var wa_eCustom13='http://software.intel.com/en-us/blogs/2008/12/02/timing-locks-in-c/';
+    var wa_eCustom28='http://software.intel.com/en-us/blogs/2008/12/02/timing-locks-in-c/';
+   // -->
+   </script>
+   <script type="text/javascript" src="/common/js/wa_process.js?v=20101225"></script>
+   <script type="text/javascript">var _sf_async_config={uid:982,domain:"software.intel.com"}; (function(){ function loadChartbeat() { window._sf_endpt=(new Date()).getTime(); var e = document.createElement('script'); e.setAttribute('language', 'javascript'); e.setAttribute('type', 'text/javascript'); e.setAttribute('src', (("https:" == document.location.protocol) ? "https://s3.amazonaws.com/" : "http://") + "static.chartbeat.com/js/chartbeat.js"); document.body.appendChild(e); } var oldonload = window.onload; window.onload = (typeof window.onload != 'function') ? loadChartbeat : function() { oldonload(); loadChartbeat(); }; })();</script>
+  </div>
+ </body>
+</html>
