@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+        
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="generator" content="Fog Creek CityDesk 2.0.25" />
+<meta name="citydesk" content="F7E7E13A/290" />
+<title>
+      julian m bucknall &gt;&gt; 
+  	
+	
+	Lock-free data structures: the stack
+	
+    </title>
+    <link rel="stylesheet" type="text/css" href="../CSS/boyet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="../CSS/boyetprint.css" media="print" />
+  </head>
+  <body>
+	<a href="../index.html">    
+		<div id="header">
+	    </div>
+	</a>
+    
+  	<div id="leftcolumn">
+		<div class="staticcontent">
+		<p>
+		<a href="../index.html" style="color:white;">Home</a>
+		</p>
+		</div>				
+		<div id="googleads">
+		<span>
+<script type="text/javascript">
+//<![CDATA[
+<!--
+google_ad_client = "pub-9975007717823376";
+google_alternate_ad_url = "http://www.boyet.com/Images/TopStyle_banner.gif";
+google_ad_width = 120;
+google_ad_height = 600;
+google_ad_format = "120x600_as";
+google_ad_type = "text_image";
+google_ad_channel ="";
+google_color_border = "412C2E";
+google_color_bg = "C18D97";
+google_color_link = "412C2E";
+google_color_text = "000000";
+google_color_url = "806550";
+//-->//]]>
+</script>
+<script src="http://pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script>	
+		</span>		
+		</div>
+	</div>
+
+	<div id="centercolumn">
+	<div class="article">
+	<h1>
+	
+	
+	Lock-free data structures: the stack
+	
+	</h1>
+	
+	
+
+	<p>
+	[<a href="javascript:window.print()">Click to print this article</a>]
+	</p>
+            
+	
+	<span class="image">
+	<img src="../Images/Helmsley_castle.gif" alt="Helmsley Castle, N. Yorks" />
+	</span>				
+	
+	
+    <p>
+<strong>Notes</strong>: Several people have emailed me to say
+this code suffers from the <a href="ABAProblem.html">ABA problem</a>. 
+It doesn't, but only because it's written in C# and implictly uses the 
+.NET garbage collector. If you just, quote, convert it to C++ or Delphi, 
+unquote, it will not work and will suffer from some form of ABA.
+See <a href="http://blog.boyet.com/blog/blog/someone-is-wrong-on-the-internet-mdash-the-lock-free-stack-edition/">here</a> for details.
+</p>
+<p>
+------
+</p>
+
+<p>
+It's a fact that lock-based concurrency doesn't scale: only one thread
+at a time can execute the thread-safe code that's being protected by a
+lock or a mutex. The more threads there are accessing the lock, the
+more will be just sitting there waiting. (Actually "waiting" implies
+that they're awake: in fact, the operating system will have put them
+to sleep and will awaken them one at a time to acquire the lock.)
+</p>
+
+<p>
+In pseudo-code, we have for a thread:
+</p>
+<div class="codebackground"><pre>
+do forever
+  acquire mutex (or other lock) to resource
+  do work on protected resource 
+  release mutex
+  maybe do other work not requiring resource
+end do
+</pre></div>
+<p>
+Meanwhile, the other threads may be doing other work, but eventually
+they grind to a halt, all stuck waiting for the lock to be released.
+And when that happens only one thread can be woken up to acquire the
+lock. We have the effect of a hourglass where only one grain of sand
+can get through the restriction at any one time, and grains that did
+get through can make their way to the top again. The more grains of
+sand the bigger the wait. Similarly the more threads using the
+protected resource the longer they'll have to wait proportionally to
+the amount of work they do. 
+</p>
+<p>
+It's worse as well if the machine being used has two or more CPUs,
+using a lock-based approach means in effect that you can't really take
+advantage of all CPUs. And more systems are being sold that have two
+CPUs on the same die, or that use hyperthreading to mimic two CPUs. 
+</p>
+<p>
+That's why an awful lot of work has been done over the past 10 or 15
+years on lock-free or non-blocking data structures. There is a precise
+meaning to the term lock-free by the way: A data structure is lock-free 
+if it guarantees that after a finite number of steps of any
+operation on the data structure, some operation completes.
+</p>
+<p>
+Lock-free data structures are usually implemented around some retry
+logic (a simple loop) as well as a strong synchronization primitive.
+The most widely-used such primitive used in these data structures is
+known as Compare-And-Swap (CAS). (A synchronization primitive is an
+atomic operation that cannot be interrupted and is usually implemented
+in hardware.) Windows (and therefore the .NET Framework) don't have
+CAS, but it can easily be implemented in software using another
+primitive that they do have. 
+</p>
+<p>
+Let's implement a lock-free stack using a linked list as the
+underlying data structure (you'll see why in a moment) to explore
+lock-free programming.
+</p>
+<p>
+There are two operations on a stack: <code>Push</code> adds an item to
+the top of the stack and <code>Pop</code> removes the top item. It's
+extremely easy to implement such a stack in a single threaded
+environment.
+</p>
+<div class="codebackground"><pre>
+  public class SimpleStack&lt;T&gt; {
+
+    private class Node&lt;V&gt; {
+      public Node&lt;V&gt; Next;
+      public V Item;
+    }
+
+    private Node&lt;T&gt; head;
+
+    public SimpleStack() {
+      head = new Node&lt;T&gt;();
+    }
+
+    public void Push(T item) {
+      Node&lt;T&gt; node = new Node&lt;T&gt;();
+      node.Item = item;
+      node.Next = head.Next;
+      head.Next = node;
+    }
+
+    public T Pop() {
+      Node&lt;T&gt; node = head.Next;
+      if (node == null)
+        return default(T);
+      head.Next = node.Next;
+      return node.Item;
+    }
+  }
+</pre></div>  
+<p>
+This implementation uses a dummy node for <code>head</code>, off from
+which we hang the rest of the stack. This makes it easier to code the
+<code>Push()</code> method: we don't have to check for a null
+<code>head</code>.
+</p>
+<p>
+Anyway, let's analyze <code>Push()</code> from a multithreaded
+viewpoint now. Getting a new node doesn't affect the stack object at
+all: <code>node</code> is just a local variable. Admittedly we are
+using a global service (the heap manager) and that may be affected by
+other threads. (Hold that thought as we continue.) The next line is
+all about local variables and can't be affected by other threads.
+</p>
+<p>
+The next line is more interesting. The <code>head</code> variable is a
+field of the (shared) object, but it's never changed. We get the value
+of its <code>Next</code> field and store that in a local variable
+(actually a field of a local variable, which amounts to the same
+thing). You may not know this, but .NET guarantees that reading
+<code>head.Next</code> is an atomic operation. In other words, no
+other thread can jump in half way through us reading
+<code>head.Next</code> and change its value so that we somehow get
+half of the old value and half of the new one. 
+</p>
+<p>
+The next line is the horrific one, in a multithreaded sense. Just
+before this line executes we have made sure that our node points to
+the node currently pointed to by <code>head</code>. But, and its a
+very big but, any other thread can come along and do a
+<code>Push()</code> (<code>head</code> now points to another new node)
+or a <code>Pop()</code> (<code>head</code> now points to the next node
+along) before our next line executes. If this does happen, we'll trash
+the linkage and the stack. This is why we usually add a lock to
+protect our access to the head node:
+</p>
+<div class="codebackground"><pre>
+  public void Push(T item) {
+    Node&lt;T&gt; node = new Node&lt;T&gt;();
+    node.Item = item;
+    lock (head) {
+      node.Next = head.Next;
+      head.Next = node;
+    }
+  }
+</pre></div>
+<p>
+Instead of doing this, we're going to be clever and use the
+<code>CAS</code> function. In C# the <code>CAS</code> function would
+look a little like this:
+</p>
+<div class="codebackground"><pre>
+static bool CAS(ref object destination, object currentValue, object newValue) {
+  if (destination == currentValue) {
+    destination = newValue;
+    return true;
+  }
+  return false;
+}
+</pre></div>
+<p>
+But of course the big problem is that, as written, it's not atomic.
+Any old thread could mess us up in the middle. In some operating
+systems or on some hardware there is a routine that is guaranteed to
+do this compare and swap atomically, but Windows doesn't have it. So
+we use another: <code>Interlocked.CompareExchange</code>. This method
+compares destination to <code>currentValue</code>, and if they're
+equal sets destination to <code>newValue</code> and returns
+<code>currentValue</code>. If they aren't equal it just returns the
+value of destination. And all this is done in an atomic fashion: no
+other thread can interrupt it. (In fact, it's done in hardware with
+the <code>CMPXCH</code> assembly instruction.) 
+</p>
+<p>
+Since we're in C# generics-land, here's the one I actually wrote:
+</p>
+<div class="codebackground"><pre>
+  private static bool CAS(
+    ref Node&lt;T&gt; location, Node&lt;T&gt; comparand, Node&lt;T&gt; newValue) {
+    return 
+      comparand == Interlocked.CompareExchange&lt;Node&lt;T&gt;&gt;(
+                     ref location, newValue, comparand);
+  }
+</pre></div>
+<p>
+Now we can use this method with some retry logic to effect linking the
+new node without blocking other threads. Are you ready?
+</p>
+<div class="codebackground"><pre>
+  public void Push(T item) {
+    Node&lt;T&gt; node = new Node&lt;T&gt;();
+    node.Item = item;
+    do {
+      node.Next = head.Next;
+    } while (!CAS(ref head.Next, node.Next, node));
+  }
+</pre></div>
+<p>  
+In other words, we set our node's <code>Next</code> value to
+<code>head.Next</code>, and try and set the <code>head.Next</code>
+value to our new node provided that <code>head.Next</code> hasn't
+changed in the meantime. If it has we just try again. And again.
+Eventually we shall succeed. Or rather, we can't guarantee that a
+particular thread may not succeed for a very long time, rather that
+there will always be a particular thread that will be moving forward
+at some particular time.
+</p>
+<p>
+If you think that this is not good enough (this loop not being
+guaranteed to exit), consider this: in a normal locking situation,
+it's not guaranteed that a particular thread will not wait for a very
+long time at a lock. The operating system makes no guarantees about
+how long a particular thread waits, just that only one thread will be
+woken up to acquire the lock once the current thread releases it.
+</p>
+<p>
+The pattern shown here is essentially how you do lock-free
+programming: read the current value from the variable, try and set the
+new value provided that the variable has not been changed. Repeat and
+rinse until we're successful.
+</p>
+<p>
+So, now the Pop() method looks like this:
+</p>
+<div class="codebackground"><pre>
+  public T Pop() {
+    Node&lt;T&gt; node;
+    do {
+      node = head.Next;
+      if (node == null)
+        return default(T);
+    } while (!CAS(ref head.Next, node, node.Next));
+    return node.Item;
+  }
+</pre></div>
+<p>
+Of course, we shouldn't take my word for it that this contraption of
+bizarre code works, we have to try this out on a dual (or more)
+processor machine. (Big tip for multithreaded development: always use
+a machine with more than one processor to test your multithreaded
+code. It'll fail faster if there's a bug.)
+</p>
+<p>
+So I wrote this juicy little application: it pushes 10000 integers
+onto a stack in one thread and pops them all from anotherat the same
+time. Since I have a dual processor machine here, I figured that would
+be the best test to do. 
+</p>
+<p>
+The first thread just pushes the integers 1 to 10000 onto the stack.
+The second thread pops them off and keeps tallies of what it's seen to
+make sure that it pops off exactly one of each value and there are
+exactly 10000 of them. (Note: the way I wrote the <code>Pop()</code>
+method is to return the default value for the instantiating type if
+there was nothing on the stack. For an <code>int</code>, the default
+value is 0, which is why I don't use 0 as a value to push on the
+stack.)
+</p>
+<div class="codebackground"><pre>
+  class Program {
+
+    public const int topValue = 10000;
+
+    class PusherEngine {
+      private SimpleStack&lt;int&gt; stack;
+      public PusherEngine(SimpleStack&lt;int&gt; stack) {
+        this.stack = stack;
+      }
+      public void Execute() {
+        for (int i = 1; i &lt;= topValue; i++)
+        {
+          stack.Push(i);
+        }
+      }
+    }
+
+    class PopperEngine {
+      private SimpleStack&lt;int&gt; stack;
+      private Thread pusherThread;
+
+      public PopperEngine(SimpleStack&lt;int&gt; stack, Thread pusherThread) {
+        this.stack = stack;
+        this.pusherThread = pusherThread;
+      }
+
+      public void Execute() {
+        bool[] poppedValues = new bool[topValue + 1];
+        int poppedInt;
+
+        do {
+          poppedInt = stack.Pop();
+          if (poppedInt != 0) {
+            if (poppedValues[poppedInt])
+              Console.WriteLine(string.Format("{0} has been popped before!", poppedInt));
+            poppedValues[poppedInt] = true;
+          }
+        } while (poppedInt != topValue);
+
+        pusherThread.Join();
+        Console.WriteLine("pusher now finished");
+
+        poppedInt = stack.Pop();
+        while (poppedInt != 0) {
+          if (poppedValues[poppedInt])
+            Console.WriteLine(string.Format("{0} has been popped before!", poppedInt));
+          poppedValues[poppedInt] = true;
+          poppedInt = stack.Pop();
+        }
+
+        Console.WriteLine("checking output");
+        for (int i = 1; i &lt;= topValue; i++) {
+          if (!poppedValues[i])
+            Console.Write(string.Format("{0} is missing", poppedValues[i]));
+        }
+      }
+    }
+
+    static void Main(string[] args) {
+
+      Console.WriteLine("create the shared stack");
+      SimpleStack&lt;int&gt; stack = new SimpleStack&lt;int&gt;();
+
+      Console.WriteLine("create the threads");
+      PusherEngine pusher = new PusherEngine(stack);
+      Thread pusherThread = new Thread(new ThreadStart(pusher.Execute));
+      PopperEngine popper = new PopperEngine(stack, pusherThread);
+      Thread popperThread = new Thread(new ThreadStart(popper.Execute));
+
+      Console.WriteLine("start the threads");
+      pusherThread.Start();
+      popperThread.Start();
+
+      popperThread.Join();
+
+      Console.WriteLine("Done");
+      Console.ReadLine();
+    }
+  }
+</pre></div>
+<p>
+Because of the amount of code that gets executed in the popper thread,
+the pusher thread will usually finish pushing stuff much earlier than
+the popper thread can pop it off. 
+</p>
+<p>
+So what about the couple of items I asked you to bear in mind earlier
+on? First, we used a linked list for the data structure in order that
+we didn't have to pre-size the stack to use an array (for example).
+The big issue here would be how to grow the array when the stack
+filled. It's difficult without locking the array. Say we had a boolean
+value that we could test to see if if was safe to use the internal
+array. The issue is that if we detect true (it's OK to use the
+internal array) then another thread might creep in and clear the flag
+and grow the array before we had a chance to use it (so we may end up
+altering the array that was being thrown away). 
+</p>
+<p>
+Second, the heap manager is going to have to ensure multithreaded
+access to allow many threads to allocate memory at once and probably
+uses a locking methodology. So although we now have a super-cool 
+lock-free stack, we're using a locking heap manager inside. There's not a
+lot we can do about the garbage collector, but at least that's an
+equal-opportunity system: all .NET threads are going to be suspended
+during a collection.
+</p>
+<p>
+In my <a href="PriorityQueueLimited.html">article on implementing a simple priority
+queue with queues</a>, I talked about making it lock-free. Well, this
+article goes a little way towards that goal ("Uh, this is all about a
+stack, dummy, where's the queue? Let alone where's the priority
+queue?"), but we've a way to go yet. See you next time, when 
+<a href="LockfreeQueue.html">we'll talk about the lock-free queue</a>.
+</p>
+<p>
+Here's a bunch of links for you to tie all this lock-free stuff up.
+</p>
+<ul>
+  <li><a href="LockfreeStack.html">Lock-free data structures: the stack</a>
+  </li>
+<li><a href="LockfreeQueue.html">Lock-free data structures: the queue</a>
+  </li>
+<li><a href="LockfreeFreeList.html">Lock-free data structures: the free list</a>
+  </li>
+<li><a href="LockFreeLimitedPriorityQ.html">Lock-free data structures: the limited-priority queue</a>
+  </li>
+<li><a href="LockFreeRedux.html">Lock-free data structures: redux</a>
+  </li>
+<li><a href="../Code/LockFreeCode.zip">Lock-free data structures: the code</a>
+</li>
+</ul>
+	</div>
+	</div>
+
+	<div id="footer">
+	<p>
+	copyright (c) julian m bucknall, 2000-2008&nbsp;&nbsp;|&nbsp;&nbsp;
+	published: Thu, 27-Oct-2005&nbsp;&nbsp;|&nbsp;&nbsp;
+	updated: Sat, 18-Apr-2009&nbsp;&nbsp;|&nbsp;&nbsp;
+	email: <a href="GeneralBook/Webmaster.html">webmaster</a>
+	</p>
+	</div>
+    <script type="text/JavaScript" src="http://rt.trafficfacts.com/tf.php?k=5894gc40adf3d4b480c64848b32dea7b5fc203da187b1h11;c=s">
+    </script>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-3795909-1");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>
+  </body>
+</html>
+   
