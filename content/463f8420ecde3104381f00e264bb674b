@@ -1,0 +1,936 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+<head profile="http://gmpg.org/xfn/11">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>  Mono 2.0 Packages for Ubuntu Intrepid | eric&#8217;s extremeboredom</title>
+	
+<meta name="generator" content="WordPress 3.0.3" /> 
+
+<link rel="stylesheet" href="http://eric.extremeboredom.net/wp-content/themes/agregado/style.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="http://eric.extremeboredom.net/wp-content/themes/agregado/css/nav.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="http://eric.extremeboredom.net/wp-content/themes/agregado/css/posts.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="http://eric.extremeboredom.net/wp-content/themes/agregado/css/print.css" type="text/css" media="print" />
+
+<link rel="alternate" type="application/rss+xml" title="eric&#8217;s extremeboredom RSS Feed" href="http://eric.extremeboredom.net/feed" />
+<link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="http://eric.extremeboredom.net/feed/atom" />
+<link rel="pingback" href="http://eric.extremeboredom.net/xmlrpc.php" />
+
+
+
+<link rel="alternate" type="application/rss+xml" title="eric&#039;s extremeboredom &raquo; Mono 2.0 Packages for Ubuntu Intrepid Comments Feed" href="http://eric.extremeboredom.net/2008/10/15/296/feed" />
+<link rel='stylesheet' id='openid-css'  href='http://eric.extremeboredom.net/wp-content/plugins/openid/f/openid.css?ver=519' type='text/css' media='all' />
+<script type='text/javascript' src='http://eric.extremeboredom.net/wp-includes/js/jquery/jquery.js?ver=1.4.2'></script>
+<script type='text/javascript' src='http://eric.extremeboredom.net/wp-content/plugins/openid/f/openid.js?ver=519'></script>
+<script type='text/javascript' src='http://eric.extremeboredom.net/wp-content/themes/agregado/js/dropdowns.js?ver=1.0'></script>
+<script type='text/javascript' src='http://eric.extremeboredom.net/wp-content/plugins/google-analyticator/external-tracking.min.js?ver=6.1.1'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://eric.extremeboredom.net/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://eric.extremeboredom.net/wp-includes/wlwmanifest.xml" /> 
+<link rel='index' title='eric&#8217;s extremeboredom' href='http://eric.extremeboredom.net' />
+<link rel='start' title='Datacenter Cleanup' href='http://eric.extremeboredom.net/2005/02/25/94' />
+<link rel='prev' title='Why didn&#8217;t Nokia change Qt&#8217;s licensing model?' href='http://eric.extremeboredom.net/2008/10/04/288' />
+<link rel='next' title='DNS SRV Lookups on Linux from C#' href='http://eric.extremeboredom.net/2008/11/21/322' />
+<meta name="generator" content="WordPress 3.0.3" />
+<link rel='canonical' href='http://eric.extremeboredom.net/2008/10/15/296' />
+<link rel='shortlink' href='http://wp.me/poti8-4M' />
+<meta http-equiv="X-XRDS-Location" content="http://eric.extremeboredom.net/?xrds" />
+<meta http-equiv="X-Yadis-Location" content="http://eric.extremeboredom.net/?xrds" />
+	<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+<!-- Google Analytics Tracking by Google Analyticator 6.1.1: http://ronaldheft.com/code/analyticator/ -->
+<script type="text/javascript">
+	var analyticsFileTypes = [''];
+	var analyticsEventTracking = 'enabled';
+</script>
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-177891-1']);
+	_gaq.push(['_trackPageview']);
+
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
+</script>
+</head>
+
+<body class="page-mono-20-packages-for-ubuntu-intrepid" id="interior">
+
+
+<div id="top">  
+<div class="wrapper">
+
+<div id="navbar" class="clearfloat">
+<ul id="nav">
+<li id="nav-home"><a href="http://eric.extremeboredom.net/">Home</a></li>
+	<li class="cat-item cat-item-9"><a href="http://eric.extremeboredom.net/category/me" title="View all posts filed under Me">Me</a>
+<ul class='children'>
+	<li class="cat-item cat-item-14"><a href="http://eric.extremeboredom.net/category/me/rants" title="View all posts filed under Rants">Rants</a>
+</li>
+	<li class="cat-item cat-item-12"><a href="http://eric.extremeboredom.net/category/me/website" title="View all posts filed under Website Updates">Website Updates</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://eric.extremeboredom.net/category/me/work" title="View all posts filed under Work">Work</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://eric.extremeboredom.net/category/open-source" title="View all posts filed under Open Source">Open Source</a>
+<ul class='children'>
+	<li class="cat-item cat-item-6"><a href="http://eric.extremeboredom.net/category/open-source/mono" title="View all posts filed under Mono">Mono</a>
+</li>
+	<li class="cat-item cat-item-33"><a href="http://eric.extremeboredom.net/category/open-source/synapse" title="View all posts filed under Synapse">Synapse</a>
+</li>
+	<li class="cat-item cat-item-21"><a href="http://eric.extremeboredom.net/category/open-source/ubuntu" title="View all posts filed under Ubuntu">Ubuntu</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-1"><a href="http://eric.extremeboredom.net/category/other" title="View all posts filed under Other">Other</a>
+<ul class='children'>
+	<li class="cat-item cat-item-17"><a href="http://eric.extremeboredom.net/category/other/events" title="View all posts filed under Events">Events</a>
+</li>
+	<li class="cat-item cat-item-16"><a href="http://eric.extremeboredom.net/category/other/stuff-that-sucks" title="A collections of things that completly suck.">Stuff that sucks</a>
+</li>
+	<li class="cat-item cat-item-15"><a href="http://eric.extremeboredom.net/category/other/boredom-links" title="View all posts filed under Stuff to do when you&#039;re bored">Stuff to do when you&#039;re bored</a>
+</li>
+	<li class="cat-item cat-item-13"><a href="http://eric.extremeboredom.net/category/other/world-news" title="View all posts filed under World News">World News</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-10"><a href="http://eric.extremeboredom.net/category/technology" title="View all posts filed under Technology">Technology</a>
+<ul class='children'>
+	<li class="cat-item cat-item-28"><a href="http://eric.extremeboredom.net/category/technology/conferences" title="View all posts filed under Conferences">Conferences</a>
+</li>
+	<li class="cat-item cat-item-20"><a href="http://eric.extremeboredom.net/category/technology/seattlewireless" title="View all posts filed under SeattleWireless">SeattleWireless</a>
+</li>
+	<li class="cat-item cat-item-11"><a href="http://eric.extremeboredom.net/category/technology/softwaredev" title="View all posts filed under Software Development">Software Development</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-30"><a href="http://eric.extremeboredom.net/category/urbanism" title="View all posts filed under Urbanism">Urbanism</a>
+<ul class='children'>
+	<li class="cat-item cat-item-29"><a href="http://eric.extremeboredom.net/category/urbanism/transit" title="Posts about public transportation">Transit</a>
+</li>
+</ul>
+</li>
+</ul>
+
+<ul id="toolbar" class="clearfloat">
+<li><a href="#" id="icon-page" title="Browse Pages">Browse Pages</a>
+	<ul class="children">
+	<li class="page_item page-item-188"><a href="http://eric.extremeboredom.net/about" title="About Me">About Me</a></li>
+<li class="page_item page-item-320"><a href="http://eric.extremeboredom.net/archives" title="Archives">Archives</a></li>
+<li class="page_item page-item-191"><a href="http://eric.extremeboredom.net/project-list" title="Projects">Projects</a></li>
+	</ul>
+</li>
+<li><a href="http://eric.extremeboredom.net/archives" id="icon-archives" title="Browse Archives">Browse Archives</a></li>
+<li><a href="#" id="icon-search" title="Search">Search</a>
+	<ul class="children" id="searchmenu">
+	<li><form method="get" id="searchform" action="http://eric.extremeboredom.net/">
+<input type="text" value="" name="s" id="s" class="field" />
+<input type="submit" id="searchsubmit" value="Go" class="button" />
+</form>
+</li>
+	</ul> 
+</li>
+<li class="last"><a href="http://eric.extremeboredom.net/feed" id="icon-rss" title="RSS Feed">RSS</a></li>
+</ul><!--END TOOLBAR-->
+</div><!--END NAVBAR-->
+
+
+
+		
+<div id="branding">
+<h1><a href="http://eric.extremeboredom.net/">eric&#8217;s extremeboredom</a></h1>
+<div id="description">adventures into and out of extreme boredom.</div>
+</div>
+
+
+	
+	<div id="main" class="clearfloat">
+	<div id="content" class="clearfloat">
+	
+	
+		<div class="post clearfloat" id="post-296">
+    
+  
+  <h2>
+    Mono 2.0 Packages for Ubuntu Intrepid  </h2>
+  
+    <p class="postmetadata">Posted <em>by</em> FireRabbit <em>on</em> Oct 15, 2008 &bull; <span class="commentcount">(<a href="http://eric.extremeboredom.net/2008/10/15/296#commentarea">37</a>)</span></p>
+    
+ 
+  <div class="entry clearfloat">
+        <p>I was disappointed to read that <a href="https://answers.launchpad.net/ubuntu/+source/mono/+question/44628">Intrepid will not include Mono 2.0</a>, so I created packages. They&#8217;re available for download from my <a href="https://launchpad.net/~firerabbit/+archive">PPA</a>.</p>
+<pre>deb http://ppa.launchpad.net/firerabbit/ubuntu intrepid main
+deb-src http://ppa.launchpad.net/firerabbit/ubuntu intrepid main</pre>
+<p>Please let me know if you find them useful!</p>
+<p>Note that these packages are <strong>unofficial</strong>, if you have any problems, please let me know directly. Do not file an ubunu bug.</p>
+<p>Also, <a href="http://eric.extremeboredom.net/stuff/pkg-mono-2.0~ppa0.patch.txt">here&#8217;s the diff</a> against the <a href="http://svn.debian.org/wsvn/pkg-mono/mono/trunk/">pkg-mono repository</a> which is currently at v1.9.1.</p>
+     
+    <br />
+		
+	<span id="indexing">  Categorized as <a href="http://eric.extremeboredom.net/category/open-source" title="View all posts in Open Source" rel="category tag">Open Source</a>, <a href="http://eric.extremeboredom.net/category/open-source/ubuntu" title="View all posts in Ubuntu" rel="category tag">Open Source, Ubuntu</a></span>
+	
+  <br />
+  
+    
+	
+       
+  </div>
+  
+  
+   
+</div>
+		
+		
+
+
+	<div id="commentarea">
+	<!-- You can start editing here. -->
+<h3 id="comments">
+  37 Comments</h3>
+<ol class="commentlist">
+        <li id="comment-97763">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://1.gravatar.com/avatar/7de786f1dbc93c8fdc67c5e019d94b3d?s=42&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        <a href='http://Thanks' rel='external nofollow' class='url'>F. Velasco</a>        </cite> says:
+                <div class="commentmetadata"><a href="#comment-97763" title="Permalink for this comment">
+          October 15th, 2008          at
+          11:26 pm          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>Thanks. I&#8217;m Mono/Ubuntu user and it&#8217;s not easy to be updated. I&#8217;ll try it.</p>
+</div>
+  </li>
+            <li id="comment-97770">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://0.gravatar.com/avatar/aaf3e5ab6ee0f8e1b577002d996da679?s=42&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        Paul Burton        </cite> says:
+                <div class="commentmetadata"><a href="#comment-97770" title="Permalink for this comment">
+          October 16th, 2008          at
+          3:20 am          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>There seems to be a problem installing mono-smcs:</p>
+<p>Depends: mono-runtime (&gt;=2.0) but 2.0~ppa0 is to be installed</p>
+<p>Which seems weird&#8230;</p>
+</div>
+  </li>
+            <li id="comment-97775">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://1.gravatar.com/avatar/b7f2380ba97b6b0ac89beb7354efb837?s=42&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        Ryan Bair        </cite> says:
+                <div class="commentmetadata"><a href="#comment-97775" title="Permalink for this comment">
+          October 16th, 2008          at
+          8:32 am          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>Thanks, this is great! Everything looks good so far.</p>
+</div>
+  </li>
+            <li id="comment-97778">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://0.gravatar.com/avatar/494be3e57d71d3a12208273521cd4bfc?s=42&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        Nuk        </cite> says:
+                <div class="commentmetadata"><a href="#comment-97778" title="Permalink for this comment">
+          October 16th, 2008          at
+          10:06 am          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>Thank You very mutch!</p>
+</div>
+  </li>
+            <li id="comment-97786">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://0.gravatar.com/avatar/a30516db505f6eb3740f8c0a63b57004?s=42&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        <a href='http://people.iola.dk/arj' rel='external nofollow' class='url'>Anders Rune Jensen</a>        </cite> says:
+                <div class="commentmetadata"><a href="#comment-97786" title="Permalink for this comment">
+          October 16th, 2008          at
+          2:18 pm          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>Will they work on older Ubuntus as well?</p>
+<p>Thanks :)</p>
+</div>
+  </li>
+            <li id="comment-97792">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://1.gravatar.com/avatar/b83b45dd9f9213a8386931f770168b1c?s=42&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        <a href='http://www.trausch.us/' rel='external nofollow' class='url'>Michael B. Trausch</a>        </cite> says:
+                <div class="commentmetadata"><a href="#comment-97792" title="Permalink for this comment">
+          October 16th, 2008          at
+          7:52 pm          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>Hey there.  Thanks for the packages.  I tried to do something similar but I couldn&#8217;t find my way around the file lists well enough to do a what I thought would be a satisfactory job, so I wound up just building a script that built it from source and installed it in a directory under ${HOME}.</p>
+<p>One question, though:  Is it possible that you could put together the Mono debugger with the package set?  These packages leave the old (Intrepid) version of the Mono debugger on the system, which doesn&#8217;t work with the new Mono at all.</p>
+<p>If not, that&#8217;s perfectly understandable.</p>
+<p>BTW, you may want to update the version so that hard &gt;=-style dependencies can work.  If you use 2.0-1~ppa0 as the package version number, the dependency of (&gt;= 2.0) ought to work just fine.</p>
+</div>
+  </li>
+            <li id="comment-97882">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://1.gravatar.com/avatar/19efb7291755c88107e37dffabeb77ad?s=42&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        <a href='http://igordevlog.blogspot.com' rel='external nofollow' class='url'>Igor</a>        </cite> says:
+                <div class="commentmetadata"><a href="#comment-97882" title="Permalink for this comment">
+          October 18th, 2008          at
+          9:06 am          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>Hey, I&#8217;m seeing the same error as Paul Burton&#8230;</p>
+<p>Thanks this is pretty cool :)</p>
+</div>
+  </li>
+            <li id="comment-97969">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://0.gravatar.com/avatar/2751119dcda4da795e60d390866348f5?s=42&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        fragro        </cite> says:
+                <div class="commentmetadata"><a href="#comment-97969" title="Permalink for this comment">
+          October 20th, 2008          at
+          10:25 am          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>Can you package Monodevelop 2.0 alpha 1 also? (mainly because monodvelop-vala addin)</p>
+<p>Like for Suse: <a href="http://mjhutchinson.com/journal/2008/10/17/updating_monodevelop_trunk_packages" rel="nofollow">http://mjhutchinson.com/journal/2008/10/17/updating_monodevelop_trunk_packages</a></p>
+</div>
+  </li>
+            <li id="comment-98025">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://1.gravatar.com/avatar/357a20e8c56e69d6f9734d23ef9517e8?s=42&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        Stanisław Pitucha        </cite> says:
+                <div class="commentmetadata"><a href="#comment-98025" title="Permalink for this comment">
+          October 21st, 2008          at
+          8:57 am          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>Same here -&gt; ubuntu doesn&#8217;t think that 2.0~ppa0 &gt;= 2.0 &#8230;<br />
+mono-smcs dependencies are b0rked.</p>
+</div>
+  </li>
+            <li id="comment-98068">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://1.gravatar.com/avatar/b6fc2723c333f224b2e3119516cfe88a?s=42&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        <a href='http://blog.davebsd.com' rel='external nofollow' class='url'>David</a>        </cite> says:
+                <div class="commentmetadata"><a href="#comment-98068" title="Permalink for this comment">
+          October 23rd, 2008          at
+          11:16 am          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>Big thanks from the GNOME Do team!</p>
+</div>
+  </li>
+            <li id="comment-98069">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://1.gravatar.com/avatar/b9ed83c90d9eedc2ee6d8c7e8a263386?s=42&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        <a href='http://coffeecokeandcode.blogspot.com/' rel='external nofollow' class='url'>Casper</a>        </cite> says:
+                <div class="commentmetadata"><a href="#comment-98069" title="Permalink for this comment">
+          October 23rd, 2008          at
+          12:35 pm          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>Thanks for taking the time to put it together for the rest of us! :)</p>
+</div>
+  </li>
+            <li id="comment-98128">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://1.gravatar.com/avatar/92123a2f59f6a3653d5d3969a5e9cd47?s=42&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        simion        </cite> says:
+                <div class="commentmetadata"><a href="#comment-98128" title="Permalink for this comment">
+          October 24th, 2008          at
+          12:18 pm          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>Hi, can you please package mono-debugger? i can&#8217;t compile monodevelop from SVN with debugger suport</p>
+</div>
+  </li>
+            <li id="comment-98235">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://0.gravatar.com/avatar/cfc2aa9e1fdff12c709068f50c0b00da?s=42&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        Laurent Debacker        </cite> says:
+                <div class="commentmetadata"><a href="#comment-98235" title="Permalink for this comment">
+          October 27th, 2008          at
+          6:59 am          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>Thank you very much for this effort.</p>
+<p>You would mind packaging libgdiplus as well please? I get rendering glitches in my Ubuntu 8.04, and I think it&#8217;s due to the fact that I have still libgdiplus 1.2.6.</p>
+<p>Thanks,<br />
+Laurent.</p>
+</div>
+  </li>
+            <li id="comment-98250">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://1.gravatar.com/avatar/da9a6f11fcd070f7d41dd24168e7871f?s=42&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        popi        </cite> says:
+                <div class="commentmetadata"><a href="#comment-98250" title="Permalink for this comment">
+          October 28th, 2008          at
+          12:45 am          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>that&#8217;s seems working&#8230;. last needed should be an svn Monodevelop version ;-)</p>
+</div>
+  </li>
+            <li id="comment-98372">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://1.gravatar.com/avatar/562c1b85a6ce1e746d1f33187e46123d?s=42&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        Paul        </cite> says:
+                <div class="commentmetadata"><a href="#comment-98372" title="Permalink for this comment">
+          October 31st, 2008          at
+          5:39 am          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>The packages are great. Thank you.</p>
+<p>Could you add an updated mono-debugger package? MonoDevelop with Debugger wants to have 2.0 but it is 0.6.</p>
+</div>
+  </li>
+            <li id="comment-98383">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://1.gravatar.com/avatar/fbb1bbcdc1e9dfd3059cebf80d15c13f?s=42&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        crashfourit        </cite> says:
+                <div class="commentmetadata"><a href="#comment-98383" title="Permalink for this comment">
+          November 1st, 2008          at
+          9:46 am          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>&#8220;There seems to be a problem installing mono-smcs:</p>
+<p>Depends: mono-runtime (&gt;=2.0) but 2.0~ppa0 is to be installed</p>
+<p>Which seems weird…&#8221;</p>
+<p>I&#8217;m getting the same problem</p>
+</div>
+  </li>
+            <li id="comment-98390">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://1.gravatar.com/avatar/3da4c5a6e60fd6af157bbe563286cbd5?s=42&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        Andres        </cite> says:
+                <div class="commentmetadata"><a href="#comment-98390" title="Permalink for this comment">
+          November 2nd, 2008          at
+          3:28 am          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>I have the same problem that Paul Burton says..</p>
+</div>
+  </li>
+            <li id="comment-98391">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://1.gravatar.com/avatar/3da4c5a6e60fd6af157bbe563286cbd5?s=42&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        Andres        </cite> says:
+                <div class="commentmetadata"><a href="#comment-98391" title="Permalink for this comment">
+          November 2nd, 2008          at
+          3:30 am          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>The message is showed when I check mono-smcs<br />
+Thanks.</p>
+</div>
+  </li>
+            <li id="comment-98535">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://0.gravatar.com/avatar/22f9cf0e7bbf511457d29c6e0e241058?s=42&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        david        </cite> says:
+                <div class="commentmetadata"><a href="#comment-98535" title="Permalink for this comment">
+          November 5th, 2008          at
+          5:22 am          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>This is great! works for hardy 8.04? Thanks!</p>
+</div>
+  </li>
+            <li id="comment-98550">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://1.gravatar.com/avatar/b385707f13a043e60a162667bbaa427b?s=42&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        <a href='http://tuxazteca.wordpress.com' rel='external nofollow' class='url'>Erick Aguilar Bravo</a>        </cite> says:
+                <div class="commentmetadata"><a href="#comment-98550" title="Permalink for this comment">
+          November 5th, 2008          at
+          5:43 pm          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>Thanks</p>
+</div>
+  </li>
+            <li id="comment-98600">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://1.gravatar.com/avatar/7d69bcca90a855a3df933f9d03a87981?s=42&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        Alecava        </cite> says:
+                <div class="commentmetadata"><a href="#comment-98600" title="Permalink for this comment">
+          November 6th, 2008          at
+          1:10 pm          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>Very good, also having an updated Monodevelop will be fantastic</p>
+</div>
+  </li>
+            <li id="comment-98678">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://0.gravatar.com/avatar/41783a5b12728d04f6b2dc5d745ea72c?s=42&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        Chad Kittel        </cite> says:
+                <div class="commentmetadata"><a href="#comment-98678" title="Permalink for this comment">
+          November 9th, 2008          at
+          8:35 pm          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>Thank you!</p>
+<p>mono-smcs is giving me the same issue that Paul Burton identified.</p>
+<p>mono-smcs:<br />
+  Depends: mono-runtime (&gt;=2.0) but 2.0~ppa0 is to be installed</p>
+</div>
+  </li>
+            <li id="comment-99221">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://1.gravatar.com/avatar/99432e87ebcb52845032bfaf10eff9a5?s=42&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        Anton        </cite> says:
+                <div class="commentmetadata"><a href="#comment-99221" title="Permalink for this comment">
+          November 17th, 2008          at
+          3:22 pm          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>Is it possible that these packages do not include Monodevelop? I was able to build mono from svn, but Monodevelop is much more tricky&#8230; =(</p>
+<p>Are you going to publish MD as well?</p>
+<p>Thank you, that&#8217;s cool!</p>
+</div>
+  </li>
+            <li id="comment-99223">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://1.gravatar.com/avatar/b6eed5f09106bc0f249632a03df99d8b?s=42&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        <a href='http://www.furstars.eu' rel='external nofollow' class='url'>Matt Doughty</a>        </cite> says:
+                <div class="commentmetadata"><a href="#comment-99223" title="Permalink for this comment">
+          November 18th, 2008          at
+          4:03 am          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>For those getting:</p>
+<p>Depends: mono-runtime (&gt;=2.0) but 2.0~ppa0 is to be installed</p>
+<p>Make sure your repositories are intrepid not hardy.</p>
+</div>
+  </li>
+            <li id="comment-99624">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://0.gravatar.com/avatar/063a3e1aeccc05c1dec005d11a1b206e?s=42&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        <a href='http://kraptor.com' rel='external nofollow' class='url'>kraptor</a>        </cite> says:
+                <div class="commentmetadata"><a href="#comment-99624" title="Permalink for this comment">
+          December 3rd, 2008          at
+          11:50 am          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>I had to &#8220;ln -s /usr/bin/gmcs /usr/bin/gmcs2&#8243; in order to get Monodevelop working&#8230;</p>
+</div>
+  </li>
+            <li id="comment-100097">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://0.gravatar.com/avatar/ebb5bc7dc252fdde6d74d4716f163e49?s=42&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        mikem        </cite> says:
+                <div class="commentmetadata"><a href="#comment-100097" title="Permalink for this comment">
+          December 17th, 2008          at
+          7:03 pm          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>As kraptor mentions above, I also had to create a symlink /usr/bin/gmcs -&gt; /usr/bin/gmcs2.</p>
+<p>Microsoft.CSharpCodeProvider() throws a very unclear exception when it can&#8217;t find gmcs. When calling CSharpCodeProvider.CompileAssemblyFromSource(), an exception with the text &#8220;Standard output has not been redirected or process has not been started.&#8221; is thrown.</p>
+<p>More in this email thread: <a href="http://www.mail-archive.com/mono-bugs@lists.ximian.com/msg54632.html" rel="nofollow">http://www.mail-archive.com/mono-bugs@lists.ximian.com/msg54632.html</a></p>
+</div>
+  </li>
+            <li id="comment-100454">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://1.gravatar.com/avatar/5c6516d6ead0108fc4eb1dc0549233f7?s=42&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        hawk        </cite> says:
+                <div class="commentmetadata"><a href="#comment-100454" title="Permalink for this comment">
+          December 31st, 2008          at
+          9:24 am          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>Any chance of seeing the mod_mono (libapache2-mod-mono, mono-apache-server2, mono-xsp-base, etc) part packaged too?</p>
+</div>
+  </li>
+            <li id="comment-100463">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://0.gravatar.com/avatar/0a7d543a6a3d738bcd34b56c24002943?s=42&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        <a href='http://kmmbvnr.livejournal.com' rel='external nofollow' class='url'>kmmbvnr</a>        </cite> says:
+                <div class="commentmetadata"><a href="#comment-100463" title="Permalink for this comment">
+          December 31st, 2008          at
+          10:04 pm          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>Why mono-debugger deb package doesn&#8217;t present in repository?</p>
+</div>
+  </li>
+            <li id="comment-100467">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://0.gravatar.com/avatar/60c800edb20295e9a8973ac6acc1e171?s=42&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        Sébastien Morin        </cite> says:
+                <div class="commentmetadata"><a href="#comment-100467" title="Permalink for this comment">
+          January 1st, 2009          at
+          6:16 am          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>Thank you, could you also add xsp.</p>
+</div>
+  </li>
+            <li id="comment-100879">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://1.gravatar.com/avatar/9311590b3198f14e8ee80c78e98e70ed?s=42&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        Dimitar Dobrev        </cite> says:
+                <div class="commentmetadata"><a href="#comment-100879" title="Permalink for this comment">
+          January 16th, 2009          at
+          12:19 am          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>Hi, Eric. Thank you very much for your 2.0 packages. Do you plan upgrading them to 2.2 soon?</p>
+</div>
+  </li>
+            <li id="comment-100968">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://0.gravatar.com/avatar/e51dd1760ee928b4766d6f6cbd38f0d2?s=42&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        Stuart        </cite> says:
+                <div class="commentmetadata"><a href="#comment-100968" title="Permalink for this comment">
+          January 18th, 2009          at
+          12:16 pm          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>Thanks for this.  Very useful for getting monodevelop to work from svn.  2.2 would be great.</p>
+</div>
+  </li>
+            <li id="comment-101138">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://0.gravatar.com/avatar/64895664f417476d8a3be64b11766b4c?s=42&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        <a href='http://www.sauware.com' rel='external nofollow' class='url'>Fabio</a>        </cite> says:
+                <div class="commentmetadata"><a href="#comment-101138" title="Permalink for this comment">
+          January 22nd, 2009          at
+          2:16 pm          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>thanks man, hope you also upload the mono 2.2, be nice, anyway thank you very much for this update</p>
+</div>
+  </li>
+            <li id="comment-101202">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://1.gravatar.com/avatar/d63da1de7357e9da70f7930fa9e19ff0?s=42&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        <a href='http://azercell.com' rel='external nofollow' class='url'>Rovshan</a>        </cite> says:
+                <div class="commentmetadata"><a href="#comment-101202" title="Permalink for this comment">
+          January 25th, 2009          at
+          10:12 pm          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>Thank you very much! 2.2 would really be great</p>
+</div>
+  </li>
+            <li id="comment-102400">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://1.gravatar.com/avatar/771f52b5b1d9889ded1391e182b44dbb?s=42&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        <a href='http://webifyr.com' rel='external nofollow' class='url'>Sachin Sagar</a>        </cite> says:
+                <div class="commentmetadata"><a href="#comment-102400" title="Permalink for this comment">
+          February 25th, 2009          at
+          11:34 am          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>I&#8217;m on Ububtu Hardy at SliceHost<br />
+Added to the /etc/apt/source.list the following ppa<br />
+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8211;<br />
+deb <a href="http://ppa.launchpad.net/firerabbit/ppa/ubuntu" rel="nofollow">http://ppa.launchpad.net/firerabbit/ppa/ubuntu</a> hardy main<br />
+deb-src <a href="http://ppa.launchpad.net/firerabbit/ppa/ubuntu" rel="nofollow">http://ppa.launchpad.net/firerabbit/ppa/ubuntu</a> hardy main<br />
+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-<br />
+Installed mono-2.0-devel and mono-gmcs</p>
+<p>Now when I run the compiler, the following error is generated. </p>
+<p>deploy@mail:~$ gmcs example.cs<br />
+TYPE: 1<br />
+**<br />
+** ERROR:(mini-amd64.c:192):amd64_patch: assertion failed: (amd64_is_imm32 (disp))<br />
+Stacktrace:</p>
+<p>Native stacktrace:</p>
+<p>        /usr/bin/mono [0x51bb67]<br />
+        /lib/libpthread.so.0 [0x7f02a35777d0]<br />
+        /lib/libc.so.6(gsignal+0&#215;35) [0x7f02a2fb8095]<br />
+        /lib/libc.so.6(abort+0&#215;110) [0x7f02a2fb9af0]<br />
+        /usr/lib/libglib-2.0.so.0(g_assertion_message+0&#215;117) [0x7f02a39e2d87]<br />
+        /usr/lib/libglib-2.0.so.0 [0x7f02a39e3222]<br />
+        /usr/bin/mono [0x42dbb8]<br />
+        /usr/bin/mono [0x4e6229]<br />
+        /usr/bin/mono [0x50849b]<br />
+        /usr/bin/mono [0x508cd9]<br />
+        /usr/bin/mono [0x5091d3]<br />
+        /usr/bin/mono(mono_exception_from_name_two_strings+0xdd) [0x48c38d]<br />
+        /usr/bin/mono(mono_runtime_init+0x13e) [0x48e64e]<br />
+        /usr/bin/mono [0x4e31e5]<br />
+        /usr/bin/mono(mono_main+0&#215;341) [0x4169b1]<br />
+        /lib/libc.so.6(__libc_start_main+0xf4) [0x7f02a2fa41c4]<br />
+        /usr/bin/mono(realloc+0&#215;381) [0x416109]</p>
+<p>=================================================================<br />
+Got a SIGABRT while executing native code. This usually indicates<br />
+a fatal error in the mono runtime or one of the native libraries<br />
+used by your application.<br />
+=================================================================</p>
+<p>Aborted</p>
+<p>&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8211;<br />
+Can somebody plz help me out of this?</p>
+</div>
+  </li>
+            <li id="comment-102637">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://0.gravatar.com/avatar/214a4e56e8819d29f065b44aeebd8eb4?s=42&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        joss        </cite> says:
+                <div class="commentmetadata"><a href="#comment-102637" title="Permalink for this comment">
+          March 6th, 2009          at
+          12:27 am          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>Hi , thanks for the packages.<br />
+That&#8217;s what I was looking for, but I have a problem with my netBook akoya e1210. After installing upgrade to 8.10 I have my network down and I am trying to restore it in same way.</p>
+<p>In the while I need to install mono 2.0 or later. could you give me a hand to download these packages in a USB driver and than install it manually?.</p>
+</div>
+  </li>
+            <li id="comment-103244">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://1.gravatar.com/avatar/502a9a986096828156e9620df35a1a67?s=42&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        Johnny        </cite> says:
+                <div class="commentmetadata"><a href="#comment-103244" title="Permalink for this comment">
+          March 20th, 2009          at
+          10:35 am          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>Man.  Finally.  I have been trying to get mono/monodevelop (the newer than ubuntu gives which is ancient 1.0) for week.   I couldn&#8217;t thank you enough.  THANK YOU!!! THANK YOU!!! THANK YOU!!! THANK YOU!!! THANK YOU!!! THANK YOU!!! THANK YOU!!! THANK YOU!!! THANK YOU!!! THANK YOU!!! </p>
+<p>Really.</p>
+</div>
+  </li>
+            <li id="comment-105970">
+    <div class="clearfloat">
+	<div class="gravatar"><img alt='' src='http://0.gravatar.com/avatar/41f366dd6b4f7031f250626d4c9534f7?s=42&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D42&amp;r=G' class='avatar avatar-42 photo' height='42' width='42' /></div>
+         <div class="commentinfo"><cite>
+        N!D        </cite> says:
+                <div class="commentmetadata"><a href="#comment-105970" title="Permalink for this comment">
+          May 21st, 2009          at
+          3:35 pm          </a>
+                  </div>
+      </div>
+      <!--END COMMENTINFO-->
+    </div>
+    <div class="commenttext"><p>Thank you! These are the first instructions that got the 2.0 version working for me. Now its onto clutter&#8230;.</p>
+<p> on my EEE 701 with #! crunchbang linux</p>
+</div>
+  </li>
+      </ol>
+                                                                            <h3 id="respond">Leave a Reply</h3>
+<form action="http://eric.extremeboredom.net/wp-comments-post.php" method="post" id="commentform">
+    <p>
+    <input type="text" name="author" id="user-name" value="" size="32" tabindex="1" class="field" />
+   
+  </p>
+  <p>
+    <input type="text" name="email" id="user-email" value="" size="32" tabindex="2" class="field" />
+    
+  </p>
+  <p>
+    <input type="text" name="url" id="user-url" value="" size="32" tabindex="3" class="field" />
+  </p>
+    <p>
+    <textarea name="comment" id="user-comment" tabindex="4" class="field" cols="" rows=""></textarea>
+  </p>
+  <p>
+    <input name="submit" type="submit" id="submit" tabindex="5" class="button" value="Leave a Comment" />
+    <input type="hidden" name="comment_post_ID" value="296" />
+  </p>
+  <p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="caf383b840" /></p>		<span id="openid_comment">
+			<label>
+				<input type="checkbox" id="login_with_openid" name="login_with_openid" checked="checked" />
+				Authenticate this comment using <span class="openid_link">OpenID</span>.			</label>
+		</span>
+		<script type="text/javascript">jQuery(function(){ add_openid_to_comment_form('http://eric.extremeboredom.net/index.php', '8efc4fc663') })</script>
+</form>
+	</div>
+
+	</div>
+
+<div id="sidebar">
+<ul>
+
+
+
+
+
+<li>
+<div class="widget">
+<h3>More <em>in</em> 'Open Source'</h3>
+<ul>
+
+<li><a href="http://eric.extremeboredom.net/2009/03/31/364">Thanks for sending Synapse off to a great start!</a></li>
+<li><a href="http://eric.extremeboredom.net/2009/03/15/336">Announcing Synapse!</a></li>
+<li><a href="http://eric.extremeboredom.net/2009/01/15/333">Qt to be LGPL!</a></li>
+
+</ul>
+</div>
+</li>
+
+
+<li>
+<div class="widget">
+<h3>More <em>in</em> 'Ubuntu'</h3>
+<ul>
+
+<li><a href="http://eric.extremeboredom.net/2009/01/15/333">Qt to be LGPL!</a></li>
+<li><a href="http://eric.extremeboredom.net/2007/07/20/280">Ubuntu Live and OSCON</a></li>
+<li><a href="http://eric.extremeboredom.net/2006/01/24/246">Jabber</a></li>
+
+</ul>
+</div>
+</li>
+
+
+<!--
+<li>
+<div class="widget" id="tagcloud">
+<h3>Popular Topics</h3>
+</div></li>
+-->
+
+<li>
+<div class="widget">
+<h3>Recent Comments</h3>
+
+<ul id="recentcomments">
+<li><a href="http://eric.extremeboredom.net/2004/10/09/139#comment-116839" title="on Linksys Sucks"><em>Pachu Kovalan</em>Never in your life buy a Linksys wireless router. 6 months of my lif...</a></li>
+<li><a href="http://eric.extremeboredom.net/2009/03/31/364#comment-116097" title="on Thanks for sending Synapse off to a great start!"><em>glococo</em>Hi Eric !
+
+Im so happy to see a serious XMPP IM project. 
+We have...</a></li>
+<li><a href="http://eric.extremeboredom.net/2009/03/15/336#comment-116096" title="on Announcing Synapse!"><em>glococo</em>I forgot to mention... 
+
+I WANT TO SEE LINUX / Gnome &amp; KDE  DR...</a></li>
+</ul>    
+   </div>   </li>
+
+</ul>
+</div>
+
+</div><!--END MAIN-->
+
+
+
+</div><!--END WRAPPER-->
+</div><!--END TOP-->
+
+
+
+
+
+<div id="footer">
+<div class="wrapper">
+&copy; 2010, eric&#8217;s extremeboredom + <a href="http://www.smashingmagazine.com/2008/09/08/agregado-a-free-wordpress-theme/" target="_blank">Agregado Theme</a> + <a href="http://www.wordpress.org" target="_blank">Wordpress</a>
+
+<!--stats_footer_test--><script src="http://stats.wordpress.com/e-201051.js" type="text/javascript"></script>
+<script type="text/javascript">
+st_go({blog:'5832472',v:'ext',post:'296'});
+var load_cmc = function(){linktracker_init(5832472,296,2);};
+if ( typeof addLoadEvent != 'undefined' ) addLoadEvent(load_cmc);
+else load_cmc();
+</script>
+</div>
+</div> 
+
+
+ 
+</body>
+</html>
