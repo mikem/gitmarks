@@ -1,0 +1,982 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en-us" xmlns="http://www.w3.org/1999/xhtml">
+ <head profile="http://gmpg.org/xfn/11">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Language" content="en-us" />
+  <meta http-equiv="X-UA-Compatible" content="IE-5" />
+  <link rel="pingback" href="http://software.intel.com/en-us/services/comment/pingback/" />
+  <link rel="shortcut icon" href="/common/images/favicon.ico" />
+  <link rel="stylesheet" href="/common/css/master-global.css?v=7470" type="text/css" media="screen" />
+  <link rel="stylesheet" href="/common/css/style.css?v=7470" type="text/css" media="screen" />
+  <link rel="stylesheet" href="/common/css/style_print.css?v=7470" type="text/css" media="print" />
+  <script type="text/javascript" src="/common/js/jquery.min.js?v=7470"></script>
+ <link href="/media/js/tooltip/jquery.cluetip.css"  rel="stylesheet" type="text/css" /> <script src="/media/js/tooltip/jquery.hoverIntent.js" type="text/javascript"></script> <script src="/media/js/tooltip/jquery.cluetip.js" type="text/javascript"></script>  <script type="text/javascript" src="/common/js/jquery.bgiframe.min.js?v=7470"></script>
+  <script type="text/javascript" src="/common/js/jqmodal.js?v=7470"></script>
+  <script type="text/javascript" src="/common/js/ufo.js?v=7470"></script>
+  <script type="text/javascript" src="/common/js/isn/combined.js?v=7470"></script>
+  <script type="text/javascript" src="/common/js/isn/search.js?v=7470"></script>
+  <script type="text/javascript">var _sf_startpt=(new Date()).getTime()</script>
+<link rel="stylesheet" href="/media/css/SyntaxHighlighter.css?v=7470" type="text/css" media="screen" />
+<link rel="stylesheet" href="/media/css/widget.css?v=7470" type="text/css" media="screen" />
+<link rel="stylesheet" href="/media/css/jquery.rating.css?v=7470" type="text/css" media="screen" />
+<script type="text/javascript" src="/lang/en-us/services/alerts.js?v=7470"></script><script type="text/javascript" src="/media/js/ajaxfileupload.js?v=7470"></script>
+<script type="text/javascript" src="/media/js/select.js?v=7470"></script>
+<script type="text/javascript" src="/media/js/jquery.rating.js?v=7470"></script>
+<script type="text/javascript" src="/media/js/isncommentsapi.js?v=7470"></script>
+<script type="text/javascript" src="/media/js/isnratingapi.js?v=7470"></script>
+<script type="text/javascript" src="/media/js/isnpollapi.js?v=7470"></script>
+<script type="text/javascript" src="/media/js/isncategoryapi.js?v=7470"></script>
+<script type="text/javascript" src="/media/js/file_folder.js?v=7470"></script>
+<script type="text/javascript" src="/media/js/shCore.js?v=7470"></script>
+<script type="text/javascript" src="/media/js/shCode.js?v=7470"></script>
+<script type="text/javascript" src="/media/js/querystring.js?v=7470"></script>
+<script type="text/javascript" src="/media/js/academicpop.js?v=7470"></script><meta name="description" content="How to Get the Most Out of a Multi-Core CPU with Your Game Engine"><meta name="keywords" content="game development,physics,visual computing"><script type="text/javascript" src="/common/js/constants/en-us.js?v=7470"> </script>
+<link rel="stylesheet" type="text/css" id="HAT-linkStyle" href="/common/css/ltr_header.css?v=7470" />
+  <title>Designing the Framework of a Parallel Game Engine - Intel&#174; Software Network</title>
+<style></style><script type="text/javascript"></script>  <script type="text/javascript">   $(document).ready(function() {    $("#loginForm").cluetip({ activation: "click", dropShadow: false,sticky: true, arrows: false, showTitle: false,local:true, cursor: "pointer" });    $("a.basic").cluetip({ sticky:false, width:"165px", dropShadow: false,arrows: false, showTitle: false });   });  </script> </head>
+ <body>
+	<noscript><center><strong>Javascript is disabled on your browser. In order to use this platform effeciently, please enable javascript from your browser settings or contact your system administrator.</strong></center></noscript>  <div id="container" class="main-outer" style="width:1003px">
+<!-- start corp header -->
+<div class="con con-hdr"> 
+<script type="text/javascript"> 
+  /*<![CDATA[*/
+  //GAAT40 namespace definition
+  var GAAT40 = (typeof GAAT40 == "undefined" || !GAAT40) ? {} : GAAT40;
+
+  //Page specific render settings
+  GAAT40.renderSettings = {
+    pageWidth: "w1024", //w800 | w1024
+    renderMode: "standards", //quirks | standards
+    textDirection: "ltr", //ltr | rtl
+    protocol: "http", //http | https
+    culture: "en_US",
+    enableShareWidget: false,
+    enableEmailWidget: true,
+    enablePrintWidget: true,
+    shareTxt: "Share",
+    changeTxt: "Change",
+    searchTxt: "Search",
+    printTxt: "Print",
+    emailTxt: "Email A Friend",
+    sitewidePath: "/sites/sitewide/hat/40recode"
+    };
+  
+    // construct asset paths to dependencies
+    GAAT40.ProtocolType = (function(){
+      var protocol = (GAAT40.renderSettings.protocol == "https")?"https://ssl.":"http://www.";			
+      return protocol;
+    })();
+
+    GAAT40.FileType = (function(){
+      var extension = (document.location.search.indexOf("filemax=1") != -1)?"-master":"";			
+      return extension;
+    })();
+ 
+    //Use assets depending on the url - test environment serves a route relative version of assets
+    GAAT40.AssetPath = (function() {
+      var testUrls = ["int-gaat40-output-tests.mrmw.co.uk", "int-40recode.mrmpweb.co.uk", "int-40recode2.mrmpweb.co.uk", "proto-cps.cps.intel.com", "preview-cps.cps.intel.com"];
+
+      var defaultUrl = GAAT40.ProtocolType + "intel.com";
+      var liveUrl = defaultUrl;
+
+      var setincookie = (document.location.search.indexOf("assetcookie=1") != -1)
+      
+      if (document.location.search.indexOf("assetcookie=0") != -1) {
+        document.cookie = "GAATAssetPath=; expires=Thu, 01-Jan-70 00:00:01 GMT;";
+      }
+        
+      if ((document.location.search.indexOf("assetpath=proto") != -1) || document.cookie.indexOf("GAATAssetPath=proto") != -1) {
+        liveUrl = (GAAT40.renderSettings.protocol == "https") ? "https://" : "http://";
+        liveUrl += "proto-cps.cps.intel.com";
+        if (setincookie) {
+          document.cookie = "GAATAssetPath=proto; path=/";
+        }
+      }
+
+      if ((document.location.search.indexOf("assetpath=preview") != -1) || document.cookie.indexOf("GAATAssetPath=preview") != -1) {
+        liveUrl = (GAAT40.renderSettings.protocol == "https") ? "https://" : "http://";
+        liveUrl += "preview-cps.cps.intel.com";
+        if (setincookie) {
+          document.cookie = "GAATAssetPath=preview; path=/";
+        }
+      }
+ 
+      if (testUrls.join().indexOf(document.location.host) != -1 || document.location.search.indexOf("assetpath=rel") != -1 || (document.cookie.indexOf("GAATAssetPath=rel") != -1)) {
+        liveUrl = "";
+        if (setincookie) {
+          document.cookie = "GAATAssetPath=rel; path=/";
+        }
+      }
+ 
+      if (document.location.search.indexOf("assetpath=live") != -1 || document.cookie.indexOf("GAATAssetPath=live") != -1) {
+        liveUrl = defaultUrl;
+        if (setincookie) {
+          document.cookie = "GAATAssetPath=live; path=/";
+      }
+    }
+
+    return liveUrl;
+  })();
+ 
+  // add CSS
+
+  // hide the header while it is worked on
+  document.write('<style type="text/css">#gaat40-header {height:91px;overflow:hidden;visibility:hidden;}</style>')
+ 
+  //dynamically add header css
+  document.write('<link id="gaat-linkstyle" href="' + GAAT40.AssetPath + GAAT40.renderSettings.sitewidePath + '/css/' + GAAT40.renderSettings.textDirection + '_header.css?v=7470" rel="stylesheet" type="text/css" />');
+
+ 
+
+// add INTEL JavaScript
+  if(typeof(INTEL) == "undefined") {
+    document.write('<scr' + 'ipt type="text/javascript" src="' + GAAT40.AssetPath + '/sites/js/INTEL.js"><\/scr' + 'ipt>');			
+  }
+		
+GAAT40.SearchFilterLUT = { head:"Filter Your Results", inputName:"category",
+qs:[ { filter:"Products", term:"Products" },
+    { filter:"SuppDown", term:"Support &amp; Downloads" },
+    { filter:"BlogComm", term:"Blogs &amp; Communities" },
+    { filter:"Reseller", term:"Reseller" },
+    { filter:"Software", term:"Software" },
+    { filter:"AboutIntel", term:"About Intel" },
+    { filter:"HAT-adv1", term:"Advanced Search" }
+   ]
+};
+/*]]>*/
+</script>
+
+<div id="gaat40-header" class="gaat40-reset">
+  <a class="gaat40-logo" title="" href="http://www.intel.com"><img src="http://www.intel.com/sites/sitewide/HAT/40recode/pix/main-logo.png" alt="Logo - Intel" /></a>
+  <ul class="gaat40-locale gaat40-first">
+    <li class="gaat40-first" id="gaat40-gohome">
+      <a href="http://www.intel.com">Go to Intel.com</a>
+    </li>
+  </ul>
+  <ul class="gaat40-search">
+    <li>
+      <form method="get" id="FORMSearchHeader" action="http://mysearch.intel.com/corporate/default.aspx">
+        <fieldset>
+          <input type="hidden" id="culture" name="culture" value="en_US" />
+          <input type="hidden" name="category" id="category" />
+          <input type="hidden" name="adv" id="adv" />
+          <input type="hidden" name="value" id="value" />
+          <label id="lbl_search" for="q">Search</label>
+          <input id="q" name="q" type="text" class="gaat40-inptsearch" />
+          <input type="submit" value="Search" id="input-submit" class="gaat40-btnsearch" />
+          <div id="HAT-filtermenu-container" class="gaat40-hide"></div>
+        </fieldset>
+      </form>
+    </li>
+  </ul>
+  <div class="gaat40-nav">
+    <ul class="gaat40-mainnav">
+      <li class="gaat40-first gaat40-selected" id="gaat40-hdr_link_bus">
+        <a href="/en-us/">Intel&#174; Software Network</a>
+      </li>
+    </ul>
+    <div class="gaat40-lower">
+      <ul id="gaat40-subnav" class="gaat40-subnav">
+<!-- start menu -->
+        <li class="gaat40-first">
+          <a href="/en-us/articles/intel-software-network-communities/">Communities</a>
+          <div class="gaat40-subsubnav gaat40-hide">
+            <ul class="gaat40-first">
+              <li class="gaat40-first"><a href="http://appdeveloper.intel.com/">AppUp&#8480; developer program</a></li>
+              <li><a href="/en-us/visual-computing/">Visual Computing</a></li>
+              <li><a href="/en-us/parallel/">Parallel Programming</a></li>
+              <li><a href="/en-us/manageability/">Manageability</a></li>
+              <li><a href="/en-us/academic/">Academic</a></li>
+              <li><a href="/en-us/articles/blackbelt/">Earn Reputation &mdash; Intel&reg; Black Belt Program</a></li>
+              <li><a href="/en-us/articles/intel-software-network-communities/">More...</a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="">
+          <a href="http://www.intel.com/cd/software/partner/asmo-na/eng/index.htm">Partners</a>
+          <div class="gaat40-subsubnav gaat40-hide">
+            <ul class="gaat40-first">
+              <li class="gaat40-first"><a href="http://www.intel.com/cd/software/partner/asmo-na/eng/index.htm">Intel&reg; Software Partner Program</a></li>
+              <li><a href="http://www.intel.com/cd/software/partner/asmo-na/eng/285233.htm">Member Benefits</a></li>
+              <li><a href="http://www.intel.com/cd/software/partner/asmo-na/eng/431095.htm">Software Checkers</a></li>
+              <li><a href="http://www.intel.com/cd/software/partner/asmo-na/eng/293533.htm">Program News</a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="">
+          <a href="javascript:void(0);">Tools & Downloads</a>
+          <div class="gaat40-subsubnav gaat40-hide">
+            <ul class="gaat40-first">
+              <li><h5>Tools</h5></li>
+              <li><a href="/en-us/intel-sdp-home/">Intel&reg; Software Development Products</a></li>
+              <li><a href="/en-us/intel-parallel-studio-home/">Intel&reg; Parallel Studio</a></li>
+              <li><a href="/en-us/articles/intel-software-evaluation-center/">Free Evaluations</a></li>
+              <li><a href="/en-us/articles/tools/">Tools Knowledge Base</a></li>
+              <li><a href="/en-us/articles/intel-academic-developer-program/">Academic</a></li>
+            </ul>
+            <ul>
+              <li><h5>Downloads</h5></li>
+              <li><a href="/en-us/articles/code-downloads/">Code & Downloads</a></li>
+              <li><a href="/en-us/articles/non-commercial-software-development/">Free Non-Commercial</a></li>
+              <li><a href="/en-us/whatif/">"WhatIf" Experimental Software</a></li>
+              <li><a href="http://downloadcenter.intel.com/">Drivers</a></li>
+              <li><a href="http://www.intel.com/support/detect.htm">Intel&reg; Driver Update Utility</a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="">
+          <a href="javascript:void(0);">Forums & Support</a>
+          <div class="gaat40-subsubnav gaat40-hide">
+            <ul class="gaat40-first">
+              <li class="gaat40-first"><a href="/en-us/forums/">Software Forums</a></li>
+              <li><a href="http://appdeveloper.intel.com/en-us/forum/">AppUp&#8480; developer program Forums</a></li>
+              <li><a href="/en-us/articles/all/1/">Knowledge Base</a></li>
+              <li><a href="/en-us/articles/intel-software-developer-support/">Support Resources</a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="">
+          <a href="javascript:void(0);">Blog</a>
+          <div class="gaat40-subsubnav gaat40-hide">
+            <ul class="gaat40-first">
+              <li class="gaat40-first"><a href="/en-us/blogs/">Intel&reg; Software Network blog</a></li>
+              <li><a href="http://appdeveloper.intel.com/en-us/blog">AppUp&#8480; developer program blog</a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="">
+          <a href="javascript:void(0);">Resources</a>
+          <div class="gaat40-subsubnav gaat40-hide">
+            <ul class="gaat40-first">
+              <li class="gaat40-first"><a href="/en-us/tv/">Intel&reg; Software Network TV</a></li>
+              <li><a href="/en-us/videos/list/1/1/">Take-5 Videos</a></li>
+              <li><a href="/en-us/articles/intel-software-network-events-calendar/">Events Calendar</a></li>
+              <li><a href="/en-us/articles/intel-software-network-news-archive/">Intel&reg; Software Network Newsletter</a></li>
+              <li><a href="http://www.intel.com/intelpress/">Intel&reg; Press</a></li>
+              <li><a href="/en-us/articles/intel-software-insight-magazine/">Insight Magazine</a></li>
+              <li><a href="http://software.intel.com/sites/billboard/va-magazines/">Visual Adrenaline</a></li>
+            </ul>
+          </div>
+        </li>
+<!-- end menu -->
+      </ul>
+      <ul id="gaat40-subnav" class="gaat40-subnav" style="float: right">
+       <li class="gaat40-first">
+        <a href="http://www.intel.com/products/sitemap.htm">Product Index</a>
+       </li>
+       <li id="gaat40-locale">
+        <a href="javascript:;">United States (English)</a>
+        <div class="gaat40-subsubnav gaat40-hide">
+         <ul>
+          <li><a href="http://software.intel.com/en-us/">English</a></li>
+          <li><a href="http://software.intel.com/zh-cn/">中文</a></li>
+          <li><a href="http://software.intel.com/ru-ru/">Русский</a></li>
+          <li><a href="http://software.intel.com/fr-fr/">Français</a></li>
+         </ul>
+        </div>
+       </li>
+      </ul>
+  </div>
+</div>
+<div class="gaat40-share"><div id="ishare_icon"></div></div>
+<div class="gaat40-clear"></div>
+</div>
+<script type="text/javascript">/*<![CDATA[*/
+  document.write('<scr' + 'ipt type="text/javascript" src="' + GAAT40.AssetPath + GAAT40.renderSettings.sitewidePath + '/js/header2' + GAAT40.FileType +'.js"><\/scr' + 'ipt>');
+/*]]>*/</script> 
+</div> 
+<!-- end corp header -->
+  <link rel="stylesheet" href="/common/css/tweaks.css?v=7470" type="text/css" media="screen" />
+	<!-- ----------------------- Add external css files here ------------------------------  -->
+        <link rel="stylesheet" href="/admin/css/admin.css" type="text/css">
+
+	<!-- ----------------------- Add external js files here ------------------------------  -->
+	<script language="javascript" src="/media/js/jquery.form.js"></script>
+	<script language="javascript" src="/lang/en-us/articles/alerts.js"></script>
+	<script language="javascript" src="/articles/js/articles.js?v=7470"></script>
+	<script language="javascript" src="/admin/articles/js/create_articles.js"></script>
+	
+	
+	
+	<style type="text/css">
+	@media print{
+	body{ background-color:#FFFFFF; background-image:none; color:#000000 }
+	#header{ display:none;}
+	#right{ display:none;}
+	#footer{ display:none;}
+	#print_discard{ display:none;}
+	#rating_option{ display:none;}
+	#poll_res{ display:none;}
+	#media_downloads{ display:none;}
+	#media_uploads{ display:none;}
+	}
+	</style>
+	<script language='javascript'>
+ 		var base_url = "/";
+	 	var base_url_ajax = "/en-us/";
+
+		$(document).ready(function() {
+
+		   var options = {
+		    target:        '#managediv_body',   // target element(s) to be updated with server response
+		    success:       art_ajax_poxt_response,  // post-submit callback
+
+		    // other available options:
+		    url:       base_url_ajax+"articles/manage_article.php?f=setpermission&rnd="+Math.random(),         // override for form's 'action' attribute
+		    type:      "post"        // 'get' or 'post', override for form's 'method' attribute
+
+		    };
+
+		    // bind to the form's submit event
+		    $('#frmProtect').submit(function() {
+		        // inside event callbacks 'this' is the DOM element so we first
+		        // wrap it in a jQuery object and then invoke ajaxSubmit
+		        $(this).ajaxSubmit(options);
+
+		        // !!! Important !!!
+		        // always return false to prevent standard browser submit and page navigation
+		        return false;
+		    });
+		});
+
+		// create new article
+		function art_create_article() {
+			//window.open("/en-us/admin/articles/add");
+			document.new_article.action 	= "/en-us/admin/articles/add";
+			document.new_article.method		= "post";
+			document.new_article.submit();
+		}
+
+
+	</script>
+
+
+<div class="wrap"><div style="float:left;width:745px;"><div id="quick_login" style="display:none"><div id="loginBoxContent" style="display:none;z-index:99999"><div class="box">
+ <div class="boxHeader">Login</div>
+ <div class="boxBody">
+  <form action="https://ssl.software.intel.com/en-us/login/?Lang=ENG&amp;TARGET=http://software.intel.com/en-us/articles/designing-the-framework-of-a-parallel-game-engine" method="post">
+   <input type="hidden" name="qlogin" value="true" />
+   <div class="row">
+    <div class="key">Login ID:</div>
+    <div class="value"><input id="txtUserName" name="txtUserName" class="login" size="12" type="text" /></div>
+   </div>
+   <div class="row">
+    <div class="key">Password:</div>
+    <div class="value"><input id="txtPassword" name="txtPassword" class="login" size="12" type="password" /></div>
+   </div>
+   <div class="row">
+    <div class="key">Remember Me?</div><div class="value"><input id="chkRememberMe" type="checkbox" name="chkRememberMe" value="on" /></div>
+   </div>
+   <div style="clear: both"></div>
+   <input type="submit" class="login" value="Login" /><br />
+  </form>
+  <br />
+	<b><a id="new_reg" href="https://ssl.software.intel.com/en-us/register/visual-adrenaline/">New Registration?</a></b><br />
+  <a href="https://welcome.intel.com/forgot_loginid.aspx?Lang=ENG">Forgot Login ID?</a><br />
+  <a href="https://welcome.intel.com/forgot_password.aspx?Lang=ENG">Forgot Password?</a><br />
+ </div>
+</div>
+</div><div class="log_user">You are not logged-in <a id="loginForm" class="load-local" href="#" rel="#loginBoxContent">Login/Register</a></div></div><div id='breadcrumb'><a href='http://software.intel.com/en-us/'>Home</a> &rsaquo; <a href='/en-us/articles/all/1/'>Articles</a></div>
+					<form name="new_article">
+					<input type="hidden" name="article_return_page" value="/en-us/articles/designing-the-framework-of-a-parallel-game-engine/">
+					</form>
+					<form id="posts-filter" name="art_landing_page">
+					<input type="hidden" id="article_category_ids" value="4|20|334"/>
+					<input type="hidden" id="article_type_ids" value="3"/>
+				<h1 style="width:530px">Designing the Framework of a Parallel Game Engine</h1><p id="post-search"><a id="createNewArticle" href="javascript:art_create_article()" style="color:#151B8E;font-size:13px;font-weight: bold; font-style: verdana,sans-serif;">Submit New Article<img align="baseline" src="/media/images/black_arrow.gif"/></a></p></form><div id="rating_option"><div class='alignleft'><table><tr>
+                <td>Published On&nbsp;:&nbsp;&nbsp;</td>
+                <td>June 18, 2009 1:00 AM PDT
+</td></tr><tr>
+									<td colspan='2'><span id='r_s_41747'><div style='float:left;height:15px;'>Rate</div><div style='float:left;height:15px;'>&nbsp;</div><span><input class='star {required:false}' type='radio' name='r_r_41747'  disabled='disabled' value='Please login to rate!
+Current Score: 4.71 out of 7 users' /><input class='star {required:false}' type='radio' name='r_r_41747'  disabled='disabled' value='Please login to rate!
+Current Score: 4.71 out of 7 users' /><input class='star {required:false}' type='radio' name='r_r_41747'  disabled='disabled' value='Please login to rate!
+Current Score: 4.71 out of 7 users' /><input class='star {required:false}' type='radio' name='r_r_41747'  checked='checked' disabled='disabled' value='Please login to rate!
+Current Score: 4.71 out of 7 users' /><input class='star {required:false}' type='radio' name='r_r_41747'  disabled='disabled' value='Please login to rate!
+Current Score: 4.71 out of 7 users' /><input type='hidden' id='hdn_module_41747' value='1' /><input type='hidden' id='hdn_source_41747' value='41747' /><input type='hidden' id='hdn_language_41747' value='1' /><input type='hidden' id='hdn_author_41747' value='' /><input type='hidden' id='hdn_c_41747' value='4,20,334' /></span></span>			</td>
+								</tr>
+							</table>
+						</div>
+						<div class='alignright'>
+							<table>
+								<tr></tr></table>
+					</div>
+					<br class='clear'/>
+				</div>
+				<br/><div id="article_text"><p class="sectionHeading">Download PDF</p>
+<p><a href="http://software.intel.com/file/8109">Designing the Framework of a Parallel Game Engine</a></p>
+<p><span class="sectionBodyText"><a href="#bibliography"></a></span></p>
+<p><span class="sectionHeadingText"><a name="1"></a>1. Introduction</span><br /><span class="sectionBodyText">With the advent of multiple cores within a processor the need to create a parallel game engine has become more and more important. It is still possible to focus primarily on just the GPU and have a single threaded game engine, but the advantage of utilizing all the processors on a system, whether CPU or GPU, can give a much greater experience for the user. For example, by utilizing more CPU cores a game could increase the number of rigid body physics object for greater effects on screen, or developing smarter AI that gives it a more human like behavior.</span></p>
+<p><span class="sectionBodyText"><strong><a name="1.1"></a>1.1. Overview</strong><br />The “Parallel Game Engine Framework” or engine is a multi-threaded game engine that is designed to scale to as many processors as are available within a platform. It does this by executing different functional blocks in parallel so that it can utilize all available processors. This is easier said than done as there are many pieces to a game engine that often interact with one another and can cause many threading errors because of that. The engine takes these scenarios into account and has mechanisms for getting proper synchronization of data without having to be bound by synchronization locks. The engine also has a method for executing data synchronization in parallel in order to keep serial execution time at a minimum.</span></p>
+<p><span class="sectionBodyText"><strong><a name="1.2"></a>1.2. Assumptions</strong><br />This paper assumes a good working knowledge of modern computer game development as well as some experience with game engine threading or threading for performance in general.</span></p>
+<p><span class="sectionHeadingText"><a name="2"></a>2. Parallel Execution State</span><br /><span class="sectionBodyText">The concept of a parallel execution state in an engine is crucial to an efficient multi-threaded runtime. In order for a game engine to truly run parallel, with as little synchronization overhead as possible, it will need to have each system operate within its own execution state with as little interaction as possible to anything else that is going on in the engine. Data still needs to be shared however, but now instead of each system accessing a common data location to say, get position or orientation data, each system has its own copy. This removes the data dependency that exists between different parts of the engine. Notices of any changes made by a system to shared data are sent to a state manager which then queues up all the changes, called messaging. Once the different systems are done executing, they are notified of the state changes and update their internal data structures, which is also part of messaging. Using this mechanism greatly reduces synchronization overhead, allowing systems to act more independently.</span></p>
+<p style="text-align: left;"><a name="2.1"></a><strong>2.1. Execution Modes</strong><br />Execution state management works best when operations are synchronized to a clock, meaning the different systems execute synchronously. The clock frequency may or may not be equivalent to a frame time and it is not necessary for it to be so. The clock time does not even have to be fixed to a specific frequency but could be tied to frame count, such that one clock step would be equal to how long it takes to complete one frame regardless of length. Depending on how you would like to implement your execution state will determine clock time. Figure 1 illustrates the different systems operating in free step mode of execution, meaning they all don’t have to complete their execution on the same clock. There is also a lock step mode of execution (see Figure 2) where all systems execution and complete in one clock.</p>
+<p><a name="fig1"></a><img title="fig1.JPG" src="http://software.intel.com/file/7951" alt="fig1.JPG" /></p>
+<p>Figure 1: Execution State using Free Step Mode</p>
+<p style="text-align: left;"><strong><a name="2.1.1"></a>2.1.1. Free Step Mode</strong><br />This mode of execution allows systems to operate in the time they need to complete their calculations. Free can be misleading as a system is not free to complete whenever it wants to, but is free to select the number of clocks it will need to execute.<br /><br />With this method a simple notification of a state change to the state manager is not enough, data will also need to be passed along with the state change notification. This is because a system that has modified shared data may still be executing when a system that wants the data is ready to do an update. This requires more memory and more copies to be used so may not be the most ideal mode for all situations.</p>
+<p style="text-align: left;"><a name="2.1.2"></a><strong>2.1.2. Lock Step Mode</strong><br />This mode requires that all systems complete their execution in a single clock. This is simpler to implement and does not require passing data with the notification because systems that are interested in a change made by another system can simply query the other system for the value (at the end of execution of course).<br /><br />Lock step can also implement a pseudo free step mode of operation by staggering calculations across multiple steps. One use of this is with an AI that will calculate its initial “large view” goal in the first clock but instead of just repeating the goal calculation for the next clock it can now come up with a more focused goal based on the initial goal.</p>
+<p><a name="fig2"></a><img title="fig2.JPG" src="http://software.intel.com/file/7952" alt="fig2.JPG" /></p>
+<p>Figure 2: Execution State using Lock Step Mode</p>
+<p> </p>
+<p><a name="2.2"></a><strong>2.2. Data Synchronization</strong></p>
+<p><span class="sectionBodyText">It is possible for multiple systems to make changes to the same shared data. Because of this, something needs to be put in place in the messaging to determine which value would be the correct value to use. There are two such mechanisms that can be used:</span></p>
+<ul>
+<li>Time, where the last system to make the change time-wise has the correct value.</li>
+<li>Priority, where a system with a higher priority will be the one that has the correct value. This can also be combined with the time mechanism to resolve changes from systems of equal priority.</li>
+</ul>
+<p>Data values that are determined to be stale, via the two mechanisms, will simply be overwritten or thrown out of the change notification queue.<br /><br />Because the data is shared, using relative values for data can prove to be difficult as some data may be order dependent when combining it. To alleviate this problem use absolute data values for those that require it so that when systems update their local values they just replace the old with the new. A combination of both absolute and relative data would be the most ideal and would depend on each specific situation. For example, common data, like position and orientation, should be kept absolute as creating a transformation matrix for it would depend on the order they are received, but a custom system that generated particles, via the graphics system, that fully owned the particle information could merely send relative value updates.</p>
+<p><a name="3"></a><span class="sectionHeadingText">3. The Engine</span></p>
+<p><span class="sectionBodyText">The engine’s design is focused on flexibility, allowing for the simple expansion of its functionality. With that said, it can be easily modified to accommodate platforms that are constrained by certain factors, like memory, etc.<br />The engine is broken up into two distinct pieces called the framework and the managers. The framework (section 3.1) contains the parts of the game that are duplicated, meaning there will be multiple instances of them. It also contains items that have to do with execution of the main game loop. The managers (section 3.2) are singletons that the game logic is dependent upon.<br /><br />The following diagram illustrates the different sections that make up the engine:</span></p>
+<p><a name="fig3"></a><img title="fig3.JPG" src="http://software.intel.com/file/7953" alt="fig3.JPG" /></p>
+<p>Figure 3: Engine High-Level Architecture</p>
+<p>Notice that the game processing functionality, referred to as a system, is treated as a separate entity from the engine. This is for the purpose of modularity, essentially making the engine the “glue” for tying in all the functionality together. Modularity also allows for the systems to loaded or unloaded as needed.<br /><br />The interfaces are the means of communication between the engine and the systems. Systems implement the interface so that the engine can get access to a system’s functionality, and the engine implements the interface so that the systems can access the managers.<br /><br />To get a clearer picture of this concept refer to Appendix A, “Example Engine Diagram”.<br />As described in section 2, “Parallel Execution State”, the systems are inherently discrete. By doing this, systems can run in parallel without interfering with the execution of other systems. This does cause some problems when systems need to communicate with each other as data is not guaranteed to be in a stable state. Two reasons for inter system communication are:</p>
+<ul>
+<li>To inform another system of a change it has made to shared data (e.g. position, or orientation),</li>
+<li>To request for some functionality that is not available within the system (e.g. the AI system asking the geometry/physics system to perform a ray intersection test).</li>
+</ul>
+<p>The first communication problem is solved by implementing the state manager described in the previous section. The state manager is discussed in more detail in section 3.2.2, “State Manager”.<br /><br />To rectify the second problem, a mechanism is included for a system to provide a service that a different system can use. For a more detailed description, you can reference section 3.2.3, “Service Manager”.</p>
+<p><a name="3.1"></a><strong>3.1. Framework</strong></p>
+<p>The framework is responsible for tying in all the different pieces of the engine together. Engine initialization occurs within the framework, with the exception of the managers which are globally instantiated. The information about the scene is also stored in the framework. For the purpose of flexibility the scene is implemented as what is called a universal scene which contains universal objects which are merely containers for tying together the different functional parts of a scene. More information on this is available in section 3.1.2.<br /><br />The game loop is also located within the framework and has the following flow:</p>
+<p><a name="fig4"></a><img title="fig4.JPG" src="http://software.intel.com/file/7954" alt="fig4.JPG" /></p>
+<p>Figure 4: Main Game Loop</p>
+<p>The first step in the game loop is to process all pending OS window messages as the engine operates in a windowed environment. The engine would be unresponsive to the OS if this was not done. The next step is for the scheduler to issue the systems’ tasks with the task manager. This is discussed in more detail in section 3.1.1 below. Next, the changes that the state manager (section 3.2.2) has been keeping track of are distributed to all interested parties. Finally, the framework checks the execution status to see if the engine should quit, or perform some other engine execution action like go to the next scene. The engine execution status is located in the environment manager which is discussed in section 3.2.4.</p>
+<p><strong><a name="3.1.1"></a>3.1.1. Scheduler</strong><br />The scheduler holds the master clock for execution which is set at a pre-determined frequency. The clock can also run at an unlimited rate, for things like benchmarking mode, so that there is no waiting for the clock time to expire before proceeding.<br />The scheduler submits systems for execution, via the task manager, on a clock tick. For free step mode (section 2.1.1), the scheduler communicates with the systems to determine how many clock ticks they will need to complete their execution and from there determines which systems are ready for execution and which systems will be done by a certain clock tick. This amount can be adjusted by the scheduler if it determines that a system needs more execution time. Lock step mode (section 2.1.2) has all systems start and end on the same clock, so the scheduler will wait for all systems to complete execution.</p>
+<p style="text-align: left;"><a name="3.1.2"></a><strong>3.1.2. Universal Scene &amp; Objects</strong><br />The universal scene and objects are containers for the functionality that is implemented within the systems. By themselves, the universal scene and objects do not possess any functionality other than the ability to interact with the engine. They can, however, be extended to include the functionality that is available in a system. This gives them the ability to take on the properties of any available system without having to be tied to a specific system giving it loose coupling. Loose coupling is important as it allows the systems to be independent of each other giving them the ability to run in parallel.<br />The following diagram illustrates the universal scene and object extension of a system:</p>
+<p style="text-align: left;"><a name="fig5"></a><img title="fig5.JPG" src="http://software.intel.com/file/7955" alt="fig5.JPG" /></p>
+<p>Figure 5: Universal Scene and Object Extension</p>
+<p>An example of how extensions work is as follows: A universal scene is extended to have graphics, physics, and other properties. The graphics scene extension would be responsible for initializing the display and other things, and the physics scene extension would be responsible for setting up the rigid body world, like gravity, etc. Scenes contain objects, so a universal scene would have several universal objects. A universal scene can also be extended to have graphics, physics, and other properties. The graphics object extension would be responsible for drawing the object on screen, and the physics object extension would be responsible for the rigid body interaction of the object with other rigid bodies.<br />For a more detailed diagram on the relationship of the engine with the systems see Appendix B, “Engine and System Relationship Diagram”.<br /><br />Another thing to point out is that the universal scene and universal object are responsible for registering all their extensions with the state manager so that the extensions will get notified of changes made by other extensions (i.e. other systems). An example would be the graphics extension being registered to receive notification of position and orientation changes made by the physics extension.<br /><br />More information about the system’s components can be found in section 5.2, “System Components”.</p>
+<p><strong><a name="3.2"></a>3.2. The Managers</strong><br />The managers provide global functionality within the engine and are implemented as singletons, meaning there will only be one instantiation made available for each type of manager. The reason they are singletons is because their resources should not be duplicated as they will cause redundancy and potential processing performance implications. They also provide common functionality that will be useable across all the systems.</p>
+<p><a name="3.2.1"></a><strong>3.2.1. Task Manager </strong><br />The task manager handles scheduling of a system’s task within its thread pool. The thread pool creates one thread per processor to get the best possible n-way scaling to processors and prevents over subscription avoiding unnecessary task switching within the OS.<br /><br />The task manager receives its list of tasks to execute from the scheduler as well as which tasks to wait for execution to complete. The scheduler gets its list of tasks to execute from the different systems themselves. There will only be one primary task per system, this is commonly known as functional decomposition, but each primary task is allowed to issue as many sub-tasks as it wants to for operating on its data, which is called data decomposition.<br /><br />The following demonstrates how the task manager could issue tasks onto threads for execution on a quad core system:</p>
+<p><a name="fig6"></a><img title="fig6.JPG" src="http://software.intel.com/file/7956" alt="fig6.JPG" /></p>
+<p>Figure 6: Task Manager Thread Pool Example</p>
+<p>Aside from access by the scheduler for issuing of primary tasks, the task manager also has an initialization mode where it will call systems serially from each thread so that the systems can initialize any thread local storage they require for execution.<br />For some help getting started on implementing a task manager, refer to Appendix D, “Tips on Implementing Tasks”.</p>
+<p><a name="3.2.2"></a><strong>3.2.2. State Manager</strong></p>
+<p>State management is part of the messaging mechanism that tracks and distributes change notifications made by a system to other interested systems. To reduce unnecessary change notification broadcasts, systems must register with the state manager for changes they are interested in receiving. This mechanism is based on the observer design pattern which is described in more detail in Appendix C, “The Observer Design Pattern”. In a nutshell, the observer design pattern has the basic premise of an observer observing a subject for any changes, with a change controller acts as a mediator between the two.</p>
+<p>This mechanism works as such: 1) The observer registers the subject it wants to observe with the change controller (or state manager), 2) when the subject has changed one of its properties it sends a change notification to the change controller, 3) the change controller, when told to by the framework, will distribute the change notifications of the subject to the observer, and 4) the observer will query the subject for the actual changed data.<br /><br />Free step mode of operation (section 2.1.1) introduces some extra complexities to this mechanism. Firstly, it will be necessary to include the data along with the change notification as a system that has modified shared data may still be executing and therefore cannot be queried for its value. Next, if a system is not yet ready to receive the changes at the end of a clock tick, the state manager will need to hold on to that data until all systems registered for it are finally ready to receive it.<br /><br />The framework implements two state managers, one for handling changes on the scene level and another for handling changes on the object level. The reason for this is that scenes and objects, for the most part, have different messages that are relevant to them so separating them removes the need to process unnecessary messages. However, any object changes that are relevant to the scene will be registered with the scene so that it will receive those change notifications.<br />In order to remove any synchronization overhead, the state manager will have a change queue for each thread created by the task manager. This way there is no synchronization required when accessing the queue. The queues can then be merged after execution using the method described in section 2.2.</p>
+<p><a name="fig7"></a><img title="fig7.JPG" src="http://software.intel.com/file/7959" alt="fig7.JPG" /></p>
+<p>Figure 7: Internal UObject Change Notification</p>
+<p>While you would think that change notifications would have to be distributed serially, it is possible to parallelize this action. When systems are executing their tasks they operate across all their objects. For example, the physics system would be moving around objects, checking for collisions, and setting new forces, etc. as physics object interact with each other. During change notification a system’s object is no longer interacting with other objects from its own system but is now interacting with other extensions in the universal object it is associated with. This means that universal objects are now independent of each other so each universal object can be updated in parallel. Take note, though, that there may be some corner cases that need to be accounted for with synchronization. Still, something that looked hopelessly serial can now get some parallelization.</p>
+<p><a name="3.2.3"></a><strong>3.2.3. Service Manager</strong><br />The service manager provides access to functionality to systems that otherwise would not have such functionality. A thing to note is that the service manager does not provide this directly but has the interfaces defined for it and any systems that implement the exposed interface functionality will register themselves with the service manager.<br />There is only a small set of services available as the design of the engine is to keep systems running as discretely as possible. Also, systems are not free to provide any service they so choose but only those provided for by the service manager.</p>
+<p><a name="fig8"></a><img title="fig8.JPG" src="http://software.intel.com/file/7961" alt="fig8.JPG" /></p>
+<p>Figure 8: Service Manager Example</p>
+<p>The service manager has another role of providing access to the properties of the different systems to each other. Properties are values of each system that are specific to a system and are therefore not passed in the messaging system. Some examples of these are the screen resolution of the graphics system, or the gravity value of the physics system. The service manager gives access to all these properties to the different systems without giving them direct control over them. It also makes it so that the property changes are queued up and are only issued during serial execution. Take note that accessing another system’s properties is a rare occurrence and should not be used as common practice. This is made available for things like the console window, for example, to turn on/off wireframe mode in the graphics system, or for the user interface system to change the screen resolution as requested by the user. They are essentially used for things that will not change from frame to frame.</p>
+<p><a name="3.2.4"></a><strong>3.2.4. Environment Manager</strong><br />The environment manager provides the functionality for the engine’s running environment. The following is a list of the function groups provided by the environment manager:</p>
+<ul>
+<li>Variables – variable names and data that are shared across the entire engine. The variables are usually set upon loading a scene or some user settings, and are queried in the engine and or by the different systems.</li>
+<li>Execution – information about the execution, such as the end of a scene or end of the program. This can be set or queried for by either the engine or the systems.</li>
+</ul>
+<p> </p>
+<p><a name="3.2.5"></a><strong>3.2.5. Platform Manager</strong><br />The platform manager handles all abstraction of OS calls and also provides added functionality beyond just a simple abstraction. This gives the benefit of encapsulating several common functional steps within one call instead of all the callers having to implement them or know about the nuances of the OS calls.<br /><br />An example of this is the call in the platform manager to load a system’s dynamic library. Aside from loading a system in, it also gets the function entry points and then calls the library’s initialization function. It will also keep around a handle to the library and then unloads it upon exit of the engine.<br /><br />The platform manager is also responsible for providing information about the processor, such as which SIMD instructions are supported and some others, and initializing some of the behavior for the process. This is a query only functionality that systems can use.</p>
+<p><span class="sectionHeadingText"><a name="4"></a>4. Interfaces</span><br /><span class="sectionBodyText">The interfaces are the means of communication between the framework, the managers, and the systems. The framework and the managers reside within the engine and therefore the framework has direct access to the managers. The systems, however, reside outside of the engine and have different functionality from each other making it necessary to have a common method for accessing them. Also, the systems do not have direct access to the managers so they also need a method for accessing the managers but not necessarily the full functionality as certain items should only be accessible to the framework.<br /><br />The interfaces provide a set functionality that needs to be implemented in order to have a common method of access. This makes it unnecessary for the framework to know the details about a specific system as it can communicate to it through a known set of calls.</span></p>
+<p><span class="sectionBodyText"><strong><a name="4.1"></a>4.1. Subject and Observer Interfaces</strong><br />The subject and observer interfaces are used for the registration of the observer with the subject and for passing of change notifications from the subject to the observer. A default subject implementation is also provided as the functionality to handle observer registration/de-registration is common to all subjects.</span></p>
+<p><span class="sectionBodyText"><strong><a name="4.2"></a>4.2. Manager Interfaces<br /></strong>The managers, even though they are singletons, are only directly available to the framework which means that the different systems do not have access to them. In order to provide access, each manager would have an interface that exposes a subset of its functionality. The interface would then be passed to the system when it gets initialized and the systems would then have access to a subset of the manager.<br /><br />The interface defined is dependent upon the manager and therefore is not a common interface but specific to that manager.</span></p>
+<p><span class="sectionBodyText"><strong><a name="4.3"></a>4.3. System Interfaces</strong><br />The systems need to implement interfaces in order for the framework to get access to its components. Without it the framework would have to implement a specific implementation of each new system that gets added to the engine.<br />There are four components to a system so there are four interfaces a system must implement. They are: System, Scene, Object, and Task. These different components are covered in section 5, “Systems”. The interfaces are the means of getting these components. The System interface provides methods for creating and destroying scenes. Scene interfaces provide methods for creating and destroying objects and a method for retrieving the primary task. The Task interface is used by the task manager when issuing tasks within its thread pool.<br /><br />The scene and object interfaces also derive from the subject and observer interfaces as these are the pieces of the system that need to communicate with one another, and with the universal scene and object they are attached to.</span></p>
+<p><span class="sectionBodyText"><strong><a name="4.4"></a>4.4. Change Interfaces<br /></strong>There are also some special interfaces that are used for passing data between the systems. Any systems that make these specific modifications must also implement the interface. An example of this kind of interface is geometry. The geometry interface would have methods for retrieving the position, orientation, and scale for a certain item. Any systems that make modifications to geometry would need to implement this interface so that a different system would be able to access the geometry changes without needing to know about the other system.</span></p>
+<p><span class="sectionHeadingText"><a name="5"></a>5. Systems</span><br /><span class="sectionBodyText">The systems are what provide the game functionality to the engine. Without them the engine would just spin endlessly without any tasks to perform. In order to keep the engine from having to know about all the different system types, systems must implement the interfaces described in section 4.3, “System Interfaces”. This makes it much simpler to add a new system to the engine since the engine won’t need to know about the details.</span></p>
+<p><span class="sectionBodyText"><strong><a name="5.1"></a>5.1. Types</strong><br />The engine should have some predefined systems types that go along with them for standard game components. Some examples are as follows: Geometry, Graphics, Physics (rigid body collision), Audio, Input, AI, and Animation.<br /><br />A custom type is also recommended for systems that implement functionality outside of the common functional blocks in a game. Take note that any systems that modify the custom type’s specific data items will need to know about the custom type’s interface as the engine does not provide this information.</span></p>
+<p><a name="5.2"></a><strong>5.2. System Components</strong><br /><span class="sectionBodyText">A system has several components to it that need to be implemented. They are as follows: System, Scene, Object, and Task. These components are all used to communicate with the different sections within the engine.<br />The following diagram demonstrates the relationship between the components:</span></p>
+<p><a name="fig9"></a><img title="fig9.JPG" src="http://software.intel.com/file/7962" alt="fig9.JPG" /></p>
+<p>Figure 9: System Components</p>
+<p>For a more detailed diagram on the relationship of the systems with the engine, refer to Appendix A, “Engine and System Relationship Diagram”.</p>
+<p> </p>
+<p><span class="sectionBodyText"><strong><a name="5.2.1"></a>5.2.1. System</strong><br />The system component, or system, is responsible for initializing system resources that will remain more or less constant throughout the execution of the engine. An example of this is the graphics system analyzing all the passed in resource locations to determine where they are located for quicker loading upon use of the resource. The screen resolution would also be another item set by the graphics system.<br /><br />The system is also the main entry point for the framework and provides information about itself, such as its type, and provides methods for creation and destruction of scenes.</span></p>
+<p><span class="sectionBodyText"><strong><a name="5.2.2"></a>5.2.2. Scene</strong><br />The scene component, otherwise known as a system scene, is responsible for handling resources that are pertinent to the existing scene. The universal scene uses this scene as an extension of its functionality to make available the properties this system scene provides. An example of this component is the physics scene creating a new world and setting the gravity for the world upon scene initialization.<br /><br />The scene also provides methods for creation and destruction of objects. It also owns the task component, which is used to operate on the scene, and provide a method for retrieving it.</span></p>
+<p><span class="sectionBodyText"><strong><a name="5.2.3"></a>5.2.3. Object</strong><br />The object component, alternatively a. system object, is an object within the scene and is typically associated with what is visible to the user on screen. The universal object uses this object component as an extension of its functionality to allow the properties this object provides to be exposed via the universal object.<br /><br />An example of how this could be used is a universal object extending geometry, graphics, and physics to create a beam of wood on screen. The geometry would hold the position, orientation, and scale information of the object, the graphics system would display it on screen using the given mesh, and the physics system would apply rigid body collision to it so that it would interact with other rigid body objects and gravity.<br /><br />In certain situations a system object may be interested in the changes of a different universal object, or one of its extensions. In this case a link can be established so that the system object can observe the other object.</span></p>
+<p><span class="sectionBodyText"><strong><a name="5.2.4"></a>5.2.4. Task<br /></strong>The task component, referred to as a system task, is responsible for operating on the scene. When the task receives a command to update, from the task manager, it will perform the system’s functionality on the objects within the scene.<br />The task can also choose to subdivide its execution into subtasks and schedule the subtasks with the task manager for even more threaded execution. Doing this allows the engine to scale more readily to a configuration with multiple processors. This technique is known as data decomposition.<br /><br />During the task’s update of the scene is when any modifications done to its objects are posted to the state manager. Refer to section 3.2.2 for more information about the state manager.</span></p>
+<p><span class="sectionHeadingText"><a name="6"></a>6. Tying It All Together</span><br /><span class="sectionBodyText">This is a lot of information to absorb all at once, and the different sections aren’t really separate from one another. The entire engine execution can be broken up into several stages as described in the following sections.</span></p>
+<p> </p>
+<p><a name="6.1"></a><strong>6.1. Initialization Stage</strong><br />Engine execution begins by initializing the managers and the framework.</p>
+<ul>
+<li>The framework calls the scene loader to load in the scene.</li>
+<li>The loader determines what systems the scene is using then calls the platform manager to load those modules.</li>
+<li>The platform manager loads the modules, passes in the manager interfaces, then calls into them to create a new system.</li>
+<li>The module returns a pointer to the instantiated system which implements the system interface.</li>
+<li>The system module will also register any services it provides with the service manager.</li>
+</ul>
+<p> </p>
+<p><a name="fig10"></a><img title="fig10.JPG" src="http://software.intel.com/file/7965" alt="fig10.JPG" /></p>
+<p>Figure 10: Engine Manager and System Initialization</p>
+<p> </p>
+<p><a name="6.2"></a><strong>6.2. Scene Loading Stage</strong> <br />Control returns to the loader which loads the scene.</p>
+<ul>
+<li>The loader creates a universal scene and calls each system interface to instantiate system scenes, extending the functionality of the universal scene.</li>
+<li>The universal scene checks each system scene for what shared data changes they could possibly make and what shared data changes they would like to receive.</li>
+<li>The universal scene then registers the matching system scenes with the state manager so that they will be notified of the changes.</li>
+<li>The loader creates a universal object for each object in the scene and determines which systems will be extending the universal object. The universal object follows a similar system object registration pattern with the state manager as that of the universal scene.</li>
+<li>The loader instantiates system objects via the system scene interfaces it previously received and extends the universal objects with the system objects.</li>
+<li>The scheduler then queries the system scene interfaces for their primary tasks because the scheduler is responsible for issuing the primary tasks to the task manager during execution.</li>
+</ul>
+<p><a name="fig11"></a><img title="fig11.JPG" src="http://software.intel.com/file/7964" alt="fig11.JPG" /></p>
+<p>Figure 11: Universal Scene and Object Initialization</p>
+<p> </p>
+<p><a name="6.3"></a><strong>6.3. Game Loop Stage</strong></p>
+<ul>
+<li>The platform manager is called to process all window messages and/or other platform specific items that are needed for operation on the current platform.</li>
+<li>Execution is then transferred to the scheduler, which waits for the clock time to expire before proceeding.</li>
+<li>The scheduler, for free step mode, checks which of the system tasks completed execution in the previous clock. All tasks that are done (i.e. ready to execute) get issued to the task manager.</li>
+<li>The scheduler will now determine which tasks will complete on the current clock and waits for completion of those tasks.</li>
+<li>For lock step mode, the scheduler issues all tasks and waits for them to complete for each clock step.</li>
+</ul>
+<p> </p>
+<p><a name="6.3.1"></a><strong>6.3.1. Task Execution</strong><br />Execution is transferred to the task manager.</p>
+<ul>
+<li>The task manager queues up all tasks submitted to it and starts processing each task as threads become available. (Task processing is specific to each system. Systems can operate using only one task or they can issue more tasks which get queued in the task manager, thus potentially getting executed in parallel).</li>
+<li>As tasks execute they will operate on the entire scene or on specific objects and modify their internal data structures.</li>
+<li>Any data that is considered as shared, like position and orientation, needs to get propagated to the other systems. The system task does this by having the system scene or system object (whichever was changed) inform their observer of the change. In this case the observer is actually the change controller located in the state manager.</li>
+<li>The change controller queues up the change information to be processed later, but change types that the observer is not interested in are simply ignored.</li>
+<li>If the task needs any services it goes through the service manager to call into the provided service. The service manager can also be used to change the property of a different system that isn’t exposed via the messaging mechanism (e.g. the user input system changes the screen resolution of the graphics system).</li>
+<li>Tasks can also call into the environment manager to read environment variables, change the runtime state (e.g. pause execution, go to next scene, etc.).</li>
+</ul>
+<p><a name="fig12"></a><img title="fig12.JPG" src="http://software.intel.com/file/7966" alt="fig12.JPG" /></p>
+<p>Figure 12: Task Manager and Tasks</p>
+<p><span class="sectionBodyText">
+<p><a name="6.3.2"></a><strong>6.3.2. Distribution</strong><br />Once all tasks targeted for the current clock have completed execution, the main loop calls the state manager to distribute the changes.</p>
+<ul>
+<li>The state manager calls each of its change controllers to distribute the changes they have queued up. This is done by going through each subject’s changes and seeing which observer was listening to that subject.</li>
+<li>The change controller then calls the observer informing it of the change (a pointer to the subject’s interface is also passed to the observer). For free step mode, the observer gets the changed data from the change controller, but for lock step mode the observer queries the subject for the data.</li>
+<li>The observers that are interested in the changes done by a system object will typically be other system objects that are all attached to the same universal object. This makes it possible for the change distribution to be broken up into tasks for execution in parallel. To limit synchronization, group together in a task any universal objects’ extensions that are linked.</li>
+</ul>
+<span class="sectionBodyText">
+<p><a name="6.3.3"></a><strong>6.3.3. Runtime Check and Exit</strong><br />The final step of the main loop is to check the runtime’s state. There are several runtime states like: run, pause, next scene, etc. If the runtime state is set to run it will repeat the entire game loop. If the runtime is set to exit then it exits the game loop, frees up resources, and exits the application. Other runtime states can be implemented like pause, go to next scene, etc.</p>
+<p><span class="sectionHeadingText"><a name="7"></a>7. Final Thoughts</span><br /><span class="sectionBodyText">The key takeaway from all of this is section 2, “Parallel Execution State”. Designing systems for functional decomposition, coupled with data decomposition will deliver a good amount of parallelization and will also ensure scalability with future processors with an even larger amount of cores. Remember to use the state manager along with the messaging mechanism to keep all data in sync with only minimal synchronization overhead.<br /><br />The observer design pattern is a function of the messaging mechanism and some time should be spent learning it so that the most efficient design possible can be implemented to address the needs of your engine. After all, it is the mechanism of communication between the different systems to synchronize all shared data.<br /><br />Tasking plays an important role in proper load balancing. Following the tips in Appendix D will help you create an efficient task manager for your engine.<br /><br />As you can see, designing a highly parallel engine is manageable by using clearly defined messaging and structure. Properly building parallelism into your game engine will give it significant performance gains on modern and all future processors.</span></p>
+<p><span class="sectionHeadingText"><a name="8"></a>8. About the Author<br /></span><span class="sectionBodyText">Jeff Andrews is an Application Engineer with Intel working on optimizing code for software developers, currently focused on PC gaming. He also researches different technologies for enhancing performance or for adding new features to games, which included a role of lead architect for Intel’s Smoke demo framework.<br /></span></p>
+<p><span class="sectionBodyText"><span class="sectionHeadingText"><a name="A"></a>Appendix A. Example Engine Diagram</span></span></p>
+</span></span>The main game loop begins processing (see Figure 4, “Main Game Loop” for a graphical representation of this).</p>
+<p> </p>
+<p> </p>
+<p> </p>
+<p> </p>
+<p><span class="sectionHeadingText"><img title="appA.JPG" src="http://software.intel.com/file/7948" alt="appA.JPG" /></span></p>
+<p> </p>
+<p><br /><span class="sectionHeadingText"><a name="B"></a>Appendix B. Engine and System Relationship Diagram</span></p>
+<p> </p>
+<p><span class="sectionHeadingText"><img title="appB.JPG" src="http://software.intel.com/file/7949" alt="appB.JPG" /></span></p>
+<div>
+<p><br /><span class="sectionHeadingText"><a name="C"></a>Appendix C. The Observer Design Pattern<br /></span><span class="sectionBodyText">The observer design pattern is documented in the book “Design Patterns: Elements of Reusable Object-Oriented Software,” written by Erich Gamma et al., and originally published by Addison-Wesley in 1995.<br /><br />The basic premise of this pattern is that any items interested in data or state changes in other items are not burdened with having to poll the items from time to time to see if there are any changes. The pattern defines a subject and an observer that are used for the change notification. It works by having an observer observe a subject for any changes. The change controller acts as a mediator between the two. The following diagram illustrates the relationship:</span></p>
+<p> </p>
+<div><span class="sectionBodyText"><a name="fig13"></a><img title="appC.JPG" src="http://software.intel.com/file/7950" alt="appC.JPG" /></span></div>
+<p> </p>
+<span class="sectionBodyText">
+<p>Figure 13: Observer Design Pattern</p>
+<p style="text-align: left;">The following is the flow of events:</p>
+<ol>
+<li>
+<div style="text-align: left;">The observer registers itself with the subject that it wants to observe changes for via the change controller.</div>
+</li>
+<li>
+<div style="text-align: left;">The change controller is actually an observer. Instead of registering the observer with the subject it registers itself with the subject and keeps its own list of which observers are registered with which subject.</div>
+</li>
+<li>
+<div style="text-align: left;">The subject inserts the observer (actually the change controller) in its list of observers that are interested in it; optionally there can also be a change type which identifies what type of changes the observer is interested in – this helps speed up the change notification distribution process.</div>
+</li>
+<li>
+<div style="text-align: left;">When the subject makes a change to its data or state it notifies the observer via a callback mechanism and passes information of the types that were changed.</div>
+</li>
+<li>
+<div style="text-align: left;">The change controller queues up the change notifications and waits for the signal to distribute them.</div>
+</li>
+<li>
+<div style="text-align: left;">During distribution the change controller calls the actual observers.</div>
+</li>
+<li>
+<div style="text-align: left;">The observers query the subject for the changed data or state (or get the data from the message).</div>
+</li>
+<li>
+<div style="text-align: left;">When the observer is no longer interested in the subject or is being destroyed, it deregisters itself from the subject via the change controller.</div>
+</li>
+</ol>
+<p style="text-align: left;"><a name="D"></a><span class="sectionHeadingText">Appendix D. Tips on Implementing Tasks</span> <br /><span class="sectionBodyText">While task distribution can be implemented in many different ways, it is best to keep the number of worker threads equal to the number of available logical processors of the platform. Avoid setting the affinity of tasks to a specific thread as the tasks from the different systems will not complete at the same time and can lead to a load imbalance among the worker threads, effectively reducing your parallelization. It will also be worth your while to investigate using a tasking library, like Intel’s Threading Building Blocks for example, which can simplify this process.<br /><br />There are some optimizations that can be done in the task manager to ensure CPU friendly execution of the different task submitted. They are as follows:</span></p>
+<ul>
+<li>
+<div style="text-align: left;">Reverse Issuing, if the order of primary tasks being issued is fairly static, the tasks can then be alternately issued in reverse order from frame to frame. The last task to execute in a previous frame will more than likely still have its data in the cache, so by issuing the tasks in reverse order for the next frame it will all but guarantee that the CPU caches will not have to be repopulated with the correct data.</div>
+</li>
+<li>
+<div style="text-align: left;">Cache Sharing, some multi-core processors have their shared cache split into sections so that two processors may share a cache, while another two share a separate cache. By issuing sub-tasks from the same system onto processors sharing a cache it will increase the likelihood that the data will already be in the shared cache.</div>
+</li>
+</ul>
+<p style="text-align: left;"><a name="list"></a><span class="sectionHeadingText">List of Figures</span><br /><span class="sectionBodyText"><a href="#fig1">Figure 1</a>: Execution State using Free Step Mode 5<br /><a href="#fig2">Figure 2</a>: Execution State using Lock Step Mode 6<br /><a href="#fig3">Figure 3</a>: Engine High-Level Architecture 8<br /><a href="#fig4">Figure 4</a>: Main Game Loop 9<br /><a href="#fig5">Figure 5</a>: Universal Scene and Object Extension 10<br /><a href="#fig6">Figure 6</a>: Task Manager Thread Pool Example 11<br /><a href="#fig7">Figure 7</a>: Internal UObject Change Notification 12<br /><a href="#fig8">Figure 8</a>: Service Manager Example 13<br /><a href="#fig9">Figure 9</a>: System Components 17<br /><a href="#fig10">Figure 10</a>: Engine Manager and System Initialization 19<br /><a href="#fig11">Figure 11</a>: Universal Scene and Object Initialization 19<br /><a href="#fig12">Figure 12</a>: Task Manager and Tasks 20<br /><a href="#fig13">Figure 13</a>: Observer Design Pattern 25</span></p>
+<p style="text-align: left;"><span class="sectionHeadingText"><a name="bibliography"></a>Bibliography</span><br /><span class="sectionBodyText">Gamma, E., Helm, R., Johnson, R., Vlissides, J., (1995-2000). Design Patterns: Elements of Reusable Object-Oriented Software. USA: Addison-Wesley.<br />Intel® Threading Building Blocks (TBB) Home Page. Available from: <br />&lt;<a href="http://www.threadingbuildingblocks.org">http://www.threadingbuildingblocks.org</a>&gt;</span></p>
+</span></div>
+<p> </p>
+<p> </p></div><br/><br/><br/><br/><div id='print_discard'><div id='article_footer'></div><br />Refer to our <a href="http://software.intel.com/en-us/articles/optimization-notice/">Optimization Notice</a> for more information regarding performance and optimization choices in Intel software products.<br /><div id="comments"></div>
+<style type="text/css">td.comment .dp-highlighter { width: 525px; }</style>
+<script type="text/javascript">
+function comment_form_check(full) {
+	if(full == 'true') {
+		if($("#comment_name").val().length < 1) {
+			alert('Name required is a required field!');
+			$("#comment_name").focus();
+			return false;
+		}
+		if(!validate_email($("#comment_email").val())) {
+			alert('Email required is a required field!');
+			$("#comment_email").focus();
+			return false;
+		}
+	}
+	if($("#comment_text").val().length < 1) {
+		alert('comment text is a required field');
+		$("#comment_text").focus();
+		return false;
+	}
+	return true;
+}
+</script>
+<h3 class="pagesection">Comments (16) <a href="/en-us/articles/designing-the-framework-of-a-parallel-game-engine/feed/"><img src="/media/images/small_icons/rss.png" border="0" style="vertical-align:bottom;" /></a></h3><div class="seperator"></div>
+<div id="comment-9300" style="padding: 5px;">
+<table width="720"><tr><td style="border-right: 1px solid #ccc; vertical-align: top; width: 184px">November 27, 2008 7:36 PM PST
+<br /><br /><input type="hidden" name="isn_user_id" id="isn_user_id" value="293202"/><a href="http://software.intel.com/en-us/profile/293202/">sunny0104</a><br /><table cellspacing="0" cellpadding="0" style="border: 0px none; "><tbody><tr><td style="border: 0px none ; padding: 0px; "><a href="http://software.intel.com/en-us/profile/293202/"><img alt="sunny0104" border="0" src="http://software.intel.com/media/images/pixel.gif" title="sunny0104" height="60" width="60" /></a></td><td valign="top" style="width:135px;border:0px none;line-height:14px;padding:3px;padding-top:0px">Total Points: <br />125<br />Registered User</td></tr></tbody></table></td><td class="comment" style="padding-left: 5px; vertical-align: top; width: 530px">
+Thank you ,up</td></tr></table>
+</div>
+<div class="seperator"></div>
+<div id="comment-9307" style="padding: 5px;">
+<table width="720"><tr><td style="border-right: 1px solid #ccc; vertical-align: top; width: 184px">November 28, 2008 8:15 AM PST
+<br /><br /><img alt="" border="0" src="http://software.intel.com/media/images/pixel.gif" title="" height="60" width="60" /><br />James Munro</td><td class="comment" style="padding-left: 5px; vertical-align: top; width: 530px">
+Is there any way of obtaining a PDF formatted copy of this article, or even a hard-copy? This will prove extremely useful in my dissertation, thanks!</td></tr></table>
+</div>
+<div class="seperator"></div>
+<div id="comment-9404" style="padding: 5px;">
+<table width="720"><tr><td style="border-right: 1px solid #ccc; vertical-align: top; width: 184px">December 3, 2008 2:59 PM PST
+<br /><br /><input type="hidden" name="isn_user_id" id="isn_user_id" value="317523"/><a href="http://software.intel.com/en-us/profile/317523/">bgkyer</a><br /><table cellspacing="0" cellpadding="0" style="border: 0px none; "><tbody><tr><td style="border: 0px none ; padding: 0px; "><a href="http://software.intel.com/en-us/profile/317523/"><img alt="bgkyer" border="0" src="http://software.intel.com/media/images/pixel.gif" title="bgkyer" height="60" width="60" /></a></td><td valign="top" style="width:135px;border:0px none;line-height:14px;padding:3px;padding-top:0px">Total Points: <br />15<br />Registered User</td></tr></tbody></table></td><td class="comment" style="padding-left: 5px; vertical-align: top; width: 530px">
+Great article - you should fix the link to threadingbuildingblocks.org at the end (typo in it - &#39;threadind&#39;). I honestly think this could be further genercised to a parallel application engine with just a few alterations on the base objects.<br />
+</td></tr></table>
+</div>
+<div class="seperator"></div>
+<div id="comment-9444" style="padding: 5px;">
+<table width="720"><tr><td style="border-right: 1px solid #ccc; vertical-align: top; width: 184px">December 4, 2008 7:55 PM PST
+<br /><br /><input type="hidden" name="isn_user_id" id="isn_user_id" value="274005"/><a href="http://software.intel.com/en-us/profile/274005/">Orion Granatir (Intel)</a><br /><table cellspacing="0" cellpadding="0" style="border: 0px none; "><tbody><tr><td style="border: 0px none ; padding: 0px; "><a href="http://software.intel.com/en-us/profile/274005/"><img alt="Orion Granatir (Intel)" border="0" src="http://software.intel.com/media/avatars/d/c/3/4/d/6/1/dc34d616b58d38453195cf8168e4a429/d8c1ab7dd81b6065e28e1df655be05e6/d8c1ab7dd81b6065e28e1df655be05e6_s.jpg" title="Orion Granatir (Intel)" height="60" width="60" /></a></td><td valign="top" style="width:135px;border:0px none;line-height:14px;padding:3px;padding-top:0px">Total Points: <br />2,752<br /><div class='lpic'><img src='http://software.intel.com/media/images/brown.gif'/></div>Brown Belt</td></tr></tbody></table></td><td class="comment" style="padding-left: 5px; vertical-align: top; width: 530px">
+Thanks for the heads up on the typo (broken link).  And we are working on getting a PDF version of the doc posted.</td></tr></table>
+</div>
+<div class="seperator"></div>
+<div id="comment-11522" style="padding: 5px;">
+<table width="720"><tr><td style="border-right: 1px solid #ccc; vertical-align: top; width: 184px">December 18, 2008 2:45 PM PST
+<br /><br /><img alt="" border="0" src="http://software.intel.com/media/images/pixel.gif" title="" height="60" width="60" /><br />James Munro</td><td class="comment" style="padding-left: 5px; vertical-align: top; width: 530px">
+Thanks for uploading a PDF version, makes it easier for me to reference in university work :)</td></tr></table>
+</div>
+<div class="seperator"></div>
+<div id="comment-11538" style="padding: 5px;">
+<table width="720"><tr><td style="border-right: 1px solid #ccc; vertical-align: top; width: 184px">December 18, 2008 6:40 PM PST
+<br /><br /><input type="hidden" name="isn_user_id" id="isn_user_id" value="335177"/><a href="http://software.intel.com/en-us/profile/335177/">Jeffrey Andrews (Intel)</a><br /><table cellspacing="0" cellpadding="0" style="border: 0px none; "><tbody><tr><td style="border: 0px none ; padding: 0px; "><a href="http://software.intel.com/en-us/profile/335177/"><img alt="Jeffrey Andrews (Intel)" border="0" src="http://software.intel.com/media/images/pixel.gif" title="Jeffrey Andrews (Intel)" height="60" width="60" /></a></td><td valign="top" style="width:135px;border:0px none;line-height:14px;padding:3px;padding-top:0px">Total Points: <br />80<br />Registered User</td></tr></tbody></table></td><td class="comment" style="padding-left: 5px; vertical-align: top; width: 530px">
+bgkyer - you're absolutely right about this being able to be genericised for "any" parallel application.  Our goal was specifically for games since it's not necessarily simple to figure out how to get all the different systems running in parallel.  Feel free to modify the source code to suite your needs.</td></tr></table>
+</div>
+<div class="seperator"></div>
+<div id="comment-12049" style="padding: 5px;">
+<table width="720"><tr><td style="border-right: 1px solid #ccc; vertical-align: top; width: 184px">December 24, 2008 3:49 PM PST
+<br /><br /><img alt="" border="0" src="http://software.intel.com/media/images/pixel.gif" title="" height="60" width="60" /><br />Josh</td><td class="comment" style="padding-left: 5px; vertical-align: top; width: 530px">
+Hey Jeffery, Hey Orion,<br />
+<br />
+Kudos to you and other members of the Smoke Technology Demo team for your great job.<br />
+<br />
+There are a couple of dark areas in my mind which I'd like some light to be shed on. I'd appreciate it if you answer the following questions:<br />
+<br />
+1) What are the performance characteristics of TBB's task stealing scheduler with regarding to cache coherency in the context of Game Engine Design? How did it affect Smoke's performance specifically?<br />
+<br />
+2) Why do we need to instruct TBB's scheduler and arm it with pre-determined knowledge of each task's workload (as specified in PerformanceHint enumeration in TaskSchedulerTBB.cpp)? Why can't those tasks be scheduled efficiently otherwise?<br />
+<br />
+3) Considering that TBB is designed for a wide range of applications, do you consider TBB's scheduler optimal (or close enough to optimal) for use in Game Engines?<br />
+<br />
+4) How can I improve Smoke's scheduler / task manager? Is there any room for major algorithmic optimizations? How would you guys go about designing your own task scheduler?<br />
+<br />
+Many thanks.</td></tr></table>
+</div>
+<div class="seperator"></div>
+<div id="comment-12249" style="padding: 5px;">
+<table width="720"><tr><td style="border-right: 1px solid #ccc; vertical-align: top; width: 184px">December 25, 2008 6:55 PM PST
+<br /><br /><img alt="" border="0" src="http://software.intel.com/media/images/pixel.gif" title="" height="60" width="60" /><br />Josh</td><td class="comment" style="padding-left: 5px; vertical-align: top; width: 530px">
+5) One inherent problem that I see with Smoke's scheduler is that, if I'm not mistaken, Smoke's execution model more closely follows Bulk Synchronous Processing (BSP), although its use of a task pool can be misleading at first glance. A call to TaskManager::WaitForSystemTasks at the end of Scheduler::Execute, effectively synchronizes all tasks at the end of each frame, which is not a scalable design in that faster subsystems should now wait for slower subsystems (e.g. SystemProceduralFire) to catch up. I don't know why this came as a surprise to me since this article has explicitly stated  in section 2.1 that "execution state management works best when operations are synchronized to a clock, meaning the different systems execute synchronously." :)<br />
+<br />
+Anyway, the point I'm trying to make here is that a system would be much more scalable if different subsystems can run in parallel at different frequencies. A game is mostly considered choppy when rendering is not smooth. People won't notice as much if AI or Physics run at lower frequencies. In my opinion, this reason alone is sufficient to motivate us to shift our focus to designs that promote loose coupling by allowing subsystems to run at different frequencies, of course then, the synchronization would become more of a problem.<br />
+<br />
+What do you guys think? How can Smoke's design be tweaked to support this?<br />
+<br />
+I'm all eyes and ears. Don't keep me waiting for too long. ;)<br />
+<br />
+Many thanks in advance.</td></tr></table>
+</div>
+<div class="seperator"></div>
+<div id="comment-13177" style="padding: 5px;">
+<table width="720"><tr><td style="border-right: 1px solid #ccc; vertical-align: top; width: 184px">December 29, 2008 5:09 PM PST
+<br /><br /><input type="hidden" name="isn_user_id" id="isn_user_id" value="274005"/><a href="http://software.intel.com/en-us/profile/274005/">Orion Granatir (Intel)</a><br /><table cellspacing="0" cellpadding="0" style="border: 0px none; "><tbody><tr><td style="border: 0px none ; padding: 0px; "><a href="http://software.intel.com/en-us/profile/274005/"><img alt="Orion Granatir (Intel)" border="0" src="http://software.intel.com/media/avatars/d/c/3/4/d/6/1/dc34d616b58d38453195cf8168e4a429/d8c1ab7dd81b6065e28e1df655be05e6/d8c1ab7dd81b6065e28e1df655be05e6_s.jpg" title="Orion Granatir (Intel)" height="60" width="60" /></a></td><td valign="top" style="width:135px;border:0px none;line-height:14px;padding:3px;padding-top:0px">Total Points: <br />2,752<br /><div class='lpic'><img src='http://software.intel.com/media/images/brown.gif'/></div>Brown Belt</td></tr></tbody></table></td><td class="comment" style="padding-left: 5px; vertical-align: top; width: 530px">
+Hey Josh,<br />
+<br />
+Thanks for all the comments and feedback.<br />
+I am going to write a blog post about some of your comments so hopefully more people get their eyes on it.<br />
+<br />
+Let me answer some quick questions.  I’ll try and get Brad Werth to throw in his two cents on the TBB questions.  Brad’s the individual that did most of the TBB work.  I’ll answer some of the longer questions in my blog post this week :D  I’ll post a link when it’s up.<br />
+<br />
+1. TBB worked well for Smoke’s performance.  The task stealing was the real key.  I haven’t look at the performance recently.<br />
+  <br />
+If you look in Smoke.gdf, you can change the mechanism used for the scheduler: <br />
+<br />
+Change the Value from TBB to TP to use the native windows threading instead of TBB and you can compare performace.<br />
+<br />
+2. & 3.  I’ll let Brad answer these.  Brad is writing an article on TBB for game engines.  TBB is an effective tool for expressing threading.  If used correctly, game engines can see a lot of benefit.  The biggest complaint I hear about TBB is the lack of PS3 support… but TBB is open source, so hopefully someone is working on a port :D<br />
+<br />
+4. There is always some room for improvement.  If you look at the native windows threading (set TaskManager to TP in Smoke.gdf), you’ll see our very rough and simple task scheduler.  It’s doesn’t have all the fancy features (like tasking stealing) you get with TBB.  You hit on the number one feature I would like to add to the scheduler, free step mode (all systems don’t have a hard sync point).<br />
+<br />
+5. This is the big question.  I’ll write a blog with my opinions/thoughts on this subject.  As Jeff explains in his article, this framework could run in free step mode (section 2.1.1).  There are a lot of benefits to running in free step vs lock step.  However, there are some less than obvious benefits to lock step.  We start off Smoke with at free step scheme.  But we decided to switch to lock step for simplification and time of development.  By all means, you could adapt Smoke to be free step… something I would love to see.  It’s actually not that hard (I hope)... since each system gets required data directly from the owning system, each system could buffer it’s data and update at a desired frequency.<br />
+<br />
+Again, thanks for all your input.<br />
+Please keep us up-to-date on what you do with Smoke!<br />
+Thanks,<br />
+Orion<br />
+</td></tr></table>
+</div>
+<div class="seperator"></div>
+<div id="comment-13224" style="padding: 5px;">
+<table width="720"><tr><td style="border-right: 1px solid #ccc; vertical-align: top; width: 184px">December 29, 2008 11:46 PM PST
+<br /><br /><img alt="" border="0" src="http://software.intel.com/media/images/pixel.gif" title="" height="60" width="60" /><br />Josh</td><td class="comment" style="padding-left: 5px; vertical-align: top; width: 530px">
+Hey Orion,<br />
+<br />
+Thanks for taking the time and writing a follow-up. I really appreciate it.<br />
+<br />
+5) If we're about to stick to task pools (which by the way, being a more scalable approach to threading, is a move in the right direction IMHO) as opposed to going down the conventional route of giving each subsystem its own thread and looping at different frequencies, one way to do this is to change the tasks so they would:<br />
+<br />
+a) immediately add themselves to the queue at the end of each execution<br />
+b) keep track of the elapsed time since their last execution and yield if enough time has not passed<br />
+<br />
+This way, we are effectively turning that explicit loop in the one-thread-per-subsystem approach into an implicit loop. This approach is preferable if we don't want to make drastic changes to the scheduler, but puts the burden of scheduling on the tasks themselves.<br />
+<br />
+A better approach that I can think of, which doesn't suit Smoke's current scheduler right out of the box, is to put this burden on the scheduler itself. This way a scheduler has an internal timer with events set at different frequencies (which we have obtained from the subsystems themselves, i.e. how many times per second does the task want to run?), each of which when fired, results in the corresponding tasks that belong to the said subsystem to execute. I haven't given this further thought though. What would happen if the system under too much pressure that can't run the tasks at the predefined intervals? Maybe a dynamic solution that alters the frequencies during the run-time would help us alleviate this problem to some degree...<br />
+<br />
+But one problem remains. The downside of free step approaches in general is that it would introduce more lag into our system. In the worst case, the rendering happens before physics which takes place before AI which in turn runs before input and I'm not even taking other subsystems into considerations.<br />
+<br />
+Maybe a hybrid approach is what we should be looking for.<br />
+<br />
+I'd be looking forward to hearing from you.<br />
+Regards,<br />
+Josh</td></tr></table>
+</div>
+<div class="seperator"></div>
+<div id="comment-13379" style="padding: 5px;">
+<table width="720"><tr><td style="border-right: 1px solid #ccc; vertical-align: top; width: 184px">December 30, 2008 7:20 PM PST
+<br /><br /><input type="hidden" name="isn_user_id" id="isn_user_id" value="274005"/><a href="http://software.intel.com/en-us/profile/274005/">Orion Granatir (Intel)</a><br /><table cellspacing="0" cellpadding="0" style="border: 0px none; "><tbody><tr><td style="border: 0px none ; padding: 0px; "><a href="http://software.intel.com/en-us/profile/274005/"><img alt="Orion Granatir (Intel)" border="0" src="http://software.intel.com/media/avatars/d/c/3/4/d/6/1/dc34d616b58d38453195cf8168e4a429/d8c1ab7dd81b6065e28e1df655be05e6/d8c1ab7dd81b6065e28e1df655be05e6_s.jpg" title="Orion Granatir (Intel)" height="60" width="60" /></a></td><td valign="top" style="width:135px;border:0px none;line-height:14px;padding:3px;padding-top:0px">Total Points: <br />2,752<br /><div class='lpic'><img src='http://software.intel.com/media/images/brown.gif'/></div>Brown Belt</td></tr></tbody></table></td><td class="comment" style="padding-left: 5px; vertical-align: top; width: 530px">
+I wrote a quick blog about lock vs free step: <a href="http://software.intel.com/en-us/blogs/2008/12/30/lock-or-be-free/" title="http://software.intel.com/en-us/blogs/2008/12/30/lock-or-be-free/" target="_blank">http://software.intel.com/en-us/blogs/2008/12/30/lock-or-be-free/</a>  This blog highlights some of the issues I was thinking about for question 5.<br />
+<br />
+Hey Josh, you have some interesting ideas here.  I think you are right, the best place to put most of the burden would be the Scheduler.  One thing the Scheduler is lacking in Smoke is "knowledge" about running tasks.  It doesn't have priority or information for load balancing.  Right now, the Scheduler needs a large number of small tasks to keep all the worker threads busy because it doesn't try to actively load balance.  With TBB we to get some extra balancing with task stealing, but the Scheduler could to a lot more.<br />
+<br />
+Thanks again for the posts and let me know what you think of the blog :)<br />
+</td></tr></table>
+</div>
+<div class="seperator"></div>
+<div id="comment-13440" style="padding: 5px;">
+<table width="720"><tr><td style="border-right: 1px solid #ccc; vertical-align: top; width: 184px">December 31, 2008 2:19 AM PST
+<br /><br /><img alt="" border="0" src="http://software.intel.com/media/images/pixel.gif" title="" height="60" width="60" /><br />Josh</td><td class="comment" style="padding-left: 5px; vertical-align: top; width: 530px">
+Hello Orion,<br />
+<br />
+Informative blog post. Thanks. :)<br />
+<br />
+I agree with you that lock step mode can be tweaked to better take advantage of our available resources. Lock step performs better, especially if the work is divided properly meaning that the number of available tasks (preferably far) exceeds the number of hardware threads and the jobs are relatively equal in size. I agree.<br />
+<br />
+But the biggest advantage of free step execution mode is the extra flexibility it brings along. Both free step and lock step can max out our CPU usage, but free step is superior in that it's capable of delivering a better gaming experience because we can now dynamically adapt our game to the gamers' machines by allowing different subsystems to run at different frequencies. So while it's true that they both can theoretically max out our CPU usage meaning that literally no CPU cycles are wasted, but free step can partition a frame in a way that more time is devoted to those subsystems that we, as the developers, think contribute more to our game's "responsiveness".<br />
+<br />
+The way I have envisioned it, we would identify our priorities in a list (i.e. 1.Rendering, 2.Physics, 3.AI and such) and when the game starts, it would scale to the gamers' machines so those subsystems that have lower priorities would slow down in favor of those that are given higher priorities. We can even let the gamer tweak this priority inside the Options menu, so for instance, if one particular gamer is more interested in a more challenging AI than more accurate physics calculations she can reverse the priorities.<br />
+<br />
+Of course this is easier to say than do, but all things we have today started as ideas one day nonetheless.<br />
+<br />
+I'd be looking forward to hearing from you Orion.<br />
+<br />
+Kind Regards,<br />
+Josh<br />
+<br />
+P.S. In case anybody comes up with other interesting ideas (or implementations!) long after this discussion is over, please don't hesitate to contact me. You can reach me at <a href="http://aphrodite3d.blogspot.com" title="http://aphrodite3d.blogspot.com" target="_blank">http://aphrodite3d.blogspot.com</a>. I'm not much of a blogger as you see!</td></tr></table>
+</div>
+<div class="seperator"></div>
+<div id="comment-14396" style="padding: 5px;">
+<table width="720"><tr><td style="border-right: 1px solid #ccc; vertical-align: top; width: 184px">January 5, 2009 4:32 PM PST
+<br /><br /><input type="hidden" name="isn_user_id" id="isn_user_id" value="182791"/><a href="http://software.intel.com/en-us/profile/182791/">Brad Werth (Intel)</a><br /><table cellspacing="0" cellpadding="0" style="border: 0px none; "><tbody><tr><td style="border: 0px none ; padding: 0px; "><a href="http://software.intel.com/en-us/profile/182791/"><img alt="Brad Werth (Intel)" border="0" src="http://software.intel.com/media/avatars/1/4/c/c/1/d/1/14cc1d1f4d92377593caa2c77b9930dd/2563f41ff7c8f1b9ead213bbf8e1cb1e/2563f41ff7c8f1b9ead213bbf8e1cb1e_s.jpg" title="Brad Werth (Intel)" height="60" width="60" /></a></td><td valign="top" style="width:135px;border:0px none;line-height:14px;padding:3px;padding-top:0px">Total Points: <br />1,694<br /><div class='lpic'><img src='http://software.intel.com/media/images/brown.gif'/></div>Brown Belt</td></tr></tbody></table></td><td class="comment" style="padding-left: 5px; vertical-align: top; width: 530px">
+Hey, I'm responding to Josh's many insightful questions posted earlier.<br />
+<br />
+1) How/Why is TBB faster for Smoke?  We didn't do a lot of deep-thinking on this -- we treated TBB as middleware and tried it out.  It has better performance, so there we go.  Conceptually the scheduler in TBB and all Cilk-style schedulers have an advantage as cores increase (no central task pool to synchronize on) and data decomposition increases (cache benefits become apparent).<br />
+<br />
+2) Why do we order the tasks being submitted to TBB?  The TBB scheduler is, as an implementation detail, FIFO.  We order the tasks to put the largest indivisible work in first, so itcan get started immediately.  If it was submitted last, it would be possible for the TBB threads to start on smaller data decomposition tasks, which would increase the total frame time.<br />
+<br />
+3) Is TBB appropriate for games?  Yes, we think so.  Certainly the scheduling algorithm has nice performance properties.  As with most middleware, the issue with TBB is not whether it can deliver performance (it can), but whether you can effectively utilize its organizational idiom.  I'm spending a lot of time thinking about that and how to wrap TBB better for games.  Take a look at the Pet Me demo for a simple wrapping of TBB that uses a Promises pattern (like in Java 1.5).  Pet Me is at <a href="http://www.gamasutra.com/view/feature/3876/sponsored_feature_multicore_.php" title="http://www.gamasutra.com/view/feature/3876/sponsored_feature_multicore_.php" target="_blank">http://www.gamasutra.com/view/feature/3876/sponsored_feature_multicore_.php</a>.<br />
+<br />
+4) How can we improve task scheduling in Smoke? As Orion wrote earlier, breaking the requirement to synchronize each frame is a natural next step.  I posted my thoughts on how to do that in Smoke as a comment to Orion's blog entry <a href="http://software.intel.com/en-us/blogs/2008/12/30/lock-or-be-free/" title="http://software.intel.com/en-us/blogs/2008/12/30/lock-or-be-free/" target="_blank">http://software.intel.com/en-us/blogs/2008/12/30/lock-or-be-free/</a>.<br />
+<br />
+5) Is it viable to have each recurring task schedule itself when finished?  It's a good idea but it's challenging to do in TBB.  The internal tree structure of TBB and the local work trees make it a challenge to put a task into the system that will be run "later".  In TBB, if a task is about to finish and makes a new child/continuation/etc to run again, that task will run next, making the effor equivalent to a while(true) loop.  You can request a specific task to run next, but how will you know what's in the task pool or which thread it is assigned to?  It's a bit of a mess.  I'm working on an article now that lays out some of these challenges and some partial solutions we've found.  I'll post a notice here when that is available.<br />
+<br />
+Let me be perfectly clear that when I talk about challenges and solutions, I'm discussing the peculiarities of using TBB's API, not its ability to deliver performance.  TBB performance has been fantastic in almost every situation where we've been able to apply the library.<br />
+</td></tr></table>
+</div>
+<div class="seperator"></div>
+<div id="comment-14487" style="padding: 5px;">
+<table width="720"><tr><td style="border-right: 1px solid #ccc; vertical-align: top; width: 184px">January 6, 2009 4:05 PM PST
+<br /><br /><input type="hidden" name="isn_user_id" id="isn_user_id" value="335177"/><a href="http://software.intel.com/en-us/profile/335177/">Jeffrey Andrews (Intel)</a><br /><table cellspacing="0" cellpadding="0" style="border: 0px none; "><tbody><tr><td style="border: 0px none ; padding: 0px; "><a href="http://software.intel.com/en-us/profile/335177/"><img alt="Jeffrey Andrews (Intel)" border="0" src="http://software.intel.com/media/images/pixel.gif" title="Jeffrey Andrews (Intel)" height="60" width="60" /></a></td><td valign="top" style="width:135px;border:0px none;line-height:14px;padding:3px;padding-top:0px">Total Points: <br />80<br />Registered User</td></tr></tbody></table></td><td class="comment" style="padding-left: 5px; vertical-align: top; width: 530px">
+Hi Josh,<br />
+<br />
+Thanks for giving this a really good looking over.  You've made some really good points.  I'm not working on Smoke anymore but I'm sure Orion will mull them over.<br />
+<br />
+Here are some tidbits to give you a little more insight into Smoke:<br />
+<br />
+. The original intent was to have the Scheduler query the system tasks on how many clock ticks they would require to execute, and ping the task if it was exceeding the requested amount.  Due to time constraints we weren't able to implement this - easy to say but hard to do.<br />
+<br />
+. Free step has some extra complexities with the change notification that, again, we didn't have enough time to implement.<br />
+<br />
+. Lock step can do a pseudo free step, such that, a system task that doesn't need to do anything will just return, relinquishing the thread for another task.  System tasks that need more time can break up their calculation so that they halt calculations close to when the clock tick expires and continue calculations on the next clock tick.</td></tr></table>
+</div>
+<div class="seperator"></div>
+<div id="comment-33794" style="padding: 5px;">
+<table width="720"><tr><td style="border-right: 1px solid #ccc; vertical-align: top; width: 184px">November 2, 2009 4:07 AM PST
+<br /><br /><input type="hidden" name="isn_user_id" id="isn_user_id" value="449841"/><a href="http://software.intel.com/en-us/profile/449841/">crazii</a><br /><table cellspacing="0" cellpadding="0" style="border: 0px none; "><tbody><tr><td style="border: 0px none ; padding: 0px; "><a href="http://software.intel.com/en-us/profile/449841/"><img alt="crazii" border="0" src="http://software.intel.com/media/images/pixel.gif" title="crazii" height="60" width="60" /></a></td><td valign="top" style="width:135px;border:0px none;line-height:14px;padding:3px;padding-top:0px">Total Points: <br />5<br />Registered User</td></tr></tbody></table></td><td class="comment" style="padding-left: 5px; vertical-align: top; width: 530px">
+Hello,I'm new here,now I'm just writing something to learn the engine design stuff,especially parallelizing techs.I'm now studying and thinking carefully about your article.But I got a question that really bothers me,which is just about how to provide interface to the user,as I'm not quite experienced in such designing job.<br />
+<br />
+The question is:There are many subsystems,with different functioanlities.Is it a good way that we let the client to use the system's functionality directly as using a plugin,or we need pre-define some system's interface in the framework level,for the engine? Take rendersystem as example,do we need some interface (like services) defined for it?<br />
+<br />
+Hey,I don't know if it is suitable to ask it here.Anyway thank you for the article.It's awesome.<br />
+By the way,I'm using TBB for my test/study,currently it works pretty fine in Lock step mode.</td></tr></table>
+</div>
+<div class="seperator"></div>
+<div id="comment-43332" style="padding: 5px;">
+<table width="720"><tr><td style="border-right: 1px solid #ccc; vertical-align: top; width: 184px">May 13, 2010 1:44 PM PDT
+<br /><br /><img alt="" border="0" src="http://software.intel.com/media/images/pixel.gif" title="" height="60" width="60" /><br />Arni Arent</td><td class="comment" style="padding-left: 5px; vertical-align: top; width: 530px">
+This architecture is flawed.<br />
+<br />
+It allows different systems to submit sub-tasks into the queue, presumably for execution by an available worker thread.<br />
+<br />
+This means that you can have multiple threads working on any one system. What this means is that memory that each system has is being affected by multiple threads.<br />
+<br />
+That invites a lot of concurrency problems.</td></tr></table>
+</div>
+<div class="seperator"></div>
+<h3 class="pagesection">Trackbacks (8)</h3><div class="seperator"></div><ul>
+<li><a href="http://www.wild.deathtouchstudios.com/?p=83" rel="nofollow" target="_blank">Wilds Home &raquo; DeathTouchEngine Rewrite Introduction</a><br />
+September 9, 2009 8:59 PM PDT
+</li><li><a href="http://www.wild.deathtouchstudios.com/?p=83" rel="nofollow" target="_blank">Wilds Home &raquo; DeathTouchEngine Rewrite Introduction</a><br />
+September 13, 2009 11:44 PM PDT
+</li><li><a href="http://www.studiofortress.com/blog/2009/11/concurrency-links/" rel="nofollow" target="_blank">Concurrency links &laquo; StudioFortress</a><br />
+November 2, 2009 4:36 PM PST
+</li><li><a href="http://toddseiler.com/wordpress/?p=31" rel="nofollow" target="_blank">Todd Seiler &raquo; Concurrency &amp; Parallelism</a><br />
+September 6, 2010 3:08 AM PDT
+</li><li><a href="http://www.nelxon.com/191/xdsk/" rel="nofollow" target="_blank"> The XDSK | Nelxon Studios </a><br />
+September 16, 2010 4:22 AM PDT
+</li><li><a href="http://aronze.com/troll/?p=32" rel="nofollow" target="_blank"> some article | troll</a><br />
+October 26, 2010 12:04 AM PDT
+</li><li><a href="http://software.intel.com/en-us/blogs/2008/12/30/lock-or-be-free/" rel="nofollow" target="_blank">Lock or Be Free &#8211; Intel Software Network Blogs</a><br />
+December 9, 2010 1:05 AM PST
+</li><li><a href="http://www.nelxon.com/681/xdsk2/" rel="nofollow" target="_blank"> XDSK2 &#8211; XNA 4.0 Resources | Nelxon Studio </a><br />
+December 9, 2010 3:35 AM PST
+</li></ul>
+<br />
+<h3 class="pagesection">Leave a comment&nbsp;&nbsp;<a target="_blank" href="http://software.intel.com/en-us/articles/comments-help-guide/"><img src="/media/images/help.gif" border="0" style="height:19px;width:19px;vertical-align:middle;"></a></h3><div>To obtain technical support, please go to <a href="http://software.intel.com/sites/support/">Software Support</a>.</div><div class="seperator"></div>
+<form action="/services/comment/post/" method="post" onsubmit="return comment_form_check('true');">
+Name (required)*<br /><input id="comment_name" name="n" size="45" type="text" /><br />
+Email (required; will not be displayed on this page)*<br /><input id="comment_email" name="e" size="45" type="text" /><br />
+Your URL (optional)<br /><input name="u" size="45" type="text" /><br />
+<br />
+Comment*<br />
+<input name="t" type="hidden" value="1293265578|0145635843baf19542adfc61fd45f3ed" />
+<input name="m" type="hidden" value="1" />
+<input name="s" type="hidden" value="41747" />
+<input name="c" type="hidden" value="4,20,334" />
+<input name="l" type="hidden" value="1" />
+<input name="a" type="hidden" value="" />
+<input name="p" type="hidden" value="http://software.intel.com/en-us/articles/designing-the-framework-of-a-parallel-game-engine/" />
+<textarea id="comment_text" name="c" rows="10" style="width: 97%"></textarea><br />
+<input class="button" type="submit" value="submit" />
+</form>
+</div></div><div id='right'><div class="box" id="buttons">
+ <div class="boxBody" id="icons">
+  <div id="sprn" onclick="print();" onmouseout="window.status=''" onmouseover="window.status='Print'" title="Print"></div>
+  <div id="seaf" onclick="eaf();" onmouseout="window.status=''" onmouseover="window.status='Email to a friend'" title="Email to a friend"></div>
+  <div id="ssfb" onclick="sfb();" onmouseout="window.status=''" onmouseover="window.status='Support'" title="Support"></div>
+  <div id="snew" onclick="document.location='http://software.intel.com/en-us/articles/intel-software-network-news-archive/';" onmouseout="window.status=''" onmouseover="window.status='http://software.intel.com/en-us/articles/intel-software-network-news-archive/'" title="Newsletter"></div>
+  <div id="srss" onclick="document.location='http://feeds.feedburner.com/ISNMain';" onmouseout="window.status=''" onmouseover="window.status='http://feeds.feedburner.com/ISNMain'" title="RSS"></div>
+  <div id="sdig" onclick="digg();" onmouseout="window.status=''" onmouseover="window.status='Digg this'" title="Digg this"></div>
+  <div id="sdel" onclick="delicious();" onmouseout="window.status=''" onmouseover="window.status='del.icio.us'" title="del.icio.us"></div>
+  <div id="ssrc" onclick="window.open('http://software.intel.com/en-us/articles/advanced-search/','_blank');" onmouseout="window.status=''" onmouseover="window.status='Search'" title="Search"></div>
+ </div>
+</div>
+<div class="box">
+ <div class="boxHeader">Login</div>
+ <div class="boxBody">
+  <form action="https://ssl.software.intel.com/en-us/login/?Lang=ENG&amp;TARGET=http://software.intel.com/en-us/articles/designing-the-framework-of-a-parallel-game-engine" method="post">
+   <input type="hidden" name="qlogin" value="true" />
+   <div class="row">
+    <div class="key">Login ID:</div>
+    <div class="value"><input id="txtUserName" name="txtUserName" class="login" size="12" type="text" /></div>
+   </div>
+   <div class="row">
+    <div class="key">Password:</div>
+    <div class="value"><input id="txtPassword" name="txtPassword" class="login" size="12" type="password" /></div>
+   </div>
+   <div class="row">
+    <div class="key">Remember Me?</div><div class="value"><input id="chkRememberMe" type="checkbox" name="chkRememberMe" value="on" /></div>
+   </div>
+   <div style="clear: both"></div>
+   <input type="submit" class="login" value="Login" /><br />
+  </form>
+  <br />
+	<b><a id="new_reg" href="https://ssl.software.intel.com/en-us/register/visual-adrenaline/">New Registration?</a></b><br />
+  <a href="https://welcome.intel.com/forgot_loginid.aspx?Lang=ENG">Forgot Login ID?</a><br />
+  <a href="https://welcome.intel.com/forgot_password.aspx?Lang=ENG">Forgot Password?</a><br />
+ </div>
+</div>
+<div class='box'><div class='boxHeader'>Tags for this Page</div><div class='boxBody' id='tfpage'><a href='/en-us/tags/7437'>game development</a> <a href='/en-us/tags/7447'>physics</a> <a href='/en-us/tags/7499'>visual computing</a> </div></div></div><div class='clear'></div></div>
+	<br class="clear"/>
+
+	<div style="padding:0px;display:none;" id="flag_type_display">
+		<select id='selflag'><option value="9">Inappropriate Content</option><option value="10">Out of Context Content</option><option value="35">Content out of date</option></select>	</div>
+
+<!-- begin footer -->
+<div class="con con-ftr">
+  <div class="gaat40-clear"></div>
+  <div id="gaat40-footer" class="gaat40-reset">
+    <div class="gaat40-cr">
+      <ul class="gaat40-first">
+        <li class="gaat40-first">©Intel Corporation</li>
+      </ul>
+    </div>
+    <div class="gaat40-main">
+      <ul class="gaat40-first">
+        <li class="gaat40-first"><a href="http://www.intel.com/siteindex.htm?iid=ftr+map">Site Map</a></li>
+        <li><a href="http://www.intel.com/intel/rss.htm?iid=ftr+rss">RSS</a></li>
+        <li><a href="http://www.intel.com/jobs/index.htm?iid=ftr+jobs">Jobs</a></li>
+        <li><a href="http://www.intc.com/index.cfm?iid=ftr+invrel">Investor Relations</a></li>
+        <li><a href="http://www.intel.com/pressroom/index.htm?iid=ftr+press">Press Room</a></li>
+        <li><a href="http://www.intel.com/feedback.htm?iid=ftr+contact">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="gaat40-terms">
+      <ul class="gaat40-first">
+        <li class="gaat40-first"><a href="http://www.intel.com/sites/corporate/termsofuse.htm?iid=ftr+terms">Terms of Use</a></li>
+        <li><a class="gaat40-trademark" href="http://www.intel.com/sites/corporate/tradmarx.htm?iid=ftr+trademark">*Trademarks</a></li>
+        <li><a href="http://www.intel.com/sites/corporate/privacy.htm?iid=ftr+privacy">Privacy</a></li>
+      </ul>
+    </div>
+    <div class="clear"></div>
+  </div> 
+</div>
+<!-- end footer -->
+  </div>
+  <div style="display: none">
+   <script type="text/javascript" src="/common/js/wa_setup.js?v=20101225"></script>
+   <script type="text/javascript"><!--
+    var wa_pageName='Designing the Framework of a Parallel Game Engine';
+    var wa_geo='asmo-na';
+    var wa_language='en-us';
+    var wa_org1='sw';
+    var wa_org2='isn';
+    var wa_org3='articles';
+    var wa_org4='Designing the Framework of a Parallel Game Engine';
+    var wa_orgX='';
+    var wa_custom01='';
+    var wa_custom03='Multicore,VisualComp,game-development';
+    var wa_custom04='game development,physics,visual computing';
+    var wa_custom05='Technical Article';
+    var wa_custom14='2008-11-25';
+    var wa_custom21='41747';
+    var wa_eCustom14='41747';
+    var wa_custom15='2008-11-25';
+    var wa_urlQueryString="all";
+    var wa_reportSuites='intelcorpsw,intelcorpswkb,intelcorpswmulticore,intelcorpswgraphics, intelcorpswgamedev';
+    var s_charSet='UTF-8';
+    var wa_eCustom13='http://software.intel.com/en-us/articles/designing-the-framework-of-a-parallel-game-engine/';
+    var wa_eCustom28='http://software.intel.com/en-us/articles/designing-the-framework-of-a-parallel-game-engine/';
+   // -->
+   </script>
+   <script type="text/javascript" src="/common/js/wa_process.js?v=20101225"></script>
+   <script type="text/javascript">var _sf_async_config={uid:982,domain:"software.intel.com"}; (function(){ function loadChartbeat() { window._sf_endpt=(new Date()).getTime(); var e = document.createElement('script'); e.setAttribute('language', 'javascript'); e.setAttribute('type', 'text/javascript'); e.setAttribute('src', (("https:" == document.location.protocol) ? "https://s3.amazonaws.com/" : "http://") + "static.chartbeat.com/js/chartbeat.js"); document.body.appendChild(e); } var oldonload = window.onload; window.onload = (typeof window.onload != 'function') ? loadChartbeat : function() { oldonload(); loadChartbeat(); }; })();</script>
+  </div>
+ </body>
+</html>
