@@ -1,0 +1,802 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>	
+		<!--chartbeat code-->
+		<script type="text/javascript">var _sf_startpt=(new Date()).getTime()</script>
+		
+		<!--global stylesheet-->
+		<link rel="stylesheet" type="text/css" href="http://a.blip.tv/skin/mercury/global.css?v=oldgaryz" media="screen" />
+		
+		<!--common stylesheet-->
+		<link rel="stylesheet" type="text/css" href="http://a.blip.tv/skin/mercury/common.css?v=moldygaryz" media="screen" />
+
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>
+			
+				Clojure on blip.tv
+			 
+			</title>
+
+		
+			<!-- Facebook share tags -->
+			
+				<meta name="title" content="Clojure"/>
+				<meta name="description" content="Screencasts, talks and tutorials on the Clojure programming language."/>
+				
+					<link rel="image_src" href="http://a.images.blip.tv/Richhickey-picture599-12-839.jpg" />
+				
+			
+
+				
+			<!-- End Facebook share tags -->
+		
+			
+		
+		<meta http-equiv="keywords" name="keywords" content="Clojure,clojure,vlog,show,videoblog,blog" />
+		
+				
+		<meta name="x-debug-action" content="users_view" />
+		
+		<meta name="robots" content="all" />
+
+		<!--format_inc_header-->
+		
+
+
+
+
+<script type="text/javascript" src="http://a.blip.tv/scripts/json.js?v=oldgaryz"></script>
+<script type="text/javascript" src="http://a.blip.tv/scripts/pokkariJavascript.js?v=oldgaryz"></script>
+
+
+
+
+
+
+
+<script type="text/javascript" src="http://a.blip.tv/scripts/BLIP.js?v=oldgaryz"></script>
+<script type="text/javascript" src="http://a.blip.tv/scripts/BLIP/Object.js?v=oldgaryz"></script>
+<script type="text/javascript" src="http://a.blip.tv/scripts/BLIP/Delegate.js?v=oldgaryz"></script>
+<script type="text/javascript" src="http://a.blip.tv/scripts/BLIP/Control.js?v=oldgaryz"></script>
+<script type="text/javascript" src="http://a.blip.tv/scripts/BLIP/Controls/Navigation.js?v=oldgaryz"></script>
+<script type="text/javascript" src="http://a.blip.tv/scripts/BLIP/Controls/FastUserMenu.js?v=oldgaryz"></script>
+
+<script>
+	var navigation = new BLIP.Controls.Navigation();
+</script>
+
+			
+			
+			
+			
+
+        <script type="text/javascript" language="javascript">
+	
+	
+	
+
+       PokkariPlayer.BARISTA_ENDPOINT = "http://barista.blip.tv:9393/barista/resolve";
+       Pokkari.siteUrl = "http://blip.tv";
+       Pokkari.siteDomain = "blip.tv";
+       </script>
+
+
+			
+<link rel="alternate" type="application/rss+xml" title="blip.tv RSS" href="http://blip.tv/rss" />
+
+
+		<!--/format_inc_header-->		
+		
+		<link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="blip.tv" />
+		
+			
+		
+		
+
+	</head>
+	<body>
+<!-- include: templ/blipnew/format.pthml -->
+		<div id="Header">
+			<!-- User stuff -->
+			
+				<div id="HeaderUsername">
+					Hi there, <a href="/users/create/">Sign up!</a> <span id="Divider">|</span> <a href="/users/login/?return_url=/%3Fuser%3Dclojure">Login</a>
+				</div>
+			
+			<!-- /User stuff -->			
+			<div class="Clear"></div>
+			<div id="HeaderNavWrapper">
+				<a href="http://blip.tv"><img src="http://a.blip.tv/skin/mercury/images/logo.gif?v=oldgaryz" id="Logo" alt="blip.tv" /></a>					
+				<div id="HeaderNavMenuWrapper">
+					<div class="HeaderNavMenu" onMouseOver="navigation.show(this)" onMouseOut="navigation.hide(this)">					<div class="MajorLink"><a href="http://blip.tv/popular">Browse</a></div>
+					<ul>
+					  
+						<li><a href="http://blip.tv/recent">Recent Episodes</a></li>
+						<li><a href="http://blip.tv/popular">Popular Episodes</a></li>
+						<li class="LastItem"><a href="http://blip.tv/random">Random Episodes</a></li>
+					</ul>
+				</div>
+					<div class="HeaderNavMenu" onMouseOver="navigation.show(this)" onMouseOut="navigation.hide(this)">
+	 				<div class="MajorLink"><a href="http://blip.tv/dashboard">Dashboard</a></div>
+					<ul>
+						<li><a href="http://blip.tv/dashboard">Overview</a></li>
+						<li><a href="http://blip.tv/dashboard/episodes">Episodes</a></li>
+						<li><a href="http://blip.tv/dashboard/players">Players</a></li>
+						<li><a href="http://blip.tv/dashboard/distribution">Distribution</a></li>
+						<li><a href="http://blip.tv/dashboard/ads">Advertising</a></li>
+						<li class="LastItem"><a href="http://blip.tv/dashboard/stats">Statistics</a></li>
+					</ul>
+				</div>
+					<div class="HeaderNavMenu" onMouseOver="navigation.show(this)" onMouseOut="navigation.hide(this)">
+					<div class="MajorLink"><a href="http://blip.tv/dashboard/upload">Upload</a></div>
+					<ul>
+						<li><a href="http://blip.tv/dashboard/upload">Web upload</a></li>
+						<li><a href="http://blip.tv/tools/">Desktop upload client</a></li>
+						<li class="LastItem"><a href="http://blip.tv/dashboard/ftp/">FTP upload</a></li>
+					</ul>
+				</div>
+					<div class="HeaderNavMenu" onMouseOver="navigation.show(this)" onMouseOut="navigation.hide(this)">
+					<div class="MajorLink"><a href="http://support.blip.tv/">Help</a></div>
+					<ul>
+						<li><a href="http://support.blip.tv/">Overview</a></li>
+						<li><a href="http://support.blip.tv/forums">Troubleshooting</a></li>
+						<li><a href="http://blip.tv/faq">FAQ</a></li>
+						<li><a href="http://support.blip.tv/forums">Knowledge Base</a></li>
+						<li class="LastItem"><a href="http://support.blip.tv/">Contact support</a></li>
+					</ul>
+				</div>
+					<div class="Clear"></div>
+				</div>
+				<div class="Clear"></div>
+			</div>
+			<div id="HeaderSearch">
+				<form method="get" action="/search">
+					<div id="SearchQuery">
+						<input type="text" name="q">
+					</div>
+					<div id="SearchQuerySubmit">
+						<input type="submit" value="Search blip.tv">
+					</div>
+				</form>
+				<div class="Clear"></div>
+			</div>
+			<div class="Clear"></div>
+		</div>
+
+		<div class="Clear"></div>
+
+	<div id="Wrapper">
+		<div class="Clear"></div>
+
+		<!-- Sides & Tables anteater -->
+
+		
+			<table cellpadding="0" cellspacing="0" border="0" id="main_table">
+
+					
+					<!-- side -->
+					<td valign="top" id="side0">
+						<div id="side0_auto"></div>
+						<!-- include: templ/blipnew/posts_navigation.pthml -->
+
+
+					</td>
+					
+					<td id="body" valign="top">
+					<!-- main -->
+						<!-- include: templ/blipnew/users_single.pthml -->
+
+
+
+
+	
+		
+			
+				</td></tr></table>
+
+<script type="text/javascript" src="http://a.blip.tv/scripts/swfobject.js?v=oldgaryz"></script>
+
+<style>
+
+	
+	#Permalink {
+		float: left;
+		color: #BBB;
+		font-size: 11px;
+		margin-left: 50px;
+	}
+	
+	#Subscribe {
+		float: right;
+		color: #4c4c4c;
+		font-size: 11px;
+		margin-right: 50px;
+	}
+	
+	#Subscribe a {
+		color: #BBB;
+	}
+	
+	#ShowpageContent {
+		background: #000 url("http://a.blip.tv/skin/mercury/images/showpage_theater_top.gif?v=oldgaryz") no-repeat;
+		background-position: top;
+	}
+	
+	#ShowpageContentFooter {
+		padding: 7px 7px 9px 7px;
+		background: #212020 url("http://a.blip.tv/skin/mercury/images/showpage_theater_bot.gif?v=oldgaryz") no-repeat;	
+		background-position: bottom;
+		border-top: 1px solid #313131;
+	}
+
+	.JournalPagesButton {
+		float: right;
+		width: 80px;
+		height: 48px;
+		margin: 0 0px 5px 5px;
+		background: #FFF url("http://a.blip.tv/skin/mercury/images/journal_bg.gif?v=oldgaryz") no-repeat;
+	}
+	
+	.JournalPagesButtonContents {
+		padding: 17px 5px 0 0px;
+		font-size: 11px;
+		text-align: center;
+	}
+
+	.JournalPagesButtonContents a {
+		font-weight: bold;
+		color: #FFF;
+	}
+	
+	#NoPosts {
+		margin: 120px 0 120px 0;
+		font-size: 25px;
+		line-height: 25px;
+		text-align: center;
+	}
+	
+</style>
+
+	<div id="ShowpageHeader">
+		<div id="ShowName">Clojure</div>
+		
+		<div class="ShowHeaderNav">
+			<a href="http://clojure.blip.tv/posts?view=archive&nsfw=dc" id="ArchiveLink">Episode Archive</a>
+			<a href="javascript:void(0);" onClick="javascript:toggleSyndicate(true);" id="WatchShow">Watch Episodes</a>
+			<!--<a href="#syndicate" onClick="javascript:toggleSyndicate(false);" id="SyndShow">Syndicate Show</a>-->
+		</div>
+		<div class="Clear"></div>
+	</div>
+
+	<div class="Clear"></div>
+	
+	<div id="ShowpageContent" >
+		<div id="ShowpageShowplayer">
+		
+			<script type="text/javascript">
+				var so;
+				var customPlayerId = "-2";
+				var backcolor;
+				var frontcolor;
+				var lightcolor;
+				function EmbedCustomPlayer(params) {
+					// The custom player code will come back with the extra params.  Drop them.
+					var url = new Url(params[0]);
+					url.removeQueryParam('view');
+					url.removeQueryParam('callback');
+					url.removeQueryParam('skin');
+
+					backcolor=url.getQueryParam('backcolor');
+					frontcolor=url.getQueryParam('frontcolor');
+					lightcolor=url.getQueryParam('lightcolor');
+					// if the players colors are customized then we reset teh style of the surrounding html to match colors
+					if(backcolor){
+
+						document.getElementById("ShowpageContent").style.background="#"+backcolor.substring(2)+" url(\"http://a.blip.tv/skin/mercury/images/showpage_theater_top.gif?v=oldgaryz\") no-repeat";
+						document.getElementById("ShowpageContentFooter").style.background="#"+backcolor.substring(2)+" url(\"http://a.blip.tv/skin/mercury/images/showpage_theater_bot.gif?v=oldgaryz\") no-repeat";
+						document.getElementById("ShowpageContentFooter").style.backgroundPosition="bottom";
+						document.getElementById("ShowpageContentFooter").style.borderTop="1px solid #"+backcolor.substring(2);
+					}
+					if(frontcolor){
+						document.getElementById("ShowpageContentFooter").style.foreground="#"+frontcolor.substring(2)+" url(\"http://a.blip.tv/skin/mercury/images/showpage_theater_bot.gif?v=oldgaryz\") no-repeat";
+					}
+					if(lightcolor){
+						document.getElementById("ShowpageContentFooter").style.lightcolor="#"+lightcolor.substring(2)+" url(\"http://a.blip.tv/skin/mercury/images/showpage_theater_bot.gif?v=oldgaryz\") no-repeat";
+					}
+
+
+					// Support for loading enhancements
+					url.setQueryParam('staggeredLoad',true);
+
+					var fileUrl = new Url(url.getQueryParam('file'));
+					fileUrl.setQueryParam('use_direct',1);
+					fileUrl.setQueryParam('use_documents',1);
+					url.setQueryParam('file',fileUrl.getUrl());
+
+
+					// Hack in Stratos
+					//url.setQueryParam('listOnStart',true);
+					url.setQueryParam('autoplay',true);
+					if (!Boolean(url.getQueryParam('useoldplayer'))) {
+						url.updateUrl();
+						url.url = url.url.replace('showplayer.swf','stratos.swf');
+					}
+
+					var so = new SWFObject(url.getUrl(), "showplayer1", "860", "513", "8", "#000000");
+					so.addParam("allowfullscreen", "true");
+					so.addParam("allowScriptAccess", "always");
+					so.addParam("wmode", "opaque");
+					so.write("ShowpageShowplayer");
+				}
+
+				if (customPlayerId > 0) {
+					new Ajax.Request("/play/?users_id=167079&players_id=-2&posts_id=-2&skin=json&autoplay=true&view=url&callback=EmbedCustomPlayer");
+				}
+				else {
+					so = new SWFObject("http://a.blip.tv/scripts/flash/stratos.swf?autostart=true&backcolor=0x000000&lightcolor=0xAAAAAA&frontcolor=0x999999&enablejs=true&autoplay=true&file=http://clojure.blip.tv/rss/flash/%3Freferrer=clojure.blip.tv%26source=1%26use_direct=1%26use_documents=1&staggeredLoad=true", "showplayer1", "860", "513", "8", "#000000");
+					so.addParam("allowfullscreen", "true");
+					so.addParam("allowScriptAccess", "always");
+					so.addParam("wmode", "opaque");
+					so.write("ShowpageShowplayer");
+
+				}
+			</script>
+			
+		
+		</div>
+		<div id="ShowpageContentFooter">
+			<a id="Permalink"></a>
+			<div id="Subscribe">
+			Subscribe to this show via 
+				
+			<a href="itpc://clojure.blip.tv/rss/itunes/" title="Subscribe to this show in iTunes">iTunes</a>, <a href="http://subscribe.getmiro.com/?url1=http://clojure.blip.tv/rss">Miro</a>, <a href="http://www.channels.com/autosubscribe?feed_url=http://clojure.blip.tv/rss">channels.com</a>, 
+			
+			or <a href="http://clojure.blip.tv/rss" title="Get this show's rss feed with enclosures">RSS</a></div>
+			<div class="Clear"></div>
+		</div>
+	</div>
+	
+		<div id="SyndicateContainer">
+			<div class="Clear"></div>
+			<img src="http://a.blip.tv/skin/mercury/images/syndicate_big.gif?v=oldgaryz" id="SyndicateIcon">
+			<div id="SyndicateTitle">Syndicate</div>
+			<div class="Clear"></div>
+			<div id="SyndicateContent">
+			
+					
+
+						<div class="ColumnHalf">
+							<div class="ColumnContents">
+								<span class="SyndicateText">
+									Now you can get <b>Clojure</b> displayed right on your own Web site!  It's easy.  Just configure a <b>Show Player</b> and then grab the <a href="#copypaste">copy &amp; paste code</a> at the bottom of this page and toss it into your own site. 
+								</span>
+								<div class="bliphelp">
+									<p>
+										Please note that we require you to give proper credit to the show when you syndicate it to your Web site.  You can do this by maintaining (and not obscuring) the branding in the lower-right corner of the Show Player.  Failing to do so is a violation of our terms of service and may result in this Show Player getting shut off.
+									</p>
+								</div>
+							</div>
+						</div>
+
+						<div class="ColumnContents" id="ShowPlayerDemo">
+							<script type="text/javascript">
+							
+							var playerUpdater = {
+								
+								session: Math.floor(Math.random() * 100000),
+								postsId : -1,
+								
+								load: function() {
+									new Ajax.Request("/players/list/?skin=json&callback=playerUpdater.loaded&multi_episode=1&users_id=167079&cachekey=" + this.session);
+								},
+								
+								loaded: function(players) {
+									if (players) {
+										var select = document.getElementById('ShowPlayers');
+										select.options.length = 1;
+										var self = this;
+										select.onchange = function() { self.getEmbedCode(this.value,self.postsId); };
+										for (var i=0; i<players.length; i++) {
+											if (players[i].id) {
+												select.options[i+1] = new Option(players[i].name,players[i].id);
+											}
+										}
+									}
+								},
+								
+								update_show_player: function() {
+									this.load();
+								},
+								
+								getEmbedCode: function() {
+									var playersId = $("ShowPlayers").value;
+									new Ajax.Request("/players/embed/?posts_id=-1&players_id=" + playersId + "&width="+ $('width').value +"&height="+ $('height').value +
+										"&skin=json&callback=playerUpdater.gotEmbedCode&cachekey=" + this.session + "&users_id=167079"
+									);
+								},
+						
+								gotEmbedCode: function(params) {
+									if (params && params.length && params[0] && params[0].code) {
+										var code = params[0].code;
+										var textarea = document.getElementById('ShowPlayerCode');
+										textarea.value = code;
+										$('show_player_embed').innerHTML = code;
+									}
+									
+								}
+								
+							}
+						
+							
+							</script>
+							
+							<div id="show_player_embed" style="align: center;"></div>
+
+						</div>
+
+					<div class="Clear"></div>
+					<div class="Row">
+						<div class="ColumnHalf" id="SyndicateForm">
+							<div class="SyndicateTitles">Step 1. Configure your Show Player</div>					
+							<div class="ColumnContents">
+								<table width="90%" cellspacing="13">
+									<tr>
+										<th width="100px"><label for="sort">Select player</label></th>
+										<td colspan="4" align="left">
+											<select size="1" name="ShowPlayers" id="ShowPlayers">
+												<option value="-3">Default player</option>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<th><label for="dimensions">Dimensions</label></th>
+										<td colspan="4" align="left">
+											<input type="text" size="5" id="width" name="width" value="412" />&nbsp;&nbsp;x&nbsp;&nbsp;<input type="text" size="5" id="height" name="height" value="340" />
+										</td>
+									</tr>
+									<td align="center" colspan=2><input type="submit" value="Update Player Code" onClick="playerUpdater.getEmbedCode();"/></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<div class="ColumnHalf">
+							<div class="SyndicateTitles">Step 2. Copy & paste the code</div>
+							<div class="ColumnContents">
+								<a name="copypate"></a>
+								<textarea style="width: 100%; height: 150px; margin-top: 10px; font-size: 8pt; font-family: courier new;" id="ShowPlayerCode" readonly="readonly">
+								</textarea>							
+							</div>
+						</div>						
+					</div>
+					
+			</div>
+		</div>
+
+	<div class="Clear"></div>
+	
+	<div id="ShowFooter">
+		<div id="ShowFooterContent">
+			<div class="ColumnHalf">
+				<div class="ColumnContents">
+					<div id="NowWatching">
+						Currently Watching:
+					</div>
+					<div class="Clear"></div>
+					<span id="EpisodeTitle"></span>
+					<div class="Clear"></div>
+					<span id="EpisodeDescription"></span>
+					<div class="Clear"></div>
+				</div>
+			</div>
+			<div class="ColumnHalf">
+				<div class="ColumnContents">
+					<div class="SeperateShowInfo AboutShowContainer">
+						<div id="AboutThisShow">About this show:</div>
+						<div class="Clear"></div>
+						<div id="AboutShow">Clojure</div>
+						<div class="Clear"></div>
+						Screencasts, talks and tutorials on the Clojure programming language.
+						<a href="javascript:void(0)" onClick="javascript:toggleMenu('MoreDetails');" id="AboutMore">
+							<img src="http://a.blip.tv/skin/mercury/images/more.gif?v=oldgaryz" id="MoreLess" align="right"> More details
+						</a>
+						<div class="Clear"></div>
+						<div id="MoreDetails">
+							<div id="MoreDetailsContainer">
+								<div class="DetailsHalf">
+									<div class="ColumnContents">							
+										<div class="ShowPageSecionTitle">Details</div>
+										<p>
+											<strong>Genre:</strong>&nbsp;&nbsp;<a href="http://blip.tv/shows/?category=7" title="Find more shows in the Technology genre">Technology</a>
+										</p>
+										<p>
+											<strong>Language:</strong>&nbsp;&nbsp;<a href="http://blip.tv/shows/?language_code=en" title="Find more English shows">English</a>
+										</p>
+										<p>
+											<strong>Content Rating:</strong>&nbsp;&nbsp;<a href="http://blip.tv/shows/?content_rating=-1" title="Find more TV-UN shows">TV-UN</a>
+										</p>
+									</div>
+								</div>
+								<div class="DetailsHalf">
+									<div class="ColumnContents">
+										<div class="ShowPageSecionTitle">Contact</div>
+										<p>
+											<strong>Website:</strong>&nbsp;&nbsp;<a class="external" target="_BLANK" href="http://clojure.sourceforge.net">Clojure</a>
+										</p>
+										<p>
+											<strong>E-mail:</strong>&nbsp;&nbsp;<i>Not publicly available.</i>
+										</p>
+										<p>
+											<strong>AOL IM:</strong>&nbsp;&nbsp;<i>Not provided.</i>
+										</p>
+										<p>
+											<strong>Skype:</strong>&nbsp;&nbsp;<i>Not provided.</i>
+										</p>
+										<p>
+											<strong>Y! Messenger:</strong>&nbsp;&nbsp;<i>Not provided.</i>
+										</p>			
+									</div>
+								</div>
+								<div class="DetailsFull">
+									<div class="ShowPageSecionTitle">Cast</div>
+									<p>
+										
+											<i>Clojure hasn't shared any cast information with blip.tv yet</i>.
+										
+									</p>
+								</div>
+							</div>
+						</div>
+						<div class="Clear"></div>
+					</div>
+				</div>
+			</div>
+			<div class="ColumnHalf">
+			</div>
+		</div>
+	</div>
+
+	<div class="Clear"></div>
+<script>
+
+		var permalink = "";
+
+		function getFlashMovie(movieName)
+		{
+			var isIE = navigator.appName.indexOf("Microsoft") != -1;
+			return (isIE) ? window[movieName] : document[movieName];
+	 	}
+		
+		var CurrentPlaylist = [];
+		var CurrentItem = 0;
+
+		function getUpdate(type, arg1, arg2)
+		{
+			//console.log(type + " " + arg1 + " " + arg2);
+			switch(type)
+			{
+				case "complete":
+					CurrentItem++;
+					updateDisplay();
+				break;
+				
+			}
+		}
+
+		function toggleMenu(id) {
+			toggleVisibility(id);	
+			
+			var ml = document.getElementById("MoreLess");
+			document.getElementById("AboutMore").blur();
+			
+			if (ml.src == "http://a.blip.tv/skin/mercury/images/more.gif?v=oldgaryz") {
+				ml.src ="http://a.blip.tv/skin/mercury/images/less.gif?v=oldgaryz";
+			} else if (ml.src == "http://a.blip.tv/skin/mercury/images/less.gif?v=oldgaryz") {
+				ml.src ="http://a.blip.tv/skin/mercury/images/more.gif?v=oldgaryz";
+			}
+		}
+		
+		function toggleVisibility(id) {
+			var e = document.getElementById(id);
+		   if(e.style.display == 'block')
+			  e.style.display = 'none';
+		   else
+			  e.style.display = 'block';
+		}
+
+		function playlistUpdate(playlist) {
+			//console.log("Playlist Update");
+			CurrentPlaylist = playlist;
+			updateDisplay();
+		}
+
+	 	function updateDisplay()
+	 	{
+			var item = CurrentPlaylist[CurrentItem];
+
+			document.getElementById('EpisodeTitle').innerHTML = stripHTML(item.title);	
+			document.getElementById('EpisodeDescription').innerHTML = stripHTML(item.description);
+			
+			if (typeof(window.originalTitle) == "undefined") {
+				window.originalTitle = document.title || (window.body && window.body.title);
+			}
+			
+			document.title = stripHTML(item.title) + " - " +  window.originalTitle;
+			if (window.body) {
+				window.body.title = document.title;
+			}
+	 	}
+	 	
+		function stripHTML(s) {
+			return s.replace(/\\&/g, '&amp;').replace(/\\</g, '&lt;').replace(/\\>/g, '&gt;').replace(/\\t/g, '&nbsp;&nbsp;&nbsp;').replace(/\\n/g, '').replace('<br />', '').replace('<br/>', '').replace('<br>', '').replace('<p>', '').replace('</p>', '');
+		}
+		
+		function toggleSyndicate(syndicate) {
+			var bigTheaterContainer = document.getElementById("ShowpageContent");
+			var watchingRow = document.getElementById("ShowFooter");
+			var syndicateContainer = document.getElementById("SyndicateContainer");
+			var syndicateLink = document.getElementById("SyndShow");
+			var watchShowLink = document.getElementById("WatchShow");
+		
+			if (syndicate) {
+				if (navigator.appName == "Microsoft Internet Explorer") {
+					bigTheaterContainer.style.display = '';
+					watchingRow.style.display = '';
+					syndicateLink.style.display = '';
+				} else {
+					bigTheaterContainer.style.display = "inherit";
+					watchingRow.style.display = "inherit";
+					syndicateLink.style.display = "inherit";
+				}
+				syndicateContainer.style.display = "none";
+				watchShowLink.style.display = "none";
+			} else {
+				bigTheaterContainer.style.display = "none";
+				watchingRow.style.display = "none";
+				syndicateContainer.style.display = "block";
+		 		watchShowLink.style.display = "block";
+				syndicateLink.style.display = "none";
+				playerUpdater.update_show_player();
+			}
+		}
+			
+		function checkSyndicateHash () {
+			
+			if(location.hash == "#syndicate") {
+				toggleSyndicate(false);
+			}
+			
+		}
+		
+		Pokkari.AttachEvent(window,"load",function() { checkSyndicateHash(); });		
+</script>
+
+<table>
+<tr><td></td><td>
+
+
+			
+		
+	
+
+
+
+
+					</td>
+				</tr>
+			</table>
+		
+
+	</div>
+	<div class="Clear"></div>
+	<div id="Footer">
+		<div class="FooterColumn FooterBorder">
+			<div class="FooterColumnContents">
+				<h4>About blip.tv</h4>
+				<span class="FooterBabble">We help creative people be creative.</span> <a href="/about/" class="FooterBabble">More about us &rsaquo;</a>
+			</div>
+		</div>
+		<div class="FooterColumn FooterBorder">
+			<div class="FooterColumnContents">
+				<h4>You</h4>
+				<div class="ColumnHalf">
+					<a href="http://blip.tv/dashboard/">Dashboard</a>
+					<a href="http://blip.tv/file/post/">Publishing</a>
+					<a href="http://blip.tv/blogs/list/">Distribution</a>
+				</div>
+				<div class="ColumnHalf">
+					<a href="http://blip.tv/dashboard/ads">Advertising</a>
+					<a href="http://blip.tv/users/stats/">Statistics</a>
+					<a href="http://blip.tv/">Showpage</a>
+					<a href="http://blip.tv/prefs/security/">Account</a>
+				</div>
+
+			</div>
+		</div>
+		<div class="FooterColumn FooterBorder">
+			<div class="FooterColumnContents">
+				<h4>Help</h4>
+				<span class="FooterBabble"><a href="http://support.blip.tv/forums" class="FooterBabble">The Knowledge Base</a> is great for those new to Web show production on blip.tv. Check out our <a href="http://support.blip.tv/" class="FooterBabble">Help Section</a> for more information about how to use the blip.tv service.</span>
+			</div>
+		</div>
+		<div class="FooterColumn">
+			<div class="FooterColumnContents">
+				<h4>Us</h4>
+				<div class="ColumnHalf">
+					<a href="http://blog.blip.tv/">Our Blog</a>
+					<a href="http://blip.tv/careers/" class="Highlight">Careers at blip</a>
+					<a href="http://blip.tv/epk">Advertise on blip</a>
+				</div>
+				<div class="ColumnHalf">
+					<a href="http://blip.tv/tos/">Terms of Use</a>
+					<a href="http://blip.tv/dmca/">Copyright Policy</a>
+					<a href="http://blip.tv/about/api/">Developers</a>
+				</div>
+			</div>
+			<div class="Clear"></div>
+			
+			<script type="text/javascript">
+			var browserVersion = navigator.appVersion;
+			if(browserVersion.substring(5,11)=="iPhone"){
+				document.write("<div id=\"Navigation\">");
+				document.write("<a href=\"http://blip.tv/?skin=iphone\" class=\"LastLink\">Blip Mobile Site</a>");
+	                	document.write("</div>");
+				document.write("<div class=\"Clear\"></div>");
+			}
+			</script>
+
+			<div class="FooterColumnContents">
+				<p>Copyright &copy; 2010 Blip Networks Inc.</p>
+			</div>
+			</div>
+		</div>
+	
+			<script type="text/javascript">
+			window.storageManager = new PokkariStorage();
+			</script>
+	
+	<script type="text/javascript">
+		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+		document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+	<script type="text/javascript">
+		var pageTracker = _gat._getTracker("UA-713068-1");
+		pageTracker._initData();
+		pageTracker._trackPageview();
+	</script>
+
+	<!--app11-->
+	
+	<!-- Start Quantcast tag -->
+	<script type="text/javascript">
+	_qoptions={
+	qacct:"p-74vRiZ03u2gFw"
+	};
+	</script>
+	<script type="text/javascript" src="http://edge.quantserve.com/quant.js"></script>
+	<noscript>
+	<img src="http://pixel.quantserve.com/pixel/p-74vRiZ03u2gFw.gif" style="display: none;" border="0" height="1" width="1" alt="Quantcast"/>
+	</noscript>
+	<!-- End Quantcast tag -->
+	<!-- chartbeat code -->
+<script type="text/javascript">
+var _sf_async_config={uid:15601,domain:"blip.tv"};
+(function(){
+  function loadChartbeat() {
+    window._sf_endpt=(new Date()).getTime();
+    var e = document.createElement('script');
+    e.setAttribute('language', 'javascript');
+    e.setAttribute('type', 'text/javascript');
+    e.setAttribute('src',
+       (("https:" == document.location.protocol) ? "https://s3.amazonaws.com/" : "http://") +
+       "static.chartbeat.com/js/chartbeat.js");
+    document.body.appendChild(e);
+  }
+  var oldonload = window.onload;
+  window.onload = (typeof window.onload != 'function') ?
+     loadChartbeat : function() { oldonload(); loadChartbeat(); };
+})();
+
+</script>
+	</body>
+</html>
