@@ -1,0 +1,118 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<HTML>
+
+<HEAD>
+<TITLE>SSH Frequently Asked Questions</TITLE>
+<LINK href="../styles.css" rel="stylesheet" type="text/css">
+</HEAD>
+
+<BODY LEFTMARGIN=0 TOPMARGIN=0 MARGINHEIGHT=0 MARGINWIDTH=0>
+
+
+<table width=100% valign=top cellpadding=0 cellspacing=0 bgcolor="#314294">
+<tr><td>
+<img src="../images/sshtdg.gif" alt="SSH:TDG" align=left hspace=0 vspace=0>
+<div class="topbar">
+SSH: The Secure Shell (The Definitive Guide)<br>
+Barrett, Silverman, &amp; Byrnes / O&rsquo;Reilly
+</div>
+</td>
+</tr>
+</table>
+
+<table height=100% valign=top cellpadding=10 cellspacing=0 border=0>
+<tr>
+<td class=navbar valign=top>
+<table class=navbar cellspacing=15 cellpadding=0 border=0>
+<tr><td><a class="navbar" href="../index.html">Top</a></td></tr><tr><td><a class="navbar-selected" href="../faq">FAQ</a></td></tr><tr><td><a class="navbar" href="../protocols.html">Protocols</a></td></tr><tr><td><a class="navbar" href="../references.html">References</a></td></tr><tr><td><a class="navbar" href="../authors-bios.html">Authors</a></td></tr></table></td><td valign=top class=content><h2>SSH Frequently Asked Questions</h2>
+
+<h3><b>How do I allow a user to use scp or sftp, but not allow regular ssh
+(i.e. forbid getting a shell or running other programs)?</b></h3>
+<hr>
+This answer is that this is a rather tricky thing to do right.  Both
+<em>scp1</em> and <em>scp2</em> run <em>ssh</em> as a subprocess to
+connect to the remote host and run the appropriate server to talk to &mdash;
+<em>scp -[tf]</em> and <em>sftp-server</em>, respectively.  So, the best
+you can do is to restrict the user to only running the file-transfer
+server.
+ <p>
+
+The simplest way to do this is to make the target account special-purpose,
+by giving it a shell which only allows runing the file-transfer server.
+SSH always uses the shell to run remote programs, so this is a reliable
+restriction.  SSH invokes the shell program with the option <code>-c
+program</code> to run <em>program</em>; your replacement should accept
+either <code>scp</code> with appropriate arguments, or
+<code>sftp-server</code>, as appropriate.  SSH2 comes with
+<code>ssh-dummy-shell</code> for exactly this purpose, though naturally it
+only handles sftp.
+ <p>
+
+If you don't want to limit the account this way, then it gets harder to do
+this reliably.  The next thing to try would be public-key authentication
+with a forced command.  It's simple with SSH2:
+
+<pre>
+  # SSH2
+  [remote:~/.ssh2/authorization]
+  key users_key.pub
+  command /usr/local/bin/sftp-server
+</pre>
+
+With SSH1, this is more complicated, because the client passes arguments
+to scp in the remote command.  For example:
+
+<pre>
+  client command             runs this on server
+  ----------------------------------------------
+  scp foo server:bar         scp -t bar
+  scp server:bar foo         scp -f bar
+  scp *.txt server:dir       scp -d -t dir
+</pre>
+
+So, you need to use a wrapper program to restrict it.  Here's an example:
+<pre>
+  # SSH1
+  [remote:~/.ssh/authorized_keys]
+  command="/path/to/scp-wrapper" 1024 37 1440913682374...
+</pre>
+
+<a href="scp-wrapper.txt"><em>scp-wrapper</em> Perl script</a>
+ <p>
+
+Now, as given so far, each of these solutions has a glaring hole: the
+authorization and authorized_keys files are writable by the target
+account.  These measures are easily circumvented by simply using scp to
+overwrite those files.  So, you need to protect them from change by the
+target account.  You can make the account's SSH control directory and its
+contents unwritable where it is, or you can change its location e.g. with
+the sshd2 UserConfigDirectory statement.
+ <p>
+
+Beyond that, though, there are still more holes.  For example, SSH runs
+the user's shell to exec the remote command, with <code>$SHELL -c
+"command"</code>.  So you can simply scp any commands at all that you want
+to run into the remote shell startup file (e.g. <code>~/.bashrc</code>),
+and they'll be executed the next time you scp something.  So really you
+need to lock down the remote home directory so it's not writable by the
+user, and create a separate area for depositing files.
+ <p>
+
+
+<br clear=left>
+<hr>
+<table width=100%>
+<tr>
+<td id=footer-left>&copy; 2001-2010 Barrett, Silverman, &amp; Byrnes</td>
+<td id=footer-right>2000/10/15 06:05:42 [GMT]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+</table>
+
+</BODY></HTML>
