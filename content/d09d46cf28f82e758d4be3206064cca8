@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Kotka : Projects : Clojure : VimClojure</title>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" href="../../kotka.css"
+				type="text/css" />
+		<link rel="shortcut icon" href="../../favicon.ico"
+				type="image/x-icon" />
+		<link rel="icon" href="../../favicon.ico"
+				type="image/x-icon" />
+	</head>
+	<body>
+		<div id="navbar">
+			<ul>
+				<li><a href="../../index.html">Home</a></li>
+				<li>
+					<a href="../../projects/index.html">Projects</a>
+				</li>
+				<li class="last">
+					<a href="../../me/index.html">About Me</a>
+				</li>
+			</ul>
+		</div>
+		<div id="content">
+			<div id="logo">
+				<img src="../../logo.png" width="56" height="50"
+						alt="Kotka Logo"/>
+			</div>
+			
+<h1>VimClojure — a filetype plugin for Vim</h1>
+
+<h2>Description</h2>
+
+<p>VimClojure consists of a set of plugin for <a href="http://www.vim.org">Vim</a> to enhance the editing
+of <a href="http://clojure.org">Clojure</a> files. It provides syntax highlighting and indenting.</p>
+
+<p>It was merged with the former Gorilla project and now provides also
+interactive features like…</p>
+
+<ul>
+<li>omni completion</li>
+<li>macro expansion</li>
+<li>code evaluation</li>
+<li>docstring lookup</li>
+<li>javadoc lookup</li>
+</ul>
+
+<p>Here a screenshot of omni completion in Action:</p>
+
+<p><img src="OmniCompletionScreenshot.png" alt="A screenshot of the omni completion" title="Omni Completion in Action!" /></p>
+
+<p>Feel free to mail me any feedback: <a href="&#x6D;&#97;&#105;&#x6C;&#x74;&#111;:&#109;&#98;&#64;&#107;o&#x74;&#107;&#97;&#46;&#x64;&#101;">&#109;&#98;&#64;&#107;o&#x74;&#107;&#97;&#46;&#x64;&#101;</a>.</p>
+
+<p>There is a <a href="http://kotka.blip.tv/#1894565">screencast</a> available, which explains, how to setup
+VimClojure. Please note: The screencast might become outdated, so
+README in the distribution is always authoratitve for installation
+instructions.</p>
+
+<h2>Download</h2>
+
+<p>Current Version: <a href="http://www.vim.org/scripts/script.php?script_id=2501">http://www.vim.org/scripts/script.php?script_id=2501</a></p>
+
+<p>Development Version: <a href="http://bitbucket.org/kotarak/vimclojure">http://bitbucket.org/kotarak/vimclojure</a></p>
+
+<h2>FAQ</h2>
+
+<p>The following examples assume that you are running a Linux box with the
+user named <code>user</code>, that your home directory is <code>/home/user</code> and that you
+installed clojure, clojure-contrib and vimclojure in the <code>/home/user/clojure</code>
+directory.</p>
+
+<h3>Installation</h3>
+
+<p><strong>Q:</strong> How do I install vimclojure?</p>
+
+<p><strong>A:</strong> Create a text file called local.properties where you specify
+the location of the clojure.jar and clojure-contrib.jar as well
+as the location of your .vim directory. Here is an example how
+the file might look like under Linux.</p>
+
+<pre><code>
+<span class="Identifier">clojure.jar</span><span class="jpropertiesDelimiter"> = </span><span class="Constant">../clojure/clojure.jar</span>
+<span class="Identifier">clojure-contrib.jar</span><span class="jpropertiesDelimiter"> = </span><span class="Constant">../clojure-contrib/clojure-contrib.jar</span>
+<span class="Identifier">nailgun-client</span><span class="jpropertiesDelimiter"> = </span><span class="Constant">ng</span>
+<span class="Identifier">vimdir</span><span class="jpropertiesDelimiter"> = </span><span class="Constant">/home/user/.vim</span>
+</code></pre>
+
+<p>Then compile the vimclojure.jar with ant and then ant install.
+Setup your CLASSPATH as described in the README.txt (It must
+contain the vimclojure.jar!) and start the ng-server. You can
+use the included ng-server script or launch the server manually</p>
+
+<pre><code>
+<span class="">java -classpath /home/user/clojure/clojure/clojure.jar:/home/user/clojure/clojure-contrib/clojure-contrib.jar:/home/user/clojure/vimclojure/vimclojure.jar:src com.martiansoftware.nailgun.NGServer 127.0.0.1</span>
+</code></pre>
+
+<p>Point VimClojure to the place where you compiled it and tell it,
+that you want to use the interactive features. In your .vimrc:</p>
+
+<pre><code>
+<span class="Statement">let</span><span class=""> </span><span class="vimVar">vimclojure</span><span class="">#</span><span class="vimIsCommand">NailgunClient</span><span class=""> </span><span class="Statement">=</span><span class=""> </span><span class="Constant">&quot;/home/user/clojure/vimclojure/ng&quot;</span>
+<span class="Statement">let</span><span class=""> </span><span class="vimVar">clj_want_gorilla</span><span class=""> </span><span class="Statement">=</span><span class=""> </span><span class="Constant">1</span>
+</code></pre>
+
+<p>More detailed information is in the README.txt and a visual
+walkthrough is shown in the <a href="http://kotka.blip.tv/#1894565">screencast</a>.</p>
+
+<p><strong>Q:</strong> What does that „java.lang.ClassNotFoundException: clojure.contrib.pprint.PrettyWriter (pprint.clj:23)“ mean?</p>
+
+<p><strong>A:</strong> You have to AOT compile clojure-contrib, since VimClojure uses
+Tom Faulhaber's pretty printer which needs some classes generated
+via gen-class. To compile clojure-contrib execute the following
+command in the directory where you installed the contrib sources.</p>
+
+<pre><code>
+<span class="">ant -Dclojure.jar=../clojure/clojure.jar</span>
+</code></pre>
+
+
+			<div id="footer">
+				<a href="http://validator.w3.org/check?url=http://kotka.de/projects/clojure/vimclojure.html">
+					<img src="../../valid_xhtml.png" width="80" height="15"
+							alt="Valid XHTML" />
+				</a>
+				<a href="http://jigsaw.w3.org/css-validator/check?url=http://kotka.de/projects/clojure/vimclojure.html">
+					<img src="../../valid_css.png" width="80" height="15"
+							alt="Valid CSS" />
+				</a>
+				<a href="http://del.icio.us/post?url=http://kotka.de/projects/clojure/vimclojure.html&amp;title=Kotka : Projects : Clojure : VimClojure">
+					<img src="../../delicious.png" alt="Del.icio.us Badge"
+							width="80" height="15" />
+				</a>
+				<a href="vimclojure.mkd">
+					<img src="../../as_text.png" alt="As Text"
+							width="80" height="15" />
+				</a>
+			</div>
+		</div>
+	</body>
+</html>
