@@ -1,0 +1,2589 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+
+
+
+
+
+
+
+
+
+<head><script type="text/javascript">_cf_loadingtexthtml="<img alt=' ' src='/CFIDE/scripts/ajax/resources/cf/images/loading.gif'/>";
+_cf_contextpath="";
+_cf_ajaxscriptsrc="/CFIDE/scripts/ajax";
+_cf_jsonprefix='//';
+</script><script type="text/javascript" src="/CFIDE/scripts/ajax/yui/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script type="text/javascript" src="/CFIDE/scripts/ajax/messages/cfmessage.js"></script>
+<script type="text/javascript" src="/CFIDE/scripts/ajax/package/cfajax.js"></script>
+<script type="text/javascript" src="/CFIDE/scripts/ajax/yui/animation/animation-min.js"></script>
+<script type="text/javascript" src="/CFIDE/scripts/ajax/ext/adapter/yui/ext-yui-adapter.js"></script>
+<script type="text/javascript" src="/CFIDE/scripts/ajax/ext/ext-core.js"></script>
+<script type="text/javascript" src="/CFIDE/scripts/ajax/ext/package/resizable.js"></script>
+<script type="text/javascript" src="/CFIDE/scripts/ajax/ext/package/dragdrop/dragdrop.js"></script>
+<script type="text/javascript" src="/CFIDE/scripts/ajax/ext/package/util.js"></script>
+<script type="text/javascript" src="/CFIDE/scripts/ajax/ext/build/state/State-min.js"></script>
+<script type="text/javascript" src="/CFIDE/scripts/ajax/ext/package/widget-core.js"></script>
+<script type="text/javascript" src="/CFIDE/scripts/ajax/ext/package/dialog/dialogs.js"></script>
+<script type="text/javascript" src="/CFIDE/scripts/ajax/package/cfwindow.js"></script>
+<link rel="stylesheet" type="text/css" href="/CFIDE/scripts/ajax/resources/ext/css/ext-all.css" />
+<link rel="stylesheet" type="text/css" href="/CFIDE/scripts/ajax/resources/cf/cf.css" />
+<script type="text/javascript" src="/CFIDE/scripts/cfform.js"></script>
+<script type="text/javascript" src="/CFIDE/scripts/masks.js"></script>
+<script type="text/javascript" src="/CFIDE/scripts/cfformhistory.js"></script>
+
+	  
+	  <title>Scaling in Games & Virtual Worlds - ACM Queue</title>
+	  <meta name='description' value='
+I used to be a systems programmer, working on infrastructure used
+by banks, telecom companies, and other engineers. I worked on
+operating systems. I worked on distributed middleware. I worked on
+programming languages. I wrote tools. I did all of the things that
+hard-core systems programmers do.
+' />
+	  <meta name='keywords' value='Game Development' />
+
+   	  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="favicon.ico" />
+
+<link rel="stylesheet" type="text/css" media="all" href="css/acmq-cachekey4260.css" />
+<link rel="stylesheet" type="text/css" media="print" href="css/acmq_print-cachekey1777.css" />
+
+<script type="text/javascript" src="js/jquery-1.2.6.min.js"></script>
+<script type="text/javascript" src="js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="js/global.js"></script>
+
+
+
+<link rel="alternate" type="application/rss+xml" title="Latest Queue Content RSS 2.0" href="rss/feeds/latestitems.xml" />
+<link rel="alternate" type="application/rss+xml" title="All Queue Content RSS 2.0" href="rss/feeds/queuecontent.xml" />
+<link rel="alternate" type="application/rss+xml" title="Curmudgeon RSS 2.0"     href="rss/feeds/curmudgeon.xml" />
+<link rel="alternate" type="application/rss+xml" title="Opinion RSS 2.0"        href="rss/feeds/opinion.xml" />
+<link rel="alternate" type="application/rss+xml" title="Kode Vicious RSS 2.0"   href="rss/feeds/kodevicious.xml" />
+<link rel="alternate" type="application/rss+xml" title="ACM TechNews RSS"       href="http://www.infoinc.com/acm/TechNews.rss" />
+<link rel="alternate" type="application/rss+xml" title="Washington Updates RSS" href="http://usacm.acm.org/weblog2/?feed=rss2" />
+<link rel="alternate" type="application/rss+xml" title="RISKS Forum RSS"        href="rss/feeds/risksforum.xml" />
+
+
+<link rel="alternate" type="application/rss+xml" title="AI RSS 2.0"        href="rss/feeds/ai.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="API Design RSS 2.0"        href="rss/feeds/apidesign.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Bioscience RSS 2.0"        href="rss/feeds/bioscience.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Compliance RSS 2.0"        href="rss/feeds/compliance.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Component Technologies RSS 2.0"        href="rss/feeds/componenttechnologies.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Computer Architecture RSS 2.0"        href="rss/feeds/computerarchitecture.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Concurrency RSS 2.0"        href="rss/feeds/concurrency.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="DSPs RSS 2.0"        href="rss/feeds/dsps.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Databases RSS 2.0"        href="rss/feeds/databases.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Development RSS 2.0"        href="rss/feeds/development.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Distributed Computing RSS 2.0"        href="rss/feeds/distributedcomputing.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Distributed Development RSS 2.0"        href="rss/feeds/distributeddevelopment.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Email and IM RSS 2.0"        href="rss/feeds/emailandim.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Embedded Systems RSS 2.0"        href="rss/feeds/embeddedsystems.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Failure and Recovery RSS 2.0"        href="rss/feeds/failureandrecovery.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="File Systems and Storage RSS 2.0"        href="rss/feeds/filesystemsandstorage.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Game Development RSS 2.0"        href="rss/feeds/gamedevelopment.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Graphics RSS 2.0"        href="rss/feeds/graphics.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="HCI RSS 2.0"        href="rss/feeds/hci.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Managing Megaservices RSS 2.0"        href="rss/feeds/managingmegaservices.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Mobile Computing RSS 2.0"        href="rss/feeds/mobilecomputing.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Networks RSS 2.0"        href="rss/feeds/networks.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Object-Relational Mapping RSS 2.0"        href="rss/feeds/object-relationalmapping.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Open Source RSS 2.0"        href="rss/feeds/opensource.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Patching and Deployment RSS 2.0"        href="rss/feeds/patchinganddeployment.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Performance RSS 2.0"        href="rss/feeds/performance.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Power Management RSS 2.0"        href="rss/feeds/powermanagement.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Privacy and Rights RSS 2.0"        href="rss/feeds/privacyandrights.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Processors RSS 2.0"        href="rss/feeds/processors.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Programming Languages RSS 2.0"        href="rss/feeds/programminglanguages.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Purpose-built Systems RSS 2.0"        href="rss/feeds/purpose-builtsystems.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Quality Assurance RSS 2.0"        href="rss/feeds/qualityassurance.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="RFID RSS 2.0"        href="rss/feeds/rfid.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="SIP RSS 2.0"        href="rss/feeds/sip.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Search Engines RSS 2.0"        href="rss/feeds/searchengines.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Security RSS 2.0"        href="rss/feeds/security.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Semi-structured Data RSS 2.0"        href="rss/feeds/semi-structureddata.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Social Computing RSS 2.0"        href="rss/feeds/socialcomputing.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="System Administration RSS 2.0"        href="rss/feeds/systemadministration.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="System Evolution RSS 2.0"        href="rss/feeds/systemevolution.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Virtual Machines RSS 2.0"        href="rss/feeds/virtualmachines.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Virtualization RSS 2.0"        href="rss/feeds/virtualization.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="VoIP RSS 2.0"        href="rss/feeds/voip.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Web Development RSS 2.0"        href="rss/feeds/webdevelopment.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Web Security RSS 2.0"        href="rss/feeds/websecurity.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Web Services RSS 2.0"        href="rss/feeds/webservices.xml" />
+
+<link rel="alternate" type="application/rss+xml" title="Workflow Systems RSS 2.0"        href="rss/feeds/workflowsystems.xml" />
+
+
+
+
+<script type="text/javascript">
+	ColdFusion.Ajax.importTag('CFWINDOW');
+</script>
+
+<script type="text/javascript">
+	var _cf_window_init_1293265589836=function()
+	{
+		_cf_bind_init_1293265589837=function()
+		{
+			ColdFusion.Bind.register([],{'bindTo':'morethemes_body','bindExpr':['pullthemes.cfm']},ColdFusion.Bind.urlBindHandler,false);
+		};ColdFusion.Event.registerOnLoad(_cf_bind_init_1293265589837);var _cf_window=ColdFusion.Window.create('morethemes','','pullthemes.cfm',{ modal:false, closable:true, divid:'cf_window1293265589835', draggable:true, resizable:true, fixedcenter:false, width:350, height:350, shadow:true, bodystyle:'text-align: left; font: 96%/1.5 Verdana, Arial, sans-serif; list-style: none; color:#3281A1;', callfromtag:true, minwidth:0, minheight:0, initshow:false, x:225, y:175});
+	};ColdFusion.Event.registerOnLoad(_cf_window_init_1293265589836);
+</script>
+
+		<script type="text/javascript">
+			ColdFusion.Ajax.importTag('CFFORM');
+		</script>
+		
+		<script type="text/javascript">
+			if (window.ColdFusion) ColdFusion.required['add_email']=true;
+		</script>
+		<script type="text/javascript">
+<!--
+    _CF_checkCFForm_1 = function(_CF_this)
+    {
+        //reset on submit
+        _CF_error_exists = false;
+        _CF_error_messages = new Array();
+        _CF_error_fields = new Object();
+        _CF_FirstErrorField = null;
+
+        //form element add_email required check
+        if( _CF_hasValue(_CF_this['add_email'], "TEXT", false ) )
+        {
+            //form element add_email 'EMAIL' validation checks
+            if (!_CF_checkEmail(_CF_this['add_email'].value, true))
+            {
+                _CF_onError(_CF_this, "add_email", _CF_this['add_email'].value, "Please enter a properly formatted E-mail address");
+                _CF_error_exists = true;
+            }
+
+        }else {
+            _CF_onError(_CF_this, "add_email", _CF_this['add_email'].value, "Please enter a properly formatted E-mail address");
+            _CF_error_exists = true;
+        }
+
+
+        //display error messages and return success
+        if( _CF_error_exists )
+        {
+            if( _CF_error_messages.length > 0 )
+            {
+                // show alert() message
+                _CF_onErrorAlert(_CF_error_messages);
+                // set focus to first form error, if the field supports js focus().
+                if( _CF_this[_CF_FirstErrorField].type == "text" )
+                { _CF_this[_CF_FirstErrorField].focus(); }
+
+            }
+            return false;
+        }else {
+            return true;
+        }
+    }
+//-->
+</script>
+
+		<script type="text/javascript">
+			if (window.ColdFusion) ColdFusion.required['add_email']=true;
+		</script>
+		<script type="text/javascript">
+<!--
+    _CF_checkCFForm_2 = function(_CF_this)
+    {
+        //reset on submit
+        _CF_error_exists = false;
+        _CF_error_messages = new Array();
+        _CF_error_fields = new Object();
+        _CF_FirstErrorField = null;
+
+        //form element add_email required check
+        if( _CF_hasValue(_CF_this['add_email'], "TEXT", false ) )
+        {
+            //form element add_email 'EMAIL' validation checks
+            if (!_CF_checkEmail(_CF_this['add_email'].value, true))
+            {
+                _CF_onError(_CF_this, "add_email", _CF_this['add_email'].value, "Please enter a properly formatted E-mail address");
+                _CF_error_exists = true;
+            }
+
+        }else {
+            _CF_onError(_CF_this, "add_email", _CF_this['add_email'].value, "Please enter a properly formatted E-mail address");
+            _CF_error_exists = true;
+        }
+
+
+        //display error messages and return success
+        if( _CF_error_exists )
+        {
+            if( _CF_error_messages.length > 0 )
+            {
+                // show alert() message
+                _CF_onErrorAlert(_CF_error_messages);
+                // set focus to first form error, if the field supports js focus().
+                if( _CF_this[_CF_FirstErrorField].type == "text" )
+                { _CF_this[_CF_FirstErrorField].focus(); }
+
+            }
+            return false;
+        }else {
+            return true;
+        }
+    }
+//-->
+</script>
+<script type='text/javascript' src='/cfformprotect/js/mouseMovement.js'></script><script type='text/javascript' src='/cfformprotect/js/usedKeyboard.js'></script>
+		<script type="text/javascript">
+			if (window.ColdFusion) ColdFusion.required['username']=true;
+		</script>
+		
+		<script type="text/javascript">
+			if (window.ColdFusion) ColdFusion.required['email']=true;
+		</script>
+		
+		<script type="text/javascript">
+			if (window.ColdFusion) ColdFusion.required['body_text']=true;
+		</script>
+		
+		<script type="text/javascript">
+			var _cf_SUBMIT_init_1293265589840=function()
+			{
+				ColdFusion.setSubmitClicked('edit_form','discussion_reply:method');
+			};ColdFusion.Event.registerOnLoad(_cf_SUBMIT_init_1293265589840);
+		</script>
+		<script type="text/javascript">
+<!--
+    _CF_submit_status["edit_form"]=null;
+    _CF_checkedit_form = function(_CF_this)
+    {
+        //return false if form submit button has already been pressed once
+        if( _CF_submit_status[_CF_this.name] == "submitting" ) return false;
+        //reset on submit
+        _CF_submit_status[_CF_this.name] = "submitting";
+        _CF_error_exists = false;
+        _CF_error_messages = new Array();
+        _CF_error_fields = new Object();
+        _CF_FirstErrorField = null;
+
+        //form element Creator required check
+        if( !_CF_hasValue(_CF_this['Creator'], "TEXT", false ) )
+        {
+            _CF_onError(_CF_this, "Creator", _CF_this['Creator'].value, "Name is required.");
+            _CF_error_exists = true;
+        }
+
+        //form element email required check
+        if( _CF_hasValue(_CF_this['email'], "TEXT", false ) )
+        {
+            //form element email 'EMAIL' validation checks
+            if (!_CF_checkEmail(_CF_this['email'].value, true))
+            {
+                _CF_onError(_CF_this, "email", _CF_this['email'].value, "Please enter a properly formatted E-mail address");
+                _CF_error_exists = true;
+            }
+
+        }else {
+            _CF_onError(_CF_this, "email", _CF_this['email'].value, "Please enter a properly formatted E-mail address");
+            _CF_error_exists = true;
+        }
+
+        //form element body_text required check
+        if( !_CF_hasValue(_CF_this['body_text'], "TEXTAREA", false ) )
+        {
+            _CF_onError(_CF_this, "body_text", _CF_this['body_text'].value, "Please enter your Comment, (HTML is not allowed)");
+            _CF_error_exists = true;
+        }
+
+
+        //display error messages and return success
+        if( _CF_error_exists )
+        {
+            if( _CF_error_messages.length > 0 )
+            {
+                // show alert() message
+                _CF_onErrorAlert(_CF_error_messages);
+                // set focus to first form error, if the field supports js focus().
+                if( _CF_this[_CF_FirstErrorField].type == "text" )
+                { _CF_this[_CF_FirstErrorField].focus(); }
+
+                _CF_submit_status[_CF_this.name] = null;
+            }
+            return false;
+        }else {
+            return true;
+        }
+    }
+//-->
+</script>
+</head>
+
+<body class="wide" id="Scaling in Games & Virtual Worlds">
+   <div id="wrapperhp">
+         <div id="header">
+
+      <a id="brand" href="index.cfm">ACM Queue
+      <span>Architecting Tomorrow's Computing</span></a>
+
+	
+     <ul id="nav-utility">
+        <li id="acm-link">
+          <a href="whyjoinacm.cfm">ACM : Association for Computing Machinery</a>
+        </li>
+		<li class="first">
+         
+        </li>
+      </ul><br />
+
+      <div id="wrap-nav">
+      <ul id="nav-primary">
+        
+		<li id="nav-home" style='width:25%;'>
+          <a href="index.cfm">Home</a>
+        </li>
+       
+        <li id="nav-audiocasts" style='width:25%;'>
+          <a href="listing.cfm?qc_type=audiocasts&page_title=Audiocasts">Audiocasts</a>
+        </li>
+        <li id="nav-videos" style='width:25%;'>
+          <a href="listing.cfm?qc_type=videos&page_title=Videos">Videos</a>
+        </li>
+		 <li id="nav-blogs" style='width:25%;'>
+          <a href="blogs.cfm">Blogs</a>
+        </li>
+        
+      </ul>
+    </div>
+   <div id="message-wrap">
+
+     <a href='http://www.acm.org/joinacm2' target='_new'>A Special Offer to Join ACM</a>
+ &nbsp; &nbsp; &nbsp;
+     <a href="whyjoinacm.cfm">Why Join ACM?</a>
+	</div>
+	 <div id="search-wrap">
+    <form id="form-search" name="searchform" action="results.cfm">
+		<fieldset>
+			<label for="q">Search</label>
+			<input name="SearchableText" type="text" class="text" id="q" /><button type="submit" value="Search">Search</button>
+		</fieldset>
+	</form>
+	</div>
+ </div>
+
+		      
+
+	  
+
+
+
+	  <div id="nav-secondary">
+      <div id="sitenav">
+
+		<a class="rss-inline" href="rssfeeds.cfm">Site Feeds</a>
+		<br />
+		<a style="-moz-background-clip:border; -moz-background-inline-policy:continuous; -moz-background-origin:padding; background:transparent url(/img/twitter-t.png) no-repeat scroll 0 0; padding-left:16px;" target="_blank" href="http://twitter.com/ACMQueue">Twitter feed</a>
+
+	  <h4>Browse Topics</h4>
+      <ul class="topic-list">
+	  	
+        
+		
+		
+	    <li>
+          <a href="listing.cfm?item_topic=System Administration&qc_type=theme_list&filter=System Administration&page_title=System Administration&order=desc">System Administration</a>
+        </li>
+		
+      	
+		
+	    <li>
+          <a href="listing.cfm?item_topic=Networks&qc_type=theme_list&filter=Networks&page_title=Networks&order=desc">Networks</a>
+        </li>
+		
+      	
+		
+	    <li>
+          <a href="listing.cfm?item_topic=HCI&qc_type=theme_list&filter=HCI&page_title=HCI&order=desc">HCI</a>
+        </li>
+		
+      	
+		
+	    <li>
+          <a href="listing.cfm?item_topic=Graphics&qc_type=theme_list&filter=Graphics&page_title=Graphics&order=desc">Graphics</a>
+        </li>
+		
+      	
+		
+	    <li>
+          <a href="listing.cfm?item_topic=Security&qc_type=theme_list&filter=Security&page_title=Security&order=desc">Security</a>
+        </li>
+		
+      	
+		
+	    <li>
+          <a href="listing.cfm?item_topic=Programming Languages&qc_type=theme_list&filter=Programming Languages&page_title=Programming Languages&order=desc">Programming Languages</a>
+        </li>
+		
+		
+		<div  id="cf_window1293265589835" class="yuiextdlg">
+	
+	<div  id="morethemes_title" class="x-dlg-hd">
+		
+	 </div>
+	<div  id="morethemes_body" class="x-dlg-bd">
+		
+		
+	 </div>
+ </div>
+
+		<li>
+		   <a class="morethemes" id="morethemes" name="morethemes" href="javascript:ColdFusion.Window.show('morethemes')">Full List of Topics</a>
+        </li>
+      </ul>
+
+      <h4>Columns</h4>
+      <ul>
+        <li>
+          <a href="listing.cfm?typefilter=Thebikeshed&sort=publication_date&order=desc&qc_type=Thebikeshed&article_type=&item_topic=all&filter_type=topic&page_title=The Bikeshed&filter=all">The Bikeshed</a>
+        </li>
+        <li>
+          <a href="listing.cfm?typefilter=Kodevicious&sort=publication_date&order=desc&qc_type=Kodevicious&article_type=&item_topic=all&filter_type=topic&page_title=Kode Vicious&filter=all">Kode Vicious</a>
+        </li>
+        <li>
+          <a href="listing.cfm?typefilter=curmudgeon&sort=publication_date&order=desc&qc_type=curmudgeon&article_type=&item_topic=all&filter_type=topic&page_title=Curmudgeon&filter=all">Curmudgeon</a>
+	    </li>
+        <li>
+          <a href="listing.cfm?typefilter=Opinion&sort=publication_date&order=desc&qc_type=opinion&article_type=&item_topic=all&filter_type=topic&page_title=Opinion&filter=all">Opinion</a>
+        </li>
+      </ul>
+
+	  <h4>Discussions</h4>
+		<ul>
+			<li>
+                 <a href="listing.cfm?typefilter=ctoroundtable&sort=publication_date&order=desc&qc_type=ctoroundtable&article_type=&item_topic=all&filter_type=topic&page_title=CTO Roundtables&filter=all">CTO Roundtables</a>
+            </li>
+			<li>
+                 <a href="listing.cfm?typefilter=casestudy&sort=publication_date&order=desc&qc_type=casestudy&article_type=&item_topic=all&filter_type=topic&page_title=Case Studies&filter=all">Case Studies</a>
+            </li>
+			<li>
+                  <a href="listing.cfm?qc_type=interviews&page_title=Interviews">Interviews</a>
+            </li>
+		</ul>
+
+	<div>
+	<h4>Latest Comments</h4>
+<ul>
+
+
+
+ 
+ 
+	 
+		  
+	 
+
+	
+
+		
+
+			
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+				<li style='font-size:0.87em;margin-top:8px;'>
+				- &quot;Just remember that this article was written in 2004. There's be....&quot;
+				<a href='/detail.cfm?id=988407'>Why Writing Your Own Search Engine Is Hard</a>
+				</li>
+			
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+			
+			
+
+			
+				
+			
+
+			
+				
+			
+
+			
+
+			
+
+			
+
+			
+				<li style='font-size:0.87em;margin-top:8px;'>
+				- &quot;Why exactly do you recommend IDE over, say, SATA...?...&quot;
+				<a href='/detail.cfm?id=988407'>Why Writing Your Own Search Engine Is Hard</a>
+				</li>
+			
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+			
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+				<li style='font-size:0.87em;margin-top:8px;'>
+				- &quot;I have another one: respect and use the packaging mechanism of ....&quot;
+				<a href='/detail.cfm?id=1921361'>A Plea to Software Vendors from Sysadmins - 10 Do's and Don'ts</a>
+				</li>
+			
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+	 
+		  
+	 
+
+	
+
+		
+
+  
+	 
+		  
+		
+
+	
+
+		
+
+  
+</ul>
+
+	</div>
+
+	  <h4>Archive</h4>
+      <ul>
+        <li>
+          
+		  <a href="issuedetail.cfm?issue=1898147">Current Issue</a>
+		  
+        </li>
+        <li>
+          <a href="pastissues.cfm">Past Issues</a>
+        </li>
+		 <li>
+          <a href="listing.cfm">Articles</a>&nbsp;(Full Listing)
+        </li>
+      </ul>
+
+      <h4>other acm Links</h4>
+      <ul>
+        <li>
+          <a href="http://cacm.acm.org/">CACM</a>
+        </li>
+        <li>
+          <a href="technews.cfm">ACM TechNews</a>
+        </li>
+        <li>
+          <a href="dcupdates.cfm">Washington Updates</a>
+        </li>
+        <li>
+          <a href="risksforum.cfm">RISKS Forum</a>
+        </li>
+      </ul>
+
+    </div>
+
+		<div  id="layoutsu">
+	
+	
+		  <div  id="cf_layoutarea1293265589838" style="overflow:auto;">
+		
+		
+	      <div id="emailsignup" class="promo divider">
+
+	      <h5>
+	        <span>Sign up for QueueNews</span>
+	      </h5>
+	      <p>Our free weekly newsletter showcases all of ACM Queue's latest articles and columns.</p>
+		  <form id="form-emailsignup" action="newssignup.cfm" method="post" target="_blank" onsubmit="return ColdFusion.Ajax.checkForm(this, _CF_checkCFForm_1,'cf_layoutarea1293265589838')">
+	        <fieldset>
+<!--
+	          <label for="add_email">Your Email</label>
+-->
+	          Your Email:
+	          <input name="add_email" type="text" class="text"  id="add_email"  />
+
+	          <input class="text" id="list_name" name="list_name" type="hidden" value="QUEUENEWS" />
+	          <button type="submit" value="Sign Up">
+	            <span>Sign Up</span>
+	          </button>
+	        </fieldset>
+	      </form>
+
+
+	      <h5>
+	        <span>Sign up for Queue-Updates</span>
+	      </h5>
+	      <p>Stay up to date on the latest developments at ACM Queue, including announcements about contests, interviews, and more.</p>
+		  <form id="form-emailsignup" action="newssignup.cfm" method="post" target="_blank" onsubmit="return ColdFusion.Ajax.checkForm(this, _CF_checkCFForm_2,'cf_layoutarea1293265589838')">
+	        <fieldset>
+<!--
+	          <label for="add_email">Your Email</label>
+-->
+	          Your Email:
+	          <input name="add_email" type="text" class="text"  id="add_email"  />
+
+	          <input class="text" id="list_name" name="list_name" type="hidden" value="QUEUE-UPDATES" />
+	          <button type="submit" value="Sign Up">
+	            <span>Sign Up</span>
+	          </button>
+	        </fieldset>
+	      </form>
+
+
+		 </div>
+
+		 
+	 </div>
+
+		
+ </div>
+
+		<div>
+			
+
+<div class="section">
+
+<div class="promo divider">
+
+<!-- Sharepoint Feb 7-9 -->
+<a href='http://www.sptechcon.com' target='_new'>
+<img src="/ads/SPTechCon125x125.JPG" width="125" height="125" alt="Sharepoint Technology Conference" />
+</a>
+
+<!-- Android Feb 7-9 -->
+<a href='http://www.andevcon.com' target='_new'>
+<img src="/ads/Android125x125.jpg" width="125" height="125" alt="Android Developers Conference" />
+</a>
+
+<!-- O'Reilly Strata Feb 7-9 -->
+<a href='http://strataconf.com/strata2011?cmp=mp-conf-st11-acm-q-banner-ad' target='_new'>
+<img src="/ads/Strata125x125.jpg" width="125" height="125" alt="O'Reilly Strata Conference" />
+</a>
+
+<!-- Enterprise Connect Feb 7-9 -->
+<a href='http://enterpriseconnect.com/orlando/?_mc=CNWTVR15' target='_new'>
+<img src="/ads/EnterpriseConnect125x125.gif" width="125" height="125" alt="Enterprise Connect Conference" />
+</a>
+
+
+
+</div>
+
+</div>
+
+
+
+
+		</div>
+    </div>
+
+    <div>
+        <div id="lead">
+
+
+          
+		  
+		  <span id="leadbreak"></span>
+          
+          &nbsp; &nbsp; &nbsp;
+		  <a class="descriptor" href="issuedetail.cfm?issue=1483101">view issue</a>
+		  
+          <h1 style='font-size: 1.3em; font-weight:bold;'>Scaling in Games & Virtual Worlds<span></span>
+          <br />
+		  
+          <a href="http://portal.acm.org/ft_gateway.cfm?id=1483105&type=pdf">
+            <img src="img/icon_pdf.png" alt="Download PDF version of this article" />
+          </a>
+		  
+
+		<!-- // Check for existence of associated MP3 file-->
+		
+
+		  </h1>
+
+
+		  <div class="meta">
+				
+				
+        		<p>
+        		
+        		<span>by <span>Jim Waldo</span> |</span>
+            	
+           		<span><nobr>January 8, 2009</nobr></span>
+				</p>
+				
+				 <p>Topic:
+	        		<span>Game Development</span></p>
+				
+       	  </div>
+          <!-- /.meta -->
+
+           <!-- these get hooked up to js events -->		
+<script type="text/javascript">
+	addthis_pub             = 'acm'; 
+	addthis_logo            = 'http://queue.acm.org/img/logo_queue_small.gif';
+	addthis_logo_background = '#ffffff';
+	addthis_logo_color      = '000000';
+	addthis_brand           = 'ACM Queue';
+	addthis_options         = 'favorites, email, slashdot, delicious, digg, technorati, blinklist, furl, reddit, myspace, facebook, google, live, more';
+</script>
+ <div id="wrap-content_action_bar">
+      <ul id="useractions">
+        <li>
+          <a href="#content-comments">View&nbsp;Comments</a>
+        </li>
+        <li id="user-print">
+          <a href="#">Print</a>
+        </li>
+		<li>
+			
+			<!-- ADDTHIS BUTTON BEGIN -->
+			<a href="http://www.addthis.com/bookmark.php" onmouseover="return addthis_open(this, '', 'http://queue.acm.org/detail.cfm?id=1483105', '[TITLE]')" onmouseout="addthis_close()" onclick="return addthis_sendto()"><img src="http://s9.addthis.com/button1-share.gif" width="125" height="16" border="0" alt="" /></a>
+			<script type="text/javascript" src="http://s7.addthis.com/js/152/addthis_widget.js"></script>
+			<!-- ADDTHIS BUTTON END -->
+			
+		</li>
+      </ul>
+</div>
+
+		
+		
+        </div>
+	<!--lead -->
+
+	<div id="primary">
+
+<!-- EMail Link-->
+
+
+		<div id="content">
+			<div id="wrap-supplement">
+				
+					
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="content-related">
+
+	<h3>Recently on Slashdot</h3>
+
+<br />
+
+- <a href='http://developers.slashdot.org/story/10/10/31/2127201/Mr-Pike-Tear-Down-This-ASCII-Wall'>Please Step Away from the ASR-33!</a>
+
+<br />
+
+- <a href='http://developers.slashdot.org/story/10/06/14/2225251/Knuth-Got-It-Wrong'>You're Doing it Wrong</a>
+
+<br />
+
+- <a href='http://hardware.slashdot.org/story/10/06/02/2022229/Visualizing-System-Latency'>Visualizing System Latency</a>
+
+
+<!--
+<br />
+
+- <a href='http://tech.slashdot.org/story/10/05/02/0120213/Robust-Timing-Over-the-Internet'>Principles of Robust Timing over the Internet</a>
+- <a href='http://hardware.slashdot.org/story/10/02/25/2138238/ARM-Designer-Steve-Furber-On-Energy-Efficient-Computing'>A Conversation with Steve Furber</a>
+-->
+
+
+
+
+	<br /><br />
+
+     <h3>Related Content</h3>
+
+	   
+	   <div class="block">
+       		<div class="excerpt">
+	          <h4>
+	            <a href="detail.cfm?id=1483106">Better Scripts, Better Games</a>
+   		      </h4>
+         		  
+	          	  <p>The video game industry earned $8.85 billion in revenue in 2007, almost as much as movies made at the box office. Much of this revenue was generated by blockbuster titles created by large groups of people. Though large development teams are not unheard of in the software industry, game studios tend to have unique collections of developers. Software engineers make up a relatively small portion of the game development team, while the majority of the team consists of content creators such as artists, musicians, and designers.</p>
+
+			  <div class="meta">
+	        		<p>
+	            	<span>Walker White, Christoph Koch, Johannes Gehrke, Alan Demers</span>
+	            	</p>
+	          </div>
+	          <!-- /.meta -->
+	        </div>
+   	  </div>
+	  
+	   <div class="block">
+       		<div class="excerpt">
+	          <h4>
+	            <a href="detail.cfm?id=1331296">Big Games, Small Screens</a>
+   		      </h4>
+         		  
+	          	  <p>One thing that becomes immediately apparent when creating and distributing mobile 3D games is that there are fundamental differences between the cellphone market and the more traditional games markets, such as consoles and handheld gaming devices. The most striking of these are the number of delivery platforms; the severe constraints of the devices, including small screens whose orientation can be changed; limited input controls; the need to deal with other tasks; the nonphysical delivery mechanism; and the variations in handset performance and input capability.</p>
+
+			  <div class="meta">
+	        		<p>
+	            	<span>Mark Callow, Paul Beardow, David Brittain</span>
+	            	</p>
+	          </div>
+	          <!-- /.meta -->
+	        </div>
+   	  </div>
+	  
+	   <div class="block">
+       		<div class="excerpt">
+	          <h4>
+	            <a href="detail.cfm?id=988409">Gaming Graphics:The Road to Revolution</a>
+   		      </h4>
+         		  
+	          	  <p>It has been a long journey from the days of multicolored sprites on tiled block backgrounds to the immersive 3D environments of modern games. What used to be a job for a single game creator is now a multifaceted production involving staff from every creative discipline. The next generation of console and home computer hardware is going to bring a revolutionary leap in available computing power; a teraflop (trillion floating-point operations per second) or more will be on tap from commodity hardware.</p>
+
+			  <div class="meta">
+	        		<p>
+	            	<span>Nick Porcino</span>
+	            	</p>
+	          </div>
+	          <!-- /.meta -->
+	        </div>
+   	  </div>
+	  
+	   <div class="block">
+       		<div class="excerpt">
+	          <h4>
+	            <a href="detail.cfm?id=971594">The Scalability Problem</a>
+   		      </h4>
+         		  
+	          	  <p>Back in the mid-1990s, I worked for a company that developed multimedia kiosk demos. Our biggest client was Intel, and we often created demos that appeared in new PCs on the end-caps of major computer retailers such as CompUSA. At that time, performance was in demand for all application classes from business to consumer. We created demos that showed, for example, how much faster a spreadsheet would recalculate (you had to do that manually back then) on a new processor as compared with the previous year's processor. The differences were immediately noticeable to even a casual observer - and it mattered.</p>
+
+			  <div class="meta">
+	        		<p>
+	            	<span>Dean Macri</span>
+	            	</p>
+	          </div>
+	          <!-- /.meta -->
+	        </div>
+   	  </div>
+	  
+
+	   
+	   
+			  <div class="meta">
+			  	  <a href="listing.cfm?item_topic=Game Development&qc_type=theme_list&filter=Game Development&page_title=Game Development&order=desc"> <img alt="Game Development"
+                      class="floatRight"  src="focus_img/game_development.jpg" /></a>
+			  </div>
+	   		  
+	   <h3>Browse this Topic:</h3>
+
+
+		
+
+	  <div class="block">
+       		<div class="excerpt">
+			  
+			  <div class="meta">
+			  	 
+				  	   <h4><a href="listing.cfm?item_topic=Game Development&qc_type=theme_list&filter=Game Development&page_title=Game Development&order=desc">Game Development</a><br><br><br>
+					   </h4>
+			  </div>
+	   		  
+	       </div>
+       </div>
+ </div>
+ 
+				
+			</div>
+			
+
+
+
+
+
+
+
+
+
+	
+	
+		
+		
+		
+	
+
+<h2>Scaling in games &amp; virtual worlds </h2><h4>Online games and virtual worlds have familiar scaling requirements, but don’t be fooled: everything you know is wrong.</h4><h4>Jim Waldo, Sun Microsystems Laboratories</h4><p>I USED TO BE LIKE YOU.</p><p>  I used to be a systems programmer, working on infrastructure used by banks, telecom companies, and other engineers. I worked on operating systems. I worked on distributed middleware. I worked on programming languages. I wrote tools. I did all of the things that hard-core systems programmers do. </p><p>  And I knew the rules. I knew that throughput was the real test of scaling. I knew that data had to be kept consistent and durable, and that relational databases are the way to ensure atomicity, and that loss of information is never an option. I knew that clients were getting thinner as the layers of servers increased, and that the best client would be one that contained the least amount of state and allowed the important computations to go on inside the computing cloud. I knew that support for legacy code is vital to the adoption of any new technology, and that most legacy code has yet to be written. </p><p>  But two years ago my world changed. I was asked to take on the technical architect position on Project Darkstar, a distributed infrastructure targeted to the massive-multiplayer online-game and virtual-world market. At first, it seemed like a familiar system. The goal was to scale flexibly by enabling the dynamic addition (or subtraction) of machines to match load. There was a persistence layer and a communication layer. We also wanted to make the programming model as simple as possible, while enabling the system to use all the power of the new generations of multicore chips that Sun (and others) were producing. These were all problems that I had encountered before, so how hard could these particular versions of the problems for this particular market be? I agreed to spend a couple of months on the project, cleaning up the architecture and making sure it was on the right track while I thought about new research topics that I might want to tackle.</p><p>The three months have turned into two years (and counting). I’ve found lots of new research challenges, but they all have to do with finding ways to make the environment for online games and virtual worlds scale. In the process, I have been introduced to a different world of computing, with different problems, different assumptions, and a different environment. At times I feel like an anthropologist who has discovered a new civilization. I’m still learning about the culture and practice of games, and it is a different world.</p>  <h4>Everything You Know is Wrong</h4>  <p>  The first thing to realize in understanding this new world is that it is part of the entertainment industry. Because of this, the most important goal for a game or virtual world is that it be fun. Everything else is secondary to this prime directive. Being fun is not an objective measure, but the goal is to provide an immersive, all-consuming experience that rewards the player for playing well, is easy to learn but hard to master, and will keep the player coming back again and again. </p><p>  Most online games center around a story and a world, and the richness of that story and world has much to do with the success of the game. Design of the game centers on the story and the gameplay. Design of the code that is used to implement the game comes quite a bit later (and is often considered much less interesting). A producer heads the team that builds the game or the virtual world. Members of the team include writers, artists, and musicians, as well as coders. The group with the least influence on the game consists of the coders; their job is to bring the vision of others to reality. </p><p>  The computational environment for online games or virtual worlds is close to the exact inverse of that found in most markets serviced by the high-tech industry. The clients are anything but thin; game players will be using the highest-end computing platforms they can get, or game consoles that have been specially designed for the computational rigors of these games. These client machines will have as much memory as can be jammed into the box, the latest and fastest CPUs, and graphics subsystems that have supercomputing abilities on their own. These clients will also have considerable capacity for persistent storage, since one of the basic approaches to these games is to put as much information as possible on the client. </p><p>  The need for a heavyweight client is, in part, an outcome of the evolution of these games. Online games have developed from stand-alone products, in which everything was done on the local machines. This is more than entropy in the industry, however; keeping as much as possible on the client allows the communication with the server to be minimized, both in the number of calls made to the server and in the amount of information conveyed in those calls. This communication minimization is required to meet the prime directive of fun, since it is part of the way in which latency is minimized in these games.</p><p>  Latency is the enemy of fun—and therefore the enemy of online games and virtual worlds. This is especially interesting in the case of online games, where the latency of the connection between the client and the servers cannot be controlled. Therefore, the communication protocol needs to be as simple as possible, and the information transmitted from the client to the server must fit into a single packet whenever possible. Further, the server needs to be designed so that it is doing very little, ensuring that whatever it is doing can be done very quickly so a response can be sent back to the player. Some interesting tricks have been developed to mask unavoidable latency from the player. These include techniques such as showing prerecorded clips during the loading of a mission or showing a “best guess” immediately at the result of an action and then repairing any differences between that guess and the actual result when the server responds.</p><p>  The role of the server is twofold. The most obvious is to allow players to interact with each other in the context of the game. This role is becoming more important and more complex as these games and worlds become increasingly elaborate. The original role of the server was to allow players to compete with each other in the game. Now games and virtual worlds are developing their own societies, where players may compete but may also cooperate or simply interact in various ways. Virtual worlds allow users to try out new personalities; games let players cooperate to do tasks that they would be unable to complete individually. In both, players are finding that a major draw of the technology is using it to connect to other people.</p><p>  The second role of the server is to be the arbiter of truth between the clients. Whether the client is running on a console or on a personal computer, control rests in the hands of the player. This means that the player has access to the client program, and the competitive nature of the games gives the player motivation to alter the client in the player’s favor. Even in virtual worlds, where there is only social competition, the desire to “enhance the opportunity” of the individual player (also known as “cheating”) is common. This requires that the server, which is the one component that is not under the control of the players, be the arbiter of the true state of the game. The game server is used both to discourage cheating (by making it much more difficult) and to detect cheating (by seeing patterns of divergence between the game state reported by the client and the game state held by the server). Peer-to-peer technologies might seem a natural fit for the first role of the game server, but this second role means that few if any games or worlds trust their peers enough to avoid the server component.</p>  <h4>Current Scaling Strategies</h4>  <p>  The use of the singular term server in the previous section represents a conceptual illusion of the system structure that can be maintained only by the clients of the game or world. In fact, any online game or virtual world will involve a large number of servers (or will have failed so miserably that no one either can or wants to remember the game or world). Using multiple servers is a basic mechanism for scaling the server component of a game to the levels that are being seen in the online world today. World of Warcraft has reported more than 5 million subscribers with hundreds of thousands active at any one time. Second Life reports usage within an order of magnitude of World of Warcraft, and there is some evidence that sites such as Webkinz or Club Penguin are even more popular. A single server is not able to handle such load, no matter how efficient the representation. Even if a single server could deal with this load, such a server would be far too expensive for the smaller loads that are encountered (sometimes by the same games or worlds) at times of low demand (or in parts of the product’s life cycle when demand has decreased). </p><p>  Having multiple servers means that part of building the game is deciding how to partition the load over these servers. Two techniques are commonly used in both online games and virtual worlds. Sometimes only one of the techniques is used, sometimes both, depending on the nature of the game or world.</p><p>  The first technique is to exploit the geography of the game or world, decomposing the game into different areas, each of which can be mapped to a hosting server. For example, an island in Second Life corresponds to a physical server running the code for the shared reality of the world. Similarly, different areas of the World of Warcraft universe are hosted on different physical machines. Anyone who is in the area will connect to the same server, and interactions among the players on that server can be localized (and optimized). Actions happening in a different part of the world are not likely to affect those in this part of the world, so the communication traffic between servers can be kept small.</p><p>  The second technique is known as sharding. A shard is a copy of a part of the game or virtual world. Different shards reside on different servers, and players who are assigned to one shard can interact with the world and other players in the shard, but will not see (or be able to interact with) players or objects in other shards. Shards not only allow more players to be supported in the world, but also permit independent explorations into the world by different sets of players. Thus, when a new quest or mission is added to a game, it will often be replicated with multiple shards so that more than one player (or group of players) can experience the quest or mission in its original state.</p><p>  Although sharding and geographic decomposition allow multiple servers to be used to handle the load on a single game or world, they do present the developer with significant challenges. By creating noninteracting copies of parts of a world, shards isolate the players in different shards from each other. This means that players who want to share their experience of the world or game need to become aware of the different shards that are being offered, and arrange to be placed in the same shard. As the number of players who want to be in the same shard increases (some guilds—groups of players who cooperatively play in a single game over an extended period of time—have hundreds of members), the difficulty of coordinating placement into shards increases and interferes with the experience of the world. While shards allow scale, they do so at the price of player interaction.</p><p>  Geographic decomposition does not limit player interaction, but does require that the designers of the game be able to predict the size of a geographic area that will be the correct unit of decomposition. If one geographic area becomes very popular, play on that area will slow down as the server associated with the area is overloaded. If a geographic area is less popular than originally predicted, computer hardware (and money) will be wasted on that section because not enough players are there. Since the geographic decomposition is hardwired into the code of the game or world, changing the decomposition in response to observed user behavior requires rewriting part of the game or world itself. This takes time, can introduce bugs, and is very costly. While this is being done, gameplay can be adversely affected. In extreme cases, this can have a major financial impact. When World of Warcraft was introduced, the demand for the game so outstripped its capacity that subscriptions had to be closed off for months while the code that distributed the game was rewritten.</p>  <h4>  Changing Chip Architectures</h4>  <p>  Scaling over a set of machines is a distributed computing problem, and the game and virtual-world programming culture has had little experience with this set of problems. This is hardly the only place where scaling requires the game programmer to learn a new set of skills. A change in the trend of chip design also means that these programmers must learn skills they have never had to exercise before.</p><p>  With the possible exception of the highest end of scientific computing, no other kind of software has ridden the advances of Moore’s law as aggressively as game or virtual-world programs. As chips have gotten faster, games and virtual worlds have become more realistic, more complex, and more immersive. Serious gameplayers invest in the very best equipment that they can obtain, and then use techniques such as overclocking to push even more performance out of those systems. </p><p>  Now, however, chip designers have decided to exploit Moore’s law in a different way. Rather than increasing the speed of a chip, they are adding multiple cores to a chip running at the same (or sometimes slower) clock speed. There are many good reasons for this, from simplified design to lower power consumption and heat production, but it means that the performance of a single program will not automatically increase when you run the program on a new chip. Overall performance of a group of programs may increase (since they can all run in parallel) but not the single program (unless it can be broken into multiple, cooperating threads). Games are written as single-threaded programs, however. </p><p>  In fact, games and virtual worlds (and especially the server side of these programs) should be perfect vehicles to show the performance gains possible with multicore chips and groups of cooperating servers. Games and virtual worlds are embarrassingly parallel, in that most of what goes on in them is independent of the other things that are happening. Of the hundreds of thousands of players who are active in World of Warcraft at any one time, only a very small number will be interacting with any particular player. The same is true in Second Life and nearly all large-scale games or worlds. </p><p>  The problem is that the culture that has grown up around games and virtual worlds is not one that understands or is overly familiar with the programming techniques that are required to exploit the parallelism inherent in these systems. These are people who grew up on a single (PC) machine, running a single thread. Asking them to master the intricacies of concurrent programming or distributed systems takes them away from their concentration on the game or world experience itself. Even when they have the desire, they don’t have the time or the experience to exploit these new technologies.</p>  <h4>Project Darkstar</h4>  <p>  It is for these reasons that we started Project Darkstar (<a href="http://www.projectdarkstar.com">http://www.projectdarkstar.com</a>), a research effort attempting to build a server-side infrastructure that will exploit the multithreaded, multicore chips being produced and scaled over a large group of machines, while presenting the programmer with the illusion that he or she is developing in a single-threaded, single-machine environment. Hiding threading and distribution is, in the general case, probably not a good idea (see <a href="http://research.sun.com/techrep/1994/abstract-29.html">http://research.sun.com/techrep/1994/abstract-29.html</a> for a full argument). Game and world servers tend to follow a very restricted programming model, however, in which we believe we can hide both concurrency and distribution.</p>  <p>  The model is a simple event-based one in which input from the client is received by the server, which then sets off a task in response to that event. These tasks can change the state of the world (by moving a player, changing the state of an object, or the like) and initiate communication. The communication can be to a single client or to a group of clients that are all subscribed to the same communication channel.</p><p>  We chose this model largely because this is the way most game and virtual-world servers are already structured. The challenge was then to keep this model and allow servers written in this style to be scaled over multiple cores (running multiple threads) and multiple servers. We were not trying to take existing code and allow it to run within our system. This would have made the task much more difficult and would not have corresponded to the realities of the game and virtual-world culture. Game and world servers are written from scratch for each game or world, perhaps reusing some libraries but rarely, once running, being rehosted into a different environment. Efforts to bring different platforms into the game are restricted to the client side, where new consoles bringing in new players may be worth the effort.</p><p>  Darkstar provides a container in which the server runs. The container provides interfaces to a set of services that allow the game server to keep persistent state, establish connections with clients, and construct publish/subscribe channels with sets of clients. Multiple copies of the game server code can run in multiple instances of the Darkstar container. Each copy can be written as if it were the only one active (and, in fact, it may be the only one active for small-scale games or worlds). Each of the servers is structured as an event loop—the main loop listens on a session with a client that is established when the client logs in. When a message is delivered, the event loop is called. The loop can then decode the message and determine the game or world action that is the appropriate response. It then dispatches a task within the container.</p><p>  Each of these tasks can read or change data in the world through the Darkstar data service, communicate with the client, or send messages to groups of other game or world participants via a channel. Under the covers, the task is wrapped in a transaction. The transaction is used to ensure that no conflicting concurrent access to the world data will occur. If a task tries to change data that is being changed by some other concurrent task, the data service will detect that conflict. In that case, one of the conflicting tasks will be aborted and rescheduled; the other task should run to completion. Thus, when the aborted task is retried, the conflict should have disappeared and the task should run to completion.</p><p>  This mechanism for concurrency control does require that all tasks access all of their data through the Darkstar data service. This is a departure from the usual way of programming game or world servers, where data is kept in memory to decrease latency. By using results from the past 20 years of database research, we believe that we can keep the penalty for accessing through a data service small by caching data in intelligent ways. We also believe that by using the inherent parallelism in these games, we can increase the overall performance of the game as the number of players increases, even if there is a small penalty for individual data access. Our data store is not based on a standard SQL database since we don’t need the full functionality such a database provides. What we need is something that gives us fast access to persistently stored objects that can be identified in simple ways. Our current implementation uses the Berkeley Database for this, although we have abstracted our access to it to provide the opportunity to use other persistence layers if required.</p><p>Concurrency control is not the only reason to require that all data be accessed through the data store. By backing the data in a persistent fashion rather than keeping it in main memory, we gain some inherent reliability that has not been exhibited by games or worlds in the past. Storing all of the data in memory means that a server crash can cause the loss of any change in the game or world since the last time the system was checkpointed. This can sometimes be hours of play, which can cause considerable consternation among the customers and expensive calls to the service lines. By keeping all data persistently, we believe we can ensure that no more than a few seconds of game or world interaction will be lost in the case of a server crash. In the best case, the players won’t even notice such a crash, as the tasks that were on the server will be transferred to another server in a fashion that is transparent to the player.</p><p>  The biggest payoff for requiring that all data be kept in the data store is that it helps to make the tasks that are generated by the response to events in the game portable. Since the data store can be accessed by any of a cluster of machines that are running the Darkstar stack and the game logic, there is no data that cannot be moved from machine to machine. We do the same with the communication mechanisms, ensuring that a session or channel that is connecting the game and some set of clients is abstracted through the Darkstar stack. This allows us to move the task using the session or channel to another machine without affecting the semantics of the task talking over the session or channel.</p><p>  This task portability means we can dynamically balance the load on a set of machines running the game or virtual world. Rather than splitting the game up into regions or shards at compile time, virtual worlds or games based on the Darkstar stack can move load around the network of server machines at runtime. While the participant might see a short increase in latency during the move, the overall latency will be decreased after the move. By moving tasks, we not only can balance the load on the machines involved, but also try to collocate tasks that are accessing the same set of data or that are communicating with each other. All of these mechanisms allow us to determine, while the game is being played, which tasks (and which users) should be placed on the same server.</p>  <p>  The project is in its early stages of development and deployment. It is based on an open-source licensing model and community, so we are relying on our users to educate us about the needs of the community that will build the games and worlds that will run on the infrastructure. The research is part computer science and part anthropology, but each of the cultures has an opportunity to learn much from the other.</p>  <p>  Even at this early stage, it is clear that this is going to be a complex venture. While early experience with the code has shown that the programming model does relieve the game or world server programmer from thinking about threads and locking, it has also shown that there are places where they do have to understand something about the underlying concurrency of the system. The most obvious of these is in the design of the data structures. One of the earliest users of our code was getting terrible performance from the system. When we looked at the code, we discovered that a single object was written to on every task, updating a global piece of game state. By designing the server in this way, this user effectively serialized all of the tasks that were running in the system, making it impossible for the server to get any advantage from the inherent parallelism in the game. Some minor redesign, breaking the single object into many (much smaller) objects, removed this particular bottleneck, with resulting gains in overall performance. This experience also taught us that we need to educate users of the system in the design of independent data structures that can be accessed in parallel. </p><p>  Our own implementation has not been without some excitement. When we moved from a multithreaded server that ran on a single machine to an implementation that runs on multiple machines, we expected some degradation in the performance of the single-machine system. We were delighted to find that the single-node system degradation was not nearly as large as we thought it would be, but we found that additional machines lowered the capacity of the overall system. When presented with these measurements, this was not all that surprising to understand—the possibility for contention on multiple machines is greater than that on a single machine, and discovering and recovering from such contention takes longer. We are working on removing the choke points so that adding equipment actually adds capacity.</p><p>  Measuring the performance of the system is made especially challenging by the lack of any clear notion of what the requirements of the target servers are. Game developers are notoriously secretive, and the notion of a characteristic load for a game or virtual world is not something that is well documented. We have some examples that have been written by the team or by people we know in the game world, but we cannot be sure that these are accurate reflections of what is being written by the industry. Our hope is that the open-source community that is beginning to form around the project will aid in the production of useful performance and stress tests.</p><p>  Seen in a broader light, the project has been and continues to be an interesting experiment in building levels of abstraction for the world of multithreaded, distributed systems. The problems we are tackling are not new. Large Web-serving farms have many of the same problems with highly variable demand. Scientific grids have similar problems of scaling over multiple machines. Search grids have similar issues in dealing with large-scale environments solving embarrassingly, but not completely, parallel problems. </p><p>  What makes online games and virtual worlds interestingly different are the very different requirements they bring to the table compared with these other domains. The interactive, low-latency environment is very different from grids, Web services, or search. The growth from the entertainment industry makes the engineering disciplines far different from those others, as well. Solving these problems in this new environment is challenging, and adds to our general knowledge of how to write software on the emerging class of multithreaded, multicore, distributed systems.</p><p>  And best of all, it’s fun. </p><p>JIM WALDO is a Distinguished Engineer with Sun Microsystems Laboratories, where he conducts research on large-scale distributed systems. Prior to (re)joining Sun Labs, he was the lead architect for Jini, a distributed programming system based on Java. He spent eight years at Apollo Computer and Hewlett-Packard, where he led the design and development of the first object request broker and was instrumental in getting that technology incorporated into the first OMG CORBA specification. Waldo is an adjunct faculty member at Harvard University, where he teaches distributed computing in the department of computer science. He has a Ph.D. in philosophy, holds M.A. degrees in both linguistics and philosophy, and has never taken a real computer science course.</p>
+
+
+ <p>
+ 
+ 	
+	    <img class="floatLeft" src="img/q stamp_small.jpg" width="26" height="45" alt="acmqueue"><br><br>
+	
+	<em>Originally published in Queue vol. 6, no. 7</em>&#8212;
+ 	<br>
+	see this item in the <a href="http://portal.acm.org/citation.cfm?id=1483105">ACM Digital Library</a> 
+ 
+  </p>
+
+
+<!-- EMail Link-->
+
+
+			
+            <p class="totop"><a href="#">Back to top</a></p>
+			
+		  </div>
+		  <!-- /content -->
+		   
+
+
+
+<div class="bibliography">
+	<h5>About the Author</h5>
+	<ul  class="authbios">
+   
+	   <li><span>Jim Waldo is a Senior Staff Engineer with VMware, Inc. where he works on designing and implementing infrastructure for cloud computing. He is also a Gordon McKay Professor of the Practice of Computer Science at Harvard University.<br><br>Before joining VMware, Jim was a Distinguished Engineer with Sun Microsystems Laboratories, where his last project was Darkstar, a multithreaded, distributed infrastructure for massive multiplayer online games and virtual worlds. Prior to joining Sun Labs, he was the lead architect for Jini, a distributed programming system based on Java. While at Sun, Jim also did research and product development in medical sensing, object-oriented programming and systems, distributed computing, and user environments. He was also involved in some of the early design and development of the Java programming language and environment.<br><br>Before joining Sun, Jim spent eight years at Apollo Computer and Hewlett Packard working in the areas of distributed object systems, user interfaces, class libraries, text, and internationalization. While at HP, he led the design and development of the first Object Request Broker, and was instrumental in getting that technology incorporated into the first OMG CORBA specification.<br><br>Jim edited the book <i>The Evolution of C++: Language Design in the Marketplace of Ideas</i> (MIT Press), co-edited <i>Engaging Privacy and Information Technology in a Digital Age</i> (National Academies Press), and was one of the authors of <i>The Jini Specification</i> (Addison Wesley). More recently, he authored <i>Java: The Good Parts</i> (O&#039;Reilly). He holds over 50 patents.<br><br>Jim received his Ph.D. in philosophy from the University of Massachusetts (Amherst). He also holds M.A. degrees in both linguistics and philosophy from the University of Utah.</span>
+	   	   For additional information see the ACM Digital Library Author Page for: <a href="http://portal.acm.org/author_page.cfm?id=81319503639">Jim Waldo</a><br />&nbsp;
+	    </li>
+	
+	</ul>
+</div>
+
+
+		   
+		    <!-- tags -->
+<!-- /content-tags -->
+<div id="content-comments" class="panel">
+
+	<div  id="layout1">
+	
+	
+<div  id="cf_layoutarea1293265589839" style="overflow:auto;">
+		
+		
+
+
+
+ <h3>Comments</h3>
+   <ul id="comments">
+   	 
+	 
+		 
+			  			
+		 
+		 <li class="alt">
+     		  <p class="author">
+           		 <span>Jim Waldo</span>
+           			 | 
+          			  Fri, 24 Apr 2009 20:17:40 UTC </p>
+          			  <p>Well, things have progressed considerably in the past year. We have run literally thousands of clients on a single server. We are now working on getting things running on multiple servers (which means that it doesn't yet perform well on multiple servers). But a lot depends on how independent the various tasks that are produced actually are-- the more contention in the game logic, the more linear the execution and the less performance Darkstar gives. 
+
+But you might be surprised if you try again...</p>
+     	 </li>
+      
+		 
+		 	  
+			
+		 <li class="">
+     		  <p class="author">
+           		 <span>mike</span>
+           			 | 
+          			  Thu, 22 Jan 2009 23:35:32 UTC </p>
+          			  <p>Ok</p>
+     	 </li>
+      
+		 
+			  			
+		 
+		 <li class="alt">
+     		  <p class="author">
+           		 <span>Raoul Duke</span>
+           			 | 
+          			  Tue, 20 Jan 2009 21:54:09 UTC </p>
+          			  <p>Last I heard (a year ago), demos of even simple things in Darkstar were less than performant, if you will. I haven't researched it since then, although I do see some showcased systems on the Darkstar web page.
+
+It is all nice sounding in theory. What is the current practice? I am not trying to ask this in a mean way -- personally I value anybody who is actually applying real thought to making virtual world systems suck less, and so do hope that Darkstar can show off a new way forward.</p>
+     	 </li>
+      
+ </ul>
+
+
+<a name="discussion"></a>
+<form name="edit_form" id="edit_form" action="postcomment.cfm" method="post" onsubmit="return ColdFusion.Ajax.checkForm(this, _CF_checkedit_form,'cf_layoutarea1293265589839')">
+<fieldset>
+
+
+
+
+
+
+
+
+
+
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+
+	
+	<input type="hidden" name="formfield1234567891" id="formfield1234567891" value="">
+	
+
+
+
+	
+	<input type="hidden" name="formfield1234567892" id="formfield1234567892" value="">
+	
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	<input type="hidden" name="formfield1234567893" value="39841431,19772836">
+
+
+
+	
+	<span style="display:none">Leave this field empty <input type="text" name="formfield1234567894" value=""></span>
+
+<p>Post a Comment:
+</p>
+<div>
+<div class="field">
+<label for="username">Name</label>
+<span class="fieldRequired" title="Required">(Required)</span>
+<div class="formHelp"></div>
+<div></div>
+<div>
+<input name="Creator" type="text" title="Name"  alt="Submitter"  size="40"  id="username"  />
+</div>
+</div>
+<div class="field">
+<label for="email">E-Mail</label>
+<span class="fieldRequired" title="Required">(Required)
+</span>
+<div class="formHelp"></div>
+<div></div>
+<input name="email" id="email"  type="text" size="40"  />
+</div>
+</div>
+
+
+
+<div class="field">
+<label for="body_text">Comment</label>
+<span class="fieldRequired" title="Required">(Required - 4,000 character limit - HTML syntax is <strong>not</strong> allowed and <b>will be removed</b>)</span>
+<div></div>
+<textarea name="body_text" rows="8" id="body_text" cols="40" html="No" ></textarea>
+</div>
+
+<div class="formControls">
+<input type="Hidden" name="id" value="1483105">
+<input name="discussion_reply:method" id="discussion_reply:method"  type="submit" value="Post" class="context"  />
+</div>
+</fieldset>
+</form>
+
+
+
+	 </div>
+
+ </div>
+	
+</div>
+<!-- /content-comments -->
+		   
+		    <span class="clear"></span>
+       </div>
+      <!-- /primary -->
+     </div>
+
+	 
+
+	 <span class="clear"></span>
+  </div>
+  <!-- /wrapper -->
+
+  <div id="portal-footer">
+      <div id="footer">
+        <ul>
+          <li>
+            <a href="whatisqueue.cfm">About Queue</a>
+          </li>
+          <li>
+            <a href="author_guidelines.cfm">Author Guidelines</a>
+          </li>
+          <li>
+            <a href="editorialboard.cfm">Editorial Board</a>
+          </li>
+          <li>
+            <a href="whyjoinacm.cfm">Join ACM</a>
+          </li>
+          <li>
+            <a href="http://www.acm-media.org">Advertising</a>
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <a href="rssfeeds.cfm">RSS Feeds</a>
+          </li>
+          <li>
+            <a href="privacypolicy.cfm">Privacy Policy</a>
+          </li>
+          <li>
+            <a href="contactus.cfm">Contact us</a>
+          </li>
+          <li>
+            <a href="feedback.cfm">LOVE IT, HATE IT? LET US KNOW</a>
+          </li>
+        </ul>
+        <p class="copyright">&#169; 2010 ACM, Inc. All Rights
+        Reserved.</p>
+     </div>
+     <!-- /footer -->
+ </div>
+
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-6562869-1");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>
+
+
+</body>
+</html>
