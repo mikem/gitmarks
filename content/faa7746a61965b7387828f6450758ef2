@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>An Illustrated Guide to Split Windows in Irssi | quadpoint.org</title>
+  <link rel="stylesheet" href="/static/css/blueprint/screen.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="/static/css/blueprint/print.css" type="text/css" media="print" />
+  <!--[if lt IE 8]>
+    <link rel="stylesheet" href="/static/css/blueprint/ie.css" type="text/css" media="screen, projection">
+  <![endif]-->
+  <link rel="stylesheet" media="all" type="text/css" href="/static/css/pygments_style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="/static/css/jquery.lightbox.css" />
+  <link rel="stylesheet" media="all" type="text/css"  href="/static/css/stylev2.css" />
+  <link rel="stylesheet" media="all" type="text/css" href="/static/css/libgithub.css" />
+  <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon" />
+  <script type="text/javascript" src="/static/js/excanvas-compressed.js"></script>
+  <script type="text/javascript" src="/static/js/jquery.min.js"></script>
+  <script type="text/javascript" src="/static/js/jquery.lightbox.pack.js"></script>
+  <script type="text/javascript" src="/static/js/humane.js"></script>
+  <script type="text/javascript" src="/static/js/date.js"></script>
+  <script type="text/javascript" src="/static/js/md5.js"></script>
+  <script type="text/javascript" src="/static/js/libgithub.min.js"></script>
+  <script type="text/javascript" src="/static/js/cvi_glossy_lib.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      $('a.lightbox').lightBox({
+        imageLoading: '/static/images/lightbox-ico-loading.gif',
+        imageBtnClose: '/static/images/lightbox-btn-close.gif',
+        imageBtnPrev: '/static/images/lightbox-btn-prev.gif',
+        imageBtnNext: '/static/images/lightbox-btn-next.gif'});
+    });
+  </script>
+</head>
+<body>
+  <div class="container">
+    <div class="span-1">
+     &nbsp;
+    </div>
+    <div class="span-22">
+      <div class="span-22 header">
+        <div class="span-4">
+          &nbsp;
+        </div>
+        <div class="span-7 inf">
+          &nbsp;
+        </div>
+        <div class="span-12 pull-3 qp">
+          &nbsp;
+        </div>
+      </div>
+      <div class="span-22 tabs">
+        <div class="span-2">&nbsp;</div>
+        <div class="span-3 tab"><a href="/">home</a></div>
+        <div class="span-3 tab"><a href="/blog">blog</a></div>
+        <div class="span-3 tab"><a href="/works">works</a></div>
+        <div class="span-3 tab"><a href="/projects">projects</a></div>
+        <div class="span-3 tab"><a href="/bio">bio</a></div>
+        <div class="span-3 tab"><a href="/contact">contact</a></div>
+      </div>
+      
+      <div class="span-22 bc hs">
+        <div class="first"><a href="/">The website of Matt Sparks</a></div>
+        <div><a href="/articles">Articles</a></div>
+        <div><a href="/articles/irssisplit">An Illustrated Guide to Split Windows in Irssi</a></div>
+      </div>
+      <div class="span-22 main">
+      
+      
+    <div class="content">
+      <h1><a name="an_illustrated_guide_to_split_windows_in_irssi">An Illustrated Guide to Split Windows in Irssi</a></h1>
+<p>The ability to create "split" windows in <a href="/articles/Irssi" class="urli">Irssi</a> is one of its most useful, but confusing, features. This guide is intended to educate you on how to create, manipulate, and manage the splitting features in Irssi. </p>
+<p>For the purposes of this guide, I will be using the default Irssi theme (the one with the blue bars) on a black background. This will make it easier to see where the containers exist. First and foremost, there is a small set of terms which are crucial to understanding the rest of this guide: </p>
+<ul>
+<li><b>Screen</b>: The entire visible Irssi entity. Everything seen inside of the terminal border will be called the 'screen'.</li>
+<li><b>Container</b>: A visible, potential location for a window. Containers are visible portions of the screen. Each container contains exactly one visible window.</li>
+<li><b>Item</b>: A channel, query, or status.</li>
+<li><b>Window</b>: An entity that displays zero or more items. Windows <i>can</i> be itemless. (<code>/window new split</code> will create a new container and a new itemless window)</li>
+<li><b>Sticky</b>: A property applied to windows. "Sticky" windows are bound to their containers. "Non-sticky" windows are free to move around to multiple containers. That is, a sticky window that is invisible will always show up in the same container. A single container can have multiple windows "stuck" to it, but a window can only be "stuck" to zero or one containers.</li>
+</ul>
+<p>It is not expected for you to be very comfortable with these terms at this point. However, as you read through the guide, refer to this list of definitions often. </p>
+<p>Now, open Irssi. Connect to a server and join your channels. By default, Irssi obviously has only one container (it must have at least one, otherwise nothing would be on the screen), and no windows are initially set sticky. </p>
+<p>For this guide, I will be using the channels <b>#test2</b>, <b>#test3</b>, <b>#test4</b>, and <b>#test5</b>. The numbering starts at two to keep in sync with the window reference numbers (the status window is window 1). </p>
+<p><img src="/articles/irssisplit/irssi-split-1.png" class="center" alt="Screenshot 1" /> </p>
+<p>You can see from the above screenshot that 4 channels have been joined. The status window is named "S" and is  window #1. The current window is <b>window</b> 5, which has the <b>item</b> #test5. Notice that the only <i>visible</i> window is #test5. The other 4 windows (1,2,3,4) are not. They are called <b>hidden</b> windows. To clear any confusion, there are only two types of windows: visible and hidden. A "split" window technically does not exist. In the terms of this guide, the more correct term would be a "split screen". The entity that Irssi calls a "split window" is known as a <b>container</b> here. </p>
+<p class="tip">Learn how to add a statusbar containing your window list on my <a href="/articles/irssi" class="urli">guide to irssi and screen</a>. </p>
+<p>So, at this point, you should be comfortable with the fact that Irssi starts with one container, which contains one visible window. Multiple containers means multiple visible windows. Now it is time to create another container. The current window I am in is window 5, and I want to be able to simultaneously see window 2. This is done by using: </p>
+<pre>/window show 2</pre><p><img src="/articles/irssisplit/irssi-split-2.png" class="center" alt="Screenshot 2" /> </p>
+<p>As you can see, the new container with #test2 formed above the container with #test5, and #test2 became the active window. By Irssi's definition, a "split window" refers to the window that is thrown into a newly formed container. In this case, the new container is the portion of the screen above the blue line in the middle of the screenshot. Essentially, it is the top half of the screen. By default, Irssi turns on the "<code>autostick_split_windows</code>" option. Having this on is a generally good idea, as long as you understand what it does. If you have this option enabled (which you probably do), window 2 is now <i>stuck</i> to the top container. This means that window 2 will always appear in the top container and never in the bottom container. The other four windows are <i>non-sticky</i> and do not have a set container, so they are free to move around to whatever the active container is. Non-sticky windows also tend to stay in containers that have no windows stuck to them (notice 'containers' is plural: there can be multiple containers with no windows stuck to them). </p>
+<p>To illustrate this idea, set the newly contained window as nonsticky and explore the consequences of not having sticky windows. To do this, type: </p>
+<pre>/window stick 2 off</pre><p>You should still have only two windows visible: 2 and 5. If window 2 is the active window, use <code>Alt-3</code> to switch to window 3 <b>in that container</b>. You will then have windows 3 and 5 visible. Next, use <code>Alt-5</code> to switch to window 5. You will still have the same windows visible, but window 5 will become the active window. Now, because window 2 was unstuck, use <code>Alt-2</code> to switch to it. You should notice that window 2 is now in the bottom container. Most sane people would prefer windows to not jump around like this, which is why they can be assigned to specific containers. With window 2 as the active window in the bottom container, use <code>/window stick</code> (or <code>/window stick 2</code>). This will stick window 2 to the bottom container, essentially anchoring it. If you use <code>Alt-3</code> or <code>Alt-5</code> now, they will both appear in the top container. </p>
+<p>Thus, a sticky window will not be replaced in its container by a non-sticky window. The non-sticky window will be displayed in a container with no windows stuck to it. If, however, there are no containers with no windows stuck to them (that is, all containers have at least one window stuck), the requested non-sticky window will become visible in the current container (the container with the active window). </p>
+<p>"Sticky-ness" of windows makes sense, but may take time to get used to. The windows currently stuck to a container can be easily discovered by typing, in the window in the current container: </p>
+<pre>/window</pre><p>The result will look something like this: </p>
+<p><img src="/articles/irssisplit/irssi-split-3.png" class="center" alt="Screenshot 3" /> </p>
+<p>The numbers next to the word "Sticky:" are the reference numbers of the windows stuck to <b>that particular container</b>, <i>not</i> the various windows marked sticky. In the screenshot, you can see that window 2, #test2, is stuck to the bottom container, and the other 4 windows: 1,3,4,5 are stuck to the top container. In this scenario, the only window that will <i>ever</i> appear in the bottom container is window 2, since all windows are sticky and the only sticky window in the bottom container is window 2. </p>
+
+
+      <div class="toc">
+
+<ol>
+  <li><a href="#rules">Rules</a>
+  <ol>
+    <li><a href="#rule_1">Rule #1</a></li>
+    <li><a href="#rule_2">Rule #2</a></li>
+    <li><a href="#rule_3">Rule #3</a></li>
+    <li><a href="#rule_4">Rule #4</a></li>
+    <li><a href="#rule_5">Rule #5</a></li>
+    <li><a href="#rule_6">Rule #6</a></li>
+    <li><a href="#rule_7">Rule #7</a></li>
+  </ol>
+</li>
+  <li><a href="#manipulation_of_splits">Manipulation of splits</a></li>
+  <li><a href="#tips">Tips</a></li>
+</ol>
+
+      </div>
+
+<h2><a name="rules">Rules</a></h2>
+<div class="lvl2">
+<p>At this point, you should have a basic idea of at least how sticky and non-sticky windows work with multiple containers. It is now time to introduce the rules of using multiple containers in Irssi. </p>
+</div>
+
+<h3><a name="rule_1">Rule #1</a></h3>
+<div class="lvl3">
+<p>Irssi cannot do vertical splits, only horizontal splits. That is, windows can only be arranged from top to bottom, never from side to side. </p>
+</div>
+
+<h3><a name="rule_2">Rule #2</a></h3>
+<div class="lvl3">
+<p>You cannot use <code>/window show #</code> or <code>/window hide #</code> on sticky windows. Doing so would force a window that is stuck to another container into a new container. A remedy for this will be shown in the next section. You also cannot use <code>/window show #</code> from within a container with at least one window stuck to it. That is, if I were to use <code>/window stick 4 off</code> from the bottom container in the scenario above, and then <code>/window show 4</code> to try to create a new container and put window 4 into it, Irssi would spit out an error. I don't understand this and think this is a bug. If someone can explain why this is not a bug, please tell me. </p>
+<p>A violation of rule #2 will result in the following error: </p>
+<pre>You can't show sticky windows (use /WINDOW STICK OFF)</pre></div>
+
+<h3><a name="rule_3">Rule #3</a></h3>
+<div class="lvl3">
+<p>With the Irssi setting <code>autostick_split_windows</code> <code>ON</code>, new windows created inside a container with at least one window stick to it will be automatically be made sticky. This is true even for one container. Try closing all windows (which will force the screen down to one container with the status window inside), set the status window as sticky if it is not already with <code>/window stick 1</code>, then join a channel. Use <code>/window</code> and you will find that window 2 will be sticky. </p>
+</div>
+
+<h3><a name="rule_4">Rule #4</a></h3>
+<div class="lvl3">
+<p>Closing a sticky window that is the only window stuck to a container will cause that container to disappear. </p>
+</div>
+
+<h3><a name="rule_5">Rule #5</a></h3>
+<div class="lvl3">
+<p>Using <code>/window move UP|DOWN</code> on a container with a sticky window to a container without any sticky windows will remove the stickyless container from the screen. The resulting container will have no sticky windows. </p>
+</div>
+
+<h3><a name="rule_6">Rule #6</a></h3>
+<div class="lvl3">
+<p>Using <code>/window move UP|DOWN</code> on a container with no sticky windows to a container with a sticky window will remove the stickyless container from the screen. The resulting container will contain all sticky windows. </p>
+<p>Rules #5 and #6 hold true regardless of the setting of <code>autostick_split_windows</code>. </p>
+</div>
+
+<h3><a name="rule_7">Rule #7</a></h3>
+<div class="lvl3">
+<p>Using <code>/window stick #</code> on a visible window that is in another container, that container will disappear, and the window will be stuck to the current container. </p>
+</div>
+
+<h2><a name="manipulation_of_splits">Manipulation of splits</a></h2>
+<div class="lvl2">
+<table>
+<tr><th>Command  </th><th>Action  </th></tr>
+<tr><td><code>/window show #</code> </td><td>Create a new container and put window <code>#</code> in it. See rule #2. </td></tr>
+<tr><td><code>/window hide #</code> </td><td>Remove the container containing window <code>#</code> and hide <code>#</code>. See rule #2. </td></tr>
+<tr><td><code>/window move up</code> </td><td>Move the current window in the current container to the container above. See rules #5 and #6. </td></tr>
+<tr><td><code>/window move down</code> </td><td>Move the current window in the current container to the container below. See rules #5 and #6. </td></tr>
+<tr><td><code>/window new [split]</code> </td><td>Create a new window. If <code>split</code> is specified, the new window will be created in a new container, and will be stuck to the new container if <code>autostick_split_windows</code> is <code>ON</code>. The new window is <i>itemless</i>. </td></tr>
+<tr><td><code>/window balance</code> </td><td>Make all containers the same height. </td></tr>
+<tr><td><code>/window grow [&lt;lines&gt;]</code> </td><td>Increase the height of the current container by <code>&lt;lines&gt;</code>. If <code>&lt;lines&gt;</code> is not specified, it is assumed to be 1. </td></tr>
+<tr><td><code>/window shrink [&lt;lines&gt;]</code> </td><td>Decrease the height of the current container by <code>&lt;lines&gt;</code>. If <code>&lt;lines&gt;</code> is not specified, it is assumed to be 1. </td></tr>
+<tr><td><code>/window size &lt;lines&gt;</code> </td><td>Set height of current container to <code>&lt;lines&gt;</code>. </td></tr>
+<tr><td><code>/window stick [&lt;#&gt;] [ON|OFF]</code> </td><td>If # is not specified, it is assumed to be the active window. If <code>ON</code>/<code>OFF</code> is not specified, <code>ON</code> is assumed. This command either sticks or unsticks a window. If <code>/window stick # on</code> is used, window <code>#</code> will be stuck to the current container. If <code>#</code> was already stuck to another container, it will be restuck to the current container. It does not have to be unstuck from the other container first. </td></tr>
+</table>
+</div>
+
+<h2><a name="tips">Tips</a></h2>
+<div class="lvl2">
+<p><b>Tip #1</b>: In order to not violate rule #2, the current container needs to have zero windows stuck to it, and the target window to be shown or hidden must be non-sticky. Well, what if you have 35 windows with one container and you're trying to make a new container? Do you have to unstick all your windows first before you can make a new container? If you want to use <code>/window show #</code>, yes. But, there is a workaround: <code>/window new split</code>. </p>
+<p>This will create a new container with a new itemless window, without having to unstick all windows first. Once this command is executed, you can use <code>/window stick #</code> to stick some window # to the new container. You will still have an itemless window with this method, but you can close it with <code>/window close</code> (<code>/wc</code>). </p>
+<p><b>Tip #2</b>: Use a split window to log your hilights. This is described in my <a href="/articles/irssi" class="urli">guide to Irssi and screen</a>. </p>
+<p>Article originally written: October 2005. </p>
+</div>
+
+
+    </div>
+
+      </div>
+      <div class="span-22 footer">
+        <p class="left">&copy; 2010 Matt Sparks. <a target="_blank" rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/us/">Some rights reserved.</a></p>
+        <p class="right">
+          Generated by <a href="/projects/infinitemachine">Infinite Machine</a>.
+          Hosted in the <a href="http://www.rackspacecloud.com/592.html" target="_blank" title="Use this affiliate link when you order your virtual servers!">Rackspace Cloud</a>.
+        </p>
+        
+      </div>
+    </div>
+  </div>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+  var pageTracker = _gat._getTracker("UA-4064625-2");
+  pageTracker._trackPageview();
+} catch(err) {}
+</script>
+</body>
+</html>
