@@ -1,0 +1,303 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US" xml:lang="en-US">
+
+<head profile="http://gmpg.org/xfn/11"><title>Virtual White &middot; Tutorial: Getting Real World Terrains into OpenSim</title>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
+	<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.virtualwhite.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.virtualwhite.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 2.6" />
+
+<meta name="wp_theme" content="Tarski 2.2.2" />
+<meta name="description" content="An exploration of virtual worlds and the cloud." />
+<meta name="robots" content="all" />
+
+<link rel="stylesheet" href="http://www.virtualwhite.com/wp-content/themes/tarski/style.css" type="text/css" media="all" />
+<link rel="stylesheet" href="http://www.virtualwhite.com/wp-content/themes/tarski/library/css/screen.css" type="text/css" media="screen,projection" />
+<link rel="stylesheet" href="http://www.virtualwhite.com/wp-content/themes/tarski/library/css/print.css" type="text/css" media="print" />
+
+<script type="text/javascript" src="http://www.virtualwhite.com/wp-content/themes/tarski/app/js/tarski.js"></script>
+
+<link rel="alternate" type="application/rss+xml" title="Commments feed for Tutorial: Getting Real World Terrains into OpenSim" href="http://www.virtualwhite.com/?feed=rss2&amp;p=100" />
+<link rel="alternate" type="application/rss+xml" title="Virtual White feed" href="http://www.virtualwhite.com/?feed=rss2" />
+</head>
+
+<body id="post-tutorial-getting-real-world-terrains-into-opensim" class="centre"><div id="wrapper">
+
+<div id="header">
+
+	<div id="header-image"><img alt="Header image" src="http://www.virtualwhite.com/wp-content/uploads/2008/08/vw_custom_header.jpg" /></div>
+
+<div id="title">
+<p id="blog-title"><a title="Return to main page" href="http://www.virtualwhite.com" rel="home">Virtual White</a></p>
+<p id="tagline">An exploration of virtual worlds and the cloud.</p>
+</div>
+<div id="navigation" class="clearfix">
+<ul class="primary xoxo">
+<li><a id="nav-home" href="http://www.virtualwhite.com" rel="home">Home</a></li>
+<li><a id="nav-link-19" rel="me" title="About Page"  href="http://www.virtualwhite.com/?page_id=2">About Me</a></li>
+<li><a id="nav-link-20" rel="me" title="Page with links to my books and articles"  href="http://www.virtualwhite.com/?page_id=3">Publications</a></li>
+<li><a id="nav-link-21" rel="me" title="Tutorial links page"  href="http://www.virtualwhite.com/?page_id=26">Tutorials</a></li>
+</ul>
+
+<div class="secondary">
+	<p><a class="feed" href="http://www.virtualwhite.com/?feed=rss2">Subscribe to feed</a></p>
+</div></div><p class="primary-span articlenav"><span class="previous-entry"><a href="http://www.virtualwhite.com/?p=82">&lsaquo; Tutorial: A Public OpenSim Linux Server for $15 a month</a></span> <span class="separator">&nbsp;&bull;&nbsp;</span> <span class="next-entry"><a href="http://www.virtualwhite.com/?p=138">Test Your Opensim Persistance / Restoration Process &rsaquo;</a></span></p>
+	</div>
+
+<div id="content" class="clearfix">
+
+
+	
+			
+		
+		<div class="primary">
+							
+				<div class="entry hentry">
+					
+					<div class="meta">
+						<h1 class="title entry-title">Tutorial: Getting Real World Terrains into OpenSim</h1>
+													<p class="metadata"><span class="date updated">September 9, 2008</span> in <span class="categories"><a href="http://www.virtualwhite.com/?cat=1" title="View all posts in Uncategorized" rel="category">Uncategorized</a></span> by <span class="vcard author"><a href="http://www.virtualwhite.com/?author=2" title="Articles by bwhite" class="url fn">bwhite</a></span> | <a class="comments-link" href="#comments">3 comments</a></p>
+											</div>
+					
+					<div class="content">
+						<p>I named my first OpenSim region Orcas after a <a href="http://maps.google.com/maps?f=q&amp;hl=en&amp;geocode=&amp;q=orcas+island&amp;sll=37.0625,-95.677068&amp;sspn=63.647969,112.851563&amp;ie=UTF8&amp;ll=48.592959,-122.858734&amp;spn=0.423268,0.881653&amp;z=10&amp;iwloc=addr">real world island</a>.  I decided to try and see if I could get the actual Orcas Island terrain into OpenSim to see how it looked and uncover any challanges one might face in bringing RL terrain into OpenSim.  This tutorial will walk you through the process I followed and and various software packages required to make this happen (done on Windows).  The net, net is I succeeded, but the results were uninspiring.</p>
+<p>My thanks to <a href="http://petrolia.pip.verisignlabs.com/">Petrolia</a> and <a href="http://www.wooblelab.com/command/show/67-3d-height-map-from-usgs">this tutorial</a> which got me started.</p>
+<p>[UPDATE: See Darb Dabney's excellent follow-up post <a href="http://blog.simgis.com/2008/09/11/usgs-terrain-in-opensim-a-gis-approach/">here</a> which shows how to do this more accurately.  He completes a usable Orcas island with 54 OpenSim regions at proper scale!  Great work Darb love it!]</p>
+<p><strong>Step 1 - Find Some Terrain<span style="font-size: small; font-family: Times New Roman;"> </span></strong></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;">The US government maintains a great site which while a bit cryptic contains tons of data.  Point your web browser here: <a href="http://seamless.usgs.gov/"><span style="font-size: small; font-family: Times New Roman;">http://seamless.usgs.gov</span></a>.  Navigate to &#8220;View &amp; Download United States Data&#8221;.  Make sure to enable pop-ups you&#8217;ll need them.  Google maps it is not, but use the zoom and navigation controls to find a piece of terrain you want to put into OpenSim.</p>
+<div id="attachment_102" class="wp-caption alignnone" style="width: 310px"><a href="http://www.virtualwhite.com/wp-content/uploads/2008/08/usgs_seamless.jpg"><img class="size-medium wp-image-102" title="USGS Seamless Server" src="http://www.virtualwhite.com/wp-content/uploads/2008/08/usgs_seamless-300x281.jpg" alt="USGS Seamless Server" width="300" height="281" /></a><p class="wp-caption-text">USGS Seamless Server</p></div>
+<p><strong>Step 2 - Select/Deselect Display Options</strong></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-size: small; color: #333333; font-family: Times New Roman;">On the right hand side, there is a display panel with several drop downs.  Deselect everything (a bit painful) and select &#8220;NED Shaded Relief (1/3 arc second)&#8221;  This relates to the level of detail in the data.  1/3 is the more detailed than the 1 arc sec, but less than 1/9.  1/3 creates fairly large download and you may be able to get by with 1 arc second since this all goes down to 256&#215;256 pixels.</span></p>
+<div id="attachment_104" class="wp-caption alignnone" style="width: 104px"><a href="http://www.virtualwhite.com/wp-content/uploads/2008/08/usgs_display.jpg"><img class="size-medium wp-image-104 " title="1/3 arc second Elevation Selection" src="http://www.virtualwhite.com/wp-content/uploads/2008/08/usgs_display-156x300.jpg" alt="1/3 arc second Elevation Selection" width="94" height="180" /></a><p class="wp-caption-text">1/3 arc second Elevation Selection</p></div>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"> <strong>Step 3 - Select Download Area</strong></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;">On the right hand side of the display select the &#8220;Define Rectangular Download Area&#8221; and then drag a selection around the terrain you want to use.  The process I describe in this tutorial fits what you select into a square image so the closer to square you select the less distortion you will encounter.  Once you finish your selection a pop-up will come up summarizing your request.</p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"> </p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><strong>Step 4 - Modify the Data Request</strong></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;">You want to get a .BIL formatted file, so click at the top of the request summary page on &#8220;Modify Data Request&#8221;.  It looks like a column header but it is a link.</p>
+<div class="mceTemp">
+<div id="attachment_107" class="wp-caption alignnone" style="width: 310px"><a href="http://www.virtualwhite.com/wp-content/uploads/2008/08/usgs_modify.jpg"><img class="size-medium wp-image-107" title="Modify Data Request" src="http://www.virtualwhite.com/wp-content/uploads/2008/08/usgs_modify-300x227.jpg" alt="Modify Data Request" width="300" height="227" /></a><p class="wp-caption-text">Modify Data RequestScroll down to the 1 selected download size and change from ArcGRID to BIL Change Download Type to .BIL</p></div>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;">Now scroll all the way to the bottom and select Save Changes.</p>
+<div id="attachment_105" class="wp-caption alignnone" style="width: 310px"><a href="http://www.virtualwhite.com/wp-content/uploads/2008/08/usgs_savebil.jpg"><img class="size-medium wp-image-105" title="Save Changes" src="http://www.virtualwhite.com/wp-content/uploads/2008/08/usgs_savebil-300x72.jpg" alt="Save Changes" width="300" height="72" /></a><p class="wp-caption-text">Save Changes</p></div>
+<p>Your download should start, although you may have issues as I did with pop-up blocking settings.</p>
+<p><strong>Step 5 - Download and Install MicroDEM (free)</strong></p>
+<p>You now have raw terrain data in a .BIL file.  To work with this, you need to convert it from BIL to a height map which is basically a greyscale image where 0 (black) represents the lowest point in the terrain and 255 (white) represents the highest point.  The MicroDEM software lets you do this.</p>
+<p>Download and install from here:</p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="color: #333333;"><a href="http://www.usna.edu/Users/oceano/pguth/website/microdem.htm"><span style="font-size: small; font-family: Times New Roman;">http://www.usna.edu/Users/oceano/pguth/website/microdem.htm</span></a></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"> </p>
+<p class="mceTemp"><strong>Step 6 - Open .BIL and Change to Grayscale</strong></p>
+<ul>
+<li>
+<div class="mceTemp">File -&gt; Open DEM (select the .BIL file from your download)</div>
+</li>
+<li>
+<div class="mceTemp">
+<p class="mceTemp"><em>I Needed to create “images” directory under c:\mapdata to get the save BMP to work.</em></p>
+</div>
+</li>
+<li>
+<div class="mceTemp">
+<p class="mceTemp">Modify-&gt;Elevation-&gt;Grayscale</p>
+</div>
+</li>
+<li>
+<div class="mceTemp">Modify-&gt;Grid-&gt;Neither</div>
+</li>
+<li>
+<div class="mceTemp">Remove Legend Overlays by right clicking on the image and selecting &#8220;Legends/marginalia&#8221;</div>
+</li>
+</ul>
+<div id="attachment_111" class="wp-caption alignnone" style="width: 254px"><a href="http://www.virtualwhite.com/wp-content/uploads/2008/08/remove_legends_0.jpg"><img class="size-medium wp-image-111" title="Legends Context Menu" src="http://www.virtualwhite.com/wp-content/uploads/2008/08/remove_legends_0-244x300.jpg" alt="Legends Context Menu" width="244" height="300" /></a><p class="wp-caption-text">Legends Context Menu</p></div>
+<p class="mceTemp">You&#8217;ll see a dialog like this, deselect all the check boxes and click on &#8220;redraw map&#8221;.</p>
+<div id="attachment_110" class="wp-caption alignnone" style="width: 310px"><a href="http://www.virtualwhite.com/wp-content/uploads/2008/08/remove_legends.jpg"><img class="size-medium wp-image-110" title="Remove Legends" src="http://www.virtualwhite.com/wp-content/uploads/2008/08/remove_legends-300x256.jpg" alt="Remove Legends" width="300" height="256" /></a><p class="wp-caption-text">Remove Legends</p></div>
+<p>Save it to a .BMP with</p>
+<ul>
+<li>File-&gt;Save</li>
+</ul>
+<p><strong>Step 7 - Crop/Scale in Your Favorite Image Editor</strong></p>
+<p>You now need to scale/crop the image down to 256&#215;256 pixels.  For this one I used the freely available GIMP, but Photoshop works well too.</p>
+<div id="attachment_108" class="wp-caption alignleft" style="width: 160px"><a href="http://www.gimp.org/"><img class="size-thumbnail wp-image-108 " title="The GIMP" src="http://www.virtualwhite.com/wp-content/uploads/2008/08/gimp_startup-150x150.jpg" alt="The GIMP" width="150" height="150" /></a><p class="wp-caption-text">The GIMP</p></div>
+<p> </p>
+<p> </p>
+<p> </p>
+<p> </p>
+<p> </p>
+<p> </p>
+<div id="attachment_109" class="wp-caption alignnone" style="width: 310px"><a href="http://www.virtualwhite.com/wp-content/uploads/2008/08/orcas_sized_and_scaled.jpg"><img class="size-medium wp-image-109" title="Orcas Sized and Scaled" src="http://www.virtualwhite.com/wp-content/uploads/2008/08/orcas_sized_and_scaled-300x298.jpg" alt="Orcas Sized and Scaled" width="300" height="298" /></a><p class="wp-caption-text">Orcas Sized and Scaled</p></div>
+<p class="mceTemp"><strong>Step 12 - Load into OpenSim</strong></p>
+<p class="mceTemp">You load the terrain into OpenSim from the OpenSim console with &#8221;terrain load /path/to/file.png&#8221;.  For SecondLife you can upload a .raw file from the estate tools, but this does not seem to be implemented yet in OpenSim.  Converting from a heightmap to an SL raw file is a whole &#8216;nother topic.</p>
+<p class="mceTemp">My first pass ended up with a very craggy landscape.  The black turned into the floor of the sea with steep rises.  In short, the terrain scale I picked was far to large for a single region.  [I also learned later that you really cannot use the full range of black to white or you will get pretty unusable terrains.]</p>
+<div id="attachment_116" class="wp-caption alignnone" style="width: 183px"><a href="http://www.virtualwhite.com/wp-content/uploads/2008/08/craggy.jpg"><img class="size-medium wp-image-116" title="Craggy from Ground Level" src="http://www.virtualwhite.com/wp-content/uploads/2008/08/craggy-173x300.jpg" alt="Craggy from Ground Level" width="173" height="300" /></a><p class="wp-caption-text">Craggy from Ground Level</p></div>
+<p>I lowered the water level to zero to get a better perspective and took the following shot from above.</p>
+<div id="attachment_117" class="wp-caption alignnone" style="width: 310px"><a href="http://www.virtualwhite.com/wp-content/uploads/2008/08/craggy_from_top.jpg"><img class="size-medium wp-image-117" title="Aerial View With 0 Water Level" src="http://www.virtualwhite.com/wp-content/uploads/2008/08/craggy_from_top-300x294.jpg" alt="Aerial View With 0 Water Level" width="300" height="294" /></a><p class="wp-caption-text">Aerial View With 0 Water Level</p></div>
+<p><strong>Step 13 - Make Adjustments, Rinse and Repeat</strong></p>
+<p>To get a smoother look, I used Gaussian blur filter in Photoshop and reloaded for the final results. [Reducing the contrast would have helped as well].</p></div>
+<div class="mceTemp">
+<div id="attachment_118" class="wp-caption alignnone" style="width: 266px"><a href="http://www.virtualwhite.com/wp-content/uploads/2008/08/orcas_smooth.png"><img class="size-medium wp-image-118" title="Terrain Smoothed with Gaussian Blur" src="http://www.virtualwhite.com/wp-content/uploads/2008/08/orcas_smooth.png" alt="Terrain Smoothed with Gaussian Blur" width="256" height="256" /></a><p class="wp-caption-text">Terrain Smoothed with Gaussian Blur</p></div>
+</div>
+<div class="mceTemp">
+<div class="mceTemp">
+<dl id="attachment_115" class="wp-caption alignnone" style="width: 310px;">
+<dt class="wp-caption-dt"><a href="http://www.virtualwhite.com/wp-content/uploads/2008/08/smoothed_from_top.jpg"><img class="size-medium wp-image-115" title="Aerial View of Orcas" src="http://www.virtualwhite.com/wp-content/uploads/2008/08/smoothed_from_top-300x278.jpg" alt="Aerial View of Orcas" width="300" height="278" /></a></dt>
+<dd class="wp-caption-dd">Aerial View of Orcas</dd>
+</dl>
+<p>At the end of the day, this was not really what I was hoping for.  It is not recognizable as Orcas and it is not very practical landscape for an SL Sim. </p>
+<p>Here is another post <a href="http://emmanowhere.blogspot.com/2007/03/when-i-first-terraformed-nowhere-sim-i.html">from Emma Nowhere </a>which offers more software packages for terraforming OpenSim/SL terrains.</div>
+</div>
+					</div>
+
+										
+				</div> <!-- /entry -->
+				
+					</div> <!-- /primary -->
+	
+	
+		
+
+
+
+<div id="sidebar" class="secondary">
+
+			<div id="recent-posts" class="widget widget_recent_entries">			<h3>Recent Posts</h3>			<ul>
+						<li><a href="http://www.virtualwhite.com/?p=124">Hosting OpenSim Using Amazon Web Services? </a></li>
+						<li><a href="http://www.virtualwhite.com/?p=138">Test Your Opensim Persistance / Restoration Process </a></li>
+						<li><a href="http://www.virtualwhite.com/?p=100">Tutorial: Getting Real World Terrains into OpenSim </a></li>
+						<li><a href="http://www.virtualwhite.com/?p=82">Tutorial: A Public OpenSim Linux Server for $15 a month </a></li>
+						<li><a href="http://www.virtualwhite.com/?p=73">Second Life Courts the OpenSim Community </a></li>
+						</ul>
+		</div><div id="categories-177910281" class="widget widget_categories"><h3>Categories</h3>		<ul>
+			<li class="cat-item cat-item-11"><a href="http://www.virtualwhite.com/?cat=11" title="View all posts filed under Amazon Web Services">Amazon Web Services</a>
+</li>
+	<li class="cat-item cat-item-8"><a href="http://www.virtualwhite.com/?cat=8" title="View all posts filed under OpenSim">OpenSim</a>
+</li>
+	<li class="cat-item cat-item-3"><a href="http://www.virtualwhite.com/?cat=3" title="View all posts filed under Second Life">Second Life</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://www.virtualwhite.com/?cat=6" title="View all posts filed under Technology">Technology</a>
+</li>
+	<li class="cat-item cat-item-1"><a href="http://www.virtualwhite.com/?cat=1" title="View all posts filed under Uncategorized">Uncategorized</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://www.virtualwhite.com/?cat=5" title="View all posts filed under Virtual Worlds">Virtual Worlds</a>
+</li>
+		</ul>
+</div><div id="archives" class="widget widget_archive"><h3>Archives</h3>		<ul>
+			<li><a href='http://www.virtualwhite.com/?m=200902' title='February 2009'>February 2009</a></li>
+	<li><a href='http://www.virtualwhite.com/?m=200811' title='November 2008'>November 2008</a></li>
+	<li><a href='http://www.virtualwhite.com/?m=200809' title='September 2008'>September 2008</a></li>
+	<li><a href='http://www.virtualwhite.com/?m=200808' title='August 2008'>August 2008</a></li>
+	<li><a href='http://www.virtualwhite.com/?m=200807' title='July 2008'>July 2008</a></li>
+	<li><a href='http://www.virtualwhite.com/?m=200805' title='May 2008'>May 2008</a></li>
+	<li><a href='http://www.virtualwhite.com/?m=200804' title='April 2008'>April 2008</a></li>
+		</ul>
+</div>		
+</div>
+
+
+<div id="comments">
+	
+	<div class="meta clearfix">
+		<h2 class="title">3 comments</h2>
+				<p class="comments-feed"><a href="http://www.virtualwhite.com/?feed=rss2&amp;p=100">Comments feed for this article</a></p>
+						<div id="trackback-link" class="clearfix">
+			<div class="secondary"><p>Trackback link</p></div>
+			<div class="primary"><p><a href="http://www.virtualwhite.com/wp-trackback.php?p=100">http://www.virtualwhite.com/wp-trackback.php?p=100</a></p></div>
+		</div>
+			</div> <!-- /comments header -->
+	
+		
+				
+			
+				<div class="trackback clearfix" id="comment-1326">
+					<div class="secondary">
+						<p><a href="#comment-1326" title="Permalink to this comment">September 10, 2008 at 8:29 pm</a></p>
+					</div>
+					<div class="primary">
+						<p>
+													Pingback  from <strong><a href="http://googlechrome.0ur.us/?p=4383">Google Chrome News &raquo; Blog Archive &raquo; Tutorial: Getting Real World Terrains into OpenSim</a></strong>
+												</p>
+					</div>
+				</div> <!-- /trackback -->
+		
+						
+				
+			
+				<div class="trackback clearfix" id="comment-1333">
+					<div class="secondary">
+						<p><a href="#comment-1333" title="Permalink to this comment">September 11, 2008 at 2:11 am</a></p>
+					</div>
+					<div class="primary">
+						<p>
+													Pingback  from <strong><a href="http://blog.simgis.com/2008/09/11/usgs-terrain-in-opensim-a-gis-approach/">Darb Dabney&#8217;s OpenSim Blog &raquo; Case Study: USGS terrain in OpenSim, a GIS approach</a></strong>
+												</p>
+					</div>
+				</div> <!-- /trackback -->
+		
+						
+				
+						
+		
+					
+					
+			
+				<div class="comment clearfix" id="comment-1489">
+										<div class="secondary">
+						<p class="comment-permalink"><a href="#comment-1489" title="Permalink to this comment">October 13, 2008 at 6:53 am</a></p>
+						<p class="comment-author vcard"><span class="fn">bwildasi</span></p>
+						<img alt="bwildasi&#8217;s avatar" src="http://www.gravatar.com/avatar/800a949dc2bb9f2c88f45fab0a38cabb?s=50&amp;d=http%3A%2F%2Fwww.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D50&amp;r=G" class="avatar avatar-50"  />											</div> <!-- /comment meta -->
+
+					<div class="primary content">
+						<p>Fire up any editor that handles png, bmp, tga, raw, or jpg and use your favoite picture for your terrain. For gradual evelations desaturate the colors, then slide the briteness/contrast scale to softly muted shades of gray. Finally set your 256&#215;256 pixel RGB terrain and water to the proper height in the startup_commands.txt file, saying something like:</p>
+<p>terrain load gulligans_island.png<br />
+terrain lower 80 </p>
+<p>if you still need to make subtle changes, in the server console type: &#8216;terrain help&#8217; for such things as elevate, load-tile, save, multiply, revert, or new brushes.</p>
+					</div> <!-- /comment content -->
+				</div> <!-- /comment -->
+		
+						</div>
+
+
+
+<div id="respond">
+	
+	
+	<div class="content">
+		<p><em>You must be <a href="http://www.virtualwhite.com/wp-login.php?redirect_to=http://www.virtualwhite.com/?p=100">logged in</a> to post a comment.</em></p>
+	</div>
+</div>
+
+
+
+
+</div> <!-- /main content -->
+
+
+
+<div id="footer" class="clearfix">
+	
+	<div class="secondary">
+		
+		<div id="search" class="widget widget_search"><div class="searchbox">
+	<form method="get" id="searchform" action="http://www.virtualwhite.com"><fieldset>
+		<label for="s" id="searchlabel">Search this site</label>
+		<input type="text" value="" name="s" id="s" tabindex="21" />
+		<input type="submit" id="searchsubmit" value="Search" tabindex="22" />
+	</fieldset></form>
+</div></div>		
+	</div> <!-- /secondary -->
+	
+	<div class="primary">
+		
+				
+	</div> <!-- /primary -->
+	
+	<div id="theme-info" class="clearfix">
+		
+		<div class="secondary">
+	<p><a class="feed" href="http://www.virtualwhite.com/?feed=rss2">Subscribe to feed</a></p>
+</div><div class="primary content">
+	<p>Powered by <a href="http://wordpress.org/">WordPress</a> and <a href="http://tarskitheme.com/">Tarski</a></p>
+</div>		
+	</div> <!-- /theme-info -->
+	
+</div> <!-- /footer -->
+
+</div></body></html>
