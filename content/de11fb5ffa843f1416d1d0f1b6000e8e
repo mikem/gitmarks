@@ -1,0 +1,3533 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="keywords" content="Agile data, database administrator, dba, Sybase, Oracle, Agile Alliance, Agile Software Development, Agile Modeling, Agile Database Technique">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Mapping Objects to Relational Databases: O/R Mapping In Detail </title>
+<link rel="stylesheet" type="text/css" href="http://www.agiledata.org/stylesheet/global.css">
+<link rel="shortcut icon" href="http://www.agiledata.org/images/adfavicon.ico" type="image/x-icon">
+<style>
+<!--
+#p_p_id_digitallibraryabstract_WAR_plugins_INSTANCE_DjbO_ {
+}
+-->
+</style>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td width="6%"><a href="http://www.agiledata.org">
+	<img border="0" src="http://www.agiledata.org/images/logoAgileData.gif" alt="Agile Data"></a></td>
+    <td width="100%">
+      <h1 align="center" class="maintitle">Mapping Objects to Relational Databases: O/R Mapping In 
+		Detail</h1>      
+      <p align="center"><b><a href="http://www.agiledata.org">www.agiledata.org</a><font size="2">: 
+		Techniques for Successful Evolutionary/Agile Database Development</font></b></td>
+    <td width="94%">
+      <a href="http://www.ambysoft.com/scottAmbler.html">
+		<img border="0" src="http://www.ambysoft.com/artwork/logoScottWAmbler.gif" alt="Scott W. Ambler" align="right"></a></td>
+  </tr>
+
+    <!-- Menu Bar -->
+    <tr>
+    <td width="200%" colspan="3" style="border-style: solid; border-width: 1px">
+
+			<!-- SiteSearch Google -->
+			<form method="get" action="http://www.google.com/custom">
+			<input type="hidden" name="cof" value="L:http://www.agiledata.org/images/logoAgileData.gif;BGC:#ffffcc;AH:center;GL:0;S:http://www.agiledata.org;AWFID:9f873e648db9a709;">
+			<input type="hidden" name="domains" value="www.agiledata.org;www.agilemodeling.com;www.ambysoft.com;www.enterpriseunifiedprocess.com">
+			<input type="hidden" name="hl" value="en">
+			<input type="hidden" name="safe" value="active">
+			<input type="hidden" name="oe" value="ISO-8859-1">
+			<input type="hidden" name="ie" value="ISO-8859-1">
+			<input type="hidden" name="forid" value="1">
+			<input type="hidden" name="client" value="pub-1563172974921293">
+			<input type="hidden" name="sitesearch" value="www.agiledata.org">
+            <input type="text" name="q" size="31" maxlength="255" value="">
+			<input type="submit" name="sa" value="Search"><font size="2"> &nbsp; </font>
+			<!-- SiteSearch Google -->
+
+ 			<!-- Menu Items -->
+			&nbsp;<a href="http://www.agiledata.org" class="nav">Home</a>&nbsp; 
+			|&nbsp; <a href="http://www.agiledata.org/essays/dbaSkills.html">Agile DBAs</a>&nbsp; 
+			|&nbsp; <a href="http://www.agiledata.org/essays/developerSkills.html">Developers</a>&nbsp; 
+			|&nbsp; <a href="http://www.agiledata.org/essays/enterpriseArchitecture.html">Enterprise Architects</a>&nbsp; 
+			|&nbsp; <a href="http://www.agiledata.org/essays/enterpriseAdministration.html">Enterprise Administrators</a>&nbsp; 
+			|&nbsp; <a href="http://www.agiledata.org/essays/bestPractices.html">Best Practices</a>&nbsp; 
+			|&nbsp; <a target="_blank" href="http://www.ibm.com/developerworks/blogs/page/ambler">Agility@Scale Blog</a>&nbsp;  
+			|&nbsp; 
+			<a target="_blank" href="http://www.ambysoft.com/services/contactUs.html">Contact 
+			</a><a href="http://www.ambysoft.com/services/contactUs.html">Me</a>&nbsp; 
+			</form>
+    </td>
+    </tr>
+    <!-- Menu Bar -->
+
+     </table>
+	</td>
+    </tr>
+
+</table>
+
+
+<!-- Intro and Google Ad Table -->
+<table border="0" width="100%">
+	<tr>
+		<td>
+				
+		<a href="http://www.ambysoft.com/books/reviews/current.html" target="_blank">
+<img
+src="http://www.ambysoft.com/books/reviews/covers/current.jpg" alt="Recently reviewed"
+border="0"></a></td>
+		<td>
+				
+		<font size="2">Most modern business application development projects
+use object technology such as Java or C# to build the application software and
+		<a href="http://www.agiledata.org/essays/relationalDatabases.html">relational databases</a> to store the data.&nbsp; This
+isn’t to say that you don’t have other options, there are many applications
+built with procedural languages such as COBOL and many systems will use object
+databases or XML databases to store data.&nbsp; However,
+because object and relational technologies are by far the norm that’s what I
+assume you’re working with in this article.&nbsp;
+If you’re working with different storage technologies then many of the 
+concepts are still applicable, albeit with modification (don’t worry, </font> <a href="http://www.agiledata.org/essays/advancedXML.html">Realistic
+XML</a><font size="2"> overviews mapping issues pertaining to objects and XML).&nbsp;</font></td>
+		<td width="4"><font size="2">&nbsp;
+		
+		<!-- Google Ad -->
+		<script type="text/javascript"><!--
+		google_ad_client = "pub-1563172974921293";
+		google_alternate_ad_url = "http://www.agilemodeling.com/amRedirector.html";
+		google_ad_width = 120;
+		google_ad_height = 90;
+		google_ad_format = "120x90_0ads_al_s";
+		google_ad_channel ="7984240882";
+		google_color_border = "6699CC";
+		google_color_bg = "003366";
+		google_color_link = "FFFFFF";
+		google_color_url = "AECCEB";
+		google_color_text = "AECCEB";
+		//--></script>
+		<script type="text/javascript"
+		  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+		</script>
+		<!-- End Google Ad -->
+		
+        </font>
+		
+        <p align="left">&nbsp;</p>
+		</td>
+	</tr>
+</table>
+
+
+
+
+<p>Unfortunately we need to deal with the
+<a href="http://www.agiledata.org/essays/impedanceMismatch.html">object 
+relational (O/R) impedance mismatch</a>, and to do so you need to understand two 
+things: the
+process of mapping objects to relational databases and how to implement those mappings.&nbsp; in this article the term “mapping” will be used to refer to how objects and
+their relationships are mapped to the tables and relationships between them in a
+database.&nbsp; As you’ll soon find out
+it isn’t quite as straightforward as it sounds although it isn’t too bad
+either.</p>
+<p>&nbsp;</p>
+<h3>Table of Contents</h3>
+<ol>
+	<li><a href="#BasicConcepts">Basic mapping concepts</a>
+	<ul>
+		<li><a href="#ShadowData">Shadow information and scaffolding</a></li>
+		<li><a href="#MappingMetaData">Mapping meta data</a> </li>
+		<li><a href="#HowMappingFitsIn">How mapping fits into the overall process</a>
+		</li>
+	</ul></li>
+	<li><a href="#MappingInheritance">Mapping inheritance structures</a> &nbsp;
+    <ul>
+		<li><a href="#MapHierarchyToTable">Map hierarchy to a single table</a>
+		</li>
+		<li><a href="#MapConcreteClassToTable">Map each concrete class to its own table</a>
+		</li>
+		<li><a href="#MapEachClassToTable">Map each class to its own table</a>
+		</li>
+		<li><a href="#MapToGenericStructure">Map classes to a generic table structure</a>
+		</li>
+		<li><a href="#MappingMultipleInheritance">Mapping multiple inheritance</a>
+		</li>
+		<li><a href="#ComparingTheStrategies">Comparing the strategies</a> </li>
+	</ul></li>
+	<li><a href="#MappingRelationships">Mapping object relationships</a>
+	<ul>
+		<li><a href="#TypesOfRelationships">Types of relationships</a></li>
+		<li><a href="#ImplementingObjectRelationships">How object relationships are
+        implemented</a> </li>
+		<li><a href="#ImplementingRDBRelationships">How RDB relationships are
+        implemented</a></li>
+		<li><a href="#RelationshipMappings">Relationship mappings</a>
+		<ul>
+			<li><a href="#OneToOneMappings">One-to-one relationships</a></li>
+			<li><a href="#OneToManyMappings">One-to-many relationships</a></li>
+			<li><a href="#ManyToManyMappings">Many-to-many relationships</a></li>
+		</ul></li>
+		<li><a href="#MappingOrderedCollections">Mapping ordered collections</a></li>
+		<li><a href="#MappingRecursiveAssociations">Mapping recursive
+        relationships</a></li>
+	</ul></li>
+	<li><a href="#MappingClassScope">Mapping class-scope properties</a></li>
+	<li><a href="#PerformanceTuning">Performance tuning</a>
+	<ul>
+		<li><a href="#TuningYourMappings">Tuning your mappings</a> </li>
+		<li><a href="#LazyReads">Lazy reads</a></li>
+	</ul></li>
+	<li><a href="#ImplementationImpact">Implementation impact on your objects</a>
+	</li>
+	<li><a href="#MDA">Implications for Model Driven Architecture (MDA)</a> </li>
+	<li><a href="#Patterns">Patternizing what you have learned</a> </li>
+</ol>
+<p>&nbsp;</p>
+<h3>1. <a name="BasicConcepts">Basic Concepts</a></h3>
+<p class="BT">When learning how to map objects to relational databases the place
+to start is with the data attributes of a class.<span style="mso-spacerun:
+yes">&nbsp; </span>An attribute will map to zero or more columns in a relational
+database.<span style="mso-spacerun: yes">&nbsp; </span>Remember, not all
+attributes are persistent, some are used for temporary calculations.<span style="mso-spacerun: yes">&nbsp;
+</span>For example, a <i><span style="mso-bidi-font-weight:bold">Student</span></i>
+object may have an <i>averageMark</i> attribute that is needed within your
+application but isn’t saved to the database because it is calculated by the
+application.<span style="mso-spacerun: yes">&nbsp; </span>Because some
+attributes of an objects are objects in their own right, a <i><span style="mso-bidi-font-weight:
+bold">Customer</span></i> object has an <i>Address</i> object as an attribute
+– this really reflects an association between the two classes that would
+likely need to be mapped, and the attributes of the <i><span style="mso-bidi-font-weight:
+bold">Address</span></i> class itself will need to be mapped.<span style="mso-spacerun: yes">&nbsp;
+</span>The important thing is that this is a recursive definition: At some point
+the attribute will be mapped to zero or more columns.</p>
+<p class="BT">The easiest mapping you will ever have is a property
+mapping of a single attribute to a single column.&nbsp; It is even simpler when the each have the same basic types,
+e.g. they’re both dates, the attribute is a string and the column is a char,
+or the attribute is a number and the column is a float.</p>
+<p class="BT">&nbsp;</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="100%" bgcolor="#C0C0C0">
+      <h3 align="center"><font size="3">Mapping Terminology</font></h3>
+      <p class="MsoNormal"><b><font size="2">Mapping (v)</font></b><font size="2">.<span style="mso-spacerun: yes">&nbsp;
+      </span>The act of determining how objects and their relationships are
+      persisted in permanent data storage, in this case relational databases.</font><span style="mso-spacerun:
+yes"><font size="2">&nbsp;</font></span></p>
+      <p class="MsoNormal"><b><font size="2">Mapping (n)</font></b><font size="2">. The definition of how an
+      object’s property or a relationship is persisted in permanent storage.</font></p>
+      <p class="MsoNormal"><b><font size="2">Property</font></b><font size="2">.<span style="mso-spacerun: yes">&nbsp;
+      </span>A data attribute, either implemented as a physical attribute such
+      as the string <i>firstName</i> or as a virtual attribute implemented via
+      an operation such as <i>getTotal()</i> which returns the total of an
+      order.</font></p>
+      <p class="MsoNormal"><b><font size="2">Property mapping</font></b><font size="2">.<span style="mso-spacerun: yes">&nbsp;
+      </span>A mapping that describes how to persist an object’s property.</font></p>
+      <p class="MsoNormal"><b><font size="2">Relationship mapping</font></b><font size="2">.<span style="mso-spacerun: yes">&nbsp;
+      </span>A mapping that describes how to persist a relationship
+      (association, aggregation, or composition) between two or more objects.</font></td>
+  </tr>
+</table>
+<p>It can make it easier to think that classes map to tables, and in
+a way they do, but not always directly.&nbsp;&nbsp;
+Except for very simple databases you will never have a one-to-one mapping
+of classes to tables, something you will see later in this article with regards
+to <a href="#MappingInheritance">inheritance mapping</a>.&nbsp;
+However, a common theme that you will see throughout
+this article is that a one class to one table mapping is preferable for your
+initial mapping (<a href="#PerformanceTuning">performance tuning</a> may
+motivate you to refactor your mappings).</p>
+<p class="BT">For now, let’s keep things simple.<span style="mso-spacerun: yes">&nbsp;
+</span><a href="#Figure1SimpleMappingExample">Figure 1</a> depicts two models, a
+UML class diagram and a physical data model which follows the <a href="http://www.agiledata.org/essays/umlDataModelingProfile.html">UML
+data modeling profile</a>.<span style="mso-spacerun: yes">&nbsp; </span>Both
+diagrams depict a portion of a simple schema for an order system.<span style="mso-spacerun: yes">&nbsp;
+</span>You can see how the attributes of the classes could be mapped to the
+columns of the database.<span style="mso-spacerun: yes">&nbsp; </span>For
+example, it appears that the <i>dateFulfilled</i> attribute of the <i>Order</i>
+class maps to the <i>DataFulfilled</i> column of the <i>Order</i> table and that
+the <i>numberOrdered</i> attribute of the <i>OrderItem</i> class maps to the <i>NumberOrdered</i>
+column of the <i>OrderItem</i> table.<span style="mso-spacerun: yes">&nbsp;</span></p>
+<p>&nbsp;</p>
+<p><b><a name="Figure1SimpleMappingExample">Figure 1. Simple mapping example</a>.</b></p>
+<p align="center">
+<img border="0" src="http://www.agiledata.org/images
+/mappingOrderExample.gif"></p>
+<p>Note that these initial property mappings were easy to determine for several
+reasons.<span style="mso-spacerun: yes">&nbsp; </span>First, similar naming
+standards were used in both models, an aspect of <a href="http://www.agiledata.org/essays/agileModeling.html">Agile
+Modeling (AM)’s</a> 
+<a href="http://www.agilemodeling.com/practices.htm#ApplyModelingStandards">Apply Modeling Standards practice</a>.<span style="mso-spacerun: yes">&nbsp;
+</span>Second, it is very likely that the same people created both models.<span style="mso-spacerun: yes">&nbsp;
+</span>When people work in separate teams it is quite common for their solutions
+to vary, even when the teams do a very good job, because they make different
+design decisions along the way.<span style="mso-spacerun: yes">&nbsp; </span>Third,
+one model very likely drove the development of the other model.<span style="mso-spacerun: yes">&nbsp;
+</span>In <a href="http://www.agiledata.org/essays/differentStrategies.html">Different
+Projects Require Different Strategies</a> I argued that when you are building a
+new system that your 
+<a href="http://www.agiledata.org/essays/drivingForces.html">object schema should drive the
+development of your database schema</a>.</p>
+<p>The easiest mapping you will ever have is a property
+mapping of a single attribute to a single column.&nbsp; It is even simpler when the each have the same basic types,
+e.g. they’re both dates, the attribute is a string and the column is a char,
+or the attribute is a number and the column is a float.</p>
+<p class="MsoNormal">Even though the two schemas depicted in 
+<a href="#Figure1SimpleMappingExample">Figure
+1</a> are very similar there are differences.<span style="mso-spacerun: yes">&nbsp;
+</span>These differences mean that the mapping isn’t going to be perfect.<span style="mso-spacerun: yes">&nbsp;
+</span>The differences between the two schemas are:</p>
+<ul>
+  <li>
+    <p class="MsoNormal">There are several attributes for tax in the object
+    schema yet only one in the data schema.<span style="mso-spacerun: yes">&nbsp;
+    </span>The three attributes for tax in the <i>Order</i> class presumably
+    should be added up and stored in the <i>tax</i> column of the <i>Order</i>
+    table when the object is saved.<span style="mso-spacerun: yes">&nbsp; </span>When
+    the object is read into memory, however, the three attributes would need to
+    be calculated (or a lazy initialization approach would need to be taken and
+    each attribute would be calculated when it is first accessed).<span style="mso-spacerun: yes">&nbsp;
+    </span>A schema difference such as this is a good indication that the
+    database schema needs to be refactored to split the tax column into three.</li>
+  <li>
+    <p class="MsoNormal">The data schema indicates 
+	<a href="http://www.agiledata.org/essays/keys.html">keys</a> whereas the object
+    schema does not.<span style="mso-spacerun: yes">&nbsp; </span>Rows in tables
+    are uniquely identified by 
+	<a href="http://www.agiledata.org/essays/keys.html">primary keys</a> and relationships between rows are
+    maintained through the use of foreign keys.<span style="mso-spacerun: yes">&nbsp;
+    </span>Relationships to objects, on the other hand, are implemented via
+    references to those objects not through foreign keys.<span style="mso-spacerun:
+yes">&nbsp; </span>The implication is that in order to fully persist the object 
+	data,
+    and the relationships which the objects are involved in, that the objects need to know about the key values
+    used in the database to identify them.<span style="mso-spacerun: yes">&nbsp;
+    </span>This additional information is called “<a href="#ShadowData">shadow
+    information</a>”.</li>
+  <li>
+    <p class="MsoNormal">Different types are used in each schema. The <i>subTotalBeforeTax</i>
+    attribute of <i>Order</i> is of the type <i>Currency</i> whereas the <i>SubTotalBeforeTax</i>
+    column of the <i>Order</i> table is a float.<span style="mso-spacerun: yes">&nbsp;
+    </span>When you implement this mapping you will need to be able to convert
+    back and forth between these two representations without loss of
+    information.</li>
+</ul>
+<p>&nbsp;</p>
+<h3>1.1 <a name="ShadowData">Shadow Information</a> and Scaffolding</h3>
+<p class="BT">Shadow information is any data that objects need to maintain,
+above and beyond their normal domain data, to persist themselves.<span style="mso-spacerun: yes">&nbsp;
+</span>This typically includes primary key information, particularly when the
+primary key is a surrogate key that has no business meaning, <a href="http://www.agiledata.org/essays/concurrencyControl.html">concurrency
+control</a> markings such as timestamps or incremental counters, and versioning
+numbers.<span style="mso-spacerun: yes">&nbsp; </span>For example, in 
+<a href="#Figure1SimpleMappingExample">Figure
+1</a> you see that the <i>Order</i> table has an <i>OrderID</i> column used as a
+primary key and a <i>LastUpdate</i> column that is used for optimistic
+concurrency control that the <i>Order</i> class does not have.<span style="mso-spacerun:
+yes">&nbsp; </span>To persist an order object properly the Order class would
+need to implement shadow attributes that maintain these values.<span style="mso-spacerun: yes">&nbsp;&nbsp;</span></p>
+<table border="0" width="100%" id="table16">
+	<tr>
+		<td>
+<p class="BT"><a href="#Figure2IncludingShadowInformation">Figure 2</a><font size="2"> shows a
+detailed design class model for the <i>Order</i> and <i>OrderItem</i> classes.<span style="mso-spacerun: yes">&nbsp;
+</span>There are several changes from </font> <a href="#Figure1SimpleMappingExample">Figure
+1</a><font size="2">.<span style="mso-spacerun: yes">&nbsp; </span>First, the new diagram shows
+the shadow attributes that the classes require to properly persist themselves.<span style="mso-spacerun: yes">&nbsp;
+</span>Shadow attributes have an implementation visibility, there is a space in
+front of the name instead of a minus sign, and are assigned the stereotype
+&lt;&lt;persistence&gt;&gt; (this is not a UML standard).<span style="mso-spacerun: yes">&nbsp;
+</span>Second, it shows the scaffolding attributes required to implement the
+relationship the two classes.<span style="mso-spacerun: yes">&nbsp; </span>Scaffolding
+attributes, such as the <i>orderItems</i> vector in <i>Order</i>, also have an
+implementation visibility.<span style="mso-spacerun: yes">&nbsp; </span>Third, a
+<i>getTotalTax()</i> operation was added to the <i>Order</i> class to calculate
+the value required for the <i>tax</i> column of the <i>Order</i> table.<span style="mso-spacerun: yes">&nbsp;
+</span>This is why I use the term property mapping instead of attribute mapping
+– what you really want to do is map the properties of a class, which sometimes
+are implemented as simple attributes and other times as one or more operations,
+to the columns of a database.</font></p></td>
+		<td width="120">
+		
+<b><a href="http://www.ambysoft.com/books/agileDatabaseTechniques.html">
+<img
+        src="http://images.amazon.com/images/P/0471202835.01.MZZZZZZZ.jpg" alt="Agile Database Techniques"
+        border="0" width="114" height="140" align="right"></a></b></td>
+	</tr>
+</table>
+<p>&nbsp;</p>
+<p><b><a name="Figure2IncludingShadowInformation">Figure 2. Including
+&quot;shadow information&quot; on a class diagram.</a></b></p>
+<p align="center">
+<img border="0" src="http://www.agiledata.org/images
+/mappingShadowInformation.gif"></p>
+<p>One type of shadow information that I have not discussed yet is a boolean
+flag to indicate whether an object currently exists in the database.&nbsp; The
+problem is that when you save data to a relational database you need to use a
+SQL update statement if the object was previously retrieved from the database
+and a SQL insert statement if the data does not already exist.&nbsp; A common
+practice is for each class to implement an <i>isPersistent</i> boolean flag, not
+shown in <a href="#Figure2IncludingShadowInformation">Figure 2</a>, that is set
+to true when the data is read in from the database and set to false when the
+object is newly created.</p>
+<p>It is a common <a href="http://www.modelingstyle.info/classDiagram.html">style
+convention</a> in the UML community to not show shadow information, such as keys
+and concurrency markings, on class diagrams.&nbsp;
+Similarly, the common convention is to not model scaffolding code either.
+The idea is that everyone knows you need to do this sort of thing, so why waste
+your time modeling the obvious?&nbsp;</p>
+<p>Shadow information doesn’t necessarily need to be implemented by the
+business objects, although your application will need to take care of it
+somehow.<span style="mso-spacerun: yes">&nbsp; </span>For example, with 
+<a href="http://www.ambysoft.com/books/masteringEJB.html">Enterprise
+JavaBeans (EJBs)</a> you store primary key information outside of EJBs in
+primary key classes, the individual object references a corresponding primary
+key object.<span style="mso-spacerun: yes">&nbsp; </span>The Java Data Object
+(JDO) approach goes one step further and implement shadow information in the
+JDOs and not the business objects.<o:p>
+</o:p>
+</p>
+<p>&nbsp;</p>
+<h3>1.2 <a name="MappingMetaData">Mapping Meta Data</a></h3>
+<p><a href="#Figure3MetaData">Figure 3</a> depicts the meta data representing
+the property mappings required to persist the <i>Order</i> and <i>OrderItem</i>
+classes of <a href="#Figure2IncludingShadowInformation">Figure 2</a>.<span style="mso-spacerun: yes">&nbsp;
+</span>Meta data is information about data.<span style="mso-spacerun: yes">&nbsp;
+</span><a href="#Figure3MetaData">Figure 3</a> is important for several reasons.<span style="mso-spacerun: yes">&nbsp;
+</span>First, we need some way to represent mappings.<span style="mso-spacerun: yes">&nbsp;
+</span>We could put two schemas side by side, as you see in 
+<a href="#Figure1SimpleMappingExample">Figure
+1</a>, and then draw lines between them but that gets complicated very quickly.<span style="mso-spacerun: yes">&nbsp;
+</span>Another option is a tabular representation that you see in 
+<a href="#Figure3MetaData">Figure
+3</a>.<span style="mso-spacerun: yes">&nbsp; </span>Second, the concept of
+mapping meta data is critical to the functioning of <a href="http://www.agiledata.org/essays/implementationStrategies.html#StrategyPersistenceFrameworks">persistence
+frameworks</a> which are a <a href="http://www.agiledata.org/essays/implementationStrategies.html">database
+encapsulation strategy</a> that can enable agile database techniques.</p>
+<p>&nbsp;</p>
+<p><b><a name="Figure3MetaData">Figure 3. Meta data</a> representing the
+property maps.</b><o:p>
+</o:p>
+</p>
+<table border="1" cellspacing="0" cellpadding="0" style="margin-left:54.9pt;
+ border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt">
+  <tr>
+    <td width="338" valign="top" style="width:202.5pt;border:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><b><font size="2">Property</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </b></p>
+    </td>
+    <td width="360" valign="top" style="width:3.0in;border:solid windowtext .5pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><b><font size="2">Column</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </b></p>
+    </td>
+  </tr>
+  <tr>
+    <td width="338" valign="top" style="width:202.5pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Order.orderID</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="360" valign="top" style="width:3.0in;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Order.OrderID</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="338" valign="top" style="width:202.5pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Order.dateOrdered</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="360" valign="top" style="width:3.0in;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Order.DateOrdered</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="338" valign="top" style="width:202.5pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Order.dateFulfilled</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="360" valign="top" style="width:3.0in;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Order.DateFulfilled</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="338" valign="top" style="width:202.5pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Order.getTotalTax()</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="360" valign="top" style="width:3.0in;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Order.Tax</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="338" valign="top" style="width:202.5pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Order.subtotalBeforeTax</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="360" valign="top" style="width:3.0in;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Order.SubtotalBeforeTax</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="338" valign="top" style="width:202.5pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Order.shipTo.personID</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="360" valign="top" style="width:3.0in;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Order.ShipToContactID</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="338" valign="top" style="width:202.5pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Order.billTo.personID</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="360" valign="top" style="width:3.0in;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Order.BillToContactID</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="338" valign="top" style="width:202.5pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Order.lastUpdate</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="360" valign="top" style="width:3.0in;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Order.LastUpdate</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="338" valign="top" style="width:202.5pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">OrderItem.ordered</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="360" valign="top" style="width:3.0in;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">OrderItem.OrderID</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="338" valign="top" style="width:202.5pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Order.orderItems.position(orderItem)</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="360" valign="top" style="width:3.0in;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">OrderItem.ItemSequence</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="338" valign="top" style="width:202.5pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">OrderItem.item.number</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="360" valign="top" style="width:3.0in;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">OrderItem.ItemNo</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="338" valign="top" style="width:202.5pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">OrderItem.numberOrdered</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="360" valign="top" style="width:3.0in;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">OrderItem.NumberOrdered</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="338" valign="top" style="width:202.5pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">OrderItem.lastUpdate</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="360" valign="top" style="width:3.0in;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">OrderItem.LastUpdate</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+</table>
+<p class="BT">&nbsp;</p>
+<p class="BT">The naming convention that I’m using is reasonably
+straightforward: <i>Order</i>.<i>dateOrdered</i> refers to the <i>dateOrdered</i>
+attribute of the <i>Order</i> class.<span style="mso-spacerun: yes">&nbsp; </span>Similarly
+<i>Order.DateOrdered</i> refers to the <i>DateOrdered</i> column of the <i>Order</i>
+table.<span style="mso-spacerun: yes">&nbsp; </span><i>Order.getTotalTax()</i>
+refers to the <i>getTotalTax()</i> operation of <i>Order</i> and <i>Order.billTo.personID</i>
+is the <i>personID</i> attribute of the <i>Person</i> object referenced by the <i>Order.billTo</i>
+attribute.<span style="mso-spacerun: yes">&nbsp; </span>Likely the most
+difficult property to understand is <i>Order.orderItems.position(orderItem)</i>
+which refers to the position within the <i>Order.orderItems</i> vector of the
+instance of <i>OrderItem</i> that is being saved.</p>
+<p class="BT"><a href="#Figure3MetaData">Figure 3</a> hints at an important part 
+of the O/R <a href="http://www.agiledata.org/essays/impedanceMismatch.html">impedance
+mismatch</a> between object technology and relational technology.<span style="mso-spacerun: yes">&nbsp;
+</span>Classes implement both behavior and data whereas relational database
+tables just implement data.<span style="mso-spacerun: yes">&nbsp; </span>The end
+result is that when you’re mapping the properties of classes into a relational
+database you end up mapping operations such as <i>getTotalTax()</i> and <i>position()</i>
+to columns.<span style="mso-spacerun: yes">&nbsp; </span>Although it didn’t
+happen in this example, you often need to map two operations that represent a
+single property to a column – one operation to set the value, e.g. <i>setFirstName()</i>,
+and one operation to retrieve the value, e.g. <i>getFirstName()</i>.<span style="mso-spacerun: yes">&nbsp;
+</span>These operations are typically called setters and getters respectively,
+or sometimes mutators and accessors.</p>
+<p>Whenever a key column is mapped to a property of a
+class, such as the mapping between <i>OrderItem.ItemSequence</i> and <i>Order.orderItems.position(orderItem)</i>,
+this is really part of the effort of relationship mapping, discussed later in 
+this article.&nbsp; This is because keys
+implement relationships in relational databases.&nbsp;</p>
+<p>&nbsp;</p>
+<h3>1.3 <a name="HowMappingFitsIn">How Mapping Fits In</a>to The Overall
+Process</h3>
+<p>See the essay <a href="http://www.agiledata.org/essays/evolutionaryDevelopment.html">Evolutionary
+Development</a>.</o:p>
+</p>
+<p>&nbsp;</p>
+<h3>2. <a name="MappingInheritance">Mapping Inheritance</a> Structures</h3>
+<p class="MsoNormal">Relational databases do not natively support inheritance,
+forcing you to map the inheritance structures within your object schema to your
+data schema.<span style="mso-spacerun: yes">&nbsp; </span>Although there is 
+somewhat of a backlash against inheritance within the object community, due in 
+most part to the fragile base class problem, my experience is that this problem 
+is mostly due to poor encapsulation practices among object developers than with 
+the concept of inheritance.<span style="mso-spacerun: yes">&nbsp; </span>What I’m saying is
+that the fact you need to do a little bit of work to map an inheritance
+hierarchy into a relational database shouldn’t dissuade you from using
+inheritance where appropriate.</p>
+<p class="MsoNormal">The concept of inheritance throws in several interesting
+twists when saving objects into a relational DB.<span style="mso-spacerun:
+yes">&nbsp; </span>How do you organize the inherited attributes within your data
+model?<span style="mso-spacerun: yes">&nbsp; </span>In this section you’ll see
+that there are three primary solutions for mapping inheritance into a relational
+database, and a fourth supplementary technique that goes beyond inheritance
+mapping.<span style="mso-spacerun: yes">&nbsp; </span>These techniques are:<o:p>
+</o:p>
+</p>
+<ul>
+  <li>
+    <p class="MsoNormal"><a href="#MapHierarchyToTable">Map the entire class hierarchy to a single table<o:p>
+    </a>
+    </o:p>
+  </li>
+  <li>
+    <p class="MsoNormal"><a href="#MapConcreteClassToTable">Map each concrete class to its own table</a><o:p>
+    </o:p>
+  </li>
+  <li>
+    <p class="MsoNormal"><a href="#MapEachClassToTable">Map each class to its own table</a><o:p>
+    </o:p>
+  </li>
+  <li>
+    <p class="MsoNormal"><a href="#MapToGenericStructure">Map the classes into a generic
+    table structure</a> <o:p>
+    </o:p>
+  </li>
+</ul>
+<p class="MsoNormal">To explore each technique I will discuss how to map the two
+versions of the class hierarchy presented in <a href="#Figure4ClassHierarchy"> Figure
+4</a>.<span style="mso-spacerun: yes">&nbsp;
+</span>The first version depicts three classes – <i>Person</i>, an abstact
+class, and two concrete classes, <i>Employee</i> and <i>Customer</i>.<span style="mso-spacerun: yes">&nbsp;
+</span>You know that <i>Person</i> is abstract because its name is shown in
+italics.<span style="mso-spacerun: yes">&nbsp; </span>In older versions of the
+UML the constraint “{abstract}” would have been used instead.<span style="mso-spacerun: yes">&nbsp;
+</span>The second version of the hierarchy adds a fourth concrete class to the
+hierarchy, <i>Executive</i>.<span style="mso-spacerun: yes">&nbsp; The idea is
+that you have implemented the first class hierarchy and are now presented with a
+new requirement to support giving executives, but not non-executive employees,
+fixed annual bonuses.&nbsp; The <i>Executive</i> class was added to support this
+new functionality. </span>
+</p>
+<p class="MsoNormal">For
+the sake of simplicity I have not modeled all of the attributes of the classes,
+nor have I modeled their full signatures, nor have I modeled any of the
+operations.<span style="mso-spacerun:
+yes">&nbsp; </span>This diagram is just barely good enough for my purpose, in
+other words it is an agile model.<span style="mso-spacerun: yes">&nbsp; </span>Furthermore
+these hierarchies could be approved by applying the 
+<a href="http://www.amazon.com/exec/obidos/ASIN/0201895420/ambysoftinc">Party analysis
+pattern</a> or the
+<a href="http://www.ambysoft.com/books/buildingObjectApplications.html">Business Entity</a> analysis pattern.<span style="mso-spacerun: yes">&nbsp; </span>I
+haven’t done this because I need a simple example to explain mapping
+inheritance hierarchies, not to explain the effective application of analysis
+patterns – I always follow 
+<a href="http://www.agiledata.org/essays/agileModeling.html"> AM’s</a>
+<a href="http://www.agilemodeling.com/principles.htm#ModelWithAPurpose">Model With A
+Purpose principle</a>. <o:p>
+</o:p>
+</p>
+<p class="MsoNormal">&nbsp;
+</p>
+<p class="MsoNormal"><b><a name="Figure4ClassHierarchy">Figure 4.<span style="mso-spacerun: yes">&nbsp;
+</span>Two versions of a simple class hierarchy.</a></b></p>
+<p class="MsoNormal" align="center">
+<img border="0" src="http://www.agiledata.org/images
+/mappingClassHierarchy.gif">
+</p>
+<table border="1" width="100%" bgcolor="#FFFFCC">
+  <tr>
+    <td width="100%"><font size="2">Inheritance can also be a problem when it’s misapplied
+      – for example, the hierarchy in <a href="#Figure4ClassHierarchy">Figure 4</a> could be better modeled via
+      the Party (</font><a href="http://www.amazon.com/exec/obidos/ASIN/0932633293/ambysoftinc">Hay
+      1996</a><font size="2">, </font> <a href="http://www.amazon.com/exec/obidos/ASIN/0201895420/ambysoftinc">Fowler
+      1997</a><font size="2">) or the Business Entity (</font><a href="http://www.ambysoft.com/books/buildingObjectApplications.html">Ambler
+      1997</a><font size="2">) patterns.<span style="mso-spacerun: yes">&nbsp; </span>For
+      example, if someone can be both a customer and an employee you would have
+      to objects in memory for them, which may be problematic for your
+      application.<span style="mso-spacerun: yes">&nbsp; </span>I’ve chosen
+      this example because I needed a simple, easy to understand class hierarchy
+      to map.</font><span style="mso-spacerun: yes"><font size="2">&nbsp;&nbsp;</font></span></td>
+  </tr>
+</table>
+<p><o:p>
+</o:p>
+</p>
+<h3>2.1 <a name="MapHierarchyToTable">Map Hierarchy To A Single Table</a></h3>
+<p>Following this strategy you store all the attributes of the classes in one
+table.<span style="mso-spacerun: yes">&nbsp; </span>
+<a href="#Figure5MappingToSingleTable">Figure
+5</a> depicts the data model for the class hierarchies of 
+<a href="#Figure4ClassHierarchy">Figure
+4</a> when this approach is taken.<span style="mso-spacerun: yes">&nbsp; </span>The
+attributes of each the classes are stored in the table <i>Person</i>, a good
+table naming strategy is to use the name of the hierarchy’s root class, in a
+very straightforward manner.</p>
+<p>&nbsp;</p>
+<p><b><a name="Figure5MappingToSingleTable">Figure 5. Mapping to a single table</a>.</b></p>
+<p align="center">
+<img border="0" src="http://www.agiledata.org/images
+/mappingSingleTable.gif"></p>
+<p class="BT">&nbsp;</p>
+<p class="BT">Two columns have been added to the table – <i>PersonPOID</i> and
+<i>PersonType</i>.<span style="mso-spacerun: yes">&nbsp; </span>The first column
+is the primary key for the table, you know this because of the &lt;&lt;PK&gt;&gt;
+stereotype, and the second is a code indicating whether the person is a
+customer, an employee, or perhaps both.<span style="mso-spacerun: yes">&nbsp; </span><i>PersonPOID</i>
+is a persistent object identifier (POID), often simply called an object
+identifier (OID), which is a surrogate key.<span style="mso-spacerun: yes">&nbsp;
+</span>I could have used the optional stereotype of &lt;&lt;Surrogate&gt;&gt; to
+indicate this but chose not to as POID implies this, therefore indicating the
+stereotype would only serve to complicate the diagram (follow the
+<a href="http://www.agilemodeling.com/practices.htm#DepictModelsSimply">AM
+practice Depict Models Simply</a>).<span style="mso-spacerun: yes">&nbsp;&nbsp;
+</span><a href="http://www.agiledata.org/essays/dataModeling101.html">Data
+Modeling 101</a> discusses <a href="http://www.agiledata.org/essays/dataModeling101.html#AssignKeys">surrogate
+keys</a> in greater detail.</p>
+<p class="BT">The <i>PersonType</i> column is required to identify the type of
+object that can be instantiated from a given row.<span style="mso-spacerun:
+yes">&nbsp; </span>For example the value of <i>E</i> would indicate the person
+is an employee, <i>C</i> would indicate customer, and <i>B</i> would indicate
+both.<span style="mso-spacerun: yes">&nbsp; </span>Although this approach is
+straightforward it tends to break down as the number of types and combinations
+begin to grow.<span style="mso-spacerun: yes">&nbsp; </span>For example, when
+you add the concept of executives you need to add a code value, perhaps <i>X</i>,
+to represent this.<span style="mso-spacerun: yes">&nbsp; </span>Now the value of
+<i>B</i>, representing both, is sort of goofy.<span style="mso-spacerun: yes">&nbsp;
+</span>Furthermore you might have combinations involving executives now, for
+example it seems reasonable that someone can be both an executive and a customer
+so you’d need a code for this.<span style="mso-spacerun: yes">&nbsp;&nbsp; </span>When
+you discover that combinations are possible you should consider applying the <i><a href="http://www.agiledata.org/essays/databaseRefactoringCatalog.html#ReplaceTypeCodeWithBooleans">Replace
+Type Code With Booleans</a></i> database refactoring, as you see in 
+<a href="#Figure6RefactoredSingleTableApproach">Figure
+6</a>.</p>
+<p>For the sake of simplicity I did not include columns for concurrency control,
+such as the time stamp column included in the tables of 
+<a href="#Figure2IncludingShadowInformation">Figure
+2</a>, nor did I include columns for data versioning.<br>
+</p>
+<p><b><a name="Figure6RefactoredSingleTableApproach">Figure 6. A refactored
+approach.</a></b></p>
+<p align="center">
+<img border="0" src="http://www.agiledata.org/images
+/mappingSingleTableRefactored.gif"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>2.2 <a name="MapConcreteClassToTable">Map Each Concrete Class To Its Own Table</a></h3>
+<p>With this approach a table is created for each concrete class, each table
+including both the attributes implemented by the class and its inherited
+attributes.<span style="mso-spacerun: yes">&nbsp; </span>
+<a href="#Figure7MappingConcreteToTable">Figure
+7</a> depicts the physical data model for the class hierarchy of 
+<a href="#Figure4ClassHierarchy">Figure
+4</a> when this approach is taken.<span style="mso-spacerun: yes">&nbsp; </span>There
+are tables corresponding to each of the <i>Customer</i> and <i>Employee</i>
+classes because they are concrete, objects are instantiated from them, but not <i>Person</i>
+because it is abstract.<span style="mso-spacerun: yes">&nbsp; </span>Each table
+was assigned its own primary key, <i>customerPOID</i> and <i>employeePOID</i>
+respectively.<span style="mso-spacerun: yes">&nbsp; </span>To support the
+addition of <i>Executive</i> all I needed to do was add a corresponding table
+with all of the attributes required by executive objects.<o:p>
+</o:p>
+</p>
+<p>&nbsp;</p>
+<p><b><a name="Figure7MappingConcreteToTable">Figure 7. Mapping concrete classes
+to tables</a>.</b></p>
+<p align="center">
+<img border="0" src="http://www.agiledata.org/images
+/mappingConcreteToTable.gif"></p>
+<p>&nbsp;</p>
+<h3>2.3 <a name="MapEachClassToTable">Map Each Class To Its Own Table</a></h3>
+<p class="BT">Following this strategy you create one table per class, with one
+column per business attributes and any necessary identification information (as
+well as other columns required for concurrency control and versioning).<span style="mso-spacerun: yes">&nbsp;
+</span><a href="#Figure8MappingEachToTable">Figure 8</a> depicts the physical
+data model for the class hierarchy of <a href="#Figure4ClassHierarchy">Figure 4</a>
+when each class is mapped to a single table.<span style="mso-spacerun: yes">&nbsp;
+</span>The data for the <i>Customer</i> class is stored in two tables, <i>Customer</i>
+and <i>Person</i>, therefore to retrieve this data you would need to join the
+two tables (or do two separate reads, one to each table).</p>
+<p class="BT">The application of keys is interesting.<span style="mso-spacerun:
+yes">&nbsp; </span>Notice how <i>personPOID</i> is used as the primary key for
+all of the tables. For the <i>Customer</i>, <i>Employee</i>, and <i>Executive</i>
+tables the <i>personPOID</i> is both a primary key and a foreign key.<span style="mso-spacerun: yes">&nbsp;
+</span>In the case of <i>Customer</i>, <i>personPOID</i> is its primary key and
+a foreign key used to maintain the relationship to the <i>Person</i> table.<span style="mso-spacerun: yes">&nbsp;
+</span>This is indicated by application of two stereotypes, &lt;&lt;PK&gt;&gt;
+and &lt;&lt;FK&gt;&gt;.<span style="mso-spacerun: yes">&nbsp; </span>In older
+versions of the <a href="http://www.agilemodeling.com/essays/realisticUML.html">UML</a>
+it wasn’t permissible to assign several stereotypes to a single model element
+but this restriction was lifted in UML version 1.4. <o:p>
+</o:p>
+</p>
+<p>&nbsp;</p>
+<p><b><a name="Figure8MappingEachToTable">Figure 8.&nbsp; Mapping each class to
+its own table</a>.</b></p>
+<p align="center">
+<img border="0" src="http://www.agiledata.org/images
+/mappingClassToTable.gif"></p>
+<p class="BT">A common modification that you may want to consider is the
+addition of a type column, or boolean columns as the case may be, in the <i>Person</i>
+table to indicate the applicable subtypes of the person.<span style="mso-spacerun: yes">&nbsp;
+</span>Although this is additional overhead it makes some types of queries
+easier.<span style="mso-spacerun: yes">&nbsp; </span>The addition of views is
+also an option in many cases, an approach that I prefer over the addition of
+type or boolean columns because they are easier to maintain.<o:p>
+</o:p>
+</p>
+<p>&nbsp;</p>
+<h3>2.4 <a name="MapToGenericStructure">Map Classes To A Generic Table Structure</a></h3>
+<p>A fourth option for mapping inheritance structures into a relational database
+is to take a generic, sometimes called meta-data driven approach, to mapping
+your classes.<span style="mso-spacerun: yes">&nbsp; </span>This approach isn’t
+specific to inheritance structures, it supports all forms of mapping.<span style="mso-spacerun: yes">&nbsp;
+</span>In <a href="#Figure9GenericDataSchema">Figure 9</a> you see a data
+schema for storing the value of attributes and for traversing inheritance
+structures.<span style="mso-spacerun: yes">&nbsp; </span>The schema isn’t
+complete, it could be extended to map associations for example, but it’s
+sufficient for our purposes.<span style="mso-spacerun: yes">&nbsp; </span>The
+value of a single attribute is stored in the <i>Value</i> table, therefore to
+store an object with ten business attributes there would be ten records, one for
+each attribute.<span style="mso-spacerun: yes">&nbsp; </span>The <i>Value.ObjectPOID</i>
+column stores the unique identifier for the specific object (this approach
+assumes a common key strategy across all objects, when this isn’t the case
+you’ll need to extend this table appropriately).<span style="mso-spacerun:
+yes">&nbsp; </span>The <i>AttributeType</i> table contains rows for basic data
+types such as data, string, money, integer and so on.<span style="mso-spacerun:
+yes">&nbsp; </span>This information is required to convert the value of the
+object attribute into the varchar stored in <i>Value.Value</i>.</p>
+<p>&nbsp;</p>
+<p><b><a name="Figure9GenericDataSchema">Figure 9. A generic data schema</a>
+for storing objects.</b></p>
+<p align="center">
+<img border="0" src="http://www.agiledata.org/images
+/mappingGenericSchema.gif"></p>
+<p class="BT">Let’s work through an example of mapping a single class to this
+schema.<span style="mso-spacerun: yes">&nbsp; </span>To store the <i>OrderItem</i>
+class in <a href="#Figure2IncludingShadowInformation">Figure 2</a> there would
+be three records in the <i>Value</i> table.<span style="mso-spacerun: yes">&nbsp;
+</span>One to store the value for the number of items ordered, one to store the
+value of the <i>OrderPOID</i> that this order item is part of, and one to store
+the value of the <i>ItemPOID</i> that describes the order item.<span style="mso-spacerun: yes">&nbsp;
+</span>You may decide to have a fourth row to store the value of the <i>lastUpdated</i>
+shadow attribute if you’re taking an optimistic locking approach to <a href="http://www.agiledata.org/essays/concurrencyControl.html">concurrency
+control</a>. The <i>Class</i> table would include a row for the <i>OrderItem</i>
+class and the <i>Attribute</i> table would include one row for each attribute
+stored in the database (in this case either 3 or 4 rows).<span style="mso-spacerun: yes">&nbsp;
+</span><o:p>
+</o:p>
+</p>
+<p class="BT">Now let’s map the inheritance structure between <i>Person</i>
+and <i>Customer</i>, shown in <a href="#Figure4ClassHierarchy">Figure 4</a>, into
+this schema.<span style="mso-spacerun: yes">&nbsp; </span>The <i>Inheritance</i>
+table is the key to inheritance mapping.<span style="mso-spacerun: yes">&nbsp; </span>Each
+class would be represented by a row in the <i>Class</i> table.<span style="mso-spacerun: yes">&nbsp;
+</span>There would also be a row in the <i>Inheritance</i> table, the value of <i>Inheritance.SuperClassPOID</i>
+would refer to the row in <i>Class</i> representing <i>Person</i> and <i>Inheritance.SubClassPOID</i>
+would refer to the row in <i>Class</i> representing <i>Customer</i>. To map the
+rest of the hierarchy you require one row in <i>Inheritance</i> for each
+inheritance relationship.<o:p>
+</o:p>
+</p>
+<p>&nbsp;</p>
+<h3>2.5 <a name="MappingMultipleInheritance">Mapping Multiple Inheritance</a></h3>
+<p class="BT">Until this point I have focused on mapping single inheritance
+hierarchies, single inheritance occurs when a subclass such as <i>Customer</i>
+inherits directly from a single parent class such as <i>Person</i>.<span style="mso-spacerun: yes">&nbsp;
+</span>Multiple inheritance occurs when a subclass has two or more direct
+superclasses, such as <i>Dragon</i> directly inheriting from both <i>Bird</i>
+and <i>Lizard</i> in <a href="#Figure10MappingMultipleInheritance">Figure 10</a>.<span style="mso-spacerun: yes">&nbsp;
+</span>Multiple inheritance is generally seen as a questionable feature of an
+object-oriented language, since 1990 I have only seen one domain problem where
+multiple inheritance made sense, and as a result most languages choose not to
+support it.<span style="mso-spacerun: yes">&nbsp; </span>However, languages such
+as C++ and Eiffel do support it so you may find yourself in a situation where
+you need to map a multiple inheritance hierarchy to a relational database.<o:p>
+</o:p>
+</p>
+<p class="BT"><a href="#Figure10MappingMultipleInheritance">Figure 10</a> shows
+the three data schemas that would result from applying each of the three
+inheritance mapping strategies.<span style="mso-spacerun: yes">&nbsp; </span>As
+you can see mapping multiple inheritance is fairly straightforward, there aren’t
+any surprises in <a href="#Figure10MappingMultipleInheritance">Figure 10</a>.<span style="mso-spacerun: yes">&nbsp;
+</span>The greatest challenge in my experience is to identify a reasonable table
+name when mapping the hierarchy into a single table, in this case <i>Creature</i>
+made the most sense.<o:p>
+</o:p>
+</p>
+<p><o:p></o:p>
+</p>
+<p><b><a name="Figure10MappingMultipleInheritance">Figure 10. Mapping multiple
+inheritance.</a></b></p>
+<p align="center">
+<img border="0" src="http://www.agiledata.org/images
+/mappingMultipleInheritance.gif"></p>
+<p class="BT"><o:p>
+</o:p>
+</p>
+<p>&nbsp;</p>
+<h3>2.6 <a name="ComparingTheStrategies">Comparing The Strategies</a></h3>
+<p class="BT">None of these mapping strategies are ideal for all situations, as
+you can see in <a href="#Table1ComparingInheritanceMapping">Table 1</a>.<span style="mso-spacerun: yes">&nbsp;
+</span>My experience is that the easiest strategy to work with is to have one
+table per hierarchy at first, then if you need to refactor your schema
+according.<span style="mso-spacerun: yes">&nbsp; </span>Sometimes I’ll start
+by applying the one table per class strategy whenever my team is motivated to
+work with a “pure design approach”.<span style="mso-spacerun: yes">&nbsp; </span>I
+stay away from using one table per concrete class because it typically results
+in the need to copy data back and forth between tables, forcing me to refactor
+it reasonably early in the life of the project anyway. I rarely use the generic
+schema approach because it simply doesn’t scale very well.<o:p>
+</o:p>
+</p>
+<p class="BT">It is important to understand that you can combine the first three
+strategies – one table per hierarchy, one table per concrete class, and one
+table per class – in any given application.<span style="mso-spacerun: yes">&nbsp;
+</span>You can even combine these strategies in a single, large hierarchy.<o:p>
+</o:p>
+</p>
+<p>&nbsp;</p>
+<p><b><a name="Table1ComparingInheritanceMapping">Table 1. Comparing the
+inheritance mapping</a> strategies.</b></p>
+<table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;
+ border:none;mso-border-alt:solid windowtext .5pt;mso-padding-alt:0in 5.4pt 0in 5.4pt">
+  <tr>
+    <td width="129" valign="top" style="width:77.4pt;border:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><b><font size="2">Strategy</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </b></p>
+    </td>
+    <td width="248" valign="top" style="width:148.5pt;border:solid windowtext .5pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><b><font size="2">Advantages</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </b></p>
+    </td>
+    <td width="267" valign="top" style="width:160.2pt;border:solid windowtext .5pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><b><font size="2">Disadvantages</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </b></p>
+    </td>
+    <td width="215" valign="top" style="width:128.7pt;border:solid windowtext .5pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><b><font size="2">When to Use</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </b></p>
+    </td>
+  </tr>
+  <tr>
+    <td width="129" valign="top" style="width:77.4pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><a href="#MapHierarchyToTable">One table per
+      hierarchy</a><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+    <td width="248" valign="top" style="width:148.5pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Simple approach.</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+      <p class="MsoNormal"><font size="2">Easy to add new classes, you just need to add new
+      columns for the additional data.</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+      <p class="MsoNormal"><font size="2">Supports polymorphism by simply changing the type of
+      the row.</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+      <p class="MsoNormal"><font size="2">Data access is fast because the data is in one table.</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+      <p class="MsoNormal"><font size="2">Ad-hoc </font> <a href="http://www.agiledata.org/essays/reporting.html">reporting</a><font size="2">
+      is very easy because all of the data is found in one table. </font> <o:p>
+      </o:p>
+      </p>
+    </td>
+    <td width="267" valign="top" style="width:160.2pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Coupling within the class hierarchy is increased
+      because all classes are directly coupled to the same table.<span style="mso-spacerun:
+  yes">&nbsp; </span>A change in one class can affect the table which can then
+      affect the other classes in the hierarchy.</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+      <p class="MsoNormal"><font size="2">Space potentially wasted in the database.</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+      <p class="MsoNormal"><font size="2">Indicating the type becomes complex when significant
+      overlap between types exists.</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+      <p class="MsoNormal"><font size="2">Table can grow quickly for large hierarchies.</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="215" valign="top" style="width:128.7pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">This is a good strategy for simple and/or shallow
+      class hierarchies where there is little or no overlap between the types
+      within the hierarchy.</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="129" valign="top" style="width:77.4pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><a href="#MapEachClassToTable">One table per concrete
+      class</a><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+    <td width="248" valign="top" style="width:148.5pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Easy to do ad-hoc </font> <a href="http://www.agiledata.org/essays/reporting.html">reporting</a><font size="2">
+      as all the data you need about a single class is stored in only one table.</font><span style="mso-spacerun: yes"><font size="2">&nbsp;
+      </font>
+      </span><o:p>
+      </o:p>
+      </p>
+      <p class="MsoNormal"><font size="2">Good performance to access a single object’s data.</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="267" valign="top" style="width:160.2pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">When you modify a class you need to modify its table
+      and the table of any of its subclasses.<span style="mso-spacerun: yes">&nbsp;
+      </span>For example if you were to add height and weight to the <i>Person</i>
+      class you would need to add columns to the <i>Customer</i>, <i>Employee</i>,
+      and <i>Executive</i> tables. </font> <o:p>
+      </o:p>
+      </p>
+      <p class="MsoNormal"><font size="2">Whenever an object changes its role, perhaps you hire
+      one of your customers, you need to copy the data into the appropriate
+      table and assign it a new POID value (or perhaps you could reuse the
+      existing POID value).</font><span style="mso-spacerun: yes"><font size="2">&nbsp; 
+		</font> </span><o:p>
+      </o:p>
+      </p>
+      <p class="MsoNormal"><font size="2">It is difficult to support multiple roles and still
+      maintain data integrity.<span style="mso-spacerun: yes">&nbsp; </span>For
+      example, where would you store the name of someone who is both a customer
+      and an employee?</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+    <td width="215" valign="top" style="width:128.7pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">When changing types and/or overlap between types is
+      rare.</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="129" valign="top" style="width:77.4pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><a href="#MapEachClassToTable">One table per class</a><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="248" valign="top" style="width:148.5pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Easy to understand because of the one-to-one mapping.</font><span style="mso-spacerun: yes"><font size="2">&nbsp;
+      </font>
+      </span><o:p>
+      </o:p>
+      </p>
+      <p class="MsoNormal"><font size="2">Supports polymorphism very well as you merely have
+      records in the appropriate tables for each type.</font><span style="mso-spacerun: yes"><font size="2">&nbsp;
+      </font>
+      </span><o:p>
+      </o:p>
+      </p>
+      <p class="MsoNormal"><font size="2">Very easy to modify superclasses and add new
+      subclasses as you merely need to modify/add one table. </font> <o:p>
+      </o:p>
+      </p>
+      <p class="MsoNormal"><font size="2">Data size grows in direct proportion to growth in the
+      number of objects. </font> <o:p>
+      </o:p>
+      </p>
+      <p class="MsoNormal"><font size="2">&nbsp;</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="267" valign="top" style="width:160.2pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">There are many tables in the database, one for every
+      class (plus tables to maintain relationships).</font><span style="mso-spacerun: yes"><font size="2">&nbsp;
+      </font>
+      </span><o:p>
+      </o:p>
+      </p>
+      <p class="MsoNormal"><font size="2">Potentially takes longer to read and write data using
+      this technique because you need to access multiple tables.<span style="mso-spacerun: yes">&nbsp;
+      </span>This problem can be alleviated if you organize your database
+      intelligently by putting each table within a class hierarchy on different
+      physical disk-drive platters (this assumes that the disk-drive heads all
+      operate independently).</font><span style="mso-spacerun: yes"><font size="2">&nbsp; 
+		</font> </span><o:p>
+      </o:p>
+      </p>
+      <p class="MsoNormal"><font size="2">Ad-hoc </font> <a href="http://www.agiledata.org/essays/reporting.html">reporting</a><font size="2">
+      on your database is difficult, unless you add views to simulate the
+      desired tables.</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+    <td width="215" valign="top" style="width:128.7pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">When there is significant overlap between types or
+      when changing types is common.</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="129" valign="top" style="width:77.4pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><a href="#MapToGenericStructure">Generic schema</a><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="248" valign="top" style="width:148.5pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Works very well when database access is encapsulated
+      by a robust </font> <a href="http://www.agiledata.org/essays/implementationStrategies.html#StrategyPersistenceFrameworks">persistence
+      framework</a><font size="2">.</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+      <p class="MsoNormal"><font size="2">It can be extended to provide meta data to support a
+      wide range of mappings, including relationship mappings.<span style="mso-spacerun:
+  yes">&nbsp; </span>In short, it is the start at a mapping meta data engine.</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+      <p class="MsoNormal"><font size="2">It is incredibly flexible, enabling you to quickly
+      change the way that you store objects because you merely need to update
+      the meta data stored in the <i>Class</i>, <i>Inheritance</i>, <i>Attribute</i>,
+      and <i>AttributeType</i> tables accordingly.</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="267" valign="top" style="width:160.2pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Very advanced technique that can be difficult to
+      implement at first.</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+      <p class="MsoNormal"><font size="2">It only works for small amounts of data because you
+      need to access many database rows to build a single object.</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+      <p class="MsoNormal"><font size="2">You will likely want to build a small administration
+      application to maintain the meta data.</font><span style="mso-spacerun: yes"><font size="2">&nbsp;
+      </font>
+      </span><o:p>
+      </o:p>
+      </p>
+      <p class="MsoNormal"><a href="http://www.agiledata.org/essays/reporting.html">Reporting</a><font size="2">
+      against this data can be very difficult due to the need to access several
+      rows to obtain the data for a single object.</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="215" valign="top" style="width:128.7pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">For complex applications that work with small amounts
+      of data, or for applications where you data access isn’t very common or
+      you can pre-load data into caches.</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>3. <a name="MappingRelationships">Mapping Object Relationships</a></h3>
+<p>In addition to property and inheritance mapping you
+need to understand the art of relationship mapping.&nbsp; There are three types of object relationships that you need
+to map: association, aggregation, and composition.&nbsp; For now, I’m going to treat these three types of
+relationship the same – they are mapped the same way although there are
+interesting nuances when it comes to <a href="http://www.agiledata.org/essays/referentialIntegrity.html">referential
+integrity</a>.&nbsp; </p>
+<p>&nbsp;</p>
+<h3>3.1 <a name="TypesOfRelationships">Types of Relationships</a></h3>
+<p class="MsoNormal">There are two categories of object relationships that you
+need to be concerned with when mapping.<span style="mso-spacerun: yes">&nbsp; </span>The
+first category is based on multiplicity and it includes three types:</p>
+<ul>
+  <li>
+    <p class="MsoNormal"><b>One-to-one relationships</b>.<span style="mso-spacerun:
+yes">&nbsp; </span>This is a relationship where the maximums of each of its
+    multiplicities is one, an example of which is <i>holds</i> relationship
+    between <i>Employee</i> and <i>Position</i> in 
+	<a href="#Figure11ObjectRelationships">Figure
+    11</a>.<span style="mso-spacerun:
+yes">&nbsp; </span>An employee holds one and only one position and a position
+    may be held by one employee (some positions go unfilled).</li>
+  <li>
+    <p class="MsoNormal"><b>One-to-many relationships</b>. Also known as a
+    many-to-one relationship, this occurs when the maximum of one multiplicity
+    is one and the other is greater than one.<span style="mso-spacerun: yes">&nbsp;
+    </span>An example is the <i>works in</i> relationship between <i>Employee</i>
+    and <i>Division</i>.<span style="mso-spacerun: yes">&nbsp; </span>An
+    employee works in one division and any given division has one or more
+    employees working in it.</li>
+  <li>
+    <p class="MsoNormal"><b>Many-to-many relationships</b>. This is a
+    relationship where the maximum of both multiplicities is greater than one,
+    an example of which is the <i>assigned</i> relationship between <i>Employee</i>
+    and <i>Task</i>.<span style="mso-spacerun: yes">&nbsp; </span>An employee is
+    assigned one or more tasks and each task is assigned to zero or more
+    employees.</li>
+</ul>
+<p class="MsoNormal">The second category is based on directionality and it
+contains two types, uni-directional relationships and bi-directional
+relationships.</p>
+<ul>
+  <li>
+    <p class="MsoNormal"><b>Uni-directional relationships</b>.<span style="mso-spacerun: yes">&nbsp;
+    </span>A uni-directional relationship when an object knows about the
+    object(s) it is related to but the other object(s) do not know of the
+    original object.<span style="mso-spacerun: yes">&nbsp; </span>An example of
+    which is the <i>holds</i> relationship between <i>Employee</i> and <i>Position</i>
+    in <a href="#Figure11ObjectRelationships">Figure 11</a>, indicated by the
+    line with an open arrowhead on it.<span style="mso-spacerun: yes">&nbsp; </span><i>Employee</i>
+    objects know about the position that they hold, but <i>Position</i> objects
+    do not know which employee holds it (there was no requirement to do so).<span style="mso-spacerun: yes">&nbsp;
+    </span>As you will soon see, uni-directional relationships are easier to
+    implement than bi-directional relationships.</li>
+  <li>
+    <p class="MsoNormal"><b>Bi-directional relationships</b>.<span style="mso-spacerun: yes">&nbsp;
+    </span>A bi-directional relationship exists when the objects on both end of
+    the relationship know of each other, an example of which is the <i>works in</i>
+    relationship between <i>Employee</i> and <i>Division</i>.<span style="mso-spacerun: yes">&nbsp;
+    </span><i>Employee</i> objects know what division they work in and <i>Division</i>
+    objects know what employees work in them.</li>
+</ul>
+<p>&nbsp;</p>
+<p><b><a name="Figure11ObjectRelationships">Figure 11. Relationships between objects.</a></b></p>
+<p align="center">
+<img border="0" src="http://www.agiledata.org/images
+/mappingObjectRelationships.gif"></p>
+<p>&nbsp;</p>
+<p>It is possible to have all six combinations of
+relationship in object schemas.&nbsp; However
+one aspect of the <a href="http://www.agiledata.org/essays/impedanceMismatch.html">impedance
+mismatch</a> between object technology and relational technology is that
+relational technology does not support the concept of uni-directional
+relationships – in relational databases all associations are bi-directional 
+(relationships are implemented via foreign keys, which can be joined/traversed 
+in either direction).&nbsp;&nbsp;</p>
+<p>&nbsp;</p>
+<h3>3.2 <a name="ImplementingObjectRelationships"> How Object Relationships Are
+Implemented</a></h3>
+<p class="BT">Relationships in object schemas are implemented by a combination
+of references to objects and operations.<span style="mso-spacerun: yes">&nbsp; </span>When
+the multiplicity is one (e.g. 0..1 or 1) the relationship is implemented with a
+reference to an object, a getter operation, and a setter operation.<span style="mso-spacerun: yes">&nbsp;
+</span>For example in <a href="#Figure11ObjectRelationships">Figure 11</a> the
+fact that an employee works in a single division is implemented by the <i>Employee</i>
+class via the combination of the attribute <i>division</i>, the <i>getDivision()</i>
+operation which returns the value of <i>division</i>, and the <i>setDivision()</i>
+operation which sets the value of the <i>division</i> attribute.<span style="mso-spacerun: yes">&nbsp;The
+attribute(s) and operations required to implement a relationship are often
+referred to as scaffolding.</span></p>
+<p class="BT">When the multiplicity is many (e.g. N, 0..*, 1..*) the
+relationship is implemented via a collection attribute, such as an <i>Array</i>
+or a <i>HashSet</i> in Java, and operations to manipulate that array.<span style="mso-spacerun:
+yes">&nbsp; </span>For example the <i>Division</i> class implements a <i>HashSet</i>
+attribute named <i>employees</i>, <i>getEmployees()</i> to get the value, <i>setEmployees()</i>
+to set the value, <i>addEmployee()</i> to add an employee into the <i>HashSet</i>,
+and <i>removeEmployee()</i> to remove an employee from the <i>HashSet</i>.<span style="mso-spacerun: yes">&nbsp;</span></p>
+<p class="BT">When a relationship is uni-directional the code is implemented
+only by the object that knows about the other object(s).<span style="mso-spacerun:
+yes">&nbsp; </span>For example, in the uni-directional relationship between <i>Employee</i>
+and <i>Position</i> only the <i>Employee</i> class implements the association.<span style="mso-spacerun: yes">&nbsp;
+</span>Bi-directional associations, on the other hand, are implemented by both
+classes, as you can see with the many-to-many relationship between <i>Employee</i>
+and <i>Task</i>.</p>
+<p>&nbsp;</p>
+<h3>3.3 How <a name="ImplementingRDBRelationships">Relational Database
+Relationships</a> Are Implemented</h3>
+<p>Relationships in relational databases are maintained through the use of
+foreign keys.<span style="mso-spacerun: yes">&nbsp; </span>A foreign key is a
+data attribute(s) that appears in one table that may be part of or is
+coincidental with the key of another table.<span style="mso-spacerun: yes">&nbsp;
+</span>With a one-to-one relationship the foreign key needs to be implemented by
+one of the tables.<span style="mso-spacerun: yes">&nbsp; </span>In 
+<a href="#Figure12RDBRelationships">Figure
+12</a> you see that the <i>Position</i> table includes <i>EmployeePOID</i>, a
+foreign key to the <i>Employee</i> table, to implement the association.<span style="mso-spacerun: yes">&nbsp;
+</span>I could easily have implemented a <i>PositionPOID</i> column in <i>Employee</i>
+instead.</p>
+<p>&nbsp;</p>
+<p><b><a name="Figure12RDBRelationships">Figure 12. Relationships
+in a relational database</a>.</b></p>
+<p align="center">
+<img border="0" src="http://www.agiledata.org/images
+/mappingDBRelationships.gif"></p>
+<p>&nbsp;</p>
+<p class="BT">To implement a one-to-many relationship you implement a foreign
+key from the “one table” to the “many table”.<span style="mso-spacerun: yes">&nbsp;
+</span>For example <i>Employee</i> includes a <i>DivisionPOID</i> column to
+implement the <i>works in</i> relationship to <i>Division</i>.<span style="mso-spacerun: yes">&nbsp;
+</span>You could also choose to overbuild your database schema and implement a
+one-to-many relationship via an associative table, effectively making it a
+many-to-many relationship.</p>
+<p class="BT">There are two ways to implement many-to-many associations in a
+relational database.<span style="mso-spacerun: yes">&nbsp; </span>The first one
+is to implement in each table the foreign key column(s) to the other table
+several times.<span style="mso-spacerun: yes">&nbsp; </span>For example to
+implement the many-to-many relationship between <i>Employee</i> and <i>Task</i>
+you could have five <i>TaskPOID</i> columns in <i>Employee</i> and the <i>Task</i>
+table could include seven <i>EmployeePOID</i> columns.<span style="mso-spacerun:
+yes">&nbsp; </span>Unfortunately you run into a problem with this approach when
+you assign more than five tasks to an employee or more than seven employees to a
+single task.<span style="mso-spacerun: yes">&nbsp; </span>A better approach is
+to implement what is called an associative table, an example of which is <i>EmployeeTask</i>
+in <a href="#Figure12RDBRelationships">Figure 12</a>, which includes the
+combination of the primary keys of the tables that it associates.<span style="mso-spacerun: yes">&nbsp;
+</span>With this approach you could have fifty people assigned to the same task,
+or twenty tasks assigned to the same person, and it wouldn’t matter.&nbsp; The
+basic &quot;trick&quot; is that the many-to-many relationship is converted into
+two one-to-many relationships, both of which involve the associative table.</p>
+<p class="BT">Because foreign keys are used to join tables, all relationships in
+a relational database are effectively bi-directional.<span style="mso-spacerun:
+yes">&nbsp; </span>This is why it doesn’t matter in which table you implement
+a one-to-one relationship, the code to join the two tables is virtually the
+same.<span style="mso-spacerun: yes">&nbsp; </span>For example, with the
+existing schema in <a href="#Figure12RDBRelationships">Figure 12</a> the SQL
+code to join across the holds relationship would be</p>
+<table border="1" width="53%">
+  <tr>
+    <td width="100%">
+      <p class="Code">SELECT * FROM Position, Employee</p>
+      <p class="Code">WHERE Position.EmployeePOID = Employee.EmployeePOID</td>
+  </tr>
+</table>
+<p class="BT">Had the foreign key been implemented in the Employee table the SQL
+code would be</p>
+<table border="1" width="53%">
+  <tr>
+    <td width="100%">
+      <p class="Code">SELECT * FROM Position, Employee</p>
+      <p class="Code">WHERE Position.PositionPOID = Employee.PositionPOID</td>
+  </tr>
+</table>
+<p class="BT">&nbsp;
+</p>
+<p>A consistent key strategy within your database can
+greatly simplify your relationship mapping efforts.&nbsp; The first step is to prefer single-column keys.&nbsp;
+The next step is to use a globally unique surrogate key, perhaps
+following the <a href="http://www.agiledata.org/essays/dataModeling101.html#AssignKeys">GUID
+or HIGH-LOW</a> strategies, so you are always mapping to the same type of key
+column.</o:p>
+</p>
+<p class="BT">Now that we understand how to implement relationships in each
+technology, let’s see how you map them.<span style="mso-spacerun: yes">&nbsp; </span>I
+will describe the mappings from the point of view of mapping the object
+relationships into the relational database.<span style="mso-spacerun:
+yes">&nbsp; </span>An interesting thing to remember is that in some cases you
+have design choices to make.<span style="mso-spacerun: yes">&nbsp; </span>Once
+again beware of the “magic CASE tool button” that supposedly automates
+everything for you.</p>
+<p>&nbsp;</p>
+<h3>3.4 <a name="RelationshipMappings">Relationship Mappings</a></h3>
+<p class="BT">A general rule of thumb with relationship mapping is that you
+should keep the multiplicities the same.<span style="mso-spacerun: yes">&nbsp; </span>Therefore
+a <a href="#OneToOneMappings"> one-to-one</a> object relationship maps to a one-to-one data relationship, a
+<a href="#OneToManyMappings">
+one-to-many</a> maps to a one-to-many, and a <a href="#ManyToManyMappings"> many-to-many</a> maps to a many-to-many.<span style="mso-spacerun: yes">&nbsp;
+</span>The fact is that this doesn’t have to be the case, you can implement a
+one-to-one object relationship with to a one-to-many or even a many-to-many data
+relationship.<span style="mso-spacerun: yes">&nbsp; </span>This is because a
+one-to-one data relationship is a subset of a one-to-many data relationship and
+a one-to-many relationship is a subset of a many-to-many relationship.<span style="mso-spacerun: yes">&nbsp;</span></p>
+<a href="#Figure13PropertyMappings">Figure
+13</a> depicts the property mappings between the object schema of 
+<a href="#Figure11ObjectRelationships">Figure
+11</a> and the data schema of <a href="#Figure12RDBRelationships">Figure 12</a>.
+Note how I have only had to map the business properties and the 
+<a href="#ShadowData">shadow
+information</a> of the objects, but not <a href="#ShadowData">scaffolding attributes
+</a>such as <i>Employee.position</i>
+and <i>Employee.tasks</i>. These scaffolding attributes are represented via the
+shadow information that is mapped into the database.&nbsp;
+When the relationship is read into memory the values of stored in the
+primary key columns will be stored in the corresponding shadow attributes within
+the objects.&nbsp; At the same time the
+relationship that the primary key columns represent will be defined between the
+corresponding objects by setting the appropriate values in their scaffolding
+attributes.
+<p>&nbsp;</p>
+<p><b><a name="Figure13PropertyMappings">Figure 13. Property mappings.</a></b></p>
+<table border="1" cellspacing="0" cellpadding="0" style="margin-left:54.9pt;
+ border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt">
+  <tr>
+    <td width="338" valign="top" style="width:202.5pt;border:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><b><font size="2">Property</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </b></p>
+    </td>
+    <td width="360" valign="top" style="width:3.0in;border:solid windowtext .5pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><b><font size="2">Column</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </b></p>
+    </td>
+  </tr>
+  <tr>
+    <td width="338" valign="top" style="width:202.5pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Position.title</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="360" valign="top" style="width:3.0in;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Position.Title</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="338" valign="top" style="width:202.5pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Position.positionPOID</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="360" valign="top" style="width:3.0in;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Position.PositionPOID</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="338" valign="top" style="width:202.5pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Employee.name</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="360" valign="top" style="width:3.0in;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Employee.Name</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="338" valign="top" style="width:202.5pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Employee.employeePOID</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="360" valign="top" style="width:3.0in;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Employee.EmployeePOID</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="338" valign="top" style="width:202.5pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Employee.employeePOID</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="360" valign="top" style="width:3.0in;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">EmployeeTask.EmployeePOID</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="338" valign="top" style="width:202.5pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Division.name</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="360" valign="top" style="width:3.0in;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Division.Name</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="338" valign="top" style="width:202.5pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Division.divisionPOID</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="360" valign="top" style="width:3.0in;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Division.DivisionPOID</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="338" valign="top" style="width:202.5pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Task.description</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="360" valign="top" style="width:3.0in;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Task.Description</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="338" valign="top" style="width:202.5pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Task.taskPOID</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="360" valign="top" style="width:3.0in;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Task.TaskPOID</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="338" valign="top" style="width:202.5pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Task.taskPOID</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="360" valign="top" style="width:3.0in;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">EmployeeTask.TaskPOID</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<h3>3.4.1 <a name="OneToOneMappings">One-To-One Mappings</a></h3>
+<p>Consider the one-to-one object relationship between <i>Employee</i> and <i>Position</i>.<span style="mso-spacerun: yes">&nbsp;
+</span>Let’s assume that whenever a <i>Position</i> or an <i>Employee</i>
+object is read into memory that the application will automatically traverse the <i>holds</i>
+relationship and automatically read in the corresponding object.<span style="mso-spacerun:
+yes">&nbsp; </span>The other option would be to manually traverse the
+relationship in the code, taking a lazy read approach where the other
+object is read at the time it is required by the application.<span style="mso-spacerun:
+yes">&nbsp; </span>The trade-offs of these two approaches are discussed in <a href="http://www.agiledata.org/essays/referentialIntegrity.html#LazyReads">Implementing
+Referential Integrity</a>.<span style="mso-spacerun: yes">&nbsp; </span>
+<a href="#Figure14MappingRelationships">Figure
+14</a> shows how the object relationships are mapped.<span style="mso-spacerun: yes">&nbsp;&nbsp;</span></p>
+<p>&nbsp;</p>
+<p><b><a name="Figure14MappingRelationships">Figure 14. Mapping the
+relationships.</a></b></p>
+<table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;
+ mso-table-layout-alt:fixed;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt">
+  <tr>
+    <td width="122" valign="top" style="width:72.9pt;border:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><b><font size="2">Object Relationship</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </b></p>
+    </td>
+    <td width="113" valign="top" style="width:67.5pt;border:solid windowtext .5pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><b><font size="2">From</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </b></p>
+    </td>
+    <td width="60" valign="top" style="width:.5in;border:solid windowtext .5pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><b><font size="2">To</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </b></p>
+    </td>
+    <td width="98" valign="top" style="width:58.5pt;border:solid windowtext .5pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><b><font size="2">Cardinality</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </b></p>
+    </td>
+    <td width="129" valign="top" style="width:77.55pt;border:solid windowtext .5pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><b><font size="2">Automatic Read
+      </font>
+      </b></p>
+    </td>
+    <td width="191" valign="top" style="width:114.3pt;border:solid windowtext .5pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><b><font size="2">Column(s)</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </b></p>
+    </td>
+    <td width="147" valign="top" style="width:88.05pt;border:solid windowtext .5pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><b><font size="2">Scaffolding Property</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </b></p>
+    </td>
+  </tr>
+  <tr>
+    <td width="122" valign="top" style="width:72.9pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">holds</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="113" valign="top" style="width:67.5pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Employee</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="60" valign="top" style="width:.5in;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Position</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="98" valign="top" style="width:58.5pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">One</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+    <td width="129" valign="top" style="width:77.55pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Yes</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+    <td width="191" valign="top" style="width:114.3pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Position.EmployeePOID</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="147" valign="top" style="width:88.05pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Employee.position</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="122" valign="top" style="width:72.9pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">held by</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="113" valign="top" style="width:67.5pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Position
+      </font>
+      </p>
+    </td>
+    <td width="60" valign="top" style="width:.5in;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Employee
+    </font>
+    </td>
+    <td width="98" valign="top" style="width:58.5pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">One</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+    <td width="129" valign="top" style="width:77.55pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Yes</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+    <td width="191" valign="top" style="width:114.3pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Position.EmployeePOID</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="147" valign="top" style="width:88.05pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Employee.position</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="122" valign="top" style="width:72.9pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">works in</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="113" valign="top" style="width:67.5pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Employee</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="60" valign="top" style="width:.5in;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Division</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="98" valign="top" style="width:58.5pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">One</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+    <td width="129" valign="top" style="width:77.55pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Yes</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+    <td width="191" valign="top" style="width:114.3pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Employee.DivisionPOID</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="147" valign="top" style="width:88.05pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Employee.division</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="122" valign="top" style="width:72.9pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">has working in it</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="113" valign="top" style="width:67.5pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Division</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="60" valign="top" style="width:.5in;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Employee</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="98" valign="top" style="width:58.5pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Many</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+    <td width="129" valign="top" style="width:77.55pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">No</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+    <td width="191" valign="top" style="width:114.3pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Employee.DivisionPOID</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="147" valign="top" style="width:88.05pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Division.employees</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="122" valign="top" style="width:72.9pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">assigned</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="113" valign="top" style="width:67.5pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Employee</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="60" valign="top" style="width:.5in;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Task</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+    <td width="98" valign="top" style="width:58.5pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Many</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+    <td width="129" valign="top" style="width:77.55pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">No</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+    <td width="191" valign="top" style="width:114.3pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Employee.EmployeePOID</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+      <p class="MsoNormal"><font size="2">EmployeeTask.EmployeePOID</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="147" valign="top" style="width:88.05pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Employee.tasks</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="122" valign="top" style="width:72.9pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">assigned to</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="113" valign="top" style="width:67.5pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Task</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+    <td width="60" valign="top" style="width:.5in;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Employee</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="98" valign="top" style="width:58.5pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Many</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+    <td width="129" valign="top" style="width:77.55pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">No</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+    <td width="191" valign="top" style="width:114.3pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Task.TaskPOID</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+      <p class="MsoNormal"><font size="2">EmployeeTask.TaskPOID</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="147" valign="top" style="width:88.05pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Task.employees</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p class="MsoNormal">Let’s work through the logic of retrieving a single <i>Position</i>
+object one step at a time:</p>
+<ol>
+  <li>
+    <p class="MsoNormal">The <i>Position</i> object is read into memory.</li>
+  <li>
+    <p class="MsoNormal">The <i>holds</i> relationship is automatically
+    traversed.</li>
+  <li>
+    <p class="MsoNormal">The value held by the <i>Position.EmployeePOID</i>
+    column is used to identify the single employee that needs to be read into
+    memory.</li>
+  <li>
+    <p class="MsoNormal">The <i>Employee</i> table is searched for a record with
+    that value of <i>EmployeePOID</i>.</li>
+  <li>
+    <p class="MsoNormal">The <i>Employee</i> object (if any) is read in and 
+	instantiated (due to the automatic read indicated in the held by row of 
+	Figure 14).</li>
+  <li>
+    <p class="MsoNormal">The value of the <i>Employee.position</i> attribute is
+    set to reference the <i>Position</i> object.</li>
+</ol>
+<p>&nbsp;</p>
+<p class="MsoNormal">Now let’s work through the logic of retrieving a single <i>Employee</i>
+object one step at a time:</p>
+<ol>
+  <li>
+    <p class="MsoNormal">The <i>Employee</i> object is read into memory.</li>
+  <li>
+    <p class="MsoNormal">The <i>holds</i> relationship is automatically
+    traversed.</li>
+  <li>
+    <p class="MsoNormal">The value held by the <i>Employee.EmployeePOID</i>
+    column is used to identify the single position that needs to be read into
+    memory.</li>
+  <li>
+    <p class="MsoNormal">The <i>Position</i> table is searched for a row with
+    that value of <i>EmployeePOID</i>.</li>
+  <li>
+    <p class="MsoNormal">The <i>Position</i> object is read in and instantiated 
+	(due to the automatic read indicated in the holds row).</li>
+  <li>
+    <p class="MsoNormal">The value of the <i>Employee.position</i> attribute is
+    set to reference the <i>Position</i> object.</li>
+</ol>
+<p class="BT">Now let’s consider how the objects would be saved to the
+database.<span style="mso-spacerun: yes">&nbsp; </span>Because the relationship
+is to be automatically traversed, and to maintain referential integrity, a <a href="http://www.agiledata.org/essays/referentialIntegrity.html#Transactions">transaction</a>
+is created.<span style="mso-spacerun: yes">&nbsp; </span>The next step is to add
+update statements for each object to the transaction.<span style="mso-spacerun: yes">&nbsp;
+</span>Each update statement includes both the business attributes and the key
+values mapped in <a href="#Figure13PropertyMappings">Figure 13</a>.<span style="mso-spacerun: yes">&nbsp;
+</span>Because relationships are implemented via foreign keys, and because those
+values are being updated, the relationship is effectively being persisted.<span style="mso-spacerun: yes">&nbsp;
+</span>The transaction is submitted to the database and run (see
+<a href="http://www.agiledata.org/essays/transactionControl.html">Introduction 
+to Transaction Control</a> for details).</p>
+<p class="BT">There is one annoyance with the way the holds relationship has
+been mapped into the database.<span style="mso-spacerun: yes">&nbsp; </span>Although
+the direction of this relationship is from <i>Employee</i> to <i>Position</i>
+within the object schema, it’s been implemented from <i>Position</i> to <i>Employee</i>
+in the database.<span style="mso-spacerun: yes">&nbsp; </span>This isn’t a big
+deal, but it is annoying.<span style="mso-spacerun: yes">&nbsp; </span>In the
+data schema you can implement the foreign key in either table and it wouldn’t
+make a difference, so from a data point of view when everything else is equal
+you could toss a coin.<span style="mso-spacerun: yes">&nbsp; </span>Had there
+been a potential requirement for the holds relationship to turn into a
+one-to-many relationship, something that a 
+<a href="http://www.agilemodeling.com/artifacts/changeCase.htm">change case</a>
+would indicate, then you would be motivated to implement the foreign key to
+reflect this potential requirement.<span style="mso-spacerun: yes">&nbsp; </span>For
+example, the existing data model would support an employee holding many
+positions.<span style="mso-spacerun: yes">&nbsp; </span>However, had the object
+schema been taken into account, and if there were no future requirements
+motivating you to model it other wise, it would have been cleaner to implement
+the foreign key in the <i>Employee</i> table instead.</p>
+<p>&nbsp;</p>
+<h3>3.4.2 <a name="OneToManyMappings">One-To-Many Mappings</a></h3>
+<p class="MsoNormal">Now let’s consider the <i>works in</i> relationship
+between <i>Employee</i> and <i>Division</i> in 
+<a href="#Figure11ObjectRelationships">Figure
+11</a>.<span style="mso-spacerun: yes">&nbsp; </span>This is a one-to-many
+relationship – an employee works in one division and a single division has
+many employees working in it.<span style="mso-spacerun: yes">&nbsp; </span>As
+you can see in <a href="#Figure13PropertyMappings">Figure 13</a> an interesting
+thing about this relationship is that it should be automatically traversed from <i>Employee</i>
+to <i>Division</i>, something often referred to as a cascading read, but not in
+the other direction.<span style="mso-spacerun:
+yes">&nbsp; </span>Cascading saves and cascading deletes are also possible,
+something covered in the discussion of <a href="http://www.agiledata.org/essays/referentialIntegrity.html">referential
+integrity</a>.</p>
+<p class="MsoNormal">When an employee is read into memory the relationship is
+automatically traversed to read in the division that they work in.<span style="mso-spacerun: yes">&nbsp;
+</span>Because you don’t want several copies of the same division, for example
+if you have ten employee objects that all work for the IT division you want them
+to refer to the same IT division object in memory.<span style="mso-spacerun: yes">&nbsp;
+</span>The implication is that you will need to implement a strategy for doing
+this, one option is to implement a cache that ensures only one copy of an object
+exists in memory or to simply have the <i>Division</i> class implement it’s
+own collection of instances in memory (effectively a mini-cache).<span style="mso-spacerun: yes">&nbsp;
+</span>If the application needs to it will read the <i>Division</i> object into
+memory, then it will set the value of <i>Employee.division</i> to reference the
+appropriate <i>Division</i> object.<span style="mso-spacerun: yes">&nbsp; </span>Similarly
+the <i>Division.addEmployee()</i> operation will be invoked to add the employee
+object into its collection.</p>
+<p class="MsoNormal">Saving the relationship works in the same way as it does
+for one-to-one relationships – when the objects are saved so are their primary
+and foreign key values so therefore the relationship is automatically saved.<o:p>
+</p>
+<p class="MsoNormal">Every example in this article uses foreign keys, such as <i>Employee.DivisionPOID</i>,
+pointing to the primary keys of other tables, in this case <i>Division.DivisionPOID</i>.<span style="mso-spacerun: yes">&nbsp;&nbsp;
+</span>This doesn’t have to be the case, sometimes a foreign key can refer to
+an alternate key.<span style="mso-spacerun: yes">&nbsp; </span>For example, if
+the <i>Employee</i> table of <a href="#Figure12RDBRelationships">Figure 12</a>
+were to include a <i>SocialSecurityNumber</i> column then that would be an
+alternate key for that table (assuming all employees are American citizens).<span style="mso-spacerun: yes">&nbsp;
+</span>If this where the case you would have the option to replace the <i>Position.EmployeePOID</i>
+column with <i>Position.SocialSecurityNumber</i>.</p>
+<p>&nbsp;</p>
+<h3>3.4.3 <a name="ManyToManyMappings">Many-To-Many Mappings</a></h3>
+<p class="BT">To implement many-to-many relationships you need the concept of an
+associative table, a data entity whose sole purpose is to maintain the
+relationship between two or more tables in a relational database. In 
+<a href="#Figure11ObjectRelationships">Figure
+11</a> there is a many-to-many relationship between <i>Employee</i> and <i>Task</i>.<span style="mso-spacerun: yes">&nbsp;
+</span>In the data schema of <a href="#Figure12RDBRelationships">Figure 12</a> I
+needed to introduce the associative table <i>EmployeeTask</i> to implement a
+many-to-many relationship the <i>Employee</i> and <i>Task</i> tables.<span style="mso-spacerun: yes">&nbsp;
+</span>In relational databases the attributes contained in an associative table
+are traditionally the combination of the keys in the tables involved in the
+relationship, in the case <i>EmployeePOID</i> and <i>TaskPOID</i>.<span style="mso-spacerun: yes">&nbsp;
+</span>The name of an associative table is typically either the combination of
+the names of the tables that it associates or the name of the association that
+it implements. In this case I chose <i>EmployeeTask</i> over <i>Assigned</i>.<span style="mso-spacerun: yes">&nbsp;&nbsp;</span></p>
+<p class="BT">Notice the multiplicities in 
+<a href="#Figure11ObjectRelationships">Figure
+11</a>.<span style="mso-spacerun: yes">&nbsp; </span>The rule is that the
+multiplicities &quot;cross over&quot; once the associative table is introduced,
+as indicated in <a href="#Figure12RDBRelationships">Figure 12</a>.<span style="mso-spacerun: yes">&nbsp;
+</span>A multiplicity of 1 is always introduced on the outside edges of the
+relationship within the data schema to preserve overall multiplicity of the
+original relationship.<span style="mso-spacerun: yes">&nbsp; </span>The original
+relationship indicated that an employee is assigned to one or more tasks and
+that a task has zero or more employees assigned to it. In the data schema you
+see that this is still true even with the associative table in place to maintain
+the relationship.</p>
+<p class="MsoNormal">Assume that an employee object is in memory and we need a
+list of all the tasks they have been assigned.<span style="mso-spacerun: yes">&nbsp;
+</span>The steps that the application would need to go through are:</p>
+<ol>
+  <li>
+    <p class="MsoNormal">Create a SQL Select statement that joins the <i>EmployeeTask</i>
+    and <i>Task</i> tables together, choosing all <i>EmployeeTask</i> records
+    with the an <i>EmployeePOID</i> value the same as the employee we are
+    putting the task list together.</li>
+  <li>
+    <p class="MsoNormal">The Select statement is run against the database.</li>
+  <li>
+    <p class="MsoNormal">The data records representing these tasks are marshaled
+    into <i>Task</i> objects.<span style="mso-spacerun: yes">&nbsp; </span>Part
+    of this effort includes checking to see if the <i>Task</i> object is already
+    in memory.<span style="mso-spacerun: yes">&nbsp; </span>If it is then we may
+    choose to refresh the object with the new data values (this is a <a href="http://www.agiledata.org/essays/concurrencyControl.html">concurrency</a>
+    issue).</li>
+  <li>
+    <p class="MsoNormal">The <i>Employee.addTask()</i> operation is invoked for
+    each <i>Task</i> object to build the collection up.</li>
+</ol>
+<p class="MsoNormal">A similar process would have been followed to read in the
+employees involved in a given task.<span style="mso-spacerun: yes">&nbsp; </span>To
+save the relationship, still from the point of view of the <i>Employee</i>
+object, the steps would be:</p>
+<ol>
+  <li>
+    <p class="MsoNormal">Start a transaction.</li>
+  <li>
+    <p class="MsoNormal">Add Update statements for any task objects that have
+    changed.</li>
+  <li>
+    <p class="MsoNormal">Add Insert statements for the <i>Task</i> table for any
+    new tasks that you have created.</li>
+  <li>
+    <p class="MsoNormal">Add Insert statements for the <i>EmployeeTask</i> table
+    for the new tasks.</li>
+  <li>
+    <p class="MsoNormal">Add Delete statements for the <i>Task</i> table any
+    tasks that have been deleted.<span style="mso-spacerun: yes">&nbsp; </span>This
+    may not be necessary if the individual object deletions have already
+    occurred.</li>
+  <li>
+    <p class="MsoNormal">Add Delete statements for the <i>EmployeeTask</i> table
+    for any tasks that have been deleted, a step that may not be needed if the
+    individual deletions have already occurred.</li>
+  <li>
+    <p class="MsoNormal">Add Delete statements for the <i>EmployeeTask</i> table
+    for any tasks that are no longer assigned to the employee.</li>
+  <li>
+    <p class="MsoNormal">Run the transaction.</li>
+</ol>
+<p>Many-to-many relationships are interesting because of
+the addition of the associative table.&nbsp; Two
+business classes are being mapped to three data tables to support this
+relationship, so there is extra work to do as a result.</p>
+<p>&nbsp;</p>
+<h3>3.5 <a name="MappingOrderedCollections">Mapping Ordered Collections</a></h3>
+<p class="MsoNormal"><a href="#Figure1SimpleMappingExample">Figure 1</a>
+depicted a classic <i>Order</i> and <i>OrderItem</i> model with an aggregation
+association between the two classes.<span style="mso-spacerun: yes">&nbsp; </span>An
+interesting twist is the {ordered} constraint placed on the relationship –
+users care about the order in which items appear on an order.<span style="mso-spacerun: yes">&nbsp;
+</span>When mapping this to a relational database you need to add an addition
+column to track this information.<span style="mso-spacerun: yes">&nbsp; </span>The
+database schema, also depicted in <a href="#Figure1SimpleMappingExample">Figure
+1</a>, includes the column <i>OrderItem.ItemSequence</i> to persist this
+information.<span style="mso-spacerun: yes">&nbsp; </span>Although this mapping
+seems straightforward on the surface, there are several issues that you need
+take into consideration.<span style="mso-spacerun: yes">&nbsp; </span>These
+issues become apparent when you consider basic persistence functionality for the
+aggregate:</p>
+<ul>
+  <li>
+    <p class="MsoNormal"><b>Read the data in the proper sequence</b>.<span style="mso-spacerun: yes">&nbsp;
+    </span>The scaffolding attribute that implements this relationship must be a
+    collection that enables sequential ordering of references and it must be
+    able to grow as new <i>OrderItems</i> are added to the <i>Order</i>.<span style="mso-spacerun: yes">&nbsp;
+    </span>In <a href="#Figure2IncludingShadowInformation">Figure 2</a> you see
+    that a Vector is used, a Java collection class that meets these
+    requirements.<span style="mso-spacerun: yes">&nbsp; </span>As you read the
+    order and order items into memory the Vector must be filled in the proper
+    sequence.<span style="mso-spacerun: yes">&nbsp; </span>If the values of the <i>OrderItem.ItemSequence
+    </i>column start from 1 and increase by 1 then you can simply use the value
+    of the column as the position to insert order items into the collection.<span style="mso-spacerun: yes">&nbsp;&nbsp;
+    </span>When this isn’t the case you must include an ORDER BY clause in the
+    SQL statement submitted to the database to ensure that the rows appear in
+    order in the result set.</li>
+  <li>
+    <p class="MsoNormal"><b>Don’t include the sequence number in the key</b>.<span style="mso-spacerun: yes">&nbsp;
+    </span>You have an order with five order items in memory and they have been
+    saved into the database.<span style="mso-spacerun:
+yes">&nbsp; </span>You now insert a new order item in between the second and
+    third order items, giving you a total of six order items.<span style="mso-spacerun:
+yes">&nbsp; </span>With the current data schema of 
+	<a href="#Figure1SimpleMappingExample">Figure
+    1</a> you have to renumber the sequence numbers for every order item that
+    appears after the new order item and then write out all them even though
+    nothing has changed other than the sequence number in the other order items.<span style="mso-spacerun: yes">&nbsp;
+    </span>Because the sequence number is part of the primary key of the <i>OrderItem</i>
+    table this could be problematic if other tables, not shown in 
+	<a href="#Figure1SimpleMappingExample">Figure
+    1</a>, refer to rows in <i>OrderItem</i> via foreign keys that include <i>ItemSequence</i>.<span style="mso-spacerun: yes">&nbsp;
+    </span>A better approach is shown in <a href="#Figure15OrderedCollection">Figure
+    15</a> where the <i>OrderItemID</i> column is used as the primary key.</li>
+  <li>
+    <p class="MsoNormal"><b>When do you update sequence numbers after
+    rearranging the order items?</b><span style="mso-spacerun: yes">&nbsp; </span>Whenever
+    you rearrange order items on an order, perhaps you moved the fourth order
+    item to be the second one on the order, you need to update the sequence
+    numbers within the database.<span style="mso-spacerun: yes">&nbsp; </span>You
+    may decide to cache these changes in memory until you decide to write out
+    the entire order, although this runs the risk that the proper sequence
+    won’t be saved in the event of a power outage.</li>
+  <li>
+    <p class="MsoNormal"><b>Do you update sequence numbers after deleting an
+    order item?</b><span style="mso-spacerun: yes">&nbsp; </span>If you delete
+    the fifth of six order items do you want to update the sequence number for
+    what is now the fifth item or do you want to leave it as it.<span style="mso-spacerun: yes">&nbsp;
+    </span>The sequence numbers still work – the values are 1, 2, 3, 4, 6 –
+    but you can no longer use them as the position indicators within your
+    collection without leaving a hole in the fifth position.</li>
+  <li>
+    <p class="MsoNormal"><b>Consider sequence number gaps greater than one.</b><span style="mso-spacerun: yes">&nbsp;
+    </span>Instead of assigning sequence numbers along the lines of 1, 2, 3, …
+    instead assign numbers such as 10, 20, 30 and so on.<span style="mso-spacerun: yes">&nbsp;
+    </span>That way you don’t need to update the values of the <i>OrderItem.ItemSequence</i>
+    column every time you rearrange order items because you can assign a
+    sequence number of 15 when you move something between 10 and 20. You will
+    need to change the values every so often, for example after several
+    rearrangements you may find yourself in the position of trying to insert
+    something between 17 and 18.<span style="mso-spacerun:
+yes">&nbsp; </span>Larger gaps help to avoid this (e.g. 50, 100, 150, …) but
+    you’ll never completely avoid this problem.</li>
+</ul>
+<p class="MsoNormal">&nbsp;</p>
+<p class="MsoNormal"><b><a name="Figure15OrderedCollection">Figure 15.
+Improved data schema for persisting Order and OrderItem.<span style="mso-spacerun: yes">&nbsp;</span></a></b></p>
+<p align="center">
+<img border="0" src="http://www.agiledata.org/images
+/mappingOrderedCollections.gif"></p>
+<p>&nbsp;</p>
+<h3>3.6 <a name="MappingRecursiveAssociations">Mapping Recursive Relationships</a></h3>
+<p class="BT">A recursive relationship, also called reflexive relationships (<a href="http://www.amazon.com/exec/obidos/ASIN/0201702525/ambysoftinc">Reed
+2002</a>; <a href="http://www.amazon.com/exec/obidos/ASIN/0130925691/ambysoftinc">Larman
+2002</a>), is one where the same entity (class, data entity, table, …) is
+involved with both ends of the relationship.<span style="mso-spacerun:
+yes">&nbsp; </span>For example the <i>manages</i> relationship in 
+<a href="#Figure16RecursiveRelationships">Figure
+16</a> is recursive, representing the concept that an employee may manage
+several other employees.<span style="mso-spacerun: yes">&nbsp; </span>The
+aggregate relationship that the <i>Team</i> class has with itself is recursive
+– a team may be a part of one or more other teams.<span style="mso-spacerun: yes">&nbsp;</span></p>
+<p class="BT"><a href="#Figure16RecursiveRelationships">Figure 16</a> depicts a
+class model that includes two recursive relationships and the resulting data
+model that it would be mapped to.<span style="mso-spacerun: yes">&nbsp; </span>For
+the sake of simplicity the class model includes only the classes and their
+relationships and the data model includes only the keys.<span style="mso-spacerun: yes">&nbsp;
+</span>The <a href="#ManyToManyMappings">many-to-many</a> recursive aggregation
+is mapped to the Subteams associative table in the same way that you would map a
+normal many-to-many relationship – the only difference is that both columns
+are foreign keys into the same table.<span style="mso-spacerun: yes">&nbsp; </span>Similarly
+the <a href="#OneToManyMappings">one-to-many</a> <i>manages</i> association is
+mapped in the same way that you would map a normal one-to-many relationship, the
+<i>ManagerEmployeePOID</i> column refers to another row in the <i>Employee</i>
+table where the manager’s data is stored.</p>
+<p>&nbsp;</p>
+<p><b><a name="Figure16RecursiveRelationships">Figure 16. Mapping recursive
+relationships.</a></b></p>
+<p align="center">
+<img border="0" src="http://www.agiledata.org/images
+/mappingRecursiveRelationships.gif"></p>
+<p>&nbsp;</p>
+<h3>4. <a name="MappingClassScope">Mapping Class-Scope</a>  Properties</h3>
+<p class="MsoNormal">Sometimes a class will implement a property that is
+applicable to all of its instances and not just single instances.<span style="mso-spacerun: yes">&nbsp;
+</span>The <i>Customer</i> class of <a href="#Figure17ClassScopeAttributes">Figure 17</a> 
+implements <i>nextCustomerNumber</i>, a class attribute (you know this
+because it’s underlined) which stores the value of the next customer number to
+be assigned to a new customer object.<span style="mso-spacerun: yes">&nbsp; </span>Because
+there is one value for this attribute for the class, not one value per object,
+we need to map it in a different manner.<span style="mso-spacerun: yes">&nbsp; </span><a href="#Table2ClassScopeProperties">Table
+2</a> summarizes the four basic strategies for mapping class scope properties.</p>
+<p>&nbsp;</p>
+<p><b>Figure 17<a name="Figure17ClassScopeAttributes">. Mapping class scope
+attributes.</a></b></p>
+<p align="center">
+<img border="0" src="http://www.agiledata.org/images
+/mappingClassScope.gif"></p>
+<p>&nbsp;</p>
+<p><a name="Table2ClassScopeProperties"><b>Table 2. Strategies for mapping class
+scope properties.</b></a></p>
+<table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;
+ border:none;mso-border-alt:solid windowtext .5pt;mso-padding-alt:0in 5.4pt 0in 5.4pt">
+  <tr>
+    <td width="222" valign="top" style="width:133.0pt;border:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><b><font size="2">Strategy</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </b></p>
+    </td>
+    <td width="222" valign="top" style="width:133.4pt;border:solid windowtext .5pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><b><font size="2">Example</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </b></p>
+    </td>
+    <td width="198" valign="top" style="width:1.65in;border:solid windowtext .5pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><b><font size="2">Advantages</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </b></p>
+    </td>
+    <td width="216" valign="top" style="width:1.8in;border:solid windowtext .5pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><b><font size="2">Disadvantages</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </b></p>
+    </td>
+  </tr>
+  <tr>
+    <td width="222" valign="top" style="width:133.0pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Single Column, Single-Row Table</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="222" valign="top" style="width:133.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">The <i>CustomerNumber</i> table of 
+		</font> <a href="#Figure17ClassScopeAttributes">Figure 17</a><font size="2">
+      implements this strategy.</font><span style="mso-spacerun: yes"><font size="2">&nbsp; 
+		</font> </span><o:p>
+      </o:p>
+      </p>
+    </td>
+    <td width="198" valign="top" style="width:1.65in;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Simple</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+      <p class="MsoNormal"><font size="2">Fast access</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="216" valign="top" style="width:1.8in;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Could result in many small tables</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="222" valign="top" style="width:133.0pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Multi-Column, Single-Row Table for a Single Class</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="222" valign="top" style="width:133.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">If <i>Customer</i> implemented a second class scope
+      attribute then a <i>CustomerValues</i> table could be introduced with one
+      column for each attribute.</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+    <td width="198" valign="top" style="width:1.65in;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Simple</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+      <p class="MsoNormal"><font size="2">Fast access</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="216" valign="top" style="width:1.8in;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Could result in many small tables, although fewer
+      than the single column approach</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="222" valign="top" style="width:133.0pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Multi-Column, Single-Row Table for all Classes</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="222" valign="top" style="width:133.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">The topmost version of the <i>ClassVariables</i>
+      table in </font> <a href="#Figure17ClassScopeAttributes">Figure 17</a><font size="2">.<span style="mso-spacerun: yes">&nbsp;
+      </span>This table contains one column for each class attribute within your
+      application, so if the <i>Employee</i> class had a <i>nextEmployeeNumber</i>
+      class attribute then there would be a column for this as well.</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="198" valign="top" style="width:1.65in;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Minimal number of tables introduced to your data
+      schema.</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+    <td width="216" valign="top" style="width:1.8in;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Potential for concurrency problems if many classes
+      need to access the data at once.<span style="mso-spacerun: yes">&nbsp; </span>One
+      solution is to introduce a <i>ClassConstants</i> table, as shown in </font> 
+		<a href="#Figure17ClassScopeAttributes">Figure 17</a><font size="2">, to separate attributes that are read only from those that can be
+      updated.</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="222" valign="top" style="width:133.0pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Multi-Row Generic Schema for all Classes</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="222" valign="top" style="width:133.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">The bottommost version of the <i>ClassVariables</i>
+      and <i>ClassConstants</i> tables of </font> 
+		<a href="#Figure17ClassScopeAttributes">Figure 17</a><font size="2">.<span style="mso-spacerun: yes">&nbsp; </span>The table contains
+      one row for each class scope property in your system.</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="198" valign="top" style="width:1.65in;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Minimal number of tables introduced to your data
+      schema.</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+      <p class="MsoNormal"><font size="2">Reduces concurrency problems (assuming your database
+      supports row-based locking).</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+    <td width="216" valign="top" style="width:1.8in;border-top:none;border-left:none;
+  border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Need to convert between types (e.g. <i>CustomerNumber</i>
+      is an integer but is stored as character data).</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+      <p class="MsoNormal"><font size="2">The data schema is coupled to the names of your
+      classes and their class scope properties.<span style="mso-spacerun: yes">&nbsp;
+      </span>You could avoid this with an even more generic schema along the
+      lines of </font> <a href="#Figure9GenericDataSchema">Figure 9</a><font size="2">.</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>5. <a name="PerformanceTuning">Performance Tuning</a></h3>
+<p class="MsoNormal">One of the most valuable services that an Agile DBA can
+perform on a development team is performance tuning.<span style="mso-spacerun:
+yes">&nbsp; </span>A very good book is <i><a href="http://www.amazon.com/exec/obidos/ASIN/1558607536/ambysoftinc">Database
+Tuning</a></i> by Shasha and Bonnet (2003).<span style="mso-spacerun: yes">&nbsp;
+</span>When working with structured technology most of the performance tuning
+effort was database-oriented, generally falling into one of two categories:</p>
+<ol>
+  <li>
+    <p class="MsoNormal"><b>Database performance tuning</b>.<span style="mso-spacerun: yes">&nbsp;
+    </span>This effort focuses on changing the database schema itself, often by <a href="http://www.agiledata.org/essays/dataModeling101.html#Denormalize">denormalizing</a>
+    portions of it.<span style="mso-spacerun: yes">&nbsp; </span>Other
+    techniques include changing the types of key columns, for example an index
+    is typically more effective when it is based on numeric columns instead of
+    character columns; reducing the number of columns that make up a composite
+    key; or introducing indices on a table to support common joins.</li>
+  <li>
+    <p class="MsoNormal"><b>Data access performance tuning</b>. This effort
+    focuses on improving the way that data is accessed.<span style="mso-spacerun: yes">&nbsp;
+    </span>Common techniques include the introduction of stored procedures to
+    “crunch” data in the database server to reduce the result set
+    transmitted across the network; reworking SQL queries to reflect database
+    features; clustering data to reflect common access needs; and caching data
+    within your application to reduce the number of accesses.<span style="mso-spacerun: yes">&nbsp; 
+	In fact, although I haven't presented an example in this article, a common 
+	strategy is to map an attribute of a class to a stored function.&nbsp; For 
+	example, you could map the&nbsp; <i>Customer.totalPortfolio</i> to the <i>
+	calculateCustomerPortfolio()</i> stored procedure.&nbsp; Granted, this may 
+	introduce performance problems itself (do you really want this stored 
+	function to be invoked each time you read in a customer object?) and instead 
+	you might want to map <i>Customer.totalPortfolio</i> attribute to the <i>
+	Customer.TotalPortfolio</i> column which would be calculated via a trigger 
+	(or in batch).</span></li>
+</ol>
+<p class="MsoNormal">Neither of these needs go away with object technology,
+although as <a href="#Figure18PerformanceTuningOpportunities">Figure 18</a> implies the situation is a little more complicated.<span style="mso-spacerun: yes">&nbsp;
+</span>An important thing to remember is that your object schema also has
+structure to it, therefore changes to your object schema can affect the database
+access code that is generated based on the mappings to your database.<span style="mso-spacerun: yes">&nbsp;
+</span>For example, assume that the <i>Employee</i> class has a <i>homePhoneNumber</i>
+attribute.<span style="mso-spacerun: yes">&nbsp; </span>A new feature requires
+you to implement phone number specific behavior (e.g. your application can call
+people at home).<span style="mso-spacerun: yes">&nbsp; </span>You decide to
+refactor <i>homePhoneNumber</i> into its class, and example of <a href="http://www.agiledata.org/essays/objectOrientation101.html#3ONF">third
+normal object form (3ONF)</a>, and therefore update your mappings to reflect
+this change.<span style="mso-spacerun: yes">&nbsp; </span>Performance degrades
+as a result of this change, motivating you to change either your mappings which
+the data access paths or the database schema itself.<span style="mso-spacerun:
+yes">&nbsp; </span>The implication is that a change to your object source code
+could motivate a change to your database schema.<span style="mso-spacerun: yes">&nbsp;
+</span>Sometimes the reverse happens as well.<span style="mso-spacerun: yes">&nbsp;
+</span>This is perfectly fine, because as an agile software developer you are 
+used to working in an evolutionary manner.</p>
+<p>&nbsp;</p>
+<p><b><a name="Figure18PerformanceTuningOpportunities">Figure 18</a>. Performance
+tuning opportunities.</b></p>
+<p align="center">
+<img border="0" src="http://www.agiledata.org/images
+/mappingPerformanceTuning.gif"></p>
+<p>&nbsp;</p>
+<p>There are two main additions to performance tuning that
+you need to be aware of: <a href="#TuningYourMappings">mapping tuning</a> and
+object schema tuning.&nbsp; Mapping
+tuning is described below.&nbsp; When it
+comes to object schema tuning most changes to your schema will be covered by
+common <a href="http://www.amazon.com/exec/obidos/ASIN/0201485672/ambysoftinc">refactorings</a>.&nbsp; However, a technique
+called <a href="#LazyReads">lazy reading</a> can help dramatically.&nbsp;</p>
+<p>&nbsp;</p>
+<h3>5.1 <a name="TuningYourMappings">Tuning Your Mappings</a></h3>
+<p>Throughout this article you have seen that there is more than one
+way to map object schemas to data schemas – there are four ways to map <a href="#MappingInheritance">inheritance
+structures</a>, two ways to map a <a href="#OneToOneMappings">one-to-one
+relationship</a> (depending on where you put the foreign key), and four ways to
+map <a href="#MappingClassScope">class-scope properties</a>.&nbsp;
+Because you have mapping choices, and because each mapping choice has its
+advantages and disadvantages, there are opportunities to improve the data access
+performance of your application by changing your choice of mapping.&nbsp; Perhaps you implemented the <a href="#MapEachClassToTable">one
+table per class</a> approach to mapping inheritance only to discover that it’s
+too slow, motivating you to refactor it to use the <a href="#MapHierarchyToTable">one
+table per hierarchy</a> approach.</p>
+It
+is important to understand that whenever you change a mapping strategy that it
+will require you to change either your object schema, your data schema, or both.
+<p>&nbsp;</p>
+<h3>5.2 <a name="LazyReads">Lazy Reads</a></h3>
+<p class="BT">An important performance consideration is whether the attribute
+should be automatically read in when the object is retrieved.<span style="mso-spacerun: yes">&nbsp;
+</span>When an attribute is very large, for example the picture of a person
+could be 100k whereas the rest of the attributes are less than 1k, and rarely
+accessed you may want to consider taking a lazy read approach.<span style="mso-spacerun: yes">&nbsp;
+</span>The basic idea is that instead of automatically bringing the attribute
+across the network when the object is read you instead retrieve it only when the
+attribute is actually needed.<span style="mso-spacerun: yes">&nbsp; </span>This
+can be accomplished by a getter method, an operation whose purpose is to provide
+the value of a single attribute, that checks to see if the attribute has been
+initialized and if not retrieves it from the database at that point.</p>
+<p class="BT">Other common uses for lazy read is <a href="http://www.agiledata.org/essays/reporting.html">reporting</a>
+and for retrieving objects as the results of <a href="http://www.agiledata.org/essays/findingObjects.html">searches</a>
+where you only need a small subset of the data of an object.<span style="mso-spacerun: yes">&nbsp;&nbsp;</span></p>
+<p>&nbsp;</p>
+<h3>6. <a name="ImplementationImpact">Implementation Impact</a> On Your Objects</h3>
+<p class="MsoNormal">The 
+<a href="http://www.agiledata.org/essays/impedanceMismatch.html">O/R impedance mismatch</a> forces you to map your object schema to your data schema.
+To implement these mappings you will need to add code to your business objects,
+code that impacts your application.<span style="mso-spacerun: yes">&nbsp; </span>These
+impacts are the primary fodder for the argument that object purists make against
+using object and relational technology together.<span style="mso-spacerun: yes">&nbsp;
+</span>Although I wish the situation were different, the reality is that we’re
+using object and relational technology together and very likely will for many
+years to come.<span style="mso-spacerun:
+yes">&nbsp; </span>Like it or not we need to accept this fact.<span style="mso-spacerun: yes">&nbsp;</span></p>
+<p class="MsoNormal">I think that there is significant value in summarizing how
+mapping impacts your objects.<span style="mso-spacerun: yes">&nbsp; </span>Some
+of this material you have seen in this article and some you will see in other
+chapters.<span style="mso-spacerun: yes">&nbsp; </span>The impacts on your code
+include the need to:</p>
+<ul>
+  <li>
+    <p class="MsoNormal">Maintain <a href="#ShadowData">shadow information</a>.<span style="mso-spacerun:
+yes">&nbsp;</span></li>
+  <li>
+    <p class="MsoNormal"><a href="http://www.agiledata.org/essays/databaseRefactoring.html#Refactoring">Refactor</a>
+    it to improve overall performance.</li>
+  <li>
+    <p class="MsoNormal">Work with <a href="http://www.agiledata.org/essays/legacyDatabases.html">legacy
+    data</a>.<span style="mso-spacerun: yes">&nbsp; I</span>t is common to work
+    with legacy databases and that there are often significant data quality,
+    design, and architectural problems associated with them.<span style="mso-spacerun: yes">&nbsp;
+    </span>The implication is that you often need to map your objects to legacy
+    databases and that your objects may need to implement integration and data
+    cleansing code to do so.</li>
+  <li>
+    <p class="MsoNormal"><a href="http://www.agiledata.org/essays/implementationStrategies.html">Encapsulate
+    database access</a>. Your strategy for encapsulating database access
+    determines how you will implement your mappings.<span style="mso-spacerun: yes">&nbsp;
+    </span>Your objects will be impacted by your chosen strategy, anywhere from
+    including embedded SQL code to implementing a common interface that a
+    persistence framework requires.</li>
+  <li>
+    <p class="MsoNormal">Implement <a href="http://www.agiledata.org/essays/concurrencyControl.html">concurrency
+    control</a>. Because most applications are multi-user, and because most
+    databases are accessed by several applications, you run the risk that two
+    different processes will try to modify the same data simultaneously.<span style="mso-spacerun: yes">&nbsp;
+    </span>Therefore your objects need to implement concurrency control
+    strategies that overcome these challenges.</li>
+  <li>
+    <p class="MsoNormal">
+	<a href="http://www.agiledata.org/essays/findingObjects.html">Retrieve
+    objects from a relational database</a>.<span style="mso-spacerun: yes">&nbsp; </span>You
+    will want to work with collections of the same types of objects at once,
+    perhaps you want to list all of the employees in a single division.<span style="mso-spacerun: yes">&nbsp;
+    &nbsp;</span></li>
+  <li>
+    <p class="MsoNormal"><a href="http://www.agiledata.org/essays/referentialIntegrity.html">Implement
+    referential integrity</a>.<span style="mso-spacerun:
+yes">&nbsp; </span>There are several strategies for implementing referential
+    integrity between objects and within databases.<span style="mso-spacerun:
+yes">&nbsp; </span>Although referential integrity is a business issue, and
+    therefore should be implemented within your business objects, the reality is
+    that many if not all referential integrity rules are implemented in the
+    database instead.<span style="mso-spacerun: yes">&nbsp;</span></li>
+  <li>
+    <p class="MsoNormal"><a href="http://www.agiledata.org/essays/accessControl.html">Implement
+    security access control</a>.<span style="mso-spacerun:
+yes">&nbsp; </span>Different people have different access to information.<span style="mso-spacerun: yes">&nbsp;
+    </span>As a result you need to implement security access control logic
+    within your objects and your database.</li>
+  <li>
+    <p class="MsoNormal"><a href="http://www.agiledata.org/essays/reporting.html">Implement
+    reporting</a>.<span style="mso-spacerun: yes">&nbsp; </span>Do your business
+    objects implement basic reporting functionality or do you leave this effort
+    solely to reporting tools that go directly against your database.<span style="mso-spacerun: yes">&nbsp;
+    </span>Or do you use a combination.<span style="mso-spacerun: yes">&nbsp;&nbsp;</span></li>
+  <li>
+    <p class="MsoNormal"><a href="http://www.agiledata.org/essays/advancedTechniques.html">Implement
+    object caches</a>.<span style="mso-spacerun: yes">&nbsp; </span>Object
+    caches can be used to improve application performance and to ensure that
+    objects are unique within memory.</li>
+</ul>
+<p>&nbsp;</p>
+<h3>7. <a name="MDA">Implications for Model Driven Architecture (MDA)</a></h3>
+<p class="BT">The <a href="http://www.agilemodeling.com/essays/agileMDA.htm">Model-Driven Architecture (MDA)</a> defines an approach to modeling that separates the
+specification of system functionality from the specification of its
+implementation on a specific technology platform.<span style="mso-spacerun: yes">&nbsp;
+</span>In short, it defines guidelines for structuring specifications expressed
+as models.<span style="mso-spacerun: yes">&nbsp; </span>The MDA promotes an
+approach where the same model specifying system functionality can be realized on
+multiple platforms through auxiliary mapping standards, or through point
+mappings to specific platforms.<span style="mso-spacerun: yes">&nbsp; </span>It
+also supports the concept of explicitly relating the models of different
+applications, enabling integration, interoperability and supporting system
+evolution as platform technologies come and go. <o:p>
+</o:p>
+</p>
+<p class="BT">Although the MDA is based on the Unified Modeling Language (UML),
+and the <a href="http://www.agiledata.org/essays/umlDataModelingProfile.html">UML
+does not yet officially support a data model</a>, my expectation is that object
+to relational mapping will prove to be one of the most important features that
+MDA-compliant CASE tools will support.<span style="mso-spacerun: yes">&nbsp;
+&nbsp;</span>My hope is that the members of the OMG find a way to overcome the <a href="http://www.agiledata.org/essays/impedanceMismatch.html#CulturalImpedanceMismatch">cultural
+impedance mismatch</a> and start to work with data professionals to bring issues
+such as UML data modeling and object-to-relational mapping into account.<span style="mso-spacerun: yes">&nbsp;
+</span>Time will tell.<o:p>
+</o:p>
+</p>
+<p>&nbsp;</p>
+<h3><a name="Patterns">8. Patternizing What You Have Learned</a></h3>
+<p class="BT">In this article you learned the basics of mapping objects to
+relational databases (RDBs), including some basic implementation techniques that
+will be expanded on in following chapters.<span style="mso-spacerun:
+yes">&nbsp; </span>You saw that there are several strategies for mapping
+inheritance structures to RDBs and that mapping object relationships into RDBs
+is straightforward once you understand the differences between the two
+technologies.<span style="mso-spacerun: yes">&nbsp; </span>Techniques for
+mapping both instance attributes and class attributes were presented, providing
+you with strategies to complete map a class’s attributes into an RDB.</p>
+<p class="BT">This article included some methodology discussions that described
+how mapping is one task in the iterative and incremental approach that is
+typical of agile software development.<span style="mso-spacerun: yes">&nbsp; </span>A
+related concept is that it is a fundamental mistake to allow your existing
+database schemas or <a href="http://www.agiledata.org/essays/drivingForces.html">data models to drive the development of your object models</a>.<span style="mso-spacerun: yes">&nbsp;
+</span>Look at them, treat them as constraints, but don’t let them negatively
+impact your design if you can avoid it.</p>
+<p>Throughout this article I have described mapping techniques in common prose, some authors choose to write
+patterns instead.<span style="mso-spacerun: yes">&nbsp; </span>The first such
+effort was the 
+<a href="http://www.amazon.com/exec/obidos/ASIN/0201895277/ambysoftinc">Crossing Chasms pattern language</a> and the latest effort is captured in the book
+<a href="http://www.amazon.com/exec/obidos/ASIN/0321127420/ambysoftinc">Patterns
+of Enterprise Application Architecture</a>.<span style="mso-spacerun: yes">&nbsp; </span><a href="#Table3MappingPatterns">Table
+3</a> summarizes the critical material presented in this article as patterns,
+using the names suggested by other authors wherever possible.</p>
+<p>&nbsp;</p>
+<p><b><a name="Table3MappingPatterns">Table 3. Mapping patterns</a>.</b></p>
+<table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;
+ border:none;mso-border-alt:solid windowtext .5pt;mso-padding-alt:0in 5.4pt 0in 5.4pt">
+  <tr>
+    <td width="159" valign="top" style="width:95.4pt;border:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><b><font size="2">Pattern</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </b></p>
+    </td>
+    <td width="699" valign="top" style="width:419.4pt;border:solid windowtext .5pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><b><font size="2">Description</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </b></p>
+    </td>
+  </tr>
+  <tr>
+    <td width="159" valign="top" style="width:95.4pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><a href="#MapEachClassToTable">Class Table
+      Inheritance</a><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+    <td width="699" valign="top" style="width:419.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Map each individual class within an inheritance
+      hierarchy to its own table.</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="159" valign="top" style="width:95.4pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><a href="#MapConcreteClassToTable">Concrete Table
+      Inheritance</a><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+    <td width="699" valign="top" style="width:419.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Map the concrete classes of an inheritance hierarchy
+      to its own table.</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="159" valign="top" style="width:95.4pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><a href="#ImplementingRDBRelationships">Foreign Key
+      Mapping</a><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+    <td width="699" valign="top" style="width:419.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">A relationship between objects is implemented in a
+      relational database as foreign keys in tables.</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="159" valign="top" style="width:95.4pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><a href="#ShadowData">Identity Field</a><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="699" valign="top" style="width:419.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Maintain the primary key of an object as an
+      attribute.<span style="mso-spacerun: yes">&nbsp; </span>This is an example
+      of Shadow Information.</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="159" valign="top" style="width:95.4pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><a href="#LazyReads">Lazy Initialization</a><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="699" valign="top" style="width:419.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Read a high-overhead attribute, such as a picture,
+      into memory when you first access it, not when you initially read the
+      object into memory.</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="159" valign="top" style="width:95.4pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><a href="#LazyReads">Lazy Read</a><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="699" valign="top" style="width:419.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Read an object into memory only when you require it.</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="159" valign="top" style="width:95.4pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><a href="#ObjectsDriveData">Legacy Data Constraint</a><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="699" valign="top" style="width:419.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Legacy data sources are a constraint on your object
+      schema but they should not drive its definition.</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="159" valign="top" style="width:95.4pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><a href="#BasicConcepts">Map Similar Types</a><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="699" valign="top" style="width:419.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Use similar types in your classes and tables.<span style="mso-spacerun: yes">&nbsp;
+      </span>For example it is easier to map an integer to an numeric column
+      than it is to map it to a character-based column.</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="159" valign="top" style="width:95.4pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><a href="#BasicConcepts">Map Simple Property to
+      Single Column</a><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+    <td width="699" valign="top" style="width:419.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Prefer to map the property of an object, such as the
+      total of an order or the first name of an employee, to a single database
+      column.</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="159" valign="top" style="width:95.4pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><a href="#PerformanceTuning">Mapping-Based
+      Performance Tuning</a><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+    <td width="699" valign="top" style="width:419.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">To improve overall data access performance you can
+      change your object schema, your data schema, or the mappings in between
+      the two.</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="159" valign="top" style="width:95.4pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><a href="#MappingRecursiveAssociations">Recursive
+      Relationships Are Nothing Special</a><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+    <td width="699" valign="top" style="width:419.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Map a recursive relationship exactly the same way
+      that you would map a non-recursive relationship.</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="159" valign="top" style="width:95.4pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><a href="#BasicConcepts">Representing Objects as
+      Tables</a><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+    <td width="699" valign="top" style="width:419.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Prefer to map a single class to a single table but be
+      prepared to evolve your design based to improve performance.</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="159" valign="top" style="width:95.4pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><a href="#MappingClassScope">Separate Tables for
+      Class-Scope Properties</a><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+    <td width="699" valign="top" style="width:419.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Introduce separate tables to store class scope
+      properties.</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="159" valign="top" style="width:95.4pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><a href="#ShadowData">Shadow Information </a><o:p>
+      </o:p>
+      </p>
+    </td>
+    <td width="699" valign="top" style="width:419.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Classes will need to maintain attributes to store the
+      values of database keys (see Identity Field) and concurrency columns to
+      persist themselves.</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="159" valign="top" style="width:95.4pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><a href="#ImplementingRDBRelationships">Single Column
+      Surrogate Keys</a><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+    <td width="699" valign="top" style="width:419.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">The easiest key strategy that you can adopt within
+      your database is to give all tables a single column, surrogate key that
+      has a globally unique value.</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="159" valign="top" style="width:95.4pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><a href="#MapHierarchyToTable">Single Table
+      Inheritance</a><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+    <td width="699" valign="top" style="width:419.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Map all the classes of an inheritance hierarchy to a
+      single table.</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="159" valign="top" style="width:95.4pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><a href="#ObjectsDriveData">Table Design Time</a><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+    <td width="699" valign="top" style="width:419.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">Let your object schema form the basis from which you
+      develop your data schema but be prepared to iterate your design in an
+      evolutionary manner.</font><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="159" valign="top" style="width:95.4pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><a href="#OneToOneMappings">Uni-directional Key
+      Choice</a><o:p><font size="2"> </font>
+      </o:p>
+      </p>
+    </td>
+    <td width="699" valign="top" style="width:419.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt">
+      <p class="MsoNormal"><font size="2">When a one-to-one unidirectional association exists
+      from class A to class B, put the foreign key that maintains the
+      relationship in the table corresponding to class A.</font><o:p><font size="2">
+		</font>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<h3>9. <a name="References">References</a> and Suggested Online Readings</h3>
+
+<table border="0" width="100%" id="table12">
+	<tr>
+		<td>
+		<ul>
+	<li><font size="2">At </font> <a href="http://www.ambysoft.com/essays/mappingObjects.html">
+	www.ambysoft.com/essays/mappingObjects.html</a><font size="2">
+I maintain a list of links to mapping white papers posted on the web.</font></li>
+  <li><a href="http://www.agiledata.org/essays/adopting.html">Adopting 
+	Agile/Evolutionary Database Techniques</a></li>
+			<li><a href="http://www.agiledata.org/essays/bestPractices.html">Agile Database 
+	Best Practices</a></li>
+			<li>
+			<a href="http://www.agiledata.org/essays/agileDataModeling.html">Agile/Evolutionary 
+	Data Modeling</a></li>
+			<li>
+			<a href="http://www.agiledata.org/essays/keys.html">Choosing a Primary 
+	Key: Natural or Composite?</a></li>
+	<li>
+			<a target="_blank" href="http://www2.computer.org/portal/web/csdl/doi/10.1109/DBKDA.2009.11">
+			A Classification of Object-Relational Impedance Mismatch</a>
+			<font size="2">(Ireland, Bowers, Newton &amp; Waugh)</font></li>
+			<li>
+<a href="http://www.agiledata.org/essays/culturalImpedanceMismatch.html">The 
+Cultural Impedance Mismatch Between Data Professionals and Application 
+Developers</a></li>
+			<li>
+			<a href="http://www.agiledata.org/essays/dataNormalization.html">
+			Introduction to D<font size="2">ata
+			Normalization</font></a></li>
+			<li><a href="http://www.agiledata.org/essays/mappingObjects.html">Mapping
+    Objects to Relational Databases</a></li>
+			<li><a href="http://www.agiledata.org/essays/relationalTheory.html">On 
+	Relational Theory</a></li>
+	<li><a target="_blank" href="http://www.infogoal.com/sql/">SQL Tutorial</a></li>
+			<li><a href="http://www.ambysoft.com/surveys/">Survey Results (Agile and 
+			Data Management)</a></li>
+			<li>
+			<a href="http://www.ddj.com/dept/architect/196500031?cid=Ambysoft">When 
+	is Enough Modeling Enough?</a></li>
+	<li> <a href="http://www.agiledata.org/essays/drivingForces.html">Why
+Data Models Don't Drive Object Models (And Vice Versa)</a></li>
+		</ul>
+
+<table border="0" width="100%" id="table13">
+  <tr>
+    <td width="7%">
+<b><a href="http://www.ambysoft.com/books/agileDatabaseTechniques.html">
+<img
+        src="http://images.amazon.com/images/P/0471202835.01.MZZZZZZZ.jpg" alt="Agile Database Techniques"
+        border="0" width="114" height="140"></a></b></td>
+    <td width="92%"><font size="2">This book describes the philosophies and skills required for 
+    developers and database administrators to work together effectively on 
+    project teams following evolutionary software processes such as Extreme 
+    Programming (XP), the 
+	</font> 
+	<a href="http://www.ambysoft.com/unifiedprocess/rupIntroduction.html">Rational Unified Process (RUP)</a><font size="2">, the
+	</font>
+	<a href="http://www.ambysoft.com/unifiedprocess/agileUP.html">Agile Unified 
+	Process (AUP)</a><font size="2">, Feature Driven 
+    Development (FDD), Dynamic System Development 
+    Method (DSDM), or </font> <a href="http://www.enterpriseunifiedprocess.com">The Enterprise Unified Process (EUP)</a><font size="2">.&nbsp; In March 2004 
+	it won a Jolt Productivity award.</font></td>
+  </tr>
+	<tr>
+    <td width="7%"><a href="http://www.amazon.com/exec/obidos/ASIN/0321127420/ambysoftinc">
+	<img border="0" src="http://images.amazon.com/images/P/0321127420.01._PE_PI_SCMZZZZZZZ_.jpg" alt="Patterns of Enterprise Application Architecture" width="117" height="150"></a></td>
+    <td width="92%"><font size="2">This book presents a collection of architectural patterns,
+      many of which hit on persistence-related issues.&nbsp; I highly suggest
+      this book as a complement to the material presented in this article.</font></td>
+  </tr>
+	<tr>
+    <td width="7%">
+<b>
+      	<a href="http://www.ambysoft.com/books/refactoringDatabases.html">
+      <img src="http://images.amazon.com/images/P/0321293533.01.MZZZZZZZ.jpg" alt="Refactoring Databases" border="0"></a></b></td>
+    <td width="92%">
+<p class="IT"><font size="2">This book describes, in detail, how to 
+</font> 
+<a href="http://www.agiledata.org/essays/databaseRefactoring.html">refactor a database schema</a><font size="2"> 
+to improve its design. The first section of the book overviews the fundamentals evolutionary database techniques in 
+	general and of database refactoring in detail.&nbsp; More importantly it 
+	presents strategies for implementing and deploying database refactorings, in 
+	the context of both &quot;simple&quot; single application databases and in &quot;complex&quot; 
+	multi-application databases.&nbsp; The second section, the majority of the 
+book, is a 
+</font> 
+<a href="http://www.agiledata.org/essays/databaseRefactoringCatalog.html">database refactoring reference catalog</a><font size="2">.&nbsp; It describes over 60 database refactorings, presenting 
+	data models overviewing each refactoring and the code to implement it.
+</font> </p>
+	<p>&nbsp;</td>
+  </tr>
+	</table>
+		</td>
+		<td>&nbsp;
+			<script type="text/javascript"><!--
+			google_ad_client = "pub-1563172974921293";
+			google_ad_width = 160;
+			google_ad_height = 600;
+			google_ad_format = "160x600_as";
+			google_ad_type = "text_image";
+			google_color_border = "6699CC";
+			google_color_bg = "003366";
+			google_color_link = "FFFFFF";
+			google_color_url = "AECCEB";
+			google_color_text = "AECCEB";
+			//2007-01-19: PageBottom
+			google_ad_channel = "5375874871";
+			//--></script>
+			<script type="text/javascript"
+			  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+			</script></td>
+	</tr>
+</table>
+
+<table border="0" width="100%" id="table14">
+	<tr>
+    <td width="7%">
+<b><a href="http://www.ambysoft.com/books/theObjectPrimer.html"><img
+        src="http://images.amazon.com/images/P/0521540186.01.MZZZZZZZ.jpg" alt="The Object Primer 3rd Edition: Agile Model Driven Development (AMDD) with UML 2"
+        border="0" width="106" height="140"></a></b></td>
+    <td width="92%"><font size="2">This book presents a full-lifecycle, 
+	</font> 
+	<a href="http://www.agilemodeling.com/essays/amdd.htm">agile model driven 
+	development (AMDD)</a><font size="2"> approach to software development.&nbsp; It is one of the 
+	few books which covers both object-oriented and data-oriented development in 
+	a comprehensive and coherent manner.&nbsp; Techniques the book covers 
+	include </font> <a href="http://www.agilemodeling.com">Agile Modeling (AM)</a><font size="2">, 
+	</font> 
+	<a href="http://www.ambysoft.com/essays/floot.html">Full Lifecycle Object-Oriented Testing (FLOOT)</a><font size="2">, 
+	over 30 </font> <a href="http://www.agilemodeling.com/artifacts/">modeling techniques</a><font size="2">,
+	</font>
+	<a href="http://www.ambysoft.com/agileDatabaseTechniques.html">agile database techniques</a><font size="2">,
+	</font>
+	<a href="http://www.agiledata.org/essays/databaseRefactoring.html">refactoring</a><font size="2">, and 
+	</font> 
+	<a href="http://www.agiledata.org/essays/tdd.html">test driven development (TDD)</a><font size="2">.&nbsp; If you want to gain the skills required to 
+	build mission-critical applications in an agile manner, this is the book for 
+	you. </font> </td>
+  </tr>
+	</table>
+		<p class="MsoNormal">&nbsp;</p>
+<h3> 10. <a name="LetUsHelp">Let Me Help</a></h3>
+                        <p>I actively work with clients around the world to 
+						improve their information technology (IT) practices as 
+						both a mentor/coach and trainer.&nbsp; A full 
+						description of what I do, and how to contact me, can be
+						<a href="http://www.ambysoft.com/services/">found here</a>.&nbsp;
+                        </p>
+                        <p>&nbsp;<o:p><table border="0" id="table15">
+							<tr>
+								<td>
+								<p align="center"><a href="http://www.ambysoft.com">
+								<img border="0" src="http://www.ambysoft.com/artwork/logoAmbysoft.gif"></a><br>
+								<a href="http://www.ambysoft.com/canada.html">
+								<img border="0" src="http://www.ambysoft.com/artwork/canadianFlag.gif"></a></td>
+								<td>
+								<b>
+								<font size="2"><a href="http://www.ambysoft.com/licensing.html">Copyright</a> 
+								© 2002-2010
+						</font>
+						<a href="http://www.ambysoft.com/scottAmbler.html">Scott
+                        W. Ambler</a></b><p><b><font size="2">This site owned by
+								</font>
+								<a href="http://www.ambysoft.com">Ambysoft Inc.</a></b><font size="2"><br>
+								</font>
+		<a target="_blank" href="http://www.agilemodeling.com">Agile Modeling (AM)</a><font size="2">&nbsp; |&nbsp;
+								</font>
+								<a href="http://www.ambysoft.com/unifiedprocess/agileUP.html">Agile 
+		Unified Process (AUP)</a><font size="2">&nbsp; |&nbsp; </font>
+								<a href="http://www.enterpriseunifiedprocess.com">
+								Enterprise Unified Process (EUP)</a><font size="2">&nbsp; 
+								|&nbsp; </font>
+		<a href="http://www.ambysoft.com/onlineWritings.html">My Writings</a> <font size="2">&nbsp; 
+								|&nbsp; </font>
+			<a href="http://www.ambysoft.com/surveys/">IT Surveys</a><font size="2"> &nbsp; 
+								</font>
+								</td>
+								<td>
+								<a href="http://twitter.com/scottwambler">
+		<img border="0" src="http://www.ambysoft.com/artwork/icons/twitter.gif" alt="Follow Scott W. Ambler on Twitter"></a></td>
+								</tr>
+							</table>
+						
+</body>
+
+</html>
