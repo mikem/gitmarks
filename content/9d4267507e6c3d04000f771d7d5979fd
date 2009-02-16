@@ -1,0 +1,497 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Manuel M T Chakravarty - C->Haskell</title>
+    <link rel="stylesheet" type="text/css" href="../../base.css"/>
+    <link rel="stylesheet" type="text/css" href="../../menu.css"/>
+    <link rel="stylesheet" type="text/css" href="../../front.css"/>
+<!--    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/> -->
+    <meta name="Author" content="Manuel M T Chakravarty"/>
+    <meta name="description" content="C->Haskell project page."/>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+
+    <style type="text/css">
+      .menu #software { border-color: red }
+      .menu #software:hover { border-color: #505050 }
+    </style>
+  </head>
+    
+    <body>
+      <table class="main">
+	  <tr>
+
+	    <!-- Menu
+	    -->
+	    <td width="10%" class="menu">
+	      <!-- Inline HTML for the menu on the left-hand side. -->
+
+
+    <h5 class="menu">Contents</h5>
+    <ul class="menu">
+      <li id="home"><a class="menu" href="/~chak/index.html">Home</a></li>
+      <li id="where"><a class="menu" href="/~chak/where.html">Contacts</a></li>
+      <li id="research"><a class="menu" href="/~chak/research.html">Research</a></li>
+      <li id="teaching"><a class="menu" href="/~chak/teaching.html">Teaching</a></li>
+      <li id="software"><a class="menu" href="/~chak/software.html">Code</a></li>
+      <li id="net"><a class="menu" href="/~chak/net.html">The Net</a></li>
+      <li id="ragbag"><a class="menu" href="/~chak/ragbag.html">Ragbag</a></li>
+    </ul>
+
+    <h5 class="menu">Quick links</h5>
+    <ul class="menu">
+      <li><a class="menu" href="/~chak/papers/">Publications</a></li>
+      <li><a class="menu" href="/~chak/software.html">Software</a></li>
+    </ul>
+
+    <h5 class="menu">External</h5>
+    <ul class="menu">
+      <li><a class="menu" href="http://www.cse.unsw.edu.au/~pls/">PLS
+	  Group</a></li>
+      <li><a class="menu" href="http://JustTesting.org/">Blog</a></li>
+      <li><a class="menu" href="http://twitter.com/TacticalGrace">Twitter</a></li>
+      <li><a class="menu" href="http://www.linkedin.com/in/manuelchakravarty">LinkedIn</a></li>
+    </ul>
+    <p>&nbsp;</p>
+    <a href="http://hackage.haskell.org/platform" ><img src="http://hackage.haskell.org/platform/icons/button-64.png"></a>
+	    </td>
+
+	    <!-- Main text
+	    -->
+	    <td width="90%" valign="top">
+	      <div class="body">
+		<!-- .................. Body Start ................... -->
+
+    <h1 class="top">C-&gt;Haskell, An Interface Generator for Haskell</h1>
+    <p>
+      <table cellpadding=2>
+	<!--
+	<tr>
+	  <td>
+	    <a href="http://freshmeat.net/"><img border="0" align=middle
+	    src="../../images/fmII-button.gif"></a>
+	  </td>
+	  <td>
+	    <a href="http://freshmeat.net/projects/c2hs/">freshmeat.net
+	    entry</a>
+	  </td>
+	</tr>
+	-->
+	<tr>
+	  <td>
+	    <a href="http://hackage.haskell.org/"><font color="grey" size="-1">hackageDB<br>&nbsp;&nbsp;:: [Package]</font></a>
+	  </td>
+	  <td>
+	    <a
+	    href="http://hackage.haskell.org/cgi-bin/hackage-scripts/package/c2hs">package</a>
+	  </td>
+	</tr>
+	<!--
+	<tr>
+	  <td align=middle>
+	    <a href="http://fedora.redhat.com/"><img border="0" align=middle
+	    src="../../images/fedora.ico"></a>
+	  </td>
+	  <td><a href="http://haskell.org/fedora/">Fedora Haskell</a>
+	  </td>
+	</tr>
+	-->
+	<tr>
+	  <td><a href="http://macports.org/">MacPorts</a></td>
+	  <td><a href="http://trac.macports.org/browser/trunk/dports/devel/c2hs/Portfile">entry</a>
+	  </td>
+	</tr>
+	<tr>
+	  <td><a href="http://freshports.org/">FreshPorts</a></td>
+	  <td><a href="http://freshports.org/devel/hs-c2hs/">entry</a>
+	  </td>
+	</tr>
+	<tr>
+	  <td><img border="0" align="center"
+	    src="../../images/openlogo-nd-25.png">Debian</td>
+	  <td><a href="http://packages.debian.org/c2hs">packages</a>
+	  </td>
+      </table>
+    </p>
+    <p>
+      C-&gt;Haskell is an interface generator that simplifies the development
+      of <a href="http://haskell.org/">Haskell</a> bindings to C libraries.
+      The tool processes existing C header files that determine data layout
+      and function signatures on the C side in conjunction with Haskell
+      modules that specify Haskell-side type signatures and marshaling
+      details.  Hooks embedded in the Haskell code signal access to C
+      structures and functions -- they are expanded by the interfacing tool in
+      dependence on information from the corresponding C header file.  Another
+      noteworthy property is the lightweight nature of the approach.  The idea
+      for the tool was developed during the implementation of <a
+      href="../gtk/">Gtk+HS</a>, a Haskell binding for the GUI toolkit <a
+      href="http://www.gtk.org/">GTK+.</a>  The latter is no longer under
+      active development, but its successor, <a
+      href="http://haskell.org/gtk2hs/">Gtk2Hs</a>, also uses C-&gt;Haskell.
+    </p>
+    <p>
+      The latest news:
+    <ul>
+      <li><small>[3 May 2010]</small>
+	Duncan Coutts
+	just released version 0.16.2, which works with GHC 6.12.
+      </li>
+      <li><small>[28 February 2009]</small>
+	Duncan Coutts
+	just released version 0.16.0 "Crystal Seed", which uses the new package 
+	<code>Language.C</code> that Benedikt Huber recently extracted from
+	C-&gt;Haskell's code base.  Moreover, it has better support for OS X,
+	implements enum hooks, and had several bugs fixed.
+      </li>
+      <li><small>[24 November 2007]</small>
+	Duncan Coutts
+	just released version 0.15.1 "Rainy Days".  This release builds with
+	GHC 6.4 through to 6.8 and also properly supports OpenBSD and Windows.
+	Moreover, the documentation has been updated.
+      </li>
+      <li><small>[31 August 2007]</small>
+	Duncan Coutts
+	just released version 0.15.0 "Rainy Days".  This release includes
+	Duncan's new parser with excellent gcc compatibility and an improved
+	build system.
+      </li>
+      <li><small>[2 January 2006]</small>
+	Updated the the C-&gt;Haskell darcs repository with modifications by
+	Ganesh Sittampalam to fix a problem when pulling on windows/cygwin.
+      </li>
+      <li><small>[14 May 2006]</small>
+	The C-&gt;Haskell darcs repository moved to <a
+	href="http://darcs.haskell.org/"><code>darcs.haskell.org</code></a>
+	and Duncan Coutts is now a second maintainer of the tool.  (He's the
+	one who heroically rewrote C-&gt;Haskell's parser.)
+      </li>
+      <li><small>[12 December 2005]</small>
+	Source release 0.14.5 brings in addition to bug fixes support for
+	typedef'ed pointers to structs/unions (thanks to Jelmer Vernooij) and
+	enables to suppress code generation for pointer hooks with a
+	<code>nocode</code> directive. 
+      </li>
+<!--
+      <li><small>[15 November 2005]</small>
+	Binaries for 0.13.6 are now in Debian unstable, thanks to Marco Tulio
+	Gontijo e Silva.
+      </li>
+      <li><small>[10 August 2005]</small>
+	Source release 0.14.3 adds support for cross compilation (i.e., the
+	platform for which code is to be generated can be specified using the
+	new flag <code>--platform</code>).  Moreover, two new built-in
+	translation functions <code>upcaseFirstLetter</code> and
+	<code>downcaseFirstLetter</code> are available.
+      </li>
+      <li><small>[7 August 2005]</small>
+	Source release 0.14.2 adds support for gcc's <code>asm</code>
+	construct and for hierarchical modules in import hooks, both due to
+	Duncan Coutts.  Moreover, the wrapper scripts are more robust.
+      </li>
+      <li><small>[15 July 2005]</small>
+	Source release 0.14.1 "Travelling Lightly" contains a
+	completely new build system based on Cabal 1.0.1.  It also contains a
+	completely new C lexer and parser contributed by Duncan Coutts, which
+	is generated by Alex and Happy instead of using parser combinators -
+	this reduces memory consumption for large C libraries dramatically.
+	Finally, the <code>C2HS</code> library is now added to the generated
+	bindings in source form; as a result, a C-&gt;Haskell build is <em>no
+	longer</em> specific to a particular Haskell system.  Moreover, the <a
+	href="#darcs">darcs repository</a> has an RSS feed.
+	<strong>Important:</strong> To build this new version, you need at
+	least Cabal <strong>1.0.1</strong>; version 1.0 of Cabal (as, e.g.,
+	distributed with GHC 6.4) is <strong>not</strong> sufficient.  (I
+	tested this code only with GHC 6.4 and Cabal 1.0.1, but older versions
+	of GHC may work, too.  Nhc98 may work as soon as it is properly
+	supported by Cabal.)
+      </li>
+      <li><small>[18 May 2005]</small>
+	Version 0.13.6 has been released.  It supports GHC 6.4.  Thanks to
+	Andr&eacute; Pang for most of the porting work.  Moreover,
+	C-&gt;Haskell is now maintained in a <a
+	href="#darcs">darcs repository.</a>
+      </li>
+      <li><small>[18 October 2004]</small>
+	Source release 0.13.4 that allows identifier to be put in single
+	quotes to avoid collisions with C-&gt;Haskell keywords in hooks and
+	fixes some bugs (handling of newlines after cpp directives,
+	identifiers generated in function hooks, and the package conf file).
+      </li>
+      <li><small>[13 October 2004]</small>
+	Source release 0.13.2 that fixes some bugs and adds an
+	<code>--output-dir</code> option (thanks to Volker Wysk for the
+	suggestion).
+      </li>
+      <li><small>[8 October 2004]</small>
+	Added rpms for 0.13.1 compiled with GHC 6.2.1 on Fedora Core 2.
+      </li>
+      <li><small>[11 June 2004]</small>
+	Source release 0.13.1 "Pressing Forward" can deal with header files
+	containing function bodies and complies completely with the H98 FFI
+	Addendum.  Moreover, it's performance significantly increased after a
+	space leak identified by Duncan Coutts has been removed.
+	See the release notes for further information <a
+	href="docu/c2hs-8.html#ss8.1">release notes</a>.
+      </li>
+      <li><small>[19 October 2003]</small>
+	Source release 0.12.0 "Springtime" works with GHC 6.3, builds on Mac
+	OS X, and contains Jens Petersen's new rpm spec file.  The Mac OS X
+	port has been contributed by Sean Seefried.
+      <li><small>[19 October 2003]</small>
+	Jens Petersen's new split rpms are available for 0.11.5.</li>
+      <li><small>[10 June 2003]</small>
+	Version 0.11.5 improves some aspects of the build system and includes
+	support for GHC 6.0.  It is a full binary release.</li>
+      <li><small>[22 April 2003]</small>
+	Version 0.11.4 is a bug fix, source-only release.  (Fixes a bug
+	in determining the size of a union.)
+      <li><small>[16 April 2003]</small>
+	Version 0.11.3 is a bug fix, source-only release.
+      <li><small>[13 February 2003]</small>
+	Version 0.11.1 "Powder Snow", which is a source-only testing release,
+	is now available.  This version introduces CPP directives, including
+	support for conditional compilation, as well as inline C code in
+	binding modules.  See the release notes for further information <a
+	href="docu/c2hs-8.html#ss8.1">release notes</a>.
+      <li><small>[13 February 2003]</small>
+	There is now a <a href="#ml">mailing list</a> for C-&gt;Haskell.
+      <li><small>[17 September 2002]</small>
+	The new version 0.10.17 of C-&gt;Haskell circumvents the bug in GHC
+	5.04.1 that makes 0.10.16 unusable.
+      <li><small>[16 September 2002]</small>
+	An rpm package of version 0.10.16 compiled for GHC 5.04.1 is now
+	available.
+	<br> <font color="a00050"><strong>Warning:</strong></font> Do
+	<strong>not</strong> use 
+	C-&gt;Haskell with GHC 5.04.1.  Due to <a
+	href="http://sourceforge.net/tracker/index.php?func=detail&aid=609944&group_id=8032&atid=108032">a bug</a> 
+	in GHC, the reading of <code>.chi</code> does not work.
+      <li><small>[9 September 2002]</small>
+	Version 0.10.16 is now also available as a <a
+	href="http://freshports.org/devel/hs-c2hs/">FreeBSD port</a>; thanks
+	to Oliver Braun.
+      <li><small>[7 September 2002]</small>
+	Full binary release, version 0.10.16 "Altocumulus Stratiformis
+	Perlucidus Undulatus".  The functionality is the same 
+	as in 0.10.15, but some small fixes have been applied.  For details on
+	the improvements since the last binary release, consult the <a
+	href="docu/c2hs-8.html#ss8.1">release notes</a>.
+      <li><small>[6 September 2002]</small>
+	Version 0.10.15 is now also available in <a
+	href="http://packages.debian.org/c2hs">Debian unstable</a> (thanks to
+	Michael Weber) and as a <a
+	href="http://freshports.org/devel/hs-c2hs/">FreeBSD port</a> (thanks
+	to Oliver Braun).
+      <li><small>[12 July 2002]</small>
+	Released source tar ball for version .  In addition to small
+	fixes it improves the handling of GNU C's <code>__extension__</code>
+	keyword, which bothered some people.  If there are no immediate
+	problems with this version, I'll provide binaries for it, too.
+      <li><small>[3 July 2002]</small>
+	Put a source-only release out to compensate for the lack of anonymous
+	CVS service at the moment.  This release is essentially what I plan to
+	put into the next full binary release, but I won't get around to
+	putting this out this month.
+      <li><small>[12 March 2002]</small>
+	CVS version
+	0.10.10 has a revised build system that doesn't use an explicit build
+	tree anymore.  (After updating from CVS, remove the <code>build</code>
+	tree and run <code>autoreconf</code> followed by
+	<code>./configure</code>)
+      <li><small>[25 February 2002]</small>
+	0.10.8 includes a major new feature, namely "function hooks".  See the
+	included documentation for details.
+      <li><small>[13 February 2002]</small>
+	CVS version
+	0.10.7 now supports GHC's package management system.
+      <li><small>[15 January 2002]</small>
+	0.10.6 contains a number of bug fixes and is needed to compile the CVS
+	version of Gtk+HS.
+      <li><small>[14 November 2001]</small>
+	CVS version
+	0.10.2 properly supports bitfields in structs (struct offsets are
+	computed correctly, and bitfields can be extracted and set using
+	<code>get</code> and <code>set</code> hooks)
+      <li><small>[17 October 2001]</small>
+	The current
+	binary release version 0.9.9 "Blue Ginger" is now available in Debian
+	unstable, courtesy of Michael Weber.
+      <li><small>[8 October 2001]</small>
+	0.10.x "Altocumulus Stratiformis Perlucidus Undulatus" in CVS: added
+	class hooks (see description in <code>c2hs.sgml</code>)
+      <li><small>[27 August 2001]</small>
+	version 0.9.9 "Blue Ginger"; see the <a
+	href="docu/c2hs-8.html#ss8.2">release notes</a> for details
+      <li><small>[21 June 2001]</small>
+	CVS version
+	0.9.8 introduces sizeof hooks and fixes bugs.
+      <li><small>[18 June 2001]</small>
+	0.9.7 fixes a bug in handling constant expressions - thanks to Armin
+	      Sander for the patch.
+      <li><small>[16 June 2001]</small>
+	0.9.6 has support for a local prefix in enum hooks and
+	additional bug fixes - thanks to Armin Sander for code and suggestions.
+      <li><small>[21 May 2001]</small>
+	CVS version
+	0.9.5 has additional bug fixes.
+      <li><small>[13 May 2001]</small>
+	Meanwhile, many bug fixes to the new features have appeared in CVS.
+      <li><small>[2 May 2001]</small>
+	The CVS HEAD now
+	has a couple of new features: works with GHC 5.00; support for
+	parametrised pointers; new <code>pointer</code> hook, which supports
+	the use of <code>ForeignPtr</code> and <code>StablePtr</code> as well
+	as abstract (newtype) pointers; and a <code>deriving</code> option for
+	the <code>enum</code> hook.  This revision has greatly benefitted from
+	Axel Simon's suggestions and code
+	contributions.  There is also some more documentation.  NB: This code
+	is little tested, but help with testing is, of course, very welcome.
+      <li>C-&gt;Haskell
+	version 0.8.2 "Gentle Moon" source-only intermediate release for the
+	new FFI Marshalling Library.  A truck load of bugs fixed since 0.8.1.
+ -->
+    </ul>
+    </p>
+    <p>
+      Currently, the C-&gt;Haskell compiler is available for the Glasgow
+      Haskell Compiler only.  However, the only extension needed over Haskell
+      98 and the <a href="http://www.cse.unsw.edu.au/~chak/haskell/ffi/">H98 FFI Addendum</a> are existential data types.  (The latter are
+      only needed for the C-&gt;Haskell compiler itself, but not for the
+      accompanying marshaling libraries.)  Partial support for nhc98 is in
+      place, but so far there have always been some bugs in nhc98 that
+      prevented to complete the port.
+    </p>
+
+    <a name="releases">
+    <h2>Download</h2>
+    </a>
+    <p>
+      The code is available from <a
+    href="http://hackage.haskell.org/cgi-bin/hackage-scripts/package/c2hs">hackage</a>.
+    </p>
+
+    <a name="ml">
+      <h3>Mailing List</h3>
+    </a>
+    <p>
+      To subscribe to the C-&gt;Haskell mailing list, visit <a
+	href="http://haskell.org/mailman/listinfo/c2hs/">the subscription
+	page</a>.  The address of the list is <a
+      href="mailto:c2hs@haskell.org">c2hs@haskell.org</a> and there is also
+      an <a href="http://haskell.org/pipermail/c2hs/">online archive.</a>
+    </p>
+
+    <a name="cvs">
+    <a name="darcs">
+    <h2>Darcs Repository</h2>
+    </a>
+    <p>
+      For those living on the bleeding edge of development, get the latest
+      C-&gt;Haskell code per <a href="http://darcs.net/">darcs</a> with
+    </p>
+    <blockquote>
+      <pre>
+darcs get <a href="http://code.haskell.org/c2hs/">http://code.haskell.org/c2hs/</a></pre>
+    </blockquote>
+    <p>
+      Inside your copy of the repository, execute <code>autoconf; chmod +x
+      Setup.hs</code>.  Afterwards compilation/installation is as from a tar
+      ball (i.e., Cabal style <code>./Setup.hs configure; ./Setup.hs build;
+      ./Setup.hs install</code>).  Details are in the file
+      <code>INSTALL</code>.
+    </p>
+    <p>
+      <strong>NB for Mac users:</strong> One of the patches originating from
+      the cvs to darcs conversion of the repository seems to cause problems on
+      Macs (due to the lack of case distinction in file names).  The patch can
+      be circumvented by getting a partial repository as follows:
+    </p>
+    <blockquote>
+      <pre>
+darcs get --partial <a href="http://code.haskell.org/c2hs/">http://code.haskell.org/c2hs/</a></pre>
+    </blockquote>
+    <!--
+    <p>
+      <strong>Online viewing:</strong> If you like to query the C-&gt;Haskell
+      repository without making a local 
+      copy, try the <a href="http://code.haskell.org/darcsweb/darcsweb.cgi?r=c2hs">darcs repository viewer.</a>
+    </p>
+    <p>
+      <strong>RSS feed:</strong> Repository change messages are also available
+      via <a href="http://hackage.haskell.org/darcsweb/darcsweb.cgi?r=c2hs;a=rss">rss.</a>
+    </p>
+    -->
+
+    <h2>Bug reports and feature requests</h2>
+    <p>
+      We'll use <a href="http://hackage.haskell.org/trac/c2hs/wiki">Trac</a>
+      to track bugs and feature requests in the future.
+    </p>
+
+    <a name="docu">
+    <h2>Documentation</h2>
+    </a>
+    <p>
+      If you plan to install C-&gt;Haskell, you probably like to read the <a
+      href="docu/">C-&gt;Haskell Tutorial.</a>  There is also
+      <a href="../../papers/papers.html#c2hs">a research paper</a> about the
+      tool.  To get an idea of how to use the interface generator -- after the
+      build -- go to the directory <tt>c2hs/tests/</tt>, which
+      contains a number of small examples of binding files with matching C
+      header files.  Most interesting is <tt>Structs.chs</tt> as well as 
+      <tt>Pointer.chs</tt> as well as the corresponding C source and header
+      files.  The binding file contains
+      instructions on how to generate an executable from it.  
+    </p>
+		<p>
+			Here are two blog posts that provide a more tutorial-style introduction
+			to C-&gt;Haskell:
+    </p>
+    <ul>
+      <li><a
+     href="http://loupgaroublond.blogspot.com/2009/06/haskell-bindings-to-c-from-start-to.html">Haskell
+      Bindings to C from Start to Finish</a> by Yaakov Nemoy</li>
+      <li><a href="http://tommd.wordpress.com/2009/09/22/haskell-bindings-to-c-c2hs/">Haskell Bindings to C - c2hs</a> by TomMD</li>
+		</ul>
+
+    <h2>Future Development</h2>
+    <p>
+      If you have any comments, suggestions, or a bug report, please send them
+      to <a href="mailto:c2hs@haskell.org"><code>c2hs@haskel.org</code></a>.
+      Code contributions are of course especially welcome.  Just <code>darcs
+      send</code> them.
+    </p>
+
+    <h2>License</h2>
+    <p>
+      The code is released under the <a
+	href="http://www.gnu.org/licenses/gpl.html">GNU General Public
+	Licence (GPL).</a> This means that you can basically do with it what
+	you want as long as you contribute improvements of the tool itself
+	back to the community.  Any interfaces that you generate with the tool
+	are, however, free from any license restrictions from my side.  The
+	situation is exactly the same as with the GNU C Compiler (gcc).
+    </p>
+
+		<!-- .................. Body End ................... -->
+	      </div>		
+	    </td>
+
+	  </tr>
+      </table>
+
+      <!-- Created: Sun Apr 17 21:49:30 EST 2005 -->
+      <p bgcolor="#f0f0f0" align=center>
+      <table class="greybox">
+	  <tr>
+	    <td align=center>
+	<small>&bull; Copyright [2005..2009] Manuel M T Chakravarty &bull;
+<!-- hhmts start -->
+Last modified: 1 March 2009
+<!-- hhmts end -->
+	  &bull;</small>
+	    </td>
+	  </tr>
+      </table>
+      </p>
+    </body>
+</html>
