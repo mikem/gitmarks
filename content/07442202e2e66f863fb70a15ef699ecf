@@ -1,0 +1,597 @@
+<html>
+<head>
+ <title>Haskell hacking</title>
+ <link rel="stylesheet" href="http://www.cse.unsw.edu.au/~dons/main.css" type="text/css" />
+</head>
+<body xml:lang="en" lang="en">
+
+  <div id="nav">
+      <a href="http://www.cse.unsw.edu.au/~dons/index.html"                    >home</a>
+      .  <a href="http://www.cse.unsw.edu.au/~dons/contact.html"                  >contact</a>
+      .  <a href="http://www.cse.unsw.edu.au/~dons/papers.html"                   >papers</a>
+      .  <a href="http://www.cse.unsw.edu.au/~dons/code.html"                     >code</a>
+    .  <a href="http://www.cse.unsw.edu.au/~pls" >pls</a>
+    .  <a href="http://www.cse.unsw.edu.au/~dons/blog">blog</a>
+    .  <a href="http://www.cse.unsw.edu.au/~dons/remains.html"                  >misc</a>
+  </div>
+
+  <div id="content">
+
+      </ br>
+
+      <h2><a href="http://www.cse.unsw.edu.au/~dons/blog">Haskell Hacking: a journal of Haskell programming</a></h2>
+
+      </ br>
+      <center>
+      <strong>
+          <a href="http://donsbot.wordpress.com/"><font
+                  color="red">Haskell Hacking has moved => Go here.</font></a>
+      </strong>
+      </center>
+      </ br>
+
+      </ br>
+      </ br>
+
+      <center>
+      <table width="90%">
+          <tr valign="top">
+          <td width="70%" valign="top">
+<i>2007-11-29</i>
+<a name="smoking-4core">
+<h1><a href="http://www.cse.unsw.edu.au/~dons/blog/2007/11/29#smoking-4core">Use those extra cores and beat C today! (Parallel Haskell redux)</a></h1>
+
+
+<p>
+In an oddly-titled post <a
+href="http://cgi.cse.unsw.edu.au/~dons/blog/2007/11/29#smoking">earlier
+today</a> I'd had too much coffee, and we looked at how compiled Haskell code
+smokes out interpreted code (for various reasons, mostly to do with being
+compiled and not interpreted). However, the real point of the article (other
+than to burn things with my flame thrower) was to start to explore the new
+ parallelism annotations in Haskell. 
+</p>
+
+<p>
+So let's continue that, with some more explorations of how far we can get with
+parallel annotations, and whether Haskell can compete for C, given enough
+cores. (And I'd just like to note that Spencer Janssen (of the <a
+href="http://xmonad.org">xmonads</a>) contributed most of the code and ideas
+for this article :).
+</p>
+
+<p>
+We'll stick to the <a href="http://haskell.org/haskellwiki/The_Fibonacci_sequence" >the naive
+fibonacci implementation</a>, but switch to a 4 core machine, and see how far we 
+can scale up the Haskell code as we add cores, without resorting to manual
+parallel programming.
+</p>
+
+<p>
+</p>
+
+<p>
+So, the naive Haskell, but we'll compute to a reasonable size of N:
+</p>
+
+<pre>    <span class='varid'>fib</span> <span class='keyglyph'>::</span> <span class='conid'>Int</span> <span class='keyglyph'>-&gt;</span> <span class='conid'>Int</span>
+    <span class='varid'>fib</span> <span class='num'>0</span> <span class='keyglyph'>=</span> <span class='num'>0</span>
+    <span class='varid'>fib</span> <span class='num'>1</span> <span class='keyglyph'>=</span> <span class='num'>1</span>
+    <span class='varid'>fib</span> <span class='varid'>n</span> <span class='keyglyph'>=</span> <span class='varid'>fib</span> <span class='layout'>(</span><span class='varid'>n</span><span class='comment'>-</span><span class='num'>1</span><span class='layout'>)</span> <span class='varop'>+</span> <span class='varid'>fib</span> <span class='layout'>(</span><span class='varid'>n</span><span class='comment'>-</span><span class='num'>2</span><span class='layout'>)</span>
+
+    <span class='varid'>main</span> <span class='keyglyph'>=</span> <span class='varid'>forM_</span> <span class='keyglyph'>[</span><span class='num'>0</span><span class='keyglyph'>..</span><span class='num'>45</span><span class='keyglyph'>]</span> <span class='varop'>$</span> <span class='keyglyph'>\</span><span class='varid'>i</span> <span class='keyglyph'>-&gt;</span>
+                <span class='varid'>printf</span> <span class='str'>"n=%d =&gt; %d\n"</span> <span class='varid'>i</span> <span class='layout'>(</span><span class='varid'>fib</span> <span class='varid'>i</span><span class='layout'>)</span>
+</pre>
+
+
+<p>
+All very pretty. Now, if we run it on a 4 core, 3Ghz linux machine, will it use
+those resources?
+</p>
+
+<pre>
+    $ ghc-6.8.1 -O2 Naive.hs -o naive --make
+    $ time ./naive
+    n=0 => 0
+    n=1 => 1
+    n=2 => 1
+    ...
+    n=44 => 701408733
+    n=45 => 1134903170
+    ./naive  39.03s user 0.00s system 99% cpu 39.108 total
+</pre>
+
+<p>
+<emph>99%</emph>. So the answer is no: GHC doesn't magically parallelise the
+naive code (nor memoise it, guys...). Remember that number: 39s. That's our
+goal to beat by using the extra cores.
+</p>
+
+<p>
+However, we can give the compiler some hints about how best to parallelise 
+the code, using the lovely `par` annotation (from <a href="http://haskell.org/ghc/docs/latest/html/libraries/parallel-1.0.0.0/Control-Parallel.html">Control.Parallel</a>) (originally from <a href="http://www.macs.hw.ac.uk/~dsg/gph/papers/html/Strategies/strategies.html">this paper</a>).
+From <a href="http://www.haskell.org/ghc/dist/current/docs/users_guide/lang-parallel.html">the manual</a>:
+</p>
+
+<blockquote>
+    The expression (x `par` y) sparks the evaluation of x (to weak head normal
+    form) and returns y.  Sparks are queued for execution in FIFO order, but are
+    not executed immediately. If the runtime detects that there is an idle CPU,
+    then it may convert a spark into a real thread, and run the new thread on the
+    idle CPU. In this way the available parallelism is spread amongst the real
+    CPUs.
+</blockquote>
+
+<p>
+So let's naively annotate this. Just split the tree into two parts, and run the
+first branch in parallel with the other, hoping that it finishes about the same
+time as the second, so there's no waiting:
+</p>
+
+<pre>    <span class='keyword'>import</span> <span class='conid'>Control</span><span class='varop'>.</span><span class='conid'>Parallel</span>
+    <span class='keyword'>import</span> <span class='conid'>Control</span><span class='varop'>.</span><span class='conid'>Monad</span>
+    <span class='keyword'>import</span> <span class='conid'>Text</span><span class='varop'>.</span><span class='conid'>Printf</span>
+
+    <span class='varid'>fib</span> <span class='keyglyph'>::</span> <span class='conid'>Int</span> <span class='keyglyph'>-&gt;</span> <span class='conid'>Int</span>
+    <span class='varid'>fib</span> <span class='num'>0</span> <span class='keyglyph'>=</span> <span class='num'>0</span>
+    <span class='varid'>fib</span> <span class='num'>1</span> <span class='keyglyph'>=</span> <span class='num'>1</span>
+    <span class='varid'>fib</span> <span class='varid'>n</span> <span class='keyglyph'>=</span> <span class='varid'>r</span> <span class='varop'>`par`</span> <span class='layout'>(</span><span class='varid'>l</span> <span class='varop'>`pseq`</span> <span class='varid'>l</span><span class='varop'>+</span><span class='varid'>r</span><span class='layout'>)</span>
+        <span class='keyword'>where</span>
+            <span class='varid'>l</span> <span class='keyglyph'>=</span> <span class='varid'>fib</span> <span class='layout'>(</span><span class='varid'>n</span><span class='comment'>-</span><span class='num'>1</span><span class='layout'>)</span>
+            <span class='varid'>r</span> <span class='keyglyph'>=</span> <span class='varid'>fib</span> <span class='layout'>(</span><span class='varid'>n</span><span class='comment'>-</span><span class='num'>2</span><span class='layout'>)</span>
+
+    <span class='varid'>main</span> <span class='keyglyph'>=</span> <span class='varid'>forM_</span> <span class='keyglyph'>[</span><span class='num'>0</span> <span class='keyglyph'>..</span> <span class='num'>45</span><span class='keyglyph'>]</span> <span class='varop'>$</span> <span class='keyglyph'>\</span><span class='varid'>i</span> <span class='keyglyph'>-&gt;</span>
+                <span class='varid'>printf</span> <span class='str'>"n=%d =&gt; %d\n"</span> <span class='varid'>i</span> <span class='layout'>(</span><span class='varid'>fib</span> <span class='varid'>i</span><span class='layout'>)</span>
+</pre>
+
+<p>
+Let's compile this with some reasonable flags:
+</p>
+
+<pre>
+    $ ghc-6.8.1 NaivePar.hs -O2 -o np --make -threaded
+</pre>
+
+<p>
+And we can toss two cores at it to start with:
+</p>
+
+<pre>
+    ./np +RTS -N2  138.69s user 1.18s system 190% cpu 72.48 total
+</pre>
+
+<p>
+Ok, how about 3, or 4 cores?
+</p>
+
+<pre>
+    ./np +RTS -N3  160.39s user 1.98s system 261% cpu  62.15 total
+    ./np +RTS -N4  167.61s user 2.26s system 311% cpu  54.53 total
+</pre>
+
+<p>
+Hmm, interesting! While the cpus are getting utilised, we're not making much 
+progress towards our naive single core goal. What is going on?
+</p>
+
+<p>
+The problem, of course, is that we're wasting time registering thread sparks
+for very small expressions (anything under about N=35 or so). We should really
+not use `par` for  those little jobs, since the cost of registering a thread
+spark outweighs the cost of just evaluating it here and now.
+</p>
+
+<p>
+So what we can do is use the `par` version when N is larger, and 
+drop back to straight line code for smaller jobs. That should
+do the trick.
+</p>
+
+<pre>    <span class='keyword'>import</span> <span class='conid'>Control</span><span class='varop'>.</span><span class='conid'>Parallel</span>
+    <span class='keyword'>import</span> <span class='conid'>Control</span><span class='varop'>.</span><span class='conid'>Monad</span>
+    <span class='keyword'>import</span> <span class='conid'>Text</span><span class='varop'>.</span><span class='conid'>Printf</span>
+
+    <span class='varid'>cutoff</span> <span class='keyglyph'>=</span> <span class='num'>35</span>
+
+    <span class='varid'>fib'</span> <span class='keyglyph'>::</span> <span class='conid'>Int</span> <span class='keyglyph'>-&gt;</span> <span class='conid'>Integer</span>
+    <span class='varid'>fib'</span> <span class='num'>0</span> <span class='keyglyph'>=</span> <span class='num'>0</span>
+    <span class='varid'>fib'</span> <span class='num'>1</span> <span class='keyglyph'>=</span> <span class='num'>1</span>
+    <span class='varid'>fib'</span> <span class='varid'>n</span> <span class='keyglyph'>=</span> <span class='varid'>fib'</span> <span class='layout'>(</span><span class='varid'>n</span><span class='comment'>-</span><span class='num'>1</span><span class='layout'>)</span> <span class='varop'>+</span> <span class='varid'>fib'</span> <span class='layout'>(</span><span class='varid'>n</span><span class='comment'>-</span><span class='num'>2</span><span class='layout'>)</span>
+
+    <span class='varid'>fib</span> <span class='keyglyph'>::</span> <span class='conid'>Int</span> <span class='keyglyph'>-&gt;</span> <span class='conid'>Integer</span>
+    <span class='varid'>fib</span> <span class='varid'>n</span> <span class='keyglyph'>|</span> <span class='varid'>n</span> <span class='varop'>&lt;</span> <span class='varid'>cutoff</span> <span class='keyglyph'>=</span> <span class='varid'>fib'</span> <span class='varid'>n</span>
+          <span class='keyglyph'>|</span> <span class='varid'>otherwise</span>  <span class='keyglyph'>=</span> <span class='varid'>r</span> <span class='varop'>`par`</span> <span class='layout'>(</span><span class='varid'>l</span> <span class='varop'>`pseq`</span> <span class='varid'>l</span> <span class='varop'>+</span> <span class='varid'>r</span><span class='layout'>)</span>
+     <span class='keyword'>where</span>
+        <span class='varid'>l</span> <span class='keyglyph'>=</span> <span class='varid'>fib</span> <span class='layout'>(</span><span class='varid'>n</span><span class='comment'>-</span><span class='num'>1</span><span class='layout'>)</span>
+        <span class='varid'>r</span> <span class='keyglyph'>=</span> <span class='varid'>fib</span> <span class='layout'>(</span><span class='varid'>n</span><span class='comment'>-</span><span class='num'>2</span><span class='layout'>)</span>
+
+    <span class='varid'>main</span> <span class='keyglyph'>=</span> <span class='varid'>forM_</span> <span class='keyglyph'>[</span><span class='num'>0</span><span class='keyglyph'>..</span><span class='num'>45</span><span class='keyglyph'>]</span> <span class='varop'>$</span> <span class='keyglyph'>\</span><span class='varid'>i</span> <span class='keyglyph'>-&gt;</span>
+                <span class='varid'>printf</span> <span class='str'>"n=%d =&gt; %d\n"</span> <span class='varid'>i</span> <span class='layout'>(</span><span class='varid'>fib</span> <span class='varid'>i</span><span class='layout'>)</span>
+</pre>
+
+<p>
+So that's the same algorithm, just split into two loops, once of which creates
+thread sparks. Now, we can try this with a couple of cores:
+</p>
+
+<pre>
+    $ ghc-6.8.1 Par.hs -O2 -o real-par --make -threaded
+    $ time ./real-par +RTS -N2
+    n=0 => 0
+    n=1 => 1
+    n=2 => 1
+    ...
+    n=44 => 701408733
+    n=45 => 1134903170
+
+    ./real-par +RTS -N2  71.98s user 0.49s system 191% cpu 37.866 total
+</pre>
+
+<p>
+Ok. Cool, with two cores, and the `par` overhead, we're actually beating
+one core now. How about 3?
+</p>
+
+<pre>
+    ./real-par +RTS -N3  75.03s user 0.82s system 262% cpu 28.854 total
+</pre>
+
+Excellent.  And how about the lot?
+
+<pre>
+    ./real-par +RTS -N4  76.81s user 0.75s system 351% cpu 22.059 total
+</pre>
+
+<p>
+Haskell FTW! So that's scaling up enough for now, and, considering the 
+effort involved to parallelise it, I'm more than happy with that result.
+</p>
+
+<p>
+This is, as far as I'm aware, the lightest weight parallelism mechanism in any
+mainstream language. And the magical thing is that we parallelised our code
+without ever worrying about synchronisation, communication, race conditions,
+dead locks, live locks. semaphores, mutexes...
+</p>
+
+<p>
+The other interesting thing to think about: at what point do we beat the same
+algorithm in C, and how hard would it be to parallelise the algorithm in C with
+pthreads... I'm not going to attempt the latter, but we can check the former:
+</p>
+
+<pre>
+    #include <stdio.h>
+    #include <stdlib.h>
+
+    long long fib(long long n) {
+      if (n < 2) {
+        return 1;
+      }
+      return fib(n - 2) + fib(n - 1);
+    }
+
+    int main(int argc, char ** argv) {
+      long long n = 0;
+
+      for (n = 0; n <= 45; n++) {
+          printf("Fib(%lld): %lld\n", n, fib(n));
+      }
+
+      return 0;
+    }
+</pre>
+
+<p>
+Compiled with:
+</p>
+
+<pre>
+    $ gcc -O3 par.c -o par-c
+</pre>
+
+<p>
+And running it:
+</p>
+
+<pre>
+    $ time ./par-c          
+    Fib(0): 1
+    Fib(1): 1 
+    ...
+    Fib(43): 701408733
+    Fib(44): 1134903170
+    ./par-c  32.91s user 0.00s system 99% cpu 32.960 total
+</pre>
+
+<p>
+32s. Wow! So with an off-the-shelf Linux box, you can write simple (but parallel)
+Haskell will outperform gcc's best efforts by a good margin -- today!
+Multicore programming just got a lot easier.
+</p>
+
+
+<p>
+<a href="http://www.cse.unsw.edu.au/~dons/blog">/home</a>            :: 
+<a href="http://www.cse.unsw.edu.au/~dons/blog/haskell">/haskell</a>   :: 
+<a href="http://www.cse.unsw.edu.au/~dons/blog/2007/11/29#smoking-4core">permalink</a> ::
+<a href="http://cgi.cse.unsw.edu.au/~dons/blog/index.rss">rss</a>
+</p>
+<a name="smoking">
+<h1><a href="http://www.cse.unsw.edu.au/~dons/blog/2007/11/29#smoking">Holy Shmoly, GHC Haskell 6.8 smokes Python and Ruby away! And you can parallelise it for free</a></h1>
+
+
+<p>
+<a href="http://antoniocangiano.com/2007/11/28/holy-shmoly-ruby-19-smokes-python-away/">Antonio
+Cangiano</a> writes about how Ruby 1.9 has improved in various ways, so
+that the naive fibonacci algorithm
+is finally faster in Ruby than in Python.
+So I wondered how well <a
+href="http://haskell.org/ghc">Haskell</a> would do at something like
+this, and whether we could squeeze any more performance out using some
+cheap parallelism. Looking at the code, 
+</p>
+
+<p>
+The Ruby:
+</p>
+
+<pre>
+    def fib(n)
+      if n == 0 || n == 1
+        n
+      else
+        fib(n-1) + fib(n-2)
+      end
+    end
+
+    36.times do |i|
+      puts "n=#{i} => #{fib(i)}"
+    end
+</pre>
+
+<p>
+The Python:
+</p>
+
+<pre>
+    def fib(n):
+       if n == 0 or n == 1:
+          return n
+       else:
+          return fib(n-1) + fib(n-2)
+
+    for i in range(36):
+        print "n=%d => %d" % (i, fib(i))
+</pre>
+
+<p>
+The Haskell:
+</p>
+
+<pre>    <span class='varid'>fib</span> <span class='keyglyph'>::</span> <span class='conid'>Int</span> <span class='keyglyph'>-&gt;</span> <span class='conid'>Int</span>
+    <span class='varid'>fib</span> <span class='num'>0</span> <span class='keyglyph'>=</span> <span class='num'>0</span>
+    <span class='varid'>fib</span> <span class='num'>1</span> <span class='keyglyph'>=</span> <span class='num'>1</span>
+    <span class='varid'>fib</span> <span class='varid'>n</span> <span class='keyglyph'>=</span> <span class='varid'>fib</span> <span class='layout'>(</span><span class='varid'>n</span><span class='comment'>-</span><span class='num'>1</span><span class='layout'>)</span> <span class='varop'>+</span> <span class='varid'>fib</span> <span class='layout'>(</span><span class='varid'>n</span><span class='comment'>-</span><span class='num'>2</span><span class='layout'>)</span>
+
+    <span class='varid'>main</span> <span class='keyglyph'>=</span> <span class='varid'>forM_</span> <span class='keyglyph'>[</span><span class='num'>0</span><span class='keyglyph'>..</span><span class='num'>35</span><span class='keyglyph'>]</span> <span class='varop'>$</span> <span class='keyglyph'>\</span><span class='varid'>i</span> <span class='keyglyph'>-&gt;</span>
+                <span class='varid'>printf</span> <span class='str'>"n=%d =&gt; %d\n"</span> <span class='varid'>i</span> <span class='layout'>(</span><span class='varid'>fib</span> <span class='varid'>i</span><span class='layout'>)</span>
+</pre>
+
+<p>
+And, since I've got two cores in my laptop, the Haskell annotated for
+speculative parallelism:
+</p>
+
+<pre>    <span class='keyword'>import</span> <span class='conid'>Control</span><span class='varop'>.</span><span class='conid'>Parallel</span>
+
+    <span class='varid'>fib</span> <span class='keyglyph'>::</span> <span class='conid'>Int</span> <span class='keyglyph'>-&gt;</span> <span class='conid'>Int</span>
+    <span class='varid'>fib</span> <span class='num'>0</span> <span class='keyglyph'>=</span> <span class='num'>0</span>
+    <span class='varid'>fib</span> <span class='num'>1</span> <span class='keyglyph'>=</span> <span class='num'>1</span>
+    <span class='varid'>fib</span> <span class='varid'>n</span> <span class='keyglyph'>=</span> <span class='varid'>l</span> <span class='varop'>`pseq`</span> <span class='varid'>r</span> <span class='varop'>`pseq`</span> <span class='varid'>l</span><span class='varop'>+</span><span class='varid'>r</span>
+        <span class='keyword'>where</span>
+            <span class='varid'>l</span> <span class='keyglyph'>=</span> <span class='varid'>fib</span> <span class='layout'>(</span><span class='varid'>n</span><span class='comment'>-</span><span class='num'>1</span><span class='layout'>)</span>
+            <span class='varid'>r</span> <span class='keyglyph'>=</span> <span class='varid'>fib</span> <span class='layout'>(</span><span class='varid'>n</span><span class='comment'>-</span><span class='num'>2</span><span class='layout'>)</span>
+
+    <span class='varid'>main</span> <span class='keyglyph'>=</span> <span class='varid'>forM_</span> <span class='keyglyph'>[</span><span class='num'>0</span><span class='keyglyph'>..</span><span class='num'>35</span><span class='keyglyph'>]</span> <span class='varop'>$</span> <span class='keyglyph'>\</span><span class='varid'>i</span> <span class='keyglyph'>-&gt;</span>
+                <span class='varid'>printf</span> <span class='str'>"n=%d =&gt; %d\n"</span> <span class='varid'>i</span> <span class='layout'>(</span><span class='varid'>fib</span> <span class='varid'>i</span><span class='layout'>)</span>
+</pre>
+
+<p>
+One thing that stands out to me is that Haskell looks a fair bit like the
+Python,  and they're all about the same "development effort".  The other startling 
+thing is how cheap it is to turn the single processor Haskell code into one with 
+hints on how to evaluate it in parallel. The algorithm doesn't change,
+we just add parallelism hints that the compiler then uses to parallelise
+the code. Importantly, and unlike say, Erlang or Concurrent Haskell, we
+don't have to do manual thread creation, synchronisation or
+communication -- the compiler does all that for us!
+</p>
+
+<p>
+However, the important differences emerge when we run the code: only one
+implementation here does type erasure (meaning no wasteful runtime type
+checks), produces native code, always
+optimises tail calls to gotos, and can do <a
+href="http://haskell.org/ghc/docs/latest/html/libraries/parallel-1.0.0.0/Control-Parallel.html">parallelism annotations</a>...
+
+</p>
+
+<table>
+<th><td>Language</td><td>Time (N=36)</td></th>
+
+<tr>
+    <td>Ruby (1.8.5)
+    </td>
+    <td>
+    64.26s
+    </td>
+</tr>
+
+<tr>
+    <td>Python (2.4)
+    </td>
+    <td>
+    25.16s
+    </td>
+</tr>
+
+<tr>
+    <td>Haskell (GHC 6.8)
+    </td>
+    <td>&nbsp;0.48s
+    </td>
+</tr>
+
+<tr>
+    <td>Parallel Haskell (GHC 6.8)
+    </td>
+    <td>&nbsp;0.42s
+    </td>
+</tr>
+</table>
+
+<p>
+So parallel Haskell is around 60x Python here, and 150x faster than
+Ruby. And there was basically no difference in development effort
+required. Which high level language would you choose?  </p>
+
+
+<p>
+<a href="http://www.cse.unsw.edu.au/~dons/blog">/home</a>            :: 
+<a href="http://www.cse.unsw.edu.au/~dons/blog/haskell">/haskell</a>   :: 
+<a href="http://www.cse.unsw.edu.au/~dons/blog/2007/11/29#smoking">permalink</a> ::
+<a href="http://cgi.cse.unsw.edu.au/~dons/blog/index.rss">rss</a>
+</p>
+
+</td>
+<td width="30%" valign="top">
+
+    <h1><a href="http://www.cse.unsw.edu.au/~dons/contact.html">About</a></h1>
+
+    <h1><a href="http://www.realworldhaskell.org/blog/">Real World Haskell</a></h1>
+
+    <center><a href="http://www.realworldhaskell.org/blog/"><img src="http://www.realworldhaskell.org/blog/wp-content/themes/mistylook-101/img/profile.jpg" alt="RWH Book Cover"></a>
+    </center>
+
+    <h1>Archives</h1>
+    <ul>
+    <li><a href="http://www.cse.unsw.edu.au/~dons/blog/2008/09">September 2008</a></li>
+    <li><a href="http://www.cse.unsw.edu.au/~dons/blog/2008/08">August 2008</a></li>
+    <li><a href="http://www.cse.unsw.edu.au/~dons/blog/2008/07">July 2008</a></li>
+    <li><a href="http://www.cse.unsw.edu.au/~dons/blog/2008/06">June 2008</a></li>
+    <li><a href="http://www.cse.unsw.edu.au/~dons/blog/2008/05">May 2008</a></li>
+    <li><a href="http://www.cse.unsw.edu.au/~dons/blog/2007/11">November 2007</a></li>
+    <li><a href="http://www.cse.unsw.edu.au/~dons/blog/2007/10">October 2007</a></li>
+    <li><a href="http://www.cse.unsw.edu.au/~dons/blog/2007/07">July 2007</a></li>
+    <li><a href="http://www.cse.unsw.edu.au/~dons/blog/2007/06">June 2007</a></li>
+    <li><a href="http://www.cse.unsw.edu.au/~dons/blog/2007/05">May 2007</a></li>
+    <li><a href="http://www.cse.unsw.edu.au/~dons/blog/2007/04">April 2007</a></li>
+    <li><a href="http://www.cse.unsw.edu.au/~dons/blog/2007/03">March 2007</a></li>
+    <li><a href="http://www.cse.unsw.edu.au/~dons/blog/2007/01">January 2007</a></li>
+    <li><a href="http://www.cse.unsw.edu.au/~dons/blog/2006/12">December 2006</a></li>
+    <li><a href="http://www.cse.unsw.edu.au/~dons/blog/2006/11">November 2006</a></li>
+    <li><a href="http://www.cse.unsw.edu.au/~dons/blog/2006/10">October 2006</a></li>
+    <li><a href="http://www.cse.unsw.edu.au/~dons/blog/2006/09">September 2006</a></li>
+    <li><a href="http://www.cse.unsw.edu.au/~dons/blog/2006/08">August 2006</a></li>
+    </ul>
+
+    <h1>Recommended</h1>
+    <ul>
+
+    <li><a
+        href="http://www.cse.unsw.edu.au/~dons/blog/2008/06/04#fast-fusion"
+        >Working at a high altitude for low level performance</a>
+    </li>
+
+    <li><a
+        href="http://cgi.cse.unsw.edu.au/~dons/blog/2008/05/16#fast"
+        >Write Haskell as fast as C: exploiting strictness, laziness and recursion</a>
+    </li>
+
+    <li><a
+        href="http://cgi.cse.unsw.edu.au/~dons/blog/2008/05/04#strict"
+        >Haskell is a strict language</a>
+    </li>
+
+    <li><a
+        href="http://cgi.cse.unsw.edu.au/~dons/blog/2007/11/29#smoking-4core"
+        >Use those extra cores and beat C today!</a>
+    </li>
+
+    <li><a
+        href="http://cgi.cse.unsw.edu.au/~dons/blog/2007/11/26#no-headaches"
+        >No monadic headaches: multi-core concurrency is easy in Haskell</a>
+    </li>
+
+    <li><a
+        href="http://cgi.cse.unsw.edu.au/~dons/blog/2007/11/14#no-exceptions">No
+        more exceptions: debugging Haskell code with GHCi</a>
+    </li>
+
+    <li><a
+        href="http://cgi.cse.unsw.edu.au/~dons/blog/2007/07/31#rle">Run length encoding in Haskell</a></li>
+
+    <li><a
+        href="http://cgi.cse.unsw.edu.au/~dons/blog/2007/06/02#xmonad-0.2">xmonad: a success for pure functional data and QuickCheck</a></li>
+
+    <li><a href="http://www.cse.unsw.edu.au/~dons/blog/2007/05/17#xmonad_part1b_zipper">Tracking focus with a Zipper</a></li>
+
+    <li><a href="http://cgi.cse.unsw.edu.au/~dons/blog/2007/05/01#xmonad_part1_model">Roll your own window manager</a></li>
+    <li><a
+        href="http://cgi.cse.unsw.edu.au/~dons/blog/2007/03/10#programmable-semicolons">The programmable semicolon: shell scripting and privilege separation</a></li>
+    <li><a href="http://cgi.cse.unsw.edu.au/~dons/blog/2006/12/18#ph-3">Programming Haskell: argument handling</a></li>
+    <li><a href="http://cgi.cse.unsw.edu.au/~dons/blog/2006/12/17#programming-haskell-part-2">Programming Haskell: string processing and concurrency</a></li>
+    <li><a href="http://cgi.cse.unsw.edu.au/~dons/blog/2006/12/16#programming-haskell-intro">Programming Haskell: introduction</a></li>
+    <li><a href="http://www.haskell.org/haskellwiki/Roll_your_own_IRC_bot">Roll your own IRC bot</a></li>
+    <li><a href="http://www.haskell.org/haskellwiki/Simple_unix_tools">Simple unix tools</a></li>
+    </ul>
+
+    <h1>Blog Roll</h1>
+    <ul>
+    <li><a href="http://planet.haskell.org/">planet haskell</a></li>
+    <li><a href="http://sequence.complete.org/">the haskell sequence</a></li>
+    <li><a href="http://blog.well-typed.com/">well-typed</a></li>
+    <li><a href="http://augustss.blogspot.com">augustss</a></li>
+    <li><a href="http://blog.moertel.com">tmoertel</a></li>
+    <li><a href="http://japple.blogspot.com/">japple</a></li>
+    <li><a href="http://lennartkolmodin.blogspot.com">lennart</a></li>
+    <li><a href="http://neilmitchell.blogspot.com">ndm</a></li>
+    <li><a href="http://sigfpe.blogspot.com">sigfpe</a></li>
+    <li><a href="http://www.randomhacks.net/">ekidd</a></li>
+    <li><a href="http://www.serpentine.com/blog">bos</a></li>
+    <li><a href="http://headrush.typepad.com/">creating passionate users</a></li>
+    </ul>
+
+    <h1>Syndicate</h1>
+    <ul>
+        <li>
+        <a href="http://cgi.cse.unsw.edu.au/~dons/blog/index.rss">rss</a>
+        </li>
+    </ul>
+
+
+    </td>
+    </tr>
+    </table>
+</center>
+    </ br>
+    </ br>
+
+  </div>
+
+
+  <div id="footer">
+<a href="http://www.blosxom.com/">blosxom</a>
+
+.
+
+<a href="http://cgi.cse.unsw.edu.au/~dons/blog/index.rss">rss</a>
+
+.
+
+<a href="http://cgi.cse.unsw.edu.au/~dons/blog">blog</a>
+  </div>
+
+</body>
+</html>
