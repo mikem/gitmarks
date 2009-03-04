@@ -1,0 +1,1543 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html dir='ltr'>
+<head>
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+<script type="text/javascript">(function() { var a=window;function c(b){this.t={};this.tick=function(d,i,e){e=e?e:(new Date).getTime();this.t[d]=[e,i]};this.tick("start",null,b)}var f=new c;a.jstiming={Timer:c,load:f};try{var g=null;if(a.chrome&&a.chrome.csi)g=Math.floor(a.chrome.csi().pageT);if(g==null)if(a.gtbExternal)g=a.gtbExternal.pageT();if(g==null)if(a.external)g=a.external.pageT;if(g)a.jstiming.pt=g}catch(h){};a.tickAboveFold=function(b){b=b;var d=0;if(b.offsetParent){do d+=b.offsetTop;while(b=b.offsetParent)}b=d;b<=750&&a.jstiming.load.tick("aft")};var j=false;function k(){if(!j){j=true;a.jstiming.load.tick("firstScrollTime")}}a.addEventListener?a.addEventListener("scroll",k,false):a.attachEvent("onscroll",k);
+ })();</script>
+<meta content='true' name='MSSmartTagsPreventParsing'/>
+<meta content='blogger' name='generator'/>
+<link href='http://www.blogger.com/favicon.ico' rel='icon' type='image/vnd.microsoft.icon'/>
+<link href='http://jmglov.blogspot.com/2008/04/thou-shalt-grok-unicode.html' rel='canonical'/>
+<link rel="alternate" type="application/atom+xml" title="jmglov - Atom" href="http://jmglov.blogspot.com/feeds/posts/default" />
+<link rel="alternate" type="application/rss+xml" title="jmglov - RSS" href="http://jmglov.blogspot.com/feeds/posts/default?alt=rss" />
+<link rel="service.post" type="application/atom+xml" title="jmglov - Atom" href="http://www.blogger.com/feeds/15370741/posts/default" />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.blogger.com/rsd.g?blogID=15370741" />
+<link rel="alternate" type="application/atom+xml" title="jmglov - Atom" href="http://jmglov.blogspot.com/feeds/7533941892233758040/comments/default" />
+<!--[if IE]> <script> (function() { var html5 = ("abbr,article,aside,audio,canvas,datalist,details," + "figure,footer,header,hgroup,mark,menu,meter,nav,output," + "progress,section,time,video").split(','); for (var i = 0; i < html5.length; i++) { document.createElement(html5[i]); } })(); </script> <![endif]-->
+<title>jmglov: Thou shalt grok Unicode!</title>
+<link type='text/css' rel='stylesheet' href='http://www.blogger.com/static/v1/widgets/1743847221-widget_css_bundle.css' />
+ <link rel="stylesheet" type="text/css" href="http://www.blogger.com/dyn-css/authorization.css?targetBlogID=15370741&zx=5989bbb8-5ba9-4bdd-ae1e-ed5690c8d71c"/>
+<style type="text/css">#navbar-iframe { display:block }
+</style>
+
+<style id='page-skin-1' type='text/css'><!--
+/*
+-----------------------------------------------
+Blogger Template Style
+Name:     Rounders
+Date:     27 Feb 2004
+Updated by: Blogger Team
+----------------------------------------------- */
+/* Variable definitions
+====================
+<Variable name="mainBgColor" description="Main Background Color"
+type="color" default="#fff">
+<Variable name="mainTextColor" description="Text Color" type="color"
+default="#333">
+<Variable name="postTitleColor" description="Post Title Color" type="color"
+default="#333">
+<Variable name="dateHeaderColor" description="Date Header Color"
+type="color" default="#357">
+<Variable name="borderColor" description="Post Border Color" type="color"
+default="#bbb">
+<Variable name="mainLinkColor" description="Link Color" type="color"
+default="#258">
+<Variable name="mainVisitedLinkColor" description="Visited Link Color"
+type="color" default="#666">
+<Variable name="titleBgColor" description="Page Header Background Color"
+type="color" default="#456">
+<Variable name="titleTextColor" description="Blog Title Color"
+type="color" default="#fff">
+<Variable name="topSidebarHeaderColor"
+description="Top Sidebar Title Color"
+type="color" default="#234">
+<Variable name="topSidebarBgColor"
+description="Top Sidebar Background Color"
+type="color" default="#cdc">
+<Variable name="topSidebarTextColor" description="Top Sidebar Text Color"
+type="color" default="#345">
+<Variable name="topSidebarLinkColor" description="Top Sidebar Link Color"
+type="color" default="#258">
+<Variable name="topSidebarVisitedLinkColor"
+description="Top Sidebar Visited Link Color"
+type="color" default="#258">
+<Variable name="bodyFont" description="Text Font" type="font"
+default="normal normal 100% 'Trebuchet MS',Verdana,Arial,Sans-serif">
+<Variable name="pageTitleFont" description="Blog Title Font" type="font"
+default="normal bold 200% 'Trebuchet MS',Verdana,Arial,Sans-serif">
+<Variable name="descriptionFont" description="Blog Description Font" type="font"
+default="normal normal 100% 'Trebuchet MS',Verdana,Arial,Sans-serif">
+<Variable name="headerFont" description="Sidebar Title Font" type="font"
+default="normal bold 100% 'Trebuchet MS',Verdana,Arial,Sans-serif">
+<Variable name="postTitleFont" description="Post Title Font" type="font"
+default="normal bold 135% 'Trebuchet MS',Verdana,Arial,Sans-serif">
+<Variable name="startSide" description="Start side in blog language"
+type="automatic" default="left">
+<Variable name="endSide" description="End side in blog language"
+type="automatic" default="right">
+*/
+body {
+background:#aba;
+margin:0;
+text-align:center;
+line-height: 1.5em;
+font:x-small Trebuchet MS, Verdana, Arial, Sans-serif;
+color:#333333;
+font-size/* */:/**/small;
+font-size: /**/small;
+}
+/* Page Structure
+----------------------------------------------- */
+/* The images which help create rounded corners depend on the
+following widths and measurements. If you want to change
+these measurements, the images will also need to change.
+*/
+#outer-wrapper {
+width:740px;
+margin:0 auto;
+text-align:left;
+font: normal normal 100% 'Trebuchet MS',Verdana,Arial,Sans-serif;
+}
+#main-wrap1 {
+width:485px;
+float:left;
+background:#ffffff url("http://www1.blogblog.com/rounders/corners_main_bot.gif") no-repeat left bottom;
+margin:15px 0 0;
+padding:0 0 10px;
+color:#333333;
+font-size:97%;
+line-height:1.5em;
+word-wrap: break-word; /* fix for long text breaking sidebar float in IE */
+overflow: hidden;     /* fix for long non-text content breaking IE sidebar float */
+}
+#main-wrap2 {
+float:left;
+width:100%;
+background:url("http://www1.blogblog.com/rounders/corners_main_top.gif") no-repeat left top;
+padding:10px 0 0;
+}
+#main {
+background:url("http://www.blogblog.com/rounders/rails_main.gif") repeat-y left;
+padding:0;
+width:485px;
+}
+#sidebar-wrap {
+width:240px;
+float:right;
+margin:15px 0 0;
+font-size:97%;
+line-height:1.5em;
+word-wrap: break-word; /* fix for long text breaking sidebar float in IE */
+overflow: hidden;     /* fix for long non-text content breaking IE sidebar float */
+}
+.main .widget {
+margin-top: 4px;
+width: 468px;
+padding: 0 13px;
+}
+.main .Blog {
+margin: 0;
+padding: 0;
+width: 484px;
+}
+/* Links
+----------------------------------------------- */
+a:link {
+color: #225588;
+}
+a:visited {
+color: #666666;
+}
+a:hover {
+color: #666666;
+}
+a img {
+border-width:0;
+}
+/* Blog Header
+----------------------------------------------- */
+#header-wrapper {
+background:#445566 url("http://www2.blogblog.com/rounders/corners_cap_top.gif") no-repeat left top;
+margin-top:22px;
+margin-right:0;
+margin-bottom:0;
+margin-left:0;
+padding-top:8px;
+padding-right:0;
+padding-bottom:0;
+padding-left:0;
+color:#ffffff;
+}
+#header {
+background:url("http://www.blogblog.com/rounders/corners_cap_bot.gif") no-repeat left bottom;
+padding:0 15px 8px;
+}
+#header h1 {
+margin:0;
+padding:10px 30px 5px;
+line-height:1.2em;
+font: normal bold 200% 'Trebuchet MS',Verdana,Arial,Sans-serif;
+}
+#header a,
+#header a:visited {
+text-decoration:none;
+color: #ffffff;
+}
+#header .description {
+margin:0;
+padding:5px 30px 10px;
+line-height:1.5em;
+font: normal normal 100% 'Trebuchet MS',Verdana,Arial,Sans-serif;
+}
+/* Posts
+----------------------------------------------- */
+h2.date-header {
+margin-top:0;
+margin-right:28px;
+margin-bottom:0;
+margin-left:43px;
+font-size:85%;
+line-height:2em;
+text-transform:uppercase;
+letter-spacing:.2em;
+color:#335577;
+}
+.post {
+margin:.3em 0 25px;
+padding:0 13px;
+border:1px dotted #bbbbbb;
+border-width:1px 0;
+}
+.post h3 {
+margin:0;
+line-height:1.5em;
+background:url("http://www2.blogblog.com/rounders/icon_arrow.gif") no-repeat 10px .5em;
+display:block;
+border:1px dotted #bbbbbb;
+border-width:0 1px 1px;
+padding-top:2px;
+padding-right:14px;
+padding-bottom:2px;
+padding-left:29px;
+color: #333333;
+font: normal bold 135% 'Trebuchet MS',Verdana,Arial,Sans-serif;
+}
+.post h3 a, .post h3 a:visited {
+text-decoration:none;
+color: #333333;
+}
+a.title-link:hover {
+background-color: #bbbbbb;
+color: #333333;
+}
+.post-body {
+border:1px dotted #bbbbbb;
+border-width:0 1px 1px;
+border-bottom-color:#ffffff;
+padding-top:10px;
+padding-right:14px;
+padding-bottom:1px;
+padding-left:29px;
+}
+html>body .post-body {
+border-bottom-width:0;
+}
+.post-body {
+margin:0 0 .75em;
+}
+.post-body blockquote {
+line-height:1.3em;
+}
+.post-footer {
+background: #ded;
+margin:0;
+padding-top:2px;
+padding-right:14px;
+padding-bottom:2px;
+padding-left:29px;
+border:1px dotted #bbbbbb;
+border-width:1px;
+font-size:100%;
+line-height:1.5em;
+color: #666;
+}
+/*
+The first line of the post footer might only have floated text, so we need to give it a height.
+The height comes from the post-footer line-height
+*/
+.post-footer-line-1 {
+min-height:1.5em;
+_height:1.5em;
+}
+.post-footer p {
+margin: 0;
+}
+html>body .post-footer {
+border-bottom-color:transparent;
+}
+.uncustomized-post-template .post-footer {
+text-align: right;
+}
+.uncustomized-post-template .post-author,
+.uncustomized-post-template .post-timestamp {
+display: block;
+float: left;
+text-align:left;
+margin-right: 4px;
+}
+.post-footer a {
+color: #258;
+}
+.post-footer a:hover {
+color: #666;
+}
+a.comment-link {
+/* IE5.0/Win doesn't apply padding to inline elements,
+so we hide these two declarations from it */
+background/* */:/**/url("http://www.blogblog.com/rounders/icon_comment_left.gif") no-repeat left 45%;
+padding-left:14px;
+}
+html>body a.comment-link {
+/* Respecified, for IE5/Mac's benefit */
+background:url("http://www.blogblog.com/rounders/icon_comment_left.gif") no-repeat left 45%;
+padding-left:14px;
+}
+.post img, table.tr-caption-container {
+margin-top:0;
+margin-right:0;
+margin-bottom:5px;
+margin-left:0;
+padding:4px;
+border:1px solid #bbbbbb;
+}
+.tr-caption-container img {
+border: none;
+margin: 0;
+padding: 0;
+}
+blockquote {
+margin:.75em 0;
+border:1px dotted #bbbbbb;
+border-width:1px 0;
+padding:5px 15px;
+color: #335577;
+}
+.post blockquote p {
+margin:.5em 0;
+}
+#blog-pager-newer-link {
+float: left;
+margin-left: 13px;
+}
+#blog-pager-older-link {
+float: right;
+margin-right: 13px;
+}
+#blog-pager {
+text-align: center;
+}
+.feed-links {
+clear: both;
+line-height: 2.5em;
+margin-left: 13px;
+}
+/* Comments
+----------------------------------------------- */
+#comments {
+margin:-25px 13px 0;
+border:1px dotted #bbbbbb;
+border-width:0 1px 1px;
+padding-top:20px;
+padding-right:0;
+padding-bottom:15px;
+padding-left:0;
+}
+#comments h4 {
+margin:0 0 10px;
+padding-top:0;
+padding-right:14px;
+padding-bottom:2px;
+padding-left:29px;
+border-bottom:1px dotted #bbbbbb;
+font-size:120%;
+line-height:1.4em;
+color:#333333;
+}
+#comments-block {
+margin-top:0;
+margin-right:15px;
+margin-bottom:0;
+margin-left:9px;
+}
+.comment-author {
+background:url("http://www.blogblog.com/rounders/icon_comment_left.gif") no-repeat 2px .3em;
+margin:.5em 0;
+padding-top:0;
+padding-right:0;
+padding-bottom:0;
+padding-left:20px;
+font-weight:bold;
+}
+.comment-body {
+margin:0 0 1.25em;
+padding-top:0;
+padding-right:0;
+padding-bottom:0;
+padding-left:20px;
+}
+.comment-body p {
+margin:0 0 .5em;
+}
+.comment-footer {
+margin:0 0 .5em;
+padding-top:0;
+padding-right:0;
+padding-bottom:.75em;
+padding-left:20px;
+}
+.comment-footer a:link {
+color: #333;
+}
+.deleted-comment {
+font-style:italic;
+color:gray;
+}
+.comment-form {
+padding-left:20px;
+padding-right:5px;
+}
+#comments .comment-form h4 {
+padding-left:0px;
+}
+/* Profile
+----------------------------------------------- */
+.profile-img {
+float: left;
+margin-top: 5px;
+margin-right: 5px;
+margin-bottom: 5px;
+margin-left: 0;
+border: 4px solid #334455;
+}
+.profile-datablock {
+margin-top:0;
+margin-right:15px;
+margin-bottom:.5em;
+margin-left:0;
+padding-top:8px;
+}
+.profile-link {
+background:url("http://www.blogblog.com/rounders/icon_profile_left.gif") no-repeat left .1em;
+padding-left:15px;
+font-weight:bold;
+}
+.profile-textblock {
+clear: both;
+margin: 0;
+}
+.sidebar .clear, .main .widget .clear {
+clear: both;
+}
+#sidebartop-wrap {
+background:#ccddcc url("http://www.blogblog.com/rounders/corners_prof_bot.gif") no-repeat left bottom;
+margin:0px 0px 15px;
+padding:0px 0px 10px;
+color:#334455;
+}
+#sidebartop-wrap2 {
+background:url("http://www2.blogblog.com/rounders/corners_prof_top.gif") no-repeat left top;
+padding: 10px 0 0;
+margin:0;
+border-width:0;
+}
+#sidebartop h2 {
+line-height:1.5em;
+color:#223344;
+border-bottom: 1px dotted #223344;
+margin-bottom: 0.5em;
+font: normal bold 100% 'Trebuchet MS',Verdana,Arial,Sans-serif;
+}
+#sidebartop a {
+color: #225588;
+}
+#sidebartop a:hover {
+color: #225588;
+}
+#sidebartop a:visited {
+color: #225588;
+}
+/* Sidebar Boxes
+----------------------------------------------- */
+.sidebar .widget {
+margin:.5em 13px 1.25em;
+padding:0 0px;
+}
+.widget-content {
+margin-top: 0.5em;
+}
+#sidebarbottom-wrap1 {
+background:#ffffff url("http://www.blogblog.com/rounders/corners_side_top.gif") no-repeat left top;
+margin:0 0 15px;
+padding:10px 0 0;
+color: #333333;
+}
+#sidebarbottom-wrap2 {
+background:url("http://www1.blogblog.com/rounders/corners_side_bot.gif") no-repeat left bottom;
+padding:0 0 8px;
+}
+.sidebar h2 {
+margin:0;
+padding:0 0 .2em;
+line-height:1.5em;
+font:normal bold 100% 'Trebuchet MS',Verdana,Arial,Sans-serif;
+}
+.sidebar ul {
+list-style:none;
+margin:0 0 1.25em;
+padding:0;
+}
+.sidebar ul li {
+background:url("http://www2.blogblog.com/rounders/icon_arrow_sm.gif") no-repeat 2px .25em;
+margin:0;
+padding-top:0;
+padding-right:0;
+padding-bottom:3px;
+padding-left:16px;
+margin-bottom:3px;
+border-bottom:1px dotted #bbbbbb;
+line-height:1.4em;
+}
+.sidebar p {
+margin:0 0 .6em;
+}
+#sidebar h2 {
+color: #333333;
+border-bottom: 1px dotted #333333;
+}
+/* Footer
+----------------------------------------------- */
+#footer-wrap1 {
+clear:both;
+margin:0 0 10px;
+padding:15px 0 0;
+}
+#footer-wrap2 {
+background:#445566 url("http://www2.blogblog.com/rounders/corners_cap_top.gif") no-repeat left top;
+color:#ffffff;
+}
+#footer {
+background:url("http://www.blogblog.com/rounders/corners_cap_bot.gif") no-repeat left bottom;
+padding:8px 15px;
+}
+#footer hr {display:none;}
+#footer p {margin:0;}
+#footer a {color:#ffffff;}
+#footer .widget-content {
+margin:0;
+}
+/** Page structure tweaks for layout editor wireframe */
+body#layout #main-wrap1,
+body#layout #sidebar-wrap,
+body#layout #header-wrapper {
+margin-top: 0;
+}
+body#layout #header, body#layout #header-wrapper,
+body#layout #outer-wrapper {
+margin-left:0,
+margin-right: 0;
+padding: 0;
+}
+body#layout #outer-wrapper {
+width: 730px;
+}
+body#layout #footer-wrap1 {
+padding-top: 0;
+}
+
+--></style>
+<script type="text/javascript">
+if (window.jstiming) window.jstiming.load.tick('headEnd');
+</script></head>
+<body>
+<div class='navbar section' id='navbar'><div class='widget Navbar' id='Navbar1'><script type="text/javascript">
+    function setAttributeOnload(object, attribute, val) {
+      if(window.addEventListener) {
+        window.addEventListener("load",
+          function(){ object[attribute] = val; }, false);
+      } else {
+        window.attachEvent('onload', function(){ object[attribute] = val; });
+      }
+    }
+  </script>
+<iframe src="http://www.blogger.com/navbar.g?targetBlogID=15370741&amp;blogName=jmglov&amp;publishMode=PUBLISH_MODE_BLOGSPOT&amp;navbarType=BLUE&amp;layoutType=LAYOUTS&amp;searchRoot=http%3A%2F%2Fjmglov.blogspot.com%2Fsearch&amp;blogLocale=en_US&amp;homepageUrl=http%3A%2F%2Fjmglov.blogspot.com%2F&amp;targetPostID=7533941892233758040" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" height="30px" width="100%" id="navbar-iframe" allowtransparency="true" title="Blogger Navigation and Search"></iframe>
+<div></div></div></div>
+<div id='outer-wrapper'>
+<div id='header-wrapper'>
+<div class='header section' id='header'><div class='widget Header' id='Header1'>
+<div id='header-inner'>
+<div class='titlewrapper'>
+<h1 class='title'>
+<a href='http://jmglov.blogspot.com/'>jmglov</a>
+</h1>
+</div>
+<div class='descriptionwrapper'>
+<p class='description'><span>
+</span></p>
+</div>
+</div>
+</div></div>
+</div>
+<div id='crosscol-wrapper' style='text-align:center'>
+<div class='crosscol section' id='crosscol'></div>
+</div>
+<div id='main-wrap1'><div id='main-wrap2'>
+<div class='main section' id='main'><div class='widget Blog' id='Blog1'>
+<div class='blog-posts hfeed'>
+<!-- google_ad_section_start(name=default) -->
+
+          <div class="date-outer">
+        
+<h2 class='date-header'><span>Wednesday, April 09, 2008</span></h2>
+
+          <div class="date-posts">
+        
+<div class='post-outer'>
+<div class='post hentry uncustomized-post-template'>
+<a name='7533941892233758040'></a>
+<h3 class='post-title entry-title'>
+Thou shalt grok Unicode!
+</h3>
+<div class='post-header'>
+<div class='post-header-line-1'></div>
+</div>
+<div class='post-body entry-content'>
+Working programmers simply <span style="font-weight:bold;">must</span> <a href="http://en.wiktionary.org/wiki/grok">grok</a> <a href="http://en.wikipedia.org/wiki/Unicode">Unicode</a>!<br /><br />I thereby propose the following course of study:<br /><ol><br />  <li>Read "<a href="http://www.joelonsoftware.com/articles/Unicode.html">The Absolute Minimum Every Software Developer Absolutely, Positively Must Know About Unicode and Character Sets (No Excuses!)"</a>, by Joel Spolsky</li><br />  <li>Read "<a href="http://www.codinghorror.com/blog/archives/000178.html">There Ain't No Such Thing as Plain Text</a>", by Jeff Atwood</li><br />  <li>Read "<a href="http://www.tbray.org/ongoing/When/200x/2003/04/06/Unicode">On the Goodness of Unicode</a>", by Tim Bray</li><br />  <li>Read the aforementioned <a href="http://en.wikipedia.org/wiki/Unicode">Wikipedia article on Unicode</a></li><br />  <li>Perl programmers, read: "<a href="http://ahinea.com/en/tech/perl-unicode-struggle.html">Unicode-processing issues in Perl and how to cope with it</a>", by Ivan Kurmanov</li><br />  <li>Write a <a href="http://en.wikipedia.org/wiki/UTF-8">UTF-8</a> version of "Hello, World!" in each programming language that you ordinarily use. (See below.)</li><br /></ol><br />Speaking of which, wanna know how to say "Hello, world!" in a wide variety of natural languages? Here's the list, with the language names omitted. See how many you can identify, and brag in the comments how awesome you are!<br /><ul><br />  <li>Hello, World!</li><br />  <li>世界&#12289;こんにちは&#65281;</li><br />  <li>مرحبا &#1548; العالم!</li><br />  <li>你好&#65292;世界&#65281;</li><br />  <li>Bonjour, le monde!</li><br />  <li>Hallo, welt!</li><br />  <li>Ciao, mondo!</li><br />  <li>안녕하세요, 세계!</li><br />  <li>Olá, mundo!</li><br />  <li>Здравствуй, мир!</li><br />  <li>Здравей, свят!</li><br />  <li>Hola, mundo!</li><br />  <li>Halló, Heimur!</li><br /></ul>
+<div style='clear: both;'></div>
+</div>
+<div class='post-footer'>
+<div class='post-footer-line post-footer-line-1'>
+<span class='post-author vcard'>
+Posted by
+<span class='fn'>Josh Glover</span>
+</span>
+<span class='post-timestamp'>
+at
+<a class='timestamp-link' href='http://jmglov.blogspot.com/2008/04/thou-shalt-grok-unicode.html' rel='bookmark' title='permanent link'><abbr class='published' title='2008-04-09T10:09:00+09:00'>10:09 AM</abbr></a>
+</span>
+<span class='reaction-buttons'>
+</span>
+<span class='dummy-feature'>
+</span>
+<span class='star-ratings'>
+</span>
+<span class='post-comment-link'>
+</span>
+<span class='post-backlinks post-comment-link'>
+</span>
+<span class='post-icons'>
+<span class='item-control blog-admin pid-1173383010'>
+<a href='http://www.blogger.com/post-edit.g?blogID=15370741&postID=7533941892233758040' title='Edit Post'>
+<img alt='' class='icon-action' height='18' src='http://img2.blogblog.com/img/icon18_edit_allbkg.gif' width='18'/>
+</a>
+</span>
+</span>
+<div class='post-share-buttons'>
+</div>
+</div>
+<div class='post-footer-line post-footer-line-2'>
+<span class='post-labels'>
+</span>
+</div>
+<div class='post-footer-line post-footer-line-3'>
+<span class='post-location'>
+</span>
+</div>
+</div>
+</div>
+<div class='comments' id='comments'>
+<a name='comments'></a>
+<h4>
+8
+comments:
+        
+</h4>
+<div id='Blog1_comments-block-wrapper'>
+<dl class='avatar-comment-indent' id='comments-block'>
+<dt class='comment-author ' id='c1403862720124462017'>
+<a name='c1403862720124462017'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="http://www.blogger.com/profile/14481455514713679009" rel="nofollow" onclick="" class="avatar-hovercard" id="av-0-14481455514713679009"><img src="http://img2.blogblog.com/img/b16-rounded.gif" width="16" height="16" alt="" title="vuhung">
+
+</a></span></div>
+<a href='http://www.blogger.com/profile/14481455514713679009' rel='nofollow'>vuhung</a>
+said...
+</dt>
+<dd class='comment-body' id='Blog1_cmt-1403862720124462017'>
+<p>
+Josh, are you using traditional Chinese UTF-8 font? If you are, please recommend a good one!
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://jmglov.blogspot.com/2008/04/thou-shalt-grok-unicode.html?showComment=1207712400000#c1403862720124462017' title='comment permalink'>
+Wednesday, April 09, 2008 12:40:00 PM
+</a>
+<span class='item-control blog-admin pid-1459330680'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=15370741&postID=1403862720124462017' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author blog-author' id='c3051041166436020223'>
+<a name='c3051041166436020223'></a>
+<div class="avatar-image-container vcard"><span dir="ltr"><a href="http://www.blogger.com/profile/01937662965184237064" rel="nofollow" onclick="" class="avatar-hovercard" id="av-1-01937662965184237064"><img src="http://img1.blogblog.com/img/blank.gif" width="30" height="35" alt="" class="delayLoad" style="display: none;" longdesc="http://i14.photobucket.com/albums/a338/jmglov/th_blogger.jpg" title="Josh Glover">
+
+<noscript><img src="http://i14.photobucket.com/albums/a338/jmglov/th_blogger.jpg" width="30" height="35" class="photo" alt=""></noscript></a></span></div>
+<a href='http://www.blogger.com/profile/01937662965184237064' rel='nofollow'>Josh Glover</a>
+said...
+</dt>
+<dd class='comment-body' id='Blog1_cmt-3051041166436020223'>
+<p>
+Bugger if I know. Here are the fonts that I have installed:<BR/><BR/>: jglover@jglover; equery list media-fonts/<BR/> * installed packages<BR/>media-fonts/aquafont-2.7-r2<BR/>media-fonts/aquapfont-2.5-r1<BR/>media-fonts/arphicfonts-0.1.20060513<BR/>media-fonts/baekmuk-fonts-2.2-r2<BR/>media-fonts/corefonts-1-r2<BR/>media-fonts/cronyx-fonts-2.3.1-r2<BR/>media-fonts/dejavu-2.15<BR/>media-fonts/efont-unicode-0.4.2-r1<BR/>media-fonts/encodings-1.0.0<BR/>media-fonts/essays1743-1.0<BR/>media-fonts/font-adobe-75dpi-1.0.0<BR/>media-fonts/font-alias-1.0.1<BR/>media-fonts/font-cursor-misc-1.0.0<BR/>media-fonts/font-misc-misc-1.0.0<BR/>media-fonts/font-util-1.0.1<BR/>media-fonts/freefonts-0.10-r3<BR/>media-fonts/gnu-gs-fonts-other-6.0<BR/>media-fonts/gnu-gs-fonts-std-8.11<BR/>media-fonts/hunkyfonts-0.3.1<BR/>media-fonts/intlfonts-1.2.1<BR/>media-fonts/ja-ipafonts-0.0.20040715<BR/>media-fonts/jisx0213-fonts-20040425-r2<BR/>media-fonts/kochi-substitute-20030809-r3<BR/>media-fonts/lfpfonts-fix-0.83-r2<BR/>media-fonts/lfpfonts-var-0.84<BR/>media-fonts/mikachan-font-9.1<BR/>media-fonts/monafont-2.90-r2<BR/>media-fonts/mplus-fonts-2.2.4<BR/>media-fonts/sazanami-20040629<BR/>media-fonts/sharefonts-0.10-r3<BR/>media-fonts/shinonome-0.9.11<BR/>media-fonts/terminus-font-4.20<BR/>media-fonts/ttf-bitstream-vera-1.10-r3<BR/>media-fonts/ttf-gentium-1.0.1<BR/>media-fonts/unifont-1.0-r3<BR/>media-fonts/urw-fonts-2.1-r2
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://jmglov.blogspot.com/2008/04/thou-shalt-grok-unicode.html?showComment=1207728960000#c3051041166436020223' title='comment permalink'>
+Wednesday, April 09, 2008 5:16:00 PM
+</a>
+<span class='item-control blog-admin pid-1173383010'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=15370741&postID=3051041166436020223' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author ' id='c2083570801710684700'>
+<a name='c2083570801710684700'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="http://www.stoicviking.net" rel="nofollow" onclick=""><img src="http://img1.blogblog.com/img/blank.gif" width="16" height="16" alt="" title="birkirb">
+
+</a></span></div>
+<a href='http://www.stoicviking.net' rel='nofollow'>birkirb</a>
+said...
+</dt>
+<dd class='comment-body' id='Blog1_cmt-2083570801710684700'>
+<p>
+Hvar er "Halló, Heimur!"!?
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://jmglov.blogspot.com/2008/04/thou-shalt-grok-unicode.html?showComment=1207730340000#c2083570801710684700' title='comment permalink'>
+Wednesday, April 09, 2008 5:39:00 PM
+</a>
+<span class='item-control blog-admin pid-1541139162'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=15370741&postID=2083570801710684700' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author ' id='c2423710936971382701'>
+<a name='c2423710936971382701'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="http://www.blogger.com/profile/01002920068652190833" rel="nofollow" onclick="" class="avatar-hovercard" id="av-3-01002920068652190833"><img src="http://img2.blogblog.com/img/b16-rounded.gif" width="16" height="16" alt="" title="rzoz">
+
+</a></span></div>
+<a href='http://www.blogger.com/profile/01002920068652190833' rel='nofollow'>rzoz</a>
+said...
+</dt>
+<dd class='comment-body' id='Blog1_cmt-2423710936971382701'>
+<p>
+Bah, this Unicode thing is just a fad and will disappear once you troglodytes become enlightened enough to use EBCDIC.<BR/><BR/>Also, BSD is dead!  Long live big-endianness!
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://jmglov.blogspot.com/2008/04/thou-shalt-grok-unicode.html?showComment=1207749840000#c2423710936971382701' title='comment permalink'>
+Wednesday, April 09, 2008 11:04:00 PM
+</a>
+<span class='item-control blog-admin pid-513696280'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=15370741&postID=2423710936971382701' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author ' id='c7626555679336083287'>
+<a name='c7626555679336083287'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="http://www.blogger.com/profile/02025626934163382873" rel="nofollow" onclick="" class="avatar-hovercard" id="av-4-02025626934163382873"><img src="http://img2.blogblog.com/img/b16-rounded.gif" width="16" height="16" alt="" title="MentatJack">
+
+</a></span></div>
+<a href='http://www.blogger.com/profile/02025626934163382873' rel='nofollow'>MentatJack</a>
+said...
+</dt>
+<dd class='comment-body' id='Blog1_cmt-7626555679336083287'>
+<p>
+I am so awesome!
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://jmglov.blogspot.com/2008/04/thou-shalt-grok-unicode.html?showComment=1207761900000#c7626555679336083287' title='comment permalink'>
+Thursday, April 10, 2008 2:25:00 AM
+</a>
+<span class='item-control blog-admin pid-1093025625'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=15370741&postID=7626555679336083287' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author blog-author' id='c1035718871995601475'>
+<a name='c1035718871995601475'></a>
+<div class="avatar-image-container vcard"><span dir="ltr"><a href="http://www.blogger.com/profile/01937662965184237064" rel="nofollow" onclick="" class="avatar-hovercard" id="av-5-01937662965184237064"><img src="http://img1.blogblog.com/img/blank.gif" width="30" height="35" alt="" class="delayLoad" style="display: none;" longdesc="http://i14.photobucket.com/albums/a338/jmglov/th_blogger.jpg" title="Josh Glover">
+
+<noscript><img src="http://i14.photobucket.com/albums/a338/jmglov/th_blogger.jpg" width="30" height="35" class="photo" alt=""></noscript></a></span></div>
+<a href='http://www.blogger.com/profile/01937662965184237064' rel='nofollow'>Josh Glover</a>
+said...
+</dt>
+<dd class='comment-body' id='Blog1_cmt-1035718871995601475'>
+<p>
+@birkirb: Of course I do... now. ;)<BR/><BR/>@rzoz: You are clearly insane.<BR/><BR/>@mentatjack: I guess you are a spambot, but I forgive you since you are a Mentat and all.
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://jmglov.blogspot.com/2008/04/thou-shalt-grok-unicode.html?showComment=1208163360000#c1035718871995601475' title='comment permalink'>
+Monday, April 14, 2008 5:56:00 PM
+</a>
+<span class='item-control blog-admin pid-1173383010'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=15370741&postID=1035718871995601475' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author ' id='c827401443432262518'>
+<a name='c827401443432262518'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="http://www.blogger.com/profile/02025626934163382873" rel="nofollow" onclick="" class="avatar-hovercard" id="av-6-02025626934163382873"><img src="http://img2.blogblog.com/img/b16-rounded.gif" width="16" height="16" alt="" title="MentatJack">
+
+</a></span></div>
+<a href='http://www.blogger.com/profile/02025626934163382873' rel='nofollow'>MentatJack</a>
+said...
+</dt>
+<dd class='comment-body' id='Blog1_cmt-827401443432262518'>
+<p>
+Heh, this is Steven, you know me.  <BR/><BR/>Your instructions were "See how many you can identify, and brag in the comments how awesome you are!"<BR/><BR/>for the record, I was able to identify 8.<BR/><BR/>sorry for being belligerent.
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://jmglov.blogspot.com/2008/04/thou-shalt-grok-unicode.html?showComment=1212257880000#c827401443432262518' title='comment permalink'>
+Sunday, June 01, 2008 3:18:00 AM
+</a>
+<span class='item-control blog-admin pid-1093025625'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=15370741&postID=827401443432262518' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author ' id='c7197493603710357215'>
+<a name='c7197493603710357215'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="http://www.blogger.com/profile/00202582958134988392" rel="nofollow" onclick="" class="avatar-hovercard" id="av-7-00202582958134988392"><img src="http://img2.blogblog.com/img/b16-rounded.gif" width="16" height="16" alt="" title="Jup">
+
+</a></span></div>
+<a href='http://www.blogger.com/profile/00202582958134988392' rel='nofollow'>Jup</a>
+said...
+</dt>
+<dd class='comment-body' id='Blog1_cmt-7197493603710357215'>
+<p>
+Hey big playa,<BR/><BR/>I have no idea what your up to these days.  I know you&#39;re a Dad, and I suspect you are an excellent father :D<BR/><BR/>I miss you often my friend, especially when I&#39;m singing along with a Luda or Clipse song and I work Q Hawkins into the lyrics in the way we mastered and made so classically famous in the halls of INCOGEN.  In that spirit I had to send ya this:<BR/><BR/>http://www.mtv.com/overdrive/?artist=961097&amp;vid=116154<BR/><BR/>I bet you can find a few places to search/replace Q :D<BR/><BR/>I&#39;ve been coding a bunch.  Just a silly ole PHP/MySQL framework for content management.  Its been fun. <BR/><BR/>Peace homey,<BR/><BR/>Cdog
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://jmglov.blogspot.com/2008/04/thou-shalt-grok-unicode.html?showComment=1220934660000#c7197493603710357215' title='comment permalink'>
+Tuesday, September 09, 2008 1:31:00 PM
+</a>
+<span class='item-control blog-admin pid-1182539825'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=15370741&postID=7197493603710357215' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+</dl>
+</div>
+<p class='comment-footer'>
+<a href='https://www.blogger.com/comment.g?blogID=15370741&postID=7533941892233758040' onclick=''>Post a Comment</a>
+</p>
+<div id='backlinks-container'>
+<div id='Blog1_backlinks-container'>
+</div>
+</div>
+</div>
+</div>
+<div id="latency-7533941892233758040"></div><script type="text/javascript">if (window['tickAboveFold']) {window['tickAboveFold'](document.getElementById("latency-7533941892233758040")); } </script>
+
+        </div></div>
+      
+<!-- google_ad_section_end -->
+</div>
+<div class='blog-pager' id='blog-pager'>
+<span id='blog-pager-newer-link'>
+<a class='blog-pager-newer-link' href='http://jmglov.blogspot.com/2009/03/how-long-must-we-sing-this-song.html' id='Blog1_blog-pager-newer-link' title='Newer Post'>Newer Post</a>
+</span>
+<span id='blog-pager-older-link'>
+<a class='blog-pager-older-link' href='http://jmglov.blogspot.com/2007/09/dusk-dawn-and-30-day-challenges.html' id='Blog1_blog-pager-older-link' title='Older Post'>Older Post</a>
+</span>
+<a class='home-link' href='http://jmglov.blogspot.com/'>Home</a>
+</div>
+<div class='clear'></div>
+<div class='post-feeds'>
+<div class='feed-links'>
+Subscribe to:
+<a class='feed-link' href='http://jmglov.blogspot.com/feeds/7533941892233758040/comments/default' target='_blank' type='application/atom+xml'>Post Comments (Atom)</a>
+</div>
+</div>
+</div></div>
+</div></div>
+<div id='sidebar-wrap'>
+<div id='sidebartop-wrap'><div id='sidebartop-wrap2'>
+<div class='sidebar section' id='sidebartop'><div class='widget Profile' id='Profile1'>
+<h2>About Me</h2>
+<div class='widget-content'>
+<a href='http://www.blogger.com/profile/01937662965184237064'><img alt='My Photo' class='profile-img' height='80' src='http://i14.photobucket.com/albums/a338/jmglov/th_blogger.jpg' width='69'/></a>
+<dl class='profile-datablock'>
+<dt class='profile-data'>Josh Glover</dt>
+</dl>
+<a class='profile-link' href='http://www.blogger.com/profile/01937662965184237064'>View my complete profile</a>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=15370741&widgetType=Profile&widgetId=Profile1&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("Profile1"));' target='configProfile1' title='Edit'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div></div>
+</div></div>
+<div id='sidebarbottom-wrap1'><div id='sidebarbottom-wrap2'>
+<div class='sidebar section' id='sidebar'><div class='widget HTML' id='HTML1'>
+<h2 class='title'>Twitter Updates</h2>
+<div class='widget-content'>
+<div id="twitter_div"><ul id="twitter_update_list"></ul>
+<a id="twitter-link" style="display:block;text-align:right;" href="http://twitter.com/jmglov">follow me on Twitter</a>
+</div>
+<script src="http://twitter.com/javascripts/blogger.js" type="text/javascript"></script>
+<script src="http://twitter.com/statuses/user_timeline/jmglov.json?callback=twitterCallback2&count=5" type="text/javascript"></script>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=15370741&widgetType=HTML&widgetId=HTML1&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("HTML1"));' target='configHTML1' title='Edit'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div><div class='widget BlogArchive' id='BlogArchive1'>
+<h2>Blog Archive</h2>
+<div class='widget-content'>
+<div id='ArchiveList'>
+<div id='BlogArchive1_ArchiveList'>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://jmglov.blogspot.com/search?updated-min=2010-01-01T00%3A00%3A00%2B09%3A00&updated-max=2011-01-01T00%3A00%3A00%2B09%3A00&max-results=3'>2010</a>
+<span class='post-count' dir='ltr'>(3)</span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://jmglov.blogspot.com/2010_11_01_archive.html'>November</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='posts'>
+<li><a href='http://jmglov.blogspot.com/2010/11/software-writing-cliches.html'>Software Writing Clichés</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://jmglov.blogspot.com/2010_09_01_archive.html'>September</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='posts'>
+<li><a href='http://jmglov.blogspot.com/2010/09/valkomna-till-sverige.html'>Välkomna till Sverige</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://jmglov.blogspot.com/2010_08_01_archive.html'>August</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='posts'>
+<li><a href='http://jmglov.blogspot.com/2010/08/test-driven-development-by-example-in.html'>Test Driven Development by Example, in Ruby</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://jmglov.blogspot.com/search?updated-min=2009-01-01T00%3A00%3A00%2B09%3A00&updated-max=2010-01-01T00%3A00%3A00%2B09%3A00&max-results=2'>2009</a>
+<span class='post-count' dir='ltr'>(2)</span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://jmglov.blogspot.com/2009_05_01_archive.html'>May</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='posts'>
+<li><a href='http://jmglov.blogspot.com/2009/05/essays-in-idleness-01-singularities-and.html'>Essays in Idleness 01: Singularities and Data Stor...</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://jmglov.blogspot.com/2009_03_01_archive.html'>March</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='posts'>
+<li><a href='http://jmglov.blogspot.com/2009/03/how-long-must-we-sing-this-song.html'>How Long Must We Sing This Song?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate expanded'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy toggle-open'>&#9660;&#160;</span>
+</a>
+<a class='post-count-link' href='http://jmglov.blogspot.com/search?updated-min=2008-01-01T00%3A00%3A00%2B09%3A00&updated-max=2009-01-01T00%3A00%3A00%2B09%3A00&max-results=1'>2008</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='hierarchy'>
+<li class='archivedate expanded'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy toggle-open'>&#9660;&#160;</span>
+</a>
+<a class='post-count-link' href='http://jmglov.blogspot.com/2008_04_01_archive.html'>April</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='posts'>
+<li><a href='http://jmglov.blogspot.com/2008/04/thou-shalt-grok-unicode.html'>Thou shalt grok Unicode!</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://jmglov.blogspot.com/search?updated-min=2007-01-01T00%3A00%3A00%2B09%3A00&updated-max=2008-01-01T00%3A00%3A00%2B09%3A00&max-results=19'>2007</a>
+<span class='post-count' dir='ltr'>(19)</span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://jmglov.blogspot.com/2007_09_01_archive.html'>September</a>
+<span class='post-count' dir='ltr'>(2)</span>
+<ul class='posts'>
+<li><a href='http://jmglov.blogspot.com/2007/09/dusk-dawn-and-30-day-challenges.html'>Dusk, Dawn, and 30-Day Challenges</a></li>
+<li><a href='http://jmglov.blogspot.com/2007/09/ihave-become-infected.html'>iHave become iNfected</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://jmglov.blogspot.com/2007_08_01_archive.html'>August</a>
+<span class='post-count' dir='ltr'>(2)</span>
+<ul class='posts'>
+<li><a href='http://jmglov.blogspot.com/2007/08/3.html'>チルドビール3本&amp;グラスセット</a></li>
+<li><a href='http://jmglov.blogspot.com/2007/08/softwarecompaniesgetbynamefog.html'>SoftwareCompanies.getByName(&quot;Fog Creek&quot;).getProduc...</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://jmglov.blogspot.com/2007_07_01_archive.html'>July</a>
+<span class='post-count' dir='ltr'>(5)</span>
+<ul class='posts'>
+<li><a href='http://jmglov.blogspot.com/2007/07/opensolaris-journal-ii-belenix.html'>OpenSolaris Journal II: BeleniX hdinstaller</a></li>
+<li><a href='http://jmglov.blogspot.com/2007/07/opensolaris-journal-i-belenix-livecd.html'>OpenSolaris Journal I: BeleniX LiveCD</a></li>
+<li><a href='http://jmglov.blogspot.com/2007/07/earthquake-and-fire-ii.html'>Earthquake and Fire II</a></li>
+<li><a href='http://jmglov.blogspot.com/2007/07/news-hounds-we-watch-fox-so-you-dont.html'>News Hounds: We watch FOX so you don&#39;t have to</a></li>
+<li><a href='http://jmglov.blogspot.com/2007/07/blunt-instrument.html'>A Blunt Instrument</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://jmglov.blogspot.com/2007_06_01_archive.html'>June</a>
+<span class='post-count' dir='ltr'>(9)</span>
+<ul class='posts'>
+<li><a href='http://jmglov.blogspot.com/2007/06/apparently-i-am-american-idiot.html'>Apparently I am an American Idiot</a></li>
+<li><a href='http://jmglov.blogspot.com/2007/06/mitsuyas-liquor.html'>Mitsuya&#39;s Liquor</a></li>
+<li><a href='http://jmglov.blogspot.com/2007/06/whiskey-youre-devil.html'>Whiskey, You&#39;re the Devil</a></li>
+<li><a href='http://jmglov.blogspot.com/2007/06/ogikubo-yuki.html'>Ogikubo Yuki</a></li>
+<li><a href='http://jmglov.blogspot.com/2007/06/adsense.html'>AdSense</a></li>
+<li><a href='http://jmglov.blogspot.com/2007/06/so-how-cool-is-neal-stephenson.html'>So, How Cool is Neal Stephenson?</a></li>
+<li><a href='http://jmglov.blogspot.com/2007/06/game-theory-selfishness-economics.html'>Game Theory, Selfishness, Economics, Science, and ...</a></li>
+<li><a href='http://jmglov.blogspot.com/2007/06/sams-town-redux.html'>Sam&#39;s Town, Redux</a></li>
+<li><a href='http://jmglov.blogspot.com/2007/06/sams-town.html'>Sam&#39;s Town</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://jmglov.blogspot.com/2007_03_01_archive.html'>March</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='posts'>
+<li><a href='http://jmglov.blogspot.com/2007/03/zombies-and-greater-tokyo-bulgarian.html'>Zombies and the Greater Tokyo Bulgarian Conspiracy...</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://jmglov.blogspot.com/search?updated-min=2006-01-01T00%3A00%3A00%2B09%3A00&updated-max=2007-01-01T00%3A00%3A00%2B09%3A00&max-results=50'>2006</a>
+<span class='post-count' dir='ltr'>(63)</span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://jmglov.blogspot.com/2006_12_01_archive.html'>December</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='posts'>
+<li><a href='http://jmglov.blogspot.com/2006/12/geek-test.html'>Geek Test</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://jmglov.blogspot.com/2006_11_01_archive.html'>November</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='posts'>
+<li><a href='http://jmglov.blogspot.com/2006/11/mine-eyes-have-seen-glory.html'>Mine Eyes Have Seen the Glory</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://jmglov.blogspot.com/2006_10_01_archive.html'>October</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='posts'>
+<li><a href='http://jmglov.blogspot.com/2006/10/im-still-alive.html'>I&#39;m Still Alive</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://jmglov.blogspot.com/2006_09_01_archive.html'>September</a>
+<span class='post-count' dir='ltr'>(3)</span>
+<ul class='posts'>
+<li><a href='http://jmglov.blogspot.com/2006/09/oh-my-goodness-now-what-have-i-done.html'>Oh My Goodness Now What Have I Done?</a></li>
+<li><a href='http://jmglov.blogspot.com/2006/09/japan-cleanest-nation-on-earth.html'>Japan: The Cleanest Nation on Earth</a></li>
+<li><a href='http://jmglov.blogspot.com/2006/09/day-that-crikey-lost-its-ring.html'>The Day that &quot;Crikey!&quot; Lost its Ring</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://jmglov.blogspot.com/2006_08_01_archive.html'>August</a>
+<span class='post-count' dir='ltr'>(5)</span>
+<ul class='posts'>
+<li><a href='http://jmglov.blogspot.com/2006/08/sapporo-bound-part-ii.html'>Sapporo Bound, Part II</a></li>
+<li><a href='http://jmglov.blogspot.com/2006/08/sapporo-bound-part-i.html'>Sapporo Bound, Part I</a></li>
+<li><a href='http://jmglov.blogspot.com/2006/08/roof-roof-roof-is-on-fire.html'>The Roof, The Roof, The Roof is on Fire!</a></li>
+<li><a href='http://jmglov.blogspot.com/2006/08/dont-step-on-backs-of-my-blue-suede.html'>Don&#39;t Step on the Backs of My Blue Suede Shoes</a></li>
+<li><a href='http://jmglov.blogspot.com/2006/08/van-hella-stupid-movie.html'>Van Hella-Stupid Movie</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://jmglov.blogspot.com/2006_07_01_archive.html'>July</a>
+<span class='post-count' dir='ltr'>(8)</span>
+<ul class='posts'>
+<li><a href='http://jmglov.blogspot.com/2006/07/importance-of-being-earnestly-busy.html'>The Importance of Being Earnest...ly Busy</a></li>
+<li><a href='http://jmglov.blogspot.com/2006/07/damn-weather.html'>Damn the Weather</a></li>
+<li><a href='http://jmglov.blogspot.com/2006/07/tokyo-wa-yoru-no-shichi-ji.html'>Tokyo wa yoru no shichi-ji</a></li>
+<li><a href='http://jmglov.blogspot.com/2006/07/japanese-dentistry-illustrated.html'>Japanese Dentistry Illustrated</a></li>
+<li><a href='http://jmglov.blogspot.com/2006/07/mushi-atsui.html'>Mushi Atsui</a></li>
+<li><a href='http://jmglov.blogspot.com/2006/07/amazoncommutejp-part-iii.html'>Amazon.co(mmute).jp, Part III</a></li>
+<li><a href='http://jmglov.blogspot.com/2006/07/workin-for-man-every-night-and-day_01.html'>Workin&#39; for the Man Every Night and Day, Part 2</a></li>
+<li><a href='http://jmglov.blogspot.com/2006/07/workin-for-man-every-night-and-day.html'>Workin&#39; for the Man Every Night and Day</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://jmglov.blogspot.com/2006_06_01_archive.html'>June</a>
+<span class='post-count' dir='ltr'>(14)</span>
+<ul class='posts'>
+<li><a href='http://jmglov.blogspot.com/2006/06/jmglov-fails-to-impress.html'>jmglov Fails to Impress</a></li>
+<li><a href='http://jmglov.blogspot.com/2006/06/maradona-part-ii.html'>Maradona, Part II</a></li>
+<li><a href='http://jmglov.blogspot.com/2006/06/mad-about-football.html'>Mad about Football</a></li>
+<li><a href='http://jmglov.blogspot.com/2006/06/mcheartattack-jp-way.html'>McHeartAttack, the .JP Way</a></li>
+<li><a href='http://jmglov.blogspot.com/2006/06/elementary-arithmetic-my-dear-watson.html'>Elementary (Arithmetic), My Dear Watson</a></li>
+<li><a href='http://jmglov.blogspot.com/2006/06/dont-cry-for-me-maradona.html'>Don&#39;t Cry for Me, Maradona</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://jmglov.blogspot.com/2006_05_01_archive.html'>May</a>
+<span class='post-count' dir='ltr'>(2)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://jmglov.blogspot.com/2006_04_01_archive.html'>April</a>
+<span class='post-count' dir='ltr'>(5)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://jmglov.blogspot.com/2006_03_01_archive.html'>March</a>
+<span class='post-count' dir='ltr'>(6)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://jmglov.blogspot.com/2006_02_01_archive.html'>February</a>
+<span class='post-count' dir='ltr'>(10)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://jmglov.blogspot.com/2006_01_01_archive.html'>January</a>
+<span class='post-count' dir='ltr'>(7)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://jmglov.blogspot.com/search?updated-min=2005-01-01T00%3A00%3A00%2B09%3A00&updated-max=2006-01-01T00%3A00%3A00%2B09%3A00&max-results=50'>2005</a>
+<span class='post-count' dir='ltr'>(65)</span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://jmglov.blogspot.com/2005_12_01_archive.html'>December</a>
+<span class='post-count' dir='ltr'>(15)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://jmglov.blogspot.com/2005_11_01_archive.html'>November</a>
+<span class='post-count' dir='ltr'>(18)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://jmglov.blogspot.com/2005_10_01_archive.html'>October</a>
+<span class='post-count' dir='ltr'>(18)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://jmglov.blogspot.com/2005_09_01_archive.html'>September</a>
+<span class='post-count' dir='ltr'>(11)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://jmglov.blogspot.com/2005_08_01_archive.html'>August</a>
+<span class='post-count' dir='ltr'>(3)</span>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=15370741&widgetType=BlogArchive&widgetId=BlogArchive1&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("BlogArchive1"));' target='configBlogArchive1' title='Edit'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div><div class='widget LinkList' id='LinkList2'>
+<h2>Blogs that I Read</h2>
+<div class='widget-content'>
+<ul>
+<li><a href='http://www.colinsteele.org/main/main/page/show/StartHere'>colinsteele.org</a></li>
+<li><a href='http://blog.wired.com/games/'>Game|Life</a></li>
+<li><a href='http://www.gaweeka.com/blog/'>Gaweeka</a></li>
+<li><a href='http://nobunagaota.1up.com/'>Nobunaga Ota</a></li>
+<li><a href='http://www.rudeboyrudegirl.com'>Rude Boy, Rude Girl</a></li>
+<li><a href='http://www.schmolitics.org/'>Politics Schmolitics</a></li>
+<li><a href='http://sfboy.blogspot.com/'>Sad Faced Boy</a></li>
+<li><a href='http://wilwheaton.net/'>Wil Wheaton dot Net</a></li>
+</ul>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=15370741&widgetType=LinkList&widgetId=LinkList2&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("LinkList2"));' target='configLinkList2' title='Edit'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div><div class='widget LinkList' id='LinkList1'>
+<h2>Buy Me Stuff</h2>
+<div class='widget-content'>
+<ul>
+<li><a href='http://www.amazon.com/gp/registry/registry.html/102-2950853-1576913?%5Fencoding=UTF8&type=wishlist&id=32A59PT6REMQ5'>My Amazon Wishlist</a></li>
+<li><a href='http://www.thinkgeek.com/brain/gimme.cgi?wid=81d25af49'>My ThinkGeek Wishlist</a></li>
+</ul>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=15370741&widgetType=LinkList&widgetId=LinkList1&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("LinkList1"));' target='configLinkList1' title='Edit'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div></div>
+</div></div>
+</div>
+<div id='footer-wrap1'><div id='footer-wrap2'>
+<div class='footer section' id='footer'></div>
+</div></div>
+</div>
+<script type="text/javascript">
+if (window.jstiming) window.jstiming.load.tick('widgetJsBefore');
+</script><script type="text/javascript" src="http://www.blogger.com/static/v1/widgets/512629240-widgets.js"></script>
+<script type='text/javascript'>
+if (typeof(BLOG_attachCsiOnload) != 'undefined' && BLOG_attachCsiOnload != null) { window['blogger_templates_experiment_id'] = "templatesV1";window['blogger_blog_id'] = '15370741';BLOG_attachCsiOnload('item_'); }_WidgetManager._Init('http://www.blogger.com/rearrange?blogID=15370741','http://jmglov.blogspot.com/2008/04/thou-shalt-grok-unicode.html','15370741');
+_WidgetManager._SetPageActionUrl('http://www.blogger.com/display?blogID=15370741','Jtz89ouRge9BQwjmM1gMI3p4gqk:1292706288845','AOuZoY5FWfBbsuAhOCIogmXMcUZ2MoFygA:1292706288845');
+_WidgetManager._SetDataContext([{'name': 'blog', 'data': {'title': 'jmglov', 'pageType': 'item', 'url': 'http://jmglov.blogspot.com/2008/04/thou-shalt-grok-unicode.html', 'canonicalUrl': 'http://jmglov.blogspot.com/2008/04/thou-shalt-grok-unicode.html', 'homepageUrl': 'http://jmglov.blogspot.com/', 'enabledCommentProfileImages': true, 'searchLabel': '', 'searchQuery': '', 'pageName': 'Thou shalt grok Unicode!', 'pageTitle': 'jmglov: Thou shalt grok Unicode!', 'encoding': 'UTF-8', 'locale': 'en-US', 'isPrivate': false, 'isMobile': false, 'mobileClass': '', 'languageDirection': 'ltr', 'feedLinks': '\74link rel\75\42alternate\42 type\75\42application/atom+xml\42 title\75\42jmglov - Atom\42 href\75\42http://jmglov.blogspot.com/feeds/posts/default\42 /\76\n\74link rel\75\42alternate\42 type\75\42application/rss+xml\42 title\75\42jmglov - RSS\42 href\75\42http://jmglov.blogspot.com/feeds/posts/default?alt\75rss\42 /\76\n\74link rel\75\42service.post\42 type\75\42application/atom+xml\42 title\75\42jmglov - Atom\42 href\75\42http://www.blogger.com/feeds/15370741/posts/default\42 /\76\n\74link rel\75\42EditURI\42 type\75\42application/rsd+xml\42 title\75\42RSD\42 href\75\42http://www.blogger.com/rsd.g?blogID\07515370741\42 /\76\n\74link rel\75\42alternate\42 type\75\42application/atom+xml\42 title\75\42jmglov - Atom\42 href\75\42http://jmglov.blogspot.com/feeds/7533941892233758040/comments/default\42 /\76\n', 'meTag': '', 'openIdOpTag': '', 'imageSrcTag': '', 'latencyHeadScript': '\74script type\75\42text/javascript\42\76(function() { var a\75window;function c(b){this.t\75{};this.tick\75function(d,i,e){e\75e?e:(new Date).getTime();this.t[d]\75[e,i]};this.tick(\42start\42,null,b)}var f\75new c;a.jstiming\75{Timer:c,load:f};try{var g\75null;if(a.chrome\46\46a.chrome.csi)g\75Math.floor(a.chrome.csi().pageT);if(g\75\75null)if(a.gtbExternal)g\75a.gtbExternal.pageT();if(g\75\75null)if(a.external)g\75a.external.pageT;if(g)a.jstiming.pt\75g}catch(h){};a.tickAboveFold\75function(b){b\75b;var d\0750;if(b.offsetParent){do d+\75b.offsetTop;while(b\75b.offsetParent)}b\75d;b\74\075750\46\46a.jstiming.load.tick(\42aft\42)};var j\75false;function k(){if(!j){j\75true;a.jstiming.load.tick(\42firstScrollTime\42)}}a.addEventListener?a.addEventListener(\42scroll\42,k,false):a.attachEvent(\42onscroll\42,k);\n })();\74/script\076', 'mobileHeadScript': ''}}]);
+_WidgetManager._RegisterWidget('_ProfileView', new _WidgetInfo('Profile1', 'sidebartop', null, document.getElementById('Profile1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML1', 'sidebar', null, document.getElementById('HTML1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogArchiveView', new _WidgetInfo('BlogArchive1', 'sidebar', null, document.getElementById('BlogArchive1'), {'languageDirection': 'ltr'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_LinkListView', new _WidgetInfo('LinkList2', 'sidebar', null, document.getElementById('LinkList2'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_LinkListView', new _WidgetInfo('LinkList1', 'sidebar', null, document.getElementById('LinkList1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HeaderView', new _WidgetInfo('Header1', 'header'));
+_WidgetManager._RegisterWidget('_NavbarView', new _WidgetInfo('Navbar1', 'navbar'));
+_WidgetManager._RegisterWidget('_BlogView', new _WidgetInfo('Blog1', 'main', null, document.getElementById('Blog1'), {'cmtInteractionsEnabled': false, 'commentInteractionIframeUrl': 'http://www.blogger.com/comment-interaction-iframe.g?blogId\07515370741', 'mobile': false}, 'displayModeFull'));
+</script>
+</body>
+</html>
