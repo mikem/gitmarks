@@ -1,0 +1,4108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>VMware Communities: Arrow keys not working in Player v2.5...</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" /> 
+
+<script type="text/javascript">
+    if (top != self) {
+        var isSafeTopUrl = false;
+        try {
+            var topUrl = top.location.href;
+            var topUrlQsIdx = topUrl.indexOf('?')
+            if (topUrlQsIdx > 0) {
+                topUrl = topUrl.substring(0, topUrlQsIdx);
+            }
+            topUrl = topUrl.toLowerCase();
+
+            var safeTopUrls = new Array(
+                'http://communities.vmware.com/skin-basic.jspa',
+                'http://communities.vmware.com/skin-advanced.jspa',
+                'http://communities.vmware.com/skin-advanced!UploadSkinZip.jspa'
+            );
+            for (var i = 0; i < safeTopUrls.length; i++) {
+                if (safeTopUrls[i].toLowerCase() == topUrl) {
+                    isSafeTopUrl = true;
+                    break;
+                }
+            }
+        } catch (err) {
+        }
+        if (!isSafeTopUrl) top.location = location;
+    }
+</script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Language" content="en-US" />
+<meta name="verify-v1" content="7eQcOXhDkoEs9sTxIP+shsTTZSvAkb6EybrBqtaIF5s=" />
+<meta name="robots" content="all" /> 
+<meta name="copyright" content="VMware" /> 
+<meta name="author" content="VMware" /> 
+
+<link rel="search"
+    href="/opensearch.xml"
+    title="VMware Communities"
+    type="application/opensearchdescription+xml"/>
+
+
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<!-- <link rel="icon" type="image/png" href="/favicon.png" /> -->
+
+    <script type="text/javascript">
+        if (typeof(_jive_base_url) == "undefined") {
+            var _jive_base_url = "/";
+            <!-- need to strip ;jsessionid=3rjp0oit23hk7 from urls -->
+            if (_jive_base_url.indexOf(";") > 0) {
+                _jive_base_url = _jive_base_url.substring(0, _jive_base_url.indexOf(";"));
+            }
+            if (_jive_base_url.charAt(_jive_base_url.length -1) == '/') {
+                _jive_base_url = _jive_base_url.substring(0,_jive_base_url.length -1);
+            }
+        }
+        if (typeof(_jive_project_i18n) == "undefined") {
+            var _jive_project_i18n = new Array();
+            _jive_project_i18n['project.calendar.task'] = "Task";
+            _jive_project_i18n['project.calendar.tasks'] = "Tasks";
+            _jive_project_i18n['project.calendar.checkpoint'] = "Checkpoint";
+            _jive_project_i18n['project.calendar.checkpoints'] = "Checkpoints";
+            _jive_project_i18n['global.edit'] = "Edit";
+            _jive_project_i18n['global.delete'] = "Delete";
+        }
+    </script>
+
+    
+      
+    <script type="text/javascript">
+        window.SPELL_LANGS = "English (Canada)=en_ca,English (United Kingdom)=en_gb,+English (United States)=en_us,French=fr,French (Canada)=fr_ca,German=de,Italian=it,Spanish=es";
+        window.CS_BASE_URL = "";
+        window.CS_RESOURCE_BASE_URL = "/4.0.13"
+        window.tinyMCEPreInit = {
+            suffix : "_src",
+            base : CS_BASE_URL + "/resources/scripts/tiny_mce3"
+        };
+    </script>
+     
+    
+
+
+
+    
+
+    <script type="text/javascript">
+        var profileShortUrl = "/profile-short.jspa";
+        var profileLoadingTooltip = "Loading user profile";
+        var profileErrorTooltip = "There was an error loading that profile information.";
+
+        var projectChooserUrl = "/project-chooser!input.jspa";
+        var groupChooserUrl = "/group-chooser!input.jspa";
+
+        var containerShortUrl = "/container-short.jspa";
+        var containerLoadingTooltip = "Loading place information.";
+        var containerErrorTooltip = "There was an error loading that place information.";
+
+        var videoShortUrl = "/view-video-short.jspa";
+        var videoLoadingTooltip = "Loading video information";
+        var videoErrorTooltip = "There was an error loading that video information.";
+
+        var followErrorMessage = "An internal error ocurred while following the project or community.";
+
+        (function() {
+            var originalWrite = document.write;
+            document.write = function() {
+                if(typeof $j != 'undefined' && $j.isReady) {
+                    console.warn("document.write called after document was loaded: ", arguments);
+                }
+                else {
+                    // In IE before version 8 `document.write()` does not
+                    // implement Function methods, like `apply()`.
+                    return Function.prototype.apply.call(originalWrite, document, arguments);
+                }
+            }
+        })();
+    </script>
+
+
+
+	<script type="text/javascript" src="http://www.vmware.com/files/templates/inc/library.js"></script>
+
+    <link rel="stylesheet" href="/4.0.13/styles/jive-global.css" type="text/css" media="all" />
+    <!-- <link rel="stylesheet" href="/styles/jive-icons-legacy.css" type="text/css" media="all" /> -->
+    <link rel="stylesheet" href="/4.0.13/styles/jive-icons.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="/4.0.13/styles/jive-sidebar.css" type="text/css" media="all" />
+
+
+
+
+
+    <!--[if IE 6]>
+    <style type="text/css">
+    /* hack for IE6's lack of alpha PNG support */
+    * html #jive-wrapper .ie6png,
+    * html #jive-wrapper #jive-global-header *.ie6png,
+    * html #jive-wrapper #user-bar-wrapper *.ie6png,
+    * html #jive-wrapper #jive-body *.ie6png,
+    * html #jive-wrapper #jive-footer *.ie6png {
+        background-image: expression(
+        this.runtimeStyle.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src=" +
+        (this.tagName=='IMG' ? this.src : this.currentStyle.backgroundImage.split('\"')[1]) + ")",
+        this.runtimeStyle.backgroundImage = "none",
+        this.src = "/images/transparent.png"
+        );
+        }
+    </style>
+
+    <link rel="stylesheet" href="/4.0.13/styles/jive-icons-ie.css" type="text/css" media="all" />
+    <![endif]-->
+
+<script type="text/javascript" language="JavaScript" src="/4.0.13/resources/scripts/gen/9f09b47b4ecd8e730d371308d1f94b6f.js"></script>
+<script type="text/javascript" language="JavaScript">
+        // begin list of custom CSS
+        jive.rte.defaultStyles = new Array();
+        // end list of custom CSS
+
+
+            var jiveControl = new jive.model.Controller();
+
+
+        Zapatec.Calendar._TT["DEF_DATE_FORMAT"] = "%m/%d/%Y";
+
+
+if (dwr == null) var dwr = {};
+if (dwr.engine == null) dwr.engine = {};
+if (DWREngine == null) var DWREngine = dwr.engine;
+
+dwr.engine._origScriptSessionId = "A02AFD650A5B7F0ABC60A0DC2A6983A9";
+dwr.engine._sessionCookieName = "JSESSIONID"; // JSESSIONID
+dwr.engine._allowGetForSafariButMakeForgeryEasier = "true";
+dwr.engine._scriptTagProtection = "throw 'allowScriptTagRemoting is false.';";
+dwr.engine._defaultPath = "/dwr/interface";
+dwr.engine._pollWithXhr = "false";
+
+
+        var quickuserprofile = new QuickUserProfile("jive-note-user-body", profileShortUrl, profileLoadingTooltip,
+                profileErrorTooltip);
+        var jiveprojectchooser = new JiveProjectChooser(projectChooserUrl);
+        var jivegroupchooser = new JiveGroupChooser(groupChooserUrl);
+        var quickcontainersummary = new QuickContainerSummary("jive-note-container-body", containerShortUrl,
+                containerLoadingTooltip, containerErrorTooltip);
+        var quickviewvideo = new QuickViewVideo("jive-note-video-body", videoShortUrl, videoLoadingTooltip,
+                videoErrorTooltip);
+
+        var jiveFollow = new jive.Follow(followErrorMessage);
+
+
+</script>
+
+<script type="text/javascript" language="JavaScript" src="/4.0.13/resources/scripts/gen/4d8d219f344dd175d2682d81f02f1fd1.js"></script>
+<script type="text/javascript" language="JavaScript">
+
+        $j(function() {
+
+			$j('.jive-shared-list-toggle').click(function() {
+
+			    $j('.jive-shared-list-short').toggle();
+
+				$j('.jive-shared-list-all').toggle();
+
+				return false;
+
+			});
+
+        });
+
+
+
+    
+    function toggleFeatured() {
+
+        ToggleFeatured.toggleFeatured(1, 177321, 2346, 14, {
+            callback:function(featured) {
+
+                if (featured) {
+                    $j('#featured-toggle-unfeature').show();
+                    $j('#featured-toggle-feature').hide();
+                } else {
+                    $j('#featured-toggle-unfeature').hide();
+                    $j('#featured-toggle-feature').show();
+                }
+
+
+
+                Jive.AlertMessage('content-featured-notify', {
+                    beforeStart:function() {
+                        if (featured) {
+                            $j('#content-featured-notify').html('<div><span class="jive-icon-med jive-icon-info"></span>This item is now featured!</div>');
+                           
+                        } else {
+                            $j('#content-featured-notify').html('<div><span class="jive-icon-med jive-icon-info"></span>You have removed this from featured content.</div>');
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+
+        $j(function() {
+            $j("#jive-view-picker").change();
+        });
+
+        $j(function() {
+            var tooltipUrl = "/view-favorite-tooltip.jspa";
+            $j("#jive-bookmark-sidebar .jive-avatar").livequery(function() {
+                var favoriteId = $j(this).parents("li").attr("id").slice("favorite-".length);
+                $j(this).tooltip("bookmark", tooltipUrl + "?favorite=" + favoriteId);
+            });
+        });
+
+
+</script>
+
+	 <link rel="stylesheet" type="text/css" href="http://www.vmware.com/files/templates/inc/template.css" />
+	 <link rel="stylesheet" type="text/css" href="http://www.vmware.com/files/templates/inc/fce.css" />
+	 <link rel="stylesheet" type="text/css" href="http://www.vmware.com/files/templates/inc/print.css" media="print" />
+	 <link rel="stylesheet" href="/themes/custom/styles/vmware-global.css" type="text/css" media="screen" title="" charset="utf-8" />
+	 <link rel="stylesheet" href="/themes/custom/styles/vmware-sidebar.css" type="text/css" media="screen" title="" charset="utf-8" />
+	 <link rel="stylesheet" href="/themes/custom/styles/vmware-userbar.css" type="text/css" media="screen" title="" charset="utf-8" />
+	 <link rel="stylesheet" href="/themes/custom/styles/vmware-bestof.css" type="text/css" media="screen" title="" charset="utf-8" />
+    
+
+    
+
+
+
+	<link rel="stylesheet" href="/4.0.13/styles/jive-thread.css" type="text/css" media="all" />
+
+	<link rel="stylesheet" href="/themes/custom/styles/vmware-thread.css" type="text/css" media="screen" title="" charset="utf-8" />
+
+
+        <link rel="stylesheet" href="/4.0.13/styles/jive-bridges.css" type="text/css" media="all" />
+
+
+    
+
+
+
+
+
+
+            <link rel="alternate" type="application/rss+xml"
+
+                title=" VMware Player Discussions Feed"
+
+                href="/community/feeds/threads?community=2346">
+
+
+
+
+        <link rel="alternate" type="application/rss+xml"
+
+            title="Messages in 'Arrow keys not working in Player v2.5 64bits,  host=Ubuntu 8.10 64bits, Guest = XP pro 32bits' Discussion Feed"
+
+            href="/community/feeds/messages?thread=177321">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+    <!-- BEGIN action bar -->
+
+
+
+    
+
+
+    <!-- END action bar -->
+
+
+
+    <script type="text/javascript">
+
+       function rate(rating, message, name, token)  {
+
+           var f = $j('#rate-form');
+
+           f.append('<input type="hidden" name="rating" value="'+ rating +'"/>');
+
+           f.append('<input type="hidden" name="jive.token.name" value="'+ name +'"/>');
+
+           f.append('<input type="hidden" name="'+ name +'" value="'+ token +'"/>');
+
+           f.append('<input type="hidden" name="message" value="'+ message +'"/>');
+
+           f.attr('action', "/msgrate.jspa");
+
+           f.submit();
+
+           return false;
+
+       }
+
+   </script>
+
+
+
+
+
+
+
+
+
+
+
+
+        <link rel="canonical" href="/thread/177321?start=0&tstart=0#1088846"/>   
+
+
+
+
+
+
+
+
+
+    <link rel="stylesheet" type="text/css" href="/4.0.13/styles/tiny_mce3/plugins/inlinepopups/skins/clearlooks2/window.css" />
+
+    <style type="text/css">/* custom-css */</style>
+    <style type="text/css">/* custom-css-container */</style>
+</head>
+<body class="jive-body-content jive-body-content-discussion" >
+
+
+<a href="#jive-body" class="jive-skip-nav">Skip navigation</a>
+
+<div id="container">
+  <strong class="seo">VMware</strong>
+  <div id="content-container" class="wide">
+
+    <div id="jive-wrapper" class="clearfix">
+
+        <div id="jive-body">
+
+            
+
+
+
+<!-- this form is generic for JS submissions -->
+
+<form id="rate-form" method="post"></form>
+
+
+
+
+
+
+<!-- BEGIN main body -->
+
+<div id="jive-body-main">
+
+
+
+    <!-- BEGIN main body column -->
+
+    <div id="jive-body-maincol-container">
+
+        <div id="jive-body-maincol">
+
+
+
+		 <!-- BEGIN header & intro  -->
+
+			<div id="jive-body-intro">
+
+
+
+				
+
+
+
+
+
+
+					  <a href="/community/vmtn/desktop/player?view=discussions&amp;start=0"><span class="jive-icon-sml jive-icon-arrow-generic-up"></span>
+
+
+								 Up to Discussions in&nbsp;VMware Player
+
+
+					  </a>
+
+				
+
+			</div>
+
+			<!-- END header & intro -->
+
+
+
+
+
+
+
+
+
+
+
+
+            <div id="thread.watch.notify" class="jive-info-box" style="display:none"></div>
+
+
+
+            <div id="content-featured-notify" class="jive-info-box" style="display:none"></div>
+
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!-- BEGIN answer bar -->
+
+                <div id="jive-answer-bar" class="jive-thread-info">
+
+                    <div class="clearfix jive-thread-info-padding">
+
+                        <h4>This Question is
+
+
+
+                            <span class="jive-answer-answered">Answered</span>
+
+                            (<a href="/message/1100896#1100896">go to answer</a>)
+
+
+
+                        </h4>
+
+
+
+
+
+
+
+
+
+                    </div>
+
+                </div>
+
+                <!-- END answer bar -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <!-- BEGIN thread messages -->
+
+            <div class="jive-thread-messages">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <!-- BEGIN thread info -->
+
+            <div class="jive-thread-info">
+
+                <div class="jive-thread-info-padding">
+
+
+
+                    <strong>16,305 Views</strong>
+
+
+                        <strong>16 Replies</strong>
+
+
+                    <a href="/message/1617659?tstart=0#1617659">Last post</a>:
+
+                    Sep 26, 2010 1:47 PM by
+
+
+fluxbox
+
+
+                        <span><a href="/community/feeds/messages?thread=177321"><img class="jive-icon-sml jive-icon-rss" src="/4.0.13/images/transparent.png" alt="RSS" /></a></span>
+
+
+
+
+
+
+
+
+                </div>
+
+            </div>
+
+
+
+                        <!-- BEGIN pagination-->
+
+						<div class="vmware-thread-pagination">
+
+							<div class="vmware-thread-pagination-padding">
+
+								<span class="jive-pagination">
+
+									<span class="jive-pagination-numbers">
+
+
+
+											<a href="/thread/177321?start=0&amp;tstart=0"
+
+												class="jive-pagination-current" >1</a>
+
+
+
+
+											<a href="/thread/177321?start=15&amp;tstart=0"
+
+												 >2</a>
+
+
+
+									</span>
+
+									<span class="jive-pagination-prevnext">
+
+
+											<span class="jive-pagination-prev-none">Previous</span>
+
+
+
+											<a href="/thread/177321?start=15&amp;tstart=0" class="jive-pagination-next">Next</a>
+
+
+									</span>
+
+								</span>
+
+							</div>
+
+						</div>
+
+						<!-- END pagination -->
+
+
+            <!-- END thread info -->
+
+
+
+            <!-- BEGIN original thread post -->
+
+
+                <div class="jive-thread-post">
+
+
+
+
+
+
+                <a name="177321"></a>
+
+                    <div class="jive-thread-post-body">
+
+
+
+                        <div class="jive-author">
+
+
+
+
+                                <span class="jive-author-avatar-container">
+
+<a href="/people/AlexPX"
+   class="jiveTT-hover-user"
+   onmouseover="quickuserprofile.getUserProfileTooltip(131776);"
+   onmouseout="quickuserprofile.cancelTooltip();"
+        >
+    <img
+            class="jive-avatar"
+
+            src="/people/AlexPX/avatar/46.png?a=-1"
+            border="0" height="46" width="46"
+            alt="AlexPX"
+            /></a>
+
+				<span><img src="/4.0.13/images/status/novice-16x16.gif" alt="Novice" title="Novice"/> </span>
+				 
+
+
+                                </span>
+
+
+
+                                <div class="jive-username-link-wrapper">
+
+<a href="/people/AlexPX"
+id="jive-13177621,569,817,536,695,115"
+onmouseover="quickuserprofile.getUserProfileTooltip(131776);"
+onmouseout="quickuserprofile.cancelTooltip();"
+class="jiveTT-hover-user jive-username-link"
+>AlexPX</a>
+                                </div>
+
+                                <em>10 posts since <br/>Apr 27, 2006</em>
+
+
+
+
+                        </div>
+
+
+
+                        <div class="jive-thread-post-body-container">
+
+                            <div class="jive-thread-post-subject">
+
+                                <div class="jive-thread-post-subject-content">
+
+                                    <div class="jive-social-actions clearfix">
+
+
+                                    </div>
+
+
+
+                                    <div class="jive-thread-post-moderating"><span class="jive-icon-med jive-icon-moderation"></span>Currently Being Moderated</div>
+
+                                    <h3>Oct 31, 2008 10:01 AM</h3>
+
+                                    <h2><a href="/message/1088846#1088846">Arrow keys not working in Player v2.5 64bits,&#160; host=Ubuntu 8.10 64bits, Guest = XP pro 32bits</a></h2>
+
+
+                                </div>
+
+                            </div>
+
+
+
+                            <div class="jive-thread-post-message">
+
+                                <!-- [DocumentBodyStart:2a0cd89a-921d-45c6-adb4-39546594ce2f] --><div class="jive-rendered-content"><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>My XP (32 bits) VM that works perfectly in VMware Workstation 6.5 (XP host) but now it has the following issues now that I moved it to a fresh new install of:</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>- Host = Ubuntu 8.10 64 bits, </p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>- VMware Player 2.5.0 build-118166 AMD64, (downloaded the Bundle file)</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>- Vmware Tools 2.0.0 build 116503 </p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p> Issues:</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>None of the standard arrow keys work, neither does Home, PageUp, PageDn, End or Delete, inside the VM. However, the equivalent keys work in the numeric pad with Num Lock on.</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>The Arrow Down key even displays the Windows Start Menu, so it's behaving like the Windows key (that is between left-ctrl and left-alt).</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>The Windows key, however, does nothing.&#160; All other keys seem fine, like F1..F12, backspace, tab, shift, etc.</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>The keys that don't work inside the VM work normally in the host OS, both OS and VM are set for English and British layout.</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>As a programmer, it indicates to me that there is a problem mapping the double key-stroke of those specific functions from the host to the guest, maybe because it's a 64 to 32 bits conversion bug? or a Ubuntu to Windows conversion bug? </p><p>If someone from VMware is reading this, please pass this information to the testing or development team .</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>Any suggestions? </p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>Is there a more recent VMware tools available? If yes, where can I get it from? </p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>Thanks for any help,</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>Alex. </p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;"> &#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;"> &#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;"> &#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;"> &#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p></div><!-- [DocumentBodyEnd:2a0cd89a-921d-45c6-adb4-39546594ce2f] -->
+
+
+
+
+
+
+
+
+                            </div>
+
+
+
+
+
+
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+                <!-- END original thread post -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!-- BEGIN reply -->
+
+
+
+                <div class="">
+
+                <div class="">
+
+
+
+
+                <div class="jive-thread-reply  clearfix">
+
+
+
+
+                    <div class="jive-thread-reply-body">
+
+                        <a name="1089275"></a>
+
+                        <div class="jive-author">
+
+
+
+
+                                <span class="jive-author-avatar-container">
+
+<a href="/people/RevEggplant"
+   class="jiveTT-hover-user"
+   onmouseover="quickuserprofile.getUserProfileTooltip(580367);"
+   onmouseout="quickuserprofile.cancelTooltip();"
+        >
+    <img
+            class="jive-avatar"
+
+            src="/people/RevEggplant/avatar/46.png?a=-1"
+            border="0" height="46" width="46"
+            alt="RevEggplant"
+            /></a>
+
+				<span><img src="/4.0.13/images/status/novice-16x16.gif" alt="Novice" title="Novice"/> </span>
+				 
+
+                                </span>
+
+
+
+                                <div class="jive-username-link-wrapper">
+
+<a href="/people/RevEggplant"
+id="jive-58036721,569,817,553,828,115"
+onmouseover="quickuserprofile.getUserProfileTooltip(580367);"
+onmouseout="quickuserprofile.cancelTooltip();"
+class="jiveTT-hover-user jive-username-link"
+>RevEggplant</a>
+                                </div>
+
+                                <em>1 posts since <br/>Oct 31, 2008</em>
+
+
+
+
+                        </div>
+
+
+
+                        <div class="jive-thread-reply-body-container">
+
+                            <div class="jive-thread-reply-subject">
+
+
+
+                                <div class="jive-thread-post-moderating"><span class="jive-icon-med jive-icon-moderation"></span>Currently Being Moderated</div>
+
+                                <div class="jive-thread-reply-date">
+
+
+                                    <a href="/message/1089275#1089275" title="Link to reply #1" class="jive-thread-reply-num">1.</a>
+
+
+                                <span>Nov 1, 2008 3:09 AM</span>
+
+
+
+
+
+                                    <a href="/message/1088846#1088846"
+
+                                       title="in response to: AlexPX"
+
+                                            ><img src="/4.0.13/images/transparent.png" class="jive-icon-sml jive-icon-arrow-top" alt="" /></a>
+
+
+in response to: 
+                                    <a href="/message/1088846#1088846"
+
+                                       title="Go to message"
+
+                                            >AlexPX</a>
+
+
+
+
+
+                                </div>
+
+
+
+
+
+                                <strong>
+
+
+									
+
+                                
+
+                                <a href="/message/1089275#1089275">Re: Arrow keys not working in Player v2.5 64bits,&#160; host=Ubuntu 8.10 64bits, Guest = XP pro 32bits</a></strong>
+
+
+
+
+
+
+
+
+
+                            </div>
+
+                            <div class="jive-thread-reply-message">
+
+                                <!-- [DocumentBodyStart:4af0f067-7b4f-476f-9472-fa0971e2803b] --><div class="jive-rendered-content"><p>I'm running a simlar set up, exact same versions of Player, Guest and Tools and have the same complaints after upgrade to Ubuntu 8.10 64bit and Player 2.5 118166:&#160; Arrow keys, page up/down, delete and end keys are all FUBAR. Down arrow acts like the Windows meta key. Willing to try anything at this point, as I run some software for work in a virtual machine that I'm dead in the water without.</p></div><!-- [DocumentBodyEnd:4af0f067-7b4f-476f-9472-fa0971e2803b] -->
+
+
+
+
+
+
+
+
+
+
+                                <!-- BEGIN helpful & correct buttons -->
+
+
+                                <!-- END helpful & correct buttons -->
+
+
+
+                            </div>
+
+
+
+                                <!-- BEGIN content details -->
+
+                                <div class="jive-content-controls clearfix">
+
+                                	<ul>
+
+
+
+
+
+
+
+
+									</ul>
+
+                                </div>
+
+                                <!-- END content details-->
+
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+                </div>
+
+                </div>
+
+                <!-- END reply -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!-- BEGIN reply -->
+
+
+
+                <div class="">
+
+                <div class="">
+
+
+
+
+                <div class="jive-thread-reply jive-thread-reply-alt jive-thread-reply-postauthor  clearfix">
+
+
+
+
+                    <div class="jive-thread-reply-body">
+
+                        <a name="1090347"></a>
+
+                        <div class="jive-author">
+
+
+
+
+                                <span class="jive-author-avatar-container">
+
+<a href="/people/AlexPX"
+   class="jiveTT-hover-user"
+   onmouseover="quickuserprofile.getUserProfileTooltip(131776);"
+   onmouseout="quickuserprofile.cancelTooltip();"
+        >
+    <img
+            class="jive-avatar"
+
+            src="/people/AlexPX/avatar/46.png?a=-1"
+            border="0" height="46" width="46"
+            alt="AlexPX"
+            /></a>
+
+				<span><img src="/4.0.13/images/status/novice-16x16.gif" alt="Novice" title="Novice"/> </span>
+				 
+
+                                </span>
+
+
+
+                                <div class="jive-username-link-wrapper">
+
+<a href="/people/AlexPX"
+id="jive-13177621,569,817,569,394,115"
+onmouseover="quickuserprofile.getUserProfileTooltip(131776);"
+onmouseout="quickuserprofile.cancelTooltip();"
+class="jiveTT-hover-user jive-username-link"
+>AlexPX</a>
+                                </div>
+
+                                <em>10 posts since <br/>Apr 27, 2006</em>
+
+
+
+
+                        </div>
+
+
+
+                        <div class="jive-thread-reply-body-container">
+
+                            <div class="jive-thread-reply-subject">
+
+
+
+                                <div class="jive-thread-post-moderating"><span class="jive-icon-med jive-icon-moderation"></span>Currently Being Moderated</div>
+
+                                <div class="jive-thread-reply-date">
+
+
+                                    <a href="/message/1090347#1090347" title="Link to reply #2" class="jive-thread-reply-num">2.</a>
+
+
+                                <span>Nov 3, 2008 10:05 AM</span>
+
+
+
+
+
+                                    <a href="/message/1088846#1088846"
+
+                                       title="in response to: AlexPX"
+
+                                            ><img src="/4.0.13/images/transparent.png" class="jive-icon-sml jive-icon-arrow-top" alt="" /></a>
+
+
+in response to: 
+                                    <a href="/message/1088846#1088846"
+
+                                       title="Go to message"
+
+                                            >AlexPX</a>
+
+
+
+
+
+                                </div>
+
+
+
+
+
+                                <strong>
+
+
+									
+
+                                
+
+                                <a href="/message/1090347#1090347">Re: Arrow keys not working in Player v2.5 64bits,&#160; host=Ubuntu 8.10 64bits, Guest = XP pro 32bits</a></strong>
+
+
+
+
+
+
+
+
+
+                            </div>
+
+                            <div class="jive-thread-reply-message">
+
+                                <!-- [DocumentBodyStart:249b1bbc-f5b4-42a5-8ff5-1d3dd77757df] --><div class="jive-rendered-content"><p>Ok, I got the solution:</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>Edit your "/etc/vmware/config" file, so type:</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>sudo gedit /etc/vmware/config</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>And add this to it: </p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>xkeymap.keycode.108 = 0x138 # Alt_R</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>xkeymap.keycode.106 = 0x135 # KP_Divide</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>xkeymap.keycode.104 = 0x11c # KP_Enter</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>xkeymap.keycode.111 = 0x148 # Up</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>xkeymap.keycode.116 = 0x150 # Down</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>xkeymap.keycode.113 = 0x14b # Left</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>xkeymap.keycode.114 = 0x14d # Right</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>xkeymap.keycode.105 = 0x11d # Control_R</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>xkeymap.keycode.118 = 0x152 # Insert</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>xkeymap.keycode.119 = 0x153 # Delete</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>xkeymap.keycode.110 = 0x147 # Home</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>xkeymap.keycode.115 = 0x14f # End</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>xkeymap.keycode.112 = 0x149 # Prior</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>xkeymap.keycode.117 = 0x151 # Next</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>xkeymap.keycode.78 = 0x46 # Scroll_Lock</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>xkeymap.keycode.127 = 0x100 # Pause</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>xkeymap.keycode.133 = 0x15b # Meta_L</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>xkeymap.keycode.134 = 0x15c # Meta_R</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>xkeymap.keycode.135 = 0x15d # Menu</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;"> &#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>Save it and be happy!</p></div><!-- [DocumentBodyEnd:249b1bbc-f5b4-42a5-8ff5-1d3dd77757df] -->
+
+
+
+
+
+
+
+
+
+
+                                <!-- BEGIN helpful & correct buttons -->
+
+
+                                <!-- END helpful & correct buttons -->
+
+
+
+                            </div>
+
+
+
+                                <!-- BEGIN content details -->
+
+                                <div class="jive-content-controls clearfix">
+
+                                	<ul>
+
+
+
+
+
+
+
+
+									</ul>
+
+                                </div>
+
+                                <!-- END content details-->
+
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+                </div>
+
+                </div>
+
+                <!-- END reply -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!-- BEGIN reply -->
+
+
+
+                <div class="">
+
+                <div class="">
+
+
+
+
+                <div class="jive-thread-reply jive-thread-reply-postauthor  clearfix">
+
+
+
+
+                    <div class="jive-thread-reply-body">
+
+                        <a name="1090314"></a>
+
+                        <div class="jive-author">
+
+
+
+
+                                <span class="jive-author-avatar-container">
+
+<a href="/people/AlexPX"
+   class="jiveTT-hover-user"
+   onmouseover="quickuserprofile.getUserProfileTooltip(131776);"
+   onmouseout="quickuserprofile.cancelTooltip();"
+        >
+    <img
+            class="jive-avatar"
+
+            src="/people/AlexPX/avatar/46.png?a=-1"
+            border="0" height="46" width="46"
+            alt="AlexPX"
+            /></a>
+
+				<span><img src="/4.0.13/images/status/novice-16x16.gif" alt="Novice" title="Novice"/> </span>
+				 
+
+                                </span>
+
+
+
+                                <div class="jive-username-link-wrapper">
+
+<a href="/people/AlexPX"
+id="jive-13177621,569,817,585,208,115"
+onmouseover="quickuserprofile.getUserProfileTooltip(131776);"
+onmouseout="quickuserprofile.cancelTooltip();"
+class="jiveTT-hover-user jive-username-link"
+>AlexPX</a>
+                                </div>
+
+                                <em>10 posts since <br/>Apr 27, 2006</em>
+
+
+
+
+                        </div>
+
+
+
+                        <div class="jive-thread-reply-body-container">
+
+                            <div class="jive-thread-reply-subject">
+
+
+
+                                <div class="jive-thread-post-moderating"><span class="jive-icon-med jive-icon-moderation"></span>Currently Being Moderated</div>
+
+                                <div class="jive-thread-reply-date">
+
+
+                                    <a href="/message/1090314#1090314" title="Link to reply #3" class="jive-thread-reply-num">3.</a>
+
+
+                                <span>Nov 3, 2008 10:07 AM</span>
+
+
+
+
+
+                                    <a href="/message/1088846#1088846"
+
+                                       title="in response to: AlexPX"
+
+                                            ><img src="/4.0.13/images/transparent.png" class="jive-icon-sml jive-icon-arrow-top" alt="" /></a>
+
+
+in response to: 
+                                    <a href="/message/1088846#1088846"
+
+                                       title="Go to message"
+
+                                            >AlexPX</a>
+
+
+
+
+
+                                </div>
+
+
+
+
+
+                                <strong>
+
+
+									
+
+                                
+
+                                <a href="/message/1090314#1090314">Re: Arrow keys not working in Player v2.5 64bits,&#160; host=Ubuntu 8.10 64bits, Guest = XP pro 32bits</a></strong>
+
+
+
+
+
+
+
+
+
+                            </div>
+
+                            <div class="jive-thread-reply-message">
+
+                                <!-- [DocumentBodyStart:112b0532-f4d8-41be-881c-bc063738620c] --><div class="jive-rendered-content"><p>This is (at this time) a known and common bug, I wish this information was made widely available (and specially acknowledged) by VMware</p></div><!-- [DocumentBodyEnd:112b0532-f4d8-41be-881c-bc063738620c] -->
+
+
+
+
+
+
+
+
+
+
+                                <!-- BEGIN helpful & correct buttons -->
+
+
+                                <!-- END helpful & correct buttons -->
+
+
+
+                            </div>
+
+
+
+                                <!-- BEGIN content details -->
+
+                                <div class="jive-content-controls clearfix">
+
+                                	<ul>
+
+
+
+
+
+
+
+
+									</ul>
+
+                                </div>
+
+                                <!-- END content details-->
+
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+                </div>
+
+                </div>
+
+                <!-- END reply -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!-- BEGIN reply -->
+
+
+
+                <div class="">
+
+                <div class="">
+
+
+
+
+                <div class="jive-thread-reply jive-thread-reply-alt  clearfix">
+
+
+
+
+                    <div class="jive-thread-reply-body">
+
+                        <a name="1093982"></a>
+
+                        <div class="jive-author">
+
+
+
+
+                                <span class="jive-author-avatar-container">
+
+<a href="/people/coding"
+   class="jiveTT-hover-user"
+   onmouseover="quickuserprofile.getUserProfileTooltip(447421);"
+   onmouseout="quickuserprofile.cancelTooltip();"
+        >
+    <img
+            class="jive-avatar"
+
+            src="/people/coding/avatar/46.png?a=-1"
+            border="0" height="46" width="46"
+            alt="coding"
+            /></a>
+
+				<span><img src="/4.0.13/images/status/novice-16x16.gif" alt="Novice" title="Novice"/> </span>
+				 
+
+                                </span>
+
+
+
+                                <div class="jive-username-link-wrapper">
+
+<a href="/people/coding"
+id="jive-44742121,569,817,601,003,115"
+onmouseover="quickuserprofile.getUserProfileTooltip(447421);"
+onmouseout="quickuserprofile.cancelTooltip();"
+class="jiveTT-hover-user jive-username-link"
+>coding</a>
+                                </div>
+
+                                <em>4 posts since <br/>May 2, 2008</em>
+
+
+
+
+                        </div>
+
+
+
+                        <div class="jive-thread-reply-body-container">
+
+                            <div class="jive-thread-reply-subject">
+
+
+
+                                <div class="jive-thread-post-moderating"><span class="jive-icon-med jive-icon-moderation"></span>Currently Being Moderated</div>
+
+                                <div class="jive-thread-reply-date">
+
+
+                                    <a href="/message/1093982#1093982" title="Link to reply #4" class="jive-thread-reply-num">4.</a>
+
+
+                                <span>Nov 7, 2008 10:45 AM</span>
+
+
+
+
+
+                                    <a href="/message/1088846#1088846"
+
+                                       title="in response to: AlexPX"
+
+                                            ><img src="/4.0.13/images/transparent.png" class="jive-icon-sml jive-icon-arrow-top" alt="" /></a>
+
+
+in response to: 
+                                    <a href="/message/1088846#1088846"
+
+                                       title="Go to message"
+
+                                            >AlexPX</a>
+
+
+
+
+
+                                </div>
+
+
+
+
+
+                                <strong>
+
+
+									
+
+                                
+
+                                <a href="/message/1093982#1093982">Re: Arrow keys not working in Player v2.5 64bits,&#160; host=Ubuntu 8.10 64bits, Guest = XP pro 32bits</a></strong>
+
+
+
+
+
+
+
+
+
+                            </div>
+
+                            <div class="jive-thread-reply-message">
+
+                                <!-- [DocumentBodyStart:f259bdea-9c97-4c4d-b50f-7199d3c2b49b] --><div class="jive-rendered-content"><p>The subject also describes my setup exactly. The day I installed Intrepid Ibex was the day my VMware window started going crazy. RDP to the XP works fine though.</p><p>I just installed this keymap to the /etc/vmware/config file and it works after restarting the virtual machine, so killing the player window process and starting it again doesnt fix it, you have to do a full reboot.</p><p>I still have a problem with NX (No Machine NXing from Ubuntu to Ubuntu) but that's not a VMWare issue.</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>Thanks for the fix!</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>Just noticed that my "print screen" button still maps to delete, but that's not a big deal.</p></div><!-- [DocumentBodyEnd:f259bdea-9c97-4c4d-b50f-7199d3c2b49b] -->
+
+
+
+
+
+
+
+
+
+
+                                <!-- BEGIN helpful & correct buttons -->
+
+
+                                <!-- END helpful & correct buttons -->
+
+
+
+                            </div>
+
+
+
+                                <!-- BEGIN content details -->
+
+                                <div class="jive-content-controls clearfix">
+
+                                	<ul>
+
+
+
+
+
+
+
+
+									</ul>
+
+                                </div>
+
+                                <!-- END content details-->
+
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+                </div>
+
+                </div>
+
+                <!-- END reply -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!-- BEGIN reply -->
+
+
+
+                <div class="">
+
+                <div class="">
+
+
+
+
+                <div class="jive-thread-reply  clearfix">
+
+
+
+
+                    <div class="jive-thread-reply-body">
+
+                        <a name="1098095"></a>
+
+                        <div class="jive-author">
+
+
+
+
+                                <span class="jive-author-avatar-container">
+
+<a href="/people/Barney"
+   class="jiveTT-hover-user"
+   onmouseover="quickuserprofile.getUserProfileTooltip(57697);"
+   onmouseout="quickuserprofile.cancelTooltip();"
+        >
+    <img
+            class="jive-avatar"
+
+            src="/people/Barney/avatar/46.png?a=-1"
+            border="0" height="46" width="46"
+            alt="Barney"
+            /></a>
+
+				<span><img src="/4.0.13/images/status/novice-16x16.gif" alt="Novice" title="Novice"/> </span>
+				 
+
+                                </span>
+
+
+
+                                <div class="jive-username-link-wrapper">
+
+<a href="/people/Barney"
+id="jive-5769721,569,817,617,232,115"
+onmouseover="quickuserprofile.getUserProfileTooltip(57697);"
+onmouseout="quickuserprofile.cancelTooltip();"
+class="jiveTT-hover-user jive-username-link"
+>Barney</a>
+                                </div>
+
+                                <em>1 posts since <br/>Jun 16, 2005</em>
+
+
+
+
+                        </div>
+
+
+
+                        <div class="jive-thread-reply-body-container">
+
+                            <div class="jive-thread-reply-subject">
+
+
+
+                                <div class="jive-thread-post-moderating"><span class="jive-icon-med jive-icon-moderation"></span>Currently Being Moderated</div>
+
+                                <div class="jive-thread-reply-date">
+
+
+                                    <a href="/message/1098095#1098095" title="Link to reply #5" class="jive-thread-reply-num">5.</a>
+
+
+                                <span>Nov 13, 2008 4:23 AM</span>
+
+
+
+
+
+                                    <a href="/message/1093982#1093982"
+
+                                       title="in response to: coding"
+
+                                            ><img src="/4.0.13/images/transparent.png" class="jive-icon-sml jive-icon-arrow-top" alt="" /></a>
+
+
+in response to: 
+                                    <a href="/message/1093982#1093982"
+
+                                       title="Go to message"
+
+                                            >coding</a>
+
+
+
+
+
+                                </div>
+
+
+
+
+
+                                <strong>
+
+
+									
+
+                                
+
+                                <a href="/message/1098095#1098095">Re: Arrow keys not working in Player v2.5 64bits,&#160; host=Ubuntu 8.10 64bits, Guest = XP pro 32bits</a></strong>
+
+
+
+
+
+
+
+
+
+                            </div>
+
+                            <div class="jive-thread-reply-message">
+
+                                <!-- [DocumentBodyStart:0f6b7e15-df78-4fbd-b194-631ead77e636] --><div class="jive-rendered-content"><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>Just for reference, exactly the same problem in Workstation 6.5 on Ubuntu 8.10 32 bit, Guest=XP Pro 32 bit.</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>Same solution worked too, so all good now.</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>Cheers, </p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p></div><!-- [DocumentBodyEnd:0f6b7e15-df78-4fbd-b194-631ead77e636] -->
+
+
+
+
+
+
+
+
+
+
+                                <!-- BEGIN helpful & correct buttons -->
+
+
+                                <!-- END helpful & correct buttons -->
+
+
+
+                            </div>
+
+
+
+                                <!-- BEGIN content details -->
+
+                                <div class="jive-content-controls clearfix">
+
+                                	<ul>
+
+
+
+
+
+
+
+
+									</ul>
+
+                                </div>
+
+                                <!-- END content details-->
+
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+                </div>
+
+                </div>
+
+                <!-- END reply -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!-- BEGIN reply -->
+
+
+
+                <div class="">
+
+                <div class="">
+
+
+
+
+                <div class="jive-thread-reply jive-thread-reply-alt  clearfix">
+
+
+
+
+                    <div class="jive-thread-reply-body">
+
+                        <a name="1099891"></a>
+
+                        <div class="jive-author">
+
+
+
+
+                                <span class="jive-author-avatar-container">
+
+<a href="/people/jcf"
+   class="jiveTT-hover-user"
+   onmouseover="quickuserprofile.getUserProfileTooltip(588777);"
+   onmouseout="quickuserprofile.cancelTooltip();"
+        >
+    <img
+            class="jive-avatar"
+
+            src="/people/jcf/avatar/46.png?a=-1"
+            border="0" height="46" width="46"
+            alt="jcf"
+            /></a>
+
+				<span><img src="/4.0.13/images/status/novice-16x16.gif" alt="Novice" title="Novice"/> </span>
+				 
+
+                                </span>
+
+
+
+                                <div class="jive-username-link-wrapper">
+
+<a href="/people/jcf"
+id="jive-58877721,569,817,634,178,115"
+onmouseover="quickuserprofile.getUserProfileTooltip(588777);"
+onmouseout="quickuserprofile.cancelTooltip();"
+class="jiveTT-hover-user jive-username-link"
+>jcf</a>
+                                </div>
+
+                                <em>1 posts since <br/>Nov 15, 2008</em>
+
+
+
+
+                        </div>
+
+
+
+                        <div class="jive-thread-reply-body-container">
+
+                            <div class="jive-thread-reply-subject">
+
+
+
+                                <div class="jive-thread-post-moderating"><span class="jive-icon-med jive-icon-moderation"></span>Currently Being Moderated</div>
+
+                                <div class="jive-thread-reply-date">
+
+
+                                    <a href="/message/1099891#1099891" title="Link to reply #6" class="jive-thread-reply-num">6.</a>
+
+
+                                <span>Nov 15, 2008 2:32 AM</span>
+
+
+
+
+
+                                    <a href="/message/1098095#1098095"
+
+                                       title="in response to: Barney"
+
+                                            ><img src="/4.0.13/images/transparent.png" class="jive-icon-sml jive-icon-arrow-top" alt="" /></a>
+
+
+in response to: 
+                                    <a href="/message/1098095#1098095"
+
+                                       title="Go to message"
+
+                                            >Barney</a>
+
+
+
+
+
+                                </div>
+
+
+
+
+
+                                <strong>
+
+
+									
+
+                                
+
+                                <a href="/message/1099891#1099891">Re: Arrow keys not working in Player v2.5 64bits,&#160; host=Ubuntu 8.10 64bits, Guest = XP pro 32bits</a></strong>
+
+
+
+
+
+
+
+
+
+                            </div>
+
+                            <div class="jive-thread-reply-message">
+
+                                <!-- [DocumentBodyStart:ea7b42b1-b394-4d58-8055-06b6cad9ddd5] --><div class="jive-rendered-content"><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>For reference, I got the same exact problem when upgrading from Ubuntu Hardy to Intrepid</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>Main OS : Ubuntu 8.10 32bits, kernel 2.6.27-8-generic, gcc 4.3.2</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>VMWare version : vmware-server_1.0.8-126538_i386.rpm</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>RPM converted to DEB with alien (ignoring the preinst/... scripts due to installation errors on Ubuntu)</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>I also installed the vmware-server-console from the same version packages.</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;"> &#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>To be able to compile vmware modules correctly under 2.6.27-8, I installed the vmware-update-2.6.27-5.5.7-2 (www.insecure.ws) after the vmware-server debian package installation.</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>Running Windows XP SP2 as the guest OS had the same "swapped ctrl/arrows/... keys" symptoms.</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;"> &#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>Installing the above fix in /etc/vmware/config (xkeymap.keycode...=...) solves the issue, apart from the PrintScreen key which is still mapped as Delete... thanks for the fix anyway !! it really is a relief,it was hard to work with such weird mappings <img height="16px" src="http://communities.vmware.com/4.0.13/images/emoticons/wink.gif" width="16px"/></p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>(I even had the guest OS keyboard mapping customized to be able to use the Windows International Keyboard ALT "cumulative" feature along with a dvorak keyboard... and the symptoms were the same, and the fix works the same way as with a standard keyboard mapping)</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;"> &#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>jcf </p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;"> &#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p></div><!-- [DocumentBodyEnd:ea7b42b1-b394-4d58-8055-06b6cad9ddd5] -->
+
+
+
+
+
+
+
+
+
+
+                                <!-- BEGIN helpful & correct buttons -->
+
+
+                                <!-- END helpful & correct buttons -->
+
+
+
+                            </div>
+
+
+
+                                <!-- BEGIN content details -->
+
+                                <div class="jive-content-controls clearfix">
+
+                                	<ul>
+
+
+
+
+
+
+
+
+									</ul>
+
+                                </div>
+
+                                <!-- END content details-->
+
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+                </div>
+
+                </div>
+
+                <!-- END reply -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!-- BEGIN reply -->
+
+
+
+                <div class="">
+
+                <div class="">
+
+
+
+
+                <div class="jive-thread-reply jive-thread-reply-correct  clearfix">
+
+
+
+
+                    <div class="jive-thread-reply-body">
+
+                        <a name="1100896"></a>
+
+                        <div class="jive-author">
+
+
+
+
+                                <span class="jive-author-avatar-container">
+
+<a href="/people/posaunenbaer"
+   class="jiveTT-hover-user"
+   onmouseover="quickuserprofile.getUserProfileTooltip(587705);"
+   onmouseout="quickuserprofile.cancelTooltip();"
+        >
+    <img
+            class="jive-avatar"
+
+            src="/people/posaunenbaer/avatar/46.png?a=-1"
+            border="0" height="46" width="46"
+            alt="posaunenbaer"
+            /></a>
+
+				<span><img src="/4.0.13/images/status/novice-16x16.gif" alt="Novice" title="Novice"/> </span>
+				 
+
+                                </span>
+
+
+
+                                <div class="jive-username-link-wrapper">
+
+<a href="/people/posaunenbaer"
+id="jive-58770521,569,817,650,971,115"
+onmouseover="quickuserprofile.getUserProfileTooltip(587705);"
+onmouseout="quickuserprofile.cancelTooltip();"
+class="jiveTT-hover-user jive-username-link"
+>posaunenbaer</a>
+                                </div>
+
+                                <em>5 posts since <br/>Nov 13, 2008</em>
+
+
+
+
+                        </div>
+
+
+
+                        <div class="jive-thread-reply-body-container">
+
+                            <div class="jive-thread-reply-subject">
+
+
+
+                                <div class="jive-thread-post-moderating"><span class="jive-icon-med jive-icon-moderation"></span>Currently Being Moderated</div>
+
+                                <div class="jive-thread-reply-date">
+
+
+                                    <a href="/message/1100896#1100896" title="Link to reply #7" class="jive-thread-reply-num">7.</a>
+
+
+                                <span>Nov 17, 2008 7:47 AM</span>
+
+
+
+
+
+                                    <a href="/message/1099891#1099891"
+
+                                       title="in response to: jcf"
+
+                                            ><img src="/4.0.13/images/transparent.png" class="jive-icon-sml jive-icon-arrow-top" alt="" /></a>
+
+
+in response to: 
+                                    <a href="/message/1099891#1099891"
+
+                                       title="Go to message"
+
+                                            >jcf</a>
+
+
+
+
+
+                                </div>
+
+
+
+
+
+                                <strong>
+
+
+									<span class="jive-icon-med jive-icon-discussion-correct"></span>
+
+									
+
+                                
+
+                                <a href="/message/1100896#1100896">Re: Arrow keys not working in Player v2.5 64bits,&#160; host=Ubuntu 8.10 64bits, Guest = XP pro 32bits</a></strong>
+
+
+
+
+
+
+
+
+
+                            </div>
+
+                            <div class="jive-thread-reply-message">
+
+                                <!-- [DocumentBodyStart:ba34a674-ed18-471a-9033-dd20ff7812ef] --><div class="jive-rendered-content"><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>I had the same problem with VMware Server Console on Ubuntu 8.10.</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>For me worked this:</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>add line</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p><em>xkeymap.nokeycodeMap = true</em></p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;"> &#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>to /etc/vmware-server-console/config</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;"> &#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>In another forum was a hint to add the above line to ~/.vmare/config</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>(Could be that it works, too. But I did not test) </p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p></div><!-- [DocumentBodyEnd:ba34a674-ed18-471a-9033-dd20ff7812ef] -->
+
+
+
+
+
+
+
+
+
+
+                                <!-- BEGIN helpful & correct buttons -->
+
+
+                                <!-- END helpful & correct buttons -->
+
+
+
+                            </div>
+
+
+
+                                <!-- BEGIN content details -->
+
+                                <div class="jive-content-controls clearfix">
+
+                                	<ul>
+
+
+
+
+
+
+
+
+									</ul>
+
+                                </div>
+
+                                <!-- END content details-->
+
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+                </div>
+
+                </div>
+
+                <!-- END reply -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!-- BEGIN reply -->
+
+
+
+                <div class="">
+
+                <div class="">
+
+
+
+
+                <div class="jive-thread-reply jive-thread-reply-alt jive-thread-reply-helpful  clearfix">
+
+
+
+
+                    <div class="jive-thread-reply-body">
+
+                        <a name="1108309"></a>
+
+                        <div class="jive-author">
+
+
+
+
+                                <span class="jive-author-avatar-container">
+
+<a href="/people/snauer"
+   class="jiveTT-hover-user"
+   onmouseover="quickuserprofile.getUserProfileTooltip(596410);"
+   onmouseout="quickuserprofile.cancelTooltip();"
+        >
+    <img
+            class="jive-avatar"
+
+            src="/people/snauer/avatar/46.png?a=-1"
+            border="0" height="46" width="46"
+            alt="snauer"
+            /></a>
+
+				<span><img src="/4.0.13/images/status/novice-16x16.gif" alt="Novice" title="Novice"/> </span>
+				 
+
+                                </span>
+
+
+
+                                <div class="jive-username-link-wrapper">
+
+<a href="/people/snauer"
+id="jive-59641021,569,817,667,139,115"
+onmouseover="quickuserprofile.getUserProfileTooltip(596410);"
+onmouseout="quickuserprofile.cancelTooltip();"
+class="jiveTT-hover-user jive-username-link"
+>snauer</a>
+                                </div>
+
+                                <em>1 posts since <br/>Nov 25, 2008</em>
+
+
+
+
+                        </div>
+
+
+
+                        <div class="jive-thread-reply-body-container">
+
+                            <div class="jive-thread-reply-subject">
+
+
+
+                                <div class="jive-thread-post-moderating"><span class="jive-icon-med jive-icon-moderation"></span>Currently Being Moderated</div>
+
+                                <div class="jive-thread-reply-date">
+
+
+                                    <a href="/message/1108309#1108309" title="Link to reply #8" class="jive-thread-reply-num">8.</a>
+
+
+                                <span>Nov 25, 2008 10:37 AM</span>
+
+
+
+
+
+                                    <a href="/message/1100896#1100896"
+
+                                       title="in response to: posaunenbaer"
+
+                                            ><img src="/4.0.13/images/transparent.png" class="jive-icon-sml jive-icon-arrow-top" alt="" /></a>
+
+
+in response to: 
+                                    <a href="/message/1100896#1100896"
+
+                                       title="Go to message"
+
+                                            >posaunenbaer</a>
+
+
+
+
+
+                                </div>
+
+
+
+
+
+                                <strong>
+
+
+									<span class="jive-icon-med jive-icon-discussion-helpful"></span>
+
+
+
+                                
+
+                                <a href="/message/1108309#1108309">Re: Arrow keys not working in Player v2.5 64bits,&#160; host=Ubuntu 8.10 64bits, Guest = XP pro 32bits</a></strong>
+
+
+
+
+
+
+
+
+
+                            </div>
+
+                            <div class="jive-thread-reply-message">
+
+                                <!-- [DocumentBodyStart:a143ac9e-bb72-4573-b954-3be379302d8e] --><div class="jive-rendered-content"><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;"> &#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>Well, I found the suggestions here very useful.&#160; The last suggestion of adding the </p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;"> &#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p><em>xkeymap.nokeycodeMap = true</em> </p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;"> &#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>to my /etc/vmware/config file works for the latest Workstation and Player (and easier than all of the keymaps farther up).</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;"> &#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>later,</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>scott</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;"> &#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p></div><!-- [DocumentBodyEnd:a143ac9e-bb72-4573-b954-3be379302d8e] -->
+
+
+
+
+
+
+
+
+
+
+                                <!-- BEGIN helpful & correct buttons -->
+
+
+                                <!-- END helpful & correct buttons -->
+
+
+
+                            </div>
+
+
+
+                                <!-- BEGIN content details -->
+
+                                <div class="jive-content-controls clearfix">
+
+                                	<ul>
+
+
+
+
+
+
+
+
+									</ul>
+
+                                </div>
+
+                                <!-- END content details-->
+
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+                </div>
+
+                </div>
+
+                <!-- END reply -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!-- BEGIN reply -->
+
+
+
+                <div class="">
+
+                <div class="">
+
+
+
+
+                <div class="jive-thread-reply jive-thread-reply-helpful  clearfix">
+
+
+
+
+                    <div class="jive-thread-reply-body">
+
+                        <a name="1118557"></a>
+
+                        <div class="jive-author">
+
+
+
+
+                                <span class="jive-author-avatar-container">
+
+<a href="/people/djflux"
+   class="jiveTT-hover-user"
+   onmouseover="quickuserprofile.getUserProfileTooltip(98829);"
+   onmouseout="quickuserprofile.cancelTooltip();"
+        >
+    <img
+            class="jive-avatar"
+
+            src="/people/djflux/avatar/46.png?a=3372"
+            border="0" height="46" width="46"
+            alt="djflux"
+            /></a>
+
+				<span><img src="/4.0.13/images/status/novice-16x16.gif" alt="Novice" title="Novice"/> </span>
+				 
+
+                                </span>
+
+
+
+                                <div class="jive-username-link-wrapper">
+
+<a href="/people/djflux"
+id="jive-9882921,569,817,685,187,115"
+onmouseover="quickuserprofile.getUserProfileTooltip(98829);"
+onmouseout="quickuserprofile.cancelTooltip();"
+class="jiveTT-hover-user jive-username-link"
+>djflux</a>
+                                </div>
+
+                                <em>110 posts since <br/>Jan 12, 2006</em>
+
+
+
+
+                        </div>
+
+
+
+                        <div class="jive-thread-reply-body-container">
+
+                            <div class="jive-thread-reply-subject">
+
+
+
+                                <div class="jive-thread-post-moderating"><span class="jive-icon-med jive-icon-moderation"></span>Currently Being Moderated</div>
+
+                                <div class="jive-thread-reply-date">
+
+
+                                    <a href="/message/1118557#1118557" title="Link to reply #9" class="jive-thread-reply-num">9.</a>
+
+
+                                <span>Dec 8, 2008 11:28 AM</span>
+
+
+
+
+
+                                    <a href="/message/1108309#1108309"
+
+                                       title="in response to: snauer"
+
+                                            ><img src="/4.0.13/images/transparent.png" class="jive-icon-sml jive-icon-arrow-top" alt="" /></a>
+
+
+in response to: 
+                                    <a href="/message/1108309#1108309"
+
+                                       title="Go to message"
+
+                                            >snauer</a>
+
+
+
+
+
+                                </div>
+
+
+
+
+
+                                <strong>
+
+
+									<span class="jive-icon-med jive-icon-discussion-helpful"></span>
+
+
+
+                                
+
+                                <a href="/message/1118557#1118557">Re: Arrow keys not working in Player v2.5 64bits,&#160; host=Ubuntu 8.10 64bits, Guest = XP pro 32bits</a></strong>
+
+
+
+
+
+
+
+
+
+                            </div>
+
+                            <div class="jive-thread-reply-message">
+
+                                <!-- [DocumentBodyStart:fa4ceb3a-b04d-4d98-bf8e-adbdaaf73c10] --><div class="jive-rendered-content"><p>For those of you using VMware Server 2.x on Fedora 10 and having problems with the arrow keys and other keys, this solution works on F10 as well.</p></div><!-- [DocumentBodyEnd:fa4ceb3a-b04d-4d98-bf8e-adbdaaf73c10] -->
+
+
+
+
+
+
+
+
+
+
+                                <!-- BEGIN helpful & correct buttons -->
+
+
+                                <!-- END helpful & correct buttons -->
+
+
+
+                            </div>
+
+
+
+                                <!-- BEGIN content details -->
+
+                                <div class="jive-content-controls clearfix">
+
+                                	<ul>
+
+
+
+
+
+
+
+
+									</ul>
+
+                                </div>
+
+                                <!-- END content details-->
+
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+                </div>
+
+                </div>
+
+                <!-- END reply -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!-- BEGIN reply -->
+
+
+
+                <div class="">
+
+                <div class="">
+
+
+
+
+                <div class="jive-thread-reply jive-thread-reply-alt  clearfix">
+
+
+
+
+                    <div class="jive-thread-reply-body">
+
+                        <a name="1125981"></a>
+
+                        <div class="jive-author">
+
+
+
+
+                                <span class="jive-author-avatar-container">
+
+<a href="/people/StellaArtois"
+   class="jiveTT-hover-user"
+   onmouseover="quickuserprofile.getUserProfileTooltip(609432);"
+   onmouseout="quickuserprofile.cancelTooltip();"
+        >
+    <img
+            class="jive-avatar"
+
+            src="/people/StellaArtois/avatar/46.png?a=-1"
+            border="0" height="46" width="46"
+            alt="StellaArtois"
+            /></a>
+
+				<span><img src="/4.0.13/images/status/novice-16x16.gif" alt="Novice" title="Novice"/> </span>
+				 
+
+                                </span>
+
+
+
+                                <div class="jive-username-link-wrapper">
+
+<a href="/people/StellaArtois"
+id="jive-60943221,569,817,701,351,115"
+onmouseover="quickuserprofile.getUserProfileTooltip(609432);"
+onmouseout="quickuserprofile.cancelTooltip();"
+class="jiveTT-hover-user jive-username-link"
+>StellaArtois</a>
+                                </div>
+
+                                <em>1 posts since <br/>Dec 16, 2008</em>
+
+
+
+
+                        </div>
+
+
+
+                        <div class="jive-thread-reply-body-container">
+
+                            <div class="jive-thread-reply-subject">
+
+
+
+                                <div class="jive-thread-post-moderating"><span class="jive-icon-med jive-icon-moderation"></span>Currently Being Moderated</div>
+
+                                <div class="jive-thread-reply-date">
+
+
+                                    <a href="/message/1125981#1125981" title="Link to reply #10" class="jive-thread-reply-num">10.</a>
+
+
+                                <span>Dec 16, 2008 6:21 PM</span>
+
+
+
+
+
+                                    <a href="/message/1118557#1118557"
+
+                                       title="in response to: djflux"
+
+                                            ><img src="/4.0.13/images/transparent.png" class="jive-icon-sml jive-icon-arrow-top" alt="" /></a>
+
+
+in response to: 
+                                    <a href="/message/1118557#1118557"
+
+                                       title="Go to message"
+
+                                            >djflux</a>
+
+
+
+
+
+                                </div>
+
+
+
+
+
+                                <strong>
+
+
+									
+
+                                
+
+                                <a href="/message/1125981#1125981">Re: Arrow keys not working in Player v2.5 64bits,&#160; host=Ubuntu 8.10 64bits, Guest = XP pro 32bits</a></strong>
+
+
+
+
+
+
+
+
+
+                            </div>
+
+                            <div class="jive-thread-reply-message">
+
+                                <!-- [DocumentBodyStart:d8bc3df4-bab2-4f83-b67d-3a182721d731] --><div class="jive-rendered-content"><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>Does anyone know how to fix this when the host = XP pro and the guest is Ubuntu 8.10?</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>Thanks...</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p></div><!-- [DocumentBodyEnd:d8bc3df4-bab2-4f83-b67d-3a182721d731] -->
+
+
+
+
+
+
+
+
+
+
+                                <!-- BEGIN helpful & correct buttons -->
+
+
+                                <!-- END helpful & correct buttons -->
+
+
+
+                            </div>
+
+
+
+                                <!-- BEGIN content details -->
+
+                                <div class="jive-content-controls clearfix">
+
+                                	<ul>
+
+
+
+
+
+
+
+
+									</ul>
+
+                                </div>
+
+                                <!-- END content details-->
+
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+                </div>
+
+                </div>
+
+                <!-- END reply -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!-- BEGIN reply -->
+
+
+
+                <div class="">
+
+                <div class="">
+
+
+
+
+                <div class="jive-thread-reply  clearfix">
+
+
+
+
+                    <div class="jive-thread-reply-body">
+
+                        <a name="1141049"></a>
+
+                        <div class="jive-author">
+
+
+
+
+                                <span class="jive-author-avatar-container">
+
+<a href="/people/kgpdeveloper"
+   class="jiveTT-hover-user"
+   onmouseover="quickuserprofile.getUserProfileTooltip(621578);"
+   onmouseout="quickuserprofile.cancelTooltip();"
+        >
+    <img
+            class="jive-avatar"
+
+            src="/people/kgpdeveloper/avatar/46.png?a=-1"
+            border="0" height="46" width="46"
+            alt="kgpdeveloper"
+            /></a>
+
+				<span><img src="/4.0.13/images/status/novice-16x16.gif" alt="Novice" title="Novice"/> </span>
+				 
+
+                                </span>
+
+
+
+                                <div class="jive-username-link-wrapper">
+
+<a href="/people/kgpdeveloper"
+id="jive-62157821,569,817,718,488,115"
+onmouseover="quickuserprofile.getUserProfileTooltip(621578);"
+onmouseout="quickuserprofile.cancelTooltip();"
+class="jiveTT-hover-user jive-username-link"
+>kgpdeveloper</a>
+                                </div>
+
+                                <em>1 posts since <br/>Jan 10, 2009</em>
+
+
+
+
+                        </div>
+
+
+
+                        <div class="jive-thread-reply-body-container">
+
+                            <div class="jive-thread-reply-subject">
+
+
+
+                                <div class="jive-thread-post-moderating"><span class="jive-icon-med jive-icon-moderation"></span>Currently Being Moderated</div>
+
+                                <div class="jive-thread-reply-date">
+
+
+                                    <a href="/message/1141049#1141049" title="Link to reply #11" class="jive-thread-reply-num">11.</a>
+
+
+                                <span>Jan 10, 2009 8:43 PM</span>
+
+
+
+
+
+                                    <a href="/message/1125981#1125981"
+
+                                       title="in response to: StellaArtois"
+
+                                            ><img src="/4.0.13/images/transparent.png" class="jive-icon-sml jive-icon-arrow-top" alt="" /></a>
+
+
+in response to: 
+                                    <a href="/message/1125981#1125981"
+
+                                       title="Go to message"
+
+                                            >StellaArtois</a>
+
+
+
+
+
+                                </div>
+
+
+
+
+
+                                <strong>
+
+
+									
+
+                                
+
+                                <a href="/message/1141049#1141049">Re: Arrow keys not working in Player v2.5 64bits,&#160; host=Ubuntu 8.10 64bits, Guest = XP pro 32bits</a></strong>
+
+
+
+
+
+
+
+
+
+                            </div>
+
+                            <div class="jive-thread-reply-message">
+
+                                <!-- [DocumentBodyStart:8976e702-81c8-4726-9796-1607829a1fae] --><div class="jive-rendered-content"><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>Not sure how to fix it keys problem if host is XP pro. My host is Ubuntu 8.10. Thanks to AlexPX, the problem with arrow keys not working is fixed now. </p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>Thanks a lot.&#160; </p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p></div><!-- [DocumentBodyEnd:8976e702-81c8-4726-9796-1607829a1fae] -->
+
+
+
+
+
+
+
+
+
+
+                                <!-- BEGIN helpful & correct buttons -->
+
+
+                                <!-- END helpful & correct buttons -->
+
+
+
+                            </div>
+
+
+
+                                <!-- BEGIN content details -->
+
+                                <div class="jive-content-controls clearfix">
+
+                                	<ul>
+
+
+
+
+
+
+
+
+									</ul>
+
+                                </div>
+
+                                <!-- END content details-->
+
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+                </div>
+
+                </div>
+
+                <!-- END reply -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!-- BEGIN reply -->
+
+
+
+                <div class="">
+
+                <div class="">
+
+
+
+
+                <div class="jive-thread-reply jive-thread-reply-alt  clearfix">
+
+
+
+
+                    <div class="jive-thread-reply-body">
+
+                        <a name="1143382"></a>
+
+                        <div class="jive-author">
+
+
+
+
+                                <span class="jive-author-avatar-container">
+
+<a href="/people/JohanRex"
+   class="jiveTT-hover-user"
+   onmouseover="quickuserprofile.getUserProfileTooltip(623299);"
+   onmouseout="quickuserprofile.cancelTooltip();"
+        >
+    <img
+            class="jive-avatar"
+
+            src="/people/JohanRex/avatar/46.png?a=-1"
+            border="0" height="46" width="46"
+            alt="JohanRex"
+            /></a>
+
+				<span><img src="/4.0.13/images/status/novice-16x16.gif" alt="Novice" title="Novice"/> </span>
+				 
+
+                                </span>
+
+
+
+                                <div class="jive-username-link-wrapper">
+
+<a href="/people/JohanRex"
+id="jive-62329921,569,817,735,900,115"
+onmouseover="quickuserprofile.getUserProfileTooltip(623299);"
+onmouseout="quickuserprofile.cancelTooltip();"
+class="jiveTT-hover-user jive-username-link"
+>JohanRex</a>
+                                </div>
+
+                                <em>1 posts since <br/>Jan 13, 2009</em>
+
+
+
+
+                        </div>
+
+
+
+                        <div class="jive-thread-reply-body-container">
+
+                            <div class="jive-thread-reply-subject">
+
+
+
+                                <div class="jive-thread-post-moderating"><span class="jive-icon-med jive-icon-moderation"></span>Currently Being Moderated</div>
+
+                                <div class="jive-thread-reply-date">
+
+
+                                    <a href="/message/1143382#1143382" title="Link to reply #12" class="jive-thread-reply-num">12.</a>
+
+
+                                <span>Jan 13, 2009 2:54 PM</span>
+
+
+
+
+
+                                    <a href="/message/1141049#1141049"
+
+                                       title="in response to: kgpdeveloper"
+
+                                            ><img src="/4.0.13/images/transparent.png" class="jive-icon-sml jive-icon-arrow-top" alt="" /></a>
+
+
+in response to: 
+                                    <a href="/message/1141049#1141049"
+
+                                       title="Go to message"
+
+                                            >kgpdeveloper</a>
+
+
+
+
+
+                                </div>
+
+
+
+
+
+                                <strong>
+
+
+									
+
+                                
+
+                                <a href="/message/1143382#1143382">Re: Arrow keys not working in Player v2.5 64bits,&#160; host=Ubuntu 8.10 64bits, Guest = XP pro 32bits</a></strong>
+
+
+
+
+
+
+
+
+
+                            </div>
+
+                            <div class="jive-thread-reply-message">
+
+                                <!-- [DocumentBodyStart:72fd5ad7-a149-4deb-8e47-26e1dcb0595c] --><div class="jive-rendered-content"><p>xkeymap.nokeycodeMap = true </p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>This is not a full solution.</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>I have Swedish keyboard layout in the ubuntu 8.10 host. In the winxp guest&#160; it seems I have english layout even though it is set to Swedish.</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>AlexPX solution fixes this.</p></div><!-- [DocumentBodyEnd:72fd5ad7-a149-4deb-8e47-26e1dcb0595c] -->
+
+
+
+
+
+
+
+
+
+
+                                <!-- BEGIN helpful & correct buttons -->
+
+
+                                <!-- END helpful & correct buttons -->
+
+
+
+                            </div>
+
+
+
+                                <!-- BEGIN content details -->
+
+                                <div class="jive-content-controls clearfix">
+
+                                	<ul>
+
+
+
+
+
+
+
+
+									</ul>
+
+                                </div>
+
+                                <!-- END content details-->
+
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+                </div>
+
+                </div>
+
+                <!-- END reply -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!-- BEGIN reply -->
+
+
+
+                <div class="">
+
+                <div class="">
+
+
+
+
+                <div class="jive-thread-reply  clearfix">
+
+
+
+
+                    <div class="jive-thread-reply-body">
+
+                        <a name="1149604"></a>
+
+                        <div class="jive-author">
+
+
+
+
+                                <span class="jive-author-avatar-container">
+
+<a href="/people/enmi"
+   class="jiveTT-hover-user"
+   onmouseover="quickuserprofile.getUserProfileTooltip(627616);"
+   onmouseout="quickuserprofile.cancelTooltip();"
+        >
+    <img
+            class="jive-avatar"
+
+            src="/people/enmi/avatar/46.png?a=-1"
+            border="0" height="46" width="46"
+            alt="enmi"
+            /></a>
+
+				<span><img src="/4.0.13/images/status/novice-16x16.gif" alt="Novice" title="Novice"/> </span>
+				 
+
+                                </span>
+
+
+
+                                <div class="jive-username-link-wrapper">
+
+<a href="/people/enmi"
+id="jive-62761621,569,817,752,734,115"
+onmouseover="quickuserprofile.getUserProfileTooltip(627616);"
+onmouseout="quickuserprofile.cancelTooltip();"
+class="jiveTT-hover-user jive-username-link"
+>enmi</a>
+                                </div>
+
+                                <em>1 posts since <br/>Jan 21, 2009</em>
+
+
+
+
+                        </div>
+
+
+
+                        <div class="jive-thread-reply-body-container">
+
+                            <div class="jive-thread-reply-subject">
+
+
+
+                                <div class="jive-thread-post-moderating"><span class="jive-icon-med jive-icon-moderation"></span>Currently Being Moderated</div>
+
+                                <div class="jive-thread-reply-date">
+
+
+                                    <a href="/message/1149604#1149604" title="Link to reply #13" class="jive-thread-reply-num">13.</a>
+
+
+                                <span>Jan 21, 2009 3:18 AM</span>
+
+
+
+
+
+                                    <a href="/message/1090347#1090347"
+
+                                       title="in response to: AlexPX"
+
+                                            ><img src="/4.0.13/images/transparent.png" class="jive-icon-sml jive-icon-arrow-top" alt="" /></a>
+
+
+in response to: 
+                                    <a href="/message/1090347#1090347"
+
+                                       title="Go to message"
+
+                                            >AlexPX</a>
+
+
+
+
+
+                                </div>
+
+
+
+
+
+                                <strong>
+
+
+									
+
+                                
+
+                                <a href="/message/1149604#1149604">Re: Arrow keys not working in Player v2.5 64bits,&#160; host=Ubuntu 8.10 64bits, Guest = XP pro 32bits</a></strong>
+
+
+
+
+
+
+
+
+
+                            </div>
+
+                            <div class="jive-thread-reply-message">
+
+                                <!-- [DocumentBodyStart:bc7693ea-0861-42cc-b963-2c1cbf97407a] --><div class="jive-rendered-content"><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>for fixing the "Print Screen" key, which is mapped to the "Del" key, add this to your vmware config file (tested for /etc/vmware/config):</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>xkeymap.keycode.107 = 0x137&#160; # Print Scrn</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p>see:</p><p><a class="jive-link-external-small" href="http://www.vmware.com/support/ws5/doc/ws_devices_keymap_linux_longer.html">http://www.vmware.com/support/ws5/doc/ws_devices_keymap_linux_longer.html</a></p><p><a class="jive-link-external-small" href="http://www.vmware.com/support/ws5/doc/ws_devices_keymap_vscan.html">http://www.vmware.com/support/ws5/doc/ws_devices_keymap_vscan.html</a><span> </span></p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p><p style="min-height: 8pt; height: 8pt; padding: 0px;">&#160;</p></div><!-- [DocumentBodyEnd:bc7693ea-0861-42cc-b963-2c1cbf97407a] -->
+
+
+
+
+
+
+
+
+
+
+                                <!-- BEGIN helpful & correct buttons -->
+
+
+                                <!-- END helpful & correct buttons -->
+
+
+
+                            </div>
+
+
+
+                                <!-- BEGIN content details -->
+
+                                <div class="jive-content-controls clearfix">
+
+                                	<ul>
+
+
+
+
+
+
+
+
+									</ul>
+
+                                </div>
+
+                                <!-- END content details-->
+
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+                </div>
+
+                </div>
+
+                <!-- END reply -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!-- BEGIN reply -->
+
+
+
+                <div class="">
+
+                <div class="">
+
+
+
+
+                <div class="jive-thread-reply jive-thread-reply-alt  clearfix">
+
+
+
+
+                    <div class="jive-thread-reply-body">
+
+                        <a name="1159004"></a>
+
+                        <div class="jive-author">
+
+
+
+
+                                <span class="jive-author-avatar-container">
+
+<a href="/people/nmapster"
+   class="jiveTT-hover-user"
+   onmouseover="quickuserprofile.getUserProfileTooltip(633676);"
+   onmouseout="quickuserprofile.cancelTooltip();"
+        >
+    <img
+            class="jive-avatar"
+
+            src="/people/nmapster/avatar/46.png?a=-1"
+            border="0" height="46" width="46"
+            alt="nmapster"
+            /></a>
+
+				<span><img src="/4.0.13/images/status/novice-16x16.gif" alt="Novice" title="Novice"/> </span>
+				 
+
+                                </span>
+
+
+
+                                <div class="jive-username-link-wrapper">
+
+<a href="/people/nmapster"
+id="jive-63367621,569,817,768,369,115"
+onmouseover="quickuserprofile.getUserProfileTooltip(633676);"
+onmouseout="quickuserprofile.cancelTooltip();"
+class="jiveTT-hover-user jive-username-link"
+>nmapster</a>
+                                </div>
+
+                                <em>1 posts since <br/>Jan 31, 2009</em>
+
+
+
+
+                        </div>
+
+
+
+                        <div class="jive-thread-reply-body-container">
+
+                            <div class="jive-thread-reply-subject">
+
+
+
+                                <div class="jive-thread-post-moderating"><span class="jive-icon-med jive-icon-moderation"></span>Currently Being Moderated</div>
+
+                                <div class="jive-thread-reply-date">
+
+
+                                    <a href="/message/1159004#1159004" title="Link to reply #14" class="jive-thread-reply-num">14.</a>
+
+
+                                <span>Jan 31, 2009 11:59 PM</span>
+
+
+
+
+
+                                    <a href="/message/1088846#1088846"
+
+                                       title="in response to: AlexPX"
+
+                                            ><img src="/4.0.13/images/transparent.png" class="jive-icon-sml jive-icon-arrow-top" alt="" /></a>
+
+
+in response to: 
+                                    <a href="/message/1088846#1088846"
+
+                                       title="Go to message"
+
+                                            >AlexPX</a>
+
+
+
+
+
+                                </div>
+
+
+
+
+
+                                <strong>
+
+
+									
+
+                                
+
+                                <a href="/message/1159004#1159004">Re: Arrow keys not working in Player v2.5 64bits,&#160; host=Ubuntu 8.10 64bits, Guest = XP pro 32bits</a></strong>
+
+
+
+
+
+
+
+
+
+                            </div>
+
+                            <div class="jive-thread-reply-message">
+
+                                <!-- [DocumentBodyStart:c89f8f07-62ec-45f2-8284-7a315f436267] --><div class="jive-rendered-content"><p>I had the exact same problem when using Fedora Core 10 as the host OS and Windows XP Pro as the guest.&#160; The fix suggested in this thread (adding "xkeymap.nokeycodeMap = true" to /etc/vmware/config) did the trick and my arrow keys are working again.&#160; Still, I hope VMWare fixes the underlying issue so that we don't have to look up and resolve these little bugs ourselves.&#160; Still, VMWare workstation is a truly great product--keep up the good work!</p></div><!-- [DocumentBodyEnd:c89f8f07-62ec-45f2-8284-7a315f436267] -->
+
+
+
+
+
+
+
+
+
+
+                                <!-- BEGIN helpful & correct buttons -->
+
+
+                                <!-- END helpful & correct buttons -->
+
+
+
+                            </div>
+
+
+
+                                <!-- BEGIN content details -->
+
+                                <div class="jive-content-controls clearfix">
+
+                                	<ul>
+
+
+
+
+
+
+
+
+									</ul>
+
+                                </div>
+
+                                <!-- END content details-->
+
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+                </div>
+
+                </div>
+
+                <!-- END reply -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <!-- BEGIN thread info -->
+
+					<div class="vmware-thread-pagination">
+
+						<div class="vmware-thread-pagination-padding">
+
+
+
+                            <a href="/thread/177321?tstart=0" class="jive-thread-reply-footer-top">Go to original post</a>
+
+                            <!-- BEGIN pagination-->
+
+                            <span class="jive-pagination">
+
+                                <span class="jive-pagination-numbers">
+
+
+
+                                        <a href="/thread/177321?start=0&amp;tstart=0"
+
+                                            class="jive-pagination-current" >1</a>
+
+
+
+
+                                        <a href="/thread/177321?start=15&amp;tstart=0"
+
+                                             >2</a>
+
+
+
+                                </span>
+
+                                <span class="jive-pagination-prevnext">
+
+
+                                        <span class="jive-pagination-prev-none">Previous</span>
+
+
+
+                                        <a href="/thread/177321?start=15&amp;tstart=0" class="jive-pagination-next">Next</a>
+
+
+                                </span>
+
+                            </span>
+
+                            <!-- END pagination -->
+
+                        </div>
+
+                    </div>
+
+                    <!-- END thread info -->
+
+
+
+
+
+
+
+
+
+
+                        <div id="jive-thread-reply-footer" class="clearfix">
+
+
+                            <img src="/4.0.13/images/transparent.png" class="jive-icon-sml jive-icon-arrow-top" alt="" />
+
+                            <a href="#177321">Go to original post</a>
+
+
+
+                        </div>
+
+
+
+
+
+
+            
+
+            </div>
+
+            <!-- END messages -->
+
+		</div>
+
+    </div>
+
+    <!-- END main body column -->
+
+
+
+
+
+
+
+    <!-- BEGIN sidebar column container -->
+
+    <div id="jive-body-sidebarcol-container">
+
+        <!-- BEGIN sidebar column -->
+
+        <div id="jive-body-sidebarcol">
+
+
+
+        <script type="text/javascript">
+
+            function createDocFromThread() {
+
+
+                    document.location = '/thread-to-doc.jspa?thread=177321';
+
+
+            }
+
+        </script>
+
+
+<div id="jive-action-sidebar" class="jive-sidebar jive-sidebar-actions">
+    <div class="jive-sidebar-header"></div>
+    <div id="jive-action-sidebar-body" class="jive-sidebar-body jive-sidebar-body-actions">
+
+
+        <div id="jive-action-sidebar-tab-_thread-actions-tab"
+             class="jive-action-sidebar-tab-first"
+                >
+            <h4 id="jive-action-sidebar-tab-header_thread-actions-tab">Actions</h4>
+
+
+            <ul id="jive-action-sidebar-tab-list_thread-actions-tab" class=" jive-icon-list">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <li id="jive-link-thread-print" style=""
+                        ><a href="/thread/177321?decorator=print&amp;displayFullThread=true"
+                            rel="nofollow"
+                            onclick=""
+                            title="">
+                    <span class="jive-icon-med jive-icon-print-preview"></span>
+                    View print preview
+                </a></li>
+
+
+
+
+
+
+
+
+
+
+
+            </ul>
+        </div>
+
+
+
+    </div>
+</div>
+
+
+
+
+
+
+		<!-- start jive social container -->
+
+
+
+
+<div class="jive-sidebar">
+	<div class="jive-sidebar-header">
+		<h4>Bookmarked By (0)</h4>
+	</div>
+	<div class="jive-sidebar-byline">
+        <form id="view-favorite-activity-form" action="/view-favorite-activity.jspa">
+            <input type="hidden" name="object" value="177321"/>
+            <input type="hidden" name="contentObjectType" value="1"/>
+            <label for="jive-view-picker">View:</label>
+            <select id="jive-view-picker" name="view">
+                <option value="everyone">Everyone</option>
+                <option value="notes">Only Notes</option>
+            </select>
+            <input type="hidden" name="page" value="1"/>
+        </form>
+    </div>
+    <div class="jive-sidebar-body clearfix" id="jive-bookmark-sidebar">
+        <div id="jive-bookmark-avatars-container">
+            <div class="jive-sidebar-footer view-previous">
+                <a href="#" class="jive-less">Previous</a>
+            </div>
+            <div id="jive-bookmark-list"
+                class="jive-avatar-list pageable-container clearfix fixedheight">
+            </div>
+
+            <div class="jive-sidebar-footer view-next">
+                <a class="jive-more" href="#">Next</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+        <!-- end jive social container -->
+
+		
+
+
+
+
+
+
+
+
+
+        </div>
+
+        <!-- END sidebar column -->
+
+    </div>
+
+    <!-- END sidebar column container -->
+
+
+
+    <!-- END main body -->
+
+
+
+
+</div>
+
+<!-- END main body -->
+
+
+
+
+
+        </div>
+
+    </div> 
+
+  </div>
+  <div id="top-of-page">
+    <div id="iglobal-sites"></div>
+	 <div id="primary-navigation">
+		<div class="visual">
+<!-- BEGIN breadcrumb -->
+<div id="breadcrumbs">
+
+
+    <span>
+
+
+
+
+
+
+
+                <a href="/">VMware Communities</a> &gt; 
+
+                <a href="/community/vmtn"
+                   >VMTN</a> &gt; 
+
+                <a href="/community/vmtn/desktop"
+                   >Desktop Products</a> &gt; 
+
+                <a href="/community/vmtn/desktop/player"
+                   >VMware Player</a> &gt; 
+
+
+
+
+
+        <a class='jive-breadcrumb-last' href="/community/vmtn/desktop/player?view=discussions">Discussions</a></span>
+</div>
+<!-- END breadcrumb -->
+<!-- BEGIN user bar -->
+<div id="user-bar-wrapper">
+        
+        
+<div id="jive-userbar">
+
+        
+
+	<script type="text/javascript" charset="utf-8">
+	<!--
+		function delCookie(name,path,domain) {
+			var today = new Date();
+			var deleteDate = new Date(today.getTime() - 48 * 60 * 60 * 1000); // minus 2 days
+			var cookie = name + "="
+				+ ((path == null) ? "" : "; path=" + path)
+				+ ((domain == null) ? "" : "; domain=" + domain)
+				+ "; expires=" + deleteDate;
+			document.cookie = cookie;
+		}
+		function delOblixCookie() {
+			// set focus to ok button
+			var isNetscape = (document.layers);
+			if (isNetscape == false || navigator.appVersion.charAt(0) >= 5) {
+				for (var i=0; i < document.links.length; i++) {
+					if (document.links[i].href == "javascript:top.close()") {
+						document.links[i].focus();
+						break;
+					}
+				}
+			}
+			delCookie('ObTEMC', '/');
+			delCookie('ObSSOCookie', '/');
+			// in case cookieDomain is configured
+			// delete same cookie to all of subdomain
+			var subdomain;
+			var domain = new String(document.domain);
+			var index = domain.indexOf(".");
+			while (index > 0) {
+				subdomain = domain.substring(index, domain.length);
+				if (subdomain.indexOf(".", 1) > 0) {
+					delCookie('ObTEMC', '/', subdomain);
+					delCookie('ObSSOCookie', '/', subdomain);
+				}
+				domain = subdomain;
+				index = domain.indexOf(".", 1);
+			}
+		}
+	// -->
+	</script>
+
+
+	<div class="visual-entry">
+		<h2> <a href="/">Communities</a> </h2>
+		
+
+			<div id="login-register">
+				<a href="/login!input.jspa" class="btn-login-register">Login/Register</a>
+			</div>
+              <!-- BEGIN user links  -->
+			  <ul id='section-nav'>
+							<li class='has-drop-down right-side'><a href="#" id="jiveUserMenu5Link" onclick="return false;"><span class="jive-userbar-navigation">Browse</span></a>     <!-- BEGIN navigation -->
+    <div class="drop-down" id="jiveUserMenu5">
+		<div class="t"></div>
+		<div class="c">
+			<ul class="jive-userbar-menu-browse">
+				<!-- start non-hardcoded browseable content items -->
+					<li><a href="/blogs" class="font-color-normal"><span class="jive-icon-med jive-icon-blog"></span>Blog Posts</a></li>
+					<li><a href="/bookmarks" class="font-color-normal"><span class="jive-icon-med jive-icon-bookmark"></span>Bookmarks</a></li>
+					<li><a href="/threads" class="font-color-normal"><span class="jive-icon-med jive-icon-discussion"></span>Discussions</a></li>
+					<li><a href="/docs" class="font-color-normal"><span class="jive-icon-med jive-icon-document"></span>Documents</a></li>
+				<!-- end non-hardcoded browseable content items -->
+
+				<!-- start hard-coded browseable items -->
+                <li><a href="/tags/"
+                       onclick=""
+                       title=""
+                       class="font-color-normal">
+                    <span class="jive-icon-med jive-icon-tag"></span>Tags
+                </a></li>
+                <li><a href="/community/"
+                       onclick=""
+                       title=""
+                       class="font-color-normal">
+                    <span class="jive-icon-med jive-icon-space"></span>Communities
+                </a></li>
+                <li><a href="/groups/"
+                       onclick=""
+                       title=""
+                       class="font-color-normal">
+                    <span class="jive-icon-med jive-icon-group"></span>Groups
+                </a></li>
+                <li><a href="/people/"
+                       onclick=""
+                       title=""
+                       class="font-color-normal">
+                    <span class="jive-icon-med jive-icon-people"></span>People
+                </a></li>
+				<!-- end hard-coded browseable items -->
+
+				<!-- start browseable dynamic containers -->
+				<!-- end browseable dynamic containers -->
+			</ul>
+		</div>
+		<div class="b"></div>
+    </div>
+    <!-- END navigation -->
+ </li>
+			  </ul>
+			  <!-- END user links -->
+		</ul>
+	</div>
+    <!-- BEGIN choose-container create panel -->
+    <div class="jive-userbar-slidedown" id="jiveContentCreatePanel" style="display: none;">
+		<!--<div class="jive-userbar-slidedown-border-top-content"></div>-->
+        <div class="jive-userber-slidedown-container" id="jiveContentCreateContainer"></div>
+    </div>
+    <!-- END choose-container create panel -->
+
+
+    <!-- BEGIN invite create panel -->
+    <div class="jive-userbar-slidedown" id="jiveInviteCreatePanel" style="display: none;">
+        <div class="jive-userber-slidedown-container" id="jiveInviteCreateContainer"></div>
+    </div>
+    <!-- END invite create panel -->
+
+	<!-- BEGIN right-aligned user bar items -->
+    
+</div>
+<!-- Begin Search bar-->
+<div id="jive-userbar-search">
+    <form name="f" action="http://search.vmware.com/search">
+        <input type="hidden" name="cn" value="vmware">
+        <input type="hidden" name="cc" value="www">
+        <input type="hidden" name="client" value="VMware_Site">
+        <input type="hidden" name="entqr" value="0">
+        <input type="hidden" name="ud" value="1">
+        <input type="hidden" name="output" value="xml_no_dtd">
+        <input type="hidden" name="proxystylesheet" value="VMware_gsa_Site">
+        <input type="hidden" name="site" value="VMware_Site_communities">
+        <input type="hidden" name="ie" value="UTF-8">
+        <input type="hidden" name="oe" value="UTF-8">
+        <input type="text" id="jive-query" name="q" value="" accesskey="4" class="jive-userbar-search-field" autocomplete="off" />
+        <button type="submit" value="Search" class="jive-userbar-search-button">Search</button>
+    </form>
+</div>
+<!-- End of Search bar-->
+</div>
+<!-- END user bar -->
+		</div>
+	 </div>
+    <div id="isite-tools"></div>
+    <div id="ilanguage"></div>
+    <div id="isearch-form"></div>
+  </div>
+  <div id="ifooter"></div>
+</div>
+
+
+<div id="jiveTT-note-user" class="jive-tooltip2 notedefault snp-mouseoffset"  >
+	<div class="jive-tooltip2-top"></div>
+	<div class="jive-tooltip2-mid">
+		<div class="jive-tooltip2-mid-padding" id="jive-note-user-body"></div>
+	</div>
+	<div class="jive-tooltip2-btm"></div>
+<!--[if lt IE 7]><iframe src="javascript:false;" class="ieselectfix"></iframe><![endif]--></div>
+
+<div id="jiveTT-note-video" class="jive-tooltip2 notedefault snp-mouseoffset"  >
+	<div class="jive-tooltip2-top"></div>
+	<div class="jive-tooltip2-mid">
+		<div class="jive-tooltip2-mid-padding" id="jive-note-video-body"></div>
+	</div>
+	<div class="jive-tooltip2-btm"></div>
+<!--[if lt IE 7]><iframe src="javascript:false;" class="ieselectfix"></iframe><![endif]--></div>
+
+<div id="jivecontainerTT-note-container" class="jive-tooltip2 notedefault snp-mouseoffset"  >
+	<div class="jive-tooltip2-top"></div>
+	<div class="jive-tooltip2-mid">
+		<div class="jive-tooltip2-mid-padding" id="jive-note-container-body"></div>
+	</div>
+	<div class="jive-tooltip2-btm"></div>
+<!--[if lt IE 7]><iframe src="javascript:false;" class="ieselectfix"></iframe><![endif]--></div>
+
+
+
+
+    
+
+
+
+
+
+<script type="text/javascript" language="JavaScript" src="/4.0.13/resources/scripts/gen/f1dd335cdd73840e190ceb24dc64aa2a.js"></script>
+<script type="text/javascript" language="JavaScript">
+        var emailLink='/select-csv.jspa'
+        var importCsvTitle = "Import Contacts";
+        var themeTitle = "Community Setup Wizard";
+        var themeURL = "/skin-basic.jspa";
+
+
+</script>
+
+<script type="text/javascript">
+zoomImagesURI   = "/4.0.13/images/fancyzoom/images/";
+$j(document).ready(function() {
+    setupZoom();
+});
+</script>
+
+<script type="text/javascript" src="/themes/custom/scripts/vmware.js" ></script>
+<script src="http://www.vmware.com/app/template/?set=communities" type="text/javascript"></script>
+<script type="text/javascript" src="http://www.vmware.com/files/templates/inc/tracking.js"></script>
+<script type="text/javascript" src="http://www.vmware.com/files/templates/inc/hbx.js"></script>
+
+
+</body>
+</html>
