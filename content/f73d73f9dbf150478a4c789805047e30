@@ -1,0 +1,656 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" id="sixapart-standard">
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+   <meta name="generator" content="Movable Type 3.2" />
+   <meta name="microid" content="mailto+http:sha1:993147ed4dfa70a011c6a9a1dbc427c717485b3e" />
+   <meta name="ICBM" content="40.165774,-8.850398" />
+   <meta name="DC.title" content="Notes - Simplicidade.org" />
+   <link rel="apple-touch-icon" href="/me.png" />
+   <link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon" />
+   <link rel="stylesheet" href="http://www.simplicidade.org/notes/styles-site.css" type="text/css" />
+   <link rel="stylesheet" type="text/css" href="/sh/styles/shCore.css"/>
+   <link rel="stylesheet" type="text/css" href="/sh/styles/shThemeDefault.css"/>
+   <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.simplicidade.org/notes/42.xml" />
+   <link rel="meta" type="application/rdf+xml" title="FOAF" href="/foaf.rdf" />
+   <link rel="openid.server" href="http://www.myopenid.com/server" />
+   <link rel="openid.delegate" href="http://melopt.myopenid.com/" />
+   <link rel="openid2.provider" href="http://www.myopenid.com/server" />
+   <link rel="openid2.local_id" href="http://melopt.myopenid.com" />
+   <meta http-equiv="X-XRDS-Location" content="http://www.myopenid.com/xrds?username=melopt.myopenid.com" />
+   <link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.simplicidade.org/notes/rsd.xml" />
+   <link rel="start" href="http://www.simplicidade.org/notes/" title="Home" />
+      <!--
+<rdf:RDF xmlns="http://web.resource.org/cc/"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<Work rdf:about="http://www.simplicidade.org/notes/">
+<dc:title>Notes</dc:title>
+<dc:description>Building simplicidade.org: notes, projects, and ocasional rants</dc:description>
+<license rdf:resource="http://creativecommons.org/licenses/by-nc-sa/2.5/" />
+</Work>
+<License rdf:about="http://creativecommons.org/licenses/by-nc-sa/2.5/">
+</License>
+</rdf:RDF>
+-->
+
+   
+   <script type="text/javascript" src="http://www.simplicidade.org/notes/mt-site.js"></script>
+
+   <title>Notes: Installing gitosis</title>
+   <link rel="prev" href="http://www.simplicidade.org/notes/archives/2008/09/dropbox_is_open.html" title="Dropbox is open" />
+   <link rel="next" href="http://www.simplicidade.org/notes/archives/2008/09/push_to_multipl.html" title="Push to multiple repositories" />
+</head>
+<body class="layout-two-column-right" onload="individualArchivesOnLoad(commenter_name)">
+   <div id="container">
+      <div id="container-inner" class="pkg">
+
+         <div id="banner">
+            <div id="banner-inner" class="pkg">
+               <img style="float: right" src="/me.png" />
+               <h1 id="banner-header"><a href="http://www.simplicidade.org/notes/" accesskey="1">Notes</a></h1>
+               <h2 id="banner-description">Building simplicidade.org: notes, projects, and ocasional rants</h2>
+            </div>
+         </div>
+
+         <div id="pagebody">
+            <div id="pagebody-inner" class="pkg">
+               <div id="alpha">
+                  <div id="alpha-inner" class="pkg">
+
+                     <p class="content-nav">
+                        <a href="http://www.simplicidade.org/notes/archives/2008/09/dropbox_is_open.html">&laquo; Dropbox is open</a> |
+                        <a href="http://www.simplicidade.org/notes/">Main</a>
+                        | <a href="http://www.simplicidade.org/notes/archives/2008/09/push_to_multipl.html">Push to multiple repositories &raquo;</a>
+                     </p>
+
+                     <a id="a000878"></a>
+                     <div class="entry" id="entry-878">
+                        <h3 class="entry-header">Installing gitosis</h3>
+                        <div class="entry-content">
+                           <div class="entry-body">
+                              <p><a href="http://eagain.net/gitweb/?p=gitosis.git;a=summary">Gitosis</a> is a wonderful little system to manage <a href="http://git.or.cz/">Git</a> repositories, providing access over SSH, with tight access control and using only one shell account.</p>
+
+<p>The installation instructions provided with the <a href="http://eagain.net/gitweb/?p=gitosis.git;a=blob;f=README.rst;hb=master">README.rst</a>, and the <a href="http://scie.nti.st/2007/11/14/hosting-git-repositories-the-easy-and-secure-way"><em>Hosting Git</em> article by Garry Dolley</a> provide you most of what you need to install it. But they cover the most basic installation where everything is in your system <code>PATH</code>.</p>
+
+<p>My setup is not standard at all, so the process needs to be tweaked a bit.</p>
+
+<p>Although not mentioned, Gitosis requires a recent version of <a href="http://www.python.org/">Python</a> (at least more recent than my system 2.3.4) and <code>setuptools</code> (also missing from my system).</p>
+
+<p>I choose to compile all the dependencies. To isolate this as much as possible, I created an account <code>gitdeps</code> to hold all the stuff I need to run Gitosis.</p>
+
+<p>I logged in as <code>gitdeps</code> and did:</p>
+
+<pre><code># make sure other users can use this commands
+chmod 711 $HOME
+mkdir src &amp;&amp; cd src
+
+# Install Python
+wget http://www.python.org/ftp/python/2.5.2/Python-2.5.2.tgz
+tar zxf Python-2.5.2.tgz
+cd Python-2.5.2
+./configure --prefix=$HOME
+make
+make install
+cd ..
+export PATH=$HOME/bin:$PATH
+
+# Install setuptools
+wget http://peak.telecommunity.com/dist/ez_setup.py
+python ez_setup.py
+
+# Install Git
+wget http://kernel.org/pub/software/scm/git/git-1.6.0.2.tar.gz
+tar zxf git-1.6.0.2.tar.gz
+cd git-1.6.0.2
+./configure --prefix=$HOME
+make
+make install
+cd ..
+
+# Install Gitosis
+git clone git://eagain.net/gitosis.git
+cd gitosis
+python setup.py install
+</code></pre>
+
+<p>You should have all the software needed to run Gitosis now.</p>
+
+<p>The rest of the installation is pretty simple. You need a couple of things:</p>
+
+<ul>
+<li>choose a directory to hold all the files: we will assume <code>/home/git</code> but you can use whatever you want;</li>
+<li>a user account for the system: usually this user is <code>git</code>. You can have several Gitosis installations in the same server, each one using a different user;</li>
+<li>the SSH public key of the user that will be the initial administrator of Gitosis.</li>
+</ul>
+
+<p>To create the <code>git</code> user, you should use the proper tool for your operating system. The <code>README.rst</code> provides the command to run on a <a href="http://www.debian.org/">Debian</a>-<a href="http://www.ubuntu.com/">like</a> system. I'm using <a href="http://centos.org/">CentOS</a> so the command is this:</p>
+
+<pre><code># As root
+useradd \
+      -s /bin/sh \
+      -c 'git version control' \
+      -r \
+      -d /home/git \
+      git
+mkdir -p /home/git
+chown git:git /home/git
+</code></pre>
+
+<p>After this, you just need to initialize the Gitosis system. Do:</p>
+
+<pre><code># As root
+PATH=/home/gitdeps/bin:$PATH
+export PATH
+sudo -H -u git gitosis-init &lt; /path/to/gitosis_admin_ssh_public_key.pub
+</code></pre>
+
+<p>You should see two lines of output:</p>
+
+<pre><code>Initialized empty Git repository in /home/git/repositories/gitosis-admin.git/
+Reinitialized existing Git repository in /home/git/repositories/gitosis-admin.git/
+</code></pre>
+
+<p>On a standard system, that would be it. But we have all the binaries in a non-standard directory, <code>/home/gitdeps/bin</code>. To make sure that they are found, we need to tweak the SSH instalation.</p>
+
+<p>First, you need to create a SSH environment file with the proper PATH to use:</p>
+
+<pre><code># as root
+echo "PATH=/home/gitdeps/bin:/bin:/usr/bin:/usr/local/bin" &gt; ~git/.ssh/environment
+chown git:git ~git/.ssh/environment
+chmod 400 ~git/.ssh/environment
+</code></pre>
+
+<p>Then you need to make sure that your sshd is configured to read the file. Edit the <code>/etc/ssh/sshd_config</code> file. There are two settings you must check:</p>
+
+<ul>
+<li><code>PermitUserEnvironment</code>: must be <code>yes</code>;</li>
+<li><code>UseLogin</code>: must be <code>no</code>.</li>
+</ul>
+
+<p>If <code>UseLogin</code> is <code>yes</code>, proceed with caution. You might break ssh service for other users. One alternative (left as an exercise to the reader) is to use a separate sshd just for the <code>git</code> user.</p>
+
+<p>Restart your sshd. And we are done.</p>
+
+<p>To manage Gitosis, you clone the <code>gitosis-admin.git</code> repository. Inside your local copy, you'll find a <code>gitosis.conf</code> and a <code>keydir/</code> directory with the public keys of all the users, in the format <code>USER_ID.pub</code>.</p>
+
+<pre><code># on your laptop/desktop
+git clone git@server.domain.here:gitosis-admin.git
+cd gitosis-admin
+ls -la *
+-rw-rw-r--  1 melo  staff  91 Sep 20 15:44 gitosis.conf
+
+keydir:
+total 8
+-rw-rw-r--  1 melo  staff  666 Sep 20 15:44 melo@simplicidade.org.pub
+</code></pre>
+
+<p>Have the appropriate amount of fun.</p>
+
+                           </div>
+                           <div id="more" class="entry-more">
+                              
+
+                           </div>
+                        </div>
+                        <p class="entry-footer">
+                           <span class="post-footers">Posted by Pedro Melo on September 20, 2008 03:58 PM</span> <span class="separator">|</span> <a class="permalink" href="http://www.simplicidade.org/notes/archives/2008/09/installing_gito.html">Permalink</a>
+                           <span class="separator">|</span> <a href="http://www.simplicidade.org/notes/archives/2008/09/installing_gito.html#disqus_thread">Comments (view)</a>
+                        </p>
+                     </div>
+
+                     <div id="comments" class="comments">
+                        <div class="comments-content">
+                           <div id="disqus_thread"></div><script type="text/javascript" src="http://disqus.com/forums/notes/embed.js"></script><noscript><a href="http://notes.disqus.com/?url=ref">View the forum thread.</a></noscript><a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+                        </div>
+                     </div>
+                     
+                     
+
+                  </div>
+               </div>
+
+               <div id="beta">
+   <div id="beta-inner" class="pkg">
+     <div class="module">
+        <h2 class="module-header">Subscribe</h2>
+        <div class="module-content">
+          <a href="http://feeds2.feedburner.com/simplicidade/notes" title="Subscribe to my feed" rel="alternate" type="application/rss+xml"><img src="http://www.feedburner.com/fb/images/pub/feed-icon32x32.png" alt="" style="border:0"/></a><a href="http://feeds2.feedburner.com/simplicidade/notes" title="Subscribe to my feed" rel="alternate" type="application/rss+xml">Subscribe in a reader</a>
+        </div>
+     </div>
+     
+      <div class="module">
+         <h2 class="module-header">Contacts</h2>
+         <div class="module-content">
+            melo@simplicidade.org (<a rel="me" href="xmpp:melo@simplicidade.org">XMPP</a>/<a rel="me" href="mailto:melo@simplicidade.org">email</a>) <br />
+            +351 302 029 050 (<a rel="me" href="tel:+351302029050">voice</a>)<br />
+            melopt (<a rel="me" href="callto://melopt">Skype</a>)<br />
+         </div>
+      </div>
+
+      <div class="module">
+        <h2 class="module-header">IronMan challenge</h2>
+        <div class="module-content">
+           <a href="http://www.enlightenedperl.org/ironman.html"><img border="0" src="http://ironman.enlightenedperl.org/munger/mybadge/male/melo.png" style="float: left; padding-right: 3px" alt="Iron Man badge" title="Become an Iron Man!" width="50" height="80"/></a> Are you ready to be an Iron Man? <a href="http://www.enlightenedperl.org/ironman.html">Join the challenge</a> and find out! (<a href="http://www.shadowcat.co.uk/blog/mark-keating/ironman-badges/">what is the meaning of this little man?</a>)
+        </div>
+      </div>
+      
+      <div class="module">
+        <h2 class="module-header">Moosaico</h2>
+        <div class="module-content">
+           <a href="http://moosaico.com/"><img border="0" src="http://media.moosaico.com/moo146x60.gif" alt="Junta-te!" title="Junta-te!" width="146" height="60"/></a>
+        </div>
+      </div>
+      
+      <div class="module-search module">
+         <h2 class="module-header">Search</h2>
+         <div class="module-content">
+            <form method="get" action="http://mt.geek-nest.org/mt/mt-search-nospam.cgi">
+               <input type="hidden" name="IncludeBlogs" value="1" />
+               <label for="search" accesskey="4">Search this blog:</label><br />
+               <input id="search" name="search" size="20" />
+               <input type="submit" value="Search" />
+            </form>
+         </div>
+      </div>
+      
+      <div class="module-archives module">
+         <h2 class="module-header">Recent Posts</h2>
+         <div class="module-content">
+            <ul class="module-list">
+                           <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2010/12/chegar_a_casa.html">Chegar a casa</a></li>
+                           <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2010/05/business_models.html">Business models</a></li>
+                           <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2010/04/multitasking_on.html">Multitasking on Apple mobile devices</a></li>
+                           <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2010/04/_dead.html">! Dead</a></li>
+                           <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2010/02/battery.html">Battery</a></li>
+                           <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2010/02/buzz_off.html">Buzz off</a></li>
+                           <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2010/02/oh_when_the_sai.html">Oh when the Saints...</a></li>
+                           <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2010/01/creativity_hack.html">Creativity, hackers, and other stuff</a></li>
+                           <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2010/01/apple_vs_flash.html">Apple vs Flash</a></li>
+                           <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2010/01/clarifications.html">Clarifications about AnyEvent::Mojo</a></li>
+            
+            </ul>
+         </div>
+      </div>
+      
+      <div class="module">
+        <h2 class="module-header dsq-widget-title">Recent Comments</h2>
+        <div id="module_content dsq-recentcomments" class="dsq-widget">
+        <script type="text/javascript" src="http://disqus.com/forums/notes/recent_comments_widget.js?num_items=10&avatar_size=32"></script>
+        </div>
+        <a href="http://disqus.com">Powered by Disqus</a>
+      </div>
+      
+      <div class="module">
+        <script type="text/javascript" src="http://widgets.backtype.com/melo"></script>
+      </div>
+      <div class="module">
+        <script type="text/javascript" src="http://embed.technorati.com/embed/pyhehqmsgy.js"></script>
+      </div>
+      
+            <div class="module-creative-commons module">
+         <div class="module-content">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/2.5/"><img alt="Creative Commons License" src="http://creativecommons.org/images/public/somerights20.png" /></a><br />
+            This weblog is licensed under a <a href="http://creativecommons.org/licenses/by-nc-sa/2.5/">Creative Commons License</a>.
+         </div>
+      </div>
+      
+      
+      <div class="module-categories module">
+         <h2 class="module-header">Categories</h2>
+         <div class="module-content">
+                  <ul class="module-list">
+                        <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/apple/" title="">Apple</a>
+            
+            
+               
+            </li>
+         
+                  
+                        <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/applications/" title="">Applications</a>
+            
+            
+               
+            </li>
+         
+                  
+                        <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/fun/" title="">Fun</a>
+            
+            
+               
+            </li>
+         
+                  
+                        <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/life/" title="">Life</a>
+            
+            
+               
+            </li>
+         
+                  
+                        <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/meta/" title="">Meta</a>
+            
+            
+               
+            </li>
+         
+                  
+                        <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/notes/" title="">Notes</a>
+            
+            
+               
+            </li>
+         
+                  
+                        <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/perl/" title="">Perl</a>
+            
+            
+                        <ul class="module-list">
+                        <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/perl/iron_man/" title="">Iron Man</a>
+            
+            
+               
+            </li>
+         </ul>
+         
+            </li>
+         
+                  
+                        <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/projects/" title="">Projects</a>
+            
+            
+               
+            </li>
+         
+                  
+                        <li class="module-list-item">Puppet
+            
+               
+            </li>
+         
+                  
+                        <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/rants/" title="">Rants</a>
+            
+            
+               
+            </li>
+         
+                  
+                        <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/tips_hints_tricks/" title="">Tips, Hints & Tricks</a>
+            
+            
+               
+            </li>
+         
+                  
+                        <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/xmpp/" title="">XMPP</a>
+            
+            
+               
+            </li>
+         </ul>
+         
+         </div>
+      </div>
+      
+      
+            <div class="module-archives module">
+         <h2 class="module-header"><a href="http://www.simplicidade.org/notes/archives.html">Archives</a></h2>
+         <div class="module-content">
+                     <ul class="module-list">
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2010/12/">December 2010</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2010/05/">May 2010</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2010/04/">April 2010</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2010/02/">February 2010</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2010/01/">January 2010</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2009/11/">November 2009</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2009/10/">October 2009</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2009/09/">September 2009</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2009/08/">August 2009</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2009/06/">June 2009</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2009/05/">May 2009</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2009/04/">April 2009</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2009/03/">March 2009</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2009/02/">February 2009</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2009/01/">January 2009</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2008/12/">December 2008</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2008/11/">November 2008</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2008/10/">October 2008</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2008/09/">September 2008</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2008/08/">August 2008</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2008/07/">July 2008</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2008/06/">June 2008</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2008/05/">May 2008</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2008/04/">April 2008</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2008/03/">March 2008</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2008/02/">February 2008</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2008/01/">January 2008</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2007/12/">December 2007</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2007/11/">November 2007</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2007/10/">October 2007</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2007/09/">September 2007</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2007/08/">August 2007</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2007/07/">July 2007</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2007/06/">June 2007</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2007/05/">May 2007</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2007/04/">April 2007</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2007/03/">March 2007</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2007/02/">February 2007</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2007/01/">January 2007</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2006/12/">December 2006</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2006/11/">November 2006</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2006/09/">September 2006</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2006/08/">August 2006</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2006/07/">July 2006</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2006/06/">June 2006</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2006/05/">May 2006</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2006/04/">April 2006</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2006/03/">March 2006</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2006/02/">February 2006</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2006/01/">January 2006</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2005/12/">December 2005</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2005/10/">October 2005</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2005/09/">September 2005</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2005/08/">August 2005</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2005/07/">July 2005</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2005/06/">June 2005</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2005/05/">May 2005</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2005/04/">April 2005</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2005/03/">March 2005</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2005/02/">February 2005</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2005/01/">January 2005</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2004/12/">December 2004</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2004/11/">November 2004</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2004/10/">October 2004</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2004/09/">September 2004</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2004/08/">August 2004</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2004/07/">July 2004</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2004/06/">June 2004</a></li>
+            
+                     
+               <li class="module-list-item"><a href="http://www.simplicidade.org/notes/archives/2004/05/">May 2004</a></li>
+            </ul>
+         
+         </div>
+      </div>
+      
+      
+      <div class="module-powered module">
+         <div class="module-content">
+            Powered by<br /><a href="http://www.sixapart.com/movabletype/">Movable Type 3.2</a>
+         </div>
+      </div>
+   </div>
+</div>
+
+            </div>
+         </div>
+      </div>
+   </div>
+      <!-- Google Analytics -->
+<script type="text/javascript">var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-65134-1']); _gaq.push(['_trackPageview']); (function() { var ga = document.createElement('script'); ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; ga.setAttribute('async', 'true'); document.documentElement.firstChild.appendChild(ga); })();
+</script>
+ 
+  <!-- Disqus -->
+   <script type="text/javascript">
+   //<[CDATA[
+   (function() {
+   		var links = document.getElementsByTagName('a');
+   		var query = '?';
+   		for(var i = 0; i < links.length; i++) {
+   			if(links[i].href.indexOf('#disqus_thread') >= 0) {
+   				query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+   			}
+   		}
+   		document.write('<script type="text/javascript" src="http://disqus.com/forums/notes/get_num_replies.js' + query + '"></' + 'script>');
+   	})();
+   //]]>
+   </script>
+
+  <!-- syntax highlighter -->
+  <script type="text/javascript" src="/sh/scripts/shCore.js"></script>
+  <script type="text/javascript" src="/sh/scripts/shBrushBash.js"></script>
+  <script type="text/javascript" src="/sh/scripts/shBrushPerl.js"></script>
+  <script type="text/javascript" src="/sh/scripts/shBrushPlain.js"></script>
+  <script type="text/javascript">
+  	SyntaxHighlighter.config.clipboardSwf = '/sh/scripts/clipboard.swf';
+  	SyntaxHighlighter.all();
+  </script>
+
+</html>
+
