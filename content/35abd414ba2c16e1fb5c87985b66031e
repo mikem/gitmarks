@@ -1,0 +1,1587 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml">  <head>   
+<title>Blogging Ottinger (tim)  :: Use VIM Like a Pro</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />      
+<meta http-equiv="imagetoolbar" content="no" />
+<meta content="TRUE" name="MSSmartTagsPreventParsing" />
+<meta name="generator" content="WordPress 1.5.1-alpha" /><!-- leave this for stats --> 
+<style type="text/css" media="screen">
+@import url( "http://tottinge.blogsome.com/templates/wp-layout.css" );
+</style>   
+<link rel="alternate" type="text/xml" title="RDF" href="http://tottinge.blogsome.com/feed/rdf/" />
+<link rel="alternate" type="text/xml" title="RSS" href="http://tottinge.blogsome.com/feed/" />
+<link rel="alternate" type="text/xml" title="Atom" href="http://tottinge.blogsome.com/feed/atom/" />
+
+</head>
+<body>
+<script type='text/javascript'>
+function wpopen (macagna) {
+    window.open(macagna, '_blank', 'width=400,height=400,scrollbars=yes,status=yes');
+}
+</script>
+
+
+<div id="rap">
+<h1 id="header"><a href="http://tottinge.blogsome.com" title="Blogging Ottinger (tim)">Blogging Ottinger (tim)</a></h1>
+<div id="content">
+<h1>Use Vim Like A Pro</h1>
+
+<h2>Why Bother? (reasons)</h2>
+
+<p>There are many other editors, some being quite excellent. There is no reason why 
+you cannot use one of them, however, there are some advantages in using VIM. Likewise
+none of these reasons are unique to VIM.</p>
+
+<ul>
+    <li>With the sudden rise in Unix use (Linux and Mac OS X, in particular) the
+    text editor known as VIM ("vi improved") has become ubiquitous</li>
+    <li> Vim has a small footprint in RAM and on the CPU. A given system can support a great many VIM users at once.</li>
+    <li>Vim has a lot of "superpowers", which make editing quite efficient.</li>
+    <li>Vim has "geek appeal".</li>
+    <li>Vim has a very active user/developer community. It always has.</li>
+</ul>
+
+<h2>Why Write This Tutorial (approach) </h2>
+
+<p>There are other tutorials that are very good, and google will help you find them all.
+Maybe the greatest need in this world is not for another vim tutorial, but this 
+one is mine.</p>
+
+<p>I have taken a slighltly different approach. I think that there is a 
+certain mental model that makes mastering VIM much easier. Also, I include
+habits that make VIM your friend. I don't know who else does this.</p><p>
+
+</p><p>I've agonized and organized (and reorganized, and reorganized) the tutorial
+for top-to-bottom learning, with the goal that anyone who manages to emerge
+at the other end of this tutorial will have professional-grade editing 
+skills, probably better than many of their experienced colleagues.</p>
+
+<p>While I advise patience and deep memory, I think this is one of the fastest ways 
+to improve your use of vim, and a pretty good way to start using vim from
+scratch. I wrote this for the moderately impatient developer.</p>
+
+<p>I decided not to try to write a for-sale book, because anyone should be able to use vim 
+like a pro, any time and place they choose, and without paying me any kind
+of "vim toll". </p>
+
+<h2>How should one use the tutorial? (usage)</h2>
+
+<p>Look at each numbered item in this page as a separate lesson, and spend a
+little time with it before moving onward. Maybe spend a day with each bit of 
+knowledge, and maybe a several days when the lesson is particularly meaty. </p>
+
+<p>Consider doing a few lessons a week. Don't be in a hurry.  Don't rush your brain
+so that each time you learn something new, you lose something old. The tutorial
+will last as long as you need it.  You have permission to breathe.</p>
+
+<p>You can't learn vim without using vim, so you should have some text files 
+(preferably open source program code) to work with.  It is better yet if you
+are using vim at work. It also helps if you work with a partner who is also
+reading this tutorial, so that you can reinforce each other.</p>
+
+<h2>What can I do with this tutorial? (license)</h2>
+
+<a rel="license" href="http://creativecommons.org/licenses/by/3.0/"> <img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by/3.0/88x31.png" /> </a>
+<br />This 
+<span xmlns:dc="http://purl.org/dc/elements/1.1/" href="http://purl.org/dc/dcmitype/Text" rel="dc:type">work</span> is licensed under a 
+<a rel="license" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 License</a>.
+
+
+<p>Copy it, share it, paste it into your web page.  Don't pretend it is your
+own stuff, and please give me some attribution.  As a courtesy, if you find
+it worth distributing,  I wouldn't mind getting a copy or a link. Just 
+<a href="mailto:tottinge@gmail.com">let me know</a>.</p>
+
+
+<h2>The Tutorial</h2>
+
+<ol>
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li>A little reassurance first.
+        <p>Nobody knows all of VIM. There is enough in VIM's command system to keep
+        thousands of human beings all using it in their own idiosyncratic way.
+        Luckily, you don't have to know it all.  You only need to know how to do
+        your own work.  </p> 
+
+        <p>Because there is so much capability in this program, you will be
+        learning new tricks as long as you continue to use it.  The secret is to
+        not settle for crummy ways of doing work.</p> 
+
+        <p>VIM has word completion, and undo, and shortcuts, and abbreviations, and
+        keyboard customization, and macros, and scripts. You can turn this into
+        *your* editor for *your* environment.  That's cool, but it's also
+        reassuring to know that you can probably be much more productive than you
+        are without touching any of those advanced features.</p> 
+
+        <p>As Bram Moolenaar (VIM's primary author) says, the best way to learn VIM
+        is to use it and ask questions.  This little tutorial is full of questions
+        you might not have thought to ask. That's the main value I can give
+        you.</p> 
+
+        <p>Vim has a built-in tutorial.  You might want to try it, especially if you
+        don't like my tutorial.  All you have to do is type "vimtutor" at the
+        command line.  It is a very nice tutorial, and is rather complete
+        (compared to mine, which is fairly nice but not very complete at all). </p>
+
+        <p>Finally, please consider GVIM.  It will make your experience much more
+        pleasant.  If you only have VIM, then you can still use it and learn, but
+        GVIM has a much nicer look, lets you use your mouse and scroll wheel,  and 
+        has menus and icons for those of you who are used to such things.</p> 
+    </li>
+
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li>Modality
+        <p>The original vi was invented back when "green screen" ascii
+        terminals were the UI innovation of the day (ask your dad about ascii
+        terminals).  There wern't so many shift-like keys (shift, alt, ctrl,
+        windows, fn) and there was no such thing as a pointing device.  Let's
+        pretend that there was only a "ctrl" key and a "shift" key, whether
+        it's true or not.</p>
+
+        <p>Programming (and all other computer use) was done with your eyes on
+        the screen and two hands on the keyboard.  Vi made it possible to do so
+        <b>quickly</b>, because vi is a bit like a video game, where any little
+        gesture on the keyboard causes something to happen.</p> 
+        
+        <p>If you are using vim and pressing keys causes either cool or 
+        unfortunate things to happen, you know you are in the <code>command
+        mode</code>, which is the default state of the editor.  Commands are
+        assigned to the ordinary everyday keys like 'p' and 'y' and 'g', not
+        chords like Control-Alt-Shift-Escape.</p>
+
+        <p> VIM has combinations and sequences to get the special power-ups
+        like navigating between functions in separate files and reformatting
+        entire lists in the middle of a document, code completion, abbreviations,
+        templates and the like but that is for later.</p>
+
+        <p>There has to also be a way to type text into a document, but most of
+        the keys already have special meanings! The only reasonable option was
+        for the developers to create an "insert <code>mode</code>" which would
+        make the 'a' key type an 'a' character, just like a typewriter (ask
+        your dad what a typewriter is). This is called "insert <code>mode</code>".
+        Not much happens in "insert <code>mode</code>" except normal, old,
+        boring typing. You only want to use insert <code>mode</code> when you
+        must do typing, but all the cool stuff happens in the normal (control)
+        <code>mode</code>.</p>
+
+        <p>You will learn many convenient ways to get into insert
+        <code>mode</code>, but for now you should know that the way out of
+        insert <code>mode</code>, back to the video-game-like control
+        <code>mode</code>, is to press the ESCAPE key.</p>
+
+        <p>Understanding that you have basically two <code>mode</code>s of
+        operation will make your stay in VIM less confusing, and starts you on
+        your way to VIM guruhood.</p>
+
+    </li>
+
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li>Know the VIM command pattern
+        <p>Most of the time you will either get an immediate result from a
+        keystroke, or you will type a command and a movement command (often
+        repeating the same keystroke: the "double-jump").  When you start to
+        learn the other bits and pieces (registers, repeats, etc) then you 
+        might think vim is inconsistent, and this is not so. The command
+        pattern is rather consistent, but some parts are optional. </p>
+
+        <ul>
+            <li>Register name (optional, with default cut/paste register used if not otherwise specified)</li>
+            <li>Repeats (optional): 13</li>
+            <li>Operation: y (for yank)</li>
+            <li>Movement (depending on the operation): yy (repeated to take current line, a convention used in vi)</li> 
+        </ul>
+
+        <p>VIM commands work with the pattern shown above.  There are some
+        commands that don't use register and some that don't take movement, but
+        for the most part this is the way it goes.</p>
+
+        <p>A register is essencially a cut-n-paste buffer.  In most editors you
+        get only one.  In VIM you have too many, but you don't have to use them,
+        so don't worry about it untl you get to the lesson on buffers.</p>
+
+        <p>A repeat is a number of times you want to do something.  If you don't
+        type in a number, the default is 1.</p>
+
+        <p>An operation is a keystroke that tells VIM to do something. These are
+        mostly normal keypresses, and most operators do not require shifts or alts or
+        controls.</p><p>
+
+        </p><p>Movement is a command that takes the cursor somewhere. There are a lot
+        of them, because there are lots of ways you need to move.  Don't panic,
+        though, because you can use the arrow keys if you really have to.  There
+        is a whole section of this tutor on moving around.</p>
+
+        <p> Lets try an example to clarify how the pattern works. If I want to
+        copy 13 lines into my copy/paste register, I can skip specifying a
+        register name, type 13 for a repeat count, press 'y' for yank, and then
+        press one more 'y' as a movement command (meaning current line).  That
+        yanks 13 lines into the default cut-n-paste register.  If I press 'p'
+        (choosing to use no register name and no repeat, recognizing that put
+        has no movement command), then those lines are pasted back into my
+        document just after my current line.</p>
+
+        <p>If you know this pattern, then you will know how to leverage 
+        everything else you learn about vi.  Learn all the convenient ways 
+        to move, and you will know how to cut, paste, reformat, shift, and many 
+        other things you want to do.</p>
+    </li>
+
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li>GET OUT!
+        <p>You should be able to get out of a VIM session once you are in it.  There are a few ways to do so.  Try these:
+        <table border="1px">
+            <tr><td>:q</td><td>Quit the current window (or editor if you're out of windows) if there are no unsaved changes.</td></tr>
+            <tr><td>:q!</td><td>Quit the current window even if there are unsaved changes.</td></tr>
+            <tr><td>:qa</td><td>Quit all windows unless there are unsaved changes.</td></tr>
+            <tr><td>:qa!</td><td>Quit all windows even if there are unsaved changes.</td></tr>
+            <tr><td>:wq</td><td>Save changes and quit the current window.</td></tr>
+            <tr><td>ZZ</td><td>Save changes and quit current window</td></tr>
+        </table>
+        </p>
+        <p>When you type a colon, the cursor drops to the lower left corner of the 
+        screen.  Later you will know why. For now, it's enough to know that it is
+        supposed to do that, and that these :q commands will work.  Notice that there
+        is no : in front of ZZ.</p>
+        <p>If you can't get out of VIM, you should check that caps lock is OFF, 
+        and press the escape button.  If it feels good, press it a couple of times.
+        If it beeps, you know that you've escaped enough. Then these exit commands
+        should work.</p>
+    </li>
+
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li>Mnemonics
+        <p>Not all commands are mnemonic.  They tried, but there are more than 26 things you might want to do in 
+        a text editor, and the distribution of letters means that not that many words start with a 'q' and happen to 
+        be meaningful in editing.  However, many commands are mnemonic.  There are commands for moving Forward, 
+        Back, a Word at a time, etc.</p>
+        <p>A great many are mnemonic if you know the jargon. Since "copy" and "cut" both start with "c", we have the
+        vernacular of "yank" (for copy), "delete" (for cut), and "put" (for paste).  Y, D, P.  It seems a little funky
+        but it is possible to remember these. Remember, eventually it becomes muscle memory, but the authors of VI 
+        and VIM tried not to be arbitrary when it was totally up to them.  Sometimes, there wasn't much of an option.
+        </p>
+    </li>
+
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li>Invocation
+        <p>Now that you know how to get out of VIM, maybe it's time to learn how to
+        get into VIM. We typically start VIM from the command line, though you may 
+        have menues or other ways.</p>There are a few ways you can start VIM.
+        <table border="1px">
+            <tr><td>vim</td><td>start with an empty window</td></tr>
+            <tr><td>vim file.txt </td><td>start with an file.txt loaded and ready to edit</td></tr>
+            <tr><td>vim +23 file.txt </td><td>start with an file.txt loaded and ready to edit at line 23.</td></tr>
+            <tr><td>vimtutor</td><td>Start in tutorial mode.  This is a good idea.</td></tr>
+            <tr><td>vimdiff oldfile.txt newfile.txt</td><td>Start VIM as a really fancy code merge tool.</td></tr>
+            <tr><td>vimdiff .</td><td>Start VIM as a file explorer.</td></tr>
+        </table>
+        There is more, not shown.  For now, knowing these will help you to get
+        started. DO try out the vimtutor and the vimdiff.  Some of these won't
+        work until you set up a .vimrc, but that is explained later.
+        
+
+        <p>If you type <code>gvim</code> instead of <code>vim</code> then you will
+        get the gee-whiz, cool, gui version of VIM (if it's installed).  It has some 
+        extra powers.  You'll typically like it better than the plain VIM. It is like
+        VIM with chocolate icing. Everything we say about VIM here is also true of 
+        GVIM, so you can use the same tutorial with either.</p>
+
+        <p>You don't have to edit one file at a time.  You can start (g)vim with multiple
+        filename arguments.  When you do, there are a few options you can pass to get
+        some fun additional effects. Of course, these are more fun after you learn 
+        how to work with split windows, so you can refer back to it later.
+        <table border="1px">
+            <tr><td>-o</td><td>Open multiple files in horizontally tiled windows .</td></tr>
+            <tr><td>-O</td><td>Open multiple files in vertically tiled windows .</td></tr>
+            <tr><td>-p</td><td>Open multiple files in separate tabs (I hate this).</td></tr>
+        </table>
+        </p>
+    </li>
+
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li>Move by context, not position
+        <p>The poor soul who is using VIM for the first time will be found pressing
+        up and down arrows and executing key repeats, moving horribly inefficiently
+        through any body of code.  He will be scrolling or paging (btw:
+        <code>^f</code> moves forward one page,<code> ^b</code> moves backward one
+        page) and searching with his poor eyeballs through piles of code.  This
+        poor soul is slow and clueless, and probably considers VIM to be a really
+        bad version of windows notepad instead of seeing it as the powerful tool it
+        is.</p>
+        <p>By the way, the arrow keys don't always work for vim, but don't blame vim.
+        It's actually an issue with the way your terminal is set up.  Vim can't tell
+        that your arrow keys are arrow keys.  If you have the problem, you have more
+        research to do.</p>
+
+        <p>To use VIM well, it is essential that you learn how to move well.</p>
+
+        <p>Do not search and scroll.  Do not use your eyes to find text.  They have
+        computers for that now.  Here are a handful of the most important movement
+        commands. The best way to move is by searching: 
+        <table border="1px">
+            <tr><td>/</td><td>search forward: will prompt for a pattern</td></tr>
+            <tr><td>?</td><td>search backward: will prompt for a pattern</td></tr>
+            <tr><td>n</td><td>repeat last search (like dot for searches!)</td></tr>
+            <tr><td>N</td><td>repeat last search but in the opposite direction.</td></tr>
+            <tr><td>tx</td><td>Move "to" letter 'x' (any letter will do), stopping just before the 'x'. Handy for change/delete commands.</td></tr> 
+            <tr><td>fx</td><td>"Find" letter 'x' (any letter will do), stopping <b>on</b> the letter 'x'. Also handy for change/delete commands</td></tr> 
+        </table></p>
+
+        <p>If you're not searching, at least consider jumping
+        <table border="1px">
+            <tr><td>gg</td><td>Move to beginning of file</td></tr>
+            <tr><td>G</td><td>Move to end of file</td></tr>
+            <tr><td>0</td><td>Jump to the very start of the current line.</td></tr>
+            <tr><td>w</td><td>Move forward to the beginning of the next word.</td></tr>
+            <tr><td>W</td><td>Move forward to the beginning of the next space-terminated word (ignore punctuation).</td></tr>
+            <tr><td>b</td><td>Move backward to the beginning of the current word, or backward one word if already at start.</td></tr>
+            <tr><td>B</td><td>Move backward to the beginning of the current space-terminated word, ignoring punctuation.</td></tr>
+            <tr><td>e</td><td>Move to end of word, or to next word if already at end.</td></tr>
+            <tr><td>E</td><td>Move to end of space-terminated word, ignoring punctuation</td></tr>
+        </table></p>
+
+        <p>The following commands are handy, and are even sensible and memorable if you know regex:
+        <table border="1px">
+            <tr><td>^</td><td>Jump to start of text on the current line. Far superior to leaning on left-arrow or h key. </td></tr>
+            <tr><td>$</td><td>Jump to end of the current line.  Far superior to leaning on right-arrow or k key.</td></tr>
+        </table></p>
+
+        <p>Here is some fancy movement
+        <table border="1px">
+            <tr><td>%</td><td>move to matching brace, paren, etc</td></tr>
+            <tr><td>}</td><td>Move to end of paragraph (first empty line).</td></tr>
+            <tr><td>{</td><td>Move to start of paragraph.</td></tr>
+            <tr><td>(</td><td>Move to start of sentence (separator is both period and space).</td></tr>
+            <tr><td>)</td><td>Move to start of next sentence (separator is both period and space).</td></tr>
+            <tr><td>''</td><td>Move to location of your last edit in the current file.</td></tr>
+            <tr><td>]]</td><td>Move to next function (in c/java/c++/python)</td></tr>
+            <tr><td>[[</td><td>Move to previous function/class (in c/java/c++/python)</td></tr>
+        </table></p>
+    
+        <p>Finally, if you can't move by searching, jumping, etc, you can still move with the keyboard, so 
+        put your mouse down.
+        <table border="1px">
+            <tr><td>h</td><td>move cursor to the left </td></tr>
+            <tr><td>l</td><td>move cursor to the right</td></tr>
+            <tr><td>k</td><td>move cursor  up one line</td></tr>
+            <tr><td>j</td><td>move cursor down one line</td></tr>
+            <tr><td>^f</td><td>move forward one page</td></tr>
+            <tr><td>^b</td><td>move backward one page</td></tr>
+        </table>
+        </p>
+        <p>You want to use the option <code>hls</code> (for "highlight search") in your vimrc. You will learn
+        about that soon enough.  In the short term you can type "<code>:set hls</code>" and press enter.
+    </p></li>
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li>Quoting Your Regex Metacharacters
+        <p>If you don't know what a regex is, skip this section.  For those who
+        understand what a regex is, and who realize that the "/" command takes
+        a regex rather than just normal text, this will be important.  For the
+        rest of you, it will seem totally out of place and should be skipped
+        for now.</p>
+        <p>You should know how to use regular expressions, because a few tricks
+        in regex will make your whole Unix/Linux/Mac experience a little better.
+        It is too large a topic to expose fully here, but you might try looking
+        at on of the good <a href="http://www.geocities.com/volontir/>">references
+        or <a href="http://larc.ee.nthu.edu.tw/~cthuang/vim/files/vim-regex/vim-regex.htm">tutorials</a> elsewhere on the web.</p>
+        <p>The main thing to remember is that VIM will side with convenience when it comes
+        to regex. Since you search a lot, vim will assume that <code>/+</code>
+        means that you want to search for the nearest + character.  As a result, 
+        all the metacharacters have to be quoted with the backslash ("\") character.
+        It's sometimes a pain, but if you really want to find a plus sign followed
+        by a left-parenthesis, it is very easy. 
+        </p>
+    </li>
+
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li>Don't panic. You have undo/redo
+        <p>The command for undo is <code>u</code>.  That's not too hard to remember, is it? A lot of VIM commands are pretty
+        mnemonic-friendly.</p>
+        <p> The redo would be the <code>r</code> key, but the <code>r</code> is used for  "replace" (we'll talk later about this).  We're stuck with <code>control-R</code> instead. Ah, well. You can't have everything.  </p>
+        <p>There is a lot more to undo and redo, but this is enough.  Be happy that you can revert changes, and 
+        un-revert them.  VIM isn't as powerless and unforgiving as you feared it might be, though you might still 
+        not like it very much. Just wait for that muscle memory to kick in.</p>
+        <p>If you get into a real mess, then exit the editor without saving.</p>
+        <p>If you are really afraid, or really cautious, then you should have version control for your text files.
+        I recommend you start editing with junk files in a junk directory anyway, but when you are working on something
+        important, you should not be afraid to make changes.  Version control is a good security blanket and a useful
+        backup strategy. Consider using Git or Mercurial, both of which are easy and powerful.</p>
+    </li>
+
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li>Shifted letters and <b>DEATH BY CAPS!</b>
+
+        <p>For a number of commands, shift will either reverse the direction of a
+        command (so N is the opposite of n, see next bullet) or will modify how the
+        command works.  When moving forward by one word at a time (pressing
+        <code>w</code>), one may press <code>W</code> to move forward by one word
+        but with W the editor will consider punctuation to be part of the word.
+        The same is true when moving backward with <code>b</code> or
+        <code>B</code>.</p>
+
+        <p>Because a shifted letter may mean something very different from the
+        same letter unshifted, you must be very careful not to turn on the 
+        capslock! Sometimes a poor unwary soul will accidentally hit the capslock.
+        When he intends to move left with 'j', he instead joins the current line
+        with the next.  Many other unwanted edits can take place as his fingers
+        make a quick strafing run for some complex edit. It is ugly.</p><p>
+
+        </p><p>If you encounter DEATH BY CAPS, you should turn off the capslock, 
+        and then try pressing 'u' repeatedly to get rid of unwanted edits.
+        If you feel that it's a lost cause, press ":e!" followed by pressing
+        the enter key.  That will reload the file from disk, abandoning all
+        changes.  It's a troublesome thing that will eventually happen to you.
+        Some people turn off their capslock key entirely for this reason.</p>
+
+    </li>
+
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li>Insert, Overwrite, Change
+        <p>In VIM you have a variety of ways to start entering text, as mentioned
+        above in the section on Modality.  </p>
+
+        <p>You are normally in <code>command mode</code>.  When you type
+        certain keys, you are placed in insert mode or overtype mode.  In
+        <codee>insert mode, the text you type goes before the cursor
+        position, and everything after the cursor is pushed to the right or to
+        the next line.  </codee></p>
+
+        <p>In <code> overtype mode</code> your keystrokes are input, just as they are 
+        in insert mode, but instead of inserting the keystrokes VIM will replace the
+        next character in the document with the character you type. You get to overtype
+        mode by pressing an overtype key command while in command mode.</p>
+        
+
+        <p>In <code>ex mode</code> you are typing a string of commands to run into 
+        a little window at the bottom of the screen.  We'll talk about this later on,
+        because it's powerful stuff.  It's also a little cryptic, so we will wait.
+        You get into ex mode by typing ":" in command mode.</p>
+        <p>You always return to command mode from overtype, insert, or command mode by 
+        pressing escape.  That is one handy key.</p>
+        <p>
+        <table border="1px">
+            <tr><td>i</td><td>insert before the current cursor position</td></tr>
+            <tr><td>I</td><td>insert at the beginning of the current line. Far better than pressing ^ and then i.</td></tr>
+            <tr><td>a</td><td>insert after the current cursor position</td></tr>
+            <tr><td>A</td><td>insert/append at the end of the current line. Far better than pressing $ and then i.</td></tr>
+            <tr><td>r</td><td>retype just the character under the cursor</td></tr>
+            <tr><td>R</td><td>Enter overtype (replace) mode, where you destructively retype everything until you press ESC.</td></tr>
+            <tr><td>s</td><td>(substitute) delete the character (letter, number, punctuation, space, etc) under the cursor, and enter insert mode</td></tr>
+            <tr><td>c</td><td>the 'change' (retype) command. <i>Follow with a movement command</i>. <code>cw</code> is a favorite, as is <code>cc</code></td></tr>
+            <tr><td>C</td><td>Like 'c', but for the entire line.</td></tr>
+            <tr><td>o</td><td>insert in a new line below the current line</td></tr>
+            <tr><td>O</td><td>insert in a new line above the current line</td></tr>
+            <tr><td>:</td><td>Enter command mode (for the advanced student)</td></tr>
+            <tr><td>!</td><td>Enter shell filter mode (for the very advanced student)</td></tr>
+        </table>
+        </p>
+        <p>Consider the value of the <code>c</code> command. If you use it with the <code> t</code> or <code> f</code> commands, it becomes very powerful.
+        If you were at the C at the beginning of the previous sentence, you could type <code>ct.</code> and retype the whole first sentence, preserving
+        the period.  The same is true with other commands, such as the <code>d</code> for delete. The movement commands add a lot of power to the change
+        command, and that's one reason why it is important to learn to move well.</p>
+    </li>
+
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li><b>NEVER PARK IN INSERT MODE.</b>
+        <p>Vim is set up to do more navigating than editing.  It rewards you
+        for working in the same way, mostly in control mode with spurts of time
+        in an insert mode. </p> 
+
+        <p>If you try to use vim as a weak form of notepad, modality and 
+        navigation will ensure that you are never really efficient.  If you
+        want to sail, you have to get in the boat, and if you want to get
+        good at vim, you need to get good in command mode.</p>
+        
+        <p>So, if you are stopping to think, hit <code>&lt;esc&gt;</code>.   If you
+        aren't in the middle of text typing, you should be in command mode. If
+        you are wanting to move up or down a line, or to some other place, hit
+        &lt;esc&gt;.  If you walk away from the keyboard, hit &lt;esc&gt;.
+        Otherwise, you will start to type commands and find that you're not
+        in command mode and you have lost your ability to meaningfully use . 
+        or undo. </p> 
+        </li>
+
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li>Happiness is a good .vimrc
+    <p>When VIM starts up, it reads your personal settings before it does anything interesting.  You can edit a file named <code>.vimrc</code> in your home directory. The above instructions give you enough information that you should be able to 
+    edit your .vimrc file and add all the commands listed below.  The idea is to enter the commands in the leftmost column of 
+    the table.  You will have to type them, and correct any spelling errors.  Once the file has been created, you will save and exit
+    and the next you start VIM it will have your settings.  You can edit this file at any time.</p>
+    <p>There is very fine magic in VIM.  However, it often comes without the magic turned on.  Command line 
+    completion, color syntax highlighting, the file explorer, and many other features are "missing" unless you
+     turn them on in <code>~/.vimrc</code>.</p>
+
+    <p>There is a very nice guide to the various settings in vim, and even an interactive
+    display so that you can turn them on and off.  This is not very well-known, I suspect,
+    because I only learned it this year.  I wish I had known when I was first starting.
+    </p><p>
+    <table border="1px">
+    <tr><td>:options</td></tr>
+    <tr><td>:browse options</td></tr>
+    <tr><td>:browse set</td></tr>
+    </table>
+    </p>
+    <p>In this window, you can browse through all the available options, and can even set them.
+    You can read the short help messages associated with each, or you can hit the enter button
+    on any short help to see the longer help text. If you press the enter key on an option, it will
+    toggle that option or set a new value.</p>Each of these commands has a shortcut, but you can learn those later. Try entering just the first five commands (one-per-line),
+     save the file, and then edit it again to add the other commands. You will find that the second session will have
+     color syntax highlighting, and will give you more hints and help as you work.
+     <p>
+    <table border="1px">
+        <tr><th>Command in .vimrc</th><th>Meaning</th></tr>
+
+        <tr><td>syntax enable </td><td> turn on all the magic, including Explorer and syntax highlighting</td></tr>
+        <tr><td>set showmode</td><td> Show me when I'm in insert/overtype mode</td></tr>
+        <tr><td>set showcmd</td><td> When a command is in progress, show it in the status bar</td></tr>
+        <tr><td>set wildmenu</td><td> magic for completion at the : command line.</td></tr>
+        <tr><td>set ruler< </td></td><td>turn on the "ruler" (status info) at the bottom of the screen.</td></tr>
+        <tr><td>runtime ftplugin/man.vim</td><td>Turn on man pages (type :Man <subject>)</subject></td></tr>
+
+        <tr><td>set autoindent</td><td> indent in a smart way, instead of returning to the left margin all the time</td></tr>
+        <tr><td>set expandtab</td><td> expand tabs to spaces</td></tr>
+        <tr><td>set nowrap </td><td>Don't wrap text (makes windows ugly)</td></tr>
+        <tr><td>set hlsearch </td><td> Highlight all matches in text when you search</td></tr>
+        <tr><td>set showmatch</td><td> Show matches for braces, parens, etc.</td></tr>
+        <tr><td>set ignorecase </td><td>do case-insensitive searching</td></tr>
+        <tr><td>set smartcase </td><td> When a search phrase has uppercase, don't be case insensitive</td></tr>
+        <tr><td>set path=.,..,/usr/include/**,/usr/share/**</td><td>Tell the editor where to search for files</td></tr>
+        <tr><td>set spelllang=en_us</td><td>when I want spell-checking, I want it to be english</td></tr>
+    </table>
+    </p>
+    </li>
+
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li>Help is on its way.
+        <p>There is an online help mechanism in VIM.  You should know how to use it.</p>
+        <p>Type <code>:help</code> and you will get a split window with help text in it.  You can move
+        around with the arrow keys, or with any of the VIM movement commands you will learn. </p>
+        <p>You can always enter funky keys by pressing ^v first, and then the keystroke.  This is 
+        most useful in help.  You can type <code>:help ^v^t</code> to get help for the keystroke
+        ^t. By convention you can usually get what you want by typing <code>:help CTRL-T</code> also. 
+        Don't underestimate how handy this is.</p>
+        <p>Most distributions of VIM will install a program called <code>vimtutor</code>. This 
+        program will teach you to use VIM.  It will do so by using VIM.  It is a handy piece of
+        work (props to the author!).</p>
+        <p>Help has links. If you see one you like, you can move the cursor to the link (lets
+        not just beat on the arrow keys, here!) and press ^].  Yeah, it's an odd and arbitrary-looking
+        command. That will not only navigate to the link, but also push it on a stack.  If you want
+        to go back, you can press ^t (yes, also pretty arbitrary) to pop the current link off the
+        stack and return to the previous location in the help. The commands <code>^]</code> and  <code>^t</code> 
+        aren't very memorable, but we'll use them for code navigation later, so learning them is not
+        a total waste of mental energy.</p>
+    </li>
+
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li> The Double-Jump
+        <p>By convention pressing any command twice will tell it to operate on the
+        current line.  If you want to yank (copy) the current line, press
+        <code>yy</code>.  If you want to delete the current line, press
+        <code>dd</code>.  If you want to change (retype) the current line, press
+        <code>cc</code>. This is a pretty consistent convention, down to the
+        special case of "save and exit" being <code>ZZ</code>.  Doing operations on
+        the entire current line is very common, and it made sense to make it
+        convenient.</p> 
+    </li>
+
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li>Getting rid of things.
+        <p>You can get rid of the character under the cursor by pressing
+        <code>x</code>.  If you want to press it 10 times, you can save effort
+        by typing <code>10x</code>. It can be pretty handy, but you could very
+        quickly get tired of counting how many times you want to press x, or 
+        you could get tired of holding down the <code>x</code> key.  I know I
+        would.</p> 
+        <p>The more flexible <code>delete</code> command is very simple.  It is
+        the letter 'd' for "delete".  It is one of the lucky mnemonic
+        commands.</p>
+        <p>D will take a movement command. You should have learned several in
+        the earlier paragraph.  The basic concept is that you will delete from
+        the character under the cursor to some other point in the file.</p><p>
+        </p><p>You can delete the current line by typing "dd", or you can delete
+        the current line and the one under it by typing d followed by the 'j'
+        or 'down arrow'.  Likewise, d followed by the } command (end of
+        paragraph) deletes to the end of the current paragraph. d followed by G
+        will delete to the end of the file.  You'll find that all commands that
+        take a movement command will work this way (including 'c'). Every
+        movement command you learn increases your power to copy, delete, and
+        retype.  This added power is why it is essential that you learn to move
+        well in VIM.</p>
+
+        <p>'d' will also take a repeat count, so you can type <code>23dd</code>
+        to delete 23 lines starting with the current line.  This can be
+        handy.</p>
+
+        <p>Finally, we have registers. A VIM register is like the
+        copy-and-paste buffer you have used in lesser gui tools. When you
+        delete, the deleted text is saved for pasting and you can get it back
+        by pressing the <code>p</code> (mnemonic: put or paste) key. The delete
+        key can take another register if you want to specify one. A register is
+        specified with a double-qoute character, followed by the name of a
+        register (which is a lower-case or upper-case letter, where case is
+        significant).  That means you may copy multiple bits of text by yanking
+        or deleting them into different register and pasting them into a new
+        place (or new file) by using a register-specific paste.</p> <p>Pasting
+        also takes a register specification, which is always a double-quote
+        followed by a letter, followed by the 'p' for paste.  You could even
+        paste a register many times if you specify a repeat count (see the
+        lesson on the basic command pattern). </p> 
+
+        <p>You actually have more registers than I told you, and can do more
+        with them than I said, but this is enough for a quick lesson on
+        deleting. </p>
+    </li>
+
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li>Use the Dot.
+        <p>Edits actions in VIM are recorded.  Say that you just deleted a line
+        (by typing <code>dd</code>).  The editor knows you deleted a line.  You
+        can repeat the edit (that is, delete another line)  by pressing the
+        period key (".").   You can even apply the standard pattern and give a
+        register, repeat, and then a dot (the dot knows the command and
+        movement).  This is particularly handy if the command you last used was
+        <code>cw</code>.  It will repeat the replace operation on the text
+        under the cursor. </p>
+
+        <p>Because the dot command repeats the last edit you did, it is one of
+        the most powerful keys on the keyboard. You should learn to rely on it.
+        It is one of the most wonderful things VIM gives you.</p> 
+    </li>
+
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li>Use the Star
+        <p>The star is a great command, especially if you have the option
+        <code>hlsearch</code> turned on in your .vimrc file.  It will move
+        to the next use of the word under the cursor.  In doing so, it
+        will highlight all uses of the word under the cursor.
+        <table border="1px">
+            <tr><td>*</td><td>Move to next instance of word under cursor.</td></tr>
+            <tr><td>#</td><td>Move to previous instance of word under cursor.</td></tr>
+        </table> 
+        </p>
+    </li>
+
+
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li>Registers
+        <p>In most editors you get a single cut-n-paste buffer. When you use the cut or copy command,
+        you lose whatever is in the buffer.  As a result you end up zipping back and forth in a file,
+        cutting from one place, and pasting in another.  If you are lucky you can split the window and
+        go back and forth between tiles, but it's a lot of manual labor and an exercise in hand-eye
+        coordination as you seek, cursor, mark, cut, seek, cursor, paste your way to authoring nirvana.</p><p> 
+        </p><p>It probably took a couple of minutes to get sick of that.</p>
+        <p>In VIM, they have a different answer. Sadly they have different terminology, too. Instead
+        of editing buffers, we have "registers".  Same concept, different term (the word "buffer" means
+        something else in VIM). You can find a source in your code, yank/copy to many different registers,
+        move to the destination site in your code, and then paste the various register contents. It's all
+        one move.</p>
+        <p>The registers are (from the VIM documents, available via <code>:help registers</code>):
+        <table border="1px">
+            <tr><td>" (literally, the quote character)</td><td>The unnamed or default register</td></tr>
+            <tr><td>a-z,A-Z</td><td>the lowercase letters and the uppercase letters</td></tr>
+            <tr><td>+</td><td>The system default register (the normal cut/paste one)</td></tr>
+            <tr><td>*</td><td>Select/drop registers</td></tr>
+            <tr><td>_</td><td>The black hole -- essentially /dev/null, used to avoid wiping out register " (the unnamed register)</td></tr>
+        </table> </p>
+        <p>
+        There are also a few other special-purpose registers which I leave for your exploration in the help system,
+        such as the small delete register and the numbered ones. You don't really need to know these.
+        </p><p>
+        To tell the difference between the command y and register y, VIM expects you to prefix the register name with 
+        a double-quote character.  Therefore, y is the yank command, and "y is the y register. If you type "y, VIM 
+        will wait for you to complete the standard pattern with perhaps the optional repeat count, a command, and a
+        movement command (if required).  Examples of increasing power/complexity:
+        <table border="1px">
+            <tr><td>dd</td><td>delete the current line into the default, unnamed register ("" or quote-quote)</td></tr>
+            <tr><td>"add</td><td>delete the current line into register a</td></tr>
+            <tr><td>"xy$</td><td>Yank from the current character to the end of the line into register x</td></tr>
+            <tr><td>"byy</td><td>Yank the current line into register b</td></tr>
+            <tr><td>"c24dd</td><td>Literally <i>Into register c, 24 times delete the current line</i>.  That's complex to read, maybe it's easier to just 
+            say <i>delete the next 24 lines into the c register</i></td></tr>
+        </table>
+        </p>
+        <p>I'm sure that <code>"c24dd</code> seems a little crazy, but think how you would do 
+        the same work if you were using notepad or the like. This is 6 keystrokes, and only 
+        one of the shifted, and you never had to leave the home row to grab a mouse.  It would
+        be an extremely efficient way to cut 24 lines into a named register <b>if</b> you happened
+        to know that you had 24 lines.  If you didn't know that, the work of counting the 
+        lines would more than make up for the convenience. That makes this a pretty academic
+        example, and opens the door to visual marking of text for copy/cut, etc.</p>
+    </li>
+
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li>Marking
+        <p>VIM has non-visual marking and it has visual marking.  Chances are,
+        you are interested in visual marking for cut-n-paste (yank-n-put)
+        purposes, so let's look at that.</p>
+        <table border="1px">
+        <tr><td>v</td><td>mark character-wise</td></tr>
+        <tr><td>V</td><td>mark line-wise</td></tr>
+        <tr><td>^v</td><td>column-wise marking</td></tr>
+        <tr><td>gv</td><td>Remark the area last marked.</td></tr>
+        </table>
+        <p>The command for visual marking is <code>v</code>.  You can press
+        <code>v</code>, cursor or search to the end of your current area of
+        interest, and then do a yank or delete command. In fact, you probably
+        should do that and come back. You can press <code>v</code> again to
+        cancel out of visual marking.</p>
+        <p>Sometimes you want to mark whole lines at a time. For this, VIM uses
+        the shifted (uppercase) <code>V</code>. It works just like the
+        lower-case V but always selects a whole line at a time. Of course a
+        second press of <code>V</code> will cancel this mode.</p>
+        <p>Other times, you might want to mark a rectangle instead of whole
+        lines or contiguous characters.  For rectangle (blockwise) marking, VIM
+        uses the control character <code>^V</code>.  Notice that ^V has an
+        entirely different behavior in insert mode. Don't get confused.
+        Pasting rectangular regions is a cool feature.</p>
+        <p>A cool feature is that you can start marking with <code>v</code>,
+        then press <code>V</code> to switch to line mode, or press
+        <code>^V</code><code> to switch to rectangle selection.</code></p>
+        <p>Once you leave the visual marking mode, the area is no longer marked.
+        the VIM help tells us that we can go back into visual mode with the same
+        marking mode and marked area by typing <code>gv</code>. I've been playing
+        with it.  It's handy.</p>
+        <p>I've been marking the entire document (<code>ggVG</code>) and then 
+        yanking it to the machine's cut-n-paste buffer (<code>"+y</code>) and 
+        switching to my blog editor.  In the blog editor (not vi) I do the 
+        standard ^a ^v to paste my document in.  Now I can save a few keystrokes
+        by using <code>gv</code> rather than <code>ggVG</code> before pasting
+        (after the first time).</p>
+        <p>The marked area becomes a context for other commands, so you can
+        do much more than simple yank and put. You can use the <code>r</code> command
+        and another letter like "X" , and change every character in the marked area
+        to an "X".  You can use the marked are for ex commands (which we've not 
+        talked about).  There is rather a lot of power here, but we'll end the
+        marking lesson here for now.</p>
+        <p>And since you're reading this anyway I want to remind you to avoid
+        death by caps, and never park in insert mode. It doesn't belong here, but
+        you need to hear it again.</p>
+    </li>
+
+
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li>Completion
+        <p>Feel free to use long names and big words, because VIM has
+        completion.  It's not <em>intellisense</em>, mind you, but it will
+        finish your words for you.  Type enough of a word to be unique, and
+        (without leaving insert mode) press ^n. If the word you're looking for
+        is in any of the loaded files (or buffers) then VIM will present its
+        best guess.  If it is not the one you want, press ^n again until either
+        you find your word, or you run out of choices. You can also use ^p to
+        go back to a previous selection.</p>
+
+        <p>
+        <table border="1px">
+            <tr><td>^n</td><td>In insert mode, complete a word (forward to through choice list)</td></tr>
+            <tr><td>^p</td><td>In insert mode, complete a word (backward through choice list)</td></tr>
+        </table>
+        </p>
+        
+        <p>In newer version of GVIM (graphical version) a selection box will
+        pop up, and you will pick your word by either typing a little more so
+        it really is unique or else by using arrow keys.</p>
+
+        <p>There is a more comprehensive "whole line completion" mechanism
+        availabe to you also.  You can press ^x^l to enter a special completion
+        mode.  You cycle through choices with ^n for next and ^p for previous,
+        or with arrows (if your vim supports them). Again, if you are using
+        GVIM you will get a popup window with choices.  There are times this is
+        more useful than doing cut-and-paste the old-fashioned way.</p>
+
+        <p>Less well known, there is a filename completion mechanism, accessed
+        with ^x ^f.  I don't usually use this, and have to keep a note like this
+        tutorial around for the few times that I do.  Usually having the file 
+        explorer mode and wildmenu around means not having to do filename 
+        completion in a normal day.</p>
+
+        <p>
+        <table border="1px">
+            <tr><td>^x^l</td><td>In insert mode, complete a line</td></tr>
+            <tr><td>^n</td><td>Get next choice</td></tr>
+            <tr><td>^p</td><td>Get previous choice</td></tr>
+        </table>
+        </p>
+
+        <p>When you have your selection, just keep typing. Any key other than a
+        selection key (up/down/^n/^p) will be accepted as new text as is normal
+        in insert mode.  This is a little counter-intuitive because you are
+        accustomed to hitting enter or tab to accept the entry.</p>
+
+        <p>There are a number of other special commands which are only 
+        available in insert mode.</p> 
+
+        <p>Since you have word-completion and line-completion, you have no
+        excuse for writing short and cryptic variable names. Very long,
+        meaningful names are quite feasible and not tedious at all.</p>
+    </li>
+
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li>Keep text in front of your face
+        <p>There are commands for moving the current line. The VIM folks were running out of letters I think, so 
+        they attached these commands to the z key.  
+        <table border="1px">
+            <tr><td>zt</td><td>move current line to top of page</td></tr>
+            <tr><td>zz</td><td>move current line to middle of page</td></tr>
+            <tr><td>zb</td><td>move current line to bottom of page</td></tr>
+        </table>
+        </p>
+        <p>You also can do much to keep reference code in front of your face if you use split windows.
+        Lets assume your are in <code>code.cpp</code>, and want to look at <code>code.h</code> for a while.
+        <table border="1px">
+            <tr><th>type</th><th>effect</th></tr>
+            <tr><td>:split code.h&lt;enter&gt;</td><td>splits window horizontally and loads code.h in a new window</td></tr>
+            <tr><td>:vsplit code.h&lt;enter&gt;</td><td>splits window vertically and loads code.h in a new window</td></tr>
+        </table>
+        </p>
+        <p>Once you have split windows, you'll want to know how to move between them.  Here is a small set of 
+        commands (all bound up in ^w sequences) that will help you move about.  You can always close any window
+        (even a split one) with the <code>:q</code> or <code>ZZ</code> tricks (from "GET OUT", far above).
+        <table border="1px">
+            <tr><th>^W followed by</th><th>Effect</th></tr>
+            <tr><td>j or leftarrow</td><td>Move to next window to the left </td></tr>
+            <tr><td>l or rightarrow</td><td>Move to next window to the right</td></tr>
+            <tr><td>k or uparrow</td><td>Move to window above current window</td></tr>
+            <tr><td>j or downarrow</td><td>Move to window below current window</td></tr>
+            <tr><td>c</td><td>Close current window</td></tr>
+            <tr><td>o</td><td>Close all windows except the current window</td></tr>
+        </table>
+        Check out <code>:help CTRL-W</code> for more information about window control and movement. 
+        </p>
+    </li>
+
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li>The Explorer
+        <p>You can edit directories.  Give it a shot.  There is help available, and 
+        you can get more information on the screen by pressing <code>i</code>.  
+        This is a kind of "poor man's midnight commander", or maybe a reasonable
+        substitute for the windows explorer.  It's quite handy, and highly 
+        recommended.  This only works if "syntax enable" is in your .gvimrc file.
+        <table border="1px">
+            <tr><td>o</td><td>Open file in a (horizontal) split window</td><td></td></tr>
+            <tr><td>v</td><td>Open file in a (vertical) split window</td><td></td></tr>
+            <tr><td>i</td><td>show more info</td><td></td></tr>
+            <tr><td>s</td><td>sort by column under the cursor</td><td></td></tr>
+            <tr><td>r</td><td>sort in reverse order</td><td></td></tr>
+            <tr><td>D</td><td>delete file</td><td></td></tr>
+            <tr><td>d</td><td>make new directory</td><td></td></tr>
+                                <tr><td>enter</td><td>Open file in current window.</td></tr>
+                                <tr><td></td><td></td></tr>
+        </table>
+        </p>
+    </li>
+
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li>Indenting and unindenting
+        <p>Forget using tab.  Too many tools use 8-character tabs, which is the standard.
+        if you use tabs, even if you change the tabstop parameter in your code, a lot of
+        programs will display or print your code incorrectly. Tabbing is dead, shifting 
+        is king.</p>
+        <p>So I recommend you set your tabstops to 8 in your .vimrc (<code>set tabstop=8</code>)
+        and set your shiftwidth to the desired level (<code>set shiftwidth=4</code>). No, rather
+        than recommend, I demand you go and add those two commands to your .vimrc right now.
+        I'll wait. Really... go do it..
+        <table border="1px">
+            <tr><td>set tabstop=8</td><td>Use industry standard 8-char tabs</td></tr>
+            <tr><td>set shiftwidth=4</td><td>Use standard 4-char indentation</td></tr>
+            <tr><td>set shiftround</td><td>Indent/Dedent to nearest 4-char boundary</td></tr>
+            <td></td><td>set autoindent</td><td>Automatically indent when adding a new line</td>
+        </table></p>
+        
+
+        <p>You need to also have autoindent turned on, so you don't have to manually space 
+        or indent every line.  Autoindent is so handy, I included it as a necessary feature
+        in the .vimrc section. If you followed the tutorial, you will have it turned on already.
+        Not having it on is stupid. You really want it.</p>
+        <p>In CONTROL mode:
+            <table border="1px">
+                <tr><td>&lt;</td><td>left-shift (requires a movement cmd, works on whole lines)</td><td></td></tr>
+                <tr><td>&gt;</td><td>right-shift (requires a movement cmd, works on whole lines)</td><td></td></tr>
+            </table>
+        </p>
+        <p>If you want to move a paragraph to the left, then <code>&lt;}</code> is your command. For shifting
+        three lines right, it would be <code>3&gt;&gt;</code>.  The shift commands follow the standard VIM
+        command pattern (hence the term "standard").  They do not use a buffer.</p>
+        <p>In INSERT or OVERTYPE mode:
+            <table border="1px">
+                <tr><td>^T</td><td>Indent</td><td></td></tr>
+                <tr><td>^D</td><td>Dedent/unindent</td><td></td></tr>
+            </table>
+        </p>
+    </li>
+
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li>Spelling
+        <p>VIM can also check your spelling. You can enter the command<code>
+        :set spell</code> to turn on spelling checker.  You can also set the
+        dictionary and other options, but <code>:help spell</code> will tell you
+        all about it.</p>
+        <p>I don't recommend turning this on normally. A lot of the things you
+        will edit will contain stuff other than the dictionary's list of English
+        words, and that can get to be annoying.  I prefer to turn it on and off
+        with <code>:set spell</code> and <code>:set nospell</code>.  </p>
+        <p>The earnest student can learn to turn this on and off via special 
+        scripts that are run whenever a file is loaded. The less interested can
+        skip it.</p>
+    </li>
+
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li>Little hints
+        <p>There are some handy commands for showing you information in the 
+        status line, or in a scrolling display.  When you need a reminder, but
+        don't need to navigate to some part of source, it can be handy to use
+        these.
+
+        <table border="1px">
+            <tr><td>[i</td><td>show first line containing word under the cursor</td></tr>
+            <tr><td>[I</td><td>show every line containing word under the cursor</td></tr>
+            <tr><td>:g/pattern/</td><td>show every line matching the regular expression pattern</td></tr>
+        </table>
+        </p>
+
+    </li>
+
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li>Shell Filtering
+
+        <p>If you were working at the command line, you would know how to use sort, and
+        filter with grep, maybe how to do various tasks with perl or awk. Those programs
+        are all filters.  They read the standard input and they write to standard output.</p>
+
+        <p>When you are VIM, however, you may want to do the same things.  It is sure a pain
+        to save the part of a file you want to sort, escape to the command line, sort the piece
+        of the file to a new file, and then load the sorted file fragment into the space in the editor
+        where that piece of unsorted text used to be.</p>
+
+        <p>What you need to know is that all that work is unnecessary.  If you wanted to sort
+        a paragraph, and your cursor were at the start of the paragraph, all you have to type 
+        is <code>!}sort</code> and the magic is done.</p>
+
+        <p>VIM is written to use filters directly.  Not only is this handy for using all those
+        great Linux/Unix filters, but also because you can write your own.  Any filter-type 
+        program you write is now part of you editor as well as your command-line environment.
+        That is a major bit of editing leverage. It is exciting stuff if you are a command-line
+        guru already.
+
+        <table border="1PX">
+            <tr><td>!!<i>command</i></td><td>pass current line only through filter</td></tr>
+            <tr><td>!}<i>command</i></td><td>pass area from current line through end of paragraph through filter</td></tr>
+            <tr><td>!G<i>command</i></td><td>pass area from current line through end of file through filter</td></tr>
+            <tr><td>:%!<i>command</i></td><td>pass the entire current buffer through filter</td></tr>
+        </table>
+        </p>
+    </li>
+
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li>Code Reformatting
+        <p> You can reformat code or text a number of different ways.  One is using shell filtering:
+        <table border="1PX">
+            <tr><td>%!astyle<cr></cr></td><td>Restyle the entire file with astyle (a nice reformatting program).</td></tr>
+            <tr><td>%!indent<cr></cr></td><td>Restyle the entire file with indent (a nice, older program).</td></tr>
+        </table>
+        </p>
+        <p> Another is using the <code>gq</code> command, which re-does the line wrapping, and which has 
+        intelligence for wrapping comments correctly.
+        <table border="1PX">
+            <tr><td>gqq</td><td>Re-wrap the current line (a double-jump!)</td></tr>
+            <tr><td>gqj</td><td>Re-wrap the current line and the line following</td></tr>
+            <tr><td>gq}</td><td>Re-wrap lines from the current line to the end of the paragraph.</td></tr>
+        </table>
+        </p>
+        <p>You can also retab a file. Retabbing converts tab stops to spaces, and ensures indentation is
+        correct for each. It is done by setting your <code>tabstop</code> variable to the correct indent level, then
+        setting <code>expandtab</code>, and finally by issuing the <code>:retab</code> command. It would be far
+        too much work if I didn't have expandtab and tabstop set normally. Typically, I set tabstop and retab,
+        and then save.  That's a sequence I can map to a keyboard command, or can save as a macro.</p>
+        <p>You can also have the editor wrap your text as you type, and preserve your indentation.  This is all
+        done via the <code>linebreak</code>, <code>textwidth</code>, and <code>autoindent</code> settings, which you can easily explore with the 
+        <code>help</code> facility.</p>
+    </li>
+
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li>QuickFix mode is your friend
+        <p>VIM can run your makefile and take you to each variable in turn. If
+        you have unit tests set up to run as part of the build, and the unit
+        test framework produces messages in a compatible format, you will be
+        guided through the failed tests just as if they were compile errors.
+        Likewise, any style-checking tool you use may be treated likewise if it
+        has a compatible format.</p>
+        <p>If you are doing Test-Driven Development, this is a critical feature.
+        with quickfix mode, you can find the rhythm that you're looking for. You 
+        can even assign the :mak command to a keystroke (see :help map) so that 
+        you don't have to type :make. VIM is a kind of agile editor in that regard.
+        In a separate paper, I'll detail my vim settings for TDD.</p>
+        <p>Basic quickfix commands
+        <table border="1PX">
+            <tr><td>:make</td><td>Run the makefile specified by the <code>makefile</code> variable</td></tr>
+            <tr><td>:cw</td><td>Show the compile error window if there are compile errors.</td></tr>
+            <tr><td>:cn</td><td>Go to the next compile error.</td></tr>
+            <tr><td>:cp</td><td>Go to the previous compile error.</td></tr>
+        </table></p>
+        <p>As always, look at <code>:help quickfix</code> to learn more about
+        this valuable mode of work.</p> </li>
+
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li>Manual page access
+        <p>In the .vimrc section I recommended that you turn on the Man feature.
+        since you followed those instructions, you can now access man pages from
+        VIM </p>
+        <p><code>:Man 5 crontab</code> shows you the crontab man page in a split
+        window. Your cursor will be in the help window where you can navigate as
+        you would with tags, using ^] to go to a tag, and ^t to return.  When you 
+        are done, type :q or ZZ to quit the window.</p>
+        <p>If you are looking for a man page for something in your file, you don't
+        have to type the colon and the word man.  You can type the <i>leader</i>
+        character (by default "\") and the capital K and vim will find the man
+        page and display it in a split window. By the way, if you change the leader
+        character, you will of course have to adjust these instructions.  This is
+        very handy when you are working with scripts or the Linux/Unix C API.</p>
+        <p>
+        <table border="1PX">
+            <tr><td>:Man <i>subject</i></td><td>Get manpage for <i>subject</i></td></tr>
+            <tr><td>\K</td><td>Get manpage for word currently under the cursor</td></tr>
+        </table></p>
+        <p>This feature is more valuable if you ensure that you install all of 
+        the man pages for the programming tools and libraries you use. Or at least
+        that you urge your systems admin to do it for you. If you work in perl, 
+        and you don't have all the perl man pages, you will lose out on this fine
+        feature of VIM.</p>
+    </li>
+
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li>Ctags lets you navigate like a pro.
+        <p>I heartily recommend exuberant ctags as the tag program for almost any language.
+        It will quickly span your code and create a 'tags' file, which tells vim all
+        it needs to know to find a symbol in your source.  The tag file gives a file and
+        also a regular expression for finding the line you need. It does a very fine job.
+        <table border="1PX">
+        <tr><td>!ctags -R *</td><td>Run ctags (better to do this in your makefile)</td></tr>
+        <tr><td>^]</td><td>Jump to the definition of the term (class/method/var) under the cursor</td></tr>
+        <tr><td>^t</td><td>Pop the browsing stack, return to previous location</td></tr>
+        </table>
+    </p></li>
+
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li>Bookmarks.
+        <p>Vim allows you to set a bookmark on a line, and jump from one bookmark
+        to another.</p>
+        <table border="1PX">
+            <tr><td>mx</td><td>Put bookmark 'x' at the current line.</td></tr>
+            <tr><td>'x</td><td>Jump to mark 'x'.</td></tr>
+        </table>
+        <p>You can use any letter for a bookmark, however there is a difference
+        between a lower-case letter and an upper-case letter.</p><p>
+        <ul>
+        <li>The lower-case letters set a file-specific bookmark, so that
+        'a in one file will take you to a different place than 'a in
+        another file.  </li>
+        <li>Uppercase letters set global bookmarks, so that jumping to 
+        'A will take you to the line you marked in the file where you 
+        marked it.  This is very handy, but is also sometimes not what
+        you want, because it loads the marked file in the current window.
+        </li></ul>
+        </p><p></p>
+    </li>
+
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li>Pasting in Insert Mode
+        <p>When in insert mode, you're not just stuck with typing characters and doing
+        line completion.  There are other commands, and one of them is the ^r command
+        which will read data from a register and type it for you. </p>
+        <p>If you last deleted the word <code>falsify</code> and are typing in some
+        part of the document, you can type ^r, followed by the default register named "
+        (doublequote) and the editor will paste the word "falsify" into the text and
+        continue onward in insert mode. </p>
+        <p>This is particularly helpful when doing something like <code>cw</code>, 
+        because the change command will delete the current word (loading the buffer)
+        and then enter insert mode. So say I place my cursor on the word falsify
+        above:
+        <table border="1PX">
+            <tr><th>Command</th><th>Effect</th></tr>
+            <tr><td>cw</td><td>deletes the current word to register ", and enter insert mode</td></tr>
+            <tr><td>&lt;b&gt;</td><td>enters the text (we're in insert mode). This text is the beginning of the html tag for bold text.</td></tr>
+            <tr><td>^r</td><td>start the paste-while-in insert mode</td></tr>
+            <tr><td>"</td><td>paste from register ' ("falsify") into the current location in the file.</td></tr>
+            <tr><td>&lt;/b&gt;</td><td>enter the closing tag fror bold</td></tr>
+            <tr><td>ESC</td><td>Return to command mode.</td></tr>
+            <tr><td>u</td><td>Removes the &lt;b&gt; tag from "falsify"!</td></tr>
+        </table>
+        </p><p>Be warned, the '.' command doesn't see that you used the ^R command,
+        so if you move to the next word and hit '.', vim will change that word to be
+        be the bold-tagged "falsify", too.  If you want to bold a bunch of different words,
+        you should learn how to record and playback macros (:help q).</p>
+    </li>
+
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li>Abbreviate!
+        <p>One of the easiest ways to customize your editor is with abbreviations.
+        For instance, of the most commonly mistyped python lines is the famous
+        "main" invocation:
+        <pre>
+            if __name__ == "__main__":
+        </pre>
+        </p><p>I would like to type the word "pymain" and have the editor replace
+        it with the invocation above.  Easy to do:
+        <blockquote>
+            :ab pymain if __name__ == "__main__":
+        </blockquote>Now when I type any non-alphabetic character after the
+        word pymain, it is expanded automatically. All that VIM needs is an
+        "ab" command and a whole word to expand in insert mode. The expansion
+        is immediate and automatic, there is no hotkey by which you request
+        the expansion.  As a result, it will happen when you don't want it 
+        to happen. Every time I type pymain, I get the expansion listed above,
+        even if it is an accident. I actually have to type the word wrong
+        exit insert mode and then go back to correct it, because I can't 
+        safely type it at all.</p>
+
+        <p>I can add this line to my .vimrc, as long as I leave out the 
+        leading colon. My vimrc has a number of abbreviations in it
+        currently, because I choose my abbreviations carefully. </p>
+
+        <p>I find that I sometimes type 'teh' when I mean 'the'.  
+        This is easy to fix.</p>
+        <blockquote>:ab teh the </blockquote> 
+        <p>I never type teh intentionally, so it is a good abbreviation
+        candidate.</p>
+
+        <p>You will want to use this feature carefully, so that you don't end
+        up getting unwanted expansions, but it is quite nice if you have common
+        misspellings or long sequences of code that you would otherwise have 
+        to type far too often.</p>
+
+    </li>
+
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li>Record and playback macros.
+        <p>In the help system, this is referred to as "complex-repeat". </p>
+
+        <p>You enter macro recording mode by pressing the command 'q', followed
+        by a register into which the macro will be stored.  You can use any of
+        the alphabetic keys (upper or lower case), and any of the digits. Of 
+        course you can have all 26 lower case, all uppercase 26 and all 
+        digits assigned to macros at one time if you like.</p>
+
+        <p>Every keystroke you type will be recorded until you press the 'q'
+        key again. </p>
+
+        <p>To replay a macro, you use the @ key, followed by the register name.</p>
+
+        <p>Once you have replayed a macro, the undo key will see that macro
+        as a single action.  It's very handy, since a macro can make changes
+        in many lines found throughout the file.</p>
+
+        <p>VIM remembers what macro you last played, and can repeat it with 
+        the double-jump.  The double-jump would be "@@".</p>
+
+        <p>The dot command will see it as a single action as well. That's 
+        very cool, because the above lesson becomes much more useful. It works
+        something like this:</p>
+        <table border="1PX">
+            <tr><th>Command</th><th>Effect</th></tr>
+            <tr><td>qa</td><td>Start recording the macro to register 'a'</td></tr>
+            <tr><td>cw</td><td>deletes the current word to register ", and enter insert mode</td></tr>
+            <tr><td>&lt;b&gt;</td><td>enters the text (we're in insert mode). This text is the beginning of the html tag for bold text.</td></tr>
+            <tr><td>^r</td><td>start the paste-while-in insert mode</td></tr>
+            <tr><td>"</td><td>paste from register ' ("falsify") into the current location in the file.</td></tr>
+            <tr><td>&lt;/b&gt;</td><td>enter the closing tag fror bold</td></tr>
+            <tr><td>ESC</td><td>Return to command mode.</td></tr>
+            <tr><td>q</td><td>Stop recording</td></tr>
+            <tr><td>W</td><td>Move one word to the right.</td></tr>
+            <tr><td>@@</td><td>replay the macro, wrapping the word under the cursor</td></tr>
+            <tr><td>W</td><td>Move one more word to the right.</td></tr>
+            <tr><td>.</td><td>replay the macro again, wrapping the word under the cursor</td></tr>
+        </table>
+        <p>The macro you recorded is just text in a register.  You can paste it
+        into a document, edit it to improve its operation, yank it back into the
+        register, etc. Macros provide a nice way to simplify complex edits.</p>
+        <p>Try "<code>:help q</code>" to see more about macro usage.  I didn't tell
+        it all.</p>
+    </li>
+
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li>Mapping Keys
+        <p>Whatever you can do by hand, or with a macro, you can also do with
+        key mapping.  All a key mapping does is assign a macro to a keystroke.
+        Here is an example:
+        <pre>
+            " Move between files in a long list
+            map &lt;F3&gt; :prev&lt;CR&gt;
+            map &lt;F4&gt; :next&lt;CR&gt;
+        </pre>
+        </p>
+        <p>Learn more about mapping via <code>:help map</code>.</p>
+    </li>
+
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li>Colors and Stuff
+    <p>Vim is amazingly customizable, including the colors it uses. Some 
+    people make their vim themes available on the internet, and a number
+    of color themes are included in the standard distribution.  The one 
+    you have seen most is probably the one called "default".  If you 
+    are in a separate color scheme, you can see it via the command:</p>
+    <blockquote>:echo g:colors_name</blockquote>
+    <p>Try some of the existing color schemes like delek, darkblue, desert,
+    koehler, elflord, peachpuff, or slate. You can always return to default,
+    or just exit and reload the editor. The command you need is:
+    <blockquote>colorscheme delek</blockquote>
+    For 'delek', substitue any scheme you like.  You can see all the schemes
+    in the explorer mode by typing:
+    <blockquote>:e $VIM/vim70/colors</blockquote>
+    (assuming you are using vim 7.0.  You may have to adjust for verion
+    numbers).
+    </p>
+
+    <p>The colorschemes are built from commands that set individual elements
+    such as the foreground and background of the status line,  You can learn
+    an awful lot by reading one or two of the colors files.</p>
+    The color commands start with "hi" (short for highlight), then
+    the kind of thing to color (called a groupname), and then a string of 
+    colors to use for plain terminals (ask your dad) denoted as "term", 
+    color terminals denoted as "cterm", and guis (gvim) denoted as "gui". 
+    <p>Here are a few settings I like for gvim:
+    <pre>
+        hi LineNr guibg=lightgray guifg=black
+        hi StatusLine guibg=yellow guifg=darkblue
+        hi NonText guibg=darkgray
+        hi ToDo guifg=DarkRed
+    </pre>
+    These will color the nontext area that comes  past the end of text, 
+    the number column on the left of the screen (if you do "set nu"), 
+    and colors the active status line (title bar) differently from 
+    the status line for inactive tiles/windows.</p>
+    <p>For more on coloring and theming, you should consult the built-in
+    help (<code>:help hi</code>) or perhaps some other more weighty and
+    complete guide to VIM</p>
+    </li>
+
+    <!--  LESSON SEPARATOR ------------------------------------------------- -->
+    <li> Exploiting the path.
+        <p>There is a special vim variable called <code>path</code> which will help
+        you to find files which are referenced by the files you will be editing. This
+        feature is specifically useful if you are editing C program files and you point
+        the path variable to the /usr/include/* directories.</p>
+        <p>The value you provide for path is a comma-separated list of paths where
+        files can be found. This allows you to point to the standard include, and your
+        project includes, and any other dirs you find useful.</p>
+        <p>To use this feature, place the cursor on the name of a file, and (while in
+        normal/control mode) type <code>gf</code> or <code>^wf</code>.  The file will 
+        be loaded into the current window.</p>
+        <table border="1PX">
+            <tr><td>set path=.,.**,/usr/include/**,/usr/share/**</td><td>Probably excessive, but sets the path to find just about anything. May take a long time.</td></tr>
+            <tr><td>gf</td><td>Goto File: Get the file whose name is under the cursor</td></tr>
+            <tr><td>^Wf</td><td>Window File: Same as <code>gf</code> except opens the file in a new window</td></tr>
+            <tr><td>:e#</td><td>Return to the previous window</td></tr>
+        </table>
+        <p>I find the window version more useful generally, but I find the non-window version
+        so much easier to type that I will use it instead. I wish that the file navigation
+        would add to the tag stack, so that ^t would return you to the previous file, but no.
+        Stefan Berglund informs me that the ^o will, however. Now it is much easier to 
+        jump backward through the jump list.</p>
+       <p>The other workaround is to set a bookmark as a capital letter so that you can do a return
+        to it from another file.  I know that sounds a little awful, and it is a <i>little</i>
+        awful, but it works. </p>
+        <p>Still, for C/C++ programmers, the combination of \K and ^wf allows a lot of file
+        navigation, and the bookmarks are handy for getting in/out of header files and the 
+        like.</p>
+        <p>The path is also used by the name completion (^n) system to find the files in 
+        which it will search for word completions.</p>
+      
+    </li>
+
+</ol>
+
+</div>
+<div id="menu">
+        <ul><li>Links:
+        <ul>
+          <li><a href='http://libbyo.blogsome.com/' rel='contact met co-resident spouse sweetheart' title='My wife'>Libby</a></li>
+<li><a href='http://www.offtheclock.org/' title='Steve&#039;s personal blog.'>OffTheClock</a></li>
+<li><a href='http://planet.michaelandkrissy.com/' title='My friends are aggregating their friends.'>Schultheiss</a></li>
+<li><a href='http://www.justbbrooke.com/' title='A very talented friend.'>Photographer</a></li>
+<li><a href='http://tottinge.blogsome.com/use-vim-like-a-pro/my-vimrc/' rel='me' title='The settings I&#039;m using as of 4/7/2009'>My .vimrc File</a></li>
+<li><a href='http://www.attentionspanradio.net/' title='Attention Span Radio - Streaming the best tasty jazz on the net.'>AttnSpnRad</a></li>
+<li><a href='http://www.larrycarlton.net/brandnew/home.shtml' title='The MAN... sweet guitar work on an ES-335.'>Carlton</a></li>
+<li><a href='http://ccel.org/' title='Christian classics ethereal library'>Classics</a></li>
+<li><a href='http://radiolovers.com/' title='Radio Lovers&#039; free program downloads.'>OTR</a></li>
+<li><a href='http://tottinge.blogsome.com/meaningfulnames/' title='Programming Standards'>Naming</a></li>
+<li><a href='http://typo.objectmentor.com/articles/category/tims-tepid-torrent' rel='me' title='Where I used to blog my work life.'>Object Mentor Blog</a></li>
+<li><a href='http://www.taylorguitars.com/guitars/electric/' rel='vendor' title='Taylor electric guitars'>Taylor Electric</a></li>
+<li><a href='http://www.gvisit.com/map.php?sid=bb99d3eda9261b5eae29d535a3292533' title='Who reads this stuff? See the last twenty users&#039; geographical map.'>GVisit</a></li>
+<li><a href='http://dyingchurch.org/' title='The church needs to die to self, just as its members must.'>DyingChurch</a></li>
+<li><a href='http://rondomusic.com/' title='Inexpensive guitars that work'>Rondo</a></li>
+<li><a href='http://profile.myspace.com/index.cfm?fuseaction=user.viewprofile&#038;friendid=77861673'>Jonathan</a></li>
+<li><a href='http://www.bellevuelinux.org/reasons_to_convert.html' title='25 Reasons you should use Linux'>25reasons</a></li>
+<li><a href='http://www.xubuntu.org/' title='Ubuntu linux with XFCE goodness'>xubuntu</a></li>
+<li><a href='http://www.xfce.org/' title='XFCE - the cool, flexible linux window manager that makes everything faster'>XFCE</a></li>
+<li><a href='http://www.christianguitar.org/' title='Christian Guitar Resources'>CGR</a></li>
+<li><a href='http://blogs.herald.com/dave_barrys_blog/2004/05/watch_out.html' title='&quot;With all due respect&quot;'>Weasel</a></li>
+<li><a href='http://www.zegeniestudios.net/ldc/index.php?firsttime=true' title='Choose your linux distribution'>LinuxChooser</a></li>
+<li><a href='http://www.rmcrob.com/wp-content/prayer.jpg' rel='acquaintance met' title='Randy McRoberts&#039; always entertaining blog'>RMcR</a></li>
+<li><a href='http://programming.reddit.com/' title='Programmers&#039; reddit page'>reddit</a></li>
+<li><a href='http://agileotter.blogspot.com/' title='My (newest) professional blog.'>Agile Otter</a></li>
+<li><a href='http://ww2.samhart.com/' title='SNH&#039;s homepage. Sometimes angry and/or obscene, but usually interesting.  Open source developer, founder of TuxForKids.'>Sam</a></li>
+<li><a href='http://www.linux.com/download_linux/' title='Get yourself some sweet linux love.'>Get Linux</a></li>
+<li><a href='http://agileinaflash.com/' rel='me' title='The short form to agile practice.'>Agile: In A Flash</a></li>
+<li><a href='http://tottinge.blogsome.com/use-vim-like-a-pro/' title='Use Vim Like A Pro'>Use Vim</a></li>
+
+        </ul>
+        </li></ul>
+	
+        <ul><li>Categories:
+        <ul>
+          	<li><a href="http://tottinge.blogsome.com/category/angst/" title="Sometimes, it&#8217;s saner to disagree.  ">Angst</a>
+</li>
+	<li><a href="http://tottinge.blogsome.com/category/blogging/" title="Things I&#8217;m learning about operating a blog.">Blogging</a>
+</li>
+	<li><a href="http://tottinge.blogsome.com/category/christianity/" title="Praise and critique.">Christianity</a>
+</li>
+	<li><a href="http://tottinge.blogsome.com/category/freedom/" title="We think we should have some freedom someday.">Freedom</a>
+</li>
+	<li><a href="http://tottinge.blogsome.com/category/humor-oddity-trivia-and-little-spots-of-joy-and-satire/" title="We can all use a little laugh sometime.">Fun</a>
+</li>
+	<li><a href="http://tottinge.blogsome.com/category/music-industry/guitars/" title="Pictures of hot guitars and other gear.
+">Guitars</a>
+</li>
+	<li><a href="http://tottinge.blogsome.com/category/hot-sauce/" title="I love hot stuff.  Peppers, sauces, etc.  I like talking about them, too.">Hot Sauce</a>
+</li>
+	<li><a href="http://tottinge.blogsome.com/category/intellectual-property/" title="About patents, copyrights, etc.">Intellectual Property</a>
+</li>
+	<li><a href="http://tottinge.blogsome.com/category/jazz/" title="View all posts filed under Jazz">Jazz</a>
+</li>
+	<li><a href="http://tottinge.blogsome.com/category/life/" title="Home and Hearth, personal news, whatever will be&#8230;.">Life</a>
+</li>
+	<li><a href="http://tottinge.blogsome.com/category/linux/" title="It works, it keeps working, and you are allowed to copy it.  The OS of the future.">Linux</a>
+</li>
+	<li><a href="http://tottinge.blogsome.com/category/music-industry/" title="I love music, but not way the business works.">Music</a>
+</li>
+	<li><a href="http://tottinge.blogsome.com/category/oldtimeradio/" title="Drama for ugly people or TV for the pre-tv age, it&#8217;s all good.
+">OldTimeRadio</a>
+</li>
+	<li><a href="http://tottinge.blogsome.com/category/programming/" title="The useful art, the joy and pain thereof.">Programming</a>
+</li>
+	<li><a href="http://tottinge.blogsome.com/category/reading/" title="Brain candy.">Reading</a>
+</li>
+	<li><a href="http://tottinge.blogsome.com/category/" title="View all posts filed under Uncategorized">Uncategorized</a>
+</li>
+	<li><a href="http://tottinge.blogsome.com/category/windows/" title="It makes no sense &#8212; why would people stay in an unfriendly place? ">Windows</a>
+</li>
+
+        </ul>
+        </li></ul>
+	
+        <ul><li>Search: <form id="searchform" method="POST" action="/">
+          <div><input type="text" name="s" size="15" /><br />
+          <input type="submit" name="submit" value="search" />
+          </div></form>
+        </li></ul>
+	
+        <ul><li>Archives:
+        <ul>
+           	<li><a href='http://tottinge.blogsome.com/2010/12/' title='December 2010'>December 2010</a></li>
+	<li><a href='http://tottinge.blogsome.com/2010/11/' title='November 2010'>November 2010</a></li>
+	<li><a href='http://tottinge.blogsome.com/2010/10/' title='October 2010'>October 2010</a></li>
+	<li><a href='http://tottinge.blogsome.com/2010/09/' title='September 2010'>September 2010</a></li>
+	<li><a href='http://tottinge.blogsome.com/2010/08/' title='August 2010'>August 2010</a></li>
+	<li><a href='http://tottinge.blogsome.com/2010/07/' title='July 2010'>July 2010</a></li>
+	<li><a href='http://tottinge.blogsome.com/2010/06/' title='June 2010'>June 2010</a></li>
+	<li><a href='http://tottinge.blogsome.com/2010/05/' title='May 2010'>May 2010</a></li>
+	<li><a href='http://tottinge.blogsome.com/2010/04/' title='April 2010'>April 2010</a></li>
+	<li><a href='http://tottinge.blogsome.com/2010/03/' title='March 2010'>March 2010</a></li>
+	<li><a href='http://tottinge.blogsome.com/2010/02/' title='February 2010'>February 2010</a></li>
+	<li><a href='http://tottinge.blogsome.com/2010/01/' title='January 2010'>January 2010</a></li>
+	<li><a href='http://tottinge.blogsome.com/2009/12/' title='December 2009'>December 2009</a></li>
+	<li><a href='http://tottinge.blogsome.com/2009/11/' title='November 2009'>November 2009</a></li>
+	<li><a href='http://tottinge.blogsome.com/2009/10/' title='October 2009'>October 2009</a></li>
+	<li><a href='http://tottinge.blogsome.com/2009/09/' title='September 2009'>September 2009</a></li>
+	<li><a href='http://tottinge.blogsome.com/2009/08/' title='August 2009'>August 2009</a></li>
+	<li><a href='http://tottinge.blogsome.com/2009/07/' title='July 2009'>July 2009</a></li>
+	<li><a href='http://tottinge.blogsome.com/2009/06/' title='June 2009'>June 2009</a></li>
+	<li><a href='http://tottinge.blogsome.com/2009/05/' title='May 2009'>May 2009</a></li>
+	<li><a href='http://tottinge.blogsome.com/2009/04/' title='April 2009'>April 2009</a></li>
+	<li><a href='http://tottinge.blogsome.com/2009/03/' title='March 2009'>March 2009</a></li>
+	<li><a href='http://tottinge.blogsome.com/2009/02/' title='February 2009'>February 2009</a></li>
+	<li><a href='http://tottinge.blogsome.com/2009/01/' title='January 2009'>January 2009</a></li>
+	<li><a href='http://tottinge.blogsome.com/2008/12/' title='December 2008'>December 2008</a></li>
+	<li><a href='http://tottinge.blogsome.com/2008/11/' title='November 2008'>November 2008</a></li>
+	<li><a href='http://tottinge.blogsome.com/2008/10/' title='October 2008'>October 2008</a></li>
+	<li><a href='http://tottinge.blogsome.com/2008/09/' title='September 2008'>September 2008</a></li>
+	<li><a href='http://tottinge.blogsome.com/2008/08/' title='August 2008'>August 2008</a></li>
+	<li><a href='http://tottinge.blogsome.com/2008/07/' title='July 2008'>July 2008</a></li>
+	<li><a href='http://tottinge.blogsome.com/2008/06/' title='June 2008'>June 2008</a></li>
+	<li><a href='http://tottinge.blogsome.com/2008/05/' title='May 2008'>May 2008</a></li>
+	<li><a href='http://tottinge.blogsome.com/2008/04/' title='April 2008'>April 2008</a></li>
+	<li><a href='http://tottinge.blogsome.com/2008/03/' title='March 2008'>March 2008</a></li>
+	<li><a href='http://tottinge.blogsome.com/2008/02/' title='February 2008'>February 2008</a></li>
+	<li><a href='http://tottinge.blogsome.com/2008/01/' title='January 2008'>January 2008</a></li>
+	<li><a href='http://tottinge.blogsome.com/2007/12/' title='December 2007'>December 2007</a></li>
+	<li><a href='http://tottinge.blogsome.com/2007/11/' title='November 2007'>November 2007</a></li>
+	<li><a href='http://tottinge.blogsome.com/2007/10/' title='October 2007'>October 2007</a></li>
+	<li><a href='http://tottinge.blogsome.com/2007/09/' title='September 2007'>September 2007</a></li>
+	<li><a href='http://tottinge.blogsome.com/2007/08/' title='August 2007'>August 2007</a></li>
+	<li><a href='http://tottinge.blogsome.com/2007/07/' title='July 2007'>July 2007</a></li>
+	<li><a href='http://tottinge.blogsome.com/2007/06/' title='June 2007'>June 2007</a></li>
+	<li><a href='http://tottinge.blogsome.com/2007/05/' title='May 2007'>May 2007</a></li>
+	<li><a href='http://tottinge.blogsome.com/2007/04/' title='April 2007'>April 2007</a></li>
+	<li><a href='http://tottinge.blogsome.com/2007/03/' title='March 2007'>March 2007</a></li>
+	<li><a href='http://tottinge.blogsome.com/2007/02/' title='February 2007'>February 2007</a></li>
+	<li><a href='http://tottinge.blogsome.com/2007/01/' title='January 2007'>January 2007</a></li>
+	<li><a href='http://tottinge.blogsome.com/2006/12/' title='December 2006'>December 2006</a></li>
+	<li><a href='http://tottinge.blogsome.com/2006/11/' title='November 2006'>November 2006</a></li>
+	<li><a href='http://tottinge.blogsome.com/2006/10/' title='October 2006'>October 2006</a></li>
+	<li><a href='http://tottinge.blogsome.com/2006/09/' title='September 2006'>September 2006</a></li>
+	<li><a href='http://tottinge.blogsome.com/2006/08/' title='August 2006'>August 2006</a></li>
+	<li><a href='http://tottinge.blogsome.com/2006/07/' title='July 2006'>July 2006</a></li>
+	<li><a href='http://tottinge.blogsome.com/2006/06/' title='June 2006'>June 2006</a></li>
+	<li><a href='http://tottinge.blogsome.com/2006/05/' title='May 2006'>May 2006</a></li>
+	<li><a href='http://tottinge.blogsome.com/2006/04/' title='April 2006'>April 2006</a></li>
+	<li><a href='http://tottinge.blogsome.com/2006/03/' title='March 2006'>March 2006</a></li>
+	<li><a href='http://tottinge.blogsome.com/2006/02/' title='February 2006'>February 2006</a></li>
+	<li><a href='http://tottinge.blogsome.com/2006/01/' title='January 2006'>January 2006</a></li>
+	<li><a href='http://tottinge.blogsome.com/2005/12/' title='December 2005'>December 2005</a></li>
+	<li><a href='http://tottinge.blogsome.com/2005/11/' title='November 2005'>November 2005</a></li>
+	<li><a href='http://tottinge.blogsome.com/2005/10/' title='October 2005'>October 2005</a></li>
+	<li><a href='http://tottinge.blogsome.com/2005/09/' title='September 2005'>September 2005</a></li>
+	<li><a href='http://tottinge.blogsome.com/2005/08/' title='August 2005'>August 2005</a></li>
+	<li><a href='http://tottinge.blogsome.com/2005/07/' title='July 2005'>July 2005</a></li>
+	<li><a href='http://tottinge.blogsome.com/2005/06/' title='June 2005'>June 2005</a></li>
+
+        </ul>
+        </li></ul>
+	
+	<ul><li>
+	<table id="wp-calendar">
+    <caption>December 2010</caption>
+    <thead>
+    <tr>
+		<th abbr="Sunday" scope="col" title="Sunday">S</th>
+		<th abbr="Monday" scope="col" title="Monday">M</th>
+		<th abbr="Tuesday" scope="col" title="Tuesday">T</th>
+		<th abbr="Wednesday" scope="col" title="Wednesday">W</th>
+		<th abbr="Thursday" scope="col" title="Thursday">T</th>
+		<th abbr="Friday" scope="col" title="Friday">F</th>
+		<th abbr="Saturday" scope="col" title="Saturday">S</th>
+    </tr>
+    </thead>
+
+    <tfoot>
+    <tr>
+		<td abbr="November" colspan="3" id="prev"><a href="http://tottinge.blogsome.com/2010/11/" title="View posts for November 2010">&laquo; Nov</a></td>
+		<td class="pad">&nbsp;</td>
+		<td colspan="3" id="next" class="pad">&nbsp;</td>
+    </tr>
+    </tfoot>
+
+    <tbody>
+    <tr>
+		<td colspan="3" class="pad">&nbsp;</td><td>1</td><td><a href="http://tottinge.blogsome.com/2010/12/02/" title="Moderation and Spam">2</a></td><td>3</td><td>4</td>
+	</tr>
+	<tr>
+		<td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td>
+	</tr>
+	<tr>
+		<td>12</td><td>13</td><td>14</td><td>15</td><td><a href="http://tottinge.blogsome.com/2010/12/16/" title="Use Vim Like A Pro">16</a></td><td>17</td><td>18</td>
+	</tr>
+	<tr>
+		<td>19</td><td>20</td><td>21</td><td>22</td><td>23</td><td>24</td><td id="today">25</td>
+	</tr>
+	<tr>
+		<td>26</td><td>27</td><td>28</td><td>29</td><td>30</td><td>31</td>
+		<td class="pad" colspan="1">&nbsp;</td>
+	</tr>
+	</tbody>
+	</table>
+	</li></ul>
+	
+        
+                <ul><li>Most Recent Posts
+        <ul>
+                <li><a href="http://tottinge.blogsome.com/2010/12/16/use-vim-like-a-pro/" title="Use Vim Like A Pro">Use Vim Like A Pro</a></li>
+                <li><a href="http://tottinge.blogsome.com/2010/12/02/moderation-and-spam/" title="Moderation and Spam">Moderation and Spam</a></li>
+                <li><a href="http://tottinge.blogsome.com/2010/11/10/maybe-not-the-nano-choruss-fault/" title="Maybe not the Nano Chorus's  fault? ">Maybe not the...</a></li>
+                <li><a href="http://tottinge.blogsome.com/2010/11/06/odd-popularity/" title="Odd popularity">Odd popularity</a></li>
+                <li><a href="http://tottinge.blogsome.com/2010/10/27/ford-carlton-together/" title="Ford & Carlton together">Ford & Carlton...</a></li>
+                <li><a href="http://tottinge.blogsome.com/2010/10/02/sinister-minister-by-flecktones/" title="Sinister Minister by Flecktones">Sinister Minister...</a></li>
+                <li><a href="http://tottinge.blogsome.com/2010/10/02/unhappy-with-eh-nano-clone/" title="Unhappy with EH Nano Clone">Unhappy with EH...</a></li>
+                <li><a href="http://tottinge.blogsome.com/2010/09/15/tough-week/" title="tough week">tough week</a></li>
+                <li><a href="http://tottinge.blogsome.com/2010/09/10/pb500/" title="PB500">PB500</a></li>
+                <li><a href="http://tottinge.blogsome.com/2010/09/01/waters-and-gilmour/" title="Waters and Gilmour">Waters and Gilmour</a></li>
+                <li><a href="http://tottinge.blogsome.com/2010/08/30/whassup/" title="Whassup?">Whassup?</a></li>
+                <li><a href="http://tottinge.blogsome.com/2010/08/27/tech21-boost-rvb/" title="Tech21 Boost RVB">Tech21 Boost RVB</a></li>
+                <li><a href="http://tottinge.blogsome.com/2010/08/06/oshkosh2010/" title="OshKosh2010">OshKosh2010</a></li>
+                <li><a href="http://tottinge.blogsome.com/2010/08/03/openshot-video-editor/" title="OpenShot video editor">OpenShot video...</a></li>
+                <li><a href="http://tottinge.blogsome.com/2010/07/21/cuckaburra-down-under/" title="Cuckaburra down under">Cuckaburra down...</a></li>
+                <li><a href="http://tottinge.blogsome.com/2010/07/20/dr-who-by-dr-who/" title="Dr Who by Dr Who">Dr Who by Dr Who</a></li>
+                <li><a href="http://tottinge.blogsome.com/2010/07/02/michael-kelly-patriot-vintage-guitar/" title="Michael Kelly Patriot Vintage Guitar">Michael Kelly...</a></li>
+                <li><a href="http://tottinge.blogsome.com/2010/06/28/action-squirrel/" title="Action Squirrel">Action Squirrel</a></li>
+                <li><a href="http://tottinge.blogsome.com/2010/06/11/inspirational-poster/" title="Inspirational Poster">Inspirational Poster</a></li>
+                <li><a href="http://tottinge.blogsome.com/2010/06/06/dialed-in/" title="Dialed in">Dialed in</a></li>
+                </ul>
+        </li></ul>
+        	
+        
+        
+        
+                  <ul><li>Most Popular Posts
+          <ul>
+                      <li><a href="/use-vim-like-a-pro/" title="Use VIM Like a Pro">Use VIM Like a Pro</a>: 11250</li>
+                      <li><a href="/meaningfulnames/" title="Meaningful Names">Meaningful Names</a>: 285</li>
+                      <li><a href="/use-vim-like-a-pro/my-vimrc/" title="My VimRC">My VimRC</a>: 162</li>
+                      <li><a href="/2006/08/09/weirdest-guitar-yet/" title="Weirdest guitar yet">Weirdest guitar yet</a>: 80</li>
+                      <li><a href="/2010/06/11/inspirational-poster/" title="Inspirational Poster">Inspirational Poster</a>: 77</li>
+                      <li><a href="/2006/07/23/amazing-durability-of-sd-card/" title="Amazing Durability of SD Card">Amazing Durability of SD Card</a>: 47</li>
+                      <li><a href="/2009/04/24/justice-is-blinded/" title="Justice is Blind(ed)">Justice is Blind(ed)</a>: 45</li>
+                      <li><a href="/2005/11/17/open-source-v-microsoft/" title="Open Source v. Microsoft">Open Source v. Microsoft</a>: 44</li>
+                      <li><a href="/2007/02/12/the-unspoken-parameter/" title="The Unspoken Parameter">The Unspoken Parameter</a>: 35</li>
+                      <li><a href="/2007/10/27/american-strat-hss-sienna-sunburst/" title="American Strat HSS - Sienna Sunburst">American Strat HSS - Sienna...</a>: 34</li>
+                      <li><a href="/2005/09/28/self-promotion/" title="Can software teams afford self-promotion? ">Can software teams afford...</a>: 33</li>
+                      <li><a href="/2007/03/05/acoustic-simulator/" title="Acoustic Simulator on Zoom GFX-8">Acoustic Simulator on Zoom...</a>: 28</li>
+                      <li><a href="/2010/08/27/tech21-boost-rvb/" title="Tech21 Boost RVB">Tech21 Boost RVB</a>: 26</li>
+                    </ul>
+          </li></ul>
+        	
+        <ul><li>Other:
+        <ul>
+          <li><a href="http://tottinge.blogsome.com/wp-login.php">login</a></li>
+          <li><a href="http://tottinge.blogsome.com/wp-register.php">register</a></li>
+        </ul>
+        </li></ul>
+	
+        <ul><li>Meta:
+        <ul>
+          <li><a href="http://tottinge.blogsome.com/feed/rss/">RSS .92</a></li>
+          <li><a href="http://tottinge.blogsome.com/feed/rdf/">RDF 1.0</a></li>
+          <li><a href="http://tottinge.blogsome.com/feed/">RSS 2.0</a></li>
+          <li><a href="http://tottinge.blogsome.com/feed/atom/">Atom</a></li>
+          <li><a href="http://tottinge.blogsome.com/comments/feed/">Comments RSS 2.0</a></li>
+          <li><a href="http://validator.w3.org/check/referer" title="This page validates as XHTML 1.0 Transitional">Valid <abbr title="eXtensible HyperText Markup Language">XHTML</abbr></a></li>
+        </ul>
+        </li>
+      	</ul>
+        <ul><li><ul><br />
+        <!-- adsense code was here  (a0a1d61a140b3e229cf89a85e45d27d7) -->
+        
+        
+	</ul></li></ul>
+</div>
+</div>
+<!--
+####################################################
+####            Do Not Remove                   ####
+-->
+        <p class="credit"></p>
+<!--
+####            Do Not Remove                   ####
+####################################################
+-->
+
+<script src="http://www.google-analytics.com/urchin.js" 
+  type="text/javascript"></script>
+
+<script type="text/javascript">
+  _uff = false;
+  _uacct = "UA-1676559-2";
+  _udn = "blogsome.com";
+  if(typeof(urchinTracker) == "function")
+    urchinTracker();
+</script>
+
+</body>
+</html>
