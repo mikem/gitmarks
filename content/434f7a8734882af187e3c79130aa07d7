@@ -1,0 +1,1430 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html dir='ltr'>
+<head>
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+<script type="text/javascript">(function() { var a=window;function c(b){this.t={};this.tick=function(d,i,e){e=e?e:(new Date).getTime();this.t[d]=[e,i]};this.tick("start",null,b)}var f=new c;a.jstiming={Timer:c,load:f};try{var g=null;if(a.chrome&&a.chrome.csi)g=Math.floor(a.chrome.csi().pageT);if(g==null)if(a.gtbExternal)g=a.gtbExternal.pageT();if(g==null)if(a.external)g=a.external.pageT;if(g)a.jstiming.pt=g}catch(h){};a.tickAboveFold=function(b){b=b;var d=0;if(b.offsetParent){do d+=b.offsetTop;while(b=b.offsetParent)}b=d;b<=750&&a.jstiming.load.tick("aft")};var j=false;function k(){if(!j){j=true;a.jstiming.load.tick("firstScrollTime")}}a.addEventListener?a.addEventListener("scroll",k,false):a.attachEvent("onscroll",k);
+ })();</script>
+<meta content='true' name='MSSmartTagsPreventParsing'/>
+<meta content='blogger' name='generator'/>
+<link href='http://www.blogger.com/favicon.ico' rel='icon' type='image/vnd.microsoft.icon'/>
+<link href='http://www.gp-field-guide.org.uk/' rel='canonical'/>
+<link rel="alternate" type="application/atom+xml" title="A Field Guide to Genetic Programming - Atom" href="http://www.gp-field-guide.org.uk/feeds/posts/default" />
+<link rel="alternate" type="application/rss+xml" title="A Field Guide to Genetic Programming - RSS" href="http://www.gp-field-guide.org.uk/feeds/posts/default?alt=rss" />
+<link rel="service.post" type="application/atom+xml" title="A Field Guide to Genetic Programming - Atom" href="http://www.blogger.com/feeds/5125681873184688530/posts/default" />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.blogger.com/rsd.g?blogID=5125681873184688530" />
+<link rel="openid.server" href="http://www.blogger.com/openid-server.g" />
+<!--[if IE]> <script> (function() { var html5 = ("abbr,article,aside,audio,canvas,datalist,details," + "figure,footer,header,hgroup,mark,menu,meter,nav,output," + "progress,section,time,video").split(','); for (var i = 0; i < html5.length; i++) { document.createElement(html5[i]); } })(); </script> <![endif]-->
+<title>A Field Guide to Genetic Programming</title>
+<link type='text/css' rel='stylesheet' href='http://www.blogger.com/static/v1/widgets/1743847221-widget_css_bundle.css' />
+ <link rel="stylesheet" type="text/css" href="http://www.blogger.com/dyn-css/authorization.css?targetBlogID=5125681873184688530&zx=dc3edaa7-d556-47af-be68-f52909ba86aa"/>
+<style type="text/css">#navbar-iframe { display:block }
+</style>
+
+<style id='page-skin-1' type='text/css'><!--
+/*
+-----------------------------------------------
+Blogger Template Style
+Name:     Minima Black
+Date:     26 Feb 2004
+Updated by: Blogger Team
+----------------------------------------------- */
+/* Variable definitions
+====================
+<Variable name="bgcolor" description="Page Background Color"
+type="color" default="#000">
+<Variable name="textcolor" description="Text Color"
+type="color" default="#ccc">
+<Variable name="linkcolor" description="Link Color"
+type="color" default="#9ad">
+<Variable name="pagetitlecolor" description="Blog Title Color"
+type="color" default="#ccc">
+<Variable name="descriptioncolor" description="Blog Description Color"
+type="color" default="#777">
+<Variable name="titlecolor" description="Post Title Color"
+type="color" default="#ad9">
+<Variable name="bordercolor" description="Border Color"
+type="color" default="#333">
+<Variable name="sidebarcolor" description="Sidebar Title Color"
+type="color" default="#777">
+<Variable name="sidebartextcolor" description="Sidebar Text Color"
+type="color" default="#999">
+<Variable name="visitedlinkcolor" description="Visited Link Color"
+type="color" default="#a7a">
+<Variable name="bodyfont" description="Text Font"
+type="font" default="normal normal 100% 'Trebuchet MS',Trebuchet,Verdana,Sans-serif">
+<Variable name="headerfont" description="Sidebar Title Font"
+type="font"
+default="normal bold 78% 'Trebuchet MS',Trebuchet,Arial,Verdana,Sans-serif">
+<Variable name="pagetitlefont" description="Blog Title Font"
+type="font"
+default="normal bold 200% 'Trebuchet MS',Trebuchet,Verdana,Sans-serif">
+<Variable name="descriptionfont" description="Blog Description Font"
+type="font"
+default="normal normal 78% 'Trebuchet MS', Trebuchet, Verdana, Sans-serif">
+<Variable name="postfooterfont" description="Post Footer Font"
+type="font"
+default="normal normal 78% 'Trebuchet MS', Trebuchet, Arial, Verdana, Sans-serif">
+<Variable name="startSide" description="Start side in blog language"
+type="automatic" default="left">
+<Variable name="endSide" description="End side in blog language"
+type="automatic" default="right">
+*/
+/* Use this with templates/template-twocol.html */
+body {
+background:#252525;
+margin:0;
+color:#cccccc;
+font: x-small "Trebuchet MS", Trebuchet, Verdana, Sans-serif;
+font-size/* */:/**/small;
+font-size: /**/small;
+text-align: center;
+}
+a:link {
+color:#99aadd;
+text-decoration:none;
+}
+a:visited {
+color:#aa77aa;
+text-decoration:none;
+}
+a:hover {
+color:#80FF00;
+text-decoration:underline;
+}
+a img {
+border-width:0;
+}
+/* Header
+-----------------------------------------------
+*/
+#header-wrapper {
+width:660px;
+margin:0 auto 10px;
+border:1px solid #333333;
+}
+#header-inner {
+background-position: center;
+margin-left: auto;
+margin-right: auto;
+}
+#header {
+margin: 5px;
+border: 1px solid #333333;
+text-align: center;
+color:#80FF00;
+}
+#header h1 {
+margin:5px 5px 0;
+padding:15px 20px .25em;
+line-height:1.2em;
+text-transform:uppercase;
+letter-spacing:.2em;
+font: normal bold 242% Courier, monospace;
+}
+#header a {
+color:#80FF00;
+text-decoration:none;
+}
+#header a:hover {
+color:#80FF00;
+}
+#header .description {
+margin:0 5px 5px;
+padding:0 20px 15px;
+max-width:700px;
+text-transform:uppercase;
+letter-spacing:.2em;
+line-height: 1.4em;
+font: normal normal 78% 'Trebuchet MS', Trebuchet, Verdana, Sans-serif;
+color: #80FF00;
+}
+#header img {
+margin-left: auto;
+margin-right: auto;
+}
+/* Outer-Wrapper
+----------------------------------------------- */
+#outer-wrapper {
+width: 660px;
+margin:0 auto;
+padding:10px;
+text-align:left;
+font: normal normal 100% 'Trebuchet MS',Trebuchet,Verdana,Sans-serif;
+}
+#main-wrapper {
+width: 410px;
+float: left;
+word-wrap: break-word; /* fix for long text breaking sidebar float in IE */
+overflow: hidden;     /* fix for long non-text content breaking IE sidebar float */
+}
+#sidebar-wrapper {
+width: 220px;
+float: right;
+word-wrap: break-word; /* fix for long text breaking sidebar float in IE */
+overflow: hidden;     /* fix for long non-text content breaking IE sidebar float */
+}
+/* Headings
+----------------------------------------------- */
+h2 {
+margin:1.5em 0 .75em;
+font:normal bold 78% 'Trebuchet MS',Trebuchet,Arial,Verdana,Sans-serif;
+line-height: 1.4em;
+text-transform:uppercase;
+letter-spacing:.2em;
+color:#e2ffd8;
+}
+/* Posts
+-----------------------------------------------
+*/
+h2.date-header {
+margin:1.5em 0 .5em;
+}
+.post {
+margin:.5em 0 1.5em;
+border-bottom:1px dotted #333333;
+padding-bottom:1.5em;
+}
+.post h3 {
+margin:.25em 0 0;
+padding:0 0 4px;
+font-size:140%;
+font-weight:normal;
+line-height:1.4em;
+color:#80FF00;
+}
+.post h3 a, .post h3 a:visited, .post h3 strong {
+display:block;
+text-decoration:none;
+color:#80FF00;
+font-weight:bold;
+}
+.post h3 strong, .post h3 a:hover {
+color:#cccccc;
+}
+.post-body {
+margin:0 0 .75em;
+line-height:1.6em;
+}
+.post-body blockquote {
+line-height:1.3em;
+}
+.post-footer {
+margin: .75em 0;
+color:#e2ffd8;
+text-transform:uppercase;
+letter-spacing:.1em;
+font: normal normal 78% 'Trebuchet MS', Trebuchet, Arial, Verdana, Sans-serif;
+line-height: 1.4em;
+}
+.comment-link {
+margin-left:.6em;
+}
+.post img, table.tr-caption-container {
+padding:4px;
+border:1px solid #333333;
+}
+.tr-caption-container img {
+border: none;
+padding: 0;
+}
+.post blockquote {
+margin:1em 20px;
+}
+.post blockquote p {
+margin:.75em 0;
+}
+/* Comments
+----------------------------------------------- */
+#comments h4 {
+margin:1em 0;
+font-weight: bold;
+line-height: 1.4em;
+text-transform:uppercase;
+letter-spacing:.2em;
+color: #e2ffd8;
+}
+#comments-block {
+margin:1em 0 1.5em;
+line-height:1.6em;
+}
+#comments-block .comment-author {
+margin:.5em 0;
+}
+#comments-block .comment-body {
+margin:.25em 0 0;
+}
+#comments-block .comment-footer {
+margin:-.25em 0 2em;
+line-height: 1.4em;
+text-transform:uppercase;
+letter-spacing:.1em;
+}
+#comments-block .comment-body p {
+margin:0 0 .75em;
+}
+.deleted-comment {
+font-style:italic;
+color:gray;
+}
+.feed-links {
+clear: both;
+line-height: 2.5em;
+}
+#blog-pager-newer-link {
+float: left;
+}
+#blog-pager-older-link {
+float: right;
+}
+#blog-pager {
+text-align: center;
+}
+/* Sidebar Content
+----------------------------------------------- */
+.sidebar {
+color: #999999;
+line-height: 1.5em;
+}
+.sidebar ul {
+list-style:none;
+margin:0 0 0;
+padding:0 0 0;
+}
+.sidebar li {
+margin:0;
+padding-top:0;
+padding-right:0;
+padding-bottom:.25em;
+padding-left:15px;
+text-indent:-15px;
+line-height:1.5em;
+}
+.sidebar .widget, .main .widget {
+border-bottom:1px dotted #333333;
+margin:0 0 1.5em;
+padding:0 0 1.5em;
+}
+.main .Blog {
+border-bottom-width: 0;
+}
+/* Profile
+----------------------------------------------- */
+.profile-img {
+float: left;
+margin-top: 0;
+margin-right: 5px;
+margin-bottom: 5px;
+margin-left: 0;
+padding: 4px;
+border: 1px solid #333333;
+}
+.profile-data {
+margin:0;
+text-transform:uppercase;
+letter-spacing:.1em;
+font: normal normal 78% 'Trebuchet MS', Trebuchet, Arial, Verdana, Sans-serif;
+color: #e2ffd8;
+font-weight: bold;
+line-height: 1.6em;
+}
+.profile-datablock {
+margin:.5em 0 .5em;
+}
+.profile-textblock {
+margin: 0.5em 0;
+line-height: 1.6em;
+}
+.profile-link {
+font: normal normal 78% 'Trebuchet MS', Trebuchet, Arial, Verdana, Sans-serif;
+text-transform: uppercase;
+letter-spacing: .1em;
+}
+/* Footer
+----------------------------------------------- */
+#footer {
+width:660px;
+clear:both;
+margin:0 auto;
+padding-top:15px;
+line-height: 1.6em;
+text-transform:uppercase;
+letter-spacing:.1em;
+text-align: center;
+}
+
+--></style>
+<script type="text/javascript">
+if (window.jstiming) window.jstiming.load.tick('headEnd');
+</script></head>
+<body>
+<div class='navbar section' id='navbar'><div class='widget Navbar' id='Navbar1'><script type="text/javascript">
+    function setAttributeOnload(object, attribute, val) {
+      if(window.addEventListener) {
+        window.addEventListener("load",
+          function(){ object[attribute] = val; }, false);
+      } else {
+        window.attachEvent('onload', function(){ object[attribute] = val; });
+      }
+    }
+  </script>
+<iframe src="http://www.blogger.com/navbar.g?targetBlogID=5125681873184688530&amp;blogName=A+Field+Guide+to+Genetic+Programming&amp;publishMode=PUBLISH_MODE_HOSTED&amp;navbarType=BLACK&amp;layoutType=LAYOUTS&amp;searchRoot=http%3A%2F%2Fwww.gp-field-guide.org.uk%2Fsearch&amp;blogLocale=en_GB&amp;homepageUrl=http%3A%2F%2Fwww.gp-field-guide.org.uk%2F" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" height="30px" width="100%" id="navbar-iframe" allowtransparency="true" title="Blogger Navigation and Search"></iframe>
+<div></div></div></div>
+<div id='outer-wrapper'><div id='wrap2'>
+<!-- skip links for text browsers -->
+<span id='skiplinks' style='display:none;'>
+<a href='#main'>skip to main </a> |
+      <a href='#sidebar'>skip to sidebar</a>
+</span>
+<div id='header-wrapper'>
+<div class='header section' id='header'><div class='widget Header' id='Header1'>
+<div id='header-inner'>
+<div class='titlewrapper'>
+<h1 class='title'>
+A Field Guide to Genetic Programming
+</h1>
+</div>
+<div class='descriptionwrapper'>
+<p class='description'><span>Web site in support of a freely downloadable, Creative Commons licensed introduction to genetic programming</span></p>
+</div>
+</div>
+</div></div>
+</div>
+<div id='content-wrapper'>
+<div id='crosscol-wrapper' style='text-align:center'>
+<div class='crosscol section' id='crosscol'></div>
+</div>
+<div id='main-wrapper'>
+<div class='main section' id='main'><div class='widget HTML' id='HTML1'>
+<h2 class='title'>About the book</h2>
+<div class='widget-content'>
+<img vspace="5" hspace="5" alt="Robot with transparent background" width="49" src="http://www.morris.umn.edu/~mcphee/Images/TransparentRobot.png" height="100" align="left"/>
+<em>A Field Guide to Genetic Programming</em> (ISBN 978-1-4092-0073-4) is an introduction to  genetic programming (GP).
+GP is a systematic, domain-independent method for getting computers to solve problems automatically starting from a high-level statement of what needs to be done. Using ideas from natural evolution, GP starts from an ooze of random computer programs, and progressively refines them through processes of mutation and sexual recombination, until solutions emerge. All this without the user having to know or specify the form or structure of solutions in advance. GP has generated a plethora of human-competitive results and applications, including novel scientific discoveries and patentable inventions.
+<br/><br/>
+
+
+
+The book is <a href="http://www.lulu.com/content/2167025">freely downloadable</a> under a <a href="http://creativecommons.org/">Creative Commons</a> license as a PDF and low cost printed copies can be purchased from <a href="http://www.lulu.com/content/2167025">lulu.com</a>.
+
+
+
+
+
+This web site will be used for information relating to the book, and other pertinent announcements. We also have a <a href="http://groups.google.co.uk/group/field-guide-to-genetic-programming">discussion group</a> for questions and conversation related to the book.
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=5125681873184688530&widgetType=HTML&widgetId=HTML1&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("HTML1"));' target='configHTML1' title='Edit'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div><div class='widget Blog' id='Blog1'>
+<div class='blog-posts hfeed'>
+<!-- google_ad_section_start(name=default) -->
+
+          <div class="date-outer">
+        
+<h2 class='date-header'><span>Friday, 30 July 2010</span></h2>
+
+          <div class="date-posts">
+        
+<div class='post-outer'>
+<div class='post hentry uncustomized-post-template'>
+<a name='6631276460960445912'></a>
+<h3 class='post-title entry-title'>
+<a href='http://www.gp-field-guide.org.uk/2010/07/just-2-days-left-gpem-anniversary-issue.html'>Just 2 days left: GPEM anniversary issue available for free!</a>
+</h3>
+<div class='post-header'>
+<div class='post-header-line-1'></div>
+</div>
+<div class='post-body entry-content'>
+The Springer journal Genetic Programming and Evolvable Machines is celebrating its first 10 years with a special anniversary issue of articles reviewing the state of GP and considering some of its possible futures.  For the month of July (which ends in two days!) the entire issue is <a href="http://www.springerlink.com/content/h46r77k291rn/">available for free download</a>. <br /><br />Included in the issue are:<br /><ul><li>Human-competitive results produced by genetic programming</li><li>Theoretical results in genetic programming: the next ten years?</li><li>Genetic Programming and Evolvable Machines: ten years of reviews</li><li>Open issues in genetic programming</li><li>Grammar-based genetic programming: a survey</li><li>Developments in Cartesian Genetic Programming: self-modifying CGP</li><li>Bio-inspired artificial intelligence: theory, methods, and technologies</li></ul>Once the month ends these will all start costing money again with two exceptions: the article on human-competitive results and the survey of 10 years of reviews will remain free in perpetuity.<br /><br />In the spirit of full disclosure, Riccardo, Bill, and I are all on the editorial board of the journal and contributed to one or more of the articles.  Still, it's a cool resource marking an interesting time in the development of the field, so take advantage of it while you can!
+<div style='clear: both;'></div>
+</div>
+<div class='post-footer'>
+<div class='post-footer-line post-footer-line-1'>
+<span class='post-author vcard'>
+Posted by
+<span class='fn'>Nic McPhee</span>
+</span>
+<span class='post-timestamp'>
+at
+<a class='timestamp-link' href='http://www.gp-field-guide.org.uk/2010/07/just-2-days-left-gpem-anniversary-issue.html' rel='bookmark' title='permanent link'><abbr class='published' title='2010-07-30T00:06:00+01:00'>00:06</abbr></a>
+</span>
+<span class='reaction-buttons'>
+</span>
+<span class='dummy-feature'>
+</span>
+<span class='star-ratings'>
+</span>
+<span class='post-comment-link'>
+<a class='comment-link' href='https://www.blogger.com/comment.g?blogID=5125681873184688530&postID=6631276460960445912' onclick=''>0
+comments</a>
+</span>
+<span class='post-backlinks post-comment-link'>
+</span>
+<span class='post-icons'>
+<span class='item-control blog-admin pid-1005105012'>
+<a href='http://www.blogger.com/post-edit.g?blogID=5125681873184688530&postID=6631276460960445912' title='Edit Post'>
+<img alt='' class='icon-action' height='18' src='http://img2.blogblog.com/img/icon18_edit_allbkg.gif' width='18'/>
+</a>
+</span>
+</span>
+<div class='post-share-buttons'>
+</div>
+</div>
+<div class='post-footer-line post-footer-line-2'>
+<span class='post-labels'>
+Labels:
+<a href='http://www.gp-field-guide.org.uk/search/label/GPEM' rel='tag'>GPEM</a>,
+<a href='http://www.gp-field-guide.org.uk/search/label/plugs' rel='tag'>plugs</a>
+</span>
+</div>
+<div class='post-footer-line post-footer-line-3'>
+<span class='post-location'>
+</span>
+</div>
+</div>
+</div>
+</div>
+<div id="latency-6631276460960445912"></div><script type="text/javascript">if (window['tickAboveFold']) {window['tickAboveFold'](document.getElementById("latency-6631276460960445912")); } </script>
+
+            </div></div>
+          
+
+          <div class="date-outer">
+        
+<h2 class='date-header'><span>Saturday, 19 September 2009</span></h2>
+
+          <div class="date-posts">
+        
+<div class='post-outer'>
+<div class='post hentry uncustomized-post-template'>
+<a name='6971698135379554688'></a>
+<h3 class='post-title entry-title'>
+<a href='http://www.gp-field-guide.org.uk/2009/09/thanks-for-kind-words-about-field-guide.html'>Thanks for the kind words about the Field Guide</a>
+</h3>
+<div class='post-header'>
+<div class='post-header-line-1'></div>
+</div>
+<div class='post-body entry-content'>
+<span class="Apple-style-span"  style="font-size:medium;">We occasionally have the gratifying experience of stumbling across someone who's said something nice about the Field Guide out there on the Internet.  Recently, for example, Bill came across this comment on </span><span class="Apple-style-span"  style="font-size:medium;"><a href="http://www.geneticprogramming.us/Further_Reading.html">GeneticProgramming.us</a></span><div><span class="Apple-style-span"  style="font-family:Arial, Verdana, sans-serif;"><blockquote><span class="Apple-style-span"  style="font-family:georgia;"><span class="Apple-style-span"  style="font-size:medium;"><br />   The Field Guide to Genetic Programming was compiled from numerous sources to reflect the current state and practice of Genetic Programming. This book is an invaluable asset to anybody interested in Genetic Programming. I highly recommend it. It is available for free online, but it certainly doesn't hurt to have a hard copy.</span></span></blockquote></span></div><div><span class="Apple-style-span"   style="font-family:Arial, Verdana, sans-serif;"><span class="Apple-style-span"  style="font-family:Georgia, serif;"><span class="Apple-style-span"  style="font-size:medium;">We greatly </span></span><span class="Apple-style-span" style=""><span class="Apple-style-span"  style="font-family:georgia;"><span class="Apple-style-span"  style="font-size:medium;">appreciate</span></span></span><span class="Apple-style-span"  style="font-family:Georgia, serif;"><span class="Apple-style-span"  style="font-size:medium;"> this sort of support.  It's nice to know that people are finding the Field Guide useful, and are willing to spread the word.  Many thanks to everyone who's put a little of their energy into our project.</span></span></span></div><div><span class="Apple-style-span"  style="font-size:medium;"><br /></span></div><div><span class="Apple-style-span"  style="font-size:medium;">Quite remarkably, the Field Guide continues to sell steadily on Amazon despite being freely available in multiple formats.  </span><a href="http://www.amazon.com/Field-Guide-Genetic-Programming/dp/1409200736/ref=sr_1_1?ie=UTF8&amp;s=books&amp;qid=1253383742&amp;sr=8-1"><span class="Apple-style-span"  style="font-size:medium;">Our sales rank on Amazon.com</span></a><span class="Apple-style-span"  style="font-size:medium;"> is (as of today) #198,789.  This may not sound like much, but for a quite specific technical book in an area of computer science most people haven't heard of this is pretty darn excellent!  A quick survey of some of the other heavy hitters in the EC book list shows that they're all ranked over 200K, with many </span><i><span class="Apple-style-span"  style="font-size:medium;">much</span></i><span class="Apple-style-span"  style="font-size:medium;"> higher (like over 500K).  That said, </span><a href="http://www.amazon.com/Complexity-Guided-Tour-Melanie-Mitchell/dp/0195124413/ref=pd_sim_b_2"><span class="Apple-style-span"  style="font-size:medium;">Melanie Mitchell's new </span></a><i><a href="http://www.amazon.com/Complexity-Guided-Tour-Melanie-Mitchell/dp/0195124413/ref=pd_sim_b_2"><span class="Apple-style-span"  style="font-size:medium;">Complexity: A guided tour</span></a></i><span class="Apple-style-span"  style="font-size:medium;"> (which is a general audience book) is ranked 2,981, which is a really excellent achievement - congratulations to Melanie!</span></div><div><span class="Apple-style-span"  style="font-size:medium;"><br /></span></div><div><span class="Apple-style-span"  style="font-size:medium;">If you're a reader of either the PDF or printed version and would like to lend a hand, feel free to leave a short review on something like Amazon - it's definitely appreciated.</span></div>
+<div style='clear: both;'></div>
+</div>
+<div class='post-footer'>
+<div class='post-footer-line post-footer-line-1'>
+<span class='post-author vcard'>
+Posted by
+<span class='fn'>Nic McPhee</span>
+</span>
+<span class='post-timestamp'>
+at
+<a class='timestamp-link' href='http://www.gp-field-guide.org.uk/2009/09/thanks-for-kind-words-about-field-guide.html' rel='bookmark' title='permanent link'><abbr class='published' title='2009-09-19T19:04:00+01:00'>19:04</abbr></a>
+</span>
+<span class='reaction-buttons'>
+</span>
+<span class='dummy-feature'>
+</span>
+<span class='star-ratings'>
+</span>
+<span class='post-comment-link'>
+<a class='comment-link' href='https://www.blogger.com/comment.g?blogID=5125681873184688530&postID=6971698135379554688' onclick=''>2
+comments</a>
+</span>
+<span class='post-backlinks post-comment-link'>
+</span>
+<span class='post-icons'>
+<span class='item-control blog-admin pid-1005105012'>
+<a href='http://www.blogger.com/post-edit.g?blogID=5125681873184688530&postID=6971698135379554688' title='Edit Post'>
+<img alt='' class='icon-action' height='18' src='http://img2.blogblog.com/img/icon18_edit_allbkg.gif' width='18'/>
+</a>
+</span>
+</span>
+<div class='post-share-buttons'>
+</div>
+</div>
+<div class='post-footer-line post-footer-line-2'>
+<span class='post-labels'>
+Labels:
+<a href='http://www.gp-field-guide.org.uk/search/label/Amazon' rel='tag'>Amazon</a>,
+<a href='http://www.gp-field-guide.org.uk/search/label/reviews' rel='tag'>reviews</a>,
+<a href='http://www.gp-field-guide.org.uk/search/label/sales' rel='tag'>sales</a>,
+<a href='http://www.gp-field-guide.org.uk/search/label/thanks' rel='tag'>thanks</a>
+</span>
+</div>
+<div class='post-footer-line post-footer-line-3'>
+<span class='post-location'>
+</span>
+</div>
+</div>
+</div>
+</div>
+<div id="latency-6971698135379554688"></div><script type="text/javascript">if (window['tickAboveFold']) {window['tickAboveFold'](document.getElementById("latency-6971698135379554688")); } </script>
+
+            </div></div>
+          
+
+          <div class="date-outer">
+        
+<h2 class='date-header'><span>Friday, 27 March 2009</span></h2>
+
+          <div class="date-posts">
+        
+<div class='post-outer'>
+<div class='post hentry uncustomized-post-template'>
+<a name='4549958789456388561'></a>
+<h3 class='post-title entry-title'>
+<a href='http://www.gp-field-guide.org.uk/2009/03/happy-birthday-field-guide.html'>Happy Birthday Field Guide!</a>
+</h3>
+<div class='post-header'>
+<div class='post-header-line-1'></div>
+</div>
+<div class='post-body entry-content'>
+It is hard to believe it's already a year since the launch of the Field Guide to GP. It has been amazing to see it spread. We have had nearly 40,000 views of this web site (see data below), almost exactly 28,000 downloads of the book and we are rapidly approaching the 500 mark with paper copies. I suspect (also judging from the referring sites) that many of these "contacts" have been with people who had never heard of GP before, possibly not even of evolutionary computation. This was one of the targets we had in mind when we decided to write this book and make it freely available. Many colleagues have actually helped us in this, by recommending the book to others, by suggesting it as a textbook for university courses, by mentioning the book in their blogs, etc. We are very grateful to them and to all the visitors of this site and readers of the book. <br /><br />Happy first birthday Field Guide!<br /><a onblur="try {parent.deselectBloggerImageGracefully();} catch(e) {}" href="http://3.bp.blogspot.com/_tKSoSs4FvMc/Sc1I2yUIb6I/AAAAAAAABQs/O1MfR-Seggw/s1600-h/field-guide-views-and-visits.png"><img style="cursor: pointer; width: 277px; height: 400px;" src="http://3.bp.blogspot.com/_tKSoSs4FvMc/Sc1I2yUIb6I/AAAAAAAABQs/O1MfR-Seggw/s400/field-guide-views-and-visits.png" alt="" id="BLOGGER_PHOTO_ID_5317986841050771362" border="0" /></a>
+<div style='clear: both;'></div>
+</div>
+<div class='post-footer'>
+<div class='post-footer-line post-footer-line-1'>
+<span class='post-author vcard'>
+Posted by
+<span class='fn'>Riccardo Poli</span>
+</span>
+<span class='post-timestamp'>
+at
+<a class='timestamp-link' href='http://www.gp-field-guide.org.uk/2009/03/happy-birthday-field-guide.html' rel='bookmark' title='permanent link'><abbr class='published' title='2009-03-27T21:37:00Z'>21:37</abbr></a>
+</span>
+<span class='reaction-buttons'>
+</span>
+<span class='dummy-feature'>
+</span>
+<span class='star-ratings'>
+</span>
+<span class='post-comment-link'>
+<a class='comment-link' href='https://www.blogger.com/comment.g?blogID=5125681873184688530&postID=4549958789456388561' onclick=''>1 comments</a>
+</span>
+<span class='post-backlinks post-comment-link'>
+</span>
+<span class='post-icons'>
+<span class='item-control blog-admin pid-2132940984'>
+<a href='http://www.blogger.com/post-edit.g?blogID=5125681873184688530&postID=4549958789456388561' title='Edit Post'>
+<img alt='' class='icon-action' height='18' src='http://img2.blogblog.com/img/icon18_edit_allbkg.gif' width='18'/>
+</a>
+</span>
+</span>
+<div class='post-share-buttons'>
+</div>
+</div>
+<div class='post-footer-line post-footer-line-2'>
+<span class='post-labels'>
+</span>
+</div>
+<div class='post-footer-line post-footer-line-3'>
+<span class='post-location'>
+</span>
+</div>
+</div>
+</div>
+</div>
+<div id="latency-4549958789456388561"></div><script type="text/javascript">if (window['tickAboveFold']) {window['tickAboveFold'](document.getElementById("latency-4549958789456388561")); } </script>
+
+            </div></div>
+          
+
+          <div class="date-outer">
+        
+<h2 class='date-header'><span>Thursday, 5 February 2009</span></h2>
+
+          <div class="date-posts">
+        
+<div class='post-outer'>
+<div class='post hentry uncustomized-post-template'>
+<a name='1167281948931177862'></a>
+<h3 class='post-title entry-title'>
+<a href='http://www.gp-field-guide.org.uk/2009/02/google-hits.html'>Google hits</a>
+</h3>
+<div class='post-header'>
+<div class='post-header-line-1'></div>
+</div>
+<div class='post-body entry-content'>
+Just for fun, a few days ago I tried searching Google for "genetic programming", and got a whopping half a million hits (533,000 as of this morning).<br /><br />I could not resist trying out "field guide to genetic programming". Last time I had done it, a few months ago, we had something like 3,500 hits, which I thought was wonderful. So, nothing prepared me for this: <span style="font-weight: bold;">47,400 hits</span>!!! (as of this morning) I.e., amazingly, 11.2% of all pages that mention GP also mention the book.<br /><br />I suspect a lot of this is just due to the fact that a few big blogs somehow mentioned the book. One of the latest was a mention of the book in del.icio.us in relation to Roger Alsing's <a href="http://rogeralsing.com/2008/12/07/genetic-programming-evolution-of-mona-lisa/">Evolution of Monna Lisa</a>. (I'm not even sure that is genetic programming, but still a very cool application.)<br /><br />Many thanks!<br /><br />Riccardo
+<div style='clear: both;'></div>
+</div>
+<div class='post-footer'>
+<div class='post-footer-line post-footer-line-1'>
+<span class='post-author vcard'>
+Posted by
+<span class='fn'>Riccardo Poli</span>
+</span>
+<span class='post-timestamp'>
+at
+<a class='timestamp-link' href='http://www.gp-field-guide.org.uk/2009/02/google-hits.html' rel='bookmark' title='permanent link'><abbr class='published' title='2009-02-05T09:21:00Z'>09:21</abbr></a>
+</span>
+<span class='reaction-buttons'>
+</span>
+<span class='dummy-feature'>
+</span>
+<span class='star-ratings'>
+</span>
+<span class='post-comment-link'>
+<a class='comment-link' href='https://www.blogger.com/comment.g?blogID=5125681873184688530&postID=1167281948931177862' onclick=''>1 comments</a>
+</span>
+<span class='post-backlinks post-comment-link'>
+</span>
+<span class='post-icons'>
+<span class='item-control blog-admin pid-2132940984'>
+<a href='http://www.blogger.com/post-edit.g?blogID=5125681873184688530&postID=1167281948931177862' title='Edit Post'>
+<img alt='' class='icon-action' height='18' src='http://img2.blogblog.com/img/icon18_edit_allbkg.gif' width='18'/>
+</a>
+</span>
+</span>
+<div class='post-share-buttons'>
+</div>
+</div>
+<div class='post-footer-line post-footer-line-2'>
+<span class='post-labels'>
+Labels:
+<a href='http://www.gp-field-guide.org.uk/search/label/blogs' rel='tag'>blogs</a>,
+<a href='http://www.gp-field-guide.org.uk/search/label/Google' rel='tag'>Google</a>
+</span>
+</div>
+<div class='post-footer-line post-footer-line-3'>
+<span class='post-location'>
+</span>
+</div>
+</div>
+</div>
+</div>
+<div id="latency-1167281948931177862"></div><script type="text/javascript">if (window['tickAboveFold']) {window['tickAboveFold'](document.getElementById("latency-1167281948931177862")); } </script>
+
+            </div></div>
+          
+
+          <div class="date-outer">
+        
+<h2 class='date-header'><span>Monday, 19 January 2009</span></h2>
+
+          <div class="date-posts">
+        
+<div class='post-outer'>
+<div class='post hentry uncustomized-post-template'>
+<a name='2939141821946655246'></a>
+<h3 class='post-title entry-title'>
+<a href='http://www.gp-field-guide.org.uk/2009/01/another-bug-fixed-in-tinygp.html'>Another Bug Fixed in TinyGP</a>
+</h3>
+<div class='post-header'>
+<div class='post-header-line-1'></div>
+</div>
+<div class='post-body entry-content'>
+Many thanks to Muhammad Atif Azad, who thoroughly analysed <a href="http://cswww.essex.ac.uk/staff/rpoli/TinyGP/">TinyGP.java</a>, the sample GP implementation in one of the appendices of the book, and uncovered another important bug.<br /><br />In the <span style="font-style: italic;">evolve</span> function the following line of code<br /><br /><span style="font-weight: bold;">if ( rd.nextDouble() > CROSSOVER_PROB  ) {</span><br /><br />should be<br /><br /> <span style="font-weight: bold;">if ( rd.nextDouble() <</span><span style="font-weight: bold;"> CROSSOVER_PROB  ) {</span><br /><span style="font-weight: bold;"><br /></span><span>This bug does not crash the system, but it means that the parameter CROSSOVER_PROB is interpreted as the mutation probability rather than the crossover probability (its intended purpose).<br /><br />We had found and cured this bug some years ago in the C version of TinyGP, but it somehow made it into the Java version (probably because I did the conversion before the bug had been found).<br /><br />The bug has now been fixed in the</span><span style="font-weight: bold;"> <a href="http://cswww.essex.ac.uk/staff/rpoli/TinyGP/">online version of TinyGP.java</a><br /><br />My most sincere apologies to any users of this system.</span>
+<div style='clear: both;'></div>
+</div>
+<div class='post-footer'>
+<div class='post-footer-line post-footer-line-1'>
+<span class='post-author vcard'>
+Posted by
+<span class='fn'>Riccardo Poli</span>
+</span>
+<span class='post-timestamp'>
+at
+<a class='timestamp-link' href='http://www.gp-field-guide.org.uk/2009/01/another-bug-fixed-in-tinygp.html' rel='bookmark' title='permanent link'><abbr class='published' title='2009-01-19T05:46:00Z'>05:46</abbr></a>
+</span>
+<span class='reaction-buttons'>
+</span>
+<span class='dummy-feature'>
+</span>
+<span class='star-ratings'>
+</span>
+<span class='post-comment-link'>
+<a class='comment-link' href='https://www.blogger.com/comment.g?blogID=5125681873184688530&postID=2939141821946655246' onclick=''>0
+comments</a>
+</span>
+<span class='post-backlinks post-comment-link'>
+</span>
+<span class='post-icons'>
+<span class='item-control blog-admin pid-2132940984'>
+<a href='http://www.blogger.com/post-edit.g?blogID=5125681873184688530&postID=2939141821946655246' title='Edit Post'>
+<img alt='' class='icon-action' height='18' src='http://img2.blogblog.com/img/icon18_edit_allbkg.gif' width='18'/>
+</a>
+</span>
+</span>
+<div class='post-share-buttons'>
+</div>
+</div>
+<div class='post-footer-line post-footer-line-2'>
+<span class='post-labels'>
+Labels:
+<a href='http://www.gp-field-guide.org.uk/search/label/TinyGP' rel='tag'>TinyGP</a>
+</span>
+</div>
+<div class='post-footer-line post-footer-line-3'>
+<span class='post-location'>
+</span>
+</div>
+</div>
+</div>
+</div>
+<div id="latency-2939141821946655246"></div><script type="text/javascript">if (window['tickAboveFold']) {window['tickAboveFold'](document.getElementById("latency-2939141821946655246")); } </script>
+
+            </div></div>
+          
+
+          <div class="date-outer">
+        
+<h2 class='date-header'><span>Wednesday, 26 November 2008</span></h2>
+
+          <div class="date-posts">
+        
+<div class='post-outer'>
+<div class='post hentry uncustomized-post-template'>
+<a name='7169668257583886854'></a>
+<h3 class='post-title entry-title'>
+<a href='http://www.gp-field-guide.org.uk/2008/11/odyssy-20001.html'>Odyssy 20001</a>
+</h3>
+<div class='post-header'>
+<div class='post-header-line-1'></div>
+</div>
+<div class='post-body entry-content'>
+The book is sky rocketing. Amazingly, 8 months (to the day!) since its launch, today we passed the 20,000 copies  limit (hitting 20001 to the last check, hence the title of this post). Of these approx 98.7% are (genuine) downloads and 1.3% paper copies.<br /><br />Many thanks!
+<div style='clear: both;'></div>
+</div>
+<div class='post-footer'>
+<div class='post-footer-line post-footer-line-1'>
+<span class='post-author vcard'>
+Posted by
+<span class='fn'>A Field Guide to Genetic Programming</span>
+</span>
+<span class='post-timestamp'>
+at
+<a class='timestamp-link' href='http://www.gp-field-guide.org.uk/2008/11/odyssy-20001.html' rel='bookmark' title='permanent link'><abbr class='published' title='2008-11-26T04:37:00Z'>04:37</abbr></a>
+</span>
+<span class='reaction-buttons'>
+</span>
+<span class='dummy-feature'>
+</span>
+<span class='star-ratings'>
+</span>
+<span class='post-comment-link'>
+<a class='comment-link' href='https://www.blogger.com/comment.g?blogID=5125681873184688530&postID=7169668257583886854' onclick=''>1 comments</a>
+</span>
+<span class='post-backlinks post-comment-link'>
+</span>
+<span class='post-icons'>
+<span class='item-control blog-admin pid-1705825679'>
+<a href='http://www.blogger.com/post-edit.g?blogID=5125681873184688530&postID=7169668257583886854' title='Edit Post'>
+<img alt='' class='icon-action' height='18' src='http://img2.blogblog.com/img/icon18_edit_allbkg.gif' width='18'/>
+</a>
+</span>
+</span>
+<div class='post-share-buttons'>
+</div>
+</div>
+<div class='post-footer-line post-footer-line-2'>
+<span class='post-labels'>
+</span>
+</div>
+<div class='post-footer-line post-footer-line-3'>
+<span class='post-location'>
+</span>
+</div>
+</div>
+</div>
+</div>
+<div id="latency-7169668257583886854"></div><script type="text/javascript">if (window['tickAboveFold']) {window['tickAboveFold'](document.getElementById("latency-7169668257583886854")); } </script>
+
+            </div></div>
+          
+
+          <div class="date-outer">
+        
+<h2 class='date-header'><span>Tuesday, 18 November 2008</span></h2>
+
+          <div class="date-posts">
+        
+<div class='post-outer'>
+<div class='post hentry uncustomized-post-template'>
+<a name='4974957947349439905'></a>
+<h3 class='post-title entry-title'>
+<a href='http://www.gp-field-guide.org.uk/2008/11/potential-bug-in-tinygp.html'>A (potential) bug in TinyGP</a>
+</h3>
+<div class='post-header'>
+<div class='post-header-line-1'></div>
+</div>
+<div class='post-body entry-content'>
+Many thanks to Muhammad Atif Azad who found a bug in my implementation of the grow method. Quoting from his email:<br /><br /><blockquote><span style="font-style: italic;">The 'grow' function returns -1 if we go past the maximum size limit. Consider the following line of code:</span><br /><br /><code>return( grow( buffer, grow( buffer, pos+1, max,depth-1), max,depth-1 ) );</code><br /><br /><span style="font-style: italic;">Let's say the nested grow returns -1. The outer grow accepts it for 'pos' i.e. index to next location in the tree to grow. There is no check inside the function grow against (pos == -1). Thus, it would raise a run time exception if used.</span><br /><br /><span style="font-style: italic;">The reason it may not have occurred so far may be that we reach the depth constraint earlier than the size limit.</span></blockquote><br />Indeed Atif is right: since by default MAX_LEN is set to 10,000, in order for the bug to occur one needs to use very big initial maximum depths so that individuals with more than 10,000 nodes may be created.<br /><br />The online version of TinyGP (available <a href="http://cswww.essex.ac.uk/staff/rpoli/TinyGP/">here</a>) has a fix for this potential bug.<br /><br />PS: In the original version of TinyGP, the code to perform point mutation replaced terminals with variables. This implied a bias in that random constants were actively removed from the population when mutation was switched on. Atif pointed this out to me recently. The current version of TinyGP does not have this bias.
+<div style='clear: both;'></div>
+</div>
+<div class='post-footer'>
+<div class='post-footer-line post-footer-line-1'>
+<span class='post-author vcard'>
+Posted by
+<span class='fn'>Riccardo Poli</span>
+</span>
+<span class='post-timestamp'>
+at
+<a class='timestamp-link' href='http://www.gp-field-guide.org.uk/2008/11/potential-bug-in-tinygp.html' rel='bookmark' title='permanent link'><abbr class='published' title='2008-11-18T09:25:00Z'>09:25</abbr></a>
+</span>
+<span class='reaction-buttons'>
+</span>
+<span class='dummy-feature'>
+</span>
+<span class='star-ratings'>
+</span>
+<span class='post-comment-link'>
+<a class='comment-link' href='https://www.blogger.com/comment.g?blogID=5125681873184688530&postID=4974957947349439905' onclick=''>0
+comments</a>
+</span>
+<span class='post-backlinks post-comment-link'>
+</span>
+<span class='post-icons'>
+<span class='item-control blog-admin pid-2132940984'>
+<a href='http://www.blogger.com/post-edit.g?blogID=5125681873184688530&postID=4974957947349439905' title='Edit Post'>
+<img alt='' class='icon-action' height='18' src='http://img2.blogblog.com/img/icon18_edit_allbkg.gif' width='18'/>
+</a>
+</span>
+</span>
+<div class='post-share-buttons'>
+</div>
+</div>
+<div class='post-footer-line post-footer-line-2'>
+<span class='post-labels'>
+Labels:
+<a href='http://www.gp-field-guide.org.uk/search/label/TinyGP' rel='tag'>TinyGP</a>
+</span>
+</div>
+<div class='post-footer-line post-footer-line-3'>
+<span class='post-location'>
+</span>
+</div>
+</div>
+</div>
+</div>
+<div id="latency-4974957947349439905"></div><script type="text/javascript">if (window['tickAboveFold']) {window['tickAboveFold'](document.getElementById("latency-4974957947349439905")); } </script>
+
+        </div></div>
+      
+<!-- google_ad_section_end -->
+</div>
+<div class='blog-pager' id='blog-pager'>
+<span id='blog-pager-older-link'>
+<a class='blog-pager-older-link' href='http://www.gp-field-guide.org.uk/search?updated-max=2008-11-18T09%3A25%3A00Z&max-results=7' id='Blog1_blog-pager-older-link' title='Older Posts'>Older Posts</a>
+</span>
+<a class='home-link' href='http://www.gp-field-guide.org.uk/'>Home</a>
+</div>
+<div class='clear'></div>
+<div class='blog-feeds'>
+<div class='feed-links'>
+Subscribe to:
+<a class='feed-link' href='http://www.gp-field-guide.org.uk/feeds/posts/default' target='_blank' type='application/atom+xml'>Posts (Atom)</a>
+</div>
+</div>
+</div></div>
+</div>
+<div id='sidebar-wrapper'>
+<div class='sidebar section' id='sidebar'><div class='widget LinkList' id='LinkList1'>
+<h2>Get a copy!!!</h2>
+<div class='widget-content'>
+<ul>
+<li><a href='http://www.lulu.com/content/2167025'>Download the PDF for free!</a></li>
+<li><a href='http://cswww.essex.ac.uk/staff/rpoli/gp-field-guide'>Browse the HTML version!</a></li>
+<li><a href='http://www.lulu.com/content/2167025'>Buy a printed copy at Lulu!</a></li>
+<li><a href='http://www.amazon.com/Field-Guide-Genetic-Programming/dp/1409200736/ref=sr_1_4?ie=UTF8&s=books&qid=1210074541&sr=1-4'>Buy from Amazon.com!</a></li>
+<li><a href='http://www.amazon.co.uk/Field-Guide-Genetic-Programming/dp/1409200736/ref=sr_1_1?ie=UTF8&s=books&qid=1211017770&sr=8-1'>Buy from Amazon.co.uk!</a></li>
+<li><a href='http://books.google.com/books?id=3PBrqNK5fFQC'>Find it in Google books!</a></li>
+</ul>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=5125681873184688530&widgetType=LinkList&widgetId=LinkList1&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("LinkList1"));' target='configLinkList1' title='Edit'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div><div class='widget HTML' id='HTML2'>
+<div class='widget-content'>
+<a href="http://www.flickr.com/photos/nicmcphee/2296264822/" title="A Field Guide to Genetic Programming, front cover small by Unhindered by Talent, on Flickr"><img width="192" alt="A Field Guide to Genetic Programming, front cover small" src="http://farm3.static.flickr.com/2374/2300222308_3808fc7e2d_o.png" height="288"/></a>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=5125681873184688530&widgetType=HTML&widgetId=HTML2&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("HTML2"));' target='configHTML2' title='Edit'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div><div class='widget HTML' id='HTML4'>
+<div class='widget-content'>
+<table border="0" style="background-color: #fff; padding: 5px;" cellspacing="0">
+  <tr><td>
+  <img width="132" alt="Google Groups" src="http://groups.google.co.uk/groups/img/3nb/groups_bar.gif" 
+ height="26"/>
+  </td></tr>
+  <tr><td style="padding-left: 5px"> <b>Subscribe to Field Guide to Genetic Programming</b> </td></tr>
+  <form action="http://groups.google.co.uk/group/field-guide-to-genetic-programming/boxsubscribe">
+  <tr><td style="padding-left: 5px;"> Email: <input name="email" type="text"/>
+  <input value="Subscribe" name="sub" type="submit"/>
+  </td></tr>
+</form>
+<tr><td align="right"> <a href="http://groups.google.co.uk/group/field-guide-to-genetic-programming">Visit this group</a> </td></tr>
+</table>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=5125681873184688530&widgetType=HTML&widgetId=HTML4&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("HTML4"));' target='configHTML4' title='Edit'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div><div class='widget LinkList' id='LinkList2'>
+<h2>The authors</h2>
+<div class='widget-content'>
+<ul>
+<li><a href='http://cswww.essex.ac.uk/staff/rpoli'>Riccardo Poli</a></li>
+<li><a href='http://www.cs.ucl.ac.uk/staff/W.Langdon/'>Bill Langdon</a></li>
+<li><a href='http://www.morris.umn.edu/~mcphee/'>Nic McPhee</a></li>
+</ul>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=5125681873184688530&widgetType=LinkList&widgetId=LinkList2&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("LinkList2"));' target='configLinkList2' title='Edit'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div><div class='widget LinkList' id='LinkList3'>
+<h2>Resources</h2>
+<div class='widget-content'>
+<ul>
+<li><a href='http://groups.google.co.uk/group/field-guide-to-genetic-programming'>Field Guide discussion group</a></li>
+<li><a href='http://www.cs.bham.ac.uk/~wbl/biblio/'>The GP Bibliography</a></li>
+<li><a href='http://tech.groups.yahoo.com/group/genetic_programming/'>The GP mailing list</a></li>
+<li><a href='http://cswww.essex.ac.uk/staff/rpoli/TinyGP/'>Riccardo's TinyGP implementation from Appendix B</a></li>
+</ul>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=5125681873184688530&widgetType=LinkList&widgetId=LinkList3&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("LinkList3"));' target='configLinkList3' title='Edit'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div><div class='widget Feed' id='Feed6'>
+<h2>Recent Field Guide discussion group posts</h2>
+<div class='widget-content' id='Feed6_feedItemListDisplay'>
+<span style='filter: alpha(25); opacity: 0.25;'>
+<a href='http://groups.google.co.uk/group/field-guide-to-genetic-programming/feed/rss_v2_0_msgs.xml'>Loading...</a>
+</span>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=5125681873184688530&widgetType=Feed&widgetId=Feed6&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("Feed6"));' target='configFeed6' title='Edit'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div><div class='widget LinkList' id='LinkList4'>
+<h2>Foundations of Genetic Programming by Langdon and Poli</h2>
+<div class='widget-content'>
+<ul>
+<li><a href='http://www.cs.ucl.ac.uk/staff/W.Langdon/FOGP/'>Bill's site for FOGP</a></li>
+<li><a href='http://www.springer.com/computer/foundations/book/978-3-540-42451-2'>Published by Springer</a></li>
+<li><a href='http://www.amazon.com/Foundations-Genetic-Programming-William-Langdon/dp/3540424512'>On Amazon</a></li>
+<li><a href='http://books.google.co.uk/books?id=PZli0s95Jd0C&dq=foundations+of+genetic+programming&pg=PP1&ots=PHhzHaaHyy&sig=-2lmAXwAKWMxV1Rvcwu1bjIG2m4&hl=en&prev=http://www.google.co.uk/search?q=foundations+of+genetic+programming&ie=utf-8&oe=utf-8&rls=org.mozilla:en-US:official&client=firefox-a&sa=X&oi=print&ct=title&cad=one-book-with-thumbnail'>On Google Books</a></li>
+</ul>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=5125681873184688530&widgetType=LinkList&widgetId=LinkList4&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("LinkList4"));' target='configLinkList4' title='Edit'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div><div class='widget LinkList' id='LinkList5'>
+<h2>Genetic Programming and Data Structures by Langdon</h2>
+<div class='widget-content'>
+<ul>
+<li><a href='http://www.cs.ucl.ac.uk/staff/W.Langdon/gpdata/'>Bill's page on GP and DS</a></li>
+<li><a href='http://www.springer.com/computer/foundations/book/978-0-7923-8135-8'>Published by Kluwer/Springer</a></li>
+<li><a href='http://www.amazon.com/Genetic-Programming-Data-Structures-Automatic/dp/0792381351'>On Amazon</a></li>
+<li><a href='http://books.google.co.uk/books?hl=en&id=MyNvEee9tDgC&dq=genetic+programming+and+data+structures+genetic+programming+data+structures+automatic+programming+langdon&printsec=frontcover&source=web&ots=UdVBjBf43r&sig=vkNQjKGRc_9vzrWZEIaV9vNYQoM'>On Google Books</a></li>
+</ul>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=5125681873184688530&widgetType=LinkList&widgetId=LinkList5&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("LinkList5"));' target='configLinkList5' title='Edit'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div><div class='widget Feed' id='Feed1'>
+<h2>Recent posts on GP list</h2>
+<div class='widget-content' id='Feed1_feedItemListDisplay'>
+<span style='filter: alpha(25); opacity: 0.25;'>
+<a href='http://rss.groups.yahoo.com/group/genetic_programming/rss'>Loading...</a>
+</span>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=5125681873184688530&widgetType=Feed&widgetId=Feed1&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("Feed1"));' target='configFeed1' title='Edit'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div><div class='widget Feed' id='Feed5'>
+<h2>Links to the Field Guide</h2>
+<div class='widget-content' id='Feed5_feedItemListDisplay'>
+<span style='filter: alpha(25); opacity: 0.25;'>
+<a href='http://feeds.feedburner.com/Delicious/tag/fieldguide2gp'>Loading...</a>
+</span>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=5125681873184688530&widgetType=Feed&widgetId=Feed5&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("Feed5"));' target='configFeed5' title='Edit'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div><div class='widget Feed' id='Feed3'>
+<h2>del.icio.us tags:  geneticprogramming</h2>
+<div class='widget-content' id='Feed3_feedItemListDisplay'>
+<span style='filter: alpha(25); opacity: 0.25;'>
+<a href='http://feeds.feedburner.com/Delicious/tag/geneticprogramming'>Loading...</a>
+</span>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=5125681873184688530&widgetType=Feed&widgetId=Feed3&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("Feed3"));' target='configFeed3' title='Edit'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div><div class='widget Feed' id='Feed2'>
+<h2>CiteULike: Tag genetic-programming</h2>
+<div class='widget-content' id='Feed2_feedItemListDisplay'>
+<span style='filter: alpha(25); opacity: 0.25;'>
+<a href='http://www.citeulike.org/rss/tag/genetic-programming'>Loading...</a>
+</span>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=5125681873184688530&widgetType=Feed&widgetId=Feed2&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("Feed2"));' target='configFeed2' title='Edit'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div><div class='widget Feed' id='Feed4'>
+<h2>GP on the Internet</h2>
+<div class='widget-content' id='Feed4_feedItemListDisplay'>
+<span style='filter: alpha(25); opacity: 0.25;'>
+<a href='http://pipes.yahoo.com/pipes/pipe.run?_id=Nt2zptvm3BGK7_57yp1_DQ&_render=rss'>Loading...</a>
+</span>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=5125681873184688530&widgetType=Feed&widgetId=Feed4&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("Feed4"));' target='configFeed4' title='Edit'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div><div class='widget BlogArchive' id='BlogArchive1'>
+<h2>Blog Archive</h2>
+<div class='widget-content'>
+<div id='ArchiveList'>
+<div id='BlogArchive1_ArchiveList'>
+<ul class='hierarchy'>
+<li class='archivedate expanded'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy toggle-open'>&#9660;&#160;</span>
+</a>
+<a class='post-count-link' href='http://www.gp-field-guide.org.uk/search?updated-min=2010-01-01T00%3A00%3A00Z&updated-max=2011-01-01T00%3A00%3A00Z&max-results=1'>2010</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='hierarchy'>
+<li class='archivedate expanded'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy toggle-open'>&#9660;&#160;</span>
+</a>
+<a class='post-count-link' href='http://www.gp-field-guide.org.uk/2010_07_01_archive.html'>July</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='posts'>
+<li><a href='http://www.gp-field-guide.org.uk/2010/07/just-2-days-left-gpem-anniversary-issue.html'>Just 2 days left: GPEM anniversary issue available...</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://www.gp-field-guide.org.uk/search?updated-min=2009-01-01T00%3A00%3A00Z&updated-max=2010-01-01T00%3A00%3A00Z&max-results=4'>2009</a>
+<span class='post-count' dir='ltr'>(4)</span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://www.gp-field-guide.org.uk/2009_09_01_archive.html'>September</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='posts'>
+<li><a href='http://www.gp-field-guide.org.uk/2009/09/thanks-for-kind-words-about-field-guide.html'>Thanks for the kind words about the Field Guide</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://www.gp-field-guide.org.uk/2009_03_01_archive.html'>March</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='posts'>
+<li><a href='http://www.gp-field-guide.org.uk/2009/03/happy-birthday-field-guide.html'>Happy Birthday Field Guide!</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://www.gp-field-guide.org.uk/2009_02_01_archive.html'>February</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='posts'>
+<li><a href='http://www.gp-field-guide.org.uk/2009/02/google-hits.html'>Google hits</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://www.gp-field-guide.org.uk/2009_01_01_archive.html'>January</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='posts'>
+<li><a href='http://www.gp-field-guide.org.uk/2009/01/another-bug-fixed-in-tinygp.html'>Another Bug Fixed in TinyGP</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://www.gp-field-guide.org.uk/search?updated-min=2008-01-01T00%3A00%3A00Z&updated-max=2009-01-01T00%3A00%3A00Z&max-results=22'>2008</a>
+<span class='post-count' dir='ltr'>(22)</span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://www.gp-field-guide.org.uk/2008_11_01_archive.html'>November</a>
+<span class='post-count' dir='ltr'>(2)</span>
+<ul class='posts'>
+<li><a href='http://www.gp-field-guide.org.uk/2008/11/odyssy-20001.html'>Odyssy 20001</a></li>
+<li><a href='http://www.gp-field-guide.org.uk/2008/11/potential-bug-in-tinygp.html'>A (potential) bug in TinyGP</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://www.gp-field-guide.org.uk/2008_05_01_archive.html'>May</a>
+<span class='post-count' dir='ltr'>(5)</span>
+<ul class='posts'>
+<li><a href='http://www.gp-field-guide.org.uk/2008/05/10000-downloads.html'>10,000 downloads</a></li>
+<li><a href='http://www.gp-field-guide.org.uk/2008/05/field-guide-goes-html.html'>The Field Guide goes HTML</a></li>
+<li><a href='http://www.gp-field-guide.org.uk/2008/05/field-guide-is-available-on-amazon.html'>The Field Guide is available on Amazon!</a></li>
+<li><a href='http://www.gp-field-guide.org.uk/2008/05/bug-in-tinygp-java-code.html'>Bug in TinyGP Java Code</a></li>
+<li><a href='http://www.gp-field-guide.org.uk/2008/05/table-of-contents.html'>Table of Contents</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://www.gp-field-guide.org.uk/2008_04_01_archive.html'>April</a>
+<span class='post-count' dir='ltr'>(8)</span>
+<ul class='posts'>
+<li><a href='http://www.gp-field-guide.org.uk/2008/04/8000-downloads-reached-during-weekend.html'>8,000 downloads reached during the weekend</a></li>
+<li><a href='http://www.gp-field-guide.org.uk/2008/04/field-guide-appears-in-acms-technews.html'>The Field Guide appears in ACM&#39;s Technews, reddit,...</a></li>
+<li><a href='http://www.gp-field-guide.org.uk/2008/04/over-5000-downloads.html'>Over 5,000 downloads!</a></li>
+<li><a href='http://www.gp-field-guide.org.uk/2008/04/more-photos-from-field-guide-unveiling.html'>More photos from the Field Guide unveiling</a></li>
+<li><a href='http://www.gp-field-guide.org.uk/2008/04/over-2000-downloads.html'>Over 2,000 downloads!</a></li>
+<li><a href='http://www.gp-field-guide.org.uk/2008/04/weve-created-mailing-listdiscussion.html'>We&#39;ve created a mailing list/discussion group for ...</a></li>
+<li><a href='http://www.gp-field-guide.org.uk/2008/04/over-1500-downloads.html'>Over 1,500 downloads!</a></li>
+<li><a href='http://www.gp-field-guide.org.uk/2008/04/field-guide-sightings.html'>Field Guide sightings!</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://www.gp-field-guide.org.uk/2008_03_01_archive.html'>March</a>
+<span class='post-count' dir='ltr'>(7)</span>
+<ul class='posts'>
+<li><a href='http://www.gp-field-guide.org.uk/2008/03/photos-from-grand-unveiling.html'>Photos from the grand unveiling</a></li>
+<li><a href='http://www.gp-field-guide.org.uk/2008/03/huge-thanks-to-all-our-proofreaders.html'>A huge thanks to all our proofreaders!</a></li>
+<li><a href='http://www.gp-field-guide.org.uk/2008/03/bill-langdon-receives-prestigious.html'>Bill Langdon receives prestigious EvoStar award!</a></li>
+<li><a href='http://www.gp-field-guide.org.uk/2008/03/one-heck-of-party.html'>One heck of a party!</a></li>
+<li><a href='http://www.gp-field-guide.org.uk/2008/03/book-is-now-available.html'>The book is now available!</a></li>
+<li><a href='http://www.gp-field-guide.org.uk/2008/03/almost-ready-for-eurogp.html'>Almost ready for EuroGP!</a></li>
+<li><a href='http://www.gp-field-guide.org.uk/2008/03/its-nearly-ready.html'>It&#39;s nearly ready</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=5125681873184688530&widgetType=BlogArchive&widgetId=BlogArchive1&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("BlogArchive1"));' target='configBlogArchive1' title='Edit'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div></div>
+</div>
+<!-- spacer for skins that want sidebar and main to be the same height-->
+<div class='clear'>&#160;</div>
+</div>
+<!-- end content-wrapper -->
+<div id='footer-wrapper'>
+<div class='footer section' id='footer'><div class='widget HTML' id='HTML3'>
+<h2 class='title'>Field Guide downloads</h2>
+<div class='widget-content'>
+<script src="http://spreadsheets.google.com/gpub?url=http%3A%2F%2Ftbaoebshgeq225lhq2bam0m0a5mf6u0b.spreadsheets.gmodules.com%2Fgadgets%2Fifr%3Fup__table_query_url%3Dhttp%253A%252F%252Fspreadsheets.google.com%252Ftq%253Frange%253DB2%25253AC200%2526headers%253D-1%2526key%253DpoimYhk8L5ILSwqolF6zGaQ%2526gid%253D0%2526pub%253D1%26up_title%3DDownloads%26up__table_query_refresh_interval%3D300%26up_scale%3Dmaximize%26up_values_suffix%3D%26up_annotations_width%3D10%26up_display_zoom_buttons%3D1%26up_display_exact_values%3D1%26up_display_annotations_filter%3D0%26up_display_legend_inNewline%3D0%26url%3Dhttp%253A%252F%252Fwww.google.com%252Fig%252Fmodules%252Ftime-series-line.xml&height=451&width=527"></script>
+<noscript><br/><a href="http://s45.sitemeter.com/stats.asp?site=s45fieldguide" target="_top"><br/><img border="0" alt="Site Meter" src="http://s45.sitemeter.com/meter.asp?site=s45fieldguide"/></a><br/></noscript>
+<!-- Copyright (c)2006 Site Meter -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-4128314-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=5125681873184688530&widgetType=HTML&widgetId=HTML3&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("HTML3"));' target='configHTML3' title='Edit'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div></div>
+</div>
+</div></div>
+<!-- end outer-wrapper -->
+<script type="text/javascript">
+if (window.jstiming) window.jstiming.load.tick('widgetJsBefore');
+</script><script type="text/javascript" src="http://www.blogger.com/static/v1/widgets/512629240-widgets.js"></script>
+<script type='text/javascript'>
+if (typeof(BLOG_attachCsiOnload) != 'undefined' && BLOG_attachCsiOnload != null) { window['blogger_templates_experiment_id'] = "templatesV1";window['blogger_blog_id'] = '5125681873184688530';BLOG_attachCsiOnload(''); }_WidgetManager._Init('http://www.blogger.com/rearrange?blogID=5125681873184688530','http://www.gp-field-guide.org.uk/','5125681873184688530');
+_WidgetManager._SetPageActionUrl('http://www.blogger.com/display?blogID=5125681873184688530','cRbcvPFbd45OJYU57yn9oEeroYE:1292611323899','AOuZoY5O3lxdCioeLF-3eNw0oxz2NEH8Sg:1292611323899');
+_WidgetManager._SetDataContext([{'name': 'blog', 'data': {'title': 'A Field Guide to Genetic Programming', 'pageType': 'index', 'url': 'http://www.gp-field-guide.org.uk/', 'canonicalUrl': 'http://www.gp-field-guide.org.uk/', 'homepageUrl': 'http://www.gp-field-guide.org.uk/', 'enabledCommentProfileImages': true, 'searchLabel': '', 'searchQuery': '', 'pageName': '', 'pageTitle': 'A Field Guide to Genetic Programming', 'encoding': 'UTF-8', 'locale': 'en-GB', 'isPrivate': false, 'isMobile': false, 'mobileClass': '', 'languageDirection': 'ltr', 'feedLinks': '\74link rel\75\42alternate\42 type\75\42application/atom+xml\42 title\75\42A Field Guide to Genetic Programming - Atom\42 href\75\42http://www.gp-field-guide.org.uk/feeds/posts/default\42 /\76\n\74link rel\75\42alternate\42 type\75\42application/rss+xml\42 title\75\42A Field Guide to Genetic Programming - RSS\42 href\75\42http://www.gp-field-guide.org.uk/feeds/posts/default?alt\75rss\42 /\76\n\74link rel\75\42service.post\42 type\75\42application/atom+xml\42 title\75\42A Field Guide to Genetic Programming - Atom\42 href\75\42http://www.blogger.com/feeds/5125681873184688530/posts/default\42 /\76\n\74link rel\75\42EditURI\42 type\75\42application/rsd+xml\42 title\75\42RSD\42 href\75\42http://www.blogger.com/rsd.g?blogID\0755125681873184688530\42 /\076', 'meTag': '', 'openIdOpTag': '\74link rel\75\42openid.server\42 href\75\42http://www.blogger.com/openid-server.g\42 /\76\n', 'imageSrcTag': '', 'latencyHeadScript': '\74script type\75\42text/javascript\42\76(function() { var a\75window;function c(b){this.t\75{};this.tick\75function(d,i,e){e\75e?e:(new Date).getTime();this.t[d]\75[e,i]};this.tick(\42start\42,null,b)}var f\75new c;a.jstiming\75{Timer:c,load:f};try{var g\75null;if(a.chrome\46\46a.chrome.csi)g\75Math.floor(a.chrome.csi().pageT);if(g\75\75null)if(a.gtbExternal)g\75a.gtbExternal.pageT();if(g\75\75null)if(a.external)g\75a.external.pageT;if(g)a.jstiming.pt\75g}catch(h){};a.tickAboveFold\75function(b){b\75b;var d\0750;if(b.offsetParent){do d+\75b.offsetTop;while(b\75b.offsetParent)}b\75d;b\74\075750\46\46a.jstiming.load.tick(\42aft\42)};var j\75false;function k(){if(!j){j\75true;a.jstiming.load.tick(\42firstScrollTime\42)}}a.addEventListener?a.addEventListener(\42scroll\42,k,false):a.attachEvent(\42onscroll\42,k);\n })();\74/script\076', 'mobileHeadScript': ''}}]);
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML3', 'footer', null, document.getElementById('HTML3'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_LinkListView', new _WidgetInfo('LinkList1', 'sidebar', null, document.getElementById('LinkList1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML2', 'sidebar', null, document.getElementById('HTML2'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML4', 'sidebar', null, document.getElementById('HTML4'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_LinkListView', new _WidgetInfo('LinkList2', 'sidebar', null, document.getElementById('LinkList2'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_LinkListView', new _WidgetInfo('LinkList3', 'sidebar', null, document.getElementById('LinkList3'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_FeedView', new _WidgetInfo('Feed6', 'sidebar', null, document.getElementById('Feed6'), {'title': 'Recent Field Guide discussion group posts', 'showItemDate': false, 'showItemAuthor': false, 'feedUrl': 'http://groups.google.co.uk/group/field-guide-to-genetic-programming/feed/rss_v2_0_msgs.xml', 'numItemsShow': 3, 'loadingMsg': 'Loading...', 'openLinksInNewWindow': false}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_LinkListView', new _WidgetInfo('LinkList4', 'sidebar', null, document.getElementById('LinkList4'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_LinkListView', new _WidgetInfo('LinkList5', 'sidebar', null, document.getElementById('LinkList5'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_FeedView', new _WidgetInfo('Feed1', 'sidebar', null, document.getElementById('Feed1'), {'title': 'Recent posts on GP list', 'showItemDate': true, 'showItemAuthor': true, 'feedUrl': 'http://rss.groups.yahoo.com/group/genetic_programming/rss', 'numItemsShow': 5, 'loadingMsg': 'Loading...', 'openLinksInNewWindow': false}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_FeedView', new _WidgetInfo('Feed5', 'sidebar', null, document.getElementById('Feed5'), {'title': 'Links to the Field Guide', 'showItemDate': true, 'showItemAuthor': false, 'feedUrl': 'http://feeds.feedburner.com/Delicious/tag/fieldguide2gp', 'numItemsShow': 5, 'loadingMsg': 'Loading...', 'openLinksInNewWindow': false}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_FeedView', new _WidgetInfo('Feed3', 'sidebar', null, document.getElementById('Feed3'), {'title': 'del.icio.us tags:  geneticprogramming', 'showItemDate': true, 'showItemAuthor': false, 'feedUrl': 'http://feeds.feedburner.com/Delicious/tag/geneticprogramming', 'numItemsShow': 5, 'loadingMsg': 'Loading...', 'openLinksInNewWindow': false}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_FeedView', new _WidgetInfo('Feed2', 'sidebar', null, document.getElementById('Feed2'), {'title': 'CiteULike: Tag genetic-programming', 'showItemDate': false, 'showItemAuthor': true, 'feedUrl': 'http://www.citeulike.org/rss/tag/genetic-programming', 'numItemsShow': 5, 'loadingMsg': 'Loading...', 'openLinksInNewWindow': false}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_FeedView', new _WidgetInfo('Feed4', 'sidebar', null, document.getElementById('Feed4'), {'title': 'GP on the Internet', 'showItemDate': false, 'showItemAuthor': false, 'feedUrl': 'http://pipes.yahoo.com/pipes/pipe.run?_id\75Nt2zptvm3BGK7_57yp1_DQ\46_render\75rss', 'numItemsShow': 5, 'loadingMsg': 'Loading...', 'openLinksInNewWindow': false}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogArchiveView', new _WidgetInfo('BlogArchive1', 'sidebar', null, document.getElementById('BlogArchive1'), {'languageDirection': 'ltr'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HeaderView', new _WidgetInfo('Header1', 'header'));
+_WidgetManager._RegisterWidget('_NavbarView', new _WidgetInfo('Navbar1', 'navbar'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML1', 'main', null, document.getElementById('HTML1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogView', new _WidgetInfo('Blog1', 'main'));
+</script>
+</body>
+</html>
