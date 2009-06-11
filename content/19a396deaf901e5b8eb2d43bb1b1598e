@@ -1,0 +1,2214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head profile="http://gmpg.org/xfn/11">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>James Carr  &raquo; Blog Archive   &raquo; TDD Anti-Patterns</title>
+
+<meta name="generator" content="WordPress 2.6.1" /> <!-- leave this for stats -->
+
+<link rel="stylesheet" href="http://blog.james-carr.org/wp-content/themes/cms2/style.css?randomVar=0df22fd5f9219bf65b39c255899024f7d69a5de4" type="text/css" media="screen" />
+<link rel="stylesheet" href="http://blog.james-carr.org/wp-content/themes/cms2/print.css" type="text/css" media="print" />
+<link rel="alternate" type="application/rss+xml" title="James Carr RSS Feed" href="http://blog.james-carr.org/feed/" />
+<link rel="pingback" href="http://blog.james-carr.org/xmlrpc.php" />
+<meta name="description" value="James Carr's Personal Blog. The Web, Programming, Test Driven Development, Agile Software Development... all with a dash of humor and sarcasm."/>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://blog.james-carr.org/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://blog.james-carr.org/wp-includes/wlwmanifest.xml" /> 
+<script type='text/javascript' src='http://blog.james-carr.org/wp-includes/js/jquery/jquery.js?ver=1.2.6'></script>
+<meta name="generator" content="WordPress 2.6.1" />
+
+<link rel="stylesheet" type="text/css" media="screen" href="http://blog.james-carr.org/wp-content/plugins/sociable/sociable.css" />
+
+			<link rel="stylesheet" type="text/css" href="http://blog.james-carr.org/index.php?ak_action=aktt_css" />
+			<script type="text/javascript" src="http://blog.james-carr.org/index.php?ak_action=aktt_js"></script>
+		<link rel="stylesheet" type="text/css" href="http://blog.james-carr.org/wp-content/plugins/wp-recaptcha/recaptcha.css" /><link rel="stylesheet" type="text/css" href="/css/SyntaxHighlighter.css" media="screen"/>
+<link type="text/css" rel="stylesheet" href="css/SyntaxHighlighter.css"></link>
+<script type="text/javascript" src="/js/syntax/shCore.js"></script>
+<script type="text/javascript" src="/js/syntax/shBrushCSharp.js"></script>
+<script type="text/javascript" src="/js/syntax/shBrushXml.js"></script>
+<script type="text/javascript" src="/js/syntax/shBrushJava.js"></script>
+<script type="text/javascript" src="/js/syntax/shBrushJScript.js"></script>
+<script type="text/javascript" src="/js/syntax/shBrushRuby.js"></script>
+<script type="text/javascript">
+window.onload = function () {
+	dp.SyntaxHighlighter.ClipboardSwf = '/js/syntax/clipboard.swf';
+	dp.SyntaxHighlighter.HighlightAll('code');
+};
+</script>
+</head>
+<body>
+<div id="page">
+  <div id="header">
+  <div id="headerlogo">
+	  <h1><a href="http://blog.james-carr.org/">James Carr</a></h1>
+	  <div class="description">Rants and Musings of an Agile Developer</div>
+	</div>
+    
+	<ul id="nav">
+	  <li class="page_item"><a href="http://blog.james-carr.org/" title="Home">Home</a></li>
+	  <li class="page_item page-item-2"><a href="http://blog.james-carr.org/about/" title="About">About</a></li>
+<li class="page_item page-item-23"><a href="http://blog.james-carr.org/writtings/" title="Writings">Writings</a></li>
+<li class="page_item page-item-25"><a href="http://blog.james-carr.org/code/" title="Code">Code</a></li>
+         </ul>
+</div>
+
+
+<!--/header -->
+  <div id="content">
+  
+    
+    <div class="post" id="post-44">
+        <h2><a href="http://blog.james-carr.org/2006/11/03/tdd-anti-patterns/" rel="bookmark" title="Permanent Link: TDD Anti-Patterns">TDD Anti-Patterns</a></h2>
+		<div class="post-content">
+		<p>Recently I began to write a paper on TDD Anti-Patterns, and decided to first quickly jot down some of the most common ones that others or myself have encountered &#8220;in the wild.&#8221; I then posted what I had on the <a href="http://tech.groups.yahoo.com/group/testdrivendevelopment/">testdrivendevelopment</a> on <a href="http://groups.yahoo.com/">yahoogroups</a> mailing list, and got an excellent bit of feedback!</p>
+<p>As a side note, keep in mind this is merely a catalog at the moment, hopefully to be expanded in full down the road.</p>
+<h3>TDD Anti-Pattern Catalogue</h3>
+<dl>
+<dt>The Liar</dt>
+<dd>An entire unit test that passes all of the test cases it has and appears valid, but upon closer inspection it is discovered that it doesn&#8217;t really test the intended target at all. </dd>
+<dt>Excessive Setup</dt>
+<dd>A test that requires a lot of work setting up in order to even begin testing. Sometimes several hundred lines of code is used to setup the environment for one test, with several objects involved, which can make it difficult to really ascertain what is tested due to the &#8220;noise&#8221; of all of the setup going on.</dd>
+<dt>The Giant</dt>
+<dd>A unit test that, although it is validly testing the object under test, can span thousands of lines and contain many many test cases. This can be an indicator that the system under tests is a <a href="http://en.wikipedia.org/wiki/God_object">God Object</a></dd>
+<dt>The Mockery</dt>
+<dd>Sometimes mocking can be good, and handy. But sometimes developers can lose themselves and in their effort to mock out what isn&#8217;t being tested. In this case, a unit test contains so many mocks, stubs, and/or fakes that the system under test isn&#8217;t even being tested at all, instead data returned from mocks is what is being tested.</dd>
+<dt>The Inspector</dt>
+<dd>A unit test that violates encapsulation in an effort to achieve 100% code coverage, but knows so much about what is going on in the object that any attempt to refactor will break the existing test and require any change to be reflected in the unit test.</dd>
+<dt>Generous Leftovers <sup><a href="#joakim">[4]</a></sup></dt>
+<dd>An instance where one unit test creates data that is persisted somewhere, and another test reuses the data for its own devious purposes. If the &#8220;generator&#8221; is ran afterward, or not at all, the test using that data will outright fail.</dd>
+<dt>The Local Hero <sup><a href="#frank">[1]</a></sup></dt>
+<dd>A test case that is dependent on something specific to the development environment it was written on in order to run. The result is the test passes on development boxes, but fails when someone attempts to run it elsewhere.</dd>
+<dt>The Nitpicker <sup><a href="#frank">[1]</a></sup></dt>
+<dd>A unit test which compares a complete output when it&#8217;s really only interested in small parts of it, so the test has to continually be kept in line with otherwise unimportant details. Endemic in web application testing.
+</dd>
+<dt>The Secret Catcher<sup><a href="#frank">[1]</a></sup></dt>
+<dd>A test that at first glance appears to be doing no testing due to the absence of assertions, but as they say, &#8220;the devil&#8217;s in the details.&#8221; The test is really relying on an exception to be thrown when a mishap occurs, and is expecting the testing framework to capture the exception and report it to the user as a failure.</dd>
+<dt>The Dodger <sup><a href="#frank">[1]</a></sup></dt>
+<dd>A unit test which has lots of tests for minor (and presumably easy to test) side effects, but never tests the core desired behavior. Sometimes you may find this in database access related tests, where a method is called, then the test selects from the database and runs assertions against the result.</dd>
+<dt>The Loudmouth <sup><a href="#frank">[1]</a></sup></dt>
+<dd>A unit test (or test suite) that clutters up the console with diagnostic messages, logging messages, and other miscellaneous  chatter, even when tests are passing. Sometimes during test creation there was a desire to manually see output, but even though it&#8217;s no longer needed, it was left behind.</dd>
+<dt>The Greedy Catcher <sup><a href="#frank">[1]</a></sup> </dt>
+<dd>A unit test which catches exceptions and swallows the stack trace, sometimes replacing it with a less informative failure message, but sometimes even just logging (c.f. Loudmouth) and letting the test pass.</dd>
+<dt>The Sequencer <sup><a href="#frank">[1]</a></sup></dt>
+<dd>A unit test that depends on items in an unordered list appearing in the same order during assertions.</dd>
+<dt>Hidden Dependency</dt>
+<dd>A close cousin of The Local Hero, a unit test that requires some existing data to have been populated somewhere before the test runs. If that data wasn&#8217;t populated, the test will fail and leave little indication to the developer what it wanted, or why&#8230; forcing them to dig through acres of code to find out where the data it was using was supposed to come from.</dd>
+<dt>The Enumerator <sup><a href="#tim">[2]</a></sup></dt>
+<dd>A unit test with each test case method name is only an enumeration, i.e. test1, test2, test3. As a result, the intention of the test case is unclear, and the only way to be sure is to read the test case code and pray for clarity.</dd>
+<dt>The Stranger</dt>
+<dd>A test case that doesn&#8217;t even belong in the unit test it is part of. it&#8217;s really testing a separate object, most likely an object that is used by the object under test, but the test case has gone and tested that object directly without relying on the output from the object under test making use of that object for its own behavior. Also known as <strong>TheDistantRelative</strong><sup><a href="#kelly">[5]</a></sup>.
+</dd>
+<dt>The Operating System Evangelist <sup><a href="#cory">[3]</a></sup></dt>
+<dd>A unit test that relies on a specific operation system environment to be in place in order to work. A good example would be a test case that uses the newline sequence for windows in an assertion, only to break when ran on Linux.</dd>
+<dt>Success Against All Odds <sup><a href="#tim">[2]</a></sup></dt>
+<dd>A test that was written pass first rather than fail first. As an unfortunate side effect, the test case happens to always pass even though the test should fail.</dd>
+<dt>The Free Ride</dt>
+<dd>Rather than write a new test case method to test another feature or functionality, a new assertion rides along in an existing test case.</dd>
+<dt>The One</dt>
+<dd>A combination of several patterns, particularly <strong>TheFreeRide</strong> and <strong>TheGiant</strong>, a unit test that contains only one test method which tests the entire set of functionality an object has. A common indicator is that the test method is often the same as the unit test name, and contains multiple lines of setup and assertions.</dd>
+<dt>The Peeping Tom</dt>
+<dd>A test that, due to shared resources, can see the result data of another test, and may cause the test to fail even though the system under test is perfectly valid. This has been seen commonly in fitnesse, where the use of static member variables to hold collections aren&#8217;t properly cleaned after test execution, often popping up unexpectedly in other test runs. Also known as <strong>TheUninvitedGuests</strong></dd>
+<dt>The Slow Poke</dt>
+<dd>A unit test that runs incredibly slow. When developers kick it off, they have time to go to the bathroom, grab a smoke, or worse, kick the test off before they go home at the end of the day.</dd>
+</dl>
+<p>Well, that wraps it up for now. I&#8217;d like it if people could vote on the top ten anti-patterns listed here so I can go about writing up more detailed descriptions, examples, symptoms, and (hopefully) refactorings to move away from the anti-pattern listed.</p>
+<p>If I left anyone out, please let me know, and any additional patterns are highly welcomed!</p>
+<p><sub></p>
+<ul style="list-style-type:none;">
+<li><a name="frank">[1]</a>Frank Carver</li>
+<li><a name="tim">[2]</a>Tim Ottinger</li>
+<li><a name="cory">[3]</a>Cory Foy</li>
+<li><a name="joakim">[4]</a>Joakim Ohlrogge</li>
+<li><a name="kelly">[5]</a>Kelly Anderson</li>
+</ul>
+<p></sub></p>
+
+<div class="sociable">
+<div class="sociable_tagline">
+<strong>Share and Enjoy:</strong>
+</div>
+<ul>
+	<li><a rel="nofollow" href="http://digg.com/submit?phase=2&amp;url=http%3A%2F%2Fblog.james-carr.org%2F2006%2F11%2F03%2Ftdd-anti-patterns%2F&amp;title=TDD%20Anti-Patterns" title="Digg"><img src="http://blog.james-carr.org/wp-content/plugins/sociable/images/digg.png" title="Digg" alt="Digg" class="sociable-hovers" /></a></li>
+	<li><a rel="nofollow" href="http://del.icio.us/post?url=http%3A%2F%2Fblog.james-carr.org%2F2006%2F11%2F03%2Ftdd-anti-patterns%2F&amp;title=TDD%20Anti-Patterns" title="del.icio.us"><img src="http://blog.james-carr.org/wp-content/plugins/sociable/images/delicious.png" title="del.icio.us" alt="del.icio.us" class="sociable-hovers" /></a></li>
+	<li><a rel="nofollow" href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fblog.james-carr.org%2F2006%2F11%2F03%2Ftdd-anti-patterns%2F&amp;t=TDD%20Anti-Patterns" title="Facebook"><img src="http://blog.james-carr.org/wp-content/plugins/sociable/images/facebook.png" title="Facebook" alt="Facebook" class="sociable-hovers" /></a></li>
+	<li><a rel="nofollow" href="http://www.google.com/bookmarks/mark?op=edit&amp;bkmk=http%3A%2F%2Fblog.james-carr.org%2F2006%2F11%2F03%2Ftdd-anti-patterns%2F&amp;title=TDD%20Anti-Patterns" title="Google"><img src="http://blog.james-carr.org/wp-content/plugins/sociable/images/googlebookmark.png" title="Google" alt="Google" class="sociable-hovers" /></a></li>
+	<li><a rel="nofollow" href="http://www.blogmemes.net/post.php?url=http%3A%2F%2Fblog.james-carr.org%2F2006%2F11%2F03%2Ftdd-anti-patterns%2F&amp;title=TDD%20Anti-Patterns" title="BlogMemes"><img src="http://blog.james-carr.org/wp-content/plugins/sociable/images/blogmemes.png" title="BlogMemes" alt="BlogMemes" class="sociable-hovers" /></a></li>
+	<li><a rel="nofollow" href="http://www.blogospherenews.com/submit.php?url=http%3A%2F%2Fblog.james-carr.org%2F2006%2F11%2F03%2Ftdd-anti-patterns%2F&amp;title=TDD%20Anti-Patterns" title="Blogosphere News"><img src="http://blog.james-carr.org/wp-content/plugins/sociable/images/blogospherenews.gif" title="Blogosphere News" alt="Blogosphere News" class="sociable-hovers" /></a></li>
+	<li><a rel="nofollow" href="http://www.dzone.com/links/add.html?url=http%3A%2F%2Fblog.james-carr.org%2F2006%2F11%2F03%2Ftdd-anti-patterns%2F&amp;title=TDD%20Anti-Patterns" title="description"><img src="http://blog.james-carr.org/wp-content/plugins/sociable/images/dzone.png" title="description" alt="description" class="sociable-hovers" /></a></li>
+	<li><a rel="nofollow" href="http://cgi.fark.com/cgi/fark/farkit.pl?h=TDD%20Anti-Patterns&u=http%3A%2F%2Fblog.james-carr.org%2F2006%2F11%2F03%2Ftdd-anti-patterns%2F" title="Fark"><img src="http://blog.james-carr.org/wp-content/plugins/sociable/images/fark.png" title="Fark" alt="Fark" class="sociable-hovers" /></a></li>
+	<li><a rel="nofollow" href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http%3A%2F%2Fblog.james-carr.org%2F2006%2F11%2F03%2Ftdd-anti-patterns%2F&amp;title=TDD%20Anti-Patterns&amp;source=James+Carr+Rants+and+Musings+of+an+Agile+Developer&amp;summary=Recently%20I%20began%20to%20write%20a%20paper%20on%20TDD%20Anti-Patterns%2C%20and%20decided%20to%20first%20quickly%20jot%20down%20some%20of%20the%20most%20common%20ones%20that%20others%20or%20myself%20have%20encountered%20%22in%20the%20wild.%22%20I%20then%20posted%20what%20I%20had%20on%20the%20testdrivendevelopment%20on%20yahoogroups%20mail" title="LinkedIn"><img src="http://blog.james-carr.org/wp-content/plugins/sociable/images/linkedin.png" title="LinkedIn" alt="LinkedIn" class="sociable-hovers" /></a></li>
+	<li><a rel="nofollow" href="http://www.newsvine.com/_tools/seed&amp;save?u=http%3A%2F%2Fblog.james-carr.org%2F2006%2F11%2F03%2Ftdd-anti-patterns%2F&amp;h=TDD%20Anti-Patterns" title="NewsVine"><img src="http://blog.james-carr.org/wp-content/plugins/sociable/images/newsvine.png" title="NewsVine" alt="NewsVine" class="sociable-hovers" /></a></li>
+	<li><a rel="nofollow" href="http://www.stumbleupon.com/submit?url=http%3A%2F%2Fblog.james-carr.org%2F2006%2F11%2F03%2Ftdd-anti-patterns%2F&amp;title=TDD%20Anti-Patterns" title="StumbleUpon"><img src="http://blog.james-carr.org/wp-content/plugins/sociable/images/stumbleupon.png" title="StumbleUpon" alt="StumbleUpon" class="sociable-hovers" /></a></li>
+	<li><a rel="nofollow" href="http://technorati.com/faves?add=http%3A%2F%2Fblog.james-carr.org%2F2006%2F11%2F03%2Ftdd-anti-patterns%2F" title="Technorati"><img src="http://blog.james-carr.org/wp-content/plugins/sociable/images/technorati.png" title="Technorati" alt="Technorati" class="sociable-hovers" /></a></li>
+	<li><a rel="nofollow" href="http://twitter.com/home?status=http%3A%2F%2Fblog.james-carr.org%2F2006%2F11%2F03%2Ftdd-anti-patterns%2F" title="TwitThis"><img src="http://blog.james-carr.org/wp-content/plugins/sociable/images/twitter.gif" title="TwitThis" alt="TwitThis" class="sociable-hovers" /></a></li>
+	<li><a rel="nofollow" href="http://buzz.yahoo.com/submit/?submitUrl=http%3A%2F%2Fblog.james-carr.org%2F2006%2F11%2F03%2Ftdd-anti-patterns%2F&amp;submitHeadline=TDD%20Anti-Patterns&amp;submitSummary=Recently%20I%20began%20to%20write%20a%20paper%20on%20TDD%20Anti-Patterns%2C%20and%20decided%20to%20first%20quickly%20jot%20down%20some%20of%20the%20most%20common%20ones%20that%20others%20or%20myself%20have%20encountered%20%22in%20the%20wild.%22%20I%20then%20posted%20what%20I%20had%20on%20the%20testdrivendevelopment%20on%20yahoogroups%20mail&amp;submitCategory=science&amp;submitAssetType=text" title="Yahoo! Buzz"><img src="http://blog.james-carr.org/wp-content/plugins/sociable/images/yahoobuzz.gif" title="Yahoo! Buzz" alt="Yahoo! Buzz" class="sociable-hovers" /></a></li>
+</ul>
+</div>
+		
+				
+		<p class="postrss">
+				If you're new here, you may want to subscribe to my <a href='http://blog.james-carr.org/feed/'>RSS feed</a>.  Thanks for visiting!
+					</p>
+<br/>
+				<p class="postmetadatap">
+					<small>
+						This entry was posted
+												on Friday, November 3rd, 2006 at 6:00 pm						and is filed under <a href="http://blog.james-carr.org/category/test-driven-development/" title="View all posts in Test Driven Development" rel="category tag">Test Driven Development</a>.
+						You can follow any responses to this entry through the <a href='http://blog.james-carr.org/2006/11/03/tdd-anti-patterns/feed/'>RSS 2.0</a> feed.
+
+													You can <a href="#respond">leave a response</a>, or <a href="http://blog.james-carr.org/2006/11/03/tdd-anti-patterns/trackback/" rel="trackback">trackback</a> from your own site.
+
+						
+					</small>
+				</p>
+				
+		
+		</div>
+		
+
+		
+		
+<!-- You can start editing here. -->
+
+	<h3 id="comments">123 Responses to &#8220;TDD Anti-Patterns&#8221;</h3> 
+
+	<ol class="commentlist">
+
+	
+		<li class="alt" id="comment-264">
+			<cite><a href='http://weblogs.asp.net/bsimser/archive/2006/11/03/Refactoring-to-Anti_2D00_Patterns.aspx' rel='external nofollow'>Fear and Loathing : Refactoring to Anti-Patterns</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-264" title="">November 3rd, 2006 at 11:45 pm</a> </small>
+
+			<p>[...] We all know the idea of refactoring to patterns is good. In fact that&#8217;s generally how I refactor. I see a code smell (say you have a loop that is doing too many things) and refactor to&nbsp;a pattern like Split Loop in order to fix the smell. How about refactoring to Anti-patterns? Or just plain detecting Anti-patterns in unit tests. That&#8217;s what James Carr&nbsp;is up to here. [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-265">
+			<cite><a href='http://www.efsol.com/' rel='external nofollow'>Frank Carver</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-265" title="">November 4th, 2006 at 7:18 am</a> </small>
+
+			<p>I&#8217;ve been mulling over this list and thought of another few I&#8217;ve faced<br />
+in the past. It took me a while to think up appropriate names, though.<br />
+Somehow these all seem to have an avian theme <img src='http://blog.james-carr.org/wp-includes/images/smilies/icon_smile.gif' alt=':)' class='wp-smiley' /> </p>
+<p>* The Cuckoo - A unit test which sits in a test case with<br />
+several others, and enjoys the same (potentially lengthy) setup<br />
+process as the other tests in the test case, but then discards the<br />
+some or all of the artefacts from the setup and creates its own.</p>
+<p>One of a cluster of test case structure anti-patterns along with<br />
+Stranger/Distant Relative, Mother Hen and probably Long Conversation</p>
+<p>This is really a sort of &#8220;test case envy&#8221; and would probably benefit<br />
+from refactoring into a separate test case. In more subtle cases it<br />
+might also be asking for a shared base class for the two test cases.</p>
+<p>If left unchecked, this can lead to test cases where hardly any tests<br />
+make use of the common setup process, but its done for every test<br />
+anyway.</p>
+<p>One thing to avoid is the temptation to just shove *all* the<br />
+initialization into the common setup, which just confuses and slows<br />
+down the whole process. This can lead to a Mother Hen (below).</p>
+<p>* The Mother Hen - A common setup which does far more than the actual<br />
+test cases need. For example creating all sorts of complex data structures<br />
+populated with apparently important and unique values when the tests<br />
+only assert for presence or absence of something.</p>
+<p>This can be a sign that the setup was written before the tests<br />
+themselves, which is a subtle bit of up-front design easily hidden in<br />
+an otherwise fully TDD process.</p>
+<p>One of a cluster of test case structure anti-patterns along with<br />
+Stranger/Distant Relative, Cuckoo and probably Long Conversation</p>
+<p>* The Wild Goose - A unit test which, even though it initially appears<br />
+simple, seems to require an ever increasing amount of the application<br />
+to be created or initialised in order to make it pass.</p>
+<p>This sort of test can take up a disproportionate amount of developer<br />
+time, and lose the benefits of the fast turn-round TDD cycle. In the<br />
+worst case, TDD is effectively abandoned while the all or most of the<br />
+application is developed using an untested up-front process to make a<br />
+single test pass.</p>
+<p>This is common among developers new to TDD who are not yet comfortable<br />
+with &#8220;faking&#8221; a response before moving the focus of design to a lower<br />
+level.</p>
+<p>* The Homing Pigeon - A unit test which (typically because it requires<br />
+non-public access to a class under test) needs to be created and run<br />
+at a particular place in a package hierarchy. This initially seems<br />
+perfectly reasonable, but can unexpectedly fail if the class under<br />
+test is moved to a new location or (worse) split so that its behaviour<br />
+goes to more than one such location.</p>
+<p>One of a cluster of implicit assumption anti-patterns along with Local<br />
+Hero, Operating System Evangelist and Hidden Dependency</p>
+<p>It should probably be noted that this is still an active area of<br />
+discussion, with many people arguing that it is a necessary or even<br />
+benficial approach to design by allowing testing of non-public access.</p>
+<p>* The Dodo - A unit test which tests behavior no longer required in<br />
+the application. Both the behaviour and the test should probably be<br />
+deleted.</p>
+<p>* Love Birds - A test case which is so closely coupled with a<br />
+particular class under test that it distracts from the need to test<br />
+important interaction between classes. Commonly found in a test package<br />
+structure created for Homing Pigeons where there is no obvious place<br />
+to put tests for class interaction.</p>
+<p>I&#8217;m really enjoying this game, can you tell?</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-267">
+			<cite>chuck</cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-267" title="">November 4th, 2006 at 3:44 pm</a> </small>
+
+			<p>* Old Predictable - A test case that tests multithreaded conditions with the same thread ordering every time, or random data with the same random sample data (or seed) every time.</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-268">
+			<cite><a href='http://blog.james-carr.org' rel='external nofollow'>James Carr</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-268" title="">November 4th, 2006 at 5:54 pm</a> </small>
+
+			<p>Frank: What&#8217;s up with the bird themed names? Have you been watching National Geographic all day? <img src='http://blog.james-carr.org/wp-includes/images/smilies/icon_wink.gif' alt=';)' class='wp-smiley' /> </p>
+<p>Chuck: Thanks for including a threaded related test. I have not had the experience of doing TDD with threaded applications much, but from what I have seen on some of the mailing list, it can be quite easy to write lousy tests for threaded applications.</p>
+<p>Thanks,<br />
+James</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-269">
+			<cite><a href='http://blog.james-carr.org' rel='external nofollow'>James Carr</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-269" title="">November 4th, 2006 at 10:22 pm</a> </small>
+
+			<p>Hmm&#8230; here&#8217;s another that came to mind just now while looking at the unit tests for a certain project I just downloaded&#8230;</p>
+<p>The Web Surfer<br />
+A unit test that requires a connection to internet with access to the outside world in order to run.</p>
+<p>Wow! Some these are really starting to get generalized!</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-274">
+			<cite><a href='http://cime.net/~ricky/' rel='external nofollow'>Ricky Clarkson</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-274" title="">November 5th, 2006 at 11:09 am</a> </small>
+
+			<p>I&#8217;d like to see some solutions or advice about some of these, as well as just identifying them.</p>
+<p>The Inspector, for example - my solution is to make the class under test package private (but it implements a public interface) and test it that way.. although I find that a test that depends on breaking encapsulation is probably testing behaviour that is impossible via the public interface, so the test has little value.  What&#8217;s your solution?</p>
+<p>The Loudmouth - I normally just run my tests and delete the logging code when they pass, but I can see the value in keeping it, and only showing it when the tests fail.  With the standard exception-based test frameworks, I suppose this would be quite verbose.  Thankfully I rolled my own test framework where you return SUCCESS or FAILURE (enum members - slightly clearer than true/false), so I don&#8217;t think this would be too verbose.  Subjective, I know.  A nice feature is that if the test throws an exception instead, it is not just a failure, but &#8216;blocked&#8217;.  The test suite stops - of course that might not always be good, but it&#8217;s currently my preference.</p>
+<p>Frank Carver&#8217;s Wild Goose is surely pushing the word &#8216;unit&#8217; somewhat.  I have my doubts as to the usefulness of unit testing, as opposed to just automated testing.  What is the largest thing that you can legitimately call a unit?  Is it a method, an object, a package, an entire project?</p>
+<p>I tend to write tests first only when I expect buggy code.  This is usually when I find the problem to be solved difficult to understand.  I work on a network simulator, and sometimes my boss comes up with requirements that I&#8217;m not too sure about.  He is accustomed to doing subnet calculations in his head, I&#8217;m not, so sometimes his requirements confuse me.  Writing the test first, sometimes even in his presence, can help me there.  Perhaps my approach is actually an antipattern - Selective Tester.  What do you think?</p>
+<p>I also write tests when I find bugs.  This is proving difficult with Swing-related code, especially as I try to run my tests in &#8216;headless&#8217; mode.  I&#8217;ve (temporarily) broken my application by wrapping JFrame and JDialog so that I can instantiate real versions in the real app and dummy versions in tests.  I know that this is because of the behaviour-dependent design of Swing, but either way, it&#8217;s annoying.</p>
+<p>Cheers.</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-275">
+			<cite><a href='http://www.agical.com' rel='external nofollow'>Joakim Ohlrogge</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-275" title="">November 5th, 2006 at 11:28 am</a> </small>
+
+			<p>I didn&#8217;t recognise greedy leftovers as something I said. I think The sloppy worker could have that effect but I can&#8217;t take credit for Gredy worker <img src='http://blog.james-carr.org/wp-includes/images/smilies/icon_smile.gif' alt=':)' class='wp-smiley' /> </p>
+<p>Here are the ones I came up with on the list.</p>
+<p>The overly stateful - A test that uses the filesystem unneccesarily.<br />
+For instance storing a file and reding it with a FileReader when a<br />
+StringReader would suffice to prove your point.</p>
+<p>Which leads me to:</p>
+<p>The sloppy worker - A test that creates persistent resources but<br />
+doesn&#8217;t clean after itself.</p>
+<p>The mime: Developing the code first and then repeating what the code does with expectations mocks. This makes the code drive the tests rather than the other way around. Usually leads to excessive setup and poorly named tests that are hard to see what they do.</p>
+<p>Inversion of design aka Creative setup: This is closely related to<br />
+James excessive setup anti-pattern and I&#8217;ve seen it with mocks.<br />
+Instead of redesigning the subject under test so that it doesn&#8217;t<br />
+require excessive setup; the testcase is redesigned so that it is<br />
+easier to create a complex setup.</p>
+<p>This one is more about people behviour but can be a cause of interesting petters:</p>
+<p>The bounty hunter: Making sure to exercise all code in order to reach<br />
+the required level of X% testcoverage. But not really testing<br />
+anything.</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-276">
+			<cite><a href='http://blog.james-carr.org' rel='external nofollow'>James Carr</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-276" title="">November 5th, 2006 at 3:45 pm</a> </small>
+
+			<p>Joakim: true&#8230; even though I did draw some of it from what you mentioned about sloppy worker. Thought I&#8217;d at least give partial credit since you mentioned some of the elements of it on the list. <img src='http://blog.james-carr.org/wp-includes/images/smilies/icon_wink.gif' alt=';)' class='wp-smiley' /> </p>
+<p>Another amusing one someone brought up that was summarized in one statement:</p>
+<p>Old and Busted: Test Driven Development.<br />
+The new hotness: Test Driven Unit Testing.</p>
+<p>I have yet to see a unit test for a unit test yet, however. <img src='http://blog.james-carr.org/wp-includes/images/smilies/icon_sad.gif' alt=':(' class='wp-smiley' /></p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-277">
+			<cite><a href='http://tzara.wordpress.com/2006/11/06/jot-down/' rel='external nofollow'>jot down &laquo; re-thinking</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-277" title="">November 6th, 2006 at 3:12 am</a> </small>
+
+			<p>[...] James Carr » Blog Archive » TDD Anti-Patterns     Posted by tzara Filed in blah blah [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-457">
+			<cite><a href='http://blogs.msdn.com/agilmonkey' rel='external nofollow'>casper</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-457" title="">November 28th, 2006 at 3:26 am</a> </small>
+
+			<p>A very enlightening and amusing post <img src='http://blog.james-carr.org/wp-includes/images/smilies/icon_smile.gif' alt=':)' class='wp-smiley' /> Could you clarify &#8216;The Secret Catcher&#8217; a bit? I&#8217;m not sure exactly what you mean by it, but certainly  there are valid NUnit tests that have no Assert() but rather an [ExpectedException] attribute.</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-458">
+			<cite><a href='http://blogs.msdn.com/agilemonkey/archive/2006/11/28/tdd-anti-patterns.aspx' rel='external nofollow'>Adventures of an agile developer in a not-quite agile world : TDD Anti-Patterns</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-458" title="">November 28th, 2006 at 3:26 am</a> </small>
+
+			<p>[...] James Carr has an amusing and enlightening post on TDD Anti-Patterns. They encompass all the key points I&#8217;ve written about and add a few more as well. I&#8217;m not completely sure if I understand what he means by &#8216;The Secret Catcher&#8217;, because it&#8217;s perfectly normal (and valid) to write unit tests with NUnit that have no Assert, but rather an [ExpectedException] attribute.  Posted: Tuesday, November 28, 2006 7:26 AM by casper [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-463">
+			<cite><a href='http://blog.james-carr.org' rel='external nofollow'>James Carr</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-463" title="">November 28th, 2006 at 2:36 pm</a> </small>
+
+			<p>Casper,</p>
+<p>Yeah, there&#8217;s been a bit of debate over the Secret catcher on the TDD list&#8230; after all, it is valid if you are testing for an exception to be thrown. The Secret Catcher is meant to be the case where you do not expect the exception to be thrown, but rather just rely on the framework to fail when it encounters the exception. </p>
+<p>Essentially, in java code it might look something like this:</p>
+<p>public void testSomething(){<br />
+   foo.makeCallThatCanThrowTwentyDifferentExceptions();<br />
+}</p>
+<p>I&#8217;m sure you get the picture. <img src='http://blog.james-carr.org/wp-includes/images/smilies/icon_wink.gif' alt=';)' class='wp-smiley' /></p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-470">
+			<cite><a href='http://www.chaliy.com' rel='external nofollow'>Mike Chaliy</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-470" title="">November 29th, 2006 at 6:28 am</a> </small>
+
+			<p>Another anti-pattern with another crazy name <img src='http://blog.james-carr.org/wp-includes/images/smilies/icon_smile.gif' alt=':)' class='wp-smiley' /> </p>
+<p>The Initalization Hero</p>
+<p>Occured when every test method makes initialization of the target. Must be refactored in the factory method.</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-477">
+			<cite><a href='http://blogs.msdn.com/agilmonkey' rel='external nofollow'>casper</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-477" title="">November 30th, 2006 at 3:12 am</a> </small>
+
+			<p>James - thanks for clearing that up. I&#8217;m in total agreement. Again, very well-written post <img src='http://blog.james-carr.org/wp-includes/images/smilies/icon_smile.gif' alt=':)' class='wp-smiley' /></p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-1281">
+			<cite><a href='http://www.kds.com.ua/wp/2006/12/27/why-automated-tests/' rel='external nofollow'>KDS Software Group &raquo; Software development basics: where test-driven development is from</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-1281" title="">December 27th, 2006 at 9:56 am</a> </small>
+
+			<p>[...] How test driven development can go wrong [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-1289">
+			<cite>Srihari Y.</cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-1289" title="">December 27th, 2006 at 12:41 pm</a> </small>
+
+			<p>Am currently still a novice with TDD but one i&#8217;ve usually encountered in my initial steps is this :</p>
+<p>- Write testcases which mock interfaces/classes and use &#8220;setters&#8221; to put the mocked objects to the &#8220;under test&#8221; class and have tests that test the functionality correctly.<br />
+- But finally end up writing code in constructor of that &#8220;under test&#8221; class without tests or with tests which just test  &#8220;initialisation&#8221; of the real world equivalents of the &#8220;mocked&#8221; interfaces/classes.</p>
+<p>So would this or some inherent assumption of mine (in above),  qualify for a TDD antipattern? <img src='http://blog.james-carr.org/wp-includes/images/smilies/icon_smile.gif' alt=':)' class='wp-smiley' /> </p>
+<p>Have been actually wondering what would be the best way to avoid this though? any suggestions?</p>
+<p>If really there is something, then for naming.. well.. seems close to Mockery but actually bit different.. Cannot come up with any good names..  How about &#8220;Forget the constructor&#8221;? (ahh.. forget it..  sorry cant be creative enough! <img src='http://blog.james-carr.org/wp-includes/images/smilies/icon_smile.gif' alt=':)' class='wp-smiley' /> )</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-1319">
+			<cite><a href='http://www.developers.org.ua/archives/akhavr/2006/12/28/osonvy-rozrobky-tdd/' rel='external nofollow'>Основи розробки ПЗ: мета + декомпозиція = TDD &laquo; блог разработчиков &laquo; developers.org.ua</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-1319" title="">December 28th, 2006 at 7:19 am</a> </small>
+
+			<p>[...] Як розробка, керована тестами, може піти хибним шляхом [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-2367">
+			<cite><a href='http://laribee.com/blog/2007/01/24/strategies-for-structuring-unit-tests/' rel='external nofollow'>the &#8216;bee log / Strategies for Structuring Unit Tests</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-2367" title="">January 24th, 2007 at 1:02 am</a> </small>
+
+			<p>[...] Some time ago I read a&nbsp;good article on some common TDD anti-patterns by James Carr (which lives right here.)&nbsp;Great, yeah, those are some anti-patterns. So what about patterns? [...]</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3969">
+			<cite><a href='http://www.trajano.net/' rel='external nofollow'>Archimedes Trajano</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-3969" title="">February 16th, 2007 at 9:49 am</a> </small>
+
+			<p>I am not sure if the &#8220;Giant setup&#8221; is really an anti-pattern.  Some test cases do require a big setup routine because it requires you to set up a lot of components before doing anything.</p>
+<p>e.g. in a case management system<br />
+You may have to create the person (there are many mandatory fields for the person to be valid e.g. name, birth date, gender)<br />
+Then you have to create the address for the person<br />
+Then you have to create the case with the person associated</p>
+<p>&#8230; at this point you can do operations to the case&#8230;</p>
+<p>As you can see the setup is quite big.  The teardown is usually simple if we set up the unit test to rollback all the changes.</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-4057">
+			<cite><a href='http://community.vuscode.com/archive/2007/02/17/james-carr-blog-archive-tdd-anti-patterns.aspx' rel='external nofollow'>VusCode - Coding dreams since 1998! : James Carr &#187; Blog Archive &#187; TDD Anti-Patterns</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-4057" title="">February 17th, 2007 at 1:34 pm</a> </small>
+
+			<p>[...] Link to James Carr » Blog Archive » TDD Anti-Patterns [...]</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4058">
+			<cite><a href='http://community.vuscode.com/archive/2007/02/17/james-carr-blog-archive-tdd-anti-patterns.aspx' rel='external nofollow'>Nikola malovic</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-4058" title="">February 17th, 2007 at 1:41 pm</a> </small>
+
+			<p>James Car gathered an excellent collection of TDD anti patterns which is HAVE TO for every TDD oriented developer</p>
+<p>Bookmark it at once! <img src='http://blog.james-carr.org/wp-includes/images/smilies/icon_smile.gif' alt=':)' class='wp-smiley' /></p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-4481">
+			<cite><a href='http://www.obtiva.com' rel='external nofollow'>Andy Maleh</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-4481" title="">February 21st, 2007 at 12:22 pm</a> </small>
+
+			<p>The Giant helps me often in detecting code smells.</p>
+<p>Very interesting anti-patterns. Love the naming. Thanks for cataloging them.</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-10159">
+			<cite><a href='http://codebetter.com/blogs/jean-paul_boodhoo/archive/2007/04/08/TDD-Anti_2D00_Patterns.aspx' rel='external nofollow'>Jean-Paul S. Boodhoo : TDD Anti-Patterns</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-10159" title="">April 8th, 2007 at 11:58 pm</a> </small>
+
+			<p>[...] This was published a while ago, but it is an awesome read. Made me laugh, and I just read it for the first time last week!! [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-10258">
+			<cite><a href='http://www.leftturnsolutions.com' rel='external nofollow'>Jon Herron</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-10258" title="">April 10th, 2007 at 10:21 am</a> </small>
+
+			<p>Excellent article.  Unfortantually I have been bit by The Mockery one too many times, now at least I have a good name to refer to it by.</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-10260">
+			<cite><a href='http://www.cwk-technologies.co.uk/blog/2007/04/10/How+I+Avoid+TDD+Antipatterns.aspx' rel='external nofollow'>Andrew Macdonald</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-10260" title="">April 10th, 2007 at 11:03 am</a> </small>
+
+			<p>I bumped into this article via JP Boodhoo&#8217;s blog the other day (I know the original article has been out in the wild for a while now).</p>
+<p>Anyhow, as I read through the article, realisation hit that I subconsciously follow a set of practices that help avoid the aforementioned anti-patterns &#8230;.</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-10350">
+			<cite><a href='http://icelava.net' rel='external nofollow'>Aaron Seet</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-10350" title="">April 12th, 2007 at 8:32 am</a> </small>
+
+			<p>The worst anti-pattern of them all:</p>
+<p>The Void</p>
+<p>Not a single test to confirm the system works.</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-13422">
+			<cite><a href='http://jupitermoonbeam.blogspot.com' rel='external nofollow'>jupitermoonbeam</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-13422" title="">April 30th, 2007 at 4:16 am</a> </small>
+
+			<p>The Mad Hatter&#8217;s Tea Party.<br />
+This is one of those test cases that seems to test a whole party of objects without testing any specific one.  This is often found in poorly designed systems that cannot use mocks or stubs and as a result end up testing the state and behaviour of every peripheral object in order to ensure the object under test is working correctly.</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-13493">
+			<cite><a href='http://blog.james-carr.org' rel='external nofollow'>James Carr</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-13493" title="">April 30th, 2007 at 8:36 am</a> </small>
+
+			<p>Hi jupitermoonbeam,<br />
+Yes&#8230; that&#8217;s one of the most annoying test smells I&#8217;ve seen.. you wind up with a lot of methods that test other objects that the object under test uses, and the result is quite often along the lines of &#8220;The Giant.&#8221; </p>
+<p>Thankfully the strategy for refactoring is simple&#8230; isolate methods that are testing other objects and extract them out to their own unit tests, and provide mocks/stubs for access to those objects during test execution. </p>
+<p>I&#8217;ve also found this to be a result of a code smell as well, particularly a God Object or one that has too many dependencies which could be isolated. </p>
+<p>Cheers,<br />
+James</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-13571">
+			<cite><a href='http://blog.james-carr.org/?p=70' rel='external nofollow'>James Carr &raquo; Blog Archive &raquo; TDD Anti-Patterns: The Wiki!</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-13571" title="">April 30th, 2007 at 2:06 pm</a> </small>
+
+			<p>[...] There&#8217;s one post and one post only on my blog that gets the largest amount of attention: the TDD Anti-Patterns entry. This was an entry to kind of precede an article I had prepared for the IEEE special issue on TDD, however that article won&#8217;t materialize (mainly due to last minute writing on my part). [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-14606">
+			<cite><a href='http://www.google.com' rel='external nofollow'>LolitochkaBC</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-14606" title="">May 10th, 2007 at 7:58 am</a> </small>
+
+			<p>Ааанукаребятки голосуем!!! </p>
+<p>Признавайтесь проказники и владельцы сайта blog.james-carr.org )))) </p>
+<p>ЧТО вы бдетее делать этим летом?!</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-14766">
+			<cite><a href='http://blog.james-carr.org' rel='external nofollow'>James Carr</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-14766" title="">May 10th, 2007 at 6:35 pm</a> </small>
+
+			<p>I ran your comment through babelfish, and I got:<br />
+Of aaanukarebyatki we vote!!! Acknowledge mischief-makers the owners of site blog.james-carr.org)))) THAT you bdeteye to make with this summer?!</p>
+<p>Thanks&#8230; I guess. <img src='http://blog.james-carr.org/wp-includes/images/smilies/icon_wink.gif' alt=';)' class='wp-smiley' /></p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-20600">
+			<cite>Bill Smith</cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-20600" title="">June 6th, 2007 at 8:31 am</a> </small>
+
+			<p>How about the &#8220;Roll the Dice&#8221; test?  Rather than actually figuring out where the software&#8217;s boundary conditions are, the test uses randomly generated data for parameters.  Consequently, the test passes one time and fails the next.</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-21681">
+			<cite><a href='http://www.studiowhiz.com/?p=9527' rel='external nofollow'>Studiowhiz.com &raquo; Blog Archive &raquo; On Unit Testing and TDD</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-21681" title="">June 8th, 2007 at 3:26 am</a> </small>
+
+			<p>[...] Just read a couple of interesting posts. One provides a set of anti=patterns for TDD and the other looks at how best to Unit Test the db layer. [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-21718">
+			<cite><a href='http://www.upayasoftware.com/2007/06/07/worth-reading-testing-antipatterns/' rel='external nofollow'>Worth Resting - Testing Anti-patterns &raquo; Skillful Software</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-21718" title="">June 8th, 2007 at 6:37 am</a> </small>
+
+			<p>[...] Thanks to Frank Kelly for pointing out James Carr&#8217;s great list of testing anti-patterns - things to really avoid when writing automated test cases. This is definitely a page worth reading. [...]</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-22424">
+			<cite><a href='http://blog.softwarearchitecture.com' rel='external nofollow'>Brian Sondergaard</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-22424" title="">June 11th, 2007 at 8:16 pm</a> </small>
+
+			<p>Good work James. I&#8217;ll be interested in seeing the final article and the pattern descriptions. You have an important set of principles captured here. As is typically the case at this stage of development, the current list may be lacking in orthogonality, but I&#8217;m sure that will get fleshed out.</p>
+<p>I picked up on a couple of your anti-patterns to talk about the value of tests as documentation at <a href="http://blog.softwarearchitecture.com/2007/06/test-driven-knowledge-management.html" rel="nofollow">http://blog.softwarearchitecture.com/2007/06/test-driven-knowledge-management.html</a>.</p>
+<p>Keep it up.</p>
+<p>Brian<br />
+<a href="http://blog.softwarearchitecture.com" rel="nofollow">http://blog.softwarearchitecture.com</a></p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-23660">
+			<cite><a href='http://www.pommetab.com/2007/06/20/testing-anti-patterns/' rel='external nofollow'>Pomme::TAB &raquo; Blog Archive &raquo; Testing Anti-Patterns</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-23660" title="">June 21st, 2007 at 4:25 pm</a> </small>
+
+			<p>[...] &#8220;Somehow I missed James Carr&rsquo;s TDD Anti-Patterns late last year. I&rsquo;ve perpetuated almost every one at least once. If you&rsquo;re new to testing, browse the list, think about each entry, and watch for it in your own code.&#8221; [...]</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-25529">
+			<cite>omo</cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-25529" title="">July 8th, 2007 at 1:54 am</a> </small>
+
+			<p>thanks  for your work!<br />
+i post a Japanese translation here:<br />
+<a href="http://www.hyuki.com/yukiwiki/wiki.cgi?TddAntiPatterns" rel="nofollow">http://www.hyuki.com/yukiwiki/wiki.cgi?TddAntiPatterns</a></p>
+<p>if you have any trouble with this, please let me know.</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-28015">
+			<cite><a href='http://www.kevingabbert.com' rel='external nofollow'>Kevin Gabbert</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-28015" title="">August 2nd, 2007 at 11:55 am</a> </small>
+
+			<p>It would be good to see some kind of engine that could review a bunch of tests and classify them into some of these categories.</p>
+<p>&#8220;Hey Dude, 35% of your tests suck, here is why..&#8221;</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-28321">
+			<cite><a href='http://bruno-orsier.developpez.com' rel='external nofollow'>Bruno Orsier</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-28321" title="">August 5th, 2007 at 8:38 am</a> </small>
+
+			<p>Hello James, thanks for publishing this list. Here is a french translation:</p>
+<p><a href="http://bruno-orsier.developpez.com/anti-patterns/james-carr/" rel="nofollow">http://bruno-orsier.developpez.com/anti-patterns/james-carr/</a></p>
+<p>Best regards</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-29264">
+			<cite>D Lawson</cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-29264" title="">August 17th, 2007 at 10:47 am</a> </small>
+
+			<p>excellent list - with some amusing names <img src='http://blog.james-carr.org/wp-includes/images/smilies/icon_smile.gif' alt=':-)' class='wp-smiley' /></p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-32001">
+			<cite><a href='http://blog.napyfab.com/197/links-for-2007-09-17/' rel='external nofollow'>napyfab:blog&raquo; Blog Archive &raquo; links for 2007-09-17</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-32001" title="">September 17th, 2007 at 7:41 pm</a> </small>
+
+			<p>[...] James Carr » Blog Archive » TDD Anti-Patterns (tags: tdd testing programming pattern agile antipattern development architecture) [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-33118">
+			<cite><a href='http://blog.vuscode.com/malovicn/archive/2007/02/17/james-carr-blog-archive-tdd-anti-patterns.aspx' rel='external nofollow'>James Carr &#187; Blog Archive &#187; TDD Anti-Patterns - VusCode - Coding dreams since 1998!</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-33118" title="">October 1st, 2007 at 4:55 am</a> </small>
+
+			<p>[...] Link to James Carr » Blog Archive » TDD Anti-Patterns [...]</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-34092">
+			<cite><a href='http://www.david-dylan.co.uk/david' rel='external nofollow'>DavidDylan</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-34092" title="">October 11th, 2007 at 6:24 am</a> </small>
+
+			<p>A very useful list - and one that I think would be useful to a much wider audience than just TDD practitioners.  Do you think many of these anti-patterns are equally likely to show up in tests written after the code?</p>
+<p>I appreciate that, if you were originally targetting the IEEE Software TDD edition, it made sense to include TDD in the title.  But now that your list seems to have a life of its own, perhaps you should consider renaming it: &#8220;unit test anti-patterns&#8221;.</p>
+<p>In fact I don&#8217;t even think they&#8217;re even limited to unit tests - maybe &#8220;xUnit test anti-patterns&#8221; to complement the recent book (which I haven&#8217;t read, yet) called xUnit test patterns would be the best name.  I think &#8220;automated test patterns&#8221; might be going a bit too far, as that takes you too far into the domain of tester/scripters rather than developers writing tests.</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-34100">
+			<cite><a href='http://blog.james-carr.org' rel='external nofollow'>James Carr</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-34100" title="">October 11th, 2007 at 9:11 am</a> </small>
+
+			<p>Indeed it has! It&#8217;s even been translated to 4 different languages now, so I&#8217;m starting to think maybe it&#8217;s time to dust this off and see what can be improved on it.</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-35200">
+			<cite><a href='http://blogs.it-coder.com' rel='external nofollow'>Ivan Atanasov</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-35200" title="">October 22nd, 2007 at 11:27 am</a> </small>
+
+			<p>Excellent list, because we must know &#8220;What is wrong?&#8221;, before starts writing unit testing.</p>
+<p>Best Regards</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-36941">
+			<cite><a href='http://codesthetics.com/?p=3' rel='external nofollow'>Codesthetics &raquo; Blog Archive &raquo; TDD ain&#8217;t no snowboarding</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-36941" title="">November 4th, 2007 at 4:22 pm</a> </small>
+
+			<p>[...] And that&#8217;s all. Everything came (and keeps coming) naturally: good basic principles like isolation, self-contained tests, dependency injection, and so on. There is no steep learning curve, there is no big initial investment (try buying a full set of snowboarding equipment to discover shortly after that you&#8217;re not going to use it&#8230;), there is no need for a professional instructor other than those good guys that already inspired you in the beginning. [...]</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-37623">
+			<cite><a href='http://www.ademiller.com/tech/' rel='external nofollow'>Ade Miller</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-37623" title="">November 9th, 2007 at 11:20 am</a> </small>
+
+			<p>Great list. This was just what I was looking for to describe some anti-patterns my team has been inadventently using.</p>
+<p>The Greedy Catcher - The XUnit.net framework supports much better exception catching than NUnit or MSTest.</p>
+<p>A variant of excessive setup and giant is complex base classes. Tests classes derive from a hierachy of base classes making the actual test very hard to read. Lots of people fall into this trap when first creating unit tests in an attempt to follow the DRY principle 100%. With tests sometimes readability is better than no duplication.</p>
+<p>Thanks,</p>
+<p>Ade</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-37675">
+			<cite><a href='http://www.ademiller.com/blogs/tech/2007/11/tdd-anti-pattern-inherited-test/' rel='external nofollow'>#2872 &raquo; Blog Archive &raquo; TDD anti-pattern &#8220;inherited or hidden test&#8221;</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-37675" title="">November 9th, 2007 at 10:11 pm</a> </small>
+
+			<p>[...] This post actually started out as my TDD and DSLs post but I got sidetracked into trying to describe an anti-pattern I&#8217;d noticed in a some of the unit tests we wrote as part of Service Factory: Modeling Edition. I came across James Carr&#8217;s excellent TDD anti-patterns post which got me thinking about this new variation on one of his anti-patterns.  [...]</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-37676">
+			<cite><a href='http://www.ademiller.com/tech/' rel='external nofollow'>Ade Miller</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-37676" title="">November 9th, 2007 at 10:12 pm</a> </small>
+
+			<p>I blogged about another anti-pattern I&#8217;ve seen used a fair bit. If you&#8217;re still collecting here it is:</p>
+<p><a href="http://www.ademiller.com/blogs/tech/2007/11/tdd-anti-pattern-inherited-test/" rel="nofollow">http://www.ademiller.com/blogs/tech/2007/11/tdd-anti-pattern-inherited-test/</a></p>
+<p>Cheers,</p>
+<p>Ade</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-41410">
+			<cite><a href='http://ideesign.com.br/pedro/?p=13' rel='external nofollow'>Motivations to adopt Behavior Driven Development | Yet Another Programmer Bitching</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-41410" title="">December 9th, 2007 at 6:32 pm</a> </small>
+
+			<p>[...] As a bonus, I&#8217;m finally writing tests before the code. Because, really, TDD just doesn&#8217;t work for me and I always end with crappy designs. And no, I&#8217;m not going to memorize TDD ANTI-PATTERNS (there are 22 of them!) to safely adopt the practice. I&#8217;d rather start with tests that don&#8217;t impact on design, and BDD allows me to do that. [...]</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-42422">
+			<cite><a href='http://ianjoyce.org/?p=76' rel='external nofollow'>Ian Joyce &raquo; Blog Archive &raquo; links for 2007-06-20</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-42422" title="">December 18th, 2007 at 4:20 pm</a> </small>
+
+			<p>[...] James Carr » Blog Archive » TDD Anti-Patterns (tags: patterns antipatterns testing) [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-46487">
+			<cite><a href='http://www.alvinashcraft.com/2008/01/20/daily-bits-january-20-2008/' rel='external nofollow'>&raquo; Daily Bits - January 20, 2008 Alvin Ashcraft&#8217;s Daily Geek Bits: Daily links plus random ramblings about development, gadgets and raising rugrats.</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-46487" title="">January 20th, 2008 at 11:10 am</a> </small>
+
+			<p>[...] TDD Anti-Patterns (James Carr) [...]</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-46546">
+			<cite><a href='http://www.mouseoverstudio.com/blog/?p=54' rel='external nofollow'>links for 2008-01-21</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-46546" title="">January 20th, 2008 at 9:25 pm</a> </small>
+
+			<p>[...] James Carr » Blog Archive » TDD Anti-Patterns (tags: tdd antipatterns testing Patterns programming Agile antipattern) [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-46636">
+			<cite><a href='http://blog.tieredsolutions.com/?p=374' rel='external nofollow'>The DaxMindMapper Reloaded &raquo; TDD Anti-Patterns .. as TDD matures new lessons are learnt. - .NET Software Development</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-46636" title="">January 21st, 2008 at 4:57 pm</a> </small>
+
+			<p>[...] James Carr&#8217;s TDD Anti-Patterns [...]</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-46654">
+			<cite><a href='http://vp.blog.br/2008/01/21/anti-padroes-de-tdd/' rel='external nofollow'>:: 2web :: &raquo; Blog Archive &raquo; Anti-padrões de TDD</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-46654" title="">January 21st, 2008 at 9:26 pm</a> </small>
+
+			<p>[...] James Carr fez um excelente (e divertido) trabalho ao levantar anti-padrões - práticas RUINS comumente encontradas nos projetos - em projetos TDD. [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-46671">
+			<cite><a href='http://www.chinhdo.com/20080121/finds-of-the-week-jan-20-2008/' rel='external nofollow'>Finds of the Week - Jan 20, 2008 &raquo; Chinh Do</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-46671" title="">January 22nd, 2008 at 12:05 am</a> </small>
+
+			<p>[...] James Carr&#8217;s TDD Anti-Patterns is a fun and enlightening read on of Test Driven Development. [...]</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-46825">
+			<cite><a href='http://afongen.com/blog/2008/01/22/links-for-2008-01-23/' rel='external nofollow'>afongen &raquo; links for 2008-01-23</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-46825" title="">January 23rd, 2008 at 1:24 am</a> </small>
+
+			<p>[...] TDD Anti-Patterns (tags: tdd) [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-46833">
+			<cite><a href='http://blog.geekdaily.org/' rel='external nofollow'>Jim</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-46833" title="">January 23rd, 2008 at 3:10 am</a> </small>
+
+			<p>Wonderful post! I&#8217;m glad it&#8217;s resurfaced for those of us who missed it the first time around. The Web Surfer and The Nitpicker are two I keep seeing repeatedly, as well as Excessive Setup which I&#8217;ve always thought of as Much Ado About Nothing.</p>
+<p>Thanks again!</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-46872">
+			<cite><a href='http://blogs.adobe.com/tomsugden/' rel='external nofollow'>Tom Sugden</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-46872" title="">January 23rd, 2008 at 9:05 am</a> </small>
+
+			<p>Here is another simple anti-pattern that I think has been missed: The Denier or Contradiction. This is a test case where the message parameter of an assertion describes a success rather than a failure. If the test case fails, the test runner will display a contradictory failure message suggesting the test was successful.</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-47093">
+			<cite><a href='http://www.codebureau.com/blog' rel='external nofollow'>Matt</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-47093" title="">January 24th, 2008 at 9:51 pm</a> </small>
+
+			<p>Love the post..</p>
+<p>How about the &#8216;Stealth Bomber&#8217;.  This is probably an extreme extension of the Hidden Dependency.  I&#8217;ve seen a few tests that would simply &#8216;never&#8217; fail when run interactively or debugged, or during a full test run in the day.  When a supposed &#8216;fix&#8217; was implemented it would even fool the developer into feeling pleased with themselves by passing for a day or two before bombing again in an overnight run.  The logic wouldn&#8217;t show anything untoward, and it continued to bomb every few days without warning or trace of &#8216;why&#8217;.  More than likely a group of no-no&#8217;s of execution sequence-dependent, date/time-dependent, database-dependent, context-dependent etc.  </p>
+<p>There&#8217;s probably another variation - maybe the &#8216;Blue Moon&#8217;.  A test that&#8217;s specifically dependent on the current date, and fails as a result of things like public holidays, leap years, weekends, 5 week months etc.  This is again guilty of not setting up its own data.</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-47198">
+			<cite>Kevin</cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-47198" title="">January 25th, 2008 at 3:08 pm</a> </small>
+
+			<p>Locale Evangelist - We work with an offshore team, and sometimes we create tests that fail in one locale but pass in another. Our most frequent culprit is a timezone dependency.</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-47221">
+			<cite><a href='http://blog.briandicroce.com/2008/01/25/this-weeks-geek-links-jan-25th-2008/' rel='external nofollow'>This Week&#8217;s Geek Links (Jan. 25th, 2008) &laquo; Brian Di Croce</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-47221" title="">January 25th, 2008 at 6:48 pm</a> </small>
+
+			<p>[...] &#8220;TDD Anti-Patterns&#8221; Software developer James Carr shares his own catalogue of TDD Anti-Pattern. It&#8217;s a good complement to Gerard Meszaros&#8217; &#8220;xUnit Test Patterns: Refactoring Test Code&#8221; and pretty helpful in case you&#8217;re wondering whether or not your test harness is well written. [...]</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-47585">
+			<cite><a href='http://www.nelz.net/roller' rel='external nofollow'>Nelz</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-47585" title="">January 28th, 2008 at 2:40 pm</a> </small>
+
+			<p>James, great post!</p>
+<p>Since you asked for votes, I would vote for The Inspector, and The Excessive Setup, as those are the anti-patterns I&#8217;m most guilty of.  </p>
+<p>I am also interested in The Nitpicker and how to combat its use in web-app testing.</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-47770">
+			<cite><a href='http://la-stories.blogspot.com' rel='external nofollow'>Don Hosek</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-47770" title="">January 29th, 2008 at 6:37 pm</a> </small>
+
+			<p>For the nitpicker, the best approach is to use regular expression matching on the output that you&#8217;re inspecting. This of course can create some potential issues of its own, especially for the regexp newbie, but is probably the best of the possible solutions.</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-47913">
+			<cite>PandaWood</cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-47913" title="">January 30th, 2008 at 10:09 pm</a> </small>
+
+			<p>Rick Clarkson says:<br />
+&#8220;Thankfully I rolled my own test framework where you return SUCCESS or FAILURE (enum members - slightly clearer than true/false)&#8221;</p>
+<p>That sounds scary, nothing is clearer than true/false!</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-49420">
+			<cite><a href='http://temujin.blogsome.com/2008/02/08/tdd-anti-patterns/' rel='external nofollow'>temujin, the fabulous freak&#8230; &raquo; TDD Anti-Patterns</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-49420" title="">February 8th, 2008 at 6:56 am</a> </small>
+
+			<p>[...] TDD Anti-Patterns [via ISerializable] [...]</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-49467">
+			<cite><a href='http://www.dataconstructor.com' rel='external nofollow'>Max Guernsey, III</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-49467" title="">February 8th, 2008 at 3:17 pm</a> </small>
+
+			<p>Chuck: I&#8217;m not sure that &#8220;old predictable&#8221; is an anti-pattern.  A test that is not predictable is, itself, an anti-pattern.  If you need good coverage like that, you might consider generating several different tests that order threads differently or use different, predictable, random seeds.</p>
+<p>&#8211; Max</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-57980">
+			<cite><a href='http://www.lobosoft.es/2008/03/29/la-implantacion-de-tdd-en-nuestra-empresa/' rel='external nofollow'>La implantación de TDD en nuestra empresa</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-57980" title="">March 29th, 2008 at 11:43 am</a> </small>
+
+			<p>[...] Anti-patrones TDD, de James Carr. [...]</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-69036">
+			<cite><a href='http://www.wowgoldip.com/2008/05/22/tdd-anti-patterns/' rel='external nofollow'>TDD Anti Patterns | Developer Home</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-69036" title="">May 22nd, 2008 at 6:30 pm</a> </small>
+
+			<p>[...] James Carr lists a nice bunch of TDD anti patterns. via Jeremy . [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-76496">
+			<cite><a href='http://www.bostonbaydigital.com/2008/07/03/tdd-anti-patterns/' rel='external nofollow'>Boston Bay Digital &raquo; TDD Anti Patterns</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-76496" title="">July 3rd, 2008 at 8:02 am</a> </small>
+
+			<p>[...] Anyone who has written a remotely complex web application applying TDD philosophies will find the following interesting: <a href="http://blog.james-carr.org/?p=44" rel="nofollow">http://blog.james-carr.org/?p=44</a> [...]</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-77173">
+			<cite><a href='http://dotnet.org.za/mikegeyser/archive/2008/07/07/tdd-anti-patterns.aspx' rel='external nofollow'>TDD Anti-Patterns - not just another working title</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-77173" title="">July 7th, 2008 at 10:04 am</a> </small>
+
+			<p>[...] Share this post: email it! | bookmark it! | digg it! | reddit! | kick it! | live it!  Posted: Jul 07 2008, 03:04 PM by mikegeyser | with nocomments [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-77335">
+			<cite>Adrian Mouat</cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-77335" title="">July 8th, 2008 at 7:09 am</a> </small>
+
+			<p>Are these really &#8220;patterns&#8221;? I would argue they are closer to &#8220;code smells&#8221; as defined by Martin Fowler in &#8220;Refactoring&#8221;.</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-77462">
+			<cite><a href='http://www.pirnat.com/2008/07/09/links-for-2008-07-09/' rel='external nofollow'>links for 2008-07-09</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-77462" title="">July 9th, 2008 at 1:38 am</a> </small>
+
+			<p>[...] TDD Anti-Patterns Various antipatterns of the testing and test-driven world. Pretty sure I&#8217;ve encountered my fair share of them along the way&#8211;how about you? (tags: tdd testing antipatterns programming patterns development agile) [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-77626">
+			<cite><a href='http://www.grenswoningen.nl' rel='external nofollow'>Wonen in Duitsland</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-77626" title="">July 10th, 2008 at 7:33 am</a> </small>
+
+			<p>Are these really “patterns”? I would argue they are closer to “code smells” as defined by Martin Fowler in “Refactoring”.</p>
+<p>Yes, Indeed that was the samething i was thinking about.<br />
+But i can be wrong also.</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-77667">
+			<cite><a href='http://www.ccil.org/~cowan' rel='external nofollow'>John Cowan</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-77667" title="">July 10th, 2008 at 1:53 pm</a> </small>
+
+			<p>Sometimes the Giant has its uses.</p>
+<p>A little while ago, I wrote a test for a method that has to take a number of factors into account and return one of two results.  For example, if the content is precious, always return A, but if not, then if the version is 3, always return B unless the user has requested A, etc. etc.</p>
+<p>The giant test I wrote does the full combinatorial explosion of assertEquals tests:  version 1, 2, or 3; user requested A or B; content is precious or not; etc.  There end up being 72 calls.</p>
+<p>Now I could refactor that to 72 tests, but I don&#8217;t think that would help anyone much.  And doing &#8220;just enough&#8221; testing would have turned out to be not enough: just one of the 72 tests actually failed after I wrote the code, but it exposed a deep logic error.  (Now I&#8217;ve had to change the code to satisfy new requirements, and half the tests are failing!  Arrgh.  But I&#8217;ll get it fixed eventually.)</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-77729">
+			<cite>Graham Lenton</cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-77729" title="">July 11th, 2008 at 5:56 am</a> </small>
+
+			<p>How about the &#8216;Honest, Guv&#8217; where the expected outcome is so entropic that the developer simply asserts true with a comment &#8216;this works, honestly..&#8217;</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-91447">
+			<cite><a href='http://jasonrudolph.com/blog/2008/10/07/testing-anti-patterns-potpourri-quotes-resources-and-collective-wisdom/' rel='external nofollow'>:jasonrudolph =&gt; :blog &raquo; Blog Archive &raquo; Testing Anti-Patterns Potpourri - Quotes, Resources, and Collective Wisdom</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-91447" title="">October 7th, 2008 at 6:30 am</a> </small>
+
+			<p>[...] start off with something light. James Carr&#8217;s TDD Anti-Pattern Catalogue is a good, fun read that&#8217;s downright hilarious at times (but only because we remember writing [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-93819">
+			<cite><a href='http://kartones.net/blogs/kartones/pages/links.aspx' rel='external nofollow'>Links - Kartones Blog</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-93819" title="">November 2nd, 2008 at 7:00 pm</a> </small>
+
+			<p>[...] LibraryScott Hanselman Dev&#38;TestTDD Anti-PatternsEl Ave [...]</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-95648">
+			<cite><a href='http://madcoderspeak.blogspot.com' rel='external nofollow'>Gishu Pillai</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-95648" title="">December 2nd, 2008 at 7:33 am</a> </small>
+
+			<p>I started a thread on stackoverflow.com, which is what I associate with voting nowadays <img src='http://blog.james-carr.org/wp-includes/images/smilies/icon_smile.gif' alt=':)' class='wp-smiley' /><br />
+Anyways you may want to take a look at an informal anti-pattern survey of sorts here<br />
+<a href="http://stackoverflow.com/questions/333682/tdd-anti-patterns-catalogue#333697" rel="nofollow">http://stackoverflow.com/questions/333682/tdd-anti-patterns-catalogue#333697</a></p>
+<p>and of course.. uber post. Thanks for taking the time to put this down.</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-96806">
+			<cite><a href='http://gettingagile.com/2008/12/22/tdd-anti-patterns/' rel='external nofollow'>GettingAgile.com &raquo; Blog Archive &raquo; TDD Anti-Patterns</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-96806" title="">December 22nd, 2008 at 5:20 am</a> </small>
+
+			<p>[...] A catalog of common issues individuals and teams run into while doing TDD on their projects is well under way in this blog entry. [...]</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-97930">
+			<cite><a href='http://www.carlosble.com/?p=225' rel='external nofollow'>El blog de Carlos Ble &raquo; Antipatrones en TDD</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-97930" title="">January 9th, 2009 at 12:14 pm</a> </small>
+
+			<p>[...] es una traducción del artículo de James Carr, TDD Anti-Patterns. En dicho artículo algunos antipatrones han sido escritos por Frank Carver, Tim Ottinger, Cory [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-97932">
+			<cite><a href='http://carlosble.com' rel='external nofollow'>Carlos Ble</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-97932" title="">January 9th, 2009 at 12:19 pm</a> </small>
+
+			<p>Excelent article James!<br />
+I&#8217;ve translated it to spanish: <a href="http://www.carlosble.com/?p=225" rel="nofollow">http://www.carlosble.com/?p=225</a></p>
+<p>Thanks</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-98769">
+			<cite><a href='http://mkfsh.wordpress.com/2009/01/28/test-driven-development-patterns-practices-references/' rel='external nofollow'>Test Driven Development - Patterns &amp; Practices: References &laquo; Ibn e Muazzam&#8217;s Blog</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-98769" title="">January 28th, 2009 at 2:56 am</a> </small>
+
+			<p>[...] <a href="http://blog.james-carr.org/2006/11/03/tdd-anti-patterns/" rel="nofollow">http://blog.james-carr.org/2006/11/03/tdd-anti-patterns/</a> [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-99333">
+			<cite><a href='http://grimpidev.wordpress.com/2009/02/06/test-driven-development-tdd/' rel='external nofollow'>Introducción a Test Driven Development (TDD) &laquo; Grimpi IT Blog</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-99333" title="">February 6th, 2009 at 10:51 pm</a> </small>
+
+			<p>[...] Anti-Patterns de TDD [...]</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-100619">
+			<cite><a href='http://suomala.wordpress.com/2009/03/09/tdd-anti-patterns/' rel='external nofollow'>TDD Anti-Patterns &laquo; Pekka &#8216;Peks&#8217; Suomalan blogi</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-100619" title="">March 9th, 2009 at 1:50 pm</a> </small>
+
+			<p>[...] 9, 2009 suomala    Törmäsin tähän hiljattain uudelleen. Kyseessä on James Carrin artikkeli TDD Anti-Patterns yksikkötestien sudenkuopista. Kevyttä luettavaa, mutta sisältää silti paljon hyviä [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-103436">
+			<cite>fact</cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-103436" title="">April 28th, 2009 at 6:15 am</a> </small>
+
+			<p>TDD is an anti-pattern.</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-103439">
+			<cite><a href='http://undefined.com/ia/2009/04/28/cool-list-of-tdd-anti-patterns/' rel='external nofollow'>Indefinite Articles &raquo; cool list of TDD anti-patterns</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-103439" title="">April 28th, 2009 at 7:55 am</a> </small>
+
+			<p>[...] a blast from the past [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-103480">
+			<cite><a href='http://blog.knowtu.com/2009/04/28/links-for-2009-04-28/' rel='external nofollow'>Knowtu &raquo; links for 2009-04-28</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-103480" title="">April 28th, 2009 at 9:04 pm</a> </small>
+
+			<p>[...] James Carr » Blog Archive » TDD Anti-Patterns (tags: testing junit tdd) [...]</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-103483">
+			<cite><a href='http://toby.epril.com/?p=750' rel='external nofollow'>TDD 안티 패턴</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-103483" title="">April 28th, 2009 at 9:59 pm</a> </small>
+
+			<p>[...] Carr가 TDD Anti-Patterns을 공개했다. TDD라고 되어있지만 사실은 테스트(코드작성) 안티패턴이라고 [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-103531">
+			<cite><a href='http://mikemclean.ca/muse/2009/04/links-for-2009-04-29/' rel='external nofollow'>links for 2009-04-29 | the higher you fly</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-103531" title="">April 29th, 2009 at 5:28 pm</a> </small>
+
+			<p>[...] James Carr » Blog Archive » TDD Anti-Patterns (tags: testing tdd programming) [...]</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-103648">
+			<cite>Peter Hickman</cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-103648" title="">May 1st, 2009 at 7:23 am</a> </small>
+
+			<p>Having just sat down and read through a bunch of unit tests that can take 15 minutes to run I would like to propose the &#8220;test everything&#8221; anti-pattern. In this anti-pattern the unit tests test the functionality of the programming language along with the application.</p>
+<p>For example I have just seen a load of tests to see if a subclass has it&#8217;s superclass as an ancestor and that the methods of the superclass are all inherited. The only way in which this can break is if the language changes!</p>
+<p>I fully expect to see tests to make sure that 1 + 1 still equals 2, you known, just incase!</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-103681">
+			<cite><a href='http://moffdub.wordpress.com/2009/05/01/helltime-for-may-1/' rel='external nofollow'>Helltime for May 1 &laquo; I Built His Cage</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-103681" title="">May 1st, 2009 at 6:02 pm</a> </small>
+
+			<p>[...] Carr has a comprehensive list of TDD Anti-Patterns. Full disclosure: I am regularly guilty of The One (one test method for the entire class) and The [...]</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-104119">
+			<cite><a href='http://qa.co.kg/index.php/archives/358' rel='external nofollow'>&raquo; Антипаттерны TDD и не только QAлификация</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-104119" title="">May 7th, 2009 at 12:30 am</a> </small>
+
+			<p>[...] на старую, но до сих пор актуальную статью посвященную антипаттернам в test driven development, большая [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-104297">
+			<cite><a href='http://blog.ennuyer.net/i-am-way-behind-on-my-rails-link-blogging-link-dump-and-reboot/' rel='external nofollow'>Ennuyer.net &raquo; Blog Archive &raquo; I am way behind on my rails link blogging. Link dump and reboot.</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-104297" title="">May 9th, 2009 at 6:43 am</a> </small>
+
+			<p>[...]  James Carr » Blog Archive » TDD Anti-Patterns  [...]</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-104901">
+			<cite><a href='http://mkhairul.com/2009/05/16/thoughts-on-tdd/' rel='external nofollow'>[ mkhairul.com ] &raquo; Thoughts on TDD</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-104901" title="">May 15th, 2009 at 4:02 pm</a> </small>
+
+			<p>[...] have to keep a lookout for TDD anti-patterns, and always remember..  Testing by itself does not improve software quality. Test results are an [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-106432">
+			<cite><a href='http://pabloidz.wordpress.com/2009/06/01/links-for-2009-06-01/' rel='external nofollow'>links for 2009-06-01 &laquo; pabloidz</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-106432" title="">June 1st, 2009 at 8:03 am</a> </small>
+
+			<p>[...] TDD Anti-Patterns James Carr (tags: anti-patterns tdd) [...]</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-106650">
+			<cite>Andrej</cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-106650" title="">June 3rd, 2009 at 1:39 pm</a> </small>
+
+			<p>The problem of the Nitpicker is that it is not a Unit test at all. A unit test is supposed to test a Unit using the API of the unit. If the system is split into units well, an API of a unit should not change often or contain too many unimportant details.<br />
+Testing a Web interface is not unit testing, because intead of testing units we test the whole application via it user interface.</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-106831">
+			<cite><a href='http://blog.james-carr.org' rel='external nofollow'>James Carr</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-106831" title="">June 5th, 2009 at 11:10 am</a> </small>
+
+			<p>@Andrej</p>
+<p>Indeed! A good unit test would not test the entire web application through the user interface, but rather test a single individual unit of the interface or system.</p>
+<p>However, it is not uncommon in web projects that span multiple teams to come across a JUnit test (being referred to by other devs as a &#8220;unit test&#8221;) that uses Selenium, HtmlUnit, or some other means to test a specific unit in the whole bang of the system. The problem is it&#8217;s an integration test or acceptance test, but the developers end up having it ran with the developer tests.</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-107308">
+			<cite><a href='http://mjtsai.com/blog/2009/06/12/tdd-anti-patterns/' rel='external nofollow'>Michael Tsai - Blog - TDD Anti-Patterns</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-107308" title="">June 12th, 2009 at 9:23 am</a> </small>
+
+			<p>[...] James Carr (via Ned Batchelder): The Nitpicker: A unit test which compares a complete output when it&rsquo;s really only interested in small parts of it, so the test has to continually be kept in line with otherwise unimportant details. Endemic in web application testing. [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-107474">
+			<cite><a href='http://rapid-dev.net/2009/06/quick-links-short-right-anti/' rel='external nofollow'>Quick links: short, right, anti | rapid-DEV.net</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-107474" title="">June 15th, 2009 at 1:27 am</a> </small>
+
+			<p>[...] TDD Anti-Patterns: a funny skewering of what people do wrong in unit tests   var addthis_pub = &#8216;huynhtronghoan&#8217;; var [...]</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-107502">
+			<cite><a href='http://mcherm.com/' rel='external nofollow'>Michael Chermside</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-107502" title="">June 15th, 2009 at 2:37 pm</a> </small>
+
+			<p>The Time Switcher:</p>
+<p>A test case that passes or fails depending on the time zone of the local machine (and/or whether or not daylight savings is in effect). Often fixed by switching the hour so that the test breaks twice a year.</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-108055">
+			<cite>andreifeld</cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-108055" title="">June 23rd, 2009 at 4:16 am</a> </small>
+
+			<p>Hi all,<br />
+I&#8217;m thinking maybe the next question will be appropriate here in a TDD blog article&#8230;</p>
+<p>Let&#8217;s presume I&#8217;m running unit tests on a mysql DB.<br />
+The DB is required to be up and running and I&#8217;m using my application API&#8217;s in order to load and save from the DB.</p>
+<p>Now this is very slow as using this API to a persistence DB is very expensive.</p>
+<p>I am not a DBA, but is there a simple way that I can use my existing sql tables as &#8216;in memory tables&#8217;? This will robust my testing framework endlessly.</p>
+<p>thanks</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-108921">
+			<cite><a href='http://AgileInAFlash.blogspot.com/' rel='external nofollow'>Tim Ottinger</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-108921" title="">July 1st, 2009 at 11:29 pm</a> </small>
+
+			<p>James:</p>
+<p>We produced an index-card-sized version of the list, reduced for space considerations, but any attempt to write up a quick statement on each would be about the same size as your article.  Any chance you would agree with me posting this article, or as much as fits, on the site at <a href="http://agileinaflash.blogspot.com/2009/06/tdd-antipatterns.html?" rel="nofollow">http://agileinaflash.blogspot.com/2009/06/tdd-antipatterns.html?</a></p>
+<p>Feel free to use this posting&#8217;s email</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-109043">
+			<cite><a href='http://blog.james-carr.org/2009/07/03/agile-in-a-flash/' rel='external nofollow'>James Carr &raquo; Blog Archive &raquo; Agile in a Flash</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-109043" title="">July 3rd, 2009 at 12:59 am</a> </small>
+
+			<p>[...] I discovered an interesting blog thanks to Tim Ottinger&#8217;s comment on my TDD Anti-Patterns post, Agile in a Flash. It looks like they&#8217;re putting together a comprehensive book plus [...]</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-109924">
+			<cite><a href='http://blog.cwa.me.uk/2009/07/17/the-morning-brew-392/' rel='external nofollow'>Reflective Perspective - Chris Alcock &raquo; The Morning Brew #392</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-109924" title="">July 17th, 2009 at 3:41 am</a> </small>
+
+			<p>[...] TDD Anti-Patterns - I came across a couple of people linking to this article from 2006 by James Carr which lists a number of TDD related anti-patterns. Some of the names are rather light hearted, but the problems they describe are quite serious [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-109940">
+			<cite><a href='http://www.machete.ca' rel='external nofollow'>Allain Lalonde</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-109940" title="">July 17th, 2009 at 12:16 pm</a> </small>
+
+			<p>Excellent Post</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-110018">
+			<cite><a href='http://identi.ca/notice/6680147' rel='external nofollow'>Roman Joost (romanofski) 's status on Sunday, 19-Jul-09 13:36:17 UTC - Identi.ca</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-110018" title="">July 19th, 2009 at 9:36 am</a> </small>
+
+			<p>[...]  <a href="http://blog.james-carr.org/2006/11/03/tdd-anti-patterns/" rel="nofollow">http://blog.james-carr.org/2006/11/03/tdd-anti-patterns/</a>  [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-110055">
+			<cite><a href='http://www.kozlenko.info/?p=591' rel='external nofollow'>Maxim&#8217;s blog &raquo; links for 2009-07-20</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-110055" title="">July 20th, 2009 at 3:02 am</a> </small>
+
+			<p>[...] TDD Anti-Patterns A list of most common TDD Anti-Patterns with short description [...]</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-110524">
+			<cite><a href='http://pabloidz.wordpress.com/2009/07/27/links-for-2009-07-27/' rel='external nofollow'>links for 2009-07-27 &laquo; pabloidz</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-110524" title="">July 27th, 2009 at 8:04 am</a> </small>
+
+			<p>[...] TDD Anti-Patterns James Carr (tags: tdd) [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-110555">
+			<cite><a href='http://www.jaceju.net/blog/?p=613' rel='external nofollow'>網站製作學習誌 &raquo; [Web] 連結分享</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-110555" title="">July 28th, 2009 at 6:06 am</a> </small>
+
+			<p>[...] TDD Anti-Patterns [...]</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-110651">
+			<cite><a href='http://grantpalin.com/2009/07/29/weekly-links-63/' rel='external nofollow'>Weekly Links #63 | GrantPalin.com</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-110651" title="">July 29th, 2009 at 9:22 pm</a> </small>
+
+			<p>[...] TDD Anti-Patterns Seems to be focused on unit testing, not so much test-driven development. Good points all the same. [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-112583">
+			<cite><a href='http://tvoeimja.ru/' rel='external nofollow'>Иван</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-112583" title="">September 1st, 2009 at 4:28 pm</a> </small>
+
+			<p><a href="http://tvoeimja.ru/" rel="nofollow">имя,имени,человека,людей,руси,значение имени,женские имена,имена бесплатно,мужские имена,совместимость имен,имя человека,имена девочек,тайна имени,имена мальчиков</a>У каждого человека есть своё имя, но не каждый человек может сказать что<br />
+ же значти его имя .<br />
+Не каждый знает происхождение и корни своего имени, хотя это очень важно.</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-113096">
+			<cite><a href='http://www.officerental.nl' rel='external nofollow'>Kantoorpand / Bedrijfspand huren</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-113096" title="">September 15th, 2009 at 12:59 pm</a> </small>
+
+			<p>I discovered an interesting blog thanks to Tim Ottinger’s comment on my TDD Anti-Patterns post, Agile in a Flash.</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-113948">
+			<cite><a href='http://www.joaoalmeida.info/?p=35' rel='external nofollow'>TDD Anti-Patterns | the fabulous freak</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-113948" title="">September 25th, 2009 at 9:47 am</a> </small>
+
+			<p>[...] TDD Anti-Patterns [via ISerializable] [...]</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-117927">
+			<cite><a href='http://www.ChrisShayan.com' rel='external nofollow'>Chris Shayan</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-117927" title="">November 10th, 2009 at 7:01 am</a> </small>
+
+			<p><a href="http://www.chrisshayan.com/my/index.php?option=com_content&amp;view=article&amp;id=266:unit-tests&amp;catid=48:clean-code&amp;Itemid=65" rel="nofollow">http://www.chrisshayan.com/my/index.php?option=com_content&amp;view=article&amp;id=266:unit-tests&amp;catid=48:clean-code&amp;Itemid=65</a></p>
+<p>or</p>
+<p><a href="http://www.chrisshayan.com/my/index.php?option=com_content&amp;view=article&amp;id=281:slap&amp;catid=49:refactoring&amp;Itemid=65" rel="nofollow">http://www.chrisshayan.com/my/index.php?option=com_content&amp;view=article&amp;id=281:slap&amp;catid=49:refactoring&amp;Itemid=65</a></p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-118344">
+			<cite><a href='http://leaningagile.wordpress.com/2009/11/16/tdd-antipatterns/' rel='external nofollow'>TDD Antipatterns &laquo; Lean, Agile and good software devepment</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-118344" title="">November 16th, 2009 at 8:08 am</a> </small>
+
+			<p>[...] Jame Carr anti-patterns catalogue [...]</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-123997">
+			<cite><a href='http://www.lbotti.net/blog/2010/01/12/surfing/' rel='external nofollow'>Surfing &laquo; Everything technical</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-123997" title="">January 12th, 2010 at 7:14 pm</a> </small>
+
+			<p>[...] platforms as possible to test open source software builds. Finally, a nice old blog entry regarding TDD AntiPatterns. Lot of stuff. Will keep an eye on those (and perhaps contribute to basie, who [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-128613">
+			<cite><a href='http://argehaber.blogspot.com' rel='external nofollow'>argehaber</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-128613" title="">February 25th, 2010 at 7:31 pm</a> </small>
+
+			<p>could not exactly turn some sentences. but in general was a useful article. I have read with admiration. good work.</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-134715">
+			<cite><a href='http://mokhan.ca/press/2007/05/03/sleep-sitting/' rel='external nofollow'>Sleep Sitting &laquo; Mo Khan: My Blog!</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-134715" title="">April 17th, 2010 at 10:59 pm</a> </small>
+
+			<p>[...] On another note i read an interesting article last night on TDD anti-patterns&#8230; It&#8217;s a good read and it taught me that as a newbie I am making a lot of classic TDD mistakes&#8230; Check out the article if you have a chance&#8230; <a href="http://blog.james-carr.org/?p=44" rel="nofollow">http://blog.james-carr.org/?p=44</a> [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-140091">
+			<cite><a href='http://kartones.net/blogs/kartones/archive/2006/12/03/tdd-and-testing.aspx' rel='external nofollow'>TDD and Testing - Kartones Blog</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-140091" title="">July 2nd, 2010 at 3:14 am</a> </small>
+
+			<p>[...] serves as an introduction and gives few advices/tips. The most interesting thing I&#39;ve found is an article about TDD Anti-Patterns. It contains a list of anti-patterns, each one with a description.  Quite useful, as probably most [...]</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-141849">
+			<cite><a href='http://www.casualmiracles.com' rel='external nofollow'>Lance Walton</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-141849" title="">July 29th, 2010 at 5:42 pm</a> </small>
+
+			<p>This is a good catalog. But they&#8217;re not actually TDD anti-patterns; they are unit-test anti-patterns.</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-146407">
+			<cite><a href='http://www.just-about.net/?p=392' rel='external nofollow'>Test Harder and Smarter | Just about .NET</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-146407" title="">September 27th, 2010 at 5:11 am</a> </small>
+
+			<p>[...] must always kept running. In my eyes it is wrong to demonize TDD. It is more a question of “how shall I use it” instead of “Too Damn [...]</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-149000">
+			<cite><a href='http://www.vectorcast.com/blog/2010/10/22/what-not-to-do-during-test-creation/' rel='external nofollow'>What NOT to do during test creation &laquo; Automated Software Testing</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-149000" title="">October 22nd, 2010 at 2:59 pm</a> </small>
+
+			<p>[...] you are interested in some examples, James Carr came up with a list of test anti-patterns. TDD Anti-Pattern Catalogue The Liar An entire unit test that passes all of the test cases it has [...]</p>
+
+		</li>
+
+	
+	
+	</ol>
+
+ 
+
+
+<h3 id="respond">Leave a Reply</h3>
+
+
+<form action="http://blog.james-carr.org/wp-comments-post.php" method="post" id="commentform">
+
+
+<p><input type="text" name="author" id="author" value="" size="22" tabindex="1" />
+<label for="author"><strong>Name</strong> (required)</label></p>
+
+<p><input type="text" name="email" id="email" value="" size="22" tabindex="2" />
+<label for="email"><strong>Mail</strong> (will not be published) (required)</label></p>
+
+<p><input type="text" name="url" id="url" value="" size="22" tabindex="3" />
+<label for="url"><strong>Website</strong></label></p>
+
+
+<p><textarea name="comment" id="comment" cols="100%" rows="10" tabindex="4"></textarea></p>
+
+<p><input name="submit" type="submit" id="submit" tabindex="5" value="Submit Comment" />
+<input type="hidden" name="comment_post_ID" value="44" />
+</p>
+		<script type='text/javascript'>
+				var RecaptchaOptions = { theme : 'red', lang : 'en' , tabindex : 5 };
+		</script><script type="text/javascript" src="http://api.recaptcha.net/challenge?k=6LedBwQAAAAAAHN2oHUym0bEMyiCvxq80BVsozuv"></script>
+
+<noscript>
+<iframe src="http://api.recaptcha.net/noscript?k=6LedBwQAAAAAAHN2oHUym0bEMyiCvxq80BVsozuv" height="300" width="500" frameborder="0"></iframe><br/>
+<textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
+<input type="hidden" name="recaptcha_response_field" value="manual_challenge"/>
+</noscript>				<div id="recaptcha-submit-btn-area"></div> 
+				<script type='text/javascript'>
+				var sub = document.getElementById('submit');
+				sub.parentNode.removeChild(sub);
+				document.getElementById('recaptcha-submit-btn-area').appendChild (sub);
+				document.getElementById('submit').tabIndex = 6;
+				if ( typeof _recaptcha_wordpress_savedcomment != 'undefined') {
+						document.getElementById('comment').value = _recaptcha_wordpress_savedcomment;
+				}
+				document.getElementById('recaptcha_table').style.direction = 'ltr';
+				</script>
+				<noscript>
+				 <style type='text/css'>#submit {display:none;}</style>
+				 <input name="submit" type="submit" id="submit-alt" tabindex="6" value="Submit Comment"/> 
+				</noscript>
+</form>
+
+
+<div class="googleads">
+<script type="text/javascript"><!--
+google_ad_client = "pub-8585244295045035";
+google_ad_width = 468;
+google_ad_height = 60;
+google_ad_format = "468x60_as";
+google_ad_type = "text";
+//2007-09-02: themespack
+google_ad_channel = "4850292866";
+google_color_border = "ffffff";
+google_color_bg = "ffffff";
+google_color_link = "6699cc";
+google_color_text = "000000";
+google_color_url = "000000";
+//-->
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>		
+			
+	</div><!--/post -->
+
+  </div><!--/content -->
+
+<div id="sidebar">
+<div id="misc">
+<div id="info">
+<h2>About Me</h2>
+Here I'll share my knowledge, discovery and experience related to my hobby and work. Most articles on this site are related to OOP, Agile Software Development, Design Patterns, and a small touch of my personal life. <a href="http://blog.james-carr.org/?page_id=2">More</a><br /><br />
+<div id="social-stuff">
+ 	<ul id="social">
+		<li>
+			<a href="http://www.new.facebook.com/people/James_Carr/656570562" rel="facebook" title="View My Facebook Profile!">
+				<img src="http://blog.james-carr.org/wp-content/images/social-icons/facebook.gif"/>
+			</a>
+		</li>
+		<li>
+			<a href="http://www.linkedin.com/in/jamesfreakincarr" rel="me" class="linkedin" title="View My LinkedIN Profile!">
+				<img src="http://blog.james-carr.org/wp-content/images/social-icons/linkedin.gif"/>
+			</a>
+		</li>
+		<li>
+			<a href="http://www.twitter.com/jamescarr" rel="me" class="twitter" title="View My Tweets!">
+				<img src="http://blog.james-carr.org/wp-content/images/social-icons/twitter.gif"/>
+			</a>
+		</li>
+		<li>
+			<a href="http://www.flickr.com/jamescarr" rel="me" class="flickr" title="View My Flickr Photos!">
+				<img src="http://blog.james-carr.org/wp-content/images/social-icons/flickr.gif"/>
+			</a>
+		</li>
+		<li>
+			<a href="http://friendfeed.com/jamescarr" rel="me" class="friendfeed" title="View My FriendFeed!">
+				<img src="http://blog.james-carr.org/wp-content/images/social-icons/friendfeed.gif"/>
+			</a>
+		</li>
+	</ul>
+</div>
+<h2>Want to subscribe?</h2>
+<a href="feed:http://blog.james-carr.org/feed/">
+<img src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png" alt="" style="vertical-align:middle;border:0"/>
+</a>&nbsp;
+<a href="feed:http://blog.james-carr.org/feed/">
+Subscribe in a reader</a>
+</div>
+</div>
+<div id="bsearch">
+<form method="get" id="searchform" action="http://blog.james-carr.org/">
+<div> Find entries : <input type="text" value="" name="s" id="s" />
+<input type="submit" id="searchsubmit" value="Go" />
+</div>
+</form>
+</div>
+
+
+<div id="misc1">
+<div id="info1">
+<div id="left">
+
+    <ul>
+<li> 
+  <h3 class="sidebartitle" >Latest Post</h3>
+  		<ul class="list-rec">
+		<li>
+	<a href="http://blog.james-carr.org/2010/12/07/links-for-2010-12-07/" rel="bookmark" title="Permanent link to links for 2010-12-07">links for 2010-12-07</a><br />
+	</li>
+              	<li>
+	<a href="http://blog.james-carr.org/2010/12/03/mission-accomplished-public-speaking/" rel="bookmark" title="Permanent link to Mission Accomplished: Public Speaking">Mission Accomplished: Public Speaking</a><br />
+	</li>
+              	<li>
+	<a href="http://blog.james-carr.org/2010/11/23/links-for-2010-11-23/" rel="bookmark" title="Permanent link to links for 2010-11-23">links for 2010-11-23</a><br />
+	</li>
+              	<li>
+	<a href="http://blog.james-carr.org/2010/10/17/links-for-2010-10-17/" rel="bookmark" title="Permanent link to links for 2010-10-17">links for 2010-10-17</a><br />
+	</li>
+              	<li>
+	<a href="http://blog.james-carr.org/2010/10/14/links-for-2010-10-14/" rel="bookmark" title="Permanent link to links for 2010-10-14">links for 2010-10-14</a><br />
+	</li>
+                          </ul>
+           </li>
+
+          <li>
+      <h3 class="sidebartitle" >Archives</h3>
+      <ul class="list-archives">
+        	<li><a href='http://blog.james-carr.org/2010/12/' title='December 2010'>December 2010</a></li>
+	<li><a href='http://blog.james-carr.org/2010/11/' title='November 2010'>November 2010</a></li>
+	<li><a href='http://blog.james-carr.org/2010/10/' title='October 2010'>October 2010</a></li>
+	<li><a href='http://blog.james-carr.org/2010/09/' title='September 2010'>September 2010</a></li>
+	<li><a href='http://blog.james-carr.org/2010/08/' title='August 2010'>August 2010</a></li>
+	<li><a href='http://blog.james-carr.org/2010/07/' title='July 2010'>July 2010</a></li>
+	<li><a href='http://blog.james-carr.org/2010/06/' title='June 2010'>June 2010</a></li>
+	<li><a href='http://blog.james-carr.org/2010/05/' title='May 2010'>May 2010</a></li>
+	<li><a href='http://blog.james-carr.org/2010/04/' title='April 2010'>April 2010</a></li>
+	<li><a href='http://blog.james-carr.org/2010/03/' title='March 2010'>March 2010</a></li>
+	<li><a href='http://blog.james-carr.org/2010/02/' title='February 2010'>February 2010</a></li>
+	<li><a href='http://blog.james-carr.org/2010/01/' title='January 2010'>January 2010</a></li>
+	<li><a href='http://blog.james-carr.org/2009/12/' title='December 2009'>December 2009</a></li>
+	<li><a href='http://blog.james-carr.org/2009/11/' title='November 2009'>November 2009</a></li>
+	<li><a href='http://blog.james-carr.org/2009/10/' title='October 2009'>October 2009</a></li>
+	<li><a href='http://blog.james-carr.org/2009/09/' title='September 2009'>September 2009</a></li>
+	<li><a href='http://blog.james-carr.org/2009/08/' title='August 2009'>August 2009</a></li>
+	<li><a href='http://blog.james-carr.org/2009/07/' title='July 2009'>July 2009</a></li>
+	<li><a href='http://blog.james-carr.org/2009/06/' title='June 2009'>June 2009</a></li>
+	<li><a href='http://blog.james-carr.org/2009/05/' title='May 2009'>May 2009</a></li>
+	<li><a href='http://blog.james-carr.org/2009/04/' title='April 2009'>April 2009</a></li>
+	<li><a href='http://blog.james-carr.org/2009/02/' title='February 2009'>February 2009</a></li>
+	<li><a href='http://blog.james-carr.org/2009/01/' title='January 2009'>January 2009</a></li>
+	<li><a href='http://blog.james-carr.org/2008/12/' title='December 2008'>December 2008</a></li>
+	<li><a href='http://blog.james-carr.org/2008/11/' title='November 2008'>November 2008</a></li>
+	<li><a href='http://blog.james-carr.org/2008/10/' title='October 2008'>October 2008</a></li>
+	<li><a href='http://blog.james-carr.org/2008/09/' title='September 2008'>September 2008</a></li>
+	<li><a href='http://blog.james-carr.org/2008/08/' title='August 2008'>August 2008</a></li>
+	<li><a href='http://blog.james-carr.org/2008/07/' title='July 2008'>July 2008</a></li>
+	<li><a href='http://blog.james-carr.org/2008/06/' title='June 2008'>June 2008</a></li>
+	<li><a href='http://blog.james-carr.org/2008/05/' title='May 2008'>May 2008</a></li>
+	<li><a href='http://blog.james-carr.org/2008/04/' title='April 2008'>April 2008</a></li>
+	<li><a href='http://blog.james-carr.org/2008/03/' title='March 2008'>March 2008</a></li>
+	<li><a href='http://blog.james-carr.org/2008/02/' title='February 2008'>February 2008</a></li>
+	<li><a href='http://blog.james-carr.org/2008/01/' title='January 2008'>January 2008</a></li>
+	<li><a href='http://blog.james-carr.org/2007/12/' title='December 2007'>December 2007</a></li>
+	<li><a href='http://blog.james-carr.org/2007/11/' title='November 2007'>November 2007</a></li>
+	<li><a href='http://blog.james-carr.org/2007/10/' title='October 2007'>October 2007</a></li>
+	<li><a href='http://blog.james-carr.org/2007/09/' title='September 2007'>September 2007</a></li>
+	<li><a href='http://blog.james-carr.org/2007/08/' title='August 2007'>August 2007</a></li>
+	<li><a href='http://blog.james-carr.org/2007/07/' title='July 2007'>July 2007</a></li>
+	<li><a href='http://blog.james-carr.org/2007/06/' title='June 2007'>June 2007</a></li>
+	<li><a href='http://blog.james-carr.org/2007/05/' title='May 2007'>May 2007</a></li>
+	<li><a href='http://blog.james-carr.org/2007/04/' title='April 2007'>April 2007</a></li>
+	<li><a href='http://blog.james-carr.org/2007/03/' title='March 2007'>March 2007</a></li>
+	<li><a href='http://blog.james-carr.org/2007/01/' title='January 2007'>January 2007</a></li>
+	<li><a href='http://blog.james-carr.org/2006/12/' title='December 2006'>December 2006</a></li>
+	<li><a href='http://blog.james-carr.org/2006/11/' title='November 2006'>November 2006</a></li>
+	<li><a href='http://blog.james-carr.org/2006/10/' title='October 2006'>October 2006</a></li>
+	<li><a href='http://blog.james-carr.org/2006/08/' title='August 2006'>August 2006</a></li>
+	<li><a href='http://blog.james-carr.org/2006/07/' title='July 2006'>July 2006</a></li>
+	<li><a href='http://blog.james-carr.org/2006/06/' title='June 2006'>June 2006</a></li>
+      </ul>
+    </li>
+
+
+
+<li>	<h3 class="sidebartitle" >Recent Comments </h3>
+<ul>
+	<li><strong><a href="http://blog.james-carr.org/2010/12/03/mission-accomplished-public-speaking/#comment-156798" title="on Mission Accomplished: Public Speaking">Mike Finney</a></strong>: Wonderful job and thanks for sharing your insights! :)...</li>
+	<li><strong><a href="http://blog.james-carr.org/2010/12/03/mission-accomplished-public-speaking/#comment-156652" title="on Mission Accomplished: Public Speaking">Mark Volkmann</a></strong>: Congrats on a great year James!
+
+I especially like your fi...</li>
+	<li><strong><a href="http://blog.james-carr.org/2010/09/26/lessons-learned-with-my-recent-nodejs-app/#comment-146314" title="on Lessons Learned With My Recent Node.js App">Java Programming</a></strong>: Heroku in my openion is good for node.js...</li>
+	<li><strong><a href="http://blog.james-carr.org/2010/09/26/lessons-learned-with-my-recent-nodejs-app/#comment-146313" title="on Lessons Learned With My Recent Node.js App">Java Programming</a></strong>: Heroku might not be mature yet still they r making good effo...</li>
+	<li><strong><a href="http://blog.james-carr.org/2010/08/29/node-knockout-creation-dropnode/#comment-146280" title="on Node Knockout Creation: DropNode">Jeremy Johnstone</a></strong>: Any chance you will be publishing the source code to this?...</li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="right">
+<ul>
+<li>
+
+	<h3 class="sidebartitle" >Categories</h3>
+      <ul class="list-cat">        	<li class="cat-item cat-item-12"><a href="http://blog.james-carr.org/category/devrandom/" title="View all posts filed under /dev/random">/dev/random</a> (7)
+</li>
+	<li class="cat-item cat-item-3"><a href="http://blog.james-carr.org/category/agile-software-development/" title="View all posts filed under Agile Software Development">Agile Software Development</a> (50)
+</li>
+	<li class="cat-item cat-item-22"><a href="http://blog.james-carr.org/category/aspect-oriented-programming/" title="View all posts filed under Aspect Oriented Programming">Aspect Oriented Programming</a> (3)
+</li>
+	<li class="cat-item cat-item-32"><a href="http://blog.james-carr.org/category/bdd/" title="View all posts filed under BDD">BDD</a> (12)
+</li>
+	<li class="cat-item cat-item-18"><a href="http://blog.james-carr.org/category/blogging/" title="View all posts filed under blogging">blogging</a> (2)
+</li>
+	<li class="cat-item cat-item-34"><a href="http://blog.james-carr.org/category/coaching/" title="View all posts filed under coaching">coaching</a> (2)
+</li>
+	<li class="cat-item cat-item-24"><a href="http://blog.james-carr.org/category/conferences/" title="View all posts filed under Conferences">Conferences</a> (10)
+</li>
+	<li class="cat-item cat-item-13"><a href="http://blog.james-carr.org/category/design/" title="View all posts filed under Design">Design</a> (5)
+</li>
+	<li class="cat-item cat-item-17"><a href="http://blog.james-carr.org/category/eiffel/" title="View all posts filed under Eiffel">Eiffel</a> (2)
+</li>
+	<li class="cat-item cat-item-23"><a href="http://blog.james-carr.org/category/extreme-programming/" title="View all posts filed under extreme programming">extreme programming</a> (2)
+</li>
+	<li class="cat-item cat-item-15"><a href="http://blog.james-carr.org/category/fitfitnesse/" title="View all posts filed under FIT/Fitnesse">FIT/Fitnesse</a> (8)
+</li>
+	<li class="cat-item cat-item-20"><a href="http://blog.james-carr.org/category/fun-stuff/" title="View all posts filed under Fun Stuff">Fun Stuff</a> (1)
+</li>
+	<li class="cat-item cat-item-38"><a href="http://blog.james-carr.org/category/scm/git/" title="View all posts filed under git">git</a> (1)
+</li>
+	<li class="cat-item cat-item-36"><a href="http://blog.james-carr.org/category/gradle/" title="View all posts filed under gradle">gradle</a> (2)
+</li>
+	<li class="cat-item cat-item-35"><a href="http://blog.james-carr.org/category/groovy/" title="View all posts filed under groovy">groovy</a> (2)
+</li>
+	<li class="cat-item cat-item-8"><a href="http://blog.james-carr.org/category/java/" title="View all posts filed under Java">Java</a> (15)
+</li>
+	<li class="cat-item cat-item-5"><a href="http://blog.james-carr.org/category/javascript/" title="View all posts filed under Javascript">Javascript</a> (27)
+</li>
+	<li class="cat-item cat-item-21"><a href="http://blog.james-carr.org/category/jruby/" title="View all posts filed under JRuby">JRuby</a> (1)
+</li>
+	<li class="cat-item cat-item-10"><a href="http://blog.james-carr.org/category/linux/" title="View all posts filed under Linux">Linux</a> (3)
+</li>
+	<li class="cat-item cat-item-33"><a href="http://blog.james-carr.org/category/mocksstubsfakes/" title="View all posts filed under Mocks/Stubs/Fakes">Mocks/Stubs/Fakes</a> (4)
+</li>
+	<li class="cat-item cat-item-25"><a href="http://blog.james-carr.org/category/no-fluff-just-stuff/" title="View all posts filed under No Fluff Just Stuff">No Fluff Just Stuff</a> (7)
+</li>
+	<li class="cat-item cat-item-41"><a href="http://blog.james-carr.org/category/nodejs/" title="View all posts filed under nodejs">nodejs</a> (6)
+</li>
+	<li class="cat-item cat-item-14"><a href="http://blog.james-carr.org/category/object-design/" title="View all posts filed under Object Design">Object Design</a> (6)
+</li>
+	<li class="cat-item cat-item-2"><a href="http://blog.james-carr.org/category/personal/" title="View all posts filed under Personal">Personal</a> (3)
+</li>
+	<li class="cat-item cat-item-9"><a href="http://blog.james-carr.org/category/php/" title="View all posts filed under php">php</a> (2)
+</li>
+	<li class="cat-item cat-item-19"><a href="http://blog.james-carr.org/category/rants/" title="View all posts filed under rants">rants</a> (3)
+</li>
+	<li class="cat-item cat-item-26"><a href="http://blog.james-carr.org/category/retrospectives/" title="View all posts filed under retrospectives">retrospectives</a> (5)
+</li>
+	<li class="cat-item cat-item-31"><a href="http://blog.james-carr.org/category/scala/" title="View all posts filed under scala">scala</a> (9)
+</li>
+	<li class="cat-item cat-item-16"><a href="http://blog.james-carr.org/category/silly/" title="View all posts filed under Silly">Silly</a> (2)
+</li>
+	<li class="cat-item cat-item-11"><a href="http://blog.james-carr.org/category/stupidity/" title="View all posts filed under Stupidity">Stupidity</a> (2)
+</li>
+	<li class="cat-item cat-item-39"><a href="http://blog.james-carr.org/category/scm/svn/" title="View all posts filed under svn">svn</a> (1)
+</li>
+	<li class="cat-item cat-item-30"><a href="http://blog.james-carr.org/category/tdd-javascript-series/" title="View all posts filed under tdd-javascript-series">tdd-javascript-series</a> (8)
+</li>
+	<li class="cat-item cat-item-4"><a href="http://blog.james-carr.org/category/test-driven-development/" title="View all posts filed under Test Driven Development">Test Driven Development</a> (39)
+</li>
+	<li class="cat-item cat-item-7"><a href="http://blog.james-carr.org/category/thoughts/" title="View all posts filed under Thoughts">Thoughts</a> (18)
+</li>
+	<li class="cat-item cat-item-1"><a href="http://blog.james-carr.org/category/uncategorized/" title="View all posts filed under Uncategorized">Uncategorized</a> (240)
+</li>
+	<li class="cat-item cat-item-6"><a href="http://blog.james-carr.org/category/web-ui/" title="View all posts filed under Web UI">Web UI</a> (12)
+</li>
+      </ul>
+    </li>
+     <li>
+      <h3 class="sidebartitle" >Links</h3>
+      <ul class="list-blogroll">
+        <li><a href="http://xprogramming.com/" rel="contact">Ron Jeffries</a></li>
+<li><a href="http://www.cornetdesign.com/" rel="acquaintance met co-worker colleague">Cory Foy</a></li>
+<li><a href="http://oneagilecoder.agilestl.com">Brian Button</a></li>
+<li><a href="http://www.meyerweb.com/">Eric Meyer</a></li>
+<li><a href="http://www.martinfowler.com/bliki/">Martin Fowler&#8217;s Bliki</a></li>
+<li><a href="http://memeagora.blogspot.com/">Meme Agora</a></li>
+<li><a href="http://chris.headwaysoftware.com/">Chris Chedgey</a></li>
+<li><a href="http://kylecordes.com">Kyle Cordes</a></li>
+<li><a href="http://blog.daveastels.com/">Dave Astels</a></li>
+<li><a href="http://www.massless.org">Massless</a></li>
+<li><a href="http://www.brokenkode.com/">Broken Kode</a></li>
+<li><a href="http://chriswheeler.blogspot.com/">Chris Wheeler</a></li>
+<li><a href="http://www.jamesshore.com/Blog/">James Shore</a></li>
+<li><a href="http://www.jayflowers.com">Jay Flowers</a></li>
+<li><a href="http://www.cincomsmalltalk.com/userblogs/ralph/blogView">Ralph Johnson</a></li>
+<li><a href="http://www.quirksmode.org/" title="My favorite resource for things browser related.">Quirksmode</a></li>
+<li><a href="http://buildwithoutboundaries.blogspot.com/" rel="acquaintance co-worker" title="Steve Asher&#8217;s Blog">Build Without Boundries</a></li>
+<li><a href="http://finneycanhelp.blogspot.com/" rel="acquaintance co-worker">Mike Finney</a></li>
+<li><a href="http://codeclimber.blogspot.com/" title="Ethan Vizitei&#8217;s Coding Blog">Code Climber</a></li>
+<li><a href="http://code-ronin.blogspot.com/" title="Travis Heseman&#8217;s Blog">Code Ronin</a></li>
+<li><a href="http://cadrlife.blogspot.com/" title="Ray Myers&#8217; Blog">(cadr life)</a></li>
+      </ul>
+    </li>
+<li>
+	<h3 class="sidebartitle" >Meta</h3>
+   <ul class="list-meta">
+          <li><a href="http://blog.james-carr.org/wp-login.php">Log in</a></li>
+    <li><a href="http://validator.w3.org/check/referer" title="This page validates as XHTML 1.0 Transitional">Valid <abbr title="eXtensible HyperText Markup Language">XHTML</abbr></a></li>
+    <li><a href="http://gmpg.org/xfn/"><abbr title="XHTML Friends Network">XFN</abbr></a></li>
+    <li><a href="http://wordpress.org/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">WordPress</a></li>
+                </ul>
+     </li>
+<li>
+	<h3 class="sidebartitle" >Feed</h3>
+<ul class="list-rss">
+<li><a href="http://blog.james-carr.org/feed/" title="Syndicate this site using RSS"><abbr title="Really Simple Syndication"> Feed RSS</abbr></a></li>
+		<li><a href="http://blog.james-carr.org/comments/feed/" title="The latest comments to all posts in RSS">Comments <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<!--/sidebar -->
+  
+  <div id="close">
+   </div> 
+</div><!--/page -->
+
+<div style="clear:both;"></div>
+<!--footer bar -->
+<div id="footerbg">
+
+	<div id="footer">
+<div class="alignleft">
+</div> 
+<div class="alignright"><a href="http://blog.james-carr.org/feed/" class="rss">Entries RSS</a> |  <a href="http://blog.james-carr.org/comments/feed/" class="rss">Comments RSS</a> | <span class="loginout"><a href="http://blog.james-carr.org/wp-login.php">Log in</a></span>&nbsp;&nbsp;</div>
+</div>
+</div>
+
+
+
+
+</div>
+</div>
+ <!--footer bar end -->
+
+</body>
+</html>
+
