@@ -1,0 +1,833 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+
+<head profile="http://gmpg.org/xfn/11">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>Shaping Software  &raquo; Blog Archive   &raquo; Patterns and Practices of Lean Software Development</title>
+
+<meta name="generator" content="WordPress 2.7.1" /> <!-- leave this for stats -->
+
+<link rel="stylesheet" href="http://shapingsoftware.com/wp-content/themes/arthemia/style.css" type="text/css" media="screen" />
+<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://shapingsoftware.com/feed/" />
+<link rel="alternate" type="text/xml" title="RSS .92" href="http://shapingsoftware.com/feed/rss/" />
+<link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="http://shapingsoftware.com/feed/atom/" />
+
+<link rel="pingback" href="http://shapingsoftware.com/xmlrpc.php" />
+
+
+<link rel="icon" href="http://shapingsoftware.com/wp-content/themes/arthemia/images/favicon.ico" />
+<link rel="shortcut icon" href="http://shapingsoftware.com/wp-content/themes/arthemia/images/favicon.ico" />
+
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://shapingsoftware.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://shapingsoftware.com/wp-includes/wlwmanifest.xml" /> 
+<script type='text/javascript' src='http://shapingsoftware.com/wp-includes/js/jquery/jquery.js?ver=1.2.6'></script>
+<meta name="generator" content="WordPress 2.7.1" />
+
+<!--[if IE]><script src="http://shapingsoftware.com/wp-content/plugins/wp-gbcf/wp-gbcf_focus.js" type="text/javascript"></script><![endif]-->
+<!-- GBCF -->
+
+<style type="text/css">.recentcomments a{display:inline !important;padding: 0 !important;margin: 0 !important;}</style>
+
+	<!-- Clean Archives Reloaded v3.1.2 | http://www.viper007bond.com/wordpress-plugins/clean-archives-reloaded/ -->
+	<style type="text/css">.car-collapse .car-yearmonth { cursor: s-resize; } </style>
+	<script type="text/javascript">
+		/* <![CDATA[ */
+			jQuery(document).ready(function() {
+				jQuery('.car-collapse').find('.car-monthlisting').hide();
+				jQuery('.car-collapse').find('.car-monthlisting:first').show();
+				jQuery('.car-collapse').find('.car-yearmonth').click(function() {
+					jQuery(this).next('ul').slideToggle('fast');
+				});
+				jQuery('.car-collapse').find('.car-toggler').click(function() {
+					if ( 'Expand All' == jQuery(this).text() ) {
+						jQuery(this).parent('.car-container').find('.car-monthlisting').show();
+						jQuery(this).text('Collapse All');
+					}
+					else {
+						jQuery(this).parent('.car-container').find('.car-monthlisting').hide();
+						jQuery(this).text('Expand All');
+					}
+					return false;
+				});
+			});
+		/* ]]> */
+	</script>
+
+
+<meta name="verify-v1" content="M+zhWEVYCAgbMmWW+Z4nY+um+qGhGQMXZzqg1ihhReQ=" />
+</head>
+<body>
+
+<script type='text/javascript' src='http://track.mybloglog.com/js/jsserv.php?mblID=2008090701124709'></script>
+
+<div id="head" class="clearfloat">
+
+<div class="clearfloat">
+
+<img src="http://shapingsoftware.com/wp-content/themes/arthemia/images/ShapingSoftware4.jpg" alt="Shaping Software"/>
+<!--
+	<div id="logo" class="left">
+	<a href="http://shapingsoftware.com/"><img src="http://shapingsoftware.com/wp-content/themes/arthemia/images/logo.png" width="177px" height="39px" alt="" /></a>
+	<div id="tagline">Patterns and Practices for Software Success.</div>
+	</div>
+
+	<div class="right">
+	<img src="http://shapingsoftware.com/wp-content/themes/arthemia/images/banners/wide.jpg" alt="" width="468px" height="60px"  />
+	</div>
+-->
+
+</div>
+
+<div id="navbar" class="clearfloat">
+
+<ul id="page-bar" class="left clearfloat">
+
+<li><a href="http://shapingsoftware.com/">Home</a></li>
+<li><a href="http://shapingsoftware.com/about/">About</a>
+<li><a href="http://shapingsoftware.com/archives/">Archives</a>
+<li><a href="http://shapingsoftware.com/contact/">Contact</a>
+<li><a href="http://shapingsoftware.com/guests/">Guests</a>
+
+</ul>
+
+<!--
+<form method="get" id="searchform" class="left" action="http://shapingsoftware.com/">
+<div>
+<input type="text" value="Search the archive..." value="" name="s" id="s" onfocus="this.value=''" title="Enter the terms you wish to search for." /><input type="image" src="http://shapingsoftware.com/wp-content/themes/arthemia/images/magnify.gif" id="searchsubmit" />
+
+</div>
+</form>
+-->
+
+<!--
+<form action="http://www.google.com/search" style="margin-bottom:10px;" method="get">
+<input value="shapingsoftware.com" name="sitesearch" type="hidden"/>
+<input name="q" size="20" type="text"/><input value="Search" name="submit" type="submit"/>
+</form>
+-->
+
+<div id="searchContainer">
+	<form action="http://www.google.com/search" style="margin-bottom: 10px;" method="get">
+		<input value="shapingsoftware.com" name="sitesearch" type="hidden">
+		<input name="q" size="20" type="text"><input value="Search" name="submit" type="submit" id="searchSubmit">
+	</form>
+</div>
+
+</div>
+
+</div>
+
+<div id="page" class="clearfloat">
+	<div id="content">
+	
+	
+	<div class="post" id="post-370">
+	
+	<span class="breadcrumbs"><a href="http://shapingsoftware.com/">Home</a> &raquo; <a href="http://shapingsoftware.com/category/guest-posts/" title="View all posts in Guest Posts" rel="category tag">Guest Posts</a>,  <a href="http://shapingsoftware.com/category/process/" title="View all posts in Process" rel="category tag">Process</a></span>
+	
+	<h2 class="title">Patterns and Practices of Lean Software Development</h2>
+	
+	<div id="stats">
+<span>22 June 2009</span>
+<span></span>
+<span>14 Comments</span></div>
+
+
+	<div class="entry clearfloat">
+	
+	<div class="noprint" style="float: right; margin: 0px"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" src="http://shapingsoftware.com/wp-content/uploads/2009/06/patternsandpracticesforleansoftwaredevelopment-thumb.jpg" border="0" alt="PatternsAndPracticesForLeanSoftwareDevelopment" width="304" height="244" /></div>
+<p><span style="color: #5399c4"><strong>Editor’s note</strong>: This is a guest post on Lean Software Development by Corey Ladas. If you don’t know Corey, he is a product development methodologist extraordinaire.  if you missed Corey&#8217;s previous post, <a href="http://shapingsoftware.com/2009/06/15/introduction-to-lean-software-development/">Introduction to Lean Software Development</a>, be sure to check it out.  This is a follow up post for readers who wanted m</span><span style="color: #5399c4">ore information on some principles, patterns, and practices that could help support Lean Software Development. </span></p>
+<p>Lean Thinking is a paradigm of production and can’t easily be reduced to a process recipe.  The particular form of any Lean process will always depend upon the form of the product that is created by that process.  However, any Lean process will realize a few essential principles.  If we apply these Lean principles to software development, we may find some practices that express those principles in a way that is useful and sensible for the medium.</p>
+<p><strong>One Piece Flow<br />
+</strong>A central concept in Lean is that planning, executing, and delivering work in small batches minimizes waste. The ideal limit of working in small batches is the single unit. Creating one piece at a time with zero waste is the ideal of <strong>one-piece flow</strong>.</p>
+<p>A Lean goal in software development would be to define a minimum batch size that delivers value to stakeholders.  One such approach for product development is the <strong>minimum marketable feature (MMF)</strong>.  Not all software development is product development, so “marketable” is not always the right criterion.  But every enterprise has some kind of goal that determines value, and this goal can be applied to a minimum stakeholder-valued feature.</p>
+<p>There may be many steps involved with the creation of such an atomic work product.  Some of the work that is scheduled in association with a product will directly add value to the product. Other work may be incidental or even unnecessary.  It is important to distinguish between these categories.  <strong>Value stream maps</strong> describe the sequence of value-adding improvements that are necessary to deliver the product.  The “flow” in one-piece flow means that these activities should be performed in an uninterrupted sequence from start to finish.</p>
+<p>Dividing the work into independent business-valued features enables the <strong>staged delivery</strong> of those features.  Your highest-value customers may receive most of their benefit from some subset of your planned features and would prefer to take earlier delivery of a smaller system.  Revenue earned from these customers can fund your ongoing development in an <strong>incremental funding model</strong>.</p>
+<p>An incremental delivery strategy may still be executed against a predetermined plan.  An even more adaptive strategy is <strong>evolutionary delivery</strong>, where frequent deliveries are made in response to evolving market conditions and each delivery is a complete, fully functional system.  Many hosted applications and open-source projects fit this model.  Tom Gilb has written extensively on engineering practices than enable evolutionary delivery at a high level of rigor and quality.</p>
+<p>The extreme interpretation of evolutionary delivery is <strong>continuous deployment</strong>, where very small incremental improvements are released to production at a high frequency.  Flickr, for example, releases new code to production every 30 minutes.  IMVU releases every 8 minutes.  This level of operation transforms the metaphor of software development from the construction of an object to the refinement of a fluid.</p>
+<p><strong>Let the Market Pull Value from the System<br />
+</strong>If we are very flexible in our delivery capability, then we can respond to market conditions as they evolve.  Rather than deliver a feature in a planned release 18 months from now, we can deliver it next month if the market demands.  The faster we can plan and deliver a new feature, the more we can allow the market to <strong>pull value from the system</strong>.</p>
+<p>Customers may not have the right understanding to express what they really need.  Allowing the market to pull will still require interpretation from a producer.  In order to understand what the customer really needs, you should <strong>go and see for yourself</strong> the need that the customer is trying to satisfy.   The methods of <strong>Quality Function Deployment</strong> allow us to discover and express the voice of the customer in a way that we can translate into detailed and actionable product specifications.</p>
+<p>If we deliver work in high-frequency iteration, we will have to find a way to make that work flow smoothly within the development organization.    If that value stream includes operations that require the services of specialized or scarce resources, then we will need a way to coordinate the scheduling of those resources.  A <strong>kanban-controlled workflow</strong> regulates the productivity of individual process steps in the value stream, so that each step produces only at the rate that is required by the pull of the market.  A kanban system creates an internal market where downstream consumers pull value from upstream producers.</p>
+<p>Pull systems enable us to create value <strong>just-in-time</strong>.  Market value does not always come in uniformly-sized chunks and sometimes we can see changes in market trends before they are expressed as specific product demands.  We can strike a balance between meeting the demand of the present and anticipating the needs of the future with just-enough-planning.  <strong>Rolling wave planning</strong> scales planning detail according to time, so that we make detailed plans about things that will happen very soon, and more general plans about things that will happen in the future.  The further the time horizon, the less specific the plan.  Then we must revisit the plan frequently as we learn new things about market conditions.</p>
+<p><strong>Real options</strong> are an approach to project management that are analogous to financial options in investment management.  A real option may allow us to purchase in the right to defer a management decision to some future date.  When that date arrives we can exercise the option or allow it to expire.  We can then create a planning portfolio of options instead of a portfolio of commitments.  Rolling wave planning and staged delivery are examples of options thinking.</p>
+<p><strong>Set-based development</strong> means that we may pursue multiple competing design alternatives simultaneously, and defer commitment to any particular design alternative until we have more information.  This is another example of options thinking.  <strong>Distributed version control</strong> systems enable inexpensive branching and merging and thereby facilitate evolutionary selection of the fittest features and designs.  Some well-known large open source projects operate according to a set-based strategy.</p>
+<p><strong>Visual Control</strong><br />
+Another key principle of Lean thinking is that we should optimize the whole system, as a system.  Uncoordinated local optimizations never lead to a system that is optimized as a whole.  In order to optimize the system as a whole, it helps if we can see the system as a whole, and this leads us to the practice of <strong>visual control</strong>.  Visual controls are usually created to illuminate the relationship between a local process and the system, in order to provide the operators of the local process with context.</p>
+<p>A popular type of visual control in software development is the <strong>card wall</strong>.  If a card wall is used in conjunction with a kanban system, then we might call it a heijunka board or kanban board.  A heijunka board is used to implement a process called <strong>production leveling</strong>, where the parts of the system operate at a consistent rate, without booms and busts, and the flow of work through the system is smooth.  A card wall can also be used to implement the practice of the <strong>andon signal</strong>, which is used to communicate a problem in the development process.</p>
+<p>Visual controls work best when they are ubiquitous and inescapable, but we can always enforce a minimum shared understanding with a <strong>daily stand-up meeting</strong>.</p>
+<p><strong>Build Quality In</strong><br />
+A Lean development process should not allow defective work to move downstream.  A policy of one-piece flow enables a policy of 100% inspection, with an aim towards discovery of any defects at the earliest possible moment.  This translates directly to software development in the form of <strong>design review</strong> and <strong>code inspection</strong>, which are greatly facilitated by small batch size and pull workflow.  When a defect is discovered, a Lean process should <strong>stop the line</strong> and apply root-cause analysis in order to discover the source of the defect.  If the root cause is repeatable and preventable, then we should adapt our process to prevent that kind of defect in the future.</p>
+<p><strong>Jidoka</strong> is a philosophy of optimizing the balance of work between people and machines, so that people only do work that people are good at and machines only do work that machines are good at.  Lean processes use automation, but always in the service of and under the control of a human operator.  A Lean process should prefer <strong>simple tools</strong>.  Over-reliance on complex tools and technology may lead a business to be enslaved by the capability of their technology and disconnected from customer value.  Lean tools should be as flexible as the marketplace they serve.</p>
+<p><strong>Continuous integration</strong> is a automation practice that reduces work-in-process and can greatly facilitate the early discovery of defects.  <strong>Design-by-Contract</strong> instruments source code to self-detect design anomalies.  Automated design verification can then be accomplished with <strong>static analysis</strong>.  Specification-based verification strikes a nice balance between work that people are good at (expressing intent) versus work that machines are good at (exhaustive search).  Requirements specifications can also be made verifiable in this way.</p>
+<p><strong>Continuous Improvement<br />
+</strong>The <strong>PDSA</strong> (or PDCA) cycle is a time-tested approach to continuous improvement.  <strong>Plan</strong> the work that you need to do, <strong>Do</strong> the work, <strong>Study</strong> the results of the work you have done, and <strong>Act</strong> on what you learn in order to improve.  The application of Lean principles create an environment where the PDSA cycle can be sustainable and effective.</p>
+<p><strong>Standard work</strong> is the foundation of continuous improvement.  Standard work in Lean means that the operators of a process reach a consensus about appropriate results of a process and the best known methods to achieve them.  A work standard only remains the standard until a better way is discovered, which then becomes the new standard.  These standards should never be imposed by an external agent. In software development, such standards may take the form of design rules, coding rules, checklists, inspection procedures, or even the workflow itself.  PDSA is the process which drives the evolution of standards.</p>
+<p><strong>Throughput metrics</strong> provide useful information to discover the causes and effects of production problems.  The primary throughput metrics are time-series metrics, so we can associate changes in the metrics with known historical events.  Inventory levels are a leading indicator of lead time, which we can use to guide management action.  A stable throughput process is predictable and enables estimation of future deliveries based on historical data, instead of guessing.</p>
+<p><strong>References</strong></p>
+<ul>
+<li>Corey&#8217;s blog:  <a href="http://www.LeanSoftwareEngineering.com">http://www.LeanSoftwareEngineering.com</a></li>
+<li><a href="http://www.amazon.com/Lean-Thinking-Corporation-Revised-Updated/dp/0743249275" target="_blank">Lean Thinking</a>, James Womack and Daniel Jones</li>
+<li><a href="http://www.amazon.com/Software-Numbers-Low-Risk-High-Return-Development/dp/0131407287" target="_blank">Software by Numbers</a>, Denning and Cleland-Huang</li>
+<li><a href="http://www.amazon.com/Principles-Software-Engineering-Management-Gilb/dp/0201192462" target="_blank">Principles of Software Engineering Mangement</a>, Tom Gilb</li>
+<li><a href="http://www.amazon.com/Lean-Software-Strategies-Techniques-Developers/dp/1563273055" target="_blank">Lean Software Strategies</a>, Peter Middleton and James Sutton</li>
+<li><a href="http://www.amazon.com/Implementing-Lean-Software-Development-Addison-Wesley/dp/0321437381" target="_blank">Implementing Lean Software Development</a>, Mary and Tom Poppendieck</li>
+<li><a href="http://www.amazon.com/Principles-Product-Development-Flow-Generation/dp/1935401009" target="_blank">The Principles of Product Development Flow</a>, Donald G. Reinertsen</li>
+<li><a href="http://www.amazon.com/Scrumban-Essays-Systems-Software-Development/dp/0578002140" target="_blank">Scrumban</a>, Corey Ladas</li>
+</ul>
+<p><em>Photo by <a rel="nofollow" href="http://www.flickr.com/photos/cayusa/" target="_blank">Cayusa</a></em><em>.</em></p>
+
+		
+	</div>
+
+	<div id="tools">
+<div style="float:left;"><a href=" http://digg.com/submit?phase=2&url= http://shapingsoftware.com/2009/06/22/patterns-and-practices-of-lean-software-development/&title=Patterns and Practices of Lean Software Development" target="_blank"><img src="http://shapingsoftware.com/wp-content/themes/arthemia/images/sociable/digg.png" title="Digg this!"></a><a href=" http://del.icio.us/post?v=4&noui&jump=close
+&url=http://shapingsoftware.com/2009/06/22/patterns-and-practices-of-lean-software-development/&title=Patterns and Practices of Lean Software Development" target="_blank"><img src="http://shapingsoftware.com/wp-content/themes/arthemia/images/sociable/delicious.png" title="Add to del.icio.us!"></a><a href="http://www.stumbleupon.com/submit?url=http://shapingsoftware.com/2009/06/22/patterns-and-practices-of-lean-software-development/&title=Patterns and Practices of Lean Software Development" target="_blank"><img src="http://shapingsoftware.com/wp-content/themes/arthemia/images/sociable/stumbleupon.png" title="Stumble this!"></a><a href=" http://technorati.com/faves?add=http://shapingsoftware.com" target="_blank"><img src="http://shapingsoftware.com/wp-content/themes/arthemia/images/sociable/technorati.png" title="Add to Techorati!"></a><a href="http://www.facebook.com/sharer.php?u=http://shapingsoftware.com/2009/06/22/patterns-and-practices-of-lean-software-development/&t=Patterns and Practices of Lean Software Development" target="_blank"><img src="http://shapingsoftware.com/wp-content/themes/arthemia/images/sociable/facebook.png" title="Share on Facebook!"></a><a href=" http://www.newsvine.com/_tools/seed&save? u=http://shapingsoftware.com/2009/06/22/patterns-and-practices-of-lean-software-development/&h=Patterns and Practices of Lean Software Development" target="_blank"><img src="http://shapingsoftware.com/wp-content/themes/arthemia/images/sociable/newsvine.png" title="Seed Newsvine!"></a><a href=" http://reddit.com/submit?url=
+http://shapingsoftware.com/2009/06/22/patterns-and-practices-of-lean-software-development/&title=Patterns and Practices of Lean Software Development" target="_blank"><img src="http://shapingsoftware.com/wp-content/themes/arthemia/images/sociable/reddit.png" title="Reddit!"></a><a href=" http://myweb.yahoo.com/myresults/bookmarklet? t=Patterns and Practices of Lean Software Development&u=http://shapingsoftware.com/2009/06/22/patterns-and-practices-of-lean-software-development/&ei=UTF" target="_blank"><img src="http://shapingsoftware.com/wp-content/themes/arthemia/images/sociable/yahoomyweb.png" title="Add to Yahoo!"></a>
+</div>
+
+	<div style="float:right;display:block;"></div>
+	</div>
+
+	</div>
+	
+	<div id="comments">
+	
+<!-- You can start editing here. -->
+
+
+	<h3 id="comments">14 Comments <a href="#respond" title="Leave a comment">&raquo;</a></h3>
+<ul class="commentlist">
+
+		
+		<div class="commentlist">
+
+		<li id="comment-54270" >
+
+		<div class="clearfloat">
+
+			
+
+			<div class="commenttext">
+			<cite><strong><a href='http://six-sigma-jobs.krankos.org/question-about-continuous-improvement/' rel='external nofollow' class='url'>Question about continuous improvement? | Six Sigma Jobs</a>  </strong> said: </cite>
+
+						<p>[...] Shaping Software » Blog Archive » Patterns and Practices of Lean &#8230; [...]</p>
+			</div>	
+
+	
+		</div>
+		
+		<div class="commentmetadata"># 22 June 2009 at 12:58 pm </div>
+		</li>
+
+
+		
+		<div class="commentlist">
+
+		<li id="comment-54275" >
+
+		<div class="clearfloat">
+
+		<img alt='' src='http://www.gravatar.com/avatar/ab44ce48be05b74719a9e04d57d311b1?s=55&amp;d=http%3A%2F%2Fwww.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D55&amp;r=G' class='avatar avatar-55 photo' height='55' width='55' />	
+
+			<div class="commenttext">
+			<cite><strong><a href='http://www.ZedBuildsAndBugs.com/' rel='external nofollow' class='url'>Mr. Hericus</a>  </strong> said: </cite>
+
+						<p>&#8220;Flickr, for example, releases new code to production every 30 minutes.  IMVU releases every 8 minutes.&#8221;</p>
+<p>When you say things like this, if not coached in the right context it can tend to strike fear into people rather than excitement.  For a developer: does Lean all of a sudden mean I only have 8 minutes to implement my next assignment?  For a team: do we have to do everything in 8 minutes?</p>
+<p>I follow the idea that you&#8217;re postulating here, and am an ardent supporter of keeping things simple and delivering small features quickly.  With tools and the right automated testing/validation in place the flow can be achieved quite naturally.</p>
+<p>It&#8217;s not about doing everything in 30 minutes or 8 minutes.  It&#8217;s about the idea that if everyone is continually producing at their own rates, and the correct systems are in place, then a release can happen at any time with minimal structure or ceremony whenever anyone completes what they happen to be working on.  Whether it took them 8 minutes or 8 days to implement, it can be released right now.</p>
+<p>Thanks for the post!</p>
+<p>Mr. Hericus</p>
+			</div>	
+
+	
+		</div>
+		
+		<div class="commentmetadata"># 22 June 2009 at 4:47 pm </div>
+		</li>
+
+
+		
+		<div class="commentlist">
+
+		<li id="comment-54277" >
+
+		<div class="clearfloat">
+
+		<img alt='' src='http://www.gravatar.com/avatar/2a58fa35c10e419a01b54ecf7478c81c?s=55&amp;d=http%3A%2F%2Fwww.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D55&amp;r=G' class='avatar avatar-55 photo' height='55' width='55' />	
+
+			<div class="commenttext">
+			<cite><strong>Praveen  </strong> said: </cite>
+
+						<p>Really informative follow up to the Lean Software Development on SourcesOfInsight.<br />
+I had questions about feature cost estimation that got answered in your blog :D.</p>
+<p>I have always been the evolutionary delivery guy. But the other techniques, esp continuous deployment might be very useful in my environment.</p>
+<p>I had two dumb questions wrt &#8220;stop the line&#8221; - cross reference it to your blog post on &#8220;p&amp;p on s/w engg workflow&#8221; - parallel activities. For the sake of argument, consider that a fault occured on Design Interface. Now, will the Design logic step also stop till a resolution is identified?<br />
+Another question. Is the Lean development process from &#8220;specify&#8221; -&gt; &#8220;deploy&#8221; or can it segmented into each task?<br />
+Sorry for taking bits n pieces from shapingsoftware and leansoftwareengineering :D.</p>
+			</div>	
+
+	
+		</div>
+		
+		<div class="commentmetadata"># 22 June 2009 at 6:21 pm </div>
+		</li>
+
+
+		
+		<div class="commentlist">
+
+		<li id="comment-54283" >
+
+		<div class="clearfloat">
+
+		<img alt='' src='http://www.gravatar.com/avatar/c98b5aa80007a6faeff204bc3ab093bb?s=55&amp;d=http%3A%2F%2Fwww.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D55&amp;r=G' class='avatar avatar-55 photo' height='55' width='55' />	
+
+			<div class="commenttext">
+			<cite><strong><a href='http://www.impactalabs.com' rel='external nofollow' class='url'>Kevin Lam (IMPACTA)</a>  </strong> said: </cite>
+
+						<p>Great informative article, I could have used this article 2 years ago when I was first starting development of my product; however, fortunately I can avoid future mistakes now :), thanks again!</p>
+<p>&#8211;Kevin</p>
+			</div>	
+
+	
+		</div>
+		
+		<div class="commentmetadata"># 22 June 2009 at 7:57 pm </div>
+		</li>
+
+
+		
+		<div class="commentlist">
+
+		<li id="comment-54284" >
+
+		<div class="clearfloat">
+
+		<img alt='' src='http://www.gravatar.com/avatar/80fa0c0042d43f3a52b1a6168c8e776f?s=55&amp;d=http%3A%2F%2Fwww.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D55&amp;r=G' class='avatar avatar-55 photo' height='55' width='55' />	
+
+			<div class="commenttext">
+			<cite><strong><a href='http://www.leansoftwareengineering.com' rel='external nofollow' class='url'>Corey Ladas</a>  </strong> said: </cite>
+
+						<p>Hi Praveen,</p>
+<p>The stop-the-line case from the parallel workflow example might not stop the &#8220;design logic&#8221; step immediately.  If that workflow segment is kanban-limited, then the second path will continue to process any work that is already underway.  If the problem on the first path is not resolved before the second branch completes, then the second branch will stall.  This might be a good thing, because the people working on the second branch can use their capacity to try to help the first branch resolve their bottleneck instead of building up new design-in-process inventory that will then have to be burned off at some downstream bottleneck.</p>
+<p>The second branch might also stall if it is determined that the root cause was a defect in the specification step that preceded both design steps.</p>
+<p>There is no one Lean development process, so the first step is usually Value Stream Mapping to show how people really work in your business.</p>
+			</div>	
+
+	
+		</div>
+		
+		<div class="commentmetadata"># 22 June 2009 at 8:33 pm </div>
+		</li>
+
+
+		
+		<div class="commentlist">
+
+		<li id="comment-54293" >
+
+		<div class="clearfloat">
+
+		<img alt='' src='http://www.gravatar.com/avatar/31192d78140570d817f0c7bbbd0719b0?s=55&amp;d=http%3A%2F%2Fwww.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D55&amp;r=G' class='avatar avatar-55 photo' height='55' width='55' />	
+
+			<div class="commenttext">
+			<cite><strong><a href='http://www.progressivedevelopmentblog.com' rel='external nofollow' class='url'>James Waletzky</a>  </strong> said: </cite>
+
+						<p>Fantastic article, Cory! This succinctly states many concepts I have been talking to my management team about, and does so with lean vocabulary. I am going to pass it around widely. The focus on &#8220;lean patterns&#8221; (that&#8217;s the way I view the keywords) is effective.</p>
+<p>Can you provide some pointers in the way of metrics to feed the idea to more data-oriented personalities? I agree with the concepts in the article, but the art of pursuasion usually requires back-up data, and specifically data from the software industry.</p>
+<p>I had never heard of PDSA specifically, but it sounds just like the Six Sigma DMAIC concept. The continous improvement ideas are also stressed in Human Performance Technology.</p>
+			</div>	
+
+	
+		</div>
+		
+		<div class="commentmetadata"># 23 June 2009 at 2:06 am </div>
+		</li>
+
+
+		
+		<div class="commentlist">
+
+		<li id="comment-54305" >
+
+		<div class="clearfloat">
+
+		<img alt='' src='http://www.gravatar.com/avatar/80fa0c0042d43f3a52b1a6168c8e776f?s=55&amp;d=http%3A%2F%2Fwww.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D55&amp;r=G' class='avatar avatar-55 photo' height='55' width='55' />	
+
+			<div class="commenttext">
+			<cite><strong><a href='http://www.leansoftwareengineering.com' rel='external nofollow' class='url'>Corey Ladas</a>  </strong> said: </cite>
+
+						<p>Hi James!</p>
+<p>PDSA is also known as the Deming cycle, which is an evolution of the earlier PDCA / Shewhart cycle.</p>
+<p>You&#8217;ll find metrics galore in the new Don Reinertsen book, but the core are your basic throughput metrics: throughput, cycle time, lead time, work-in-process, station availability.  &#8220;Software by Numbers&#8221; also makes a solid economic argument.</p>
+<p>We&#8217;ve been seeing 2-4x productivity improvements over comparable teams using Scrum-like methods (e.g. <a href="http://www.ddj.com/architect/218000215" rel="nofollow">http://www.ddj.com/architect/218000215</a>), and even bigger improvements over teams using traditional phase/gate methods.  But of course, this stuff is really about scale and enterprise integration.  Team performance improvement is mostly a bonus feature.</p>
+			</div>	
+
+	
+		</div>
+		
+		<div class="commentmetadata"># 23 June 2009 at 8:58 am </div>
+		</li>
+
+
+		
+		<div class="commentlist">
+
+		<li id="comment-54306" >
+
+		<div class="clearfloat">
+
+			
+
+			<div class="commenttext">
+			<cite><strong><a href='http://www.kygeek.com/daily-links/daily-links-for-tuesday-june-23th-2009' rel='external nofollow' class='url'>Daily Links for Tuesday, June 23th, 2009</a>  </strong> said: </cite>
+
+						<p>[...] Shaping Software » Blog Archive » Patterns and Practices of Lean Software Development [...]</p>
+			</div>	
+
+	
+		</div>
+		
+		<div class="commentmetadata"># 23 June 2009 at 11:40 am </div>
+		</li>
+
+
+		
+		<div class="commentlist">
+
+		<li id="comment-54322" >
+
+		<div class="clearfloat">
+
+		<img alt='' src='http://www.gravatar.com/avatar/cedf9916cb844c90b311cd3457bc529d?s=55&amp;d=http%3A%2F%2Fwww.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D55&amp;r=G' class='avatar avatar-55 photo' height='55' width='55' />	
+
+			<div class="commenttext">
+			<cite><strong><a href='http://www.dotcodedump.com' rel='external nofollow' class='url'>Ian Lintner</a>  </strong> said: </cite>
+
+						<p>Those most interesting and valuable ideas in lean are the focus on the simple over the complex. The idea that excess process are wasteful, and even dangerous, shouldn&#8217;t need to be said, but it does.  </p>
+<p>The areas where I believe lean software development practitioners betray lean&#8217;s roots is specifying certain technologies or patterns.  The whole point is that process will be specified at a team, or organization level from the ground up. One example of this would be declaring that you can&#8217;t have lean without test driven development.</p>
+			</div>	
+
+	
+		</div>
+		
+		<div class="commentmetadata"># 23 June 2009 at 10:12 pm </div>
+		</li>
+
+
+		
+		<div class="commentlist">
+
+		<li id="comment-54333" >
+
+		<div class="clearfloat">
+
+		<img alt='' src='http://www.gravatar.com/avatar/80fa0c0042d43f3a52b1a6168c8e776f?s=55&amp;d=http%3A%2F%2Fwww.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D55&amp;r=G' class='avatar avatar-55 photo' height='55' width='55' />	
+
+			<div class="commenttext">
+			<cite><strong><a href='http://www.LeanSoftwareEngineering.com' rel='external nofollow' class='url'>Corey Ladas</a>  </strong> said: </cite>
+
+						<p>Hi Ian,</p>
+<p>I very much agree with you about the overspecification of tools and practices, and you picked a good example.  I like User Stories, and sometimes I use them because sometimes that is an appropriate method.  Other times it isn&#8217;t.  I&#8217;m glad I know more than one requirements analysis technique.  Right tool for the job.  No golden hammers.</p>
+			</div>	
+
+	
+		</div>
+		
+		<div class="commentmetadata"># 24 June 2009 at 6:25 am </div>
+		</li>
+
+
+		
+		<div class="commentlist">
+
+		<li id="comment-54543" >
+
+		<div class="clearfloat">
+
+			
+
+			<div class="commenttext">
+			<cite><strong><a href='http://misfitgeek.com/blog/patterns-and-practices-of-lean-software-development/' rel='external nofollow' class='url'>Patterns and Practices of Lean Software Development : Misfit Geek</a>  </strong> said: </cite>
+
+						<p>[...] D. Meier emailed me this week to ask my opinion on “Lean” and referred me to [ THIS POST [...]</p>
+			</div>	
+
+	
+		</div>
+		
+		<div class="commentmetadata"># 29 June 2009 at 7:23 pm </div>
+		</li>
+
+
+		
+		<div class="commentlist">
+
+		<li id="comment-58544" >
+
+		<div class="clearfloat">
+
+			
+
+			<div class="commenttext">
+			<cite><strong><a href='http://techdistrict.kirkk.com/2009/10/02/lean-and-kanban-collection/' rel='external nofollow' class='url'>Lean and Kanban Collection : Software &amp; Technology @kirkk.com</a>  </strong> said: </cite>
+
+						<p>[...] Patterns and Practices of Lean Software Development - Post by @corey_ladas discussing principles such as One Piece Flow, Real Options, and Build Quality In. [...]</p>
+			</div>	
+
+	
+		</div>
+		
+		<div class="commentmetadata"># 2 October 2009 at 2:48 pm </div>
+		</li>
+
+
+		
+		<div class="commentlist">
+
+		<li id="comment-59917" >
+
+		<div class="clearfloat">
+
+		<img alt='' src='http://www.gravatar.com/avatar/65509e5861fb7c90e81fe9dadb329d37?s=55&amp;d=http%3A%2F%2Fwww.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D55&amp;r=G' class='avatar avatar-55 photo' height='55' width='55' />	
+
+			<div class="commenttext">
+			<cite><strong><a href='http://www.digite.com' rel='external nofollow' class='url'>Mahesh Singh</a>  </strong> said: </cite>
+
+						<p>Hi Corey,</p>
+<p>I guess I am somewhat late to this discussion - but hopefully you will see this and respond.  I am still early in my learning of Lean Software Development - and your two posts were very instructive.  </p>
+<p>However, I am left with a nagging question - how different is all this from Agile or Iterative development - both of which also talk of many of the same things such as delivering in small chunks, delivering continuously for faster market/ customer feedback, etc.?</p>
+<p>A secondary question - based on the current capabilities of various software engineering and project management tools, what can software teams actually practice of Lean methods?  There are a lot of tools that support Agile development, including the one my company produces - are there tools that explicitly provide Lean related processes, workflows, metrics and measures?  Or are Lean practitioners able to do Lean projects using standard/ Agile tools in the market - in other words - is it more to do with the methods than the tools?</p>
+<p>Thanks,<br />
+Mahesh</p>
+			</div>	
+
+	
+		</div>
+		
+		<div class="commentmetadata"># 29 October 2009 at 12:51 am </div>
+		</li>
+
+
+		
+		<div class="commentlist">
+
+		<li id="comment-71152" >
+
+		<div class="clearfloat">
+
+			
+
+			<div class="commenttext">
+			<cite><strong><a href='http://www.synesthesia.co.uk/blog/archives/2010/05/01/links-for-2010-05-01/' rel='external nofollow' class='url'>Synesthesia</a>  </strong> said: </cite>
+
+						<p>[...] Patterns and Practices of Lean Software DevelopmentExcellent post by Corey Ladas that pulls together a large range of concepts relating to the workflow of software developmentpatterns software lean workflow [...]</p>
+			</div>	
+
+	
+		</div>
+		
+		<div class="commentmetadata"># 1 May 2010 at 9:10 pm </div>
+		</li>
+
+
+	</ul>
+	
+
+ 
+
+
+
+	</div>
+
+	
+	</div>
+
+<!-- Code over here will go to top of sidebar --> 
+<div id="featured"> 
+<b><font size="+1">Welcome to Shaping Software!</font></b>
+Shaping Software is written for anyone who wants to improve their software engineering effectiveness.  <a href="/about/">Learn more ...</a>
+<br>
+<a href="http://feeds.feedburner.com/ShapingSoftware" title="Subscribe to my feed" rel="alternate" type="application/rss+xml"><img src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png" alt="" style="border:0" align="middle"/></a> <a href="http://feeds.feedburner.com/ShapingSoftware" title="Subscribe to my feed" rel="alternate" type="application/rss+xml"> Subscribe to RSS</a>
+<br>
+<a href="http://www.feedburner.com/fb/a/emailverifySubmit?feedId=1620317&amp;loc=en_US" >
+<image src="/images/eMailIcon.gif"/ valign="middle" style="vertical-align:middle;border:0" /></a>&nbsp;
+<a href="http://www.feedburner.com/fb/a/emailverifySubmit?feedId=1620317&amp;loc=en_US" >Subscribe by Email</a>
+</div> 
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+<div id="sidebar">
+
+<div id="sidebar-ads">
+
+<script type="text/javascript"><!--
+google_ad_client = "pub-0602610841907147";
+/* Shaping Software, 300x250, created 11/30/08 */
+google_ad_slot = "1719582029";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+<!--
+<img src="http://shapingsoftware.com/wp-content/themes/arthemia/images/banners/square.jpg" alt="" width="300px" height="250px" />
+-->
+
+</div>
+  
+<div id="sidebar-top"> 
+
+<h3>Top Posts</h3>
+<ul>
+<li><a href="http://shapingsoftware.com/2008/12/02/7-habits-of-highly-effective-program-managers/">7 Habits of Highly Effective Program Managers</a>
+<li><a href="http://shapingsoftware.com/2008/12/31/10-success-patterns-for-pms/">10 Success Patterns for PMs</a>
+<li><a href="http://shapingsoftware.com/2009/03/02/agile-architecture-method/">Agile Architecture Method</a>
+<li><a href="http://shapingsoftware.com/2009/02/09/architectural-styles/">Architectural Styles</a>
+<li><a href="http://shapingsoftware.com/2009/12/24/customer-connected-engineering-at-patterns-practices/">Customer Connected Engineering at patterns & practices</a>
+<li><a href="http://shapingsoftware.com/2008/12/09/lessons-learned-in-patterns-practices/">Lessons Learned in patterns & practices</a>
+<li><a href="http://shapingsoftware.com/2009/01/19/microsoft-patterns-practices-agile-workspace-tour/">Microsoft patterns & practices Agile Workspace Tour</a>
+<li><a href="http://shapingsoftware.com/2008/09/01/my-favorite-software-books/">My Favorite Software Books</a>
+<li><a href="http://shapingsoftware.com/2009/02/02/personas-at-patterns-practices/">Personas at patterns & practices</a>
+
+<!--
+<li><a href="http://shapingsoftware.com/2008/04/07/security-principles/">Security Principles</a>
+<li><a href="http://shapingsoftware.com/2008/09/02/7-habits-of-highly-successful-software-architects/">7 Habits of Highly Successful Software Architects</a>
+<li><a href="http://shapingsoftware.com/2008/08/04/adding-people-to-late-projects-makes-them-later/">Adding People to Late Projects Makes Them Later</a></li>
+<li><a href="http://shapingsoftware.com/2008/08/17/give-up-explicit-preparation-for-change/">Give Up Explicit Preparation for Change</a></li>
+<li><a href="http://shapingsoftware.com/2008/06/02/incrementally-render-the-solution/">Incrementally Render the Solution</a></li>
+<li><a href="http://shapingsoftware.com/2008/09/28/make-a-list-of-the-jobs-to-be-done/">Make a List of the Jobs to Be Done</a></li>
+<li><a href="http://shapingsoftware.com/2008/03/30/performance-frame/">Performance Frame</a></li>
+<li><a href="http://shapingsoftware.com/2008/06/01/requirements-types/">Requirements Types</a></li>
+<li><a href="http://shapingsoftware.com/2008/04/07/security-principles/">Security Principles</a></li>
+<li><a href="http://shapingsoftware.com/2008/08/18/extreme-programming-xp-at-a-glance/">XP at a Glance</a></li>
+-->
+</ul>
+
+
+<h3>Software Process At a Glance</h3>
+<ul>
+<li><a href="http://shapingsoftware.com/2008/08/18/extreme-programming-xp-at-a-glance/">Extreme Programming (XP) at a Glance</a>
+<li><a href="http://shapingsoftware.com/2008/08/18/microsoft-solution-framework-msf-at-a-glance/">Microsoft Solution Framework (MSF) at a Glance</a>
+<li><a href="http://shapingsoftware.com/2008/08/18/msf-agile-at-a-glance/">MSF Agile at a Glance</a>
+<li><a href="http://shapingsoftware.com/2008/08/18/rational-unified-process-rup-at-a-glance/">Rational Unified Process (RUP) at a Glance</a>
+</ul>
+
+</div>
+
+
+<div id="sidebar-middle" class="clearfloat"> 
+<div id="sidebar-left">
+
+<h3>Categories</h3>		<ul>
+			<li class="cat-item cat-item-8"><a href="http://shapingsoftware.com/category/architecture/" title="How to improve solution architecture and design.">Architecture</a>
+</li>
+	<li class="cat-item cat-item-48"><a href="http://shapingsoftware.com/category/book-nuggets/" title="View all posts filed under Book Nuggets">Book Nuggets</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://shapingsoftware.com/category/books/" title="View all posts filed under Books">Books</a>
+</li>
+	<li class="cat-item cat-item-50"><a href="http://shapingsoftware.com/category/business/" title="View all posts filed under Business">Business</a>
+</li>
+	<li class="cat-item cat-item-15"><a href="http://shapingsoftware.com/category/career/" title="View all posts filed under Career">Career</a>
+</li>
+	<li class="cat-item cat-item-14"><a href="http://shapingsoftware.com/category/data/" title="View all posts filed under Data">Data</a>
+</li>
+	<li class="cat-item cat-item-20"><a href="http://shapingsoftware.com/category/design/" title="View all posts filed under Design">Design</a>
+</li>
+	<li class="cat-item cat-item-17"><a href="http://shapingsoftware.com/category/featured/" title="View all posts filed under Featured">Featured</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://shapingsoftware.com/category/frames/" title="View all posts filed under Frames">Frames</a>
+</li>
+	<li class="cat-item cat-item-3"><a href="http://shapingsoftware.com/category/general/" title="View all posts filed under General">General</a>
+</li>
+	<li class="cat-item cat-item-47"><a href="http://shapingsoftware.com/category/guest-posts/" title="View all posts filed under Guest Posts">Guest Posts</a>
+</li>
+	<li class="cat-item cat-item-16"><a href="http://shapingsoftware.com/category/headline/" title="View all posts filed under Headline">Headline</a>
+</li>
+	<li class="cat-item cat-item-51"><a href="http://shapingsoftware.com/category/leadership/" title="View all posts filed under Leadership">Leadership</a>
+</li>
+	<li class="cat-item cat-item-49"><a href="http://shapingsoftware.com/category/lessons-in-software/" title="View all posts filed under Lessons in Software">Lessons in Software</a>
+</li>
+	<li class="cat-item cat-item-42"><a href="http://shapingsoftware.com/category/lessons-learned/" title="View all posts filed under Lessons Learned">Lessons Learned</a>
+</li>
+	<li class="cat-item cat-item-43"><a href="http://shapingsoftware.com/category/marketing/" title="View all posts filed under Marketing">Marketing</a>
+</li>
+	<li class="cat-item cat-item-41"><a href="http://shapingsoftware.com/category/modeling/" title="View all posts filed under Modeling">Modeling</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://shapingsoftware.com/category/patterns/" title="How to leverage and share problem and solution pairs.">Patterns</a>
+</li>
+	<li class="cat-item cat-item-13"><a href="http://shapingsoftware.com/category/patterns-practices/" title="View all posts filed under patterns &amp; practices">patterns &amp; practices</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://shapingsoftware.com/category/performance/" title="How to improve response time, throughput, and resource utilization.">Performance</a>
+</li>
+	<li class="cat-item cat-item-10"><a href="http://shapingsoftware.com/category/process/" title="View all posts filed under Process">Process</a>
+</li>
+	<li class="cat-item cat-item-12"><a href="http://shapingsoftware.com/category/project-management/" title="How to improve teams, execution and project management.">Project-Management</a>
+</li>
+	<li class="cat-item cat-item-7"><a href="http://shapingsoftware.com/category/requirements/" title="View all posts filed under Requirements">Requirements</a>
+</li>
+	<li class="cat-item cat-item-4"><a href="http://shapingsoftware.com/category/security/" title="How to address threats, attacks, vulnerabilities, and countermeasures.">Security</a>
+</li>
+	<li class="cat-item cat-item-45"><a href="http://shapingsoftware.com/category/trends/" title="View all posts filed under Trends">Trends</a>
+</li>
+	<li class="cat-item cat-item-1"><a href="http://shapingsoftware.com/category/uncategorized/" title="View all posts filed under Uncategorized">Uncategorized</a>
+</li>
+	<li class="cat-item cat-item-46"><a href="http://shapingsoftware.com/category/user-experience/" title="View all posts filed under User Experience">User Experience</a>
+</li>
+		</ul>
+ 
+<ul></ul>
+
+
+</div>  
+
+<div id="sidebar-right">
+					<h3>Recent Posts</h3>			<ul>
+						<li><a href="http://shapingsoftware.com/2009/12/24/customer-connected-engineering-at-patterns-practices/">Customer Connected Engineering at patterns &#038; practices </a></li>
+						<li><a href="http://shapingsoftware.com/2009/12/15/customer-problem-competition-and-success/">Customer, Problem, Competition, and Success </a></li>
+						<li><a href="http://shapingsoftware.com/2009/12/07/lessons-in-software-from-eric-brechner/">Lessons in Software from Eric Brechner </a></li>
+						<li><a href="http://shapingsoftware.com/2009/11/30/patterns-practices-best-practices/">Best Practices at patterns &amp; practices </a></li>
+						<li><a href="http://shapingsoftware.com/2009/11/11/drive-from-quality/">Drive from Quality </a></li>
+						</ul>
+		
+<h3>Resources</h3>
+<ul>
+<li><a href="http://shapingsoftware.com/2008/09/01/my-favorite-software-books/">My Favorite Software Books</a></li>
+<li><a href="http://shapingsoftware.com/sitemap/">Sitemap</a>
+</ul>
+
+<br>
+<br>
+<script type="text/javascript"><!--
+amazon_ad_tag = "sourcesofinsight-20"; amazon_ad_width = "120"; amazon_ad_height = "240";//--></script>
+<script type="text/javascript" src="http://www.assoc-amazon.com/s/ads.js"></script>
+
+<br>
+<br>
+<!-- Site Meter -->
+<script type="text/javascript" src="http://s35.sitemeter.com/js/counter.js?site=s35ShapingSoftware">
+</script>
+<noscript>
+<a href="http://s35.sitemeter.com/stats.asp?site=s35ShapingSoftware" target="_top">
+<img src="http://s35.sitemeter.com/meter.asp?site=s35ShapingSoftware" alt="Site Meter" border="0"/></a>
+</noscript>
+<!-- Copyright (c)2006 Site Meter -->
+
+
+<!--
+<h3>Blogroll</h3>
+<ul>
+<li><a href="http://colorlabsproject.com">Colorlabs Project</a></li>
+<li><a href="http://michaelhutagalung.com">Michael Jubel</a></li>
+<li><a href="http://www.hannasyalala.com">Hanna Siahaan</a></li>
+<li><a href="http://majarimagazine.com">Majari Magazine</a></li>
+<li><a href="http://bloggerzine.majarikanayakan.com">The Bloggerzine</a></li>
+<li><a href="http://www.majarikanayakan.com">Majari Kanayakan</a></li>
+</ul>
+-->
+
+
+
+</div> 
+
+</div>
+
+<div id="sidebar-bottom"> 
+<h3>Tags</h3><a href='http://shapingsoftware.com/tag/agile/' class='tag-link-31' title='7 topics' rel="tag" style='font-size: 11.5pt;'>Agile</a>
+<a href='http://shapingsoftware.com/tag/architecture/' class='tag-link-8' title='25 topics' rel="tag" style='font-size: 22pt;'>Architecture</a>
+<a href='http://shapingsoftware.com/tag/books/' class='tag-link-18' title='1 topic' rel="tag" style='font-size: 8pt;'>Books</a>
+<a href='http://shapingsoftware.com/tag/budget/' class='tag-link-32' title='4 topics' rel="tag" style='font-size: 9.75pt;'>Budget</a>
+<a href='http://shapingsoftware.com/tag/career/' class='tag-link-15' title='6 topics' rel="tag" style='font-size: 10.916666666667pt;'>Career</a>
+<a href='http://shapingsoftware.com/tag/data/' class='tag-link-14' title='1 topic' rel="tag" style='font-size: 8pt;'>Data</a>
+<a href='http://shapingsoftware.com/tag/design/' class='tag-link-20' title='24 topics' rel="tag" style='font-size: 21.416666666667pt;'>Design</a>
+<a href='http://shapingsoftware.com/tag/modeling/' class='tag-link-41' title='1 topic' rel="tag" style='font-size: 8pt;'>Modeling</a>
+<a href='http://shapingsoftware.com/tag/patterns/' class='tag-link-19' title='3 topics' rel="tag" style='font-size: 9.1666666666667pt;'>Patterns</a>
+<a href='http://shapingsoftware.com/tag/performance/' class='tag-link-5' title='3 topics' rel="tag" style='font-size: 9.1666666666667pt;'>Performance</a>
+<a href='http://shapingsoftware.com/tag/principles/' class='tag-link-40' title='1 topic' rel="tag" style='font-size: 8pt;'>Principles</a>
+<a href='http://shapingsoftware.com/tag/process/' class='tag-link-10' title='18 topics' rel="tag" style='font-size: 17.916666666667pt;'>Process</a>
+<a href='http://shapingsoftware.com/tag/product-lines/' class='tag-link-24' title='4 topics' rel="tag" style='font-size: 9.75pt;'>Product-Llines</a>
+<a href='http://shapingsoftware.com/tag/project-management/' class='tag-link-12' title='19 topics' rel="tag" style='font-size: 18.5pt;'>Project-Management</a>
+<a href='http://shapingsoftware.com/tag/qualities/' class='tag-link-39' title='3 topics' rel="tag" style='font-size: 9.1666666666667pt;'>Qualities</a>
+<a href='http://shapingsoftware.com/tag/requirements/' class='tag-link-7' title='10 topics' rel="tag" style='font-size: 13.25pt;'>Requirements</a>
+<a href='http://shapingsoftware.com/tag/reuse/' class='tag-link-25' title='1 topic' rel="tag" style='font-size: 8pt;'>Reuse</a>
+<a href='http://shapingsoftware.com/tag/scenarios/' class='tag-link-21' title='4 topics' rel="tag" style='font-size: 9.75pt;'>Scenarios</a>
+<a href='http://shapingsoftware.com/tag/schedule/' class='tag-link-33' title='4 topics' rel="tag" style='font-size: 9.75pt;'>Schedule</a>
+<a href='http://shapingsoftware.com/tag/security/' class='tag-link-4' title='9 topics' rel="tag" style='font-size: 12.666666666667pt;'>Security</a>
+<a href='http://shapingsoftware.com/tag/teamwork/' class='tag-link-34' title='2 topics' rel="tag" style='font-size: 8.5833333333333pt;'>Teamwork</a>
+<a href='http://shapingsoftware.com/tag/techniques/' class='tag-link-38' title='5 topics' rel="tag" style='font-size: 10.333333333333pt;'>Techniques</a>
+<a href='http://shapingsoftware.com/tag/xp/' class='tag-link-30' title='5 topics' rel="tag" style='font-size: 10.333333333333pt;'>XP</a> 
+
+
+<br>
+<h3>About Me</h3>
+<table>
+<tr>
+<td valign="top">
+My name is J.D. Meier.  I'm currently a Principal Program Manager on the <a href="http://msdn.microsoft.com/en-us/practices/default.aspx">patterns & practices team</a> at <a href="http://www.microsoft.com/">Microsoft</a>.
+</td>
+<td>
+<img src="/images/JD.jpg"/>
+</td>
+</tr>
+</table>
+
+</div>   
+
+
+</div></div>  
+
+<div id="front-popular" class="clearfloat">
+
+<div id="recentpost" class="clearfloat">
+
+					<h3>Recent Comments</h3>			<ul id="recentcomments"><li class="recentcomments"><a href='http://www.synesthesia.co.uk/blog/archives/2010/05/01/links-for-2010-05-01/' rel='external nofollow' class='url'>Synesthesia</a> on <a href="http://shapingsoftware.com/2009/06/22/patterns-and-practices-of-lean-software-development/comment-page-1/#comment-71152">Patterns and Practices of Lean Software Development</a></li><li class="recentcomments"><a href='http://www.chess.uk.com' rel='external nofollow' class='url'>Warehouse Management System</a> on <a href="http://shapingsoftware.com/2008/11/27/knowledge-areas-capability-levels-and-ladder-levels/comment-page-1/#comment-70797">Knowledge Areas, Capability Levels, and Ladder Levels</a></li><li class="recentcomments"><a href='http://www.chess.uk.com' rel='external nofollow' class='url'>Warehouse Management Software</a> on <a href="http://shapingsoftware.com/2008/06/22/macro-and-micro-software-process/comment-page-1/#comment-69610">Macro and Micro Software Process</a></li><li class="recentcomments">Herb Richter on <a href="http://shapingsoftware.com/2009/06/15/introduction-to-lean-software-development/comment-page-1/#comment-66644">Introduction to Lean Software Development</a></li><li class="recentcomments">JD on <a href="http://shapingsoftware.com/2009/12/24/customer-connected-engineering-at-patterns-practices/comment-page-1/#comment-64210">Customer Connected Engineering at patterns &#038; practices</a></li></ul>
+		</div> 		
+
+<div id="mostcommented" class="clearfloat">
+
+<h3>Friends in the Community</h3>
+<script src="http://pub.mybloglog.com/comm3.php?mblID=2008090701124709&amp;r=widget&amp;is=small&amp;o=l&amp;ro=2&amp;cs=black&amp;ww=220&amp;wc=multiple&amp;l=n"></script>
+
+<!--
+<h3>Most Commented</h3>
+<ul> 	<li><a href="http://shapingsoftware.com/2009/07/06/lessons-in-software-from-james-waletzky/" title="Lessons in Software from James Waletzky">Lessons in Software from James Waletzky</a></li> 	 	<li><a href="http://shapingsoftware.com/2009/06/22/patterns-and-practices-of-lean-software-development/" title="Patterns and Practices of Lean Software Development">Patterns and Practices of Lean Software Development</a></li> 	 	<li><a href="http://shapingsoftware.com/2009/07/20/lessons-in-software-from-mike-de-libero/" title="Lessons in Software from Mike de Libero">Lessons in Software from Mike de Libero</a></li> 	 	<li><a href="http://shapingsoftware.com/2009/12/07/lessons-in-software-from-eric-brechner/" title="Lessons in Software from Eric Brechner">Lessons in Software from Eric Brechner</a></li> 	 	<li><a href="http://shapingsoftware.com/2009/06/29/lessons-in-software-from-alok-srivastava/" title="Lessons in Software from Alok Srivastava">Lessons in Software from Alok Srivastava</a></li> 	  
+</ul>
+
+ 
+-->
+
+
+</div>
+
+<div id="recent_comments" class="clearfloat">
+
+ 
+</div>
+</div>
+
+<div id="footer">  Powered by <a href="http://wordpress.org/">WordPress</a> |  <a href="http://shapingsoftware.com/wp-login.php">Log in</a> | <a href="http://shapingsoftware.com/feed/">Entries (RSS)</a> | <a href="http://shapingsoftware.com/comments/feed/">Comments (RSS)</a> | <a href="http://www.michaeljubel.com/2008/05/arthemia-magazine-blog-wordpress-theme-released/" target="_blank">Arthemia</a> theme by <a href="http://www.michaeljubel.com" target="_blank">Michael Jubel</a>
+
+<!-- 30 queries. 0.645 seconds. -->
+
+</div>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-1393479-5");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>
+
+
+
+</body>
+</html>
