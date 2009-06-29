@@ -1,0 +1,2847 @@
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+
+    <base href="http://blog.crisp.se/henrikkniberg/" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="description" content="Henrik Kniberg's blog" />
+    <meta name="abstract" content="Lean and Agile software development" />
+    <meta name="author" content="Henrik Kniberg" />
+    <meta name="generator" content="Pebble (http://pebble.sourceforge.net)" />
+    <title>One day in Kanban land - Henrik Kniberg's blog</title>
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="http://blog.crisp.se/henrikkniberg/rss.xml" />
+    <link rel="alternate" type="application/rdf+xml" title="RDF" href="http://blog.crisp.se/henrikkniberg/rdf.xml" />
+    <link rel="alternate" type="application/atom+xml" title="Atom" href="http://blog.crisp.se/henrikkniberg/atom.xml" />
+
+    <link rel="stylesheet" href="themes/user-jangrape/screen.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="themes/_pebble/print.css" type="text/css" media="print" />
+    <script type="text/javascript" src="/pebble.js">
+    </script>
+  </head>
+
+  <body>
+
+    <div id="container">
+
+
+<div id="subscriptions">
+  <a href="http://blog.crisp.se/henrikkniberg/rss.xml">RSS</a> <a href="http://blog.crisp.se/henrikkniberg/rss.xml" style="border: 0px;"><img src="common/images/feed-icon-16x16.png" alt="RSS feed" border="0" /></a> |
+  <a href="http://blog.crisp.se/henrikkniberg/atom.xml">Atom</a> <a href="http://blog.crisp.se/henrikkniberg/atom.xml" style="border: 0px;"><img src="common/images/feed-icon-16x16.png" alt="Atom feed" border="0" /></a>
+</div>
+
+
+<div id="search">
+  
+<form name="searchForm" method="post" action="search.action" accept-charset="UTF-8">
+  <input type="text" name="query" />
+  <input type="submit" value="Search" />
+</form>
+
+</div>
+
+<div id="header">
+  <div id="blogHome"><span><a href="http://www.crisp.se/"><img src="http://www.crisp.se/images_gui/logo.gif" alt="Crisp Home"/></a><img id="blogHomeBullet" src="/themes/default/images/bullet.jpg" alt="*"/><a href="/"><img src="http://www.crisp.se/images/heading/h5-crispblog.gif" alt="Crisp Blog"/></a></span></div>
+  <div id="blogName"><span>Henrik Kniberg's blog</span><a href="http://crisp.se/henrik.kniberg"><img id="blogImage" src="http://crisp.se/images/people/crisp_photo-face_hendrik.png" alt="" border="0" /></a></div>
+  <div id="blogDescription"><span>Lean and Agile software development</span></div>
+</div>
+
+
+
+  
+  
+  <div id="linearNavigationLinks">
+    
+      <a href="http://blog.crisp.se/henrikkniberg/2009/06/23/1245758760000.html">&lt;&lt; The Thinking Tool called Agile</a> |
+    
+    <a href="http://blog.crisp.se/henrikkniberg/">Home</a>
+    
+      | <a href="http://blog.crisp.se/henrikkniberg/2009/08/11/1249994760000.html">Running for the Agile Alliance board &gt;&gt;</a>
+    
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+<div id="sidebar">
+
+  <div class="sidebarItem">
+
+  <div class="sidebarItemTitle"><span>Login</span></div>
+  <br />
+  <form name="loginForm" method="post" action="http://blog.crisp.se/j_acegi_security_check">
+    <input type="hidden" name="redirectUrl" value="/henrikkniberg/"/>
+    <input type="text" name="j_username" />
+    <br />
+    <input type="password" name="j_password" />
+    <br />
+    Remember me<input type="checkbox" name="_acegi_security_remember_me" />
+    <input type="submit" value="Login" />
+  </form>
+
+
+
+</div>
+
+
+  <div class="sidebarItem">
+    <div class="sidebarItemTitle"><span>Navigate</span></div>
+    <div class="calendar"><table width="100%"><tr><td colspan="7" align="center"><b><a href="http://blog.crisp.se/henrikkniberg/2009/06.html">June 2009</a></b></td></tr><tr><td class="calendarDayHeader" width="14%">Sun</td><td class="calendarDayHeader" width="14%">Mon</td><td class="calendarDayHeader" width="14%">Tue</td><td class="calendarDayHeader" width="14%">Wed</td><td class="calendarDayHeader" width="14%">Thu</td><td class="calendarDayHeader" width="14%">Fri</td><td class="calendarDayHeader" width="14%">Sat</td></tr><tr><td class="calendarDay">&nbsp;</td><td class="calendarDay">&nbsp;&nbsp;1&nbsp;</td><td class="calendarDay">&nbsp;&nbsp;2&nbsp;</td><td class="calendarDay">&nbsp;&nbsp;3&nbsp;</td><td class="calendarDay">&nbsp;&nbsp;4&nbsp;</td><td class="calendarDay">&nbsp;&nbsp;5&nbsp;</td><td class="calendarDay">&nbsp;&nbsp;6&nbsp;</td></tr><tr><td class="calendarDay">&nbsp;&nbsp;7&nbsp;</td><td class="calendarDay">&nbsp;&nbsp;8&nbsp;</td><td class="calendarDay">&nbsp;&nbsp;9&nbsp;</td><td class="calendarDay">&nbsp;10&nbsp;</td><td class="calendarDay">&nbsp;11&nbsp;</td><td class="calendarDay">&nbsp;12&nbsp;</td><td class="calendarDay">&nbsp;13&nbsp;</td></tr><tr><td class="calendarDay">&nbsp;14&nbsp;</td><td class="calendarDay">&nbsp;15&nbsp;</td><td class="calendarDay">&nbsp;16&nbsp;</td><td class="calendarDay">&nbsp;17&nbsp;</td><td class="calendarDay">&nbsp;18&nbsp;</td><td class="calendarDay">&nbsp;19&nbsp;</td><td class="calendarDay">&nbsp;20&nbsp;</td></tr><tr><td class="calendarDay">&nbsp;21&nbsp;</td><td class="calendarDay">&nbsp;22&nbsp;</td><td class="calendarDayWithEntries">&nbsp;<a href="http://blog.crisp.se/henrikkniberg/2009/06/23.html">23</a>&nbsp;</td><td class="calendarDay">&nbsp;24&nbsp;</td><td class="calendarDay">&nbsp;25&nbsp;</td><td class="calendarDayWithEntries">&nbsp;<a href="http://blog.crisp.se/henrikkniberg/2009/06/26.html">26</a>&nbsp;</td><td class="calendarDay">&nbsp;27&nbsp;</td></tr><tr><td class="calendarDay">&nbsp;28&nbsp;</td><td class="calendarDay">&nbsp;29&nbsp;</td><td class="calendarDay">&nbsp;30&nbsp;</td><td class="calendarDay">&nbsp;</td><td class="calendarDay">&nbsp;</td><td class="calendarDay">&nbsp;</td><td class="calendarDay">&nbsp;</td></tr><tr><td colspan="7" align="center"><a href="http://blog.crisp.se/henrikkniberg/2009/05.html">May</a>&nbsp; | &nbsp;<a href="http://blog.crisp.se/henrikkniberg/2010/12/25.html">Today</a>&nbsp; | &nbsp;<a href="http://blog.crisp.se/henrikkniberg/2009/07.html">Jul</a></td></tr></table></div>
+    <a href="./categories/">Categories</a> |
+    <a href="./tags/">Tags</a> |
+    <a href="search.action">Advanced Search</a>
+    <br /><br />
+  </div>
+
+  
+
+  
+
+  
+  <div class="sidebarItem">
+    <div class="sidebarItemTitle"><span>Tags</span></div>
+    <div class="sidebarTagCloud">
+    <ul>
+    
+      <li><span class="tagCloud6"><a href="http://blog.crisp.se/henrikkniberg/tags/a3/" title="2">a3</a></span></li>
+    
+      <li><span class="tagCloud10"><a href="http://blog.crisp.se/henrikkniberg/tags/agile/" title="81">agile</a></span></li>
+    
+      <li><span class="tagCloud6"><a href="http://blog.crisp.se/henrikkniberg/tags/agilealliance/" title="2">agilealliance</a></span></li>
+    
+      <li><span class="tagCloud3"><a href="http://blog.crisp.se/henrikkniberg/tags/beginners-mind/" title="1">beginners-mind</a></span></li>
+    
+      <li><span class="tagCloud7"><a href="http://blog.crisp.se/henrikkniberg/tags/books/" title="14">books</a></span></li>
+    
+      <li><span class="tagCloud7"><a href="http://blog.crisp.se/henrikkniberg/tags/checklists/" title="3">checklists</a></span></li>
+    
+      <li><span class="tagCloud6"><a href="http://blog.crisp.se/henrikkniberg/tags/chinese/" title="2">chinese</a></span></li>
+    
+      <li><span class="tagCloud3"><a href="http://blog.crisp.se/henrikkniberg/tags/comics/" title="1">comics</a></span></li>
+    
+      <li><span class="tagCloud8"><a href="http://blog.crisp.se/henrikkniberg/tags/conference/" title="22">conference</a></span></li>
+    
+      <li><span class="tagCloud3"><a href="http://blog.crisp.se/henrikkniberg/tags/consulting/" title="1">consulting</a></span></li>
+    
+      <li><span class="tagCloud6"><a href="http://blog.crisp.se/henrikkniberg/tags/crisp/" title="2">crisp</a></span></li>
+    
+      <li><span class="tagCloud3"><a href="http://blog.crisp.se/henrikkniberg/tags/cross-functional/" title="1">cross-functional</a></span></li>
+    
+      <li><span class="tagCloud7"><a href="http://blog.crisp.se/henrikkniberg/tags/david-anderson/" title="4">david-anderson</a></span></li>
+    
+      <li><span class="tagCloud3"><a href="http://blog.crisp.se/henrikkniberg/tags/don-reinertsen/" title="1">don-reinertsen</a></span></li>
+    
+      <li><span class="tagCloud6"><a href="http://blog.crisp.se/henrikkniberg/tags/events/" title="2">events</a></span></li>
+    
+      <li><span class="tagCloud3"><a href="http://blog.crisp.se/henrikkniberg/tags/example/" title="1">example</a></span></li>
+    
+      <li><span class="tagCloud3"><a href="http://blog.crisp.se/henrikkniberg/tags/exercises/" title="1">exercises</a></span></li>
+    
+      <li><span class="tagCloud3"><a href="http://blog.crisp.se/henrikkniberg/tags/french/" title="1">french</a></span></li>
+    
+      <li><span class="tagCloud3"><a href="http://blog.crisp.se/henrikkniberg/tags/gaming/" title="1">gaming</a></span></li>
+    
+      <li><span class="tagCloud6"><a href="http://blog.crisp.se/henrikkniberg/tags/german/" title="2">german</a></span></li>
+    
+      <li><span class="tagCloud3"><a href="http://blog.crisp.se/henrikkniberg/tags/humor/" title="1">humor</a></span></li>
+    
+      <li><span class="tagCloud3"><a href="http://blog.crisp.se/henrikkniberg/tags/interview/" title="1">interview</a></span></li>
+    
+      <li><span class="tagCloud7"><a href="http://blog.crisp.se/henrikkniberg/tags/jaoo/" title="3">jaoo</a></span></li>
+    
+      <li><span class="tagCloud3"><a href="http://blog.crisp.se/henrikkniberg/tags/japan/" title="1">japan</a></span></li>
+    
+      <li><span class="tagCloud7"><a href="http://blog.crisp.se/henrikkniberg/tags/japanese/" title="3">japanese</a></span></li>
+    
+      <li><span class="tagCloud3"><a href="http://blog.crisp.se/henrikkniberg/tags/javaforum/" title="1">javaforum</a></span></li>
+    
+      <li><span class="tagCloud6"><a href="http://blog.crisp.se/henrikkniberg/tags/jeff-sutherland/" title="2">jeff-sutherland</a></span></li>
+    
+      <li><span class="tagCloud3"><a href="http://blog.crisp.se/henrikkniberg/tags/jfokus/" title="1">jfokus</a></span></li>
+    
+      <li><span class="tagCloud8"><a href="http://blog.crisp.se/henrikkniberg/tags/kanban/" title="24">kanban</a></span></li>
+    
+      <li><span class="tagCloud7"><a href="http://blog.crisp.se/henrikkniberg/tags/keynote/" title="5">keynote</a></span></li>
+    
+      <li><span class="tagCloud8"><a href="http://blog.crisp.se/henrikkniberg/tags/lean/" title="41">lean</a></span></li>
+    
+      <li><span class="tagCloud7"><a href="http://blog.crisp.se/henrikkniberg/tags/mary-poppendieck/" title="9">mary-poppendieck</a></span></li>
+    
+      <li><span class="tagCloud3"><a href="http://blog.crisp.se/henrikkniberg/tags/motivation/" title="1">motivation</a></span></li>
+    
+      <li><span class="tagCloud3"><a href="http://blog.crisp.se/henrikkniberg/tags/music/" title="1">music</a></span></li>
+    
+      <li><span class="tagCloud3"><a href="http://blog.crisp.se/henrikkniberg/tags/pair-programming/" title="1">pair-programming</a></span></li>
+    
+      <li><span class="tagCloud6"><a href="http://blog.crisp.se/henrikkniberg/tags/party/" title="2">party</a></span></li>
+    
+      <li><span class="tagCloud7"><a href="http://blog.crisp.se/henrikkniberg/tags/planning/" title="4">planning</a></span></li>
+    
+      <li><span class="tagCloud3"><a href="http://blog.crisp.se/henrikkniberg/tags/planning-poker/" title="1">planning-poker</a></span></li>
+    
+      <li><span class="tagCloud3"><a href="http://blog.crisp.se/henrikkniberg/tags/pomodoro/" title="1">pomodoro</a></span></li>
+    
+      <li><span class="tagCloud6"><a href="http://blog.crisp.se/henrikkniberg/tags/portuguese/" title="2">portuguese</a></span></li>
+    
+      <li><span class="tagCloud7"><a href="http://blog.crisp.se/henrikkniberg/tags/problem-solving/" title="3">problem-solving</a></span></li>
+    
+      <li><span class="tagCloud3"><a href="http://blog.crisp.se/henrikkniberg/tags/requirements/" title="1">requirements</a></span></li>
+    
+      <li><span class="tagCloud3"><a href="http://blog.crisp.se/henrikkniberg/tags/research/" title="1">research</a></span></li>
+    
+      <li><span class="tagCloud3"><a href="http://blog.crisp.se/henrikkniberg/tags/root-cause-diagrams/" title="1">root-cause-diagrams</a></span></li>
+    
+      <li><span class="tagCloud6"><a href="http://blog.crisp.se/henrikkniberg/tags/russian/" title="2">russian</a></span></li>
+    
+      <li><span class="tagCloud10"><a href="http://blog.crisp.se/henrikkniberg/tags/scrum/" title="71">scrum</a></span></li>
+    
+      <li><span class="tagCloud8"><a href="http://blog.crisp.se/henrikkniberg/tags/slides/" title="32">slides</a></span></li>
+    
+      <li><span class="tagCloud3"><a href="http://blog.crisp.se/henrikkniberg/tags/south-africa/" title="1">south-africa</a></span></li>
+    
+      <li><span class="tagCloud6"><a href="http://blog.crisp.se/henrikkniberg/tags/spain/" title="2">spain</a></span></li>
+    
+      <li><span class="tagCloud6"><a href="http://blog.crisp.se/henrikkniberg/tags/spanish/" title="2">spanish</a></span></li>
+    
+      <li><span class="tagCloud3"><a href="http://blog.crisp.se/henrikkniberg/tags/strategy/" title="1">strategy</a></span></li>
+    
+      <li><span class="tagCloud6"><a href="http://blog.crisp.se/henrikkniberg/tags/swedish/" title="2">swedish</a></span></li>
+    
+      <li><span class="tagCloud6"><a href="http://blog.crisp.se/henrikkniberg/tags/systems-thinking/" title="2">systems-thinking</a></span></li>
+    
+      <li><span class="tagCloud3"><a href="http://blog.crisp.se/henrikkniberg/tags/teamwork/" title="1">teamwork</a></span></li>
+    
+      <li><span class="tagCloud3"><a href="http://blog.crisp.se/henrikkniberg/tags/technical-debt/" title="1">technical-debt</a></span></li>
+    
+      <li><span class="tagCloud3"><a href="http://blog.crisp.se/henrikkniberg/tags/template/" title="1">template</a></span></li>
+    
+      <li><span class="tagCloud6"><a href="http://blog.crisp.se/henrikkniberg/tags/testing/" title="2">testing</a></span></li>
+    
+      <li><span class="tagCloud3"><a href="http://blog.crisp.se/henrikkniberg/tags/time-reports/" title="1">time-reports</a></span></li>
+    
+      <li><span class="tagCloud3"><a href="http://blog.crisp.se/henrikkniberg/tags/toast/" title="1">toast</a></span></li>
+    
+      <li><span class="tagCloud6"><a href="http://blog.crisp.se/henrikkniberg/tags/tom-poppendieck/" title="2">tom-poppendieck</a></span></li>
+    
+      <li><span class="tagCloud7"><a href="http://blog.crisp.se/henrikkniberg/tags/tools/" title="9">tools</a></span></li>
+    
+      <li><span class="tagCloud6"><a href="http://blog.crisp.se/henrikkniberg/tags/toyota/" title="2">toyota</a></span></li>
+    
+      <li><span class="tagCloud3"><a href="http://blog.crisp.se/henrikkniberg/tags/training/" title="1">training</a></span></li>
+    
+      <li><span class="tagCloud6"><a href="http://blog.crisp.se/henrikkniberg/tags/transitioning/" title="2">transitioning</a></span></li>
+    
+      <li><span class="tagCloud7"><a href="http://blog.crisp.se/henrikkniberg/tags/translation/" title="3">translation</a></span></li>
+    
+      <li><span class="tagCloud3"><a href="http://blog.crisp.se/henrikkniberg/tags/trust/" title="1">trust</a></span></li>
+    
+      <li><span class="tagCloud3"><a href="http://blog.crisp.se/henrikkniberg/tags/value-stream-mapping/" title="1">value-stream-mapping</a></span></li>
+    
+      <li><span class="tagCloud3"><a href="http://blog.crisp.se/henrikkniberg/tags/versioncontrol/" title="1">versioncontrol</a></span></li>
+    
+      <li><span class="tagCloud6"><a href="http://blog.crisp.se/henrikkniberg/tags/video/" title="2">video</a></span></li>
+    
+      <li><span class="tagCloud3"><a href="http://blog.crisp.se/henrikkniberg/tags/vision/" title="1">vision</a></span></li>
+    
+      <li><span class="tagCloud3"><a href="http://blog.crisp.se/henrikkniberg/tags/visualization/" title="1">visualization</a></span></li>
+    
+      <li><span class="tagCloud3"><a href="http://blog.crisp.se/henrikkniberg/tags/waterfall/" title="1">waterfall</a></span></li>
+    
+      <li><span class="tagCloud8"><a href="http://blog.crisp.se/henrikkniberg/tags/xp/" title="35">xp</a></span></li>
+    
+    </ul>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebarItem">
+    <div class="sidebarItemTitle"><span>Recent Blog Entries</span></div>
+    <ul>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2010/11/11/1289501760000.html" title="http://blog.crisp.se/henrikkniberg/2010/11/11/1289501760000.html">Kanban and Scrum - making the most of both</a><br />Here are the slides for my session &quot;Kanban and Scrum - making the most of both&quot; at  &Oslash;redev. Also includes the &quot;extra&quot; topics that didn't fit into the timebox. Enjoy!
+
+There's also a video recording of the whole session.
+
+
+Tag...</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2010/11/11/1289488440000.html" title="http://blog.crisp.se/henrikkniberg/2010/11/11/1289488440000.html">The Power of Visualization</a><br />Here are the slides for my keynote at &Oslash;redev: &quot;Software Development - an invisible proess (or The Power of Visualization)&quot;...</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2010/11/01/1288610220000.html" title="http://blog.crisp.se/henrikkniberg/2010/11/01/1288610220000.html">Russian version of 'Kanban and Scrum - making the most of both'</a><br />Here is the Russian translation of my book Kanban and Scrum - making the most of both. 
+
+
+
+Thanks Mariia Yevgrashyna, Tanya Kobzar, Sergiy Movchan, Artjom Serdyuk, Borys  Lebeda, Aleksey Solntsev, Alina Marusyk,  Alexander Zhovnuvaty, Aleksey  Gonchare...</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2010/10/27/1288167780000.html" title="http://blog.crisp.se/henrikkniberg/2010/10/27/1288167780000.html">Vad är ett agilt projekt?</a><br />Here are the slides from my seminar &quot;Vad &auml;r ett agilt projekt&quot; (What is an agile project) at PMI in Stockholm. I was happy to see so many participants, and impressed that you managed to stay awake &amp; engaged despite the fact that it w...</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2010/10/26/1288050300000.html" title="http://blog.crisp.se/henrikkniberg/2010/10/26/1288050300000.html">Awesome Agile & Lean workshops coming up</a><br />We got some really cool workshops coming up during the next couple of months together with some of the &quot;founding fathers&quot; of Lean and Agile software development :o)
+
+ 
+David Anderson is the pioneer of Kanban in software development and author...</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2010/10/26/1288048980000.html" title="http://blog.crisp.se/henrikkniberg/2010/10/26/1288048980000.html">How we got rid of time reports</a><br />Have you ever dealt with time reports? Filled them in? Approved them? Shuffled them around?
+
+Did it feel like well spent time?
+
+Can you imagine a world without time reports?
+
+
+
+Here's the story about how we got rid of time reports at the company descri...</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2010/10/09/1286625660000.html" title="http://blog.crisp.se/henrikkniberg/2010/10/09/1286625660000.html">The Essence of Agile</a><br />Here are the slides from my keynote &quot;The Essence of Agile&quot; from AgileEE 2010 in Kiev. Thanks for a great conference!
+
+    Tbe Essence of Agile - PDF format
+    The Essence of Agile - PPTX format
+
+Here's a nice summary transcript of the sessio...</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2010/09/17/1284705480000.html" title="http://blog.crisp.se/henrikkniberg/2010/09/17/1284705480000.html">Social-Technical Systems</a><br />Here are the slides from Mary Poppendieck's seminar &quot;Social-Technic...</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2010/09/08/1283938020000.html" title="http://blog.crisp.se/henrikkniberg/2010/09/08/1283938020000.html">The Thinking Tool called Agile</a><br />Here are the slides from my keynote &quot;The Thinking Tool Called Agile&quot; from the Lean/Agile/Scrum conference in Zurich.
+
+    The Thinking Tool Called Agile - PDF
+    The Thinking Tool Called Agile - Powerpoint
+
+The slides from the value stream w...</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2010/09/01/1283373060000.html" title="http://blog.crisp.se/henrikkniberg/2010/09/01/1283373060000.html">What to do when Scrum doesn't work</a><br />Here are the slides from my keynote at the Scrum Gathering in Cape Town.
+
+    What to do when Scrum doesn't work - PDF
+    What to do when Scrum doesn't work - Powerpoint
+
+Positive atmosphere and lots of laughs, really enjoyed the audience! The whole t...</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2010/09/01/1283372400000.html" title="http://blog.crisp.se/henrikkniberg/2010/09/01/1283372400000.html">Kanban for Scrum practitioners</a><br />Here are the slides from my deep-dive workshop at the Scrum Gathering, Cape Town:
+
+    Kanban for Scrum practitioners, PDF format
+    Kanban for Scrum practitioners, Powerpoint format
+
+Thanks for attending! Lots of interesting questions and insights ca...</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2010/08/16/1281957240000.html" title="http://blog.crisp.se/henrikkniberg/2010/08/16/1281957240000.html">Leading Lean Software Development with Mary Poppendieck</a><br />On Sep 16-17 Tom &amp; Mary Poppendieck will once again come to Stockholm and teach a lean course with me. &quot;Leading Lean Software Development&quot; is aimed at leaders in organisations that are serious about succeeding with Lean software developme...</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2010/08/12/1281618240000.html" title="http://blog.crisp.se/henrikkniberg/2010/08/12/1281618240000.html">Kanban and Scrum - making the most of both</a><br />Here are the slides for my session Kanban and Scrum - making the most of both at Agile 2010, Orlando. Thanks for participating! 
+
+    Slides in PDF format - if you don't have powerpoint
+    
+    Slides in Powerpoint format - if you want the animations
+...</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2010/06/10/1276197660000.html" title="http://blog.crisp.se/henrikkniberg/2010/06/10/1276197660000.html">Kanban and Value Stream Mapping workshop</a><br />Here are the slides from my Kanban &amp; Value Stream Mapping workshop at Agile Spain 2010 in Madrid. Thanks for participating!
+
+
+Tags : slides conference value-stream-mapping lean kanban</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2010/06/10/1276196340000.html" title="http://blog.crisp.se/henrikkniberg/2010/06/10/1276196340000.html">The Essence of Agile</a><br />Here are the slides from my keynote &quot;The Essence of Agile&quot; at Agile Spain 2010, Madrid. Basically a whole week's course compressed into a one hour lecture, worked out even better than I had hoped :o)
+
+Impressed by the turnup, 300 people is go...</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2010/05/15/1273926180000.html" title="http://blog.crisp.se/henrikkniberg/2010/05/15/1273926180000.html">Japanese translation of 'Kanban and Scrum - making the most of both'</a><br />My book &quot;Kanban and Scrum - making the most of both&quot; is now available in Japanese. Good work Hiroki Kondo &amp; Midori Daida!
+
+Tags : translation japanese books agile lean scrum kanban</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2010/05/08/1273272420000.html" title="http://blog.crisp.se/henrikkniberg/2010/05/08/1273272420000.html">What is Crisp?</a><br />If you enter the Crisp office you will see these two A3 papers on the  wall (click picture for bigger version)
+
+
+
+
+
+Here is an english translation  of these pictures.
+
+The first picture is titled &quot;What is Crisp?&quot;. It defines our purpose.
+The ...</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2010/05/07/1273244580000.html" title="http://blog.crisp.se/henrikkniberg/2010/05/07/1273244580000.html">Lean and Scrum events next week</a><br />
+
+Next week is full of interesting and fun events! Mary Poppendieck, Tom Poppendieck, and Jeff Sutherland are doing the following events with me in Stockholm:
+
+    Monday - Tuesday: Certified ScrumMaster course
+    Tuesday evening: Introduction to Lean...</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2010/04/30/1272639780000.html" title="http://blog.crisp.se/henrikkniberg/2010/04/30/1272639780000.html">What is Lean?</a><br />Mary Poppendieck used this definition in our Leading Lean Software Development course a few months ago. Very nice and concise definition of lean.
+
+What is Lean?
+
+    Deliver continually increasing customer value
+    Expending continually decreasing eff...</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2010/04/28/1272466260000.html" title="http://blog.crisp.se/henrikkniberg/2010/04/28/1272466260000.html">Male Chauvinist's Guide to Babies</a><br />(see bigger version here)
+Tags : humor</li>
+    
+    </ul>
+  </div>
+  
+
+  
+  <div class="sidebarItem">
+    <div class="sidebarItemTitle"><span>Recent Responses <a href="responses/rss.xml"><img src="common/images/feed-icon-10x10.png" alt="RSS feed for responses" border="0" /></a></span></div>
+    <ul>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2008/10/19/1224451800000.html#comment1292320733986" title="http://blog.crisp.se/henrikkniberg/2008/10/19/1224451800000.html#comment1292320733986">Re: Introduction to Lean Software Development</a><br />Great slides. Very knowledgeable and informative.</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2010/10/26/1288048980000.html#trackback1291376712206" title="http://blog.crisp.se/henrikkniberg/2010/10/26/1288048980000.html#trackback1291376712206">Dessa eviga tidrapporter</a><br />Varför skall man behöva sitta och fylla i dessa tråkiga rapporter var eviga vecka? Hittade en intressant blogginlä...</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2009/08/14/1250258880000.html#comment1291027010263" title="http://blog.crisp.se/henrikkniberg/2009/08/14/1250258880000.html#comment1291027010263">Re: Scrum intro</a><br />I don't understand why the "focus factor" is calculated based on the "actual velocity" 
+Suppose that after the sprint I haven't terminated any history: the focus would be zero, but I have in fact being dedicated on the histories. 
+
+What do you think?</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2010/08/12/1281618240000.html#comment1289658060216" title="http://blog.crisp.se/henrikkniberg/2010/08/12/1281618240000.html#comment1289658060216">Re: Kanban and Scrum - making the most of both</a><br />Thanks for the feedback, glad you enjoyed the pics!</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2010/08/12/1281618240000.html#comment1289561117782" title="http://blog.crisp.se/henrikkniberg/2010/08/12/1281618240000.html#comment1289561117782">Re: Kanban and Scrum - making the most of both</a><br />Must commend you on your slidemanship.. knockout set of slides.
+
+Your pictures say more than the usual thousand words. Couldn't get off the pdf.. a pageturner and an eyeopener! Not had much exposure to Kanban but saw some things that I could add to my ...</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2010/11/11/1289501760000.html#comment1289514735185" title="http://blog.crisp.se/henrikkniberg/2010/11/11/1289501760000.html#comment1289514735185">Re: Kanban and Scrum - making the most of both</a><br />Tack för en mycket bra förläsning och en givande "shalk talk"!</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2009/09/23/1253687880000.html#comment1289116073691" title="http://blog.crisp.se/henrikkniberg/2009/09/23/1253687880000.html#comment1289116073691">Re: A3 Problem Solving template and example</a><br />Many thanks. Very useful n relevant!</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2010/10/26/1288048980000.html#comment1288096455136" title="http://blog.crisp.se/henrikkniberg/2010/10/26/1288048980000.html#comment1288096455136">Re: How we got rid of time reports</a><br />Great story. I've filled timesheets for the last 6 years of my life through 3 different job, and now for the first time I work somewhere where someone had the guts to do what you did and say we we're going to stop doing them.
+
+I don't miss them at all....</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2010/10/09/1286625660000.html#comment1287300643050" title="http://blog.crisp.se/henrikkniberg/2010/10/09/1286625660000.html#comment1287300643050">Re: The Essence of Agile</a><br />Hey Henrik,
+thanks for your presentation at AGILEEE 2010 and your jam session the day before.
+Really enjoyed the days in Kiev and your keynote as it helps me to explain the essence of Agile to people new to Scrum/XP.
+Felix
+</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2009/04/03/1238795520000.html#comment1285343589945" title="http://blog.crisp.se/henrikkniberg/2009/04/03/1238795520000.html#comment1285343589945">Re: Kanban vs Scrum</a><br />We are currently starting to use Kanban in a project for support tasks.
+I have a question to see what would be the best option for this scenario:
+
+We have a story which analysis has been completed, so we moved it from 'Analysis Pipeline' to next state ...</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2007/04/03/1175626500000.html#comment1284351737779" title="http://blog.crisp.se/henrikkniberg/2007/04/03/1175626500000.html#comment1284351737779">Re: Scrum and XP from the Trenches - version 2.0</a><br />Hi Henrik,
+We are having product development projects and projects are development+maintene...</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2010/09/01/1283373060000.html#comment1284147794252" title="http://blog.crisp.se/henrikkniberg/2010/09/01/1283373060000.html#comment1284147794252">Re: What to do when Scrum doesn't work</a><br />Good to hear! Let me know later what you did and how it worked out :o)</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2010/09/01/1283373060000.html#comment1284144658922" title="http://blog.crisp.se/henrikkniberg/2010/09/01/1283373060000.html#comment1284144658922">Re: What to do when Scrum doesn't work</a><br />I was at your presentation (and your deep dive) and found it both highly entertaining and insightful.  In fact we're currently experimenting with some of the idea's and suggestions your talk invoked. 
+Thank you!</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2007/12/18/1197973740000.html#comment1284031982328" title="http://blog.crisp.se/henrikkniberg/2007/12/18/1197973740000.html#comment1284031982328">Re: Index card generator - version 2!</a><br />The Problem is, that my Acceptance Criteria is often longer than the space allows. Like that, it cuts parts from the criteria off on the cards.
+Isn't there a possibility to put all the text on the card?</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2010/05/08/1273272420000.html#comment1283893642859" title="http://blog.crisp.se/henrikkniberg/2010/05/08/1273272420000.html#comment1283893642859">Re: What is Crisp?</a><br />Read this after you spoke at the South Africa Scrum Gathering. Fascinating - great - thank you!</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2010/09/01/1283372400000.html#comment1283862904282" title="http://blog.crisp.se/henrikkniberg/2010/09/01/1283372400000.html#comment1283862904282">Re: Kanban for Scrum practitioners</a><br />Great book and great slideshow very helpful in implementing Scrum and Kanban in our web development team. Keep up the good work!</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2010/09/01/1283373060000.html#comment1283800031953" title="http://blog.crisp.se/henrikkniberg/2010/09/01/1283373060000.html#comment1283800031953">Re: What to do when Scrum doesn't work</a><br />The whole talk was recorded by the Scrum Alliance. Not sure when they're going to put it up though.</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2010/09/01/1283373060000.html#comment1283733921961" title="http://blog.crisp.se/henrikkniberg/2010/09/01/1283373060000.html#comment1283733921961">Re: What to do when Scrum doesn't work</a><br />Great slides - and I can relate to some of these to my past experiences.
+
+Was this session recorded in video/podcast?  I would like to watch/listen to the presentation.
+Thanks</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2010/09/01/1283373060000.html#comment1283513213570" title="http://blog.crisp.se/henrikkniberg/2010/09/01/1283373060000.html#comment1283513213570">Re: What to do when Scrum doesn't work</a><br />I attended this presentation & really enjoyed it - excellent material and very well presented.  You have a great talent for presenting and explaining ideas in an elegant and understandable manner.</li>
+    
+      <li><a href="http://blog.crisp.se/henrikkniberg/2010/09/01/1283373060000.html#comment1283510592268" title="http://blog.crisp.se/henrikkniberg/2010/09/01/1283373060000.html#comment1283510592268">Links fixed!</a><br />OK, now the links work again. Thanks for notifying me!
+
+Moved the files away from DropBox. Didn't even know they had bandwidth limits.</li>
+    
+    </ul>
+  </div>
+  
+
+  
+  
+  
+  
+
+</div>
+
+
+<div id="content">
+  
+
+
+
+
+
+
+
+
+  
+  
+<div class="contentItem published">
+  
+
+
+  <div class="contentItemLinks">
+  
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  
+</div>
+
+
+  <a name="a1246053060000"></a>
+  <h1><a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html">One day in Kanban land</a></h1>
+  <h2></h2>
+
+  <div class="contentItemBody">
+    
+      
+        
+        <img border="0" src="http://blog.crisp.se/henrikkniberg/images/Kanban1.JPG" alt="" /> <br />
+<img border="0" src="http://blog.crisp.se/henrikkniberg/images/Kanban2.JPG" alt="" />  <br />
+<img border="0" src="http://blog.crisp.se/henrikkniberg/images/Kanban3.JPG" alt="" /> <br />
+<img border="0" src="http://blog.crisp.se/henrikkniberg/images/Kanban4.JPG" alt="" /> <br />
+Translations:<br />
+<ul>
+    <li><a href="http://blog.adsystems.com.br/2009/07/01/um-dia-na-terra-do-kanban/">Brazilian Portuguese</a></li>
+    <li><a href="http://www.openagile.net/2009/10/07/un-jour-au-pays-de-kanban/">French</a></li>
+    <li><a href="http://www.it-agile.de/kanban-comic.html">German</a></li>
+</ul><div class="tags">Tags : <a href="http://blog.crisp.se/henrikkniberg/tags/comics" rel="tag">comics</a> <a href="http://blog.crisp.se/henrikkniberg/tags/agile" rel="tag">agile</a> <a href="http://blog.crisp.se/henrikkniberg/tags/lean" rel="tag">lean</a> <a href="http://blog.crisp.se/henrikkniberg/tags/kanban" rel="tag">kanban</a></div>
+      
+      
+      
+    
+
+    <div class="metadata">
+      <div class="contentItemLinks">
+  
+    
+      <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#responses">Responses[42]</a>
+      <a href="http://blog.crisp.se/henrikkniberg/responses/rss.xml?entry=1246053060000"><img src="common/images/feed-icon-10x10.png" alt="RSS feed for responses to this blog entry" border="0" /></a>
+    
+    
+    
+  
+</div>
+      
+        
+        
+      
+      
+      Posted by <a href="http://www.crisp.se">Henrik Kniberg</a> on June 26, 2009 11:51:00 PM CEST
+      <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html">#</a>
+      
+    </div>
+  </div>
+
+  
+    
+
+    <br /><br />
+    <a name="responses"></a>
+    
+
+
+
+
+
+
+
+<a name="comments"></a>
+
+
+  
+  
+    
+    
+      <div class="odd">
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 16px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1246097504523">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1246097504523"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from Mattias Tronje on June 27, 2009 12:11:44 PM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1246097504523" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1246097504523">#</a>
+  </div>
+
+  <div class="responseBody">
+    Crystal clear as usual. Like the comic style!
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+      <div class="even">
+    
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 16px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1246115427743">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1246115427743"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from <a href="http://intltechventures.blogspot.com" target="_blank" title="http://intltechventures.blogspot.com" rel="nofollow">Kelvin D. Meeks</a> on June 27, 2009 5:10:27 PM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1246115427743" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1246115427743">#</a>
+  </div>
+
+  <div class="responseBody">
+    Excellent!
+
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+    
+      <div class="odd">
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 16px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1246135377107">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1246135377107"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from <a href="http://devnotes.posterous.com" target="_blank" title="http://devnotes.posterous.com" rel="nofollow">Anonymous</a> on June 27, 2009 10:42:57 PM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1246135377107" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1246135377107">#</a>
+  </div>
+
+  <div class="responseBody">
+    Kanban limit of two (2).  Good to know!  
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+      <div class="even">
+    
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 32px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1246248325098">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1246248325098"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from <a href="http://www.crisp.se" target="_blank" title="http://www.crisp.se" rel="nofollow">Henrik Kniberg</a> on June 29, 2009 6:05:25 AM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1246248325098" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1246248325098">#</a>
+  </div>
+
+  <div class="responseBody">
+    Observant readers will notice that the developers increased their limit to 3 a few days later :o)
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+    
+      <div class="odd">
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 48px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1246559403621">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1246559403621"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from Mattias Tronje on July 2, 2009 8:30:03 PM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1246559403621" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1246559403621">#</a>
+  </div>
+
+  <div class="responseBody">
+    Sorry - I laughed too much. Don't be so funny if you got such an important message ;)
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+      <div class="even">
+    
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 16px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1246190195722">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1246190195722"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from aa on June 28, 2009 1:56:35 PM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1246190195722" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1246190195722">#</a>
+  </div>
+
+  <div class="responseBody">
+    Excellent!
+
+Can we see comparison (with a similar comic) "One Day in Agile Land" please?
+
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+    
+      <div class="odd">
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 32px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1246248381829">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1246248381829"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from <a href="http://www.crisp.se" target="_blank" title="http://www.crisp.se" rel="nofollow">Henrik Kniberg</a> on June 29, 2009 6:06:21 AM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1246248381829" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1246248381829">#</a>
+  </div>
+
+  <div class="responseBody">
+    Which part of this comic was not agile?
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+      <div class="even">
+    
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 16px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1246290886496">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1246290886496"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from <a href="http://ziobrando.blogspot.com" target="_blank" title="http://ziobrando.blogspot.com" rel="nofollow">Alberto Brandolini</a> on June 29, 2009 5:54:46 PM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1246290886496" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1246290886496">#</a>
+  </div>
+
+  <div class="responseBody">
+    So clear!
+
+Thanks.
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+    
+      <div class="odd">
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 16px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1246367635835">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1246367635835"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from <a href="http://availagility.wordpress.com" target="_blank" title="http://availagility.wordpress.com" rel="nofollow">Karl Scotland</a> on June 30, 2009 3:13:55 PM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1246367635835" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1246367635835">#</a>
+  </div>
+
+  <div class="responseBody">
+    Is the change in dev limit from 2 to 3 intended to signify anything, other than the limits can change?
+
+I generally think that <em>reducing</em> the limits is a sign of improvement as the team achieves better flow
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+      <div class="even">
+    
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 32px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1246386936632">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1246386936632"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from <a href="http://www.crisp.se" target="_blank" title="http://www.crisp.se" rel="nofollow">Henrik Kniberg</a> on June 30, 2009 8:35:36 PM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1246386936632" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1246386936632">#</a>
+  </div>
+
+  <div class="responseBody">
+    The change from 2 to 3 was mostly to show that it can change. In this case to accomadate a higher variability.
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+    
+      <div class="odd">
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 16px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1246379822409">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1246379822409"></a>do you mind I translate this?
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from <a href="http://blog.kaykim.org" target="_blank" title="http://blog.kaykim.org" rel="nofollow">Kay Kim</a> on June 30, 2009 6:37:02 PM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1246379822409" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1246379822409">#</a>
+  </div>
+
+  <div class="responseBody">
+    do you mind I translate this?
+
+I'd like to share this picture with my fellow developers
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+      <div class="even">
+    
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 32px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1246386631935">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1246386631935"></a>do you mind I translate this?
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from <a href="http://www.crisp.se" target="_blank" title="http://www.crisp.se" rel="nofollow">Henrik Kniberg</a> on June 30, 2009 8:30:31 PM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1246386631935" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1246386631935">#</a>
+  </div>
+
+  <div class="responseBody">
+    Sure, feel free to translate it.
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+    
+      <div class="odd">
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 16px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1246447038476">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1246447038476"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from Anonymous on July 1, 2009 1:17:18 PM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1246447038476" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1246447038476">#</a>
+  </div>
+
+  <div class="responseBody">
+    A translation to Brazilian Portuguese:
+http://blog.adsystems.com.br/2009/07/01/um-dia-na-terra-do-kanban/
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+      <div class="even">
+    
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 32px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1246475683286">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1246475683286"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from <a href="http://www.crisp.se" target="_blank" title="http://www.crisp.se" rel="nofollow">Henrik Kniberg</a> on July 1, 2009 9:14:43 PM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1246475683286" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1246475683286">#</a>
+  </div>
+
+  <div class="responseBody">
+    Great!
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+    
+      <div class="odd">
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 16px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1246548423832">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1246548423832"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from <a href="http://www.gosquids.com" target="_blank" title="http://www.gosquids.com" rel="nofollow">Max Pool</a> on July 2, 2009 5:27:03 PM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1246548423832" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1246548423832">#</a>
+  </div>
+
+  <div class="responseBody">
+    LOL, the truth hurts.
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+      <div class="even">
+    
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 16px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1248362466949">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1248362466949"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from nickd on July 23, 2009 5:21:06 PM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1248362466949" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1248362466949">#</a>
+  </div>
+
+  <div class="responseBody">
+    I can't work out if you're for or against.
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+    
+      <div class="odd">
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 32px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1248643792159">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1248643792159"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from <a href="http://www.crisp.se" target="_blank" title="http://www.crisp.se" rel="nofollow">Henrik Kniberg</a> on July 26, 2009 11:29:52 PM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1248643792159" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1248643792159">#</a>
+  </div>
+
+  <div class="responseBody">
+    To be for or against Kanban would be as silly as being for or against staplers. It's all about context.
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+      <div class="even">
+    
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 16px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1248867654208">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1248867654208"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from Kunal Shah on July 29, 2009 1:40:54 PM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1248867654208" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1248867654208">#</a>
+  </div>
+
+  <div class="responseBody">
+    Thanks for the presentation, it a great one !!! But it has left me confused on one point. I know Agile and I know scrum but Kanban is new to me. I dont understand when the presentation says Scrum team Kanban 1 and then says Kanban team 2 and kanban team 3 on slide no 10. Can some one please tell me wether scrum team are different than Kanban? Id yes whats the difference.
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+    
+      <div class="odd">
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 32px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1248979444326">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1248979444326"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from <a href="http://www.crisp.se" target="_blank" title="http://www.crisp.se" rel="nofollow">Henrik Kniberg</a> on July 30, 2009 8:44:04 PM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1248979444326" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1248979444326">#</a>
+  </div>
+
+  <div class="responseBody">
+    If Team 1 calls themselves a Kanban team and Team 2 calls themselves a Scrum team, the only thing we know for sure is that they have different names. Other than that, the teams can be very similar or very different. I suggest you read the "Kanban vs Scrum" article, it should clarify things. http://www.crisp.se/henrik.kniberg/Kanban-vs-Scrum.pdf
+
+The slides you saw are mostly just pictures, with little or no explanation.  
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+      <div class="even">
+    
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 16px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1251283608854">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1251283608854"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from Anonymous on August 26, 2009 12:46:48 PM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1251283608854" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1251283608854">#</a>
+  </div>
+
+  <div class="responseBody">
+    Have some of the slides disappeared?  The Portuguese translation seems to have a few additional ones.
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+    
+      <div class="odd">
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 32px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1251293188787">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1251293188787"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from <a href="http://www.crisp.se" target="_blank" title="http://www.crisp.se" rel="nofollow">Henrik Kniberg</a> on August 26, 2009 3:26:28 PM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1251293188787" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1251293188787">#</a>
+  </div>
+
+  <div class="responseBody">
+    Oops, thanks for pointing that out! Looks I slipped on the keys when I added the link to the translations. Now the comic is complete again!
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+      <div class="even">
+    
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 16px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1251948416193">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1251948416193"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from Anonymous on September 3, 2009 5:26:56 AM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1251948416193" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1251948416193">#</a>
+  </div>
+
+  <div class="responseBody">
+    Hi Henrik,
+ This is great stuff. You've explained this as lucidly as one could get. Do you mind if I share this comic with my fellow developers?
+
+Thanks,
+Prakash
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+    
+      <div class="odd">
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 32px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1252314375788">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1252314375788"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from <a href="http://www.crisp.se" target="_blank" title="http://www.crisp.se" rel="nofollow">Henrik Kniberg</a> on September 7, 2009 11:06:15 AM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1252314375788" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1252314375788">#</a>
+  </div>
+
+  <div class="responseBody">
+    Feel free to use the comic as you like.
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+      <div class="even">
+    
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 16px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1252070795129">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1252070795129"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from Mike on September 4, 2009 3:26:35 PM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1252070795129" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1252070795129">#</a>
+  </div>
+
+  <div class="responseBody">
+    This really reminds me of a fast food restaurant. That's a good thing. Deployment is king because in-progress or completed food that's not deployed is going stale and the customers are going hungry. No point taking more orders or preparing more food if the orders aren't being completed. The prime focus has to be deployment and staff get moved down-stream to relieve the blockage and balance the system.
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+    
+      <div class="odd">
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 32px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1252314418390">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1252314418390"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from <a href="http://www.crisp.se" target="_blank" title="http://www.crisp.se" rel="nofollow">Henrik Kniberg</a> on September 7, 2009 11:06:58 AM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1252314418390" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1252314418390">#</a>
+  </div>
+
+  <div class="responseBody">
+    Good metaphor there!
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+      <div class="even">
+    
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 16px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1253868071582">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1253868071582"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from <a href="http://www.bryanavery.co.uk" target="_blank" title="http://www.bryanavery.co.uk" rel="nofollow">Bryan Avery</a> on September 25, 2009 10:41:11 AM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1253868071582" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1253868071582">#</a>
+  </div>
+
+  <div class="responseBody">
+    Love it  :-)
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+    
+      <div class="odd">
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 16px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1253871991469">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1253871991469"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from Anonymous on September 25, 2009 11:46:31 AM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1253871991469" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1253871991469">#</a>
+  </div>
+
+  <div class="responseBody">
+    What a grap, no beef, no point, again  new buzz word for obvious well known old stuff
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+      <div class="even">
+    
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 32px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1253992833125">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1253992833125"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from <a href="http://www.crisp.se" target="_blank" title="http://www.crisp.se" rel="nofollow">Henrik Kniberg</a> on September 26, 2009 9:20:33 PM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1253992833125" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1253992833125">#</a>
+  </div>
+
+  <div class="responseBody">
+    I wish you were right. I'll sure celebrate the day this becomes "obvious well known old stuff" :o)
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+    
+      <div class="odd">
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 16px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1254945535191">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1254945535191"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from <a href="http://www.openagile.net/" target="_blank" title="http://www.openagile.net/" rel="nofollow">Quenec&#039;hdu</a> on October 7, 2009 9:58:55 PM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1254945535191" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1254945535191">#</a>
+  </div>
+
+  <div class="responseBody">
+    Here a french translation http://www.openagile.net/2009/10/07/un-jour-au-pays-de-kanban/
+
+With my Tux :) 
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+      <div class="even">
+    
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 32px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1255018257105">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1255018257105"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from <a href="http://www.crisp.se" target="_blank" title="http://www.crisp.se" rel="nofollow">Henrik Kniberg</a> on October 8, 2009 6:10:57 PM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1255018257105" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1255018257105">#</a>
+  </div>
+
+  <div class="responseBody">
+    Good work, added a link to your version above! Yours is prettier than mine :o)
+
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+    
+      <div class="odd">
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 16px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1255211628636">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1255211628636"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from <a href="http://www.openagile.net/" target="_blank" title="http://www.openagile.net/" rel="nofollow">Quenec&#039;hdu</a> on October 10, 2009 11:53:48 PM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1255211628636" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1255211628636">#</a>
+  </div>
+
+  <div class="responseBody">
+    Thanks for the link and your comment about my design :). 	
+If others are interested I can give my images in SVG (inkscape) format.
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+      <div class="even">
+    
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 16px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1255592420561">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1255592420561"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from <a href="http://www.crisp.se" target="_blank" title="http://www.crisp.se" rel="nofollow">Henrik Kniberg</a> on October 15, 2009 9:40:20 AM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1255592420561" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1255592420561">#</a>
+  </div>
+
+  <div class="responseBody">
+    German version is up, thanks Arne Roock!
+http://www.it-agile.de/kanban-comic.html
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+    
+      <div class="odd">
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 16px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1262877258187">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1262877258187"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from Jooyung Han on January 7, 2010 4:14:18 PM CET
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1262877258187" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1262877258187">#</a>
+  </div>
+
+  <div class="responseBody">
+    While introducing kanban, I showed this to them. They got the idea very quickly and enjoyed it. Thank you for  great work :)
+
+(I'm one of the Korean translators of your Scrum and XP Book)
+
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+      <div class="even">
+    
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 32px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1262887883375">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1262887883375"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from <a href="http://www.crisp.se" target="_blank" title="http://www.crisp.se" rel="nofollow">Henrik Kniberg</a> on January 7, 2010 7:11:23 PM CET
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1262887883375" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1262887883375">#</a>
+  </div>
+
+  <div class="responseBody">
+    Thanks for your feedback, glad the comic was useful to you! And good work with the translation.
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+    
+      <div class="odd">
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 16px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1263817433598">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1263817433598"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from <a href="http://www.sysdrone.com" target="_blank" title="http://www.sysdrone.com" rel="nofollow">Jaakko Kaski</a> on January 18, 2010 1:23:53 PM CET
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1263817433598" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1263817433598">#</a>
+  </div>
+
+  <div class="responseBody">
+    I have also a demonstration of Kanban coming and these I was planning to show as well. I've worked with Scrum and Kanban now for a year and eventually starting to get the big picture :) Your work has both helped and inspired me a lot and for that I salute you sir. Tack så mycket.
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+      <div class="even">
+    
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 16px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1263931006086">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1263931006086"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from <a href="http://ajaxray.com" target="_blank" title="http://ajaxray.com" rel="nofollow">Anis uddin Ahmad</a> on January 19, 2010 8:56:46 PM CET
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1263931006086" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1263931006086">#</a>
+  </div>
+
+  <div class="responseBody">
+    Great!! Innovative idea of describing Kanban.
+Thanks.
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+    
+      <div class="odd">
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 16px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1269764828897">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1269764828897"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from <a href="http://www.agilesparks.com" target="_blank" title="http://www.agilesparks.com" rel="nofollow">yuval yeret</a> on March 28, 2010 10:27:08 AM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1269764828897" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1269764828897">#</a>
+  </div>
+
+  <div class="responseBody">
+    As usual, great material
+
+Always gets the point of Kanban across..
+
+In a recent presentation explaining CFD I used this alongside hour-by-hour CFDs showing whats going on. Available on http://www.slideshare.net/yyeret/explaining-cumulative-flow-diagrams-cfd
+
+Feel free to reuse!
+
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+      <div class="even">
+    
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 32px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1269772294611">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1269772294611"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from <a href="http://www.crisp.se" target="_blank" title="http://www.crisp.se" rel="nofollow">Henrik Kniberg</a> on March 28, 2010 12:31:34 PM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1269772294611" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1269772294611">#</a>
+  </div>
+
+  <div class="responseBody">
+    Awesome slides! Thanks for sharing back.
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+    
+      <div class="odd">
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 16px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1276139997216">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1276139997216"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from José Fidel on June 10, 2010 5:19:57 AM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1276139997216" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1276139997216">#</a>
+  </div>
+
+  <div class="responseBody">
+    Bastante bueno el comic. Gracias por ponerlo, así uno conoce más sobre Kanban.
+
+<p>
+ok
+<p>
+ATTE
+<p>
+Fuy
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+      <div class="even">
+    
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 16px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1276779233115">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1276779233115"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from <a href="http://agileanarchy.wordpress.com" target="_blank" title="http://agileanarchy.wordpress.com" rel="nofollow">Tobias Mayer</a> on June 17, 2010 2:53:53 PM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1276779233115" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1276779233115">#</a>
+  </div>
+
+  <div class="responseBody">
+    This is great, of course, AND this is how I have always coached people to do Scrum. Work on one story at a time (max two) and the whole team work on outstanding tasks for that story until the story is complete.  I can't imagine why anyone would do otherwise.  It would result in a loss of focus and a task-switching overhead. 
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+    
+      <div class="odd">
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 32px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1276801683686">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1276801683686"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from <a href="http://www.crisp.se" target="_blank" title="http://www.crisp.se" rel="nofollow">Henrik Kniberg</a> on June 17, 2010 9:08:03 PM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1276801683686" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1276801683686">#</a>
+  </div>
+
+  <div class="responseBody">
+    In a Scrum sprint, would you be OK with not having a sprint plan, and instead having the PO add stories to the sprint on a just-in-time basis? That particular aspect is otherwise what I consider to be non-Scrum. Scrum, as I've understood it, prescribes that the team should commit to a fixed number of stories for a sprint, and not allow the PO (or anyone else) to change this during the sprint.
+  </div>
+
+</div>
+
+      </div>
+
+  
+  
+    
+      <div class="even">
+    
+    
+  
+      
+
+
+
+
+
+
+
+
+  
+  
+  
+<div class="response approved" style="padding-left: 16px;">
+  
+
+
+  <div class="contentItemLinks">
+  
+    
+    <a href="replyToBlogEntry.action?entry=1246053060000&comment=1281488343192">Reply</a>
+    
+    
+  
+</div>
+
+  <h1>
+    <a name="comment1281488343192"></a>Re: One day in Kanban land
+  </h1>
+
+  <div class="metadata">
+    
+    
+
+    Comment from <a href="http://www.wickedinnovations.com/" target="_blank" title="http://www.wickedinnovations.com/" rel="nofollow">Jeorge Peter</a> on August 11, 2010 2:59:03 AM CEST
+    <a href="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1281488343192" title="http://blog.crisp.se/henrikkniberg/2009/06/26/1246053060000.html#comment1281488343192">#</a>
+  </div>
+
+  <div class="responseBody">
+    Appreciate it that you came up with the 2nd part of your squeezed links. I've seen One day in Kanban Land and its great. 
+  </div>
+
+</div>
+
+      </div>
+
+
+    
+
+
+
+
+
+
+
+<a name="trackbacks"></a>
+
+
+
+    
+
+<div align="center">
+  <br />
+  
+    <a href="replyToBlogEntry.action?entry=1246053060000">Add a comment</a>
+  
+  
+    <a href="generateTrackBackLink.action?entry=1246053060000">Send a TrackBack</a>
+  
+</div>
+
+  
+
+</div>
+
+
+
+</div>
+
+<div id="footer">
+  Powered by <a href="http://pebble.sourceforge.net">Pebble 2.0.0</a>
+</div>
+
+
+    </div>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-7074695-2");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+  </body>
+</html>
