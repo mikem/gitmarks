@@ -1,0 +1,675 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title>Kanban development oversimplified: a simple explanation of how Kanban adds to the ever-growing Agile toolkit</title>
+
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />  
+ 
+  <link rel="shortcut icon" href="../.././images/favicon.ico" type="image/vnd.microsoft.icon" />
+  <link rel="icon" href="../.././images/favicon.ico" type="image/vnd.microsoft.icon" />   
+
+  <link rel="stylesheet" href="../.././images/apd_style.css" type="text/css" />
+  <link rel="stylesheet" href="../.././images/apd_print_style.css" type="text/css" media="print">
+
+</head>
+<body>
+<div id="page_container">
+
+  <div id="site-heading">
+   
+    <div id="logo">
+    	<h1><a href="../.././index.html">AgileProductDesign.com</a></h1>
+    </div>	
+
+  	<div id="legal-notices">
+  		<a href="../.././terms_and_conditions.html">Terms & Conditions</a> | <a href="../.././privacy_policy.html">Privacy Policy</a>
+  	</div>
+
+  </div>
+
+
+  <div id="site-navigation">
+    <ul>
+      <li><a href="../.././index.html">Home</a></li>
+      <li><a href="../.././training/passionate_product_owner.html">Training</a></li>    
+      <li><a href="../.././writing/index.html">Writing</a></li>    
+      <li><a href="../.././presentations/index.html">Presentations</a></li>    
+      <li><a href="../.././calendar/index.html">Calendar</a></li>
+      <li><a href="../.././blog/index.html">Blog</a></li>
+      <li><a href="../.././jeff_patton.html">About Jeff</a></li>
+    </ul>
+  
+  </div>
+
+  <div class="content" id="kanban_over_simplified">
+
+<h1>Kanban Development Oversimplified</h1>
+
+
+	<p>How Kanban-style development gives us another way to deliver on Agile values</p>
+
+
+<div class="date" >
+
+	<p>4/20/2009</p>
+
+
+</div>
+
+<div class="intro" >
+
+	<h2>Ramblin&rsquo; Preamble</h2>
+
+
+	<p>Over a year ago now &#151; Feb 25th 2008 to be exact &#151; I wrote this draft article.</p>
+
+
+	<p>At the time Kanban development was a cool new thing &#151; bleeding edge Agile.  Due to a <a href="http://www.lemonysnicket.com/">series of unfortunate events</a> the article wasn&rsquo;t published in the magazine it was originally target for.  I&rsquo;ve been sitting on it for quite some time, so it&rsquo;s time to open-source it.</p>
+
+
+	<p>Recently I&rsquo;ve been seeing lots more about Kanban development in <a href="http://finance.groups.yahoo.com/group/kanbandev/">discussion groups</a>, <a href="http://www.stickyminds.com/s.asp?F=S14557_MAGAZINE_2">articles</a>, and at <a href="http://leankanbanconference.com/">conferences</a>. The surprising thing for me is that many smart Agile people &#151; people I know to be intelligent insightful people seem bugged by Kanban &#151; seem to see it as threat to Agile thinking.  Others see it as using new trendy words to describe best practices we already understand.  Basically, I keep running into a lot of grumpy <a href="http://www.linkedin.com/groups?about=&#38;gid=43421&#38;goback=.gdr_1241214216574_1">agilistas</a> and a few Kanban fanatics.  And, the reason I think this is weird, is that I&rsquo;m seeing Agile people behave as strangely about Kanban as traditional process folks behaved about Agile.  They seem threatened.  They see Kanban as a fad.</p>
+
+
+	<p>For me I find great value in Lean and Kanban thinking.  I do use Kanban ideas in all the Agile teams I coach. And, I do use strict Kanban, <span class="caps">WIP</span> limits and all, with a couple teams.  No one&rsquo;s been hurt by it yet.  And if it was the rebranding of already known best practice, possibly I was too dense to get it before hearing it clearly described in the Kanban metaphor.</p>
+
+
+	<p>Great thanks goes to <a href="http://aaron.sanders.name/">Aaron Sanders</a> and <a href="http://joearnold.com/">Joe Arnold</a> who helped me write this article over a year ago &#151; back when I had high hopes of breaking the story.  Great thanks goes to <a href="http://availagility.wordpress.com/">Karl Scotland</a> who apologetically described to me what his team was doing back in 2007 &#151; apologetic because he wasn&rsquo;t using time-boxes as was seen to be the &ldquo;right&rdquo; way to do agile.</p>
+
+
+	<p>Today I&rsquo;m hoping this long-ish article helps clear up some misconceptions for a few folks, and simplify it for those scratching their heads about it.  As with many of my blog essays, feel free to skim by just reading the section headings.  You&rsquo;ll get the idea.</p>
+
+
+</div>
+
+<div class="essay" >
+
+	<h2>Agile development is a value system &#151; not a process.</h2>
+
+
+	<p><img src="../.././blog/2009/images/mom.jpg" alt="mom"/> <img src="../.././blog/2009/images/apple_pie.jpg" alt="apple pie"/></p>
+
+
+	<p>The <a href="http://agilemanifesto.org/">Agile Manifesto</a> is a short, 4 lines, set of phrases that indicate <a href="http://en.wikipedia.org/wiki/Values">what&rsquo;s important</a> to those practicing Agile development.  These statements are the &ldquo;<a href="http://en.wikipedia.org/wiki/Apple_pie#Apple_pie_in_American_culture ">mom and apple pie</a>&rdquo; statements for agilists.  <strong>There&rsquo;s no specific processes specified</strong> &#151; however over the last several years common practice has emerged.</p>
+
+
+	<p>(For more on agile value system and culture, read <a href="../.././blog/agile_is_culture_not_process.html">Agile is Culture, Not Process</a>.)</p>
+
+
+	<h2>Common Agile Practice takes the best from the buffet</h2>
+
+
+	<p><img src="../.././blog/2009/images/buffet.jpg" alt="buffet"/></p>
+
+
+	<p>Specific processes call themselves &ldquo;Agile&rdquo; when they believe the value system that motivated their creation is aligned with an Agile value system.  Scrum and Extreme Programming currently dominate named Agile processes.  Less well known, but equally important, Agile processes include Crystal, Dynamic Systems Development Methodology (DSDM), Feature Driven Development (FDD), and likely a few others.  Each one of these processes knits together several valuable practices and a typical process flow.  If you dumped all these good practices out onto a table, you&rsquo;d have quite a buffet of very good practices with which to tailor your own process.  And that&rsquo;s exactly what most organizations do.</p>
+
+
+	<p>It&rsquo;s common to take a <a href="http://www.scrumalliance.org/courses">Certified Scrum Master course</a> where originally you&rsquo;d learn the ins and outs of Scrum&rsquo;s Scrum Master role, but today you&rsquo;ll learn the basics of Scrum, all its roles and process flow, and a lot of additional practices that weren&rsquo;t in the <a href="http://www.amazon.com/Agile-Software-Development-Scrum/dp/0130676349">original process described by Ken Schwaber and Mike Beedle</a>.  (Is that gold-plating or evolution?) It&rsquo;s common to include practices for managing requirements using XP&rsquo;s user stories and perform XP style release planning.  It&rsquo;s common to shrink Scrum&rsquo;s original sprint (development cycle) recommendation of one calendar month to 2 weeks.  It&rsquo;s common to use XP style estimation.  It&rsquo;s common to conclude a sprint with a reflection session or retrospective as used in approaches like Crystal, or <span class="caps">DSDM</span>.  I personally add in practices for <a href="http://www.stickyminds.com/s.asp?F=S11104_COL_2">UI design and testing</a>, <a href="../.././blog/the_new_backlog.html">story mapping</a>, and <a href="../.././blog/2009/product_owner_and_problem_shaped_hole.html">more rigor in the whole product owner/customer role</a>.  Once simple Scrum runs the risk of becoming down right Baroque in its ornamentation.</p>
+
+
+	<p>Today&rsquo;s typical Agile process, no matter what name you call it, takes the best from the buffet of Agile practices to create a typical process where:</p>
+
+
+	<ol>
+	<li>Project needs or requirements are expressed in <strong>user stories placed in a backlog</strong>, and ideally written by Product owners (in Scrum), or customers (in XP) in collaboration with the development team.  (Sometimes they magically appear.)</li>
+		<li><strong>Developers give high-level estimates</strong> saying how long user stories will take to complete.</li>
+		<li>Product owners arrange user stories into <strong>incremental releases</strong> that take typically 6 weeks to 6 months.</li>
+		<li>Product owners <strong>choose the next stories</strong>, highest value first, for each development time-box.  The stories chosen need to &ldquo;fit&rdquo; into the time-box based on how quickly the team can produce software.  </li>
+		<li>At the end of each development time-box the team should have incrementally built some of the product.  The team (proudly) <strong>demonstrates the finished product</strong> to product owners and other stakeholders. </li>
+		<li>The team adds up the development estimates for the user stories completed during the time-box.  This is the <strong>velocity</strong> (from XP) that&rsquo;ll be used to estimate the amount that can be completed in the next time-box. </li>
+		<li>The team holds a <strong>retrospective</strong> to evaluate how well they&rsquo;ve done and what changes could be made to the process to allow things to go better, then the next time-boxed development cycle is planned.</li>
+		<li>Time-boxed development continues through to release &#151; which is a short way of saying &ldquo;<strong>rinse and repeat</strong>.&rdquo;</li>
+	</ol>
+
+
+	<p>There&rsquo;s more common practices, such as daily standup meetings to synchronize the team, and burn-down charts to show development progress, but that&rsquo;s enough to make my point: Today&rsquo;s Agile process is a mash-up of a variety of good ideas from a variety of sources.</p>
+
+
+	<h2>Shift happens: slow change in common Agile practice causes common problems</h2>
+
+
+	<p><a href="../.././blog/the_shrinking_story.html"><img src="../.././blog/images/mini_me.jpg" alt=""/></a></p>
+
+
+	<p>In many organizations this flow works pretty well.  However, there are a few common complications that cause trouble.  The problems I came up with seem to be about size.  Seems size always matters.  (See the old by still relevant <a href="../.././blog/the_shrinking_story.html">Mystery of the shrinking story</a>.)</p>
+
+
+	<h3>Shrinking stories makes Agile development easier</h3>
+
+
+	<p>There&rsquo;s pressure in organizations practicing Agile development to shrink user stories &#151; to tell &ldquo;smaller&rdquo; stories so to speak.  There&rsquo;s lots of good reasons for this.</p>
+
+
+	<p>It&rsquo;s a lot easier to estimate a story that&rsquo;s small &#151; which can lead to more accurate estimates, and better predictability.</p>
+
+
+	<p>It&rsquo;s easier to plan with smaller stories.  With big stories &#151; stories that might take weeks for a developer to implement &#151; it becomes difficult to plan a development time-box &#151; particularly when the iterations are only a couple of weeks.  It seems that only a couple stories fit &#151; and there&rsquo;s often room for half a story &#151; but how do you build half a story?  Splitting them into smaller stories makes it easier to plan those time-boxes.</p>
+
+
+	<h3>Shrinking stories makes Agile development harder</h3>
+
+
+	<p>Once you&rsquo;ve shrunk your stories down, you end up with different problems.  
+User story backlogs become bigger and more difficult to manage.  When user story writing was first described as a practice by Kent Beck in the first edition of Extreme Programming Explained, a user story was &ldquo;estimable between one to five ideal programming weeks.&rdquo;  These days best practice calls for stories that can be completed in a few days or less &#151; easily a 5th their original size.  Originally an original list of stories for a project might number in the dozens.  Today a user story list, or product backlog from Scrum, can easily climb into the hundreds of stories.  Prioritizing, managing, and planning with this sort of backlog can be a nasty experience.</p>
+
+
+	<p>Shrinking stories forces earlier elaboration and decision-making.  Where product owners could write their stories fairly generally and consider many of the details later, now breaking them down into smaller stories forces more thinking earlier in a planning lifecycle.</p>
+
+
+	<p>Managing little stories forces us to keep better track of how they fit together.  Product owners are often asked to break down stories to a level where a single story becomes meaningless.  To keep track of what&rsquo;s meaningful to them and other stakeholders, they often need to keep track of bigger items such as the features of the product and how many stories contribute to building up that feature.</p>
+
+
+	<h3>Short development time-boxes make Agile development easier</h3>
+
+
+	<p>It&rsquo;s faster to plan a short time-box.  Originally XP time-boxes, or iterations were suggested to be 2-4 weeks in length.  Original Scrum recommended a sprint be a calendar month so that the development time-box could better sync in with business month and quarter-driven cycles.  Anyone who&rsquo;s attended an Agile planning meeting knows they can often last about an hour longer than you can stand it.  Short iterations &#151; say a week or two &#151; allow planning to be quicker.  These days it&rsquo;s common for a typical Agile time-box to be two weeks.</p>
+
+
+	<p>We get quicker feedback from a shorter development time-box.  At the end of an Agile time-box we have a chance to review running software and make changes to your product plan or product backlog.  We can also measure the team&rsquo;s development speed, or velocity.  And using a team retrospective, we can suggest and implement process improvements.  These frequent opportunities to evaluate our product, the pace of development, and the process we&rsquo;re using and then respond with changes are what make Agile development agile.</p>
+
+
+	<h3>Short development time-boxes make Agile development harder</h3>
+
+
+	<p>Short time-boxes herniate.</p>
+
+
+	<p><strong>Elaboration of story details pops out of the time-box:</strong> During an ideal Agile time-box we&rsquo;ll have frequent discussions between developers, testers, and those on a product owner team &#151; like business analysts, user experience people, and business people.  We&rsquo;ll do this to understand what we need to build and describe what we&rsquo;ll do to validate the story was really done.  When time-boxes are short, there&rsquo;s less time for this conversation.  It&rsquo;s common to move many of the conversations to detail the story and describe acceptance to the time-box before so we can be ready to really get moving with development when the time-box starts.  Some Scrum practitioners are beginning to put some rigor around defining what ready means &#151; what work needs to be done on a story before it can be placed into a sprint.</p>
+
+
+	<p><strong>Testing pops out of the time-box:</strong> It&rsquo;s difficult to fit thorough validation of the story into a short time-box as well.  So, often testing slips into the time-box after.  Which leaves the nasty problem of what to do with bugsÉ which often get piped into a subsequent time-box.</p>
+
+
+	<p>The result of these herniated time-box activities is a cycle that&rsquo;s actually 3-4 times longer than our time-box.  To get work done, we&rsquo;ll use a time-box to elaborate stories, one to develop them, another to more thoroughly test them, and if there are bugs, possibly another to fix them.</p>
+
+
+	<p>Communication drops and exhaustion sets in.  As time-boxes shrink those on the product owner team and testers find themselves in a constant mode of getting ready for a next time-box and evaluating past time-boxes.  They work long hours, attend lots of meetings, and seem to have less time to be available to help developers with the current time-box.  Since their focus is on a future or past time-box, questions about this time-box seem like interruptions.  Collaboration decreases and tensions increase.  Their work load is heavy, bumpy, not smooth or even.</p>
+
+
+	<h2>Applying Lean thinking to Agile breaks the rules?</h2>
+
+
+	<p><img src="../.././blog/2009/images/david_anderson_head.jpg" alt="david anderson head"/></p>
+
+
+	<p>Over the last several years a large number of Agile practitioners have begun to include thinking from Lean Manufacturing in their Agile approaches.  Initially led by Tom &#38; Mary Poppendiek in their book <a href="http://www.amazon.com/Lean-Software-Development-Agile-Toolkit/dp/0321150783 ">Lean Software Development</a>, you&rsquo;ll now find practitioners world wide talking about and making lean process changes to their Agile approaches.  Recently I&rsquo;ve heard lots of discussion about Kanban style development &#151; an approach that breaks that breaks the primary rule of today&rsquo;s common agile practice: the fixed development time-box.  While lots have been writing and talking about it, <a href="http://www.agilemanagement.net/">David Anderson</a> lead early charges into this space and still works hard has a thought leader.</p>
+
+
+	<h2>Kanban in Lean manufacturing distilled</h2>
+
+
+	<p><img src="../.././blog/2009/images/auto_assembly_line.jpg" alt="auto assembly line"/></p>
+
+
+	<p>You&rsquo;ll find a lot of terminology in Lean software development comes from Japan and from the <a href="http://en.wikipedia.org/wiki/Toyota_Production_System">Toyota Production System</a> in particular.  Kanban translated literally: &ldquo;Kan&rdquo; means visual, and &ldquo;ban&rdquo; means card or board.</p>
+
+
+<div class="example" >
+
+	<p>Picture yourself on a Toyota production line.  You put doors on Priuses.  You have a stack of 10 or so doors.  As you keep bolting them on, your stack of doors gets shorter.  When you get down to 5 doors, sitting on top of the 5th door in the stack is a card &#151; a Kanban card &#151; that says &ldquo;build 10 doors.&rdquo;  Well it may not say exactly that &#151; but it is a request to build exactly 10 more Prius doors.</p>
+
+
+	<p>You pick the Kanban card up, and run it over to the guy who builds doors.  He&rsquo;s been waiting for you.  He&rsquo;s been doing other things to keep busy while waiting.  The important thing here is that he&rsquo;s <span class="caps">NOT</span> been building Prius doors.  He takes your Kanban card and begins to build doors.</p>
+
+
+	<p>You go back to your workstation, and just a bit before your stack of doors is gone, the door guy comes back with a stack of 10 doors.  You know that Kanban card is slid in between doors 5 &#38; 6.  You got the doors just in time. 
+The whole thing sorta works like magic.  Only you wish you had the door-building job.  That guys seems to have a lotta free time on his hands.</p>
+
+
+</div>
+
+	<p>Kanban cards are used to limit the amount of inventory the factory builds.  It doesn&rsquo;t do the Toyota factory any good to build doors faster then they can assemble cars.  It just wastes money on excess doors, and parts of doors.  Excess work in progress is considered to be waste in Lean manufacturing. (It&rsquo;s probably waste in non-Lean manufacturing too.) In the above completely made up example, you&rsquo;ll never have more than 15 finished doors hanging around. (Mudha is Japanese for waste.  Learn it to impress your Lean friends.)</p>
+
+
+	<table>
+		<tr>
+			<td> <img src="../.././blog/2009/images/toyota_kanban_card.jpg" alt="toyota kanban card"/> </td>
+			<td> <img src="../.././blog/2009/images/euro_bill.jpg" alt="euro bill"/> </td>
+		</tr>
+	</table>
+
+
+
+
+	<p>Using Kanban cards, we&rsquo;ve set the limit at 15.  So Kanban cards work a bit like a currency.  Just like there&rsquo;s only a fixed amount of money in a system limited by the amount of currency in print, there&rsquo;s only a fixed amount of inventory that can be in the system limited by the Kanban cards.  Kind of a simple way to manage things when you think of it. Corey Ladas explains this well in his <a href="http://leansoftwareengineering.com/ksse/scrum-ban/">Scrumban article</a> and <a href="http://www.lulu.com/content/3864767">book</a>.</p>
+
+
+	<h2>Kanban development limits work in progress</h2>
+
+
+	<p>Kanban thinking in software development attempts to do a similar thing.  We want to limit unnecessary work in progress to be no higher than it needs to be to match the throughput of the team.  Kanban thinking applied to Agile development results in sweeping changes that throw out much of what Agile practitioners consider necessary practice.</p>
+
+
+<div class="indented-list" >
+
+	<p>In Kanban development:</p>
+
+
+	<ul>
+	<li>time-boxed development is out</li>
+		<li>stories are larger and fewer</li>
+		<li>estimation is optional or out completely </li>
+		<li>velocity is replaced by cycle time</li>
+	</ul>
+
+
+</div>
+
+	<p>By now you should be scratching your head a bit.  Exactly what&rsquo;s left of Agile if we get rid of time-boxes, change the meaning of stories, and stop measuring velocity.  And, exactly what do car doors and Kanban cards have to do with software development?</p>
+
+
+	<p>Don&rsquo;t get hung up on process.  Remember, <a href="../.././blog/agile_is_culture_not_process.html">agile development isn&rsquo;t a process</a>.</p>
+
+
+	<h2>Kanban development distilled</h2>
+
+
+	<p>Kanban development revolves around a visual board we use for managing work in progress.  (Not surprising since Kanban means visual board).  It&rsquo;s common for Agile teams to put the stories in a current time-box on a board with columns for the stages stories go through such as &ldquo;development&rdquo; and &ldquo;testing.&rdquo;  The Kanban board is similar &#151; with a few more rules.</p>
+
+
+<div class="wide-image" >
+
+	<p><img src="../.././blog/2009/images/kanban_board.jpg" alt="simple kanban board" class="boxed"/></p>
+
+
+	<p>This board was reconstructed from photos of boards used at Yahoo.</p>
+
+
+</div>
+
+	<p>The basic idea is stories start on the left side of the board and race across the board through the phases of development they need to go through to be considered &ldquo;done&rdquo;.  Finished stories, ready to release into production pile up at the end.  And, because this is a Kanban board and we&rsquo;re going to limit the amount of work in progress, so we&rsquo;ll limit the number of stories we allow on the board.  The numbers written on the bottom limit the number of stories allowed at each station.</p>
+
+
+	<p>This example Kanban board was built on a whiteboard with stickies, whiteboard markers, and blue painters tape.</p>
+
+
+	<h2>The Kanban board &#8211; left to right:</h2>
+
+
+	<h3>1. goals</h3>
+
+
+	<p>On the far left side of the Kanban board is a column labeled &ldquo;goals.&rdquo;  Here we&rsquo;ll find large goals for the product &#151; the big things we&rsquo;re driving at that compel us to build software to achieve these goals.  Keeping them there on the left side of the board keeps everyone on the same page &#151; focused on achieving those goals.  This idea was stolen from <a href="http://joearnold.com/2008/03/naked-planning-kanban-simplified/">Arlo Belshee</a> who found that by placing goals on the left, the amount of &ldquo;thrash&rdquo; on the board goes down.  Thrash is when item priority changes frequently.</p>
+
+
+	<h3>2. stories queue</h3>
+
+
+	<p>The next column contains a queue of stories ready to be started.  It&rsquo;s a queue because the stories are &ldquo;standing in line&rdquo; &#151; the story at the top will be the first to be started.  When started it&rsquo;ll leave the queue and all the others will shift up.</p>
+
+
+	<h3>3. story process steps</h3>
+
+
+	<p>Immediately to the right of the stories queue is a series of columns for the process steps a story needs to go through to be called &ldquo;done.&rdquo;</p>
+
+
+	<p>The first column is often used for elaborating the story.  In development teams at Yahoo it&rsquo;s labeled <span class="caps">UED</span> for user experience design.  If a story is here, the UI is being prototyped or describe sufficiently so that development can proceed.  You might have a column where business analysts spend time tracking down technical details that developers need to understand to write code.</p>
+
+
+	<p>The next column is often used for development.  And, the column after that for testing.</p>
+
+
+	<p><strong>These columns aren&rsquo;t set.</strong>  You should discuss with your team the phases that stories go through to be completed.   Some organization may use columns for writing documentation, or preparing customer service people to support the feature in production.</p>
+
+
+	<p><strong>These aren&rsquo;t job titles.</strong>  While it may be true that different people&rsquo;s job titles focus on different columns, focus on the story and what it needs to mature.  For example if your organization doesn&rsquo;t use business analysts or user experience people, use the first column for the place in story elaboration where developers sit down and talk to business people and others to describe the acceptance tests for the story &#151; describe what &ldquo;done&rdquo; means.  It&rsquo;s generally a bad idea to start writing code (the next phase) if you don&rsquo;t know how to tell when you&rsquo;re done.</p>
+
+
+	<p>Each process step column is divided into two parts:  The top is used for stories currently in progress in that phase.  The bottom is the buffer.  When work for that phase of the story is completed, it moves from &ldquo;in progress&rdquo; to the &ldquo;buffer&rdquo; where it&rsquo;ll wait to be pulled into the next phase.  The last process step won&rsquo;t have a buffer &#151; because when that phase is complete the story is done.  When we set limits for work in progress, we&rsquo;ll set a total number for the process step that includes both &ldquo;in process&rdquo; and the &ldquo;finished buffer&rdquo; for that process step.</p>
+
+
+	<h3>4. done</h3>
+
+
+	<p>When the story reaches the &ldquo;done&rdquo; row it&rsquo;s ready, really ready to be deployed into production.</p>
+
+
+	<h2>Stories must be minimal marketable features</h2>
+
+
+	<p><img src="../.././blog/2009/images/software_by_numbers_book_cover.jpg" alt="software by numbers book cover"/></p>
+
+
+	<p>The term &ldquo;minimal marketable feature&rdquo; was first used in the book <a href="http://www.amazon.com/Software-Numbers-Low-Risk-High-Return-Development/dp/0131407287/ref=sr_1_1?ie=UTF8&#38;s=books&#38;qid=1240273543&#38;sr=1-1">Software by Numbers</a>.  This book placed emphasis on the smallest portion of work that could be release into production and have value to its resulting customers or users.</p>
+
+
+	<p>To be marketable the feature needs to be large enough to be useful &#151; probably larger than the teeny stories that take a couple days to build and seem to be best practice in Agile development today.  <span class="caps">A MMF</span> may take weeks to build.  But the important thing isn&rsquo;t how long it takes to build, but that it be understandable and valuable to those who&rsquo;ll receive it.  To identify a <span class="caps">MMF</span> some folks ask the question &ldquo;Would I announce it in my company&rsquo;s product blog?&rdquo;  If it&rsquo;s too tiny to mention, then it&rsquo;s not a <span class="caps">MMF</span>.</p>
+
+
+	<p>This is an important part of Kanban development where the focus is on increasing value released from the development process.  Each thing released must be valuable by itself.</p>
+
+
+	<h2>Set limits for work in progress</h2>
+
+
+	<p>To be lean, we&rsquo;ll limit the number of stories we allow onto the board.  A common formula is to add up all the members of the team in all roles and divide by two.  All roles includes developers, analysts, user interfaced designers, testers, deployment people &#151; anyone immediately responsible for getting features to market.  For example, if team members total 20, we might limit the number of <span class="caps">MMF</span>-style stories on the board to 10.</p>
+
+
+	<p>We then need to set limits for each column.</p>
+
+
+	<p>For the &ldquo;stories&rdquo; queue &#151; the place where the stories wait patiently in line before going into progress, set this limit at about half the &ldquo;in progress&rdquo; limit.  For instance if the in progress limit is 10, limit this queue to 5.</p>
+
+
+	<p>For the limits of the story process steps, the limit is often half the number of people that can perform the work for that phase of development.  For instance if you have 6 developers, you might limit the development in progress column to 3.</p>
+
+
+	<p>Now, this will force developers to work together on stories.  I do find in practice that this may not work out for all teams &#151; so I often see limits that equal the number of developers (or those that can perform the process step) or often 1.5 * the number of people in a role.  Of course if you do this, it&rsquo;ll raise the overall work in progress &#151; and as you might expect, items will take longer to finish.</p>
+
+
+	<p>When you total the limits for each &ldquo;in progress&rdquo; slot on the board, they should add up to your work in progress limit.  You may need to jiggle the limits in each process step to get them to work out right.  Or, you could raise the work in progress limit &#151; which is a little like printing more money when you run out.</p>
+
+
+	<p>In the example Kanban board &ldquo;Kanbans&rdquo; are actually the blue tape lines that mark where we can put a sticky note.  Each tape line in the &ldquo;in progress&rdquo; and &ldquo;buffer&rdquo; areas represents one item allowed in progress.  You can get the same effect by just writing the limit above the column.</p>
+
+
+	<h2>The life of an <span class="caps">MMF</span> style story on the Kanban board</h2>
+
+
+	<p>This story starts with a queue of MMFs patiently waiting on the left side of the Kanban board.  They sit next to the goals on the left edge where everyone can see that these MMFs will help the product reach these goals.</p>
+
+
+	<p>A user interface designer and business analyst working as a pair pull the top story from the queue and slide the others in the queue up.  They put the story in their &ldquo;elaboration in progress&rdquo; column.  They track down necessary stakeholders and have discussions necessary to describe acceptance for the story.  They meet with developers to make sure the acceptance criteria is understood and complete enough to proceed.  Everyone agrees it is.</p>
+
+
+	<p>The BA says &ldquo;I&rsquo;ll move it into the buffer then.&rdquo;  &ldquo;No need says the developer, my in progress slot is empty, so I&rsquo;ll pull it directly in there and get started.&rdquo;</p>
+
+
+<div class="key-point" >
+
+	<p>Using a Kanban system doesn&rsquo;t mean we&rsquo;re doing a waterfall process.  Because we can see a step-wise process laid out left-to-right many mistakenly believe people won&rsquo;t behave in a collaborative manner.</p>
+
+
+</div>
+
+	<p>Notice how the BAs and UI designers collaborated with stakeholders and developers.  They were responsible for getting the work done in the slot.  But, it didn&rsquo;t mean they didn&rsquo;t collaborate with others in different roles.  You&rsquo;ll find in a healthy Kanban practice that there&rsquo;s lots of collaboration across steps.</p>
+
+
+	<p>As the we continue working on the story we&rsquo;ll see is move across the board from left to right as those working on each phase of the stories lifecycle do the work they need to move it on.  They&rsquo;re cautious not to throw anything &ldquo;over the wall.&rdquo;  They know if they move something into their buffer that&rsquo;s not really ready, those responsible for the next phase won&rsquo;t pull it in &#151; they&rsquo;ll kick it back.  This makes collaboration and communication critical.</p>
+
+
+<div class="key-point" >
+
+	<p>It&rsquo;s OK for items to move backwards on the Kanban board if someone at an upstream station need to rework a bit to improve quality.</p>
+
+
+</div>
+
+	<p>Time passes.  Stories are elaborated, moved into development, then into testing.</p>
+
+
+	<p>But, then a wrinkle occurs.</p>
+
+
+	<p>Today developers have finished a story, and s they walk to the Kanban board to move it out of development, they notice their single buffer slot is full &#151; and the &ldquo;testing in progress&rdquo; column is filled to its limit.  What now?</p>
+
+
+	<p>The developers talk to the testers.  &ldquo;We&rsquo;re really struggling to keep up here.  It&rsquo;ll be till tomorrow morning before we can get some of these stories moved out.&rdquo;  &ldquo;HmmÉ&rdquo; says a developer &ldquo;Can we help test?&rdquo;  &ldquo;Of course you can!&rdquo; says the tester.  &ldquo;With your help we can get these cleared out by the end of the day.&ldquo;  The tester grins &ldquo;I just don&rsquo;t want you validating a story you implemented.&rdquo;</p>
+
+
+	<h3>Limits point out bottlenecks</h3>
+
+
+	<p>When a column in a Kanban board is full, we know that group is at capacity.  We also know that if this keeps happening that that process step is likely where a bottleneck is.</p>
+
+
+	<p>Using a Kanban board we learn pretty fast what&rsquo;s slowing stories down from being completed and we can take steps to improve performance at the process point where it really matters since improving it elsewhere won&rsquo;t really help throughput.  In fact if people upstream continue to work at their regular pace, the people in the bottleneck role will continue to get further behind.</p>
+
+
+	<p>Ultimately we want to figure out how to keep development and throughout smooth &#151; to find consistent bottlenecks and by changing the way we work or the number of folks in a particular role eliminate them.  This smoothing of work is what Lean people called <a href="http://en.wikipedia.org/wiki/Heijunka">Heijunka</a> with the goal of eliminating unevenness or <a href="http://en.wikipedia.org/wiki/Mura_(Japanese_term)">Mura</a>.  On first seeing Kanban boards, and least one expert I know said it was actually a <a href="http://en.wikipedia.org/wiki/Heijunka_box">Heijunka Box</a> &#151; the thing we put up to show work in progress with the goal of smoothing.  I&rsquo;m not expert and don&rsquo;t want to get too hung up on the terminology.  All of it as strictly defined in manufacturing is a bit of a force-fit in software development anyway.</p>
+
+
+	<h2>Expedite using the &ldquo;expedite&rdquo; track</h2>
+
+
+	<p>There are always urgent feature requests or issues in production that need immediate handling.  Above the stories queue and each of the story process steps columns is an expedite slot.  The row of expedite slots forms a &ldquo;fast track&rdquo; across the top of the Kanban board.  When an item is placed in this fast track slot, it becomes the immediate highest priority for the team.  It&rsquo;ll be pulled from that slot, and moved through the story process steps as soon as possible, and ahead of all other work in progress.</p>
+
+
+	<h2>Measure performance in cycle time</h2>
+
+
+	<p><img src="../.././blog/2009/images/disney_wait_times.jpg" alt="disney wait times"/></p>
+
+
+	<p>It&rsquo;s common to measure &ldquo;velocity&rdquo; in Agile development as the sum of the estimates of stories completed during the development time-box.  But, since there&rsquo;s no development time-box in Kanban development, we&rsquo;ll measure story-by-story how long they took to complete &#151; the &ldquo;cycle time&rdquo; of the story.</p>
+
+
+<div class="marker-inside" >
+
+	<ol>
+	<li>As a story enters the story queue, write on it the entry date.  </li>
+		<li>As the story enters the first story process step column record on it the day it was started.  </li>
+		<li>Then finally, as it reaches the last &ldquo;done&rdquo; column at the end of the board, record on it the date it&rsquo;s finished.</li>
+	</ol>
+
+
+</div>
+
+	<p>Now you&rsquo;ve got the numbers you need to compute cycle time.</p>
+
+
+	<p>The difference between the entry date and done date is the cycle time that includes the wait time in the queue.  To estimate cycle time for new stories, take the average cycle time from the stories completed.</p>
+
+
+	<p>Calculate also the time between &ldquo;started&rdquo; and &ldquo;done&rdquo; this is the working cycle time.  It&rsquo;ll include time when the story is sitting idle in buffers &#151; but that&rsquo;s what cycle time means.  If you notice that relatively trivial pieces of work have a two week cycle time, that should be telling you something.</p>
+
+
+	<p>If you&rsquo;ve ever waited in line for the Pirates of the Caribbean in Disneyland you might remember signs along the way that say &ldquo;Your wait time from here is 30 minutes&rdquo; &#151; something like that.  Now you can post your own wait times on your Kanban board.  At the bottom of your story queue post the average cycle time with wait time.  It&rsquo;ll say something like &ldquo;Your wait time for a story here is approximately 18 days.&rdquo;  At the top of the queue post the average working cycle time.  It might say &ldquo;your wait time from here is 14 days.&rdquo;</p>
+
+
+	<h2>Who needs estimation?</h2>
+
+
+	<p>When you place focus on how quickly you can get functionality done, and have the ability to measure just that, then the estimates don&rsquo;t much matter.  In fact, many using a Kanban approach have simply stopped estimating at all.  Yes story sizes vary, but being able to give a wait time plus or minus a few days is sufficient for many organizations&rsquo; concerns.</p>
+
+
+	<p>Some do still estimate stories.  Then use those estimates in conjunction with cycle time.  Using a spreadsheet we can calculate the average cycle time for stories with a given estimate.   If you do this, consider placing a handy chart next to your Kanban board showing estimate in one column, and wait times in adjacent columns.  With this you&rsquo;re answering the real question stakeholders are asking for when they get estimates: &ldquo;when am I going to see this functionality in the software?&rdquo;</p>
+
+
+	<p>If your stakeholders are like mine, they don&rsquo;t want to know when they&rsquo;re going to get <em>this</em> functionality, the want to know when they&rsquo;re going to get <em>all this</em> functionality.  I find that if I place stories into a spreadsheet with start and end dates, and calculate cycle time, if I select an arbitrary time period &#151; say a two or three week time period &#151; I can see how many stories where completed during this time period.  For instance I might see the team finished 22 stories in 3 weeks &#151; that&rsquo;s about 7.3 stories per week.  Given a backlog of 100 stories I can reasonably infer that it&rsquo;ll take between 13 and 14 weeks (100/7.3).  That&rsquo;s <a href="http://c2.com/cgi/wiki?YesterdaysWeather">yesterday&rsquo;s weather</a> for Kanban &#151; at least the way I calculate it.</p>
+
+
+	<p>If I know that during three week time period there where 15 working days and that 5 developers worked the entire time, that&rsquo;s 75 developer days.  Knowing that lets me calculate the average number of developer days per story: 3.4 (75/22) &#151; Which is darn close to pi &#151; which makes me believe it has to be right.  ;-)  This number, 3.4, is what XP practitioners referred to as <a href="http://c2.com/cgi-bin/wiki?LoadFactor">load factor</a>.</p>
+
+
+	<h2>Evaluation cycles, not development time-boxes</h2>
+
+
+	<p>You&rsquo;d still find the &ldquo;heartbeat&rdquo; of regular cycles in a team using Kanban boards &#151; at least if they&rsquo;re doing agile right you should.  The only difference is the cycles aren&rsquo;t used to plan and commit to stories any longer.</p>
+
+
+	<h2>Synchronize the team every day</h2>
+
+
+	<p>The daily standup or daily scrum meeting occurs as normal, but now it occurs in front of the Kanban board.  Instead of the regular meeting ritual of checking in with each person to find out what they worked on yesterday and will work on today, the discussion revolves around the Kanban board and what will likely move on and off the board today, where &ldquo;traffic&rdquo; seems the heaviest, and what we could do to clear bottlenecks.</p>
+
+
+	<h2>Reflect every few weeks</h2>
+
+
+	<p>Every few weeks the team still holds a retrospective to look at the process they&rsquo;re following, discuss successes and ways it could be improved.</p>
+
+
+	<h2>Demonstrate every few weeks</h2>
+
+
+	<p>To show work to stakeholders outside the team, a regular product demonstration is scheduled to show the product and get feedback from stakeholders.</p>
+
+
+	<h2>Getting back to Agile ideals</h2>
+
+
+	<p>Getting back to Agile ideals is the motivation for those practicing Agile development using a Kanban approach.  The Agile manifesto described the things Agile practitioners value, but doesn&rsquo;t prescribe time-boxed development as the way to get it.</p>
+
+
+	<p>Lean practices help teams increase throughput.  They don&rsquo;t make developers type faster, rather they draw attention to bottlenecks that slow things down, help you see them and respond to them quicker.  Using a Kanban board lets you easily visualize work in progress across different roles and lets you see when someone is taking on too much work simultaneously.</p>
+
+
+	<p>A <a href="http://www.mountaingoatsoftware.com/task-boards">task board</a> as it&rsquo;s commonly used in an agile approach can give you the visualization too.  But, widening the task board to separate testing from development from acceptance or other process steps helps me better visualize where things are clogging up &#151; helps me better diagnose problems.  And, setting hard limits for process steps and respecting them really makes me deal with the problem in a way that dropping a pile of stories into a sprint or iteration didn&rsquo;t.  But, maybe it&rsquo;s just me who&rsquo;s lazy and avoids dealing with tough problems.  I&rsquo;m sure you&rsquo;d never run into a situation where you and your team let lots of finished development work pile up waiting to be tested.</p>
+
+
+	<h2>Ideal Kanban can pay off big</h2>
+
+
+	<p>Ideally your Kanban board moves MMFs across and actually deploys them into production when they reach done.  For organizations that can leverage this high frequency of delivery, this is a big financial benefit.  The simple math described in Software by Numbers shows the huge increase in rate of return.</p>
+
+
+	<h2>There&rsquo;s no one as zealous as the newly converted</h2>
+
+
+	<p>There&rsquo;s a lot of folks pretty excited about Kanban out there.  I am too.  Sometimes that zeal takes the form of telling people practicing common agile time-boxed development that they&rsquo;re wrong.  But, I guess I&rsquo;m crusty enough to know that there&rsquo;s lots of right ways to succeed and anyone who believes they&rsquo;ve found the best ways is likely wrong.  Don&rsquo;t let those voicing opinions strongly for, or against, Kanban approaches stop you for digging in deeper and understanding the ideas behind it.</p>
+
+
+</div>
+
+	<h2>Further reading:</h2>
+
+
+	<p>Many links are laced through the essay &#151; but here are a bunch in no particular order:</p>
+
+
+	<ul>
+	<li><a href="http://en.wikipedia.org/wiki/Toyota_Production_System">Toyota production system</a></li>
+		<li><a href="http://www.poppendieck.com/">The Poppendieks on Lean Software Development</a></li>
+		<li><a href="http://www.amazon.com/Software-Numbers-Low-Risk-High-Return-Development/dp/0131407287/ref=sr_1_1?ie=UTF8&#38;s=books&#38;qid=1240273543&#38;sr=1-1">Software by Numbers</a></li>
+		<li><a href="http://www.agilemanagement.net/Articles/Weblog/KanbaninAction.html">David Anderson on Kanban</a></li>
+		<li><a href="http://leansoftwareengineering.com/ksse/scrum-ban/">Corey Ladas on Scrumban</a></li>
+		<li><a href="http://joearnold.com/2008/03/naked-planning-kanban-simplified/">Arlo Belshee&rsquo;s Naked Planning</a></li>
+		<li><a href="http://aaron.sanders.name/kanban/kanban-ground-rules-example-for-a-specific-team">Aaron Sanders Kanban ground rules</a></li>
+		<li><a href="http://www.infoq.com/articles/hiranabe-lean-agile-kanban">InfoQ article from Kenji Hiranabe on Kanban</a></li>
+		<li><a href="../.././downloads/patton_kanban.ppt">My simple Powerpoint presentation on Kanban</a></li>
+	</ul>
+
+
+<div class="inclusion" id="blog_footer">
+
+<h1>What now?</h1>
+
+    <p>Thanks for reading this blog/essay/rant!  I&#8217;d love to hear from you, so please rate this entry, and consider leaving a comment.   Or, <a href="mailto:jpatton@acm.org?subject=apd blog comment">send email</a> to me directly.</p>
+
+    <p>If this blog entry was interesting, please take a look at <a href="http://www.agileproductdesign.com/blog/index.html">all blog entries</a></p>
+
+    <p>If you find my brand of thinking valuable, please consider <a href="../.././calendar/index.html">visiting me at a conference</a>, or <a href="../.././classes/index.html">public class</a>.  Or feel free to <a href="mailto: jpatton@acm.org">contact me directly</a> for agile coaching and training.</p>
+
+<div class="js-kit-rating" permalink=""></div>
+
+<div class="js-kit-comments" permalink=""></div>
+
+<script src="http://js-kit.com/ratings.js"></script>
+
+<script src="http://js-kit.com/comments.js"></script>
+
+</div>
+
+
+</div>
+
+
+  <div id="content-navigation">
+    <h1>Search This Site</h1>
+
+    <form method="get" action="http://www.google.com/search">
+      <input type="text"   name="q" size="15"maxlength="255" value="" />
+      <input type="submit" value="Google Search" />
+      <input type="hidden"  name="sitesearch" value="agileproductdesign.com"/> 
+    </form>   
+  
+    <h1><a href="../.././blog/index.html">Blog</a> <a href="../.././blog/apd_blog.rss"><img src="../.././blog/images/emerging_best_agile_ux_practice_files/rss_icon.png" alt="RSS Feed Link"/></a></h1>
+
+    <ul><li> <a href="../.././blog/2009/kanban_over_simplified.html">Kanban Development Oversimplified</a><br/>
+<span class="blog-date">4/20/2009</span><br/>
+<p>How Kanban-style development gives us another way to deliver on Agile values  <a href="../.././blog/2009/kanban_over_simplified.html">more...</a></p><br/>
+</li><li> <a href="../.././blog/2009/product_owner_and_problem_shaped_hole.html">The product owner and the product-shaped hole </a><br/>
+<span class="blog-date">02/16/2009</span><br/>
+</li><li> <a href="../.././blog/agile_is_culture_not_process.html">Agile development is more culture than process</a><br/>
+<span class="blog-date">02/01/2009</span><br/>
+</li></ul>
+
+	
+    <h1><a href="../.././classes/index.html">Public Classes</a></h1>
+    <div class="classes-sidebar">
+
+    <div class="inclusion" id="public_classes">
+
+<ul>
+	<li><a href="../.././training/passionate_product_owner.html">Passionate Product Ownership (Test Run $195), Salt Lake City, UT</a><br/> <span class="calendar-date">8/11/2009 &#8211; 8/12/2009 </span></li>
+		<li><a href="../.././training/passionate_product_owner.html">Passionate Product Ownership, Salt Lake City, UT</a><br/> <span class="calendar-date">10/15/2009 &#8211; 10/16/2009 </span></li>
+	</ul>
+
+
+</div>
+
+
+    </div>
+	
+    <h1>Conferences & Events</h1>
+    <div class="events-sidebar">
+
+    <div class="inclusion" id="current_events">
+
+<ul>
+	<li><a href="http://agile2009.agilealliance.org/"><img src="../.././calendar/images/agile_2009_logo.gif" alt="Agile 2009"/></a> <a href="../.././calendar/agile_2009.html">Agile 2009</a> <br/> <span class="calendar-date">8/24/2009 &#8211; 8/28/2009 </span></li>
+	</ul>
+
+
+</div>
+
+  
+    <br/>
+    <h1>Site Resources</h1>
+    <ul>  
+        <li><a href="../.././writing/index.html">Articles &amp; Columns</a>
+        </li>
+        <li><a href="../.././presentations/index.html">Presentations &amp; Handouts</a>
+        </li>
+        <li><a href="../.././calendar/index.html">Calendar</a>
+        </li>
+    </ul>
+    <h1>Links</h1>
+    <ul>  
+        <li>
+          <a href="http://tech.groups.yahoo.com/group/agile-usability/">agile-usability discussion group</a>
+        </li>
+    </ul>
+
+    <h1>Contact Information <a href="mailto: jpatton@acm.org"><img src="../.././blog/images/emerging_best_agile_ux_practice_files/exclaim_icon.png" alt="email"/></a> </h1>
+    <div class="inclusion" id="contact_information">
+
+<p><strong>Jeff Patton</strong></p>
+
+
+	<p>Salt Lake City, Utah</p>
+
+
+	<p>please feel free to contanct me at:</p>
+
+
+	<ul>
+	<li>jpatton at acm dot org</li>
+	</ul>
+
+
+</div>
+
+  </div>
+
+</div>
+
+<div id="copyright">
+  &copy; 2006-2009 Jeff Patton, All rights reserved.  
+  This page last modified 5/3/2009.  Site generated Fri, 31 Jul 2009 19:30:31 GMT.    
+</div>
+
+
+
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-2686989-1";
+urchinTracker();
+</script>
+
+</body>
+</html>
