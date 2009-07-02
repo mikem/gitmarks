@@ -1,0 +1,365 @@
+<html>
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; Charset=x-sjis">
+<STYLE TYPE="text/css">
+<!--
+ A:link  {text-decoration: underline; color:"#003399";}
+ A:visited  {text-decoration: underline; color:"#003399";}
+ A:hover  {text-decoration: underline; color="red"; background: yellow;}
+ BODY, TABLE, TD { font:10pt "Verdana", "Arial", "Helvetica", "sans-serif"; }
+//-->
+</STYLE>
+<title>Kinokuniya BookWeb</title>
+<basefont size=2>
+</head>
+<body bgcolor="#FFFFFF" topmargin=0 leftmargin=0 marginheight=0 marginwidth=0>
+<table width="100%" border="0" bgcolor="#000000" cellpadding="0" cellspacing="1">
+<tr>
+<td><img src="/button/weblogo.gif" width="60" height="17" alt="BookWeb"></td>
+<td><a href="/indexohb.cgi?AREA=04"><img src="/gif/ohb_home.gif" width="60" height="20" alt="Home" border="0"></a></td>
+<td><a href="/guest/cgi-bin/wshoscohb.cgi?AREA=04"><img src="/gif/ohb_jsea.gif" width="125" height="20" alt="Japanese Books Search" border="0"></a></td>
+<td><a href="/guest/cgi-bin/bookscohb.cgi?AREA=04"><img src="/gif/ohb_esea.gif" width="111" height="20" alt="English Books Search" border="0"></a></td>
+<td><a href="https://bookweb.kinokuniya.co.jp/ohb/shopbagad.cgi?AREA=04"><img src="/gif/ohb_scart.gif" width="85" height="20" alt="Shopping Cart" border="0"></a></td>
+</tr>
+</table>
+<CENTER>
+<FORM ACTION="https://bookweb.kinokuniya.co.jp/guest/cgi-bin/bookseaohb.cgi" METHOD="POST">
+<input name="AREA" TYPE="hidden" value="04">
+<input name="RECNO" TYPE="hidden" value="1">
+<TABLE border=5 cellpadding=5 cellspacing=5>
+<TR bgcolor="#B0C4DE" align=center>
+<TD><font face="Verdana,Helvetica,Arial" SIZE=4><b>Book Search</b></FONT></TD>
+<TD colspan=2>
+<INPUT TYPE="submit" VALUE="Search Now"> <INPUT TYPE="reset"  VALUE="Clear">
+</td>
+<TR bgcolor="#DCDCDC">
+<td colspan=3>
+<TABLE CELLPADDING=0 CELLSPACING=0>
+<TR><TD align=right>
+<B>Display:</B></TD><TD><select name=HITCNT>
+<option value="20">20
+<option value="40">40
+<option value="60">60
+<option value="80">80
+</select>matches</TD></TR>
+<TR><TD align=right>
+<B>ISBN:</B></TD><TD><INPUT NAME="ISBN" SIZE="20" STYLE="ime-mode:disabled;" />(Hyphen not required)</TD></TR>
+<TR><TD align=right>
+<B>Title:</B></TD><TD><INPUT NAME="W-TITLE" SIZE=40></TD></TR>
+<TR><TD align=right>
+<B>and</B></TD><TD><INPUT NAME="W-TITLE2" SIZE=40></TD></TR>
+<TR><TD align=right>
+<B>and</B></TD><TD><INPUT NAME="W-TITLE3" SIZE=40></TD></TR>
+<TR><TD align=right>
+<B>Author:</B>
+</TD><TD><INPUT NAME="W-AUTHOR" SIZE=40></td></tr>
+</td></tr>
+<tr><td>
+</td></tr>
+<TR><TD align=right>
+<B>Publisher:</B></TD>
+<TD><INPUT NAME="W-PUBLISH" SIZE=40></TD></TR>
+<TR><TD align=right>
+<B>Category:</B></TD><TD><select NAME="W-RTM" size=7>
+<option selected>
+<option value="120">120:Aniques/Collectibles
+<option value="130">130:Architecture
+<option value="140">140:Art
+<option value="142">142:Audio Adult:Books on Tape
+<option value="143">143:Audio Adult:Business
+<option value="144">144:Audio Adults:Language
+<option value="145">145:Audio Adult:New Age
+<option value="147">147:Audio Adult:Other
+<option value="148">148:Audio Juvenile
+<option value="149">149:Audio Adult:Subliminal
+<option value="150">150:Bargain Books
+<option value="160">160:Bibles
+<option value="170">170:Biography/Autobiography
+<option value="178">178:Blank Books/Journals
+<option value="180">180:Business/Economics
+<option value="185">185:Music CD
+<option value="190">190:Calendar
+<option value="195">195:Career/Job
+<option value="200">200:Childcare/Parenting
+<option value="210">210:Children:Babies & Toddlers
+<option value="211">211:Children:Pre-School
+<option value="212">212:Children:Kindergarten
+<option value="213">213:Children:Grades 1-2
+<option value="214">214:Children:Grades 2-3
+<option value="215">215:Children:Grades 3-4
+<option value="216">216:Children:Grades 4-6
+<option value="217">217:YA:Grades 7-9
+<option value="218">218:YA:Grades 10-12
+<option value="221">221:Cinema/Film
+<option value="224">224:Computer Books:Operating Systems
+<option value="225">225:Computer Books:Desktop Publishing
+<option value="226">226:Computer Books:Word Processing
+<option value="227">227:Computer Books:Languages
+<option value="228">228:Computer Books:Database
+<option value="229">229:Computer Books:General
+<option value="230">230:Computer Books:SpreadSheets
+<option value="231">231:Computer Books and Software
+<option value="240">240:Cooking
+<option value="250">250:Crafts/Hobbies
+<option value="280">280:Decorating
+<option value="290">290:Diet/Nutrition
+<option value="300">300:Do it Yourself
+<option value="340">340:Education
+<option value="347">347:Family/Marriage
+<option value="350">350:Fantasy
+<option value="360">360:Fiction
+<option value="430">430:History:American/Military
+<option value="431">431:History:World/Military
+<option value="444">444:Horror Fiction
+<option value="460">460:Humor
+<option value="480">480:Language
+<option value="485">485:Large Print
+<option value="495">495:Literary Criticism
+<option value="500">500:Literature:Classics
+<option value="501">501:Literature:Folklore and Mythology
+<option value="540">540:Music
+<option value="550">550:Mystery/Suspense
+<option value="560">560:Nature/Ecology
+<option value="595">595:Performing Arts/Dance
+<option value="610">610:Philosophy
+<option value="620">620:Photo-Essays
+<option value="625">625:Photo-Techniques
+<option value="630">630:Plays7
+<option value="640">640:Poetry
+<option value="650">650:Politics/International Relations
+<option value="670">670:Psychology
+<option value="680">680:Reference
+<option value="689">689:Recovery
+<option value="690">690:Religion/Ethics
+<option value="700">700:Romance:Regence
+<option value="701">701:Romance:Gothic
+<option value="702">702:Romance:Historical
+<option value="704">704:Romance:Modern
+<option value="710">710:Science/Mathematic
+<option value="720">720:Science Fiction
+<option value="725">725:Self Help
+<option value="750">750:Sociology
+<option value="760">760:Sports
+<option value="770">770:Study Guides</select>
+<br>
+</TD></TR>
+<TR><TD align=right>
+<B>Academic Descriptors:</B></TD>
+<TD>
+<select NAME="W-APR">
+<option selected>
+<option value="A01">General Works
+<option value="A02">Fine arts
+<option value="A03">Art media
+<option value="A04">Applied arts
+<option value="A05">Architecture
+<option value="A06">Reprographics
+<option value="A07">Performing arts
+<option value="A08">Music
+<option value="A09">Sports
+<option value="A10">Philosophy
+<option value="A11">Psychology
+<option value="A12">Clinical psychology
+<option value="A13">Religion
+<option value="A14">History
+<option value="A15">History of specific areas and countries
+<option value="A16">United States history
+<option value="A17">Archaeology
+<option value="A18">Auxiliary histolical sciences
+<option value="A19">Geography
+<option value="A20">Language
+<option value="A21">English language
+<option value="A22">Linguistics
+<option value="A23">Literature
+<option value="A24">World literature
+<option value="A25">English literature
+<option value="A26">American literature
+<option value="A27">Journalism
+<option value="A28">Publishing and printing
+<option value="A29">Library and information science
+<option value="A30">Social science and statistics
+<option value="A31">Sociology
+<option value="A32">Regional planning
+<option value="A33">Anthropology
+<option value="A34">Communication
+<option value="A35">Transportation
+<option value="A37">Education
+<option value="A39">Law
+<option value="A40">Political science
+<option value="A41">Government
+<option value="A42">US Government
+<option value="A43">International relations
+<option value="A44">Military science
+<option value="A45">Economics
+<option value="A46">Labor economics
+<option value="A47">Financial economics
+<option value="A48">Business administration
+<option value="A49">International economics
+<option value="A50">Science
+<option value="A51">Mathematics
+<option value="A52">Astoronomy
+<option value="A53">Physics
+<option value="A54">Chemistry
+<option value="A55">Mineralogy
+<option value="A56">Geology
+<option value="A57">Oceanography
+<option value="A58">Meteorology
+<option value="A59">Paleontology
+<option value="A60">Biology
+<option value="A61">Conservation of natural resorces
+<option value="A62">Botany
+<option value="A63">Zoology
+<option value="A64">Human biology
+<option value="A65">Medicine
+<option value="A66">Public health
+<option value="A67">Psychiatry
+<option value="A68">Pharmacological science
+<option value="A69">Nursing
+<option value="A70">Agriculture
+<option value="A71">Horticulture
+<option value="A72">Forestry
+<option value="A74">Animal science
+<option value="A76">Veterinary medicine
+<option value="A80">Technology
+<option value="A81">Materials science
+<option value="A82">Civil engineering
+<option value="A83">Environmental engineering
+<option value="A84">Building engineering
+<option value="A85">Mechanical engineering
+<option value="A86">Automotive engineering
+<option value="A87">Aeronautical engineering
+<option value="A89">Marine engineerring
+<option value="A90">Electrical engineering
+<option value="A91">Electronic engineering
+<option value="A92">Nuclear engineering
+<option value="A93">Computer engineering
+<option value="A94">Chemical engineering
+<option value="A95">Petroleum engineering
+<option value="A96">Manufacturing
+<option value="A97">Home economics
+<option value="B60">Biophysics
+<option value="B94">Biotechnology
+<option value="C07">Cinema
+<option value="C21">Speech and speech therapy
+<option value="C25">English literature - Core Author Listing
+<option value="C26">American literature - Core Author Listing
+<option value="C39">Criminology
+<option value="C45">Consumer economics
+<option value="C60">Biochemistry
+<option value="C70">Agronomy
+<option value="D65">Dentistry
+<option value="E10">Ethics
+<option value="E70">Agricultural engineering
+<option value="F47">Public finance
+<option value="F48">Accounting and finance
+<option value="F74">Fish culture and fisheries
+<option value="F80">Industrial engineering
+<option value="F82">Hydraulic engineering
+<option value="G45">Industrial economics
+<option value="G65">Internal medicine
+<option value="H37">Higher education
+<option value="H82">Transportation engineering
+<option value="L45">Economics of natural resources
+<option value="M60">Microbiology
+<option value="M81">Metallurgy
+<option value="M85">Machine engineering
+<option value="M95">Mining engineering
+<option value="N44">Naval science
+<option value="N67">Neurology
+<option value="P09">Physical education
+<option value="P24">World contemporary fiction
+<option value="P25">English contemporary fiction
+<option value="P26">American contemporary fiction
+<option value="P55">Petrology
+<option value="P60">Physiology
+<option value="P65">Pathology
+<option value="R09">Recreation
+<option value="S65">Special branches of medicine
+<option value="S87">Space engineering
+<option value="T25">English contemporary drama
+<option value="T26">American contemporary drama
+<option value="T68">Therapeutics
+<option value="V25">English contemporary poetry
+<option value="V26">American contemporary poetry
+<option value="W31">Social welfare
+</select>
+</TD></TR>
+<TR><TD align=right>
+<B>Publication Date:</B></TD>
+<TD>&nbsp;Year <SELECT NAME="W-YEAR1">
+<option selected value="">
+<option value="2010">2010
+<option value="2009">2009
+<option value="2008">2008
+<option value="2007">2007
+<option value="2006">2006
+<option value="2005">2005
+<option value="2004">2004
+<option value="2003">2003
+<option value="2002">2002
+<option value="2001">2001
+<option value="2000">2000
+<option value="1999">1999
+<option value="1998">1998
+<option value="1997">1997
+<option value="1996">1996
+<option value="1995">1995
+<option value="1994">1994
+<option value="1993">1993
+<option value="1992">1992
+<option value="1991">1991
+<option value="1990">1990
+<option value="1989">1989
+<option value="1988">1988
+<option value="1987">1987
+<option value="1986">1986
+<option value="1985">1985
+<option value="1984">1984
+<option value="1983">1983
+<option value="1982">1982
+<option value="1981">1981
+<option value="1980">1980
+</select>
+ from <SELECT NAME="W-MONTH">
+<option selected value="">
+<option value="01">January
+<option value="02">February
+<option value="03">March
+<option value="04">April
+<option value="05">May
+<option value="06">June
+<option value="07">July
+<option value="08">August
+<option value="09">September
+<option value="10">October
+<option value="11">November
+<option value="12">December
+</select>
+ for <SELECT NAME="W-MONTH2">
+<option selected value="">
+<option value="01">01
+<option value="02">02
+<option value="03">03
+<option value="04">04
+<option value="05">05
+<option value="06">06
+<option value="07">07
+<option value="08">08
+<option value="09">09
+<option value="10">10
+<option value="11">11
+<option value="12">12
+</select> months</TD></TR>
+<TR><TD COLSPAN=2>
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+</FORM>
+</CENTER>
+<hr>
+<center>
+E-mail:<a href="mailto:sims@kinokuniya.com">sims@kinokuniya.com</a><br>
+Copyright &copy; 1996-2010 Kinokuniya Company, LTD. All Rights Reserved.
+</center>
+<p>
+</body>
+</html>
