@@ -1,0 +1,1587 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr">
+	<head>
+		<meta name="ROBOTS" content="NOODP" />
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<meta http-equiv="Content-Style-Type" content="text/css" />
+		
+		<title>How to get GPS coordinates from a location in Google Maps - Tips, Tricks & Mods</title>
+		<style type="text/css" media="screen">
+			@import url( http://img.gpsreview.net/wp-content/themes/gps/style.css );
+		</style>
+		<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.gpsreview.net/feed/" />
+		<link rel="alternate" type="text/xml" title="RSS .92" href="http://www.gpsreview.net/feed/rss/" />
+		<link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="http://www.gpsreview.net/feed/atom/" />
+		<link rel="pingback" href="http://www.gpsreview.net/xmlrpc.php" />
+		<link rel="shortcuticon" href="http://forums.gpsreview.net/favicon.ico" />
+		<link rel="stylesheet" href="http://static.gpsreview.net/forums/templates/subSilver/gpsreview.css" type="text/css" />
+	</head>
+	<body bgcolor="#333333" text="#000000" link="#005400" vlink="#005400">
+<script type="text/javascript">
+window.google_analytics_uacct = "UA-70021-13";
+google_analytics_domain_name="gpsreview.net";
+</script>
+		<table border="0" cellspacing="0" cellpadding="0" class="center">
+			<tr id="header">
+				<td colspan="3">
+					<table border="0" cellspacing="0" cellpadding="0" width="100%">
+						<tr>
+							<td width="14"></td>
+							<td align="left" valign="top" id="navcontainer">
+								<ul>
+									<li class="page_item"><a href="http://www.gpsreview.net/" title="GPS Review">GPS Review</a></li>
+									<li class="page_item current_page_item"><a href="http://forums.gpsreview.net/">GPS Forums</a></li>
+									<li class="page_item"><a rel="nofollow" href="http://www.gpsreview.net/ethics/" title="Ethics">Ethics</a></li>
+									<li class="page_item"><a rel="nofollow" href="http://www.gpsreview.net/testimonials/" title="testimonials">Testimonials</a></li>
+									<li class="page_item"><a rel="nofollow" href="http://www.gpsreview.net/contact-us/" title="Contact GPS Review">Contact</a></li>
+								</ul>
+							</td>
+							<td id="searchbar" valign="top">
+<form action="http://www.gpsreview.net/search-results/" id="cse-search-box">
+  <div>
+    <input type="hidden" name="cx" value="partner-pub-2318506280567795:on5uf5r6yuy" />
+    <input type="hidden" name="cof" value="FORID:10" />
+    <input type="hidden" name="ie" value="ISO-8859-1" />
+    <input type="text" name="q" size="25" />
+    <input type="submit" name="sa" value="Search" />
+  </div>
+</form>
+
+<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=cse-search-box&amp;lang=en"></script>
+								<!--
+								<form method="get" id="search" action="http://www.gpsreview.net/index.php">
+									<input type="text" value="" name="s" id="s" />
+									<input type="submit" id="searchsubmit" value="Search" />
+								</form> !-->
+							</td>
+							<td width="14"></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr id="lead">
+				<td align="right"><img alt="leaderboard left" width="40" height="137" src="http://img.gpsreview.net/wp-content/themes/gps/images/leaderboard-left.jpg"/></td>
+				<td id="leaderboard" valign="top">
+<div align="center">
+
+<script type="text/javascript">
+if(typeof(cachebuster) == "undefined"){var cachebuster = Math.floor(Math.random()*10000000000)}
+if(typeof(dcopt) == "undefined"){var dcopt = "dcopt=ist;"} else {var dcopt = ""}
+if(typeof(tile) == "undefined"){var tile = 1} else {tile++}
+document.write('<scr'+'ipt src="http://ad.doubleclick.net/adj/gpsr.us/_default;loc=top;' + dcopt + ';tile=' + tile + ';sz=728x90;ord=' + cachebuster + '?"></scr'+'ipt>');
+</script>
+<noscript><a href="http://ad.doubleclick.net/jump/gpsr.us/_default;loc=top;sz=728x90;ord=123456789?" target="_blank" ><img src="http://ad.doubleclick.net/ad/gpsr.us/_default;loc=top;sz=728x90;ord=123456789?" border="0" alt="" /></a></noscript>
+
+</div>
+				</td>
+				<td><img alt="leaderboard right" width="40" height="137" src="http://img.gpsreview.net/wp-content/themes/gps/images/leaderboard-right.jpg"/></td>
+			</tr>
+		</table>
+		<table border="0" cellspacing="0" cellpadding="0" width="800" class="center">
+			<tr>
+				<td align="right"><img alt="content topleft" width="20" height="20" src="http://img.gpsreview.net/wp-content/themes/gps/images/content-topleft.jpg"/></td>
+				<td id="content-top"></td>
+				<td><img alt="content topright" width="20" height="20" src="http://img.gpsreview.net/wp-content/themes/gps/images/content-topright.jpg"/></td>
+			</tr>
+			<tr id="content">
+				<td align="right" id="content-left"></td>
+				<td>
+					<table border="0" width="100%">
+						<tr>
+							<td id="empty"></td><!-- empty cell -->
+							<td rowspan="2" valign="top" id="forums">
+								<div id="post-00000">
+									<div class="entry">
+										<a name="top"></a>
+										<table width="100%" cellspacing="0" cellpadding="10" border="0" align="center">
+											<tr>
+												<td class="bodyline">
+													<table width="100%" cellspacing="0" cellpadding="0" border="0">
+														<tr>
+															<td></td>
+															<td align="center" width="100%" valign="middle">
+																<table cellspacing="0" cellpadding="2" border="0">
+																	<tr>
+																		<td align="center" valign="top" nowrap="nowrap"><span class="mainmenu"><a href="http://forums.gpsreview.net/" class="mainmenu">GPS Forums Home</a> &bull; <a rel="nofollow" href="search.php" class="mainmenu">Search</a> &bull; <a rel="nofollow" href="memberlist.php" class="mainmenu">Members</a> &nbsp;
+																		&nbsp;<a rel="nofollow" href="profile.php?mode=register" class="mainmenu">Register</a>&nbsp;
+																		</span></td>
+																	</tr>
+																	<tr>
+																		<td align="center" valign="top" nowrap="nowrap"><span class="mainmenu">&nbsp;<a rel="nofollow" href="profile.php?mode=editprofile" class="mainmenu">Profile</a> &bull; <a rel="nofollow" href="privmsg.php?folder=inbox" class="mainmenu">Log in to check your private messages</a> &bull; <a rel="nofollow" href="login.php" class="mainmenu">Log in</a>&nbsp;</span></td>
+																	</tr>
+																</table>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+									</div>
+								</div>
+<!-- google_ad_section_start -->
+
+<table width="100%" cellspacing="2" cellpadding="2" border="0">
+  <tr>
+	<td align="left" valign="bottom"><h1><a class="maintitle" href="viewtopic.php?t=3632">How to get GPS coordinates from a location in Google Maps</a></h1>
+	  <span class="gensmall" style="background:#ffff00;"><b></b>
+	  </span></td>
+	<td align="right"><!--share this here !--></td>
+  </tr>
+</table>
+
+<table width="100%" cellspacing="2" cellpadding="2" border="0">
+  <tr>
+	<td align="left" valign="bottom" nowrap="nowrap"><span class="nav"><a rel="nofollow" href="posting.php?mode=newtopic&amp;f=36"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/post.gif" border="0" alt="Post new topic" align="middle" /></a>&nbsp;&nbsp;&nbsp;<a rel="nofollow" href="posting.php?mode=reply&amp;t=3632"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/reply.gif" border="0" alt="Reply to topic" align="middle" /></a></span></td>
+	<td align="left" valign="middle" width="100%"><span class="nav">&nbsp;&nbsp;&nbsp;<a href="/" class="nav">GPS Review Forums Forum Index</a>
+	  -> <a href="viewforum.php?f=36" class="nav">Tips, Tricks & Mods</a></span></td>
+  </tr>
+</table>
+
+<table class="forumline" width="100%" cellspacing="1" cellpadding="3" border="0">
+	<tr align="right">
+		<td class="catHead" colspan="2" height="28"><span class="nav"><a rel="nofollow" href="viewtopic.php?t=3632&amp;view=previous" class="nav">View previous topic</a> :: <a rel="nofollow" href="viewtopic.php?t=3632&amp;view=next" class="nav">View next topic</a> &nbsp;</span></td>
+	</tr>
+	
+	<tr>
+		<th class="thLeft" width="150" height="26" nowrap="nowrap">Author</th>
+		<th class="thRight" nowrap="nowrap">Message</th>
+	</tr>
+
+	<tr>
+		<td colspan="2" bgcolor="#ffffff">
+<!-- BEGIN: Shopzilla Publisher Asset HTML -->
+<div style="background-color: #FFFFFF;border: 1px solid #ffffff;font-family: Verdana, Arial, Sans-serif;font-size: 10px;padding: 0px 0px 0px 0px;line-height: 11px;color: #000000;width: 728px;height: 90px;">
+
+	<iframe width="728" vspace="0" scrolling="no" src="http://adserve.shopzilla.com/pp/content/tal/publisherID-1341/assetID-484/assetTypeID-9/placementID-16/showProducts-4/showRandom-0/start-1/sort-default/onlyOffers-1/categoryID-11210000/tokenID-7X/keyword-+/style-10px%20Verdana%2C%20Arial%2C%20Sans-serif;000000:FFFFFF:005400:006600:006600:666666:ffffff;0px%20solid;_blank" name="display" height="78" marginwidth="0" hspace="0" frameborder="0" marginheight="0"></iframe>
+	<div xmlns:tal="http://xml.zope.org/namespaces/tal" style="width: 726px;height: 13px;font-size: 10px;">
+	<div style="text-align: left;display: block; float: left;padding-left: 3px; color:#666666;">
+		Find great deals on <span><a href="http://www.bizrate.com/global-positioning-systems-gps/garmin-nuvi/" target="_blank" style="font-size: 10px; color:#009900;">garmin nuvi</a></span> at <a href="http://www.shopzilla.com/2_-_rf--af1__af_id--1341__af_creative_id--484__af_assettype_id--9__af_placement_id--16" target="_blank" style="font-size: 10px; color:#009900;">Shopzilla.com</a>!
+	</div>
+	<div style="text-align: right;display: block;float: right;padding-right: 2px;">
+		<a href="http://publisher.shopzilla.com/partner_id/1341/index.xhtml" class="exclude" target="_blank" style="font-size: 10px; color:#009900;">ads from Shopzilla</a>
+	</div>
+</div>
+
+</div>
+<NOSCRIPT><a href="http://adserve.bizrate.com/pp/content/tal/publisherID-1341/assetID-484/assetTypeID-9/placementID-16/showProducts-4/showRandom-0/start-1/sort-default/cache-1/noLog-1/standAlone-1/onlyOffers-1/categoryID-11210000/tokenID-7X/keyword-garmin%20oregon/style-">BizRate</a></NOSCRIPT>
+<!-- END: Shopzilla Publisher Asset HTML -->
+		</td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+
+	<tr> <!-- TJF_LINE: 0 !-->
+		<td width="150" align="left" valign="top" class="row1"><span class="name"><a name="20814"></a><b>ProximityCast</b></span><br /><span class="postdetails"><br /><img src="http://static.gpsreview.net/forums/images/avatars/gallery/Garmin/extrex-vista.jpg" alt="" border="0" /><br /><br />Joined: 05 Jan 2008<br />Posts: 17<br />Location: U.S.A.</span><br /></td>
+		<td class="row1" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a rel="nofollow" href="viewtopic.php?p=20814#20814"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails">How to get GPS coordinates from a location in Google Maps <span class="gen">&nbsp;</span>Sat Jan 05, 2008 4:53 am&nbsp; &nbsp;</span></td>
+				<td valign="top" nowrap="nowrap"> <a rel="nofollow" href="posting.php?mode=reply&amp;t=3632"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/reply.gif" width="59" height="18" border="0" alt="Reply to topic" /></a> <a rel="nofollow" href="posting.php?mode=quote&amp;p=20814"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">Hello everyone.  I look forward to getting acquainted with this forum.  This is my first post. I hope most of you will find it useful.
+<br />
+As a GPS owner I often like to find the coordinates of a location I'm traveling too beforehand.  I've used Google Earth and Delorme Street Atlas USA in the Past.
+<br />
+Google Maps is so convenient, but unfortunately does not conveniently show the Latitude and Longitude of locations. However I've found this method that works real nice.
+<br />
+1.  I open Google Maps to the vicinity of where I would like coordinates.
+<br />
+2. I use my right click mouse button and select &quot;center map here&quot; from the drop down button.
+<br />
+3. I past this javascript code that I keep saved somewhere convenient on my computer into my browser's URL address window.
+<br />
+ Here's the code: </span><table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tr> 	  <td><span class="genmed"><b>Code:</b></span></td>	</tr>	<tr>	  <td class="code">javascript&#58;void&#40;prompt&#40;'',gApplication.getMap&#40;&#41;.getCenter&#40;&#41;&#41;&#41;;</td>	</tr></table><span class="postbody">
+<br />
+4. I click the &quot;go to the address in the location bar&quot; button usually to the right of the address.
+<br />
+5. A popup appears showing the coordinates of the center of the map like this: (43.60336, -110.7362)
+<br />
+6. I right click on the coordinates the copy and click either &quot;OK&quot; or &quot;Cancel&quot;
+<br />
+7. I then paste the coordinates into google's &quot;search maps&quot; text box, remove the parenthesis and click &quot;Search Maps&quot;
+<br />
+8. A popup appears with a marker for the centered spot. The popup has the coordinates in both Decimal Degrees and Degrees, Minutes, Seconds.
+<br />
+9. I refine as and if necessary and I have my way point for inserting into my GPS.
+<br />
+
+<br />
+I hope some of you find this useful.  I know I do.
+<br />
+
+<br />
+Best Regards,
+<br />
+David B. Robert founder of ProximityCast.com
+<br />
+<img src="http://www.proximitycast.com/magazine/proximitycast.jpg" border="0" /></span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row1" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row1" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a rel="nofollow" href="profile.php?mode=viewprofile&amp;u=3336"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a>      <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr> <!-- TJF_LINE: 1 !-->
+		<td width="150" align="left" valign="top" class="row2"><span class="name"><a name="20841"></a><b>TOphotog</b></span><br /><span class="postdetails"><br /><br /><br />Joined: 14 Dec 2007<br />Posts: 29<br />Location: Toronto Canada</span><br /></td>
+		<td class="row2" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a rel="nofollow" href="viewtopic.php?p=20841#20841"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails"> <span class="gen">&nbsp;</span>Sat Jan 05, 2008 1:49 pm&nbsp; &nbsp;</span></td>
+				<td valign="top" nowrap="nowrap"> <a rel="nofollow" href="posting.php?mode=reply&amp;t=3632"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/reply.gif" width="59" height="18" border="0" alt="Reply to topic" /></a> <a rel="nofollow" href="posting.php?mode=quote&amp;p=20841"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">Now THAT is a very useful tip!  I'm a commercial real estate agent and I find that Mapsource Navigator doesn't seem to be able to find a lot of addresses, so this useful for me!  Thanks!</span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row2" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row2" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a rel="nofollow" href="profile.php?mode=viewprofile&amp;u=2725"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a>      <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr> <!-- TJF_LINE: 2 !-->
+		<td width="150" align="left" valign="top" class="row1"><span class="name"><a name="26710"></a><b>logistician</b></span><br /><span class="postdetails"><br /><br /><br />Joined: 09 Feb 2008<br />Posts: 8<br /></span><br /></td>
+		<td class="row1" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a rel="nofollow" href="viewtopic.php?p=26710#26710"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails"> <span class="gen">&nbsp;</span>Tue Feb 12, 2008 1:16 am&nbsp; &nbsp;</span></td>
+				<td valign="top" nowrap="nowrap"> <a rel="nofollow" href="posting.php?mode=reply&amp;t=3632"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/reply.gif" width="59" height="18" border="0" alt="Reply to topic" /></a> <a rel="nofollow" href="posting.php?mode=quote&amp;p=26710"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">Woah woah...this is WAY too complicated...you can get a &quot;My Map&quot; for google maps which will do this.  I'm not sure how to link those, but if you go to google maps, then the my maps tab.  From there, choose &quot;browse the directory&quot;.  I use one called &quot;Position Finder&quot;...works great!</span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row1" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row1" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a rel="nofollow" href="profile.php?mode=viewprofile&amp;u=3921"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a>      <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr> <!-- TJF_LINE: 3 !-->
+		<td width="150" align="left" valign="top" class="row2"><span class="name"><a name="26739"></a><b>ProximityCast</b></span><br /><span class="postdetails"><br /><img src="http://static.gpsreview.net/forums/images/avatars/gallery/Garmin/extrex-vista.jpg" alt="" border="0" /><br /><br />Joined: 05 Jan 2008<br />Posts: 17<br />Location: U.S.A.</span><br /></td>
+		<td class="row2" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a rel="nofollow" href="viewtopic.php?p=26739#26739"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails">Good tip! <span class="gen">&nbsp;</span>Tue Feb 12, 2008 5:49 am&nbsp; &nbsp;</span></td>
+				<td valign="top" nowrap="nowrap"> <a rel="nofollow" href="posting.php?mode=reply&amp;t=3632"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/reply.gif" width="59" height="18" border="0" alt="Reply to topic" /></a> <a rel="nofollow" href="posting.php?mode=quote&amp;p=26739"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody"></span><table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tr> 	  <td><span class="genmed"><b>logistician wrote:</b></span></td>	</tr>	<tr>	  <td class="quote">Woah woah...this is WAY too complicated...you can get a &quot;My Map&quot; for google maps which will do this.  I'm not sure how to link those, but if you go to google maps, then the my maps tab.  From there, choose &quot;browse the directory&quot;.  I use one called &quot;Position Finder&quot;...works great!</td>	</tr></table><span class="postbody">
+<br />
+
+<br />
+You're right!  I went and picked up &quot;Position Finder&quot; Quite excellent! Thanks!</span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row2" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row2" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a rel="nofollow" href="profile.php?mode=viewprofile&amp;u=3336"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a>      <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr> <!-- TJF_LINE: 4 !-->
+		<td width="150" align="left" valign="top" class="row1"><span class="name"><a name="33522"></a><b>ProximityCast</b></span><br /><span class="postdetails"><br /><img src="http://static.gpsreview.net/forums/images/avatars/gallery/Garmin/extrex-vista.jpg" alt="" border="0" /><br /><br />Joined: 05 Jan 2008<br />Posts: 17<br />Location: U.S.A.</span><br /></td>
+		<td class="row1" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a rel="nofollow" href="viewtopic.php?p=33522#33522"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails">Best yet <span class="gen">&nbsp;</span>Sun Apr 06, 2008 4:13 am&nbsp; &nbsp;</span></td>
+				<td valign="top" nowrap="nowrap"> <a rel="nofollow" href="posting.php?mode=reply&amp;t=3632"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/reply.gif" width="59" height="18" border="0" alt="Reply to topic" /></a> <a rel="nofollow" href="posting.php?mode=quote&amp;p=33522"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">This works with Google Maps is quick and easy, and does not need any add-ons.
+<br />
+    1. Move the cursor over the spot you want coordinates for.
+<br />
+    2. Right click and select &quot;Directions to here&quot; on pop-up menu.
+<br />
+    3. Copy coordinates from &quot;End Address&quot;: e.g. 29.199505,-90.041242
+<br />
+    4. Paste them back into the &quot;Search Maps&quot; box and click to check position
+<br />
+ and get them in DMS format: e.g. +29° 11' 58.22&quot;, -90° 2' 28.47&quot;</span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row1" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row1" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a rel="nofollow" href="profile.php?mode=viewprofile&amp;u=3336"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a>      <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr> <!-- TJF_LINE: 5 !-->
+		<td width="150" align="left" valign="top" class="row2"><span class="name"><a name="34044"></a><b>njenney</b></span><br /><span class="postdetails"><br /><br /><br />Joined: 10 Apr 2008<br />Posts: 2<br />Location: 63116</span><br /></td>
+		<td class="row2" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a rel="nofollow" href="viewtopic.php?p=34044#34044"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails"> <span class="gen">&nbsp;</span>Thu Apr 10, 2008 12:36 am&nbsp; &nbsp;</span></td>
+				<td valign="top" nowrap="nowrap"> <a rel="nofollow" href="posting.php?mode=reply&amp;t=3632"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/reply.gif" width="59" height="18" border="0" alt="Reply to topic" /></a> <a rel="nofollow" href="posting.php?mode=quote&amp;p=34044"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">You can also use the 'Link to this page' in the upper right hand corner.
+<br />
+
+<br />
+I usually right-click on point of interest and 'Center map here.'
+<br />
+
+<br />
+Then choose the 'Link to this page' option.
+<br />
+
+<br />
+You should be able to copy and paste the URL and extract the coordinates from there.
+<br />
+
+<br />
+i.e.
+<br />
+
+<br />
+http://maps.google.com/maps?f=q&amp;hl=en&amp;geocode=&amp;q=63116&amp;ie=UTF8&amp;ll=38.561304,-90.263672&amp;spn=0.002391,0.005879&amp;t=k&amp;z=18&amp;iwloc=addr
+<br />
+
+<br />
+38.561304,-90.263672
+<br />
+
+<br />
+Lots of options. Hope this helps.</span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row2" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row2" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a rel="nofollow" href="profile.php?mode=viewprofile&amp;u=4731"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a>      <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr> <!-- TJF_LINE: 6 !-->
+		<td width="150" align="left" valign="top" class="row1"><span class="name"><a name="35398"></a><b>dstewart</b></span><br /><span class="postdetails"><br /><br /><br />Joined: 17 Apr 2008<br />Posts: 10<br /></span><br /></td>
+		<td class="row1" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a rel="nofollow" href="viewtopic.php?p=35398#35398"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails"> <span class="gen">&nbsp;</span>Sat Apr 19, 2008 5:51 pm&nbsp; &nbsp;</span></td>
+				<td valign="top" nowrap="nowrap"> <a rel="nofollow" href="posting.php?mode=reply&amp;t=3632"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/reply.gif" width="59" height="18" border="0" alt="Reply to topic" /></a> <a rel="nofollow" href="posting.php?mode=quote&amp;p=35398"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">Okay, like that! Now, how do you get elevation? Is that in Google Maps' data too?</span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row1" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row1" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a rel="nofollow" href="profile.php?mode=viewprofile&amp;u=4835"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a>      <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr> <!-- TJF_LINE: 7 !-->
+		<td width="150" align="left" valign="top" class="row2"><span class="name"><a name="35517"></a><b>njenney</b></span><br /><span class="postdetails"><br /><br /><br />Joined: 10 Apr 2008<br />Posts: 2<br />Location: 63116</span><br /></td>
+		<td class="row2" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a rel="nofollow" href="viewtopic.php?p=35517#35517"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails"> <span class="gen">&nbsp;</span>Sun Apr 20, 2008 6:19 pm&nbsp; &nbsp;</span></td>
+				<td valign="top" nowrap="nowrap"> <a rel="nofollow" href="posting.php?mode=reply&amp;t=3632"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/reply.gif" width="59" height="18" border="0" alt="Reply to topic" /></a> <a rel="nofollow" href="posting.php?mode=quote&amp;p=35517"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">I am sure there are a bunch of tools out there. This is one example.
+<br />
+
+<br />
+Try this. Punch in coordinates or zip code and click the Find link.
+<br />
+
+<br />
+http://www.heywhatsthat.com/profiler.html
+<br />
+
+<br />
+The elevation will be displayed to the right of the coordinates.
+<br />
+
+<br />
+i.e.
+<br />
+
+<br />
+38.581532° N 90.268444° W 466 ft 
+<br />
+
+<br />
+It looks like you can also add this little Path Profiler applet and then get all sorts of good info right from Google Maps without having to go to a another site.
+<br />
+http://maps.google.com/ig/add?moduleurl=http://www.heywhatsthat.com/mapplets/profiler.xml&amp;pid=mpl&amp;synd=mpl</span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row2" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row2" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a rel="nofollow" href="profile.php?mode=viewprofile&amp;u=4731"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a>      <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr> <!-- TJF_LINE: 8 !-->
+		<td width="150" align="left" valign="top" class="row1"><span class="name"><a name="38103"></a><b>lemodular</b></span><br /><span class="postdetails"><br /><br /><br />Joined: 07 May 2008<br />Posts: 15<br /></span><br /></td>
+		<td class="row1" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a rel="nofollow" href="viewtopic.php?p=38103#38103"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails"> <span class="gen">&nbsp;</span>Wed May 07, 2008 11:53 pm&nbsp; &nbsp;</span></td>
+				<td valign="top" nowrap="nowrap"> <a rel="nofollow" href="posting.php?mode=reply&amp;t=3632"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/reply.gif" width="59" height="18" border="0" alt="Reply to topic" /></a> <a rel="nofollow" href="posting.php?mode=quote&amp;p=38103"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">...or you can get the coodinates using Google Earth.  Your cursor is continually tracked, just put it over your desired location and record the coordinates (by hand) at te lower left hand corner.  Never tried from Google map though.
+<br />
+
+<br />
+Interestingly, Google Map uses Navteq while Google Earth uses Tele Atlas .</span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row1" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row1" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a rel="nofollow" href="profile.php?mode=viewprofile&amp;u=5126"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a>      <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr> <!-- TJF_LINE: 9 !-->
+		<td width="150" align="left" valign="top" class="row2"><span class="name"><a name="38107"></a><b>Tim</b></span><br /><span class="postdetails">Site Admin<br /><img src="http://static.gpsreview.net/forums/images/gpsreview-solo-black.gif" alt="Site Admin" title="Site Admin" border="0" /><br /><br /><br />Joined: 31 Jul 2006<br />Posts: 20059<br />Location: 45.03°, -70.31°</span><br /></td>
+		<td class="row2" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a rel="nofollow" href="viewtopic.php?p=38107#38107"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails"> <span class="gen">&nbsp;</span>Thu May 08, 2008 12:15 am&nbsp; &nbsp;</span></td>
+				<td valign="top" nowrap="nowrap"> <a rel="nofollow" href="posting.php?mode=reply&amp;t=3632"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/reply.gif" width="59" height="18" border="0" alt="Reply to topic" /></a> <a rel="nofollow" href="posting.php?mode=quote&amp;p=38107"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody"></span><table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tr> 	  <td><span class="genmed"><b>lemodular wrote:</b></span></td>	</tr>	<tr>	  <td class="quote">Interestingly, Google Map uses Navteq while Google Earth uses Tele Atlas .</td>	</tr></table><span class="postbody">
+<br />
+In the USA anyway. <img src="http://static.gpsreview.net/forums/images/smiles/icon_smile.gif" alt="Smile" border="0" /> And in the USA Google uses Tele Atlas for the Google Maps API.</span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row2" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row2" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a rel="nofollow" href="profile.php?mode=viewprofile&amp;u=2"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a>      <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr> <!-- TJF_LINE: 10 !-->
+		<td width="150" align="left" valign="top" class="row1"><span class="name"><a name="44678"></a><b>debrafillingim</b></span><br /><span class="postdetails"><br /><br /><br />Joined: 21 Jun 2008<br />Posts: 4<br />Location: Grant, FL</span><br /></td>
+		<td class="row1" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a rel="nofollow" href="viewtopic.php?p=44678#44678"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails">but how to you load GPS into Garmin? <span class="gen">&nbsp;</span>Sat Jun 21, 2008 2:02 pm&nbsp; &nbsp;</span></td>
+				<td valign="top" nowrap="nowrap"> <a rel="nofollow" href="posting.php?mode=reply&amp;t=3632"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/reply.gif" width="59" height="18" border="0" alt="Reply to topic" /></a> <a rel="nofollow" href="posting.php?mode=quote&amp;p=44678"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">Very useful info...but I have a another problem.  I am in Arkansas on vacation.  Their excellent guide book tells you about the place and gives you the GPS coordinates.  GREAT IDEA!!! but after snooping thru my Garmin (it is brand new) I see no where that it lets me input coordinates rather than addresses.  Any tricks for me?
+<br />
+
+<br />
+Debra
+<br />
+
+<br />
+ <img src="http://static.gpsreview.net/forums/images/smiles/icon_cool.gif" alt="Cool" border="0" /></span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row1" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row1" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a rel="nofollow" href="profile.php?mode=viewprofile&amp;u=5933"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a>      <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr> <!-- TJF_LINE: 11 !-->
+		<td width="150" align="left" valign="top" class="row2"><span class="name"><a name="44680"></a><b>Tim</b></span><br /><span class="postdetails">Site Admin<br /><img src="http://static.gpsreview.net/forums/images/gpsreview-solo-black.gif" alt="Site Admin" title="Site Admin" border="0" /><br /><br /><br />Joined: 31 Jul 2006<br />Posts: 20059<br />Location: 45.03°, -70.31°</span><br /></td>
+		<td class="row2" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a rel="nofollow" href="viewtopic.php?p=44680#44680"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails"> <span class="gen">&nbsp;</span>Sat Jun 21, 2008 2:15 pm&nbsp; &nbsp;</span></td>
+				<td valign="top" nowrap="nowrap"> <a rel="nofollow" href="posting.php?mode=reply&amp;t=3632"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/reply.gif" width="59" height="18" border="0" alt="Reply to topic" /></a> <a rel="nofollow" href="posting.php?mode=quote&amp;p=44680"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">Debra, I replied to your question in your <a href="http://www.gpsreview.net/forums/viewtopic.php?p=44673" target="_blank" class="postlink">other thread</a>.</span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row2" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row2" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a rel="nofollow" href="profile.php?mode=viewprofile&amp;u=2"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a>      <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr> <!-- TJF_LINE: 12 !-->
+		<td width="150" align="left" valign="top" class="row1"><span class="name"><a name="44694"></a><b>debrafillingim</b></span><br /><span class="postdetails"><br /><br /><br />Joined: 21 Jun 2008<br />Posts: 4<br />Location: Grant, FL</span><br /></td>
+		<td class="row1" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a rel="nofollow" href="viewtopic.php?p=44694#44694"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails">thank you <span class="gen">&nbsp;</span>Sat Jun 21, 2008 3:39 pm&nbsp; &nbsp;</span></td>
+				<td valign="top" nowrap="nowrap"> <a rel="nofollow" href="posting.php?mode=reply&amp;t=3632"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/reply.gif" width="59" height="18" border="0" alt="Reply to topic" /></a> <a rel="nofollow" href="posting.php?mode=quote&amp;p=44694"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">I did finally find out how to do it-thank you so much for your reply!</span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row1" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row1" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a rel="nofollow" href="profile.php?mode=viewprofile&amp;u=5933"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a>      <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr> <!-- TJF_LINE: 13 !-->
+		<td width="150" align="left" valign="top" class="row2"><span class="name"><a name="54916"></a><b>ProximityCast</b></span><br /><span class="postdetails"><br /><img src="http://static.gpsreview.net/forums/images/avatars/gallery/Garmin/extrex-vista.jpg" alt="" border="0" /><br /><br />Joined: 05 Jan 2008<br />Posts: 17<br />Location: U.S.A.</span><br /></td>
+		<td class="row2" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a rel="nofollow" href="viewtopic.php?p=54916#54916"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails">Best method no longer works <span class="gen">&nbsp;</span>Wed Sep 10, 2008 4:08 am&nbsp; &nbsp;</span></td>
+				<td valign="top" nowrap="nowrap"> <a rel="nofollow" href="posting.php?mode=reply&amp;t=3632"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/reply.gif" width="59" height="18" border="0" alt="Reply to topic" /></a> <a rel="nofollow" href="posting.php?mode=quote&amp;p=54916"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">I find Google Maps more convenient than Google Earth because of the resources Google Earth requires. Tried the easiest method to get coordinates tonight: &quot;Right click, directions to here&quot; on the spot you want with Google Maps, and it didn't work...;-( Hopefully Google will make it that easy and convenient once again someday.  Till then, fortunately some other methods are posted.</span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row2" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row2" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a rel="nofollow" href="profile.php?mode=viewprofile&amp;u=3336"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a>      <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr> <!-- TJF_LINE: 14 !-->
+		<td width="150" align="left" valign="top" class="row1"><span class="name"><a name="64757"></a><b>dlehmann</b></span><br /><span class="postdetails"><br /><br /><br />Joined: 05 Dec 2008<br />Posts: 3<br /></span><br /></td>
+		<td class="row1" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a rel="nofollow" href="viewtopic.php?p=64757#64757"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails">Position Finder <span class="gen">&nbsp;</span>Fri Dec 05, 2008 1:23 am&nbsp; &nbsp;</span></td>
+				<td valign="top" nowrap="nowrap"> <a rel="nofollow" href="posting.php?mode=reply&amp;t=3632"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/reply.gif" width="59" height="18" border="0" alt="Reply to topic" /></a> <a rel="nofollow" href="posting.php?mode=quote&amp;p=64757"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">found position finder and &quot;added&quot; but nothing happened?????? what went wrong?</span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row1" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row1" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a rel="nofollow" href="profile.php?mode=viewprofile&amp;u=8715"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a>      <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr> <!-- TJF_LINE: 15 !-->
+		<td width="150" align="left" valign="top" class="row2"><span class="name"><a name="64764"></a><b>ProximityCast</b></span><br /><span class="postdetails"><br /><img src="http://static.gpsreview.net/forums/images/avatars/gallery/Garmin/extrex-vista.jpg" alt="" border="0" /><br /><br />Joined: 05 Jan 2008<br />Posts: 17<br />Location: U.S.A.</span><br /></td>
+		<td class="row2" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a rel="nofollow" href="viewtopic.php?p=64764#64764"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails">Re: Position Finder <span class="gen">&nbsp;</span>Fri Dec 05, 2008 2:30 am&nbsp; &nbsp;</span></td>
+				<td valign="top" nowrap="nowrap"> <a rel="nofollow" href="posting.php?mode=reply&amp;t=3632"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/reply.gif" width="59" height="18" border="0" alt="Reply to topic" /></a> <a rel="nofollow" href="posting.php?mode=quote&amp;p=64764"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody"></span><table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tr> 	  <td><span class="genmed"><b>dlehmann wrote:</b></span></td>	</tr>	<tr>	  <td class="quote">found position finder and &quot;added&quot; but nothing happened?????? what went wrong?</td>	</tr></table><span class="postbody">
+<br />
+I have to be logged into my google account to use position finder.</span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row2" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row2" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a rel="nofollow" href="profile.php?mode=viewprofile&amp;u=3336"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a>      <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr> <!-- TJF_LINE: 16 !-->
+		<td width="150" align="left" valign="top" class="row1"><span class="name"><a name="64769"></a><b>dlehmann</b></span><br /><span class="postdetails"><br /><br /><br />Joined: 05 Dec 2008<br />Posts: 3<br /></span><br /></td>
+		<td class="row1" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a rel="nofollow" href="viewtopic.php?p=64769#64769"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails">Position Finder <span class="gen">&nbsp;</span>Fri Dec 05, 2008 3:04 am&nbsp; &nbsp;</span></td>
+				<td valign="top" nowrap="nowrap"> <a rel="nofollow" href="posting.php?mode=reply&amp;t=3632"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/reply.gif" width="59" height="18" border="0" alt="Reply to topic" /></a> <a rel="nofollow" href="posting.php?mode=quote&amp;p=64769"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">I'm logged in..maybe I don't understand how it works..I thought there'd be marker that I move on map and it would show coordinates..If I type address in it'll show coordinates for that spot but can't move that marker around. I need something that I can move around on map and it'll show coordinates at that point.</span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row1" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row1" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a rel="nofollow" href="profile.php?mode=viewprofile&amp;u=8715"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a>      <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr> <!-- TJF_LINE: 17 !-->
+		<td width="150" align="left" valign="top" class="row2"><span class="name"><a name="64843"></a><b>ProximityCast</b></span><br /><span class="postdetails"><br /><img src="http://static.gpsreview.net/forums/images/avatars/gallery/Garmin/extrex-vista.jpg" alt="" border="0" /><br /><br />Joined: 05 Jan 2008<br />Posts: 17<br />Location: U.S.A.</span><br /></td>
+		<td class="row2" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a rel="nofollow" href="viewtopic.php?p=64843#64843"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails">No marker to move <span class="gen">&nbsp;</span>Fri Dec 05, 2008 4:11 pm&nbsp; &nbsp;</span></td>
+				<td valign="top" nowrap="nowrap"> <a rel="nofollow" href="posting.php?mode=reply&amp;t=3632"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/reply.gif" width="59" height="18" border="0" alt="Reply to topic" /></a> <a rel="nofollow" href="posting.php?mode=quote&amp;p=64843"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">When I'm logged in depending on how many items I've added I'll have a check box on the left that needs to be selected for the item to work.  When I only had &quot;position finder&quot; I don't remember seeing a check box.
+<br />
+
+<br />
+<span style="font-weight: bold">Now for how position finder works:  Simply click anywhere on the map that you want coordinates for.  Then and only then will a marker appears at the spot you clicked with a text box showing the coordinates in decimal degrees.</span>
+<br />
+
+<br />
+If you want to see the coordinates in another format, copy the decimal degree coordinates from the text box and past them into the search box and click Search Maps.  A new marker will appear with another text box showing the coordinates in decimal degrees and degrees, minutes, and seconds.
+<br />
+
+<br />
+You can also zoom in the google map to a higher and higher detail for more precise placement of the click where you want the coordinates.
+<br />
+
+<br />
+I hope this helps. If you find you're still having problems, let us know and we'll try to help.  Good luck!</span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row2" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row2" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a rel="nofollow" href="profile.php?mode=viewprofile&amp;u=3336"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a>      <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr> <!-- TJF_LINE: 18 !-->
+		<td width="150" align="left" valign="top" class="row1"><span class="name"><a name="64859"></a><b>dlehmann</b></span><br /><span class="postdetails"><br /><br /><br />Joined: 05 Dec 2008<br />Posts: 3<br /></span><br /></td>
+		<td class="row1" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a rel="nofollow" href="viewtopic.php?p=64859#64859"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails">got it <span class="gen">&nbsp;</span>Fri Dec 05, 2008 6:45 pm&nbsp; &nbsp;</span></td>
+				<td valign="top" nowrap="nowrap"> <a rel="nofollow" href="posting.php?mode=reply&amp;t=3632"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/reply.gif" width="59" height="18" border="0" alt="Reply to topic" /></a> <a rel="nofollow" href="posting.php?mode=quote&amp;p=64859"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">finally figured it out..went to &quot;my maps&quot; and there it was..one other question, is there a way to have an X on map instead of grabbing hand? the hand may actually cover the point that I want..thank you for all the help.</span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row1" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row1" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a rel="nofollow" href="profile.php?mode=viewprofile&amp;u=8715"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a>      <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr> <!-- TJF_LINE: 19 !-->
+		<td width="150" align="left" valign="top" class="row2"><span class="name"><a name="64878"></a><b>ProximityCast</b></span><br /><span class="postdetails"><br /><img src="http://static.gpsreview.net/forums/images/avatars/gallery/Garmin/extrex-vista.jpg" alt="" border="0" /><br /><br />Joined: 05 Jan 2008<br />Posts: 17<br />Location: U.S.A.</span><br /></td>
+		<td class="row2" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a rel="nofollow" href="viewtopic.php?p=64878#64878"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails">Glad to hear you got it figured out. <span class="gen">&nbsp;</span>Fri Dec 05, 2008 8:48 pm&nbsp; &nbsp;</span></td>
+				<td valign="top" nowrap="nowrap"> <a rel="nofollow" href="posting.php?mode=reply&amp;t=3632"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/reply.gif" width="59" height="18" border="0" alt="Reply to topic" /></a> <a rel="nofollow" href="posting.php?mode=quote&amp;p=64878"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">Glad to hear you got it figured out.  Google or the person who wrote the &quot;position finder&quot; applet would have control of an X over a hand unfortunately. What I would do is simply zoom in to the maximum level possible to make my click.  Even if there was an X that would not necessarily give you the accuracy you think you are getting, but that's a whole new discussion.
+<br />
+
+<br />
+Kind Regards,
+<br />
+
+<br />
+ProximityCast.com</span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row2" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row2" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a rel="nofollow" href="profile.php?mode=viewprofile&amp;u=3336"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a>      <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr> <!-- TJF_LINE: 20 !-->
+		<td width="150" align="left" valign="top" class="row1"><span class="name"><a name="65853"></a><b>T-Man</b></span><br /><span class="postdetails"><br /><br /><br />Joined: 12 Dec 2008<br />Posts: 1<br />Location: Shawnee Mission, KS</span><br /></td>
+		<td class="row1" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a rel="nofollow" href="viewtopic.php?p=65853#65853"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails">How to get GPS coordinates from a location <span class="gen">&nbsp;</span>Fri Dec 12, 2008 2:51 am&nbsp; &nbsp;</span></td>
+				<td valign="top" nowrap="nowrap"> <a rel="nofollow" href="posting.php?mode=reply&amp;t=3632"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/reply.gif" width="59" height="18" border="0" alt="Reply to topic" /></a> <a rel="nofollow" href="posting.php?mode=quote&amp;p=65853"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">Try this website. It uses a version of google maps and all you have to do is left click on the marker for coordinates. Search any address near your desired location. Then, if necessary, drag the marker to the exact desired location and click on the marker.   
+<br />
+     http://itouchmap.com/latlong.html</span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row1" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row1" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a rel="nofollow" href="profile.php?mode=viewprofile&amp;u=8886"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a>      <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr> <!-- TJF_LINE: 21 !-->
+		<td width="150" align="left" valign="top" class="row2"><span class="name"><a name="72810"></a><b>jgombos</b></span><br /><span class="postdetails"><br /><br /><br />Joined: 31 Jan 2009<br />Posts: 3<br />Location: Beglium</span><br /></td>
+		<td class="row2" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a rel="nofollow" href="viewtopic.php?p=72810#72810"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails"> <span class="gen">&nbsp;</span>Sat Jan 31, 2009 9:14 am&nbsp; &nbsp;</span></td>
+				<td valign="top" nowrap="nowrap"> <a rel="nofollow" href="posting.php?mode=reply&amp;t=3632"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/reply.gif" width="59" height="18" border="0" alt="Reply to topic" /></a> <a rel="nofollow" href="posting.php?mode=quote&amp;p=72810"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">Although iTouchmap.com is probably the easiest for those who just need one lookup, what about folks who have a list of 50+ street addresses they want converted?  
+<br />
+
+<br />
+It would be useful to have a script that queries itouchmap.com.  If anyone knows how to process a list of addresses, please post.</span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row2" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row2" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a rel="nofollow" href="profile.php?mode=viewprofile&amp;u=9902"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a>      <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr> <!-- TJF_LINE: 22 !-->
+		<td width="150" align="left" valign="top" class="row1"><span class="name"><a name="72814"></a><b>Tim</b></span><br /><span class="postdetails">Site Admin<br /><img src="http://static.gpsreview.net/forums/images/gpsreview-solo-black.gif" alt="Site Admin" title="Site Admin" border="0" /><br /><br /><br />Joined: 31 Jul 2006<br />Posts: 20059<br />Location: 45.03°, -70.31°</span><br /></td>
+		<td class="row1" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a rel="nofollow" href="viewtopic.php?p=72814#72814"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails"> <span class="gen">&nbsp;</span>Sat Jan 31, 2009 12:35 pm&nbsp; &nbsp;</span></td>
+				<td valign="top" nowrap="nowrap"> <a rel="nofollow" href="posting.php?mode=reply&amp;t=3632"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/reply.gif" width="59" height="18" border="0" alt="Reply to topic" /></a> <a rel="nofollow" href="posting.php?mode=quote&amp;p=72814"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody"></span><table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tr> 	  <td><span class="genmed"><b>jgombos wrote:</b></span></td>	</tr>	<tr>	  <td class="quote">If anyone knows how to process a list of addresses, please post.</td>	</tr></table><span class="postbody">
+<br />
+I don't know if this works outside of North America, but does what you describe:
+<br />
+
+<br />
+http://www.gpsvisualizer.com/geocoder/</span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row1" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row1" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a rel="nofollow" href="profile.php?mode=viewprofile&amp;u=2"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a>      <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr> <!-- TJF_LINE: 23 !-->
+		<td width="150" align="left" valign="top" class="row2"><span class="name"><a name="72816"></a><b>jgombos</b></span><br /><span class="postdetails"><br /><br /><br />Joined: 31 Jan 2009<br />Posts: 3<br />Location: Beglium</span><br /></td>
+		<td class="row2" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a rel="nofollow" href="viewtopic.php?p=72816#72816"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails"> <span class="gen">&nbsp;</span>Sat Jan 31, 2009 1:06 pm&nbsp; &nbsp;</span></td>
+				<td valign="top" nowrap="nowrap"> <a rel="nofollow" href="posting.php?mode=reply&amp;t=3632"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/reply.gif" width="59" height="18" border="0" alt="Reply to topic" /></a> <a rel="nofollow" href="posting.php?mode=quote&amp;p=72816"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody"></span><table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tr> 	  <td><span class="genmed"><b>Tim wrote:</b></span></td>	</tr>	<tr>	  <td class="quote"></span><table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tr> 	  <td><span class="genmed"><b>jgombos wrote:</b></span></td>	</tr>	<tr>	  <td class="quote">If anyone knows how to process a list of addresses, please post.</td>	</tr></table><span class="postbody">
+<br />
+I don't know if this works outside of North America, but does what you describe:
+<br />
+
+<br />
+http://www.gpsvisualizer.com/geocoder/</td>	</tr></table><span class="postbody">Ooo... very nice. It even offers a GPX output, which can then be fed into gpsbabel, which then outputs the format recognized by a proprietary nav system.
+<br />
+
+<br />
+Good find!</span><span class="gensmall"><br /><br />Last edited by jgombos on Sat Jan 31, 2009 2:09 pm; edited 3 times in total</span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row2" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row2" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a rel="nofollow" href="profile.php?mode=viewprofile&amp;u=9902"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a>      <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr> <!-- TJF_LINE: 24 !-->
+		<td width="150" align="left" valign="top" class="row1"><span class="name"><a name="72817"></a><b>Tim</b></span><br /><span class="postdetails">Site Admin<br /><img src="http://static.gpsreview.net/forums/images/gpsreview-solo-black.gif" alt="Site Admin" title="Site Admin" border="0" /><br /><br /><br />Joined: 31 Jul 2006<br />Posts: 20059<br />Location: 45.03°, -70.31°</span><br /></td>
+		<td class="row1" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a rel="nofollow" href="viewtopic.php?p=72817#72817"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails"> <span class="gen">&nbsp;</span>Sat Jan 31, 2009 1:28 pm&nbsp; &nbsp;</span></td>
+				<td valign="top" nowrap="nowrap"> <a rel="nofollow" href="posting.php?mode=reply&amp;t=3632"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/reply.gif" width="59" height="18" border="0" alt="Reply to topic" /></a> <a rel="nofollow" href="posting.php?mode=quote&amp;p=72817"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody"></span><table width="90%" cellspacing="1" cellpadding="3" border="0" align="center"><tr> 	  <td><span class="genmed"><b>jgombos wrote:</b></span></td>	</tr>	<tr>	  <td class="quote">It even offers a GPX output, which can then be fed into gpsbabel, which then outputs the format recognized by a proprietary nav system.</td>	</tr></table><span class="postbody">
+<br />
+That is exactly how I use it.</span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row1" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row1" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a rel="nofollow" href="profile.php?mode=viewprofile&amp;u=2"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a>      <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr> <!-- TJF_LINE: 25 !-->
+		<td width="150" align="left" valign="top" class="row2"><span class="name"><a name="72821"></a><b>jgombos</b></span><br /><span class="postdetails"><br /><br /><br />Joined: 31 Jan 2009<br />Posts: 3<br />Location: Beglium</span><br /></td>
+		<td class="row2" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a rel="nofollow" href="viewtopic.php?p=72821#72821"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails"> <span class="gen">&nbsp;</span>Sat Jan 31, 2009 2:08 pm&nbsp; &nbsp;</span></td>
+				<td valign="top" nowrap="nowrap"> <a rel="nofollow" href="posting.php?mode=reply&amp;t=3632"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/reply.gif" width="59" height="18" border="0" alt="Reply to topic" /></a> <a rel="nofollow" href="posting.php?mode=quote&amp;p=72821"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">BTW, is there a way to do the reverse? Eg. you capture fixes for homes for sale, and later want to convert them to approximate addresses to see if you can find an online listing?</span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row2" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row2" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a rel="nofollow" href="profile.php?mode=viewprofile&amp;u=9902"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a>      <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr> <!-- TJF_LINE: 26 !-->
+		<td width="150" align="left" valign="top" class="row1"><span class="name"><a name="72822"></a><b>Tim</b></span><br /><span class="postdetails">Site Admin<br /><img src="http://static.gpsreview.net/forums/images/gpsreview-solo-black.gif" alt="Site Admin" title="Site Admin" border="0" /><br /><br /><br />Joined: 31 Jul 2006<br />Posts: 20059<br />Location: 45.03°, -70.31°</span><br /></td>
+		<td class="row1" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a rel="nofollow" href="viewtopic.php?p=72822#72822"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails"> <span class="gen">&nbsp;</span>Sat Jan 31, 2009 2:16 pm&nbsp; &nbsp;</span></td>
+				<td valign="top" nowrap="nowrap"> <a rel="nofollow" href="posting.php?mode=reply&amp;t=3632"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/reply.gif" width="59" height="18" border="0" alt="Reply to topic" /></a> <a rel="nofollow" href="posting.php?mode=quote&amp;p=72822"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">There probably are, but it wouldn't likely be all that accurate at guessing the actual street number.</span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row1" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row1" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a rel="nofollow" href="profile.php?mode=viewprofile&amp;u=2"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a>      <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr> <!-- TJF_LINE: 27 !-->
+		<td width="150" align="left" valign="top" class="row2"><span class="name"><a name="75822"></a><b>jclear</b></span><br /><span class="postdetails"><br /><br /><br />Joined: 22 Feb 2009<br />Posts: 4<br />Location: pa.us</span><br /></td>
+		<td class="row2" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a rel="nofollow" href="viewtopic.php?p=75822#75822"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails">Easier way <span class="gen">&nbsp;</span>Sun Feb 22, 2009 9:54 pm&nbsp; &nbsp;</span></td>
+				<td valign="top" nowrap="nowrap"> <a rel="nofollow" href="posting.php?mode=reply&amp;t=3632"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/reply.gif" width="59" height="18" border="0" alt="Reply to topic" /></a> <a rel="nofollow" href="posting.php?mode=quote&amp;p=75822"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">Seems way to complicated.  For Google Maps, once you've located a point  just click on the normal Send link in the upper right.  Then click on GPS in the popup instead of Email.  Select your GPS vendor, add any phone number or notes you want.  The Send button then takes you to a vendor specific web based method to download to your GPS.  Works for Garmin, Tom Tom and a few others.</span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row2" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row2" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a rel="nofollow" href="profile.php?mode=viewprofile&amp;u=10284"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a>      <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr> <!-- TJF_LINE: 28 !-->
+		<td width="150" align="left" valign="top" class="row1"><span class="name"><a name="75827"></a><b>Tim</b></span><br /><span class="postdetails">Site Admin<br /><img src="http://static.gpsreview.net/forums/images/gpsreview-solo-black.gif" alt="Site Admin" title="Site Admin" border="0" /><br /><br /><br />Joined: 31 Jul 2006<br />Posts: 20059<br />Location: 45.03°, -70.31°</span><br /></td>
+		<td class="row1" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a rel="nofollow" href="viewtopic.php?p=75827#75827"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails"> <span class="gen">&nbsp;</span>Sun Feb 22, 2009 10:19 pm&nbsp; &nbsp;</span></td>
+				<td valign="top" nowrap="nowrap"> <a rel="nofollow" href="posting.php?mode=reply&amp;t=3632"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/reply.gif" width="59" height="18" border="0" alt="Reply to topic" /></a> <a rel="nofollow" href="posting.php?mode=quote&amp;p=75827"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">That gets you the location in your GPS, but it doesn't give you the coordinates to use elsewhere.</span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row1" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row1" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a rel="nofollow" href="profile.php?mode=viewprofile&amp;u=2"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a>      <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr> <!-- TJF_LINE: 29 !-->
+		<td width="150" align="left" valign="top" class="row2"><span class="name"><a name="101975"></a><b>ProximityCast</b></span><br /><span class="postdetails"><br /><img src="http://static.gpsreview.net/forums/images/avatars/gallery/Garmin/extrex-vista.jpg" alt="" border="0" /><br /><br />Joined: 05 Jan 2008<br />Posts: 17<br />Location: U.S.A.</span><br /></td>
+		<td class="row2" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a rel="nofollow" href="viewtopic.php?p=101975#101975"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails">Pretty simple <span class="gen">&nbsp;</span>Thu Sep 03, 2009 3:46 am&nbsp; &nbsp;</span></td>
+				<td valign="top" nowrap="nowrap"> <a rel="nofollow" href="posting.php?mode=reply&amp;t=3632"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/reply.gif" width="59" height="18" border="0" alt="Reply to topic" /></a> <a rel="nofollow" href="posting.php?mode=quote&amp;p=101975"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">Played around on google maps recently and found a &quot;What's here?&quot; at the bottom of the pop up menu when you right click on a spot.  Clicking &quot;What's here? places a &quot;green arrow&quot; on the spot and the decimal, degrees coordinates in the Search Maps text box.  If you click the green arrow you get a pop up box with the coordinates shown in Decimal Degrees, plus Degrees, Minutes, Seconds.  Can't get much simpler than that, unless google changes it. 
+<br />
+ps You can zoom in as desired to get the accuracy you desire.</span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row2" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row2" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a rel="nofollow" href="profile.php?mode=viewprofile&amp;u=3336"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a>      <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr> <!-- TJF_LINE: 30 !-->
+		<td width="150" align="left" valign="top" class="row1"><span class="name"><a name="102260"></a><b>mscroggi</b></span><br /><span class="postdetails"><br /><br /><br />Joined: 05 Sep 2009<br />Posts: 2<br /></span><br /></td>
+		<td class="row1" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a rel="nofollow" href="viewtopic.php?p=102260#102260"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails"> <span class="gen">&nbsp;</span>Sat Sep 05, 2009 4:09 pm&nbsp; &nbsp;</span></td>
+				<td valign="top" nowrap="nowrap"> <a rel="nofollow" href="posting.php?mode=reply&amp;t=3632"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/reply.gif" width="59" height="18" border="0" alt="Reply to topic" /></a> <a rel="nofollow" href="posting.php?mode=quote&amp;p=102260"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">I think the easiest way to get the coordinates is to  - 
+<br />
+
+<br />
+1. add a bookmark to your browser (any bookmark page will do)
+<br />
+2. go to the bookmark manager and modify the bookmark to set the title to something like 'get GPS coordinates' and paste in the javascript code for the url.. and save the bookmark
+<br />
+
+<br />
+Once you browse to any google map..  center the map around the place you wish to get the coordinates for.. and then simply select the bookmark from the bookmarks menu..    It doesnt get any easier than that!..</span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row1" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row1" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a rel="nofollow" href="profile.php?mode=viewprofile&amp;u=13624"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a>      <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr> <!-- TJF_LINE: 31 !-->
+		<td width="150" align="left" valign="top" class="row2"><span class="name"><a name="128142"></a><b>mscroggi</b></span><br /><span class="postdetails"><br /><br /><br />Joined: 05 Sep 2009<br />Posts: 2<br /></span><br /></td>
+		<td class="row2" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a rel="nofollow" href="viewtopic.php?p=128142#128142"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails"> <span class="gen">&nbsp;</span>Tue May 11, 2010 11:48 am&nbsp; &nbsp;</span></td>
+				<td valign="top" nowrap="nowrap"> <a rel="nofollow" href="posting.php?mode=reply&amp;t=3632"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/reply.gif" width="59" height="18" border="0" alt="Reply to topic" /></a> <a rel="nofollow" href="posting.php?mode=quote&amp;p=128142"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">There are multiple google map plugins that will give the coordinates etc..</span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row2" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row2" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a rel="nofollow" href="profile.php?mode=viewprofile&amp;u=13624"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a>      <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr> <!-- TJF_LINE: 32 !-->
+		<td width="150" align="left" valign="top" class="row1"><span class="name"><a name="131873"></a><b>fredmett</b></span><br /><span class="postdetails"><br /><br /><br />Joined: 18 Jun 2010<br />Posts: 1<br />Location: Chicago</span><br /></td>
+		<td class="row1" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a rel="nofollow" href="viewtopic.php?p=131873#131873"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails">an easier way <span class="gen">&nbsp;</span>Fri Jun 18, 2010 1:04 am&nbsp; &nbsp;</span></td>
+				<td valign="top" nowrap="nowrap"> <a rel="nofollow" href="posting.php?mode=reply&amp;t=3632"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/reply.gif" width="59" height="18" border="0" alt="Reply to topic" /></a> <a rel="nofollow" href="posting.php?mode=quote&amp;p=131873"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">I found a site where you can type in your address or just click on the map and get the latitude and longitude.
+<br />
+
+<br />
+http://www.mapdevelopers.com/geocode_tool.php</span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row1" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row1" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a rel="nofollow" href="profile.php?mode=viewprofile&amp;u=17332"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a>      <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+	<tr> <!-- TJF_LINE: 33 !-->
+		<td width="150" align="left" valign="top" class="row2"><span class="name"><a name="131874"></a><b>Tim</b></span><br /><span class="postdetails">Site Admin<br /><img src="http://static.gpsreview.net/forums/images/gpsreview-solo-black.gif" alt="Site Admin" title="Site Admin" border="0" /><br /><br /><br />Joined: 31 Jul 2006<br />Posts: 20059<br />Location: 45.03°, -70.31°</span><br /></td>
+		<td class="row2" width="100%" height="28" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="100%"><a rel="nofollow" href="viewtopic.php?p=131874#131874"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/icon_minipost.gif" width="12" height="9" alt="Post" title="Post" border="0" /></a><span class="postdetails"> <span class="gen">&nbsp;</span>Fri Jun 18, 2010 1:11 am&nbsp; &nbsp;</span></td>
+				<td valign="top" nowrap="nowrap"> <a rel="nofollow" href="posting.php?mode=reply&amp;t=3632"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/reply.gif" width="59" height="18" border="0" alt="Reply to topic" /></a> <a rel="nofollow" href="posting.php?mode=quote&amp;p=131874"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_quote.gif" alt="Reply with quote" title="Reply with quote" border="0" /></a>   </td>
+			</tr>
+			<tr>
+				<td colspan="2"><hr /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><span class="postbody">No need to do it from a different site now, you can turn on the coordinates in Google Maps and do it right there. Go to the labs icon and enable the LatLng Tooltip. Done.</span><span class="gensmall"></span></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="row2" width="150" align="left" valign="middle"><span class="nav"><a href="#top" class="nav">Back to top</a></span></td>
+		<td class="row2" width="100%" height="28" valign="bottom" nowrap="nowrap"><table cellspacing="0" cellpadding="0" border="0" height="18" width="18">
+			<tr>
+				<td valign="middle" nowrap="nowrap"><a rel="nofollow" href="profile.php?mode=viewprofile&amp;u=2"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/icon_profile.gif" alt="View user's profile" title="View user's profile" border="0" /></a>      <script language="JavaScript" type="text/javascript"><!--
+
+	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
+		document.write(' ');
+	else
+		document.write('</td><td>&nbsp;</td><td valign="top" nowrap="nowrap"><div style="position:relative"><div style="position:absolute"></div><div style="position:absolute;left:3px;top:-1px"></div></div>');
+
+				//--></script><noscript></noscript></td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+
+	<tr>
+		<td colspan="2" bgcolor="#ffffff">
+<!-- BEGIN: Shopzilla Publisher Asset HTML -->
+<div style="background-color: #FFFFFF;border: 1px solid #ffffff;font-family: Verdana, Arial, Sans-serif;font-size: 10px;padding: 0px 0px 0px 0px;line-height: 11px;color: #000000;width: 728px;height: 90px;">
+
+	<iframe width="728" vspace="0" scrolling="no" src="http://adserve.shopzilla.com/pp/content/tal/publisherID-1341/assetID-484/assetTypeID-9/placementID-16/showProducts-4/showRandom-0/start-1/sort-default/onlyOffers-1/categoryID-11210000/tokenID-7X/keyword-+/style-10px%20Verdana%2C%20Arial%2C%20Sans-serif;000000:FFFFFF:005400:006600:006600:666666:ffffff;0px%20solid;_blank" name="display" height="78" marginwidth="0" hspace="0" frameborder="0" marginheight="0"></iframe>
+	<div xmlns:tal="http://xml.zope.org/namespaces/tal" style="width: 726px;height: 13px;font-size: 10px;">
+	<div style="text-align: left;display: block; float: left;padding-left: 3px; color:#666666;">
+		Find great deals on <span><a href="http://www.bizrate.com/search__af_assettype_id--9__af_creative_id--484__af_id--1341__af_placement_id--16__cat_id--11210000__keyword--garmin%20oregon__rf--af1.html" target="_blank" style="font-size: 10px; color:#009900;">garmin oregon</a></span> at <a href="http://www.shopzilla.com/2_-_rf--af1__af_id--1341__af_creative_id--484__af_assettype_id--9__af_placement_id--16" target="_blank" style="font-size: 10px; color:#009900;">Shopzilla.com</a>!
+	</div>
+	<div style="text-align: right;display: block;float: right;padding-right: 2px;">
+		<a href="http://publisher.shopzilla.com/partner_id/1341/index.xhtml" class="exclude" target="_blank" style="font-size: 10px; color:#009900;">ads from Shopzilla</a>
+	</div>
+</div>
+
+</div>
+<NOSCRIPT><a href="http://adserve.bizrate.com/pp/content/tal/publisherID-1341/assetID-484/assetTypeID-9/placementID-16/showProducts-4/showRandom-0/start-1/sort-default/cache-1/noLog-1/standAlone-1/onlyOffers-1/categoryID-11210000/tokenID-7X/keyword-garmin%20oregon/style-">BizRate</a></NOSCRIPT>
+<!-- END: Shopzilla Publisher Asset HTML -->
+		</td>
+	</tr>
+	<tr>
+		<td class="spaceRow" colspan="2" height="1"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	</tr>
+
+	<!--
+	<tr align="center">
+		<td class="catBottom" colspan="2" height="28"><table cellspacing="0" cellpadding="0" border="0">
+			<tr><form method="post" action="viewtopic.php?t=3632&amp;start=0">
+				<td align="center"><span class="gensmall">Display posts from previous: <select name="postdays"><option value="0" selected="selected">All Posts</option><option value="1">1 Day</option><option value="7">7 Days</option><option value="14">2 Weeks</option><option value="30">1 Month</option><option value="90">3 Months</option><option value="180">6 Months</option><option value="364">1 Year</option></select>&nbsp;<select name="postorder"><option value="asc" selected="selected">Oldest First</option><option value="desc">Newest First</option></select>&nbsp;<input type="submit" value="Go" class="liteoption" name="submit" /></span></td>
+			</form></tr>
+		</table></td>
+	</tr>
+	!-->
+
+</table>
+
+<table width="100%" cellspacing="2" cellpadding="2" border="0" align="center">
+  <tr>
+	<td align="left" valign="middle" nowrap="nowrap"><span class="nav"><a rel="nofollow" href="posting.php?mode=newtopic&amp;f=36"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/post.gif" border="0" alt="Post new topic" align="middle" /></a>&nbsp;&nbsp;&nbsp;<a rel="nofollow" href="posting.php?mode=reply&amp;t=3632"><img src="http://static.gpsreview.net/forums/templates/subSilver/images/lang_english/reply.gif" border="0" alt="Reply to topic" align="middle" /></a></span></td>
+	<td align="left" valign="middle" width="100%"><span class="nav">&nbsp;&nbsp;&nbsp;<a href="/" class="nav">GPS Review Forums Forum Index</a>
+	  -> <a href="viewforum.php?f=36" class="nav">Tips, Tricks & Mods</a></span></td>
+	<td align="right" valign="top" nowrap="nowrap"><span class="gensmall">All times are GMT</span><br /><span class="nav" style="background:#ffff00;"></span>
+	  </td>
+  </tr>
+  <tr>
+	<td align="left" colspan="3"><span class="nav">Page <strong>1</strong> of <strong>1</strong></span></td>
+  </tr>
+</table>
+
+<table width="100%" cellspacing="2" border="0" align="center">
+  <tr>
+	<td width="40%" valign="top" nowrap="nowrap" align="left"><span class="gensmall"></span><br />
+	  &nbsp;<br />
+	  </td>
+	<td align="right" valign="top" nowrap="nowrap"><span class="gensmall">You <strong>cannot</strong> post new topics in this forum<br />You <strong>cannot</strong> reply to topics in this forum<br />You <strong>cannot</strong> edit your posts in this forum<br />You <strong>cannot</strong> delete your posts in this forum<br />You <strong>cannot</strong> vote in polls in this forum<br /></span></td>
+  </tr>
+</table>
+
+<!-- google_ad_section_end -->
+							</td>
+						</tr>
+					</table>
+				</td>
+			<td align="left" id="content-right"></td>
+		</tr>
+		<tr>
+			<td align="right"><img alt="content bottomleft" width="20" height="20" src="http://img.gpsreview.net/wp-content/themes/gps/images/content-bottomleft.jpg"/></td>
+			<td id="content-bottom"></td>
+			<td><img alt="content bottomright" width="20" height="20" src="http://img.gpsreview.net/wp-content/themes/gps/images/content-bottomright.jpg"/></td>
+		</tr>
+			<tr id="footer">
+				<td></td>
+				<td>
+					<!-- google_ad_section_start(weight=ignore) -->
+					&copy; 2005 - 2010 All Rights Reserved. <a rel="nofollow" href="http://www.gpsreview.net/privacy-policy/">privacy policy</a><br/>
+					All trademarks and copyrights are the property of their respective owners.<br/>
+					<div align="center"><span class="copyright"><br /><br /></span></div>
+					<!-- google_ad_section_end -->
+				</td>
+			</tr>
+		</table>
+
+<div id="actionbar" style="display:block;position:fixed;bottom:0;right:20px;border-width:1px 1px 0 1px;border-style:solid;
+	font-size:80%;border-color:#999;background:#D6E89C;padding:5px 20px 5px 20px;color:#005400;
+	-moz-border-radius:10px;-moz-border-radius-topleft:10px; /* this works only in camino/firefox */
+	-webkit-border-top-right-radius:10px;-webkit-border-top-left-radius:10px; /* this is just for Safari */">
+
+	<a href="http://www.gpsreview.net/"><img align="middle" src="http://img.gpsreview.net/wp-content/uploads/miniicon.png" alt="mini logo" width="16" height="16" /></a>
+	 <strong> &bull; </strong>
+	<a target="_new" href="http://twitter.com/gpsreview"><img align="middle" src="http://img.gpsreview.net/wp-content/images/favicon-twitter.png" width="16" height="16"  alt="twitter" /></a>
+	 <strong> &bull; </strong>
+	 <a href="http://www.gpsreview.net/feed/"><img align="middle" width="16" height="16" alt="feed" src="http://img.gpsreview.net/wp-content/uploads/rssicon.png" /></a>
+</div>
+<div id="clearactionabr" style="height:20px;clear:left;"></div>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-70021-13");
+pageTracker._setDomainName(".gpsreview.net");
+pageTracker._trackPageview();
+} catch(err) { }</script>
+	</body>
+</html>
