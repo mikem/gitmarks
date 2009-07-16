@@ -1,0 +1,678 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en">
+
+<head profile="http://gmpg.org/xfn/11">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>Augmented Reality with FLARToolKit &laquo; Papervision3D</title>
+
+<link rel="stylesheet" href="http://s0.wp.com/wp-content/themes/default/style.css?m=1292638056g&amp;3" type="text/css" media="screen" />
+<!--[if lte IE 8]><link rel="stylesheet" href="http://s0.wp.com/wp-content/themes/default/ie.css?m=1273203575g" type="text/css" media="screen" /><![endif]-->
+<link rel="pingback" href="http://blog.papervision3d.org/xmlrpc.php" />
+
+		<script src='http://wordpress.com/remote-login.php?action=js&amp;host=blog.papervision3d.org&amp;id=418715&amp;t=1293265295&amp;back=blog.papervision3d.org%2F2009%2F01%2F07%2Faugmented-reality-with-flartoolkit%2F' type="text/javascript"></script>
+		<script type="text/javascript">
+		/* <![CDATA[ */
+			if ( 'function' === typeof WPRemoteLogin ) {
+				document.cookie = "wordpress_test_cookie=test; path=/";
+				if ( document.cookie.match( /(;|^)\s*wordpress_test_cookie\=/ ) ) {
+					WPRemoteLogin();
+				}
+			}
+		/* ]]> */
+		</script>
+		<link rel="alternate" type="application/rss+xml" title="Papervision3D &raquo; Feed" href="http://blog.papervision3d.org/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Papervision3D &raquo; Comments Feed" href="http://blog.papervision3d.org/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Papervision3D &raquo; Augmented Reality with&nbsp;FLARToolKit Comments Feed" href="http://blog.papervision3d.org/2009/01/07/augmented-reality-with-flartoolkit/feed/" />
+<script type="text/javascript">
+/* <![CDATA[ */
+function addLoadEvent(func){var oldonload=window.onload;if(typeof window.onload!='function'){window.onload=func;}else{window.onload=function(){oldonload();func();}}}
+/* ]]> */
+</script>
+<link rel="stylesheet" href="http://s0.wp.com/wp-content/themes/h4/global.css?m=1291749258g" type="text/css" />
+<script type='text/javascript' src='http://s2.wp.com/wp-includes/js/l10n.js?m=1290133841g&amp;ver=20101110'></script>
+<script type='text/javascript' src='http://s1.wp.com/wp-content/plugins/snow/snowstorm.js?m=1291226695g&amp;ver=1291226695'></script>
+<script type='text/javascript' src='http://s1.wp.com/wp-includes/js/jquery/jquery.js?m=1290133841g&amp;ver=1.4.4'></script>
+<script type='text/javascript' src='http://s0.wp.com/wp-includes/js/comment-reply.js?m=1256768429g&amp;ver=20090102'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://papervision3d.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://papervision3d.wordpress.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='index' title='Papervision3D' href='http://blog.papervision3d.org/' />
+<link rel='prev' title='HelloEnjoy™&nbsp;Teaser' href='http://blog.papervision3d.org/2008/12/17/helloenjoy%e2%84%a2-teaser/' />
+<link rel='next' title='forum.papervision3d.org' href='http://blog.papervision3d.org/2009/01/19/forumpapervision3dorg/' />
+<meta name="generator" content="WordPress.com" />
+<link rel='canonical' href='http://blog.papervision3d.org/2009/01/07/augmented-reality-with-flartoolkit/' />
+<link rel='shortlink' href='http://wp.me/p1KVt-aC' />
+<link rel="shortcut icon" type="image/x-icon" href="http://s1.wp.com/i/favicon-stacked.ico?m=1284002170g" sizes="16x16 24x24 32x32 48x48" />
+<link rel="icon" type="image/x-icon" href="http://s1.wp.com/i/favicon-stacked.ico?m=1284002170g" sizes="16x16 24x24 32x32 48x48" />
+<link rel="apple-touch-icon" href="http://s0.wp.com/wp-content/themes/h4/i/webclip.png?m=1256768434g" />
+	<style type="text/css">
+	/* <![CDATA[ */
+				div#likes { margin-top: 15px; }
+		.like-button { border: 1px solid #eee; padding: 2px 6px; font-size: 13px; font-family: arial, tahoma, sans-serif; }
+		#wpl-likebox { clear: left; font-size: 11px; font-family: arial, tahoma, verdana, sans-serif !important; min-height: 30px; margin: 10px 0 !important; padding: 5px 0 10px 0 !important; }
+		#wpl-button { float: left; background: url( /i/buttonbg.png ) top left repeat-x; margin-right: 7px; border: 1px solid #d4d4d4; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; }
+		#wpl-button a { color: #666 !important; line-height: 130% !important; text-decoration: none !important; outline: none; float: left; padding: 3px 6px 2px 24px !important; font-size: 11px !important; background: url( /i/likestar.png ) 6px 49.8% no-repeat; }
+		#wpl-button.liked { background: #feffce; border: 1px solid #f3e389; }
+		#wpl-button.liked a { color: #ba871b !important; }
+		#wpl-likebox #wpl-count { min-height: 25px; line-height: 130% !important; float: left; padding-top: 4px; }
+		#wpl-likebox #wpl-avatars { clear: left; max-height: 98px; overflow: hidden; margin-top: 15px; line-height: 130% !important; }
+		#wpl-likebox #wpl-avatars img { border: none !important; }
+		#wpl-likebox #wpl-mustlogin { line-height: 14px !important; font-size: 11px; clear: left; margin-top: 5px; background: #f0f0f0; padding: 10px; width: 65%; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; }
+		#wpl-likebox #wpl-mustlogin a { color: #888; text-decoration: underline; }
+		#wpl-likebox #wpl-mustlogin p { margin: 5px 0; padding: 0 }
+		#wpl-likebox #wpl-mustlogin input.input { padding: 2px; background: #fff; font-size: 11px; font-family: inherit; border: 1px solid #ccc; -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1) inset; -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1) inset; line-height: 12px; }
+		#wpl-likebox #wpl-mustlogin input#wp-submit { border: 1px solid #ccc; font-size: 11px; background: #fafafa; repeat-x; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; padding: 2px 4px !important; line-height: 12px; }
+		#wpl-likebox #wpl-mustlogin label { position: relative; cursor: text; }
+		#wpl-likebox #wpl-mustlogin label span { position: absolute; top: 0px; left: 5px; padding: 0 !important; }
+		#wpl-likebox #wpl-mustlogin label span { top /*\**/: -10px\9; }
+	/* ]]> */
+	</style>
+	<link rel='openid.server' href='http://papervision3d.wordpress.com/?openidserver=1' />
+<link rel='openid.delegate' href='http://papervision3d.wordpress.com/' />
+<link rel="search" type="application/opensearchdescription+xml" href="http://blog.papervision3d.org/osd.xml" title="Papervision3D" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://wordpress.com/opensearch.xml" title="WordPress.com" />
+<style type='text/css'><!--
+body { background: url("http://s0.wp.com/wp-content/themes/default/images/kubrickbgcolor.gif?m=1273203575g"); }
+#page { background: url("http://s0.wp.com/wp-content/themes/default/images/kubrickbgwide.gif?m=1273203575g") repeat-y top !important; border: none; }
+#header { background: url("http://s0.wp.com/wp-content/themes/default/images/kubrickheader.gif?m=1273203575g") no-repeat bottom center; }
+#footer { background: url("http://s0.wp.com/wp-content/themes/default/images/kubrickfooter.gif?m=1273203575g") no-repeat bottom; border: none;}
+#header { margin: 0 !important; margin: 0 0 0 1px; padding: 1px; height: 198px; width: 758px; }
+#headerimg { margin: 7px 9px 0; height: 192px; width: 740px; }
+#header { background: url('http://s0.wp.com/wp-content/themes/default/images/header-img.php?upper=FFFFFF&lower=b0b0b0') no-repeat bottom center; }
+#headerimg h1 a, #headerimg h1 a:visited, #headerimg .description { color: ; }
+#headerimg h1 a, #headerimg .description { display: none }
+
+	--></style><meta name="application-name" content="Papervision3D" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-tooltip" content="Open Source Realtime 3D Engine for Flash." /><meta name="msapplication-task" content="name=Subscribe;action-uri=http://blog.papervision3d.org/feed/;icon-uri=http://s1.wp.com/i/favicon-stacked.ico" /><meta name="msapplication-task" content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=http://s2.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=http://s2.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=http://s2.wp.com/i/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="http://blog.papervision3d.org?custom-css=1&#038;csblog=1KVt&#038;cscache=5&#038;csrev=1" />
+<script type="text/javascript"> 
+	window.google_analytics_uacct = "UA-52447-2"; 
+</script>
+
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-52447-2']);
+	_gaq.push(['_setDomainName', 'none']);
+	_gaq.push(['_setAllowLinker', true]);
+	_gaq.push(['_initData']);
+	_gaq.push(['_trackPageview']);
+
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+	})();
+</script>
+</head>
+<body>
+<div id="page">
+
+
+<div id="header">
+	<div id="headerimg" onclick=" location.href='http://blog.papervision3d.org';" style="cursor: pointer;">
+		<h1><a href="http://blog.papervision3d.org/">Papervision3D</a></h1>
+		<div class="description">Open Source Realtime 3D Engine for Flash.</div>
+	</div>
+</div>
+<hr />
+
+	<div id="content" class="widecolumn">
+
+	
+		<div class="navigation">
+			<div class="alignleft">&laquo; <a href="http://blog.papervision3d.org/2008/12/17/helloenjoy%e2%84%a2-teaser/" rel="prev">HelloEnjoy™&nbsp;Teaser</a></div>
+			<div class="alignright"><a href="http://blog.papervision3d.org/2009/01/19/forumpapervision3dorg/" rel="next">forum.papervision3d.org</a> &raquo;</div>
+		</div>
+
+		<div class="post-658 post type-post status-publish format-standard hentry category-3d-applications category-augmented-reality category-gallery clear" id="post-658">
+						<h2>Augmented Reality with&nbsp;FLARToolKit</h2>
+			<small>By C4RL05</small>
+
+			<div class="entry">
+				<script type="text/javascript" src="http://s0.wp.com/wp-content/plugins/adverts/adsense.js?m=1256768432g&amp;1"></script><p><span style='text-align:center; display: block;'><object width='450' height='284'><param name='movie' value='http://www.youtube.com/v/TW6_X9qBeds?version=3&#038;rel=1&#038;fs=1&#038;showsearch=0&#038;showinfo=1&#038;iv_load_policy=1' /> <param name='allowfullscreen' value='true' /> <param name='wmode' value='opaque' /> <embed src='http://www.youtube.com/v/TW6_X9qBeds?version=3&#038;rel=1&#038;fs=1&#038;showsearch=0&#038;showinfo=1&#038;iv_load_policy=1' type='application/x-shockwave-flash' allowfullscreen='true' width='450' height='284' wmode='opaque'></embed> </object></span></p>
+<p><a href="http://en.wikipedia.org/wiki/Augmented_reality" target="_blank"><strong>Augmented Reality</strong></a> is a relatively new technology that blends real-world footage and computer-generated graphics in real time, blurring the line between reality and virtual by enhancing what we perceive. It opens a whole lot of possibilities in many fields, from medical to engineering, including entertainment.</p>
+<p>Thanks to Japanese coder <strong><a href="http://saqoosha.net/en/" target="_blank">Saqoosha</a></strong> we can experience it in our browser. With <a href="http://www.libspark.org/wiki/saqoosha/FLARToolKit/en" target="_blank"><strong>FLARToolKit</strong></a>, an AS3 port of the Open Source library <a href="http://www.hitl.washington.edu/artoolkit/" target="_blank"><strong>ARToolKit</strong></a>, you can detect a marker from an input image and calculate the camera position in 3D space. Combine it with your favourite 3D engine and you are ready to build your own Augmented Reality applications.</p>
+<p>Saqoosha makes amazing use of Papervision3D and FLARToolKit to wish us a <a href="http://09.aid-dcc.com/" target="_blank"><strong>Happy New Year</strong></a>. Just take a look at the video or, if you have a webcam, download and print <a href="http://09.aid-dcc.com/data/marker.pdf" target="_blank"><strong>the marker</strong></a> and <a href="http://09.aid-dcc.com/" target="_blank"><strong>experience it for yourself</strong></a>.</p>
+<div style="margin-top: 1em" class="possibly-related"><hr /><p><strong>Possibly related posts: (automatically generated)</strong></p><ul><li><a rel='related' href='http://blog.papervision3d.org/2009/02/19/ge-smart-grid-augmented-reality/' style='font-weight:bold'>GE Smart Grid Augmented Reality</a></li></ul></div>
+<!--adcode-->
+<div align="center" style="padding-top: 5px; text-align: left;" class="adcode">
+<script type="text/javascript"><!--
+google_ad_client = "pub-3443918307802676";
+google_ad_output = "js";
+google_feedback = "on";
+google_max_num_ads = "4";
+google_ad_width = 336;
+google_ad_height = 280;
+google_ad_format = "336x280_as";
+google_image_size = "336x280";
+google_ad_type = "text,flash,html";
+google_ad_channel ="7770228814+3633280292+7401333398+7453468586+7250744022";
+var color_bg = 'ffffff';
+var color_text = '000000';
+var color_link = '0000ff';
+var color_border = 'ffffff';
+var color_url = '0000ff';
+
+google_analytics_domain_name = "none";
+//--></script>
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+</div>
+<div style="clear: both"><br /></div>
+<!--/adcode-->
+
+								
+				<p class="postmetadata alt">
+					<small>
+												This entry was posted  on January 7, 2009 at 12:23 pm and is filed under <a href="http://en.wordpress.com/tag/3d-applications/" title="View all posts in 3D Applications" rel="category tag">3D Applications</a>, <a href="http://en.wordpress.com/tag/augmented-reality/" title="View all posts in Augmented Reality" rel="category tag">Augmented Reality</a>, <a href="http://en.wordpress.com/tag/gallery/" title="View all posts in Gallery" rel="category tag">Gallery</a>.						You can follow any responses to this entry through the <a href='http://blog.papervision3d.org/2009/01/07/augmented-reality-with-flartoolkit/feed/'>RSS 2.0</a> feed.
+													You can <a href="#respond">leave a response</a>, or <a href="http://blog.papervision3d.org/2009/01/07/augmented-reality-with-flartoolkit/trackback/" rel="trackback">trackback</a> from your own site.
+						
+					</small>
+				</p>
+
+			</div>
+					</div>
+
+	<div id="wpl-likebox"><div id="wpl-button"><a href='http://blog.papervision3d.org/2009/01/07/augmented-reality-with-flartoolkit/?like=1&amp;_wpnonce=1c6ce24a74' title='I like this post' class='like needs-login'><span>Like</span></a></div><div id="wpl-count"><span>2</span> bloggers like this post.</div><div id="wpl-avatars"><a href="http://gravatar.com/warehamc" title="warehamc"><img src='http://0.gravatar.com/avatar/c0c192d209d1cef927206999ca3ce018?s=35&amp;d=identicon&amp;r=G' class='avatar avatar-35' alt='warehamc' width='30' height='30' /> </a><a href="http://gravatar.com/mistahspecs" title="mistahspecs"><img src='http://0.gravatar.com/avatar/05fe4674b2bfc9a58968fdbc47ed617a?s=35&amp;d=identicon&amp;r=G' class='avatar avatar-35' alt='mistahspecs' width='30' height='30' /> </a></div></div>
+<!-- You can start editing here. -->
+	<h3 id="comments">39 Responses to &#8220;Augmented Reality with&nbsp;FLARToolKit&#8221;</h3>
+
+	<ol class="commentlist">
+					<li class="comment even thread-even depth-1" id="comment-27685">
+			<img alt='' src='http://1.gravatar.com/avatar/d219af79b45e5891507fda4c4c2139a0?s=32&amp;d=identicon&amp;r=G' class='avatar avatar-32' height='32' width='32' />			<cite>Dev</cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-27685" title="">January 7, 2009 at 3:23 pm</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=27685#respond' onclick='return addComment.moveForm("comment-27685", "27685", "respond", "658")'>Reply</a> </small>
+
+			<p><a href="http://www.specialmoves.com/xmas" rel="nofollow">http://www.specialmoves.com/xmas</a></p>
+</li>
+			<li class="pingback odd alt thread-odd thread-alt depth-1" id="comment-27691">
+						<cite><a href='http://storage.goodmix.net/?p=197' rel='external nofollow' class='url'>storage.goodmix &raquo; Blog Archive &raquo; links for 2009-01-07</a></cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-27691" title="">January 8, 2009 at 6:01 am</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=27691#respond' onclick='return addComment.moveForm("comment-27691", "27691", "respond", "658")'>Reply</a> </small>
+
+			<p>[...] Augmented Reality with FLARToolKit « Papervision3D (tags: actionscript) [...]</p>
+</li>
+			<li class="pingback even thread-even depth-1" id="comment-27709">
+						<cite><a href='http://botd.wordpress.com/2009/01/09/top-posts-987/' rel='external nofollow' class='url'>Top Posts &laquo; WordPress.com</a></cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-27709" title="">January 10, 2009 at 12:07 am</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=27709#respond' onclick='return addComment.moveForm("comment-27709", "27709", "respond", "658")'>Reply</a> </small>
+
+			<p>[...]  Augmented Reality with FLARToolKit Augmented Reality is a relatively new technology that blends real-world footage and computer-generated graphics in [...] [...]</p>
+</li>
+			<li class="pingback odd alt thread-odd thread-alt depth-1" id="comment-27728">
+						<cite><a href='http://annieok.com/tangent/?p=2122' rel='external nofollow' class='url'>Annie Ok : tangent &raquo; interesting 1.11.09</a></cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-27728" title="">January 12, 2009 at 5:11 pm</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=27728#respond' onclick='return addComment.moveForm("comment-27728", "27728", "respond", "658")'>Reply</a> </small>
+
+			<p>[...] Augmented Reality with FLARToolKit and Papervision3D [...]</p>
+</li>
+			<li class="comment even thread-even depth-1" id="comment-27729">
+			<img alt='' src='http://1.gravatar.com/avatar/3fdb4e27be447a3b542d5257084190ca?s=32&amp;d=identicon&amp;r=G' class='avatar avatar-32' height='32' width='32' />			<cite><a href='http://www.mikkoh.com/blog/' rel='external nofollow' class='url'>Mikko</a></cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-27729" title="">January 12, 2009 at 5:48 pm</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=27729#respond' onclick='return addComment.moveForm("comment-27729", "27729", "respond", "658")'>Reply</a> </small>
+
+			<p>I&#8217;ve written a post on getting started with flartoolkit and some gotchas if anyone is interested:</p>
+<p><a href="http://www.mikkoh.com/blog/" rel="nofollow">http://www.mikkoh.com/blog/</a></p>
+<ul class='children'>
+			<li class="comment odd alt depth-2" id="comment-29141">
+			<img alt='' src='http://0.gravatar.com/avatar/e8efccf80d2338183c8860076c30f836?s=32&amp;d=identicon&amp;r=G' class='avatar avatar-32' height='32' width='32' />			<cite>biggestb35</cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-29141" title="">July 14, 2009 at 3:50 pm</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=29141#respond' onclick='return addComment.moveForm("comment-29141", "29141", "respond", "658")'>Reply</a> </small>
+
+			<p>Hey. man.. your stuff is very usefull and groundbreaking.. I got a simple question for you.. I like to bring in my own models and animation from maya into papervision3d (with augmented reality &#8220;FlartartKit&#8221;)&#8230; So far I got everything install.. papervsion3d, flartartkit, collada&#8230; I can place my collada file in flash and run it.. It works fine until i try bring a file that has animation?? can you point me out where i can find information about doing this&#8230; I can seem to find anything.. Thanks man.. keep on rocking</p>
+<p>j</p>
+</li>
+</ul>
+</li>
+			<li class="comment even thread-odd thread-alt depth-1" id="comment-27738">
+			<img alt='' src='http://1.gravatar.com/avatar/d338237f76a3e14c3cb95ed52ddb58e0?s=32&amp;d=identicon&amp;r=G' class='avatar avatar-32' height='32' width='32' />			<cite>Psk</cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-27738" title="">January 14, 2009 at 4:23 am</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=27738#respond' onclick='return addComment.moveForm("comment-27738", "27738", "respond", "658")'>Reply</a> </small>
+
+			<p>Hii,<br />
+I have run the example downloaded from <a href="http://www.mikkoh.com/blog/" rel="nofollow">http://www.mikkoh.com/blog/</a>.<br />
+I want to know whether we can display our own image their?<br />
+If yes plz let me know&#8230;</p>
+<p>Thanks in Advance</p>
+</li>
+			<li class="comment odd alt thread-even depth-1" id="comment-27830">
+			<img alt='' src='http://1.gravatar.com/avatar/d3ff5e2a4fd69cd38592edee4f3a031c?s=32&amp;d=identicon&amp;r=G' class='avatar avatar-32' height='32' width='32' />			<cite><a href='http://ryan.ameba.ca' rel='external nofollow' class='url'>Ryan</a></cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-27830" title="">January 29, 2009 at 9:06 pm</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=27830#respond' onclick='return addComment.moveForm("comment-27830", "27830", "respond", "658")'>Reply</a> </small>
+
+			<p>so,</p>
+<p>is there much write up about how to use FLARToolKit?  I&#8217;ve been able to start going through papervision examples, but I guess we are all waiting for some detailed explaination of FLAR.</p>
+</li>
+			<li class="pingback even thread-odd thread-alt depth-1" id="comment-27840">
+						<cite><a href='http://alex.bosslevel.net/?p=53' rel='external nofollow' class='url'>Forgot Yesterday &raquo; The way it should have been</a></cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-27840" title="">January 31, 2009 at 9:46 pm</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=27840#respond' onclick='return addComment.moveForm("comment-27840", "27840", "respond", "658")'>Reply</a> </small>
+
+			<p>[...] Japanese team behind an augmented reality flash project did a great job. I wonder if it’s possible to combine augmented reality into some viral – distributed by QR [...]</p>
+</li>
+			<li class="comment odd alt thread-even depth-1" id="comment-27850">
+			<img alt='' src='http://0.gravatar.com/avatar/0c320c7d2db4fbcb6f109afc2dad6c59?s=32&amp;d=identicon&amp;r=G' class='avatar avatar-32' height='32' width='32' />			<cite><a href='http://www.perplentropy.com/' rel='external nofollow' class='url'>brindy</a></cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-27850" title="">February 3, 2009 at 9:52 am</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=27850#respond' onclick='return addComment.moveForm("comment-27850", "27850", "respond", "658")'>Reply</a> </small>
+
+			<p>This worked perfectly for me at home yesterday evening and then when I tried to show my colleagues today I got a flash error (I&#8217;m running the debug version) and it just didn&#8217;t work.  You can see it tracking, but it&#8217;s not showing any of the cool effects.</p>
+</li>
+			<li class="pingback even thread-odd thread-alt depth-1" id="comment-27868">
+						<cite><a href='http://scribble.kai-studios.com/2009/02/08/augmented-reality/' rel='external nofollow' class='url'>ScribbleScrabble &raquo; Blog Archive &raquo; Augmented Reality</a></cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-27868" title="">February 8, 2009 at 10:51 am</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=27868#respond' onclick='return addComment.moveForm("comment-27868", "27868", "respond", "658")'>Reply</a> </small>
+
+			<p>[...] another great video by Japanese coder Saqoosha. If watching it&#8217;s not enough for you, dive in with some real [...]</p>
+</li>
+			<li class="pingback odd alt thread-even depth-1" id="comment-27913">
+						<cite><a href='http://www.pietel.be/augmented' rel='external nofollow' class='url'>Augmented. | Pietel.be</a></cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-27913" title="">February 17, 2009 at 12:37 pm</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=27913#respond' onclick='return addComment.moveForm("comment-27913", "27913", "respond", "658")'>Reply</a> </small>
+
+			<p>[...] reality. Dat zagen we al op de Papervision blog en later bij [...]</p>
+</li>
+			<li class="comment even thread-odd thread-alt depth-1" id="comment-27915">
+			<img alt='' src='http://1.gravatar.com/avatar/fee3248a9733b02f984e44291aa7478b?s=32&amp;d=identicon&amp;r=G' class='avatar avatar-32' height='32' width='32' />			<cite><a href='http://www.djackh.com' rel='external nofollow' class='url'>DjacK</a></cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-27915" title="">February 17, 2009 at 5:19 pm</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=27915#respond' onclick='return addComment.moveForm("comment-27915", "27915", "respond", "658")'>Reply</a> </small>
+
+			<p>Check out this site the GE has up and running which I&#8217;m guessing uses the FLARToolkit!</p>
+<p>Pretty crazy how quickly these kinds of things make it into advertisements huh?</p>
+<p><a href="http://ge.ecomagination.com/smartgrid/?c_id=Huff#/augmented_reality" rel="nofollow">http://ge.ecomagination.com/smartgrid/?c_id=Huff#/augmented_reality</a></p>
+<p>-DjacK</p>
+</li>
+			<li class="pingback odd alt thread-even depth-1" id="comment-27933">
+						<cite><a href='http://gamesalfresco.com/2009/02/21/augmented-reality-in-flash-now-commercially-available/' rel='external nofollow' class='url'>Augmented Reality in Flash Now Commercially Available &laquo; Games Alfresco</a></cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-27933" title="">February 21, 2009 at 4:16 pm</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=27933#respond' onclick='return addComment.moveForm("comment-27933", "27933", "respond", "658")'>Reply</a> </small>
+
+			<p>[...] with it?  Possibly related posts: (automatically generated)Augmented Reality Made Simple in FlashAugmented Reality with FLARToolKitAugmented Reality in [...]</p>
+</li>
+			<li class="pingback even thread-odd thread-alt depth-1" id="comment-27952">
+						<cite><a href='http://hibbins.wordpress.com/2009/02/27/yesterday/' rel='external nofollow' class='url'>Yesterday &laquo; Marc Hibbins</a></cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-27952" title="">February 27, 2009 at 11:09 am</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=27952#respond' onclick='return addComment.moveForm("comment-27952", "27952", "respond", "658")'>Reply</a> </small>
+
+			<p>[...] Presumably with which, you have full control via Actionscript. The Papervision blog has a pretty cool example of the kind of things you can achieve with [...]</p>
+</li>
+			<li class="pingback odd alt thread-even depth-1" id="comment-27962">
+						<cite><a href='http://ilarialab.com/2009/03/01/straordinari-esempi-di-realta-aumentata/' rel='external nofollow' class='url'>Straordinari esempi di &#8220;realtà aumentata&#8221;&#8230; | ILaRia Lab</a></cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-27962" title="">March 2, 2009 at 12:13 am</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=27962#respond' onclick='return addComment.moveForm("comment-27962", "27962", "respond", "658")'>Reply</a> </small>
+
+			<p>[...] blog.papervision3d.org [...]</p>
+</li>
+			<li class="comment even thread-odd thread-alt depth-1" id="comment-27965">
+			<img alt='' src='http://0.gravatar.com/avatar/05fd24b00bd99121746d131e8b14f3ad?s=32&amp;d=identicon&amp;r=G' class='avatar avatar-32' height='32' width='32' />			<cite><a href='http://www.almogdesign.net' rel='external nofollow' class='url'>almog</a></cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-27965" title="">March 3, 2009 at 9:52 am</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=27965#respond' onclick='return addComment.moveForm("comment-27965", "27965", "respond", "658")'>Reply</a> </small>
+
+			<p>Any one found any good tutorials on this, everything thats out seems to ok, but does not go into detail.</p>
+</li>
+			<li class="pingback odd alt thread-even depth-1" id="comment-27969">
+						<cite><a href='http://www.viscido.org/2009/03/04/alcuni-video-sulla-realta-aumentata/' rel='external nofollow' class='url'>&raquo; Alcuni video sulla realtà aumentata</a></cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-27969" title="">March 4, 2009 at 12:14 am</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=27969#respond' onclick='return addComment.moveForm("comment-27969", "27969", "respond", "658")'>Reply</a> </small>
+
+			<p>[...] blog.papervision3d.org   Share and Enjoy: [...]</p>
+</li>
+			<li class="pingback even thread-odd thread-alt depth-1" id="comment-27988">
+						<cite><a href='http://www.contaminazione.it/blog/?p=60' rel='external nofollow' class='url'>Augmented reality - Contaminazione</a></cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-27988" title="">March 9, 2009 at 7:19 am</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=27988#respond' onclick='return addComment.moveForm("comment-27988", "27988", "respond", "658")'>Reply</a> </small>
+
+			<p>[...] seguire riporto alcuni link per capire meglio di cosa si tratta&#8230; &#8211; Augmented reality with FLARToolKit  &#8211; Un applicativo sull&#8217; AD di General Electrics &#8211; Un altro esempio by MINI (segnalatomi da [...]</p>
+</li>
+			<li class="comment odd alt thread-even depth-1" id="comment-27996">
+			<img alt='' src='http://0.gravatar.com/avatar/0c4ffffc0b55b0cb37aef9595f3de261?s=32&amp;d=identicon&amp;r=G' class='avatar avatar-32' height='32' width='32' />			<cite><a href='http://words.transmote.com' rel='external nofollow' class='url'>ericsoco</a></cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-27996" title="">March 12, 2009 at 6:28 am</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=27996#respond' onclick='return addComment.moveForm("comment-27996", "27996", "respond", "658")'>Reply</a> </small>
+
+			<p>i wrote a small framework that provides a quicker and/or more flexible entry point into using FLARToolkit.</p>
+<p>check it out here:<br />
+<a href="http://words.transmote.com/wp/20090309/flarmanager-v01/" rel="nofollow">http://words.transmote.com/wp/20090309/flarmanager-v01/</a></p>
+<p>yay machine vision on the web!</p>
+</li>
+			<li class="pingback even thread-odd thread-alt depth-1" id="comment-28253">
+						<cite><a href='http://7billionfriends.wordpress.com/2009/04/21/detroit-does-jerry/' rel='external nofollow' class='url'>Detroit Does Jerry &laquo; 7 Billion Friends: There is only 1 trend</a></cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-28253" title="">April 21, 2009 at 8:22 am</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=28253#respond' onclick='return addComment.moveForm("comment-28253", "28253", "respond", "658")'>Reply</a> </small>
+
+			<p>[...] and, if all goes well, to return many more times to see it through. What I have in mind involves Augmented Reality stuff that can layer graphics on top of real places in the city, like how imagery pops up in this [...]</p>
+</li>
+			<li class="comment odd alt thread-even depth-1" id="comment-28303">
+			<img alt='' src='http://1.gravatar.com/avatar/f4ffe42fcfee441df2bb5f19f1d7fdf1?s=32&amp;d=identicon&amp;r=G' class='avatar avatar-32' height='32' width='32' />			<cite><a href='http://digitalcortex.net' rel='external nofollow' class='url'>freedimensional</a></cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-28303" title="">May 2, 2009 at 12:45 am</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=28303#respond' onclick='return addComment.moveForm("comment-28303", "28303", "respond", "658")'>Reply</a> </small>
+
+			<p>I am releasing a series of blog posts about AR that you might be interested in &#8211; <a href="http://bit.ly/B0VOc" rel="nofollow">http://bit.ly/B0VOc</a> &#8211; would love your feedback</p>
+</li>
+			<li class="comment even thread-odd thread-alt depth-1" id="comment-28315">
+			<img alt='' src='http://0.gravatar.com/avatar/6fd45450c501a353bccb8d217d2772d3?s=32&amp;d=identicon&amp;r=G' class='avatar avatar-32' height='32' width='32' />			<cite>Abdelali</cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-28315" title="">May 3, 2009 at 11:40 am</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=28315#respond' onclick='return addComment.moveForm("comment-28315", "28315", "respond", "658")'>Reply</a> </small>
+
+			<p>Hello,</p>
+<p>Please I&#8217;m a flex developper, and i want to know how to do this with flex !!</p>
+</li>
+			<li class="pingback odd alt thread-even depth-1" id="comment-28368">
+						<cite><a href='http://hjbarraza.com/2009/05/11/augmented-reality-with-flartoolkit-%c2%ab%c2%a0papervision3d/' rel='external nofollow' class='url'>Augmented Reality with FLARToolKit « Papervision3D | hj barraza</a></cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-28368" title="">May 11, 2009 at 8:14 pm</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=28368#respond' onclick='return addComment.moveForm("comment-28368", "28368", "respond", "658")'>Reply</a> </small>
+
+			<p>[...] Augmented Reality with FLARToolKit « Papervision3D   Subscribe to comments  You can skip to the end and leave a response. Pinging is currently not allowed.  Post Tags: [...]</p>
+</li>
+			<li class="pingback even thread-odd thread-alt depth-1" id="comment-28419">
+						<cite><a href='http://lemonary.com/2009/05/joining-the-ar-club/' rel='external nofollow' class='url'>The Lemonary &raquo; Joining the AR Club</a></cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-28419" title="">May 16, 2009 at 10:17 am</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=28419#respond' onclick='return addComment.moveForm("comment-28419", "28419", "respond", "658")'>Reply</a> </small>
+
+			<p>[...] of computer vision and 3D rendering. Check out GE&#8217;s demo, fireworks, a magic trick, a hole in the head and some AR humor. If you have a webcam and print the right marker, you can play with these toys [...]</p>
+</li>
+			<li class="pingback odd alt thread-even depth-1" id="comment-28562">
+						<cite><a href='http://83.216.172.156/wordpress/?p=437' rel='external nofollow' class='url'>Kosanostra &raquo; Blog Archive &raquo; Realtà aumentata</a></cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-28562" title="">May 28, 2009 at 2:42 pm</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=28562#respond' onclick='return addComment.moveForm("comment-28562", "28562", "respond", "658")'>Reply</a> </small>
+
+			<p>[...] Says: January 7, 2009 at 3:23 pm | Reply [...]</p>
+</li>
+			<li class="comment even thread-odd thread-alt depth-1" id="comment-28692">
+			<img alt='' src='http://1.gravatar.com/avatar/1ce8939b0cb3afdbb98c7a2bf4d82202?s=32&amp;d=identicon&amp;r=G' class='avatar avatar-32' height='32' width='32' />			<cite>teresa</cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-28692" title="">June 10, 2009 at 2:08 pm</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=28692#respond' onclick='return addComment.moveForm("comment-28692", "28692", "respond", "658")'>Reply</a> </small>
+
+			<p>Hellooo ! <br />
+I’m working with augmented reality and i want to create a plane with a movie but i have a problem. could it be possible to send you the code?</p>
+</li>
+			<li class="comment odd alt thread-even depth-1" id="comment-29209">
+			<img alt='' src='http://1.gravatar.com/avatar/3022c42ba4a8f823d2ea278a7aefef76?s=32&amp;d=identicon&amp;r=G' class='avatar avatar-32' height='32' width='32' />			<cite>James</cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-29209" title="">August 2, 2009 at 2:59 pm</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=29209#respond' onclick='return addComment.moveForm("comment-29209", "29209", "respond", "658")'>Reply</a> </small>
+
+			<p>Witgley have created a cool new AR app<br />
+<a href="http://www.5gum.fr/?lang=en" rel="nofollow">http://www.5gum.fr/?lang=en</a><br />
+its an AR music mixer using 4 glyphs</p>
+</li>
+			<li class="pingback even thread-odd thread-alt depth-1" id="comment-29270">
+						<cite><a href='http://blog.madebypi.co.uk/2009/08/14/some-bright-spark/' rel='external nofollow' class='url'>Some bright Spark&#8230; | MadeByPi® Blog</a></cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-29270" title="">August 14, 2009 at 11:26 am</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=29270#respond' onclick='return addComment.moveForm("comment-29270", "29270", "respond", "658")'>Reply</a> </small>
+
+			<p>[...] of the FLARToolkit which you will (probably) of seen used for a bit of augmented reality, like this and [...]</p>
+</li>
+			<li class="pingback odd alt thread-even depth-1" id="comment-29373">
+						<cite><a href='http://blog.marchibbins.com/2009/02/27/yesterday/' rel='external nofollow' class='url'>&raquo; Yesterday Marc Hibbins</a></cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-29373" title="">September 2, 2009 at 10:21 am</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=29373#respond' onclick='return addComment.moveForm("comment-29373", "29373", "respond", "658")'>Reply</a> </small>
+
+			<p>[...] Presumably with which, you have full control via Actionscript. The Papervision blog has a pretty cool example of the kind of things you can achieve with [...]</p>
+</li>
+			<li class="comment even thread-odd thread-alt depth-1" id="comment-29382">
+			<img alt='' src='http://1.gravatar.com/avatar/71d193f009153fd91c34c8e5fe7b04ac?s=32&amp;d=identicon&amp;r=G' class='avatar avatar-32' height='32' width='32' />			<cite><a href='http://www.flashmonkey.co.uk' rel='external nofollow' class='url'>FlashMonkey</a></cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-29382" title="">September 3, 2009 at 11:04 am</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=29382#respond' onclick='return addComment.moveForm("comment-29382", "29382", "respond", "658")'>Reply</a> </small>
+
+			<p>Here&#8217;s an augmented reality piece I recently created for the RAF, it uses a DAE model of a Red Arrow loaded with Papervision. Thanks Saqoosha for FLARToolkit, it&#8217;s very easy to use!</p>
+<p><a href="http://www.flashmonkey.co.uk/raf-augmented-reality/" rel="nofollow">http://www.flashmonkey.co.uk/raf-augmented-reality/</a></p>
+</li>
+			<li class="comment odd alt thread-even depth-1" id="comment-29687">
+			<img alt='' src='http://1.gravatar.com/avatar/b18dacb75d28a93ab6e7927f391ed1a1?s=32&amp;d=identicon&amp;r=G' class='avatar avatar-32' height='32' width='32' />			<cite>nga</cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-29687" title="">October 16, 2009 at 3:50 am</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=29687#respond' onclick='return addComment.moveForm("comment-29687", "29687", "respond", "658")'>Reply</a> </small>
+
+			<p>hi, i think 3d object is too expensive, can load 2d object like video o flash inside instead of dae?</p>
+</li>
+			<li class="pingback even thread-odd thread-alt depth-1" id="comment-29791">
+						<cite><a href='http://identi.ca/notice/13474012' rel='external nofollow' class='url'>Dan Brickley (danbri) 's status on Sunday, 01-Nov-09 13:05:47 UTC - Identi.ca</a></cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-29791" title="">November 1, 2009 at 1:05 pm</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=29791#respond' onclick='return addComment.moveForm("comment-29791", "29791", "respond", "658")'>Reply</a> </small>
+
+			<p>[...] augmented reality flash fun &#8211; <a href="http://blog.papervision3d.org/2009/01/07/augmented-reality-with-flartoolkit/" rel="nofollow">http://blog.papervision3d.org/2009/01/07/augmented-reality-with-flartoolkit/</a> [...]</p>
+</li>
+			<li class="pingback odd alt thread-even depth-1" id="comment-29863">
+						<cite><a href='http://jinustudio.com/blog/archives/2075' rel='external nofollow' class='url'>AR(Augmented Reality)이 무엇인고&#8230; &laquo; jin_u as blog</a></cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-29863" title="">November 20, 2009 at 2:20 am</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=29863#respond' onclick='return addComment.moveForm("comment-29863", "29863", "respond", "658")'>Reply</a> </small>
+
+			<p>[...] 증강현실(Augmented Reality)라고도 말을 [...]</p>
+</li>
+			<li class="pingback even thread-odd thread-alt depth-1" id="comment-29897">
+						<cite><a href='http://blue-telescope.com/techblog/?p=73' rel='external nofollow' class='url'>Interesting stuff &raquo; Blue Telescope Techblog</a></cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-29897" title="">November 24, 2009 at 6:38 pm</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=29897#respond' onclick='return addComment.moveForm("comment-29897", "29897", "respond", "658")'>Reply</a> </small>
+
+			<p>[...] <a href="http://blog.papervision3d.org/2009/01/07/augmented-reality-with-flartoolkit/" rel="nofollow">http://blog.papervision3d.org/2009/01/07/augmented-reality-with-flartoolkit/</a>  &nbsp;   &laquo; Crazy Graphics Card | [...]</p>
+</li>
+			<li class="pingback odd alt thread-even depth-1" id="comment-30096">
+						<cite><a href='http://www.caisse.com/?p=145' rel='external nofollow' class='url'>Joey Caisse&#39;s ramblings&#8230; &raquo; Blog Archive &raquo; A few good AR sites&#8230; - Any sufficiently advanced bug becomes a feature.</a></cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-30096" title="">January 17, 2010 at 8:43 am</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=30096#respond' onclick='return addComment.moveForm("comment-30096", "30096", "respond", "658")'>Reply</a> </small>
+
+			<p>[...] (cool video in [...]</p>
+</li>
+			<li class="comment even thread-odd thread-alt depth-1" id="comment-30098">
+			<img alt='' src='http://1.gravatar.com/avatar/53a05629efb971757aa9a2303f6ebb2b?s=32&amp;d=identicon&amp;r=G' class='avatar avatar-32' height='32' width='32' />			<cite><a href='http://www.panovistamarketing.com' rel='external nofollow' class='url'>Augmented Reality</a></cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-30098" title="">January 17, 2010 at 4:48 pm</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=30098#respond' onclick='return addComment.moveForm("comment-30098", "30098", "respond", "658")'>Reply</a> </small>
+
+			<p>This technology is going to be great for marketing and opens up a complete new advertising channel.</p>
+</li>
+			<li class="pingback odd alt thread-even depth-1" id="comment-30281">
+						<cite><a href='http://blog.seqwood.com/2010/03/05/technology-augmented-flash/' rel='external nofollow' class='url'>Technology &amp; Marketing: Augmented Reality and Flash &laquo; Seqwood</a></cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-30281" title="">March 5, 2010 at 7:12 am</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=30281#respond' onclick='return addComment.moveForm("comment-30281", "30281", "respond", "658")'>Reply</a> </small>
+
+			<p>[...] is due to Opensource toolkits like FLARtoolkit, which stands for Flash Augmented Reality Toolkit. Combined with 3D object rendering in flash, with [...]</p>
+</li>
+			<li class="pingback even thread-odd thread-alt depth-1" id="comment-30361">
+						<cite><a href='http://iconomaque.fr/WordPress/?p=205' rel='external nofollow' class='url'>3D, la nostalgie de la facette &laquo; iconomaque</a></cite> Says:						<br />
+
+			<small class="commentmetadata"><a href="#comment-30361" title="">March 20, 2010 at 11:04 pm</a> | <a class='comment-reply-link' href='/2009/01/07/augmented-reality-with-flartoolkit/?replytocom=30361#respond' onclick='return addComment.moveForm("comment-30361", "30361", "respond", "658")'>Reply</a> </small>
+
+			<p>[...] me fait ensuite penser aux expériences de réalité augmentée utilisant Papervision3D que l’on voit fleurir sur la Toile. Papervision3D, qui est d’ailleurs [...]</p>
+</li>
+	
+	</ol>
+
+	<div class="navigation">
+		<div class="alignleft"></div>
+		<div class="alignright"></div>
+	</div>
+
+ 
+
+
+								<div id="respond">
+				<h3 id="reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/2009/01/07/augmented-reality-with-flartoolkit/#respond" style="display:none;">Cancel reply</a></small></h3>
+									<form action="http://blog.papervision3d.org/wp-comments-post.php" method="post" id="commentform">
+																			<p class="comment-notes">Your email address will not be published. Required fields are marked <span class="required">*</span></p>							<p class="comment-form-author"><label for="author">Name</label> <span class="required">*</span><input id="author" name="author" type="text" value="" size="30" aria-required='true' /></p>
+<p class="comment-form-email"><label for="email">Email</label> <span class="required">*</span><input id="email" name="email" type="text" value="" size="30" aria-required='true' /></p>
+<p class="comment-form-url"><label for="url">Website</label><input id="url" name="url" type="text" value="" size="30" /></p>
+												<p class="comment-form-comment"><label for="comment">Comment</label><textarea id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea></p>						<p class="form-allowed-tags">You may use these <abbr title="HyperText Markup Language">HTML</abbr> tags and attributes:  <code>&lt;a href=&quot;&quot; title=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;acronym title=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote cite=&quot;&quot;&gt; &lt;cite&gt; &lt;code&gt; &lt;pre&gt; &lt;del datetime=&quot;&quot;&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=&quot;&quot;&gt; &lt;strike&gt; &lt;strong&gt; </code></p>						<p class="form-submit">
+							<input name="submit" type="submit" id="submit" value="Post Comment" />
+							<input type='hidden' name='comment_post_ID' value='658' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+						</p>
+						
+<input type="hidden" name="genseq" value="1293265295" />
+<p><input type="checkbox" name="subscribe" id="subscribe" value="subscribe" style="width: auto;" tabindex="6"/> <label class="subscribe-label" id="subscribe-label" for="subscribe">Notify me of follow-up comments via email.</label></p><p><input type="checkbox" name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto;" tabindex="7"/> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog">Subscribe to this site by email</label></p><input type="hidden" name="sub-type" value="comment-form-text2" /><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="5dad5e3c9e" /></p>					</form>
+							</div><!-- #respond -->
+						
+
+	
+	</div>
+
+
+<hr />
+<div id="footer">
+	<p>
+		Theme: <a href="http://theme.wordpress.com/themes/default/">Kubrick</a>. <a href="http://wordpress.com/?ref=footer" rel="generator">Blog at WordPress.com</a>.
+		<br /><a href="http://blog.papervision3d.org/feed/">Entries (RSS)</a> and <a href="http://blog.papervision3d.org/comments/feed/">Comments (RSS)</a>.	</p>
+</div>
+</div>
+
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script>	<script type="text/javascript">
+	/* <![CDATA[ */
+		jQuery( function() {
+			
+			jQuery('#wpl-button > a.like').click( function(e) {
+				e.preventDefault();
+				
+				jQuery('#wpl-mustlogin').remove();
+
+				jQuery.post( 'http://papervision3d.wordpress.com/wp-admin/admin-ajax.php', { 
+					'action': 'wpl_record_stat',
+					'stat_name': 'loggedout_like_click'
+				} );
+
+				var tenMins = new Date();
+				tenMins.setTime( tenMins.getTime() + 600000 );
+				document.cookie = 'wpl_rand=303d0ec076; expires=' + tenMins.toGMTString() + '; domain=wordpress.com; path=/;';
+				
+				jQuery('#wpl-count').after( '\
+					<div id="wpl-mustlogin"> \
+						<form action="http://papervision3d.wordpress.com/wp-login.php" method="post"> \
+							<p>Just one more step to like this post:</p> \
+							<label><span>Username</span> <input type="text" name="log" id="user_login" class="input" value="" size="20" tabindex="80" /></label> \
+							<label><span>Password</span> <input type="password" name="pwd" id="user_pass" class="input" value="" size="20" tabindex="81" /></label> \
+							<input type="submit" name="wp-submit" id="wp-submit" class="button-primary" value="Log In" tabindex="82" /> \
+							<input type="hidden" name="redirect_to" value="http://blog.papervision3d.org/2009/01/07/augmented-reality-with-flartoolkit/?like=1" /> \
+							<input type="hidden" name="wpl_rand" value="303d0ec076" /> \
+							<p>Not a member yet? <a href="http://wordpress.com/signup/?ref=likebox" id="wpl-signup-link">Sign up with WordPress.com</a></p> \
+						</form> \
+					</div> \
+				');
+				
+				jQuery('#wpl-mustlogin').hide().slideDown('fast');
+			} );
+			
+			jQuery('#wpl-mustlogin input.input').live( 'focus', function() {
+				jQuery(this).prev().hide();
+			}).live( 'blur', function() {
+				if ( jQuery(this).val() == '' )
+					jQuery(this).prev().show();
+			});
+			
+			jQuery('#wpl-mustlogin input#wp-submit').live( 'click', function(e) {
+				e.preventDefault();
+				
+				jQuery.post( 'http://papervision3d.wordpress.com/wp-admin/admin-ajax.php', { 
+					'action': 'wpl_record_stat',
+					'stat_name': 'loggedout_login_submit'
+				}, function() {
+					jQuery('#wpl-mustlogin form').submit();
+				} );
+			});			
+			
+			jQuery('#wpl-mustlogin a#wpl-signup-link').live( 'click', function(e) {
+				e.preventDefault();
+				
+				var link = jQuery(this).attr('href');
+				
+				jQuery.post( 'http://papervision3d.wordpress.com/wp-admin/admin-ajax.php', { 
+					'action': 'wpl_record_stat',
+					'stat_name': 'loggedout_signup_click'
+				}, function() {
+					location.href = link;
+				} );
+			});					
+			
+		});
+	/* ]]> */
+	</script>
+<script type="text/javascript">_qoptions={qacct:'p-18-mFEk4J448M',labels:'language.en,type.wpcom,as'};</script>
+<script type="text/javascript" src="http://edge.quantserve.com/quant.js"></script>
+<noscript><p><img class="robots-nocontent" src="http://pixel.quantserve.com/pixel/p-18-mFEk4J448M.gif?labels=language.en%2Ctype.wpcom%2Cas" style="display:none" height="1" width="1" alt="" /></p></noscript>
+<script type='text/javascript' src='http://s.gravatar.com/js/gprofiles.js?n&#038;ver=MU'></script>
+	<script type="text/javascript">	
+	// <![CDATA[
+	WPGroHo = {
+		data: {},
+		renderers: {},
+		syncProfileData: function( hash, id ) {
+			if ( !WPGroHo.data[hash] ) {
+				WPGroHo.data[hash] = {};
+				a = jQuery( 'div.grofile-hash-map-' + hash + ' span' ).each( function() {
+					WPGroHo.data[hash][this.className] = jQuery( this ).text();
+				} );
+			}
+
+			WPGroHo.appendProfileData( WPGroHo.data[hash], hash, id );
+		},
+		appendProfileData: function( data, hash, id ) {
+			for ( var key in data ) {
+				if ( jQuery.isFunction( WPGroHo.renderers[key] ) ) {
+					return WPGroHo.renderers[key]( data[key], hash, id, key );
+				}
+
+				jQuery( '#' + id ).find( 'h4' ).after( jQuery( '<p class="grav-extra ' + key + '" />' ).html( data[key] ) );
+			}
+		}
+	};
+	jQuery(document).ready(function($){
+		Gravatar.profile_cb = function( h, d ) {
+			WPGroHo.syncProfileData( h, d );
+		};
+		Gravatar.attach_profiles();
+	});
+	// ]]>
+	</script>
+	<div style="display:none">
+	<div class="grofile-hash-map-d219af79b45e5891507fda4c4c2139a0">
+	</div>
+	<div class="grofile-hash-map-3fdb4e27be447a3b542d5257084190ca">
+	</div>
+	<div class="grofile-hash-map-e8efccf80d2338183c8860076c30f836">
+	</div>
+	<div class="grofile-hash-map-d338237f76a3e14c3cb95ed52ddb58e0">
+	</div>
+	<div class="grofile-hash-map-d3ff5e2a4fd69cd38592edee4f3a031c">
+	</div>
+	<div class="grofile-hash-map-0c320c7d2db4fbcb6f109afc2dad6c59">
+	</div>
+	<div class="grofile-hash-map-fee3248a9733b02f984e44291aa7478b">
+	</div>
+	<div class="grofile-hash-map-05fd24b00bd99121746d131e8b14f3ad">
+	</div>
+	<div class="grofile-hash-map-0c4ffffc0b55b0cb37aef9595f3de261">
+	</div>
+	<div class="grofile-hash-map-f4ffe42fcfee441df2bb5f19f1d7fdf1">
+	</div>
+	<div class="grofile-hash-map-7c28a97c39993d2e237b803296baebe4">
+	</div>
+	<div class="grofile-hash-map-1ce8939b0cb3afdbb98c7a2bf4d82202">
+	</div>
+	<div class="grofile-hash-map-3022c42ba4a8f823d2ea278a7aefef76">
+	</div>
+	<div class="grofile-hash-map-71d193f009153fd91c34c8e5fe7b04ac">
+	</div>
+	<div class="grofile-hash-map-b18dacb75d28a93ab6e7927f391ed1a1">
+	</div>
+	<div class="grofile-hash-map-53a05629efb971757aa9a2303f6ebb2b">
+	</div>
+	</div>
+<script type='text/javascript'>_acseed='Nm01fCNhbSRHWUh1RF9rSkE4WGwlezJWajdyd3tqO0Jvbzx5dkdBbXtqdz0qOEBUNn5ZZighbHZBJXA3MVVELkheNCVWS2oxe3BIX3V1R35wfmw4Z0dOVTp6NXxmSTRZSGUwSE81ZiNRdHJCX2xQfFE2NyN7WGJPWkBAdnMhJmBg';</script>
+<script type="text/javascript" src="http://b.scorecardresearch.com/beacon.js"></script><script type="text/javascript">try{COMSCORE.beacon({c1:2,c2:7518284});}catch(e){}</script><noscript><p class="robots-nocontent"><img src="http://b.scorecardresearch.com/p?cj=1c1=2&#038;c2=7518284" alt="" style="display:none" width="1" height="1" /></p></noscript><script src="http://s.stats.wordpress.com/w.js?19" type="text/javascript"></script>
+<script type="text/javascript">
+st_go({'blog':'418715','v':'wpcom','user_id':'0','post':'658','subd':'papervision3d'});
+ex_go({'crypt':'RDZlWXplVUFSPyU5aEFEcU1iaXlrWE9OLEpUNUd8QjgyeVkuS09HYUlCZFNCfmltd2lpbjBzRU1jNXNdNUtXVjYxd2l6RHIrVm8tXT9lc2dDK1puZ1l3Y3pLRllFLUh6UGgsRElKTkRRZ2NxWkxvUHpLRXZGdCZ+NS9mNyZtM1VGcGRVR1ZlLTNaUSxzNlRuYmxqOTdnNFBPW2pOb09aNDJDfmhLa19neiVtdTRUVH5qTUJ3WTlVMVlXSitZNXFTMnR1Ny5CSzRvfitGfnZndGpTQ0t4ckR1clt+VU1CYUl4bndHa0c1V21NaH40TCZ2UFlkP3N5eDFXMG5yekRoLzZQeiU2MGhOaGQmLDVzSGJjWEF5V3xXYjVMaGJbWkYwLTRifDdiZHM3Wml1MmgxS3RBQ2VfY2R8Q1lQaHpsNHxybCxIcWhMfkFnMS5BTlMyeD9VSi1jVlZnaHJdT3JlPVFbWF9jNEhHTHZyaVltPTEwdjZ1bFVOP0lkQnFYZ0VUWmR1YWMmUjJk'});
+re_go({'d[blog.papervision3d.org]':'1','v':'sph','b':'418715','p':'658'});
+addLoadEvent(function(){linktracker_init('418715',658);});
+	</script>
+</body>
+</html>
