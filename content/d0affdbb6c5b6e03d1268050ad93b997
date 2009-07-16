@@ -1,0 +1,449 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link type="text/css" rel="stylesheet" href="/css/style.css"/>
+    <link type="text/css" rel="stylesheet" href="/css/style-java.css"/>
+    <title>Open Source HTML Parsers in Java</title>
+</head>
+<body>
+
+<script type="text/javascript">
+    window.google_analytics_uacct = "UA-76305-1";
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-76305-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+    })();
+
+</script><div id="page">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+        <tr class="headerbox">
+            <td rowspan="2" height="70">
+                <a href="/">
+                            <img src="/images/logo-java.png" border="0"
+                                 height="70" width="221" alt="" align="left"/>
+                        </a>
+                    </td>
+
+            <td class="searchbox">
+                <form id="searchform" method="get" action="/search">
+                    <input name="query" size="25" value="" type="text"/>
+                    <input value="Search" type="submit"/>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td align="right" class="menu" valign="bottom" height="31">
+                <div>
+                    <a href="/last-projects">Recent Projects</a>
+                    <a href="/suggest-project">Suggest Project</a>
+                    <a href="/contact">Contact Us</a>
+                    <a id="login" href="/login" style="margin-right: 10px;">Login</a>
+
+                    <script type="text/javascript" xml:space="preserve">
+                        var start = document.cookie.indexOf('uid=');
+                        if (start != -1) {
+                            var end = document.cookie.indexOf(';', start);
+                            var uid = document.cookie.substring(start + 4, end)
+                            var login = document.getElementById('login');
+                            login.href = 'logout';
+                            login.innerHTML = 'Logout';
+                        }
+                    </script>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+        <tr valign="top">
+            <td style="width: 155px; background: #FFFEFE;">
+                <table border="0" id="leftmenu" cellpadding="0" cellspacing="0">
+ <tbody>
+    <tr><td class="category"><span>A</span></td></tr>
+          <tr><td class="first"><a href="/open-source/ajax">Ajax</a></td></tr>
+    <tr><td><a href="/open-source/aspect-oriented-frameworks">Aspect-Oriented</a></td></tr>
+    <tr><td class="spacer">&nbsp;</td></tr>
+<tr><td class="category"><span>B</span></td></tr>
+          <tr><td class="first"><a href="/open-source/bloggers">Bloggers</a></td></tr>
+    <tr><td><a href="/open-source/build-systems">Build Systems</a></td></tr>
+    <tr><td><a href="/open-source/business-intelligence">Business Intelligence</a></td></tr>
+    <tr><td><a href="/open-source/bytecode-libraries">ByteCode</a></td></tr>
+    <tr><td class="spacer">&nbsp;</td></tr>
+<tr><td class="category"><span>C</span></td></tr>
+          <tr><td class="first"><a href="/open-source/content-managment-systems">CMS</a></td></tr>
+    <tr><td><a href="/open-source/cache-solutions">Cache Solutions</a></td></tr>
+    <tr><td><a href="/open-source/charting-and-reporting">Charting & Reporting</a></td></tr>
+    <tr><td><a href="/open-source/chat-servers">Chat Servers</a></td></tr>
+    <tr><td><a href="/open-source/code-analyzers">Code Analyzers</a></td></tr>
+    <tr><td><a href="/open-source/code-beautifiers">Code Beautifiers</a></td></tr>
+    <tr><td><a href="/open-source/code-coverage">Code Coverage</a></td></tr>
+    <tr><td><a href="/open-source/collection-libraries">Collections</a></td></tr>
+    <tr><td><a href="/open-source/command-line">Command Line</a></td></tr>
+    <tr><td><a href="/open-source/connection-pools">Connection Pools</a></td></tr>
+    <tr><td><a href="/open-source/crawlers">Crawlers</a></td></tr>
+    <tr><td class="spacer">&nbsp;</td></tr>
+<tr><td class="category"><span>D</span></td></tr>
+          <tr><td class="first"><a href="/open-source/database-engines">Databases</a></td></tr>
+    <tr><td class="spacer">&nbsp;</td></tr>
+<tr><td class="category"><span>E</span></td></tr>
+          <tr><td class="first"><a href="/open-source/ejb-servers">EJB Servers</a></td></tr>
+    <tr><td><a href="/open-source/erp-crm">ERP & CRM</a></td></tr>
+    <tr><td><a href="/open-source/enterprise-service-bus">ESB</a></td></tr>
+    <tr><td><a href="/open-source/eclipse-plugins">Eclipse Plugins</a></td></tr>
+    <tr><td><a href="/open-source/expression-languages">Expression Languages</a></td></tr>
+    <tr><td class="spacer">&nbsp;</td></tr>
+<tr><td class="category"><span>F</span></td></tr>
+          <tr><td class="first"><a href="/open-source/finance">Financial Soft</a></td></tr>
+    <tr><td><a href="/open-source/forum-software">Forum Soft</a></td></tr>
+    <tr><td class="spacer">&nbsp;</td></tr>
+<tr><td class="category"><span>G</span></td></tr>
+          <tr><td class="first"><a href="/open-source/general-purpose">General Purpose</a></td></tr>
+    <tr><td><a href="/open-source/geospatial">Geospatial</a></td></tr>
+    <tr><td><a href="/open-source/groupware">Groupware</a></td></tr>
+    <tr><td class="spacer">&nbsp;</td></tr>
+<tr><td class="category"><span>H</span></td></tr>
+          <tr><td class="first"><a href="/open-source/html-parsers">HTML Parsers</a></td></tr>
+    <tr><td class="spacer">&nbsp;</td></tr>
+<tr><td class="category"><span>I</span></td></tr>
+          <tr><td class="first"><a href="/open-source/ides">IDEs</a></td></tr>
+    <tr><td><a href="/open-source/installer-generators">Installers</a></td></tr>
+    <tr><td><a href="/open-source/containers">Inversion of Control</a></td></tr>
+    <tr><td><a href="/open-source/issue-trackers">Issue Tracking</a></td></tr>
+    <tr><td class="spacer">&nbsp;</td></tr>
+<tr><td class="category"><span>J</span></td></tr>
+          <tr><td class="first"><a href="/open-source/j2ee-frameworks">J2EE Frameworks</a></td></tr>
+    <tr><td><a href="/open-source/jdbc">JDBC</a></td></tr>
+    <tr><td><a href="/open-source/jms">JMS</a></td></tr>
+    <tr><td><a href="/open-source/jmx">JMX</a></td></tr>
+    <tr><td><a href="/open-source/jsp-tag-libraries">JSP Tag Libraries</a></td></tr>
+    <tr><td><a href="/open-source/job-schedulers">Job Schedulers</a></td></tr>
+    <tr><td class="spacer">&nbsp;</td></tr>
+<tr><td class="category"><span>L</span></td></tr>
+          <tr><td class="first"><a href="/open-source/localization">Localization</a></td></tr>
+    <tr><td><a href="/open-source/logging">Logging Tools</a></td></tr>
+    <tr><td class="spacer">&nbsp;</td></tr>
+<tr><td class="category"><span>M</span></td></tr>
+          <tr><td class="first"><a href="/open-source/mail-clients">Mail Clients</a></td></tr>
+    <tr><td class="spacer">&nbsp;</td></tr>
+<tr><td class="category"><span>N</span></td></tr>
+          <tr><td class="first"><a href="/open-source/network-clients">Network Clients</a></td></tr>
+    <tr><td><a href="/open-source/network-servers">Network Servers</a></td></tr>
+    <tr><td class="spacer">&nbsp;</td></tr>
+<tr><td class="category"><span>O</span></td></tr>
+          <tr><td class="first"><a href="/open-source/obfuscators">Obfuscators</a></td></tr>
+    <tr><td class="spacer">&nbsp;</td></tr>
+<tr><td class="category"><span>P</span></td></tr>
+          <tr><td class="first"><a href="/open-source/pdf-libraries">PDF Libraries</a></td></tr>
+    <tr><td><a href="/open-source/parser-generators">Parser Generators</a></td></tr>
+    <tr><td><a href="/open-source/persistence">Persistence</a></td></tr>
+    <tr><td><a href="/open-source/portals">Portals</a></td></tr>
+    <tr><td><a href="/open-source/profilers">Profilers</a></td></tr>
+    <tr><td><a href="/open-source/project-management">Project Management</a></td></tr>
+    <tr><td class="spacer">&nbsp;</td></tr>
+<tr><td class="category"><span>R</span></td></tr>
+          <tr><td class="first"><a href="/open-source/rss-rdf-tools">RSS & RDF Tools</a></td></tr>
+    <tr><td><a href="/open-source/rule-engines">Rule Engines</a></td></tr>
+    <tr><td class="spacer">&nbsp;</td></tr>
+<tr><td class="category"><span>S</span></td></tr>
+          <tr><td class="first"><a href="/open-source/sql-clients">SQL Clients</a></td></tr>
+    <tr><td><a href="/open-source/scripting-languages">Scripting Languages</a></td></tr>
+    <tr><td><a href="/open-source/search-engines">Search Engines</a></td></tr>
+    <tr><td><a href="/open-source/security">Security</a></td></tr>
+    <tr><td><a href="/open-source/source-control">Source Control</a></td></tr>
+    <tr><td><a href="/open-source/swing">Swing</a></td></tr>
+    <tr><td class="spacer">&nbsp;</td></tr>
+<tr><td class="category"><span>T</span></td></tr>
+          <tr><td class="first"><a href="/open-source/template-engines">Template Engines</a></td></tr>
+    <tr><td><a href="/open-source/testing-tools">Testing Tools</a></td></tr>
+    <tr><td><a href="/open-source/text-processing">Text Processing</a></td></tr>
+    <tr><td class="spacer">&nbsp;</td></tr>
+<tr><td class="category"><span>U</span></td></tr>
+          <tr><td class="first"><a href="/open-source/uml-modeling">UML & Modeling</a></td></tr>
+    <tr><td class="spacer">&nbsp;</td></tr>
+<tr><td class="category"><span>V</span></td></tr>
+          <tr><td class="first"><a href="/open-source/validation">Validation</a></td></tr>
+    <tr><td class="spacer">&nbsp;</td></tr>
+<tr><td class="category"><span>W</span></td></tr>
+          <tr><td class="first"><a href="/open-source/web-frameworks">Web Frameworks</a></td></tr>
+    <tr><td><a href="/open-source/web-mail">Web Mail</a></td></tr>
+    <tr><td><a href="/open-source/web-servers">Web Servers</a></td></tr>
+    <tr><td><a href="/open-source/web-services-tools">Web Services</a></td></tr>
+    <tr><td><a href="/open-source/web-testing-tools">Web Testing</a></td></tr>
+    <tr><td><a href="/open-source/wiki-engines">Wiki Engines</a></td></tr>
+    <tr><td><a href="/open-source/workflow-engines">Workflow Engines</a></td></tr>
+    <tr><td class="spacer">&nbsp;</td></tr>
+<tr><td class="category"><span>X</span></td></tr>
+          <tr><td class="first"><a href="/open-source/xml-parsers">XML Parsers</a></td></tr>
+    <tr><td><a href="/open-source/xml-user-interface-toolkits">XML UI Toolkits</a></td></tr>
+    <tr><td class="spacer">&nbsp;</td></tr>
+ </tbody>
+</table>
+</td>
+
+            <td style="padding: 7px" id="main">
+                <div id="body">
+                    
+
+<h1>Open Source HTML Parsers in Java</h1>
+
+<h3><span><a href="/open-source/html-parsers/tagsoup">TagSoup</a></span></h3>
+
+    <table style="font-size:12px; margin-top:5px; margin-left:5px;" width="100%">
+        <tr>
+            <td>
+TagSoup is a SAX-compliant parser written in Java that, instead of parsing well-formed or valid XML, parses HTML as it is found in the wild: nasty and brutish, though quite often far from short. TagSoup is designed for people who have to process this stuff using some semblance of a rational application design. By providing a SAX interface, it allows standard XML tools to be applied to even the worst HTML.</td>
+            <!--
+        <td>
+            <img sytle="float:right;" width="120" height="90" src="/show-image?id=258"/>
+            </td>
+        
+        -->
+        </tr>
+    </table>
+    <p style="padding: 0; padding-left:6px;"><a href="/open-source/html-parsers/tagsoup">Go To TagSoup</a></p>
+
+<h3><span><a href="/open-source/html-parsers/html-parser">HTML Parser</a></span></h3>
+
+    <table style="font-size:12px; margin-top:5px; margin-left:5px;" width="100%">
+        <tr>
+            <td>
+A fast real-time parser for real-world HTML.</td>
+            <!--
+        <td>
+            <img sytle="float:right;" width="120" height="90" src="/show-image?id=254"/>
+            </td>
+        
+        -->
+        </tr>
+    </table>
+    <p style="padding: 0; padding-left:6px;"><a href="/open-source/html-parsers/html-parser">Go To HTML Parser</a></p>
+
+<h3><span><a href="/open-source/html-parsers/java-html-parser">Java HTML Parser</a></span></h3>
+
+    <p>
+        <script type="text/javascript"><!--
+        google_ad_client = "pub-1185571689816607";
+        /* 300x250, created 1/13/10 */
+        google_ad_slot = "6382580408";
+        google_ad_width = 300;
+        google_ad_height = 250;
+        //-->
+        </script>
+        <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+        </script>
+
+        <script type="text/javascript"><!--
+        google_ad_client = "pub-1185571689816607";
+        /* 300x250, created 1/13/10 */
+        google_ad_slot = "6382580408";
+        google_ad_width = 300;
+        google_ad_height = 250;
+        //-->
+        </script>
+        <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+        </script>
+    </p>
+    <table style="font-size:12px; margin-top:5px; margin-left:5px;" width="100%">
+        <tr>
+            <td>
+HTML Parser that produces a stream of tag objects, which can be further parsed into a searchable tree structure.</td>
+            <!--
+        <td>
+            <img sytle="float:right;" width="120" height="90" src="/show-image?id=255"/>
+            </td>
+        
+        -->
+        </tr>
+    </table>
+    <p style="padding: 0; padding-left:6px;"><a href="/open-source/html-parsers/java-html-parser">Go To Java HTML Parser</a></p>
+
+<h3><span><a href="/open-source/html-parsers/cobra-0.95.1">Cobra 0.95.1</a></span></h3>
+
+    <table style="font-size:12px; margin-top:5px; margin-left:5px;" width="100%">
+        <tr>
+            <td>
+Cobra is an HTML Toolkit that contains a pure Java HTML  DOM parser and a rendering engine. It supports HTML 4, Javascript and CSS2.</td>
+            <!--
+        <td>
+            <img sytle="float:right;" width="120" height="90" src="/show-image?id=2075"/>
+            </td>
+        
+        -->
+        </tr>
+    </table>
+    <p style="padding: 0; padding-left:6px;"><a href="/open-source/html-parsers/cobra-0.95.1">Go To Cobra 0.95.1</a></p>
+
+<h3><span><a href="/open-source/html-parsers/htmlcleaner">HtmlCleaner</a></span></h3>
+
+    <table style="font-size:12px; margin-top:5px; margin-left:5px;" width="100%">
+        <tr>
+            <td>
+HtmlCleaner is open-source HTML parser written in Java. HTML found on Web is usually dirty, ill-formed and unsuitable for further processing. For any serious consumption of such documents, it is necessary to first clean up the mess and bring the order to tags, attributes and ordinary text. For the given HTML document, HtmlCleaner reorders individual elements and produces well-formed XML. By default, it follows similar rules that the most of web-browsers use in order to create document object model. However, user may provide custom tag and rule set for tag filtering and balancing.</td>
+            <!--
+        <td>
+            <img sytle="float:right;" width="120" height="90" src="/show-image?id=3788"/>
+            </td>
+        
+        -->
+        </tr>
+    </table>
+    <p style="padding: 0; padding-left:6px;"><a href="/open-source/html-parsers/htmlcleaner">Go To HtmlCleaner</a></p>
+
+<h3><span><a href="/open-source/html-parsers/java-mozilla-html-parser">Java Mozilla Html Parser</a></span></h3>
+
+    <table style="font-size:12px; margin-top:5px; margin-left:5px;" width="100%">
+        <tr>
+            <td>
+MozillaParser is a Java Html parser based on mozilla's html parser. it acts as a bridge from java classes to Mozilla's classes and outputs a java Document object from a raw ( and dirty) HTML input</td>
+            <!--
+        <td>
+            <img sytle="float:right;" width="120" height="90" src="/show-image?id=6004"/>
+            </td>
+        
+        -->
+        </tr>
+    </table>
+    <p style="padding: 0; padding-left:6px;"><a href="/open-source/html-parsers/java-mozilla-html-parser">Go To Java Mozilla Html Parser</a></p>
+
+<h3><span><a href="/open-source/html-parsers/hotsax">HotSax</a></span></h3>
+
+    <table style="font-size:12px; margin-top:5px; margin-left:5px;" width="100%">
+        <tr>
+            <td>
+HotSAX is a fast, small footprint, non-validating SAX2 parser for HTML/XML/XHTML. It can be used in simple web agents, page scrapers, and spiders. It is similar to the Apache Xerces parser, except that it can generate SAX events for badly formatted HTML as well.</td>
+            <!--
+        <td>
+            <img sytle="float:right;" width="120" height="90" src="/show-image?id=259"/>
+            </td>
+        
+        -->
+        </tr>
+    </table>
+    <p style="padding: 0; padding-left:6px;"><a href="/open-source/html-parsers/hotsax">Go To HotSax</a></p>
+
+<h3><span><a href="/open-source/html-parsers/nekohtml">NekoHTML</a></span></h3>
+
+    <table style="font-size:12px; margin-top:5px; margin-left:5px;" width="100%">
+        <tr>
+            <td>
+NekoHTML is a simple HTML scanner and tag balancer that enables application programmers to parse HTML documents and access the information using standard XML interfaces. The parser can scan HTML files and "fix up" many common mistakes that human (and computer) authors make in writing HTML documents. NekoHTML adds missing parent elements; automatically closes elements with optional end tags; and can handle mismatched inline element tags.</td>
+            <!--
+        <td>
+            <img sytle="float:right;" width="120" height="90" src="/show-image?id=253"/>
+            </td>
+        
+        -->
+        </tr>
+    </table>
+    <p style="padding: 0; padding-left:6px;"><a href="/open-source/html-parsers/nekohtml">Go To NekoHTML</a></p>
+
+<h3><span><a href="/open-source/html-parsers/jericho-html-parser">Jericho HTML Parser</a></span></h3>
+
+    <table style="font-size:12px; margin-top:5px; margin-left:5px;" width="100%">
+        <tr>
+            <td>
+A simple but powerful java library for parsing and modifying HTML documents, including analysis of abritrary HTML forms to determine the structure of submitted data.</td>
+            <!--
+        <td>
+            <img sytle="float:right;" width="120" height="90" src="/show-image?id=256"/>
+            </td>
+        
+        -->
+        </tr>
+    </table>
+    <p style="padding: 0; padding-left:6px;"><a href="/open-source/html-parsers/jericho-html-parser">Go To Jericho HTML Parser</a></p>
+
+<h3><span><a href="/open-source/html-parsers/jtidy">JTidy</a></span></h3>
+
+    <table style="font-size:12px; margin-top:5px; margin-left:5px;" width="100%">
+        <tr>
+            <td>
+JTidy is a Java port of HTML Tidy , a HTML syntax checker and pretty printer. Like its non-Java cousin, JTidy can be used as a tool for cleaning up malformed and faulty HTML. In addition, JTidy provides a DOM interface to the document that is being processed, which effectively makes you able to use JTidy as a DOM parser for real-world HTML.</td>
+            <!--
+        <td>
+            <img sytle="float:right;" width="120" height="90" src="/show-image?id=257"/>
+            </td>
+        
+        -->
+        </tr>
+    </table>
+    <p style="padding: 0; padding-left:6px;"><a href="/open-source/html-parsers/jtidy">Go To JTidy</a></p>
+
+<h3><span><a href="/open-source/html-parsers/vietspider-htmlparser">VietSpider HTMLParser</a></span></h3>
+
+    <table style="font-size:12px; margin-top:5px; margin-left:5px;" width="100%">
+        <tr>
+            <td>
+VietSpider HTMLParser: Pure Java HTML DOM parser, support HTML 4.0.1. It is a fast, syntax checker, automatically closes elements with optional end tags; and can handle mismatched inline element tags. </td>
+            <!--
+        <td>
+            <img sytle="float:right;" width="120" height="90" src="/show-image?id=20494"/>
+            </td>
+        
+        -->
+        </tr>
+    </table>
+    <p style="padding: 0; padding-left:6px;"><a href="/open-source/html-parsers/vietspider-htmlparser">Go To VietSpider HTMLParser</a></p>
+
+<br>
+
+<p>
+    </p>
+
+</div>
+            </td>
+
+            <td style="width:165px; padding-top: 1px;">
+                <script type="text/javascript"><!--
+google_ad_client = "pub-1185571689816607";
+/* XSource - Right */
+google_ad_slot = "8411177203";
+google_ad_width = 160;
+google_ad_height = 600;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script><br/> <br/> <br/>
+
+                <div>
+                    <center>
+                        <a href="/feeds/rss2.0.xml">
+                            <img border="0" src="/images/feed-icon16x16.png" alt="RSS Feed"/>
+                        </a>
+
+                        <a href="/feeds/rss2.0.xml">Feed</a>
+                    </center>
+                </div>
+
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div>
+        <center>
+            <br/>
+            Java is a trademark or registered trademark of Sun Microsystems, Inc. in the United States and other countries. This site is independent of Sun Microsystems, Inc.<br/>
+            <br/>
+        </center>
+    </div>
+
+</div>
+</body>
+</html>
