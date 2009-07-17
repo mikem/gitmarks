@@ -1,0 +1,681 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head profile="http://gmpg.org/xfn/11">
+<link rel="shortcut icon" href="/favicon.ico" />
+<meta http-equiv="Content-Typ!" content="text/html; charset=UTF-8" />
+
+<title>William Vambenepe  &#8212; REST in practice for IT and Cloud management (part 1: Cloud APIs)</title>
+
+<meta name="generator" content="WordPress 3.0.2" /> <!-- leave this for stats -->
+
+<link rel="stylesheet" href="http://stage.vambenepe.com/wp-content/themes/greenday-10/style.css" type="text/css" media="screen" />
+<link rel="alternate" type="application/rss+xml" title="William Vambenepe&#039;s blog RSS Feed" href="http://stage.vambenepe.com/feed" />
+<link rel="pingback" href="http://stage.vambenepe.com/xmlrpc.php" />
+
+<style type="text/css" media="screen">
+
+</style>
+
+<link rel="alternate" type="application/rss+xml" title="William Vambenepe&#039;s blog &raquo; REST in practice for IT and Cloud management (part 1: Cloud APIs) Comments Feed" href="http://stage.vambenepe.com/archives/863/feed" />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://stage.vambenepe.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://stage.vambenepe.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='index' title='William Vambenepe&#039;s blog' href='http://stage.vambenepe.com' />
+<link rel='start' title='Too hot to count' href='http://stage.vambenepe.com/archives/7' />
+<link rel='prev' title='YACSOE' href='http://stage.vambenepe.com/archives/856' />
+<link rel='next' title='Anthology of blog posts about protocols and data formats' href='http://stage.vambenepe.com/archives/878' />
+<meta name="generator" content="WordPress 3.0.2" />
+<link rel='canonical' href='http://stage.vambenepe.com/archives/863' />
+<link rel='shortlink' href='http://stage.vambenepe.com/?p=863' />
+<style type='text/css'>
+<!--#container {	width: 660px; }
+#rightads { display: none; }
+--></style>
+</head>
+<body id="top">
+
+<div id="container">
+
+<div id="main">
+<h1 id="head"><a href="http://stage.vambenepe.com">William Vambenepe&#039;s blog</a></h1>
+<h2 id="tag" style="clear:both;">IT management in a changing IT world</h2>
+<div style="clear:both;"></div><ul id="menu">
+    <li><a href="http://stage.vambenepe.com/about">About</a></li><li><a href="http://stage.vambenepe.com/archives">Archives</a></li><li><a href="http://stage.vambenepe.com/feeds">Feeds</a></li>    <li><a href="http://stage.vambenepe.com">Home</a></li>
+    <li><a href="http://twitter.com/vambenepe">Twitter</a></li>
+<li style="float:right"><!-- <a href="http://stage.vambenepe.com/feed/"><img src="/wp-content/themes/greenday-10/rss.png" width="14" height="14" border="0" vspace="3" alt="RSS2.0" /></a> -->
+<form method="get" id="searchform" action="http://stage.vambenepe.com/">
+<div><input type="text" value="" name="s" id="s" />
+<input type="submit" id="searchsubmit" value="Search" />
+</div>
+</form>
+</li>
+</ul>
+
+	<div id="content" class="widecolumn">
+
+  
+		<h3>
+				<div id="date">16</div>
+				<div id="mon">Jul</div>
+				<div id="year">2009</div>
+			</h3>
+			<div class="post" id="post-863">
+			<h2><a href="http://stage.vambenepe.com/archives/863" rel="bookmark" title="Permanent Link to REST in practice for IT and Cloud management (part 1: Cloud APIs)">REST in practice for IT and Cloud management (part 1: Cloud APIs)</a></h2>
+			<small>by William (@vambenepe on Twitter)</small>
+
+			<div class="entry">
+				<p>In this entry I compare four public Cloud APIs (AWS EC2, GoGrid, Rackspace and Sun Cloud) to see what practical benefits REST provides for resource management protocols.</p>
+<p>As someone who was involved with the creation of the WS-* stack (especially the parts related to resource management) and who genuinely likes the <a href="http://stage.vambenepe.com/archives/118">SOAP processing model</a> I have a tendency to be a little defensive about REST, which is often defined in opposition to WS-*. On the other hand, as someone who started writing web apps when the state of the art was a CGI Perl script, who loves on-the-wire protocols (e.g. this <a href="http://stage.vambenepe.com/archives/816">recent</a> <a href="http://stage.vambenepe.com/archives/837">exploration</a> of the Windows management stack from an on-the-wire perspective), who is happy to deal with raw XML (as long as I get to do it with a <a href="http://www.xom.nu/">good library</a>), who appreciates the semantic web, and who values models over protocols the REST principles are very natural to me.</p>
+<p>I have read the <a href="http://www.infoq.com/articles/rest-introduction">introduction</a> and the <a href="http://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm">bible</a> but beyond this I haven&#8217;t seen a lot of practical and profound information about using REST (by &#8220;profound&#8221; I mean something that is not obvious to anyone who has written web applications). I had high hopes when Pete Lacey <a href="http://72.249.21.88/nonintersecting/2009/01/17/introducing-the-xprest-project/">promised</a> to deliver this through a realistic example, but it seems to have stalled after <a href="http://72.249.21.88/nonintersecting/2009/01/23/lesson-zero/">two</a> <a href="http://72.249.21.88/nonintersecting/2009/01/30/lesson-one-rest-from-the-beginning/">posts</a>. Still, his <a href="http://www.infoq.com/interviews/pete-lacey-rest">conversation with Stefan Tilkov</a> (video + transcript) remains the most informed comparison of WS-* and REST.</p>
+<p>The domain I care the most about is IT resource management (which includes &#8220;Cloud&#8221; in my view). I am familiar with most of the remote API mechanisms in this area (SNMP to WBEM to WMI to JMX/RMI to OGSI, to WSDM/WS-Management to a flurry of proprietary interfaces). I can think of ways in which some REST principles would help in this area, but they are mainly along the lines of &#8220;any consistent set of principles would help&#8221; rather than anything specific to REST. For a while now I have been wondering if I am missing something important about REST and its applicability to IT management or if it&#8217;s mostly a matter of &#8220;just pick one protocol and focus on the model&#8221; (as well as simply avoiding the various drawbacks of the alternative methods, which is a valid reason but not an intrinsic benefit of REST).</p>
+<p>I have been trying to learn from others, by looking at how they apply REST to IT/Cloud management scenarios. The Cloud area has been especially fecund in such specifications so I will focus on this for part 1. Here is what I think we can learn from this body of work.</p>
+<p><strong>Amazon EC2</strong></p>
+<p>When it came out a few years ago, the Amazon <a href="http://docs.amazonwebservices.com/AWSEC2/2006-10-01/DeveloperGuide/">EC2 API</a>, with its equivalent SOAP and plain-HTTP alternatives, did nothing to move me from the view that it&#8217;s just a matter of picking a protocol and being consistent. They give you the choice of plain HTTP versus SOAP, but it&#8217;s just a matter of tweaking how the messages are serialized (URL parameters versus a SOAP message in the input; whether or not there is a SOAP wrapper in the output). The operations are the same whether you use SOAP or not. The responses don&#8217;t even contain URLs. For example, &#8220;RunInstances&#8221; returns the IDs of the instances, not a URL for each of them. You then call &#8220;TerminateInstances&#8221; and pass these instance IDs as parameters rather than doing a &#8220;delete&#8221; on an instance URL. This API seems to have served Amazon (and their ecosystem) well. It&#8217;s easy to understand, easy to use and it provides a convenient way to handle many instances at once. Since no SOAP header is supported, the SOAP wrapper adds no value (I remember reading that the adoption rate for the EC2 SOAP API reflect this though I don&#8217;t have a link handy).</p>
+<p>Overall, seeing the EC2 API did not weaken my suspicion that there was no fundamental difference between REST and SOAP in the IT/Cloud management field. But I was very aware that Amazon didn&#8217;t really &#8220;do&#8221; REST in the EC2 API, so the possibility remained that someone would, in a way that would open my eyes to the benefits of true REST for IT/Cloud management.</p>
+<p>Fast forward to 2009 and many people have now created and published RESTful APIs for Cloud computing. APIs that are backed by real implementations and that explicitly claim RESTfulness (unlike Amazon). Plus, their authors have great credentials in datacenter automation and/or REST design. First came GoGrid, then the Sun Cloud API and recently Rackspace. So now we have concrete specifications to analyze to understand what REST means for resource management.</p>
+<p>I am not going to do a detailed comparative review of these three APIs, though I may get to that in a future post. Overall, they are pretty similar in many dimensions. They let you do similar things (create server instances based on images, destroy them, assign IPs to them&#8230;). Some features differ: GoGrid supports more load balancing features, Rackspace gives you control of backup schedules, Sun gives you clusters (a way to achieve the kind of manage-as-group features inherent in the EC2 API), etc. Leaving aside the feature-per-feature comparison, here is what I learned about what REST means in practice for resource management from each of the three specifications.</p>
+<p><strong>GoGrid</strong></p>
+<p>Though it calls itself &#8220;REST-like&#8221;, the <a href="http://wiki.gogrid.com/wiki/index.php/API">GoGrid API</a> is actually more along the lines of EC2. The first version of their API claimed that &#8220;the API is a REST-like API meaning all API calls are submitted as HTTP GET or POST requests&#8221; which is the kind of &#8220;HTTP ergo REST&#8221; declaration that makes me cringe. It&#8217;s been somewhat rephrased in later versions (thank you) though they still use the undefined term &#8220;REST-like&#8221;. Maybe it refers to their use of <a href="http://wiki.gogrid.com/wiki/index.php/API:Common_API_Call_Patterns">&#8220;call patterns&#8221;</a>. The main difference with EC2 is that they put the operation name in the URI path rather than the arguments. For example, EC2 uses</p>
+<p><em>https://ec2.amazonaws.com/?Action=<strong>TerminateInstances</strong>&amp;InstanceId.1=i-2ea64347&amp;&#8230;(auth-parameters)&#8230;</em></p>
+<p>while GoGrid uses</p>
+<p><em>https://api.gogrid.com/api/grid/server/<strong>delete</strong>?name=My+Server+Name&amp;&#8230;(auth-parameters)&#8230;</em></p>
+<p>So they have action-specific endpoints rather than a do-everything endpoint. It&#8217;s unclear to me that this change anything in practice. They don&#8217;t pass resource-specific URLs around (especially since, like EC2, they include the authentication parameters in the URL), they simply pass IDs, again like EC2 (but unlike EC2 they only let you delete one server at a time). So whatever &#8220;REST-like&#8221; means in their mind, it doesn&#8217;t seem to be &#8220;RESTful&#8221;. Again, the EC2 API gets the job done and I have no reason to think that GoGrid doesn&#8217;t also. My comments are not necessarily a criticism of the API. It&#8217;s just that it doesn&#8217;t move the needle for my appreciation of REST in the context of IT management. But then again, &#8220;instruct William Vambenepe&#8221; was probably not a goal in their functional spec</p>
+<p><strong>Rackspace</strong></p>
+<p>In this <a href="http://blog.mosso.com/2009/07/an-interview-with-the-architects-of-the-cloud-servers-api/">&#8220;interview&#8221;</a> to announce the release of the <a href="http://www.rackspacecloud.com/cloud_hosting_products/servers/api">Rackspace &#8220;Cloud Servers&#8221; API</a>, lead architects Erik Carlin and Jason Seats make a big deal of their goal to apply REST principles: <em>&#8220;We wanted to adhere as strictly as possible to RESTful practice. We iterated several times on the design to make it more and more RESTful. We actually did an update this week where we made some final changes because we just didn’t feel like it was RESTful enough&#8221;</em>. So presumably this API should finally show me the benefits of true REST in the IT resource management domain. And to be sure it does a better job than EC2 and GoGrid at applying REST principles. The authentication uses HTTP headers, keeping URLs clean. They use the different HTTP verbs the way they are intended. Well mostly, as some of the logic escapes me: doing a GET on /servers/<em>id</em> (where <em>id</em> is the server ID) returns the details of the server configuration, doing a DELETE on it terminates the server, but doing a PUT on the same URL changes the admin username/password of the server. Weird. I understand that the output of a GET can&#8217;t always have the same content as the input of a PUT on the same resource, but here they are not even similar. For non-CRUD actions, the API introduces a special URL (/servers/<em>id</em>/action) to which you can POST. The type of the payload describes the action to execute (reboot, resize, rebuild&#8230;). This is very similar to Sun&#8217;s &#8220;controller URLs&#8221; (see below).</p>
+<p>I came out thinking that this is a nice on-the-wire interface that should be easy to use. But it&#8217;s not clear to me what REST-specific benefit it exhibits. For example, how would this API be less useful if &#8220;delete&#8221; was another action POSTed to /servers/<em>id</em>/action rather than being a DELETE on /servers/<em>id</em>? The authors carefully define the HTTP behavior (content compression, caching&#8230;) but I fail to see how the volume of data involved in using this API necessitates this (we are talking about commands here, not passing disk images around). Maybe I am a lazy pig, but I would systematically bypass the cache because I suspect that the performance benefit would be nothing in comparison to the cost of having to handle in my code the possibility of caching taking place (<em>&#8220;is it ok here that the content might be stale? what about here? and here?&#8221;</em>).</p>
+<p><strong>Sun</strong></p>
+<p>Like Rackspace, the <a href="http://kenai.com/projects/suncloudapis/pages/Home">Sun Cloud API</a> is explicitly RESTful. And, by virtue of Tim Bray being on board, we benefit from not just seeing the API but also <a href="http://www.tbray.org/ongoing/When/200x/2009/03/16/Sun-Cloud">reading</a> in well-explained <a href="http://www.tbray.org/ongoing/When/200x/2009/07/02/Slow-REST">details</a> the issues, alternatives and choices that went into it. It is pretty similar to the Rackspace API (e.g. the &#8220;controller URL&#8221; approach mentioned above) but I like it a bit better and not just because the underlying model is richer (and getting richer every day as I just realized by re-reading it tonight). It handles many-as-one management through clusters in a way that is consistent with the direct resource access paradigm. And what you PUT on a resource is closely related to what you GET from it.</p>
+<p>I have <a href="http://stage.vambenepe.com/archives/632">commented before</a> on the Sun Cloud API (though the increasing richness of their model is starting to make my comments less understandable, maybe I should look into changing the links to a point-in-time version of Kenai). It shows that at the end it&#8217;s the model, not the protocol that matters. And Tim is right to see REST in this case as more of a set of hygiene guidelines for on-the-wire protocols then as the enabler for some unneeded scalability (which takes me back to wondering why the Rackspace guys care so much about caching).</p>
+<p><strong>Anything learned?</strong></p>
+<p>So, what do these APIs teach us about the practical value of REST for IT/Cloud management?</p>
+<p>I haven&#8217;t written code against all of them, but I get the feeling that the Sun and Rackspace APIs are those I would most enjoy using (Sun because it&#8217;s the most polished, Rackspace because it doesn&#8217;t force me to use JSON). The JSON part has two component. One is simply my lack of familiarity with using it compared to XML, but I assume I&#8217;ll quickly get over this when I start using it. The second is my concern that it will be cumbersome when the models handled get more complex, heterogeneous and versioned, chiefly from the lack of namespace support. But this is a topic for another day.</p>
+<p>I can&#8217;t tell if it&#8217;s a coincidence that the most attractive APIs to me happen to be the most explicitly RESTful. On the one hand, I don&#8217;t think they would be any less useful if all the interactions where replaced by XML RPC calls. Where the payloads of the requests and responses correspond to the parameters the APIs define for the different operations. The Sun API could still return resource URLs to me (e.g. a VM URL as a result of creating a VM) and I would send reboot/destroy commands to this VM via XML RPC messages to this URL. How would it matter that everything goes over HTTP POST instead of skillfully choosing the right HTTP verb for each operation? BTW, whether the XML RPC is SOAP-wrapped or not is only a secondary concern.</p>
+<p>On the other hand, maybe the process of following REST alone forces you to come up with a clear resource model that makes for a clean API, independently of many of the other REST principles. In this view, REST is to IT management protocol design what classical music training is to a rock musician.</p>
+<p>So, at least for the short-term expected usage of these APIs (automating deployments, auto-scaling, cloudburst, load testing, etc) I don&#8217;t think there is anything inherently beneficial in REST for IT/Cloud management protocols. What matter is the amount of thought you put into it and that it has a clear on-the-wire definition.</p>
+<p>What about longer term scenarios? Wouldn&#8217;t it be nice to just use a Web browser to navigate HTML pages representing the different Cloud resources? Could I use these resource representations to create mashups tying together current configuration, metrics history and events from wherever they reside? In other words, could I throw away my IT management console because all the pages it laboriously generates today would exist already in the ether, served by the controllers of the resources. Or rather as a mashup of what is served by these controllers. Such that my IT management console is really &#8220;in the cloud&#8221;, meaning not just running in somebody else&#8217;s datacenter but rather assembled on the fly from scattered pieces of information that live close to the resources managed. And wouldn&#8217;t this be especially convenient if/when I use a &#8220;federated&#8221; cloud, one that spans my own datacenter and/or multiple Cloud providers? The scalability of REST could then become more relevant, but more importantly its mashup-friendliness and location transparency would be essential.</p>
+<p>This, to me, is the intriguing aspect of using REST for IT/Cloud management. This is where the Sun Cloud API would beat the EC2 API. Tim says that in the Sun Cloud &#8220;the router is just a big case statement over URI-matching regexps&#8221;. Tomorrow this router could turn into five different routers deployed in different locations and it wouldn&#8217;t change anything for the API user. Because they&#8217;d still just follow URLs. Unlike all the others APIs listed above, for which you know the instance ID but you need to somehow know which controller to talk to about this instance. Today it doesn&#8217;t matter because there is one controller per Cloud and you use one Cloud at a time. Tomorrow? As Tim says, &#8220;the API doesn’t constrain the design of the URI space at all&#8221; and this, to me, is the most compelling long-term reason to use REST. But it only applies if you use it properly, rather than just calling your whatever-over-HTTP interface RESTful. And it won&#8217;t differentiate you in the short term.</p>
+<p>The second part in the &#8220;REST in practice for IT and Cloud management&#8221; series will be about the use of REST for configuration management and especially federation. Where you can expect to read more about the benefits of links (I mean &#8220;hypermedia&#8221;).</p>
+<p>[UPDATE: <a href="http://stage.vambenepe.com/archives/894">Part 2</a> is now available. Also make sure to read the <a href="http://stage.vambenepe.com/archives/863#comments">comments</a> bellow.]</p>
+
+
+<p>Related posts:</p><ol><li><a href='http://stage.vambenepe.com/archives/1700' rel='bookmark' title='Permanent Link: Amazon proves that REST doesn&#8217;t matter for Cloud APIs'>Amazon proves that REST doesn&#8217;t matter for Cloud APIs</a></li>
+<li><a href='http://stage.vambenepe.com/archives/894' rel='bookmark' title='Permanent Link: REST in practice for IT and Cloud management (part 2: configuration management)'>REST in practice for IT and Cloud management (part 2: configuration management)</a></li>
+<li><a href='http://stage.vambenepe.com/archives/1161' rel='bookmark' title='Permanent Link: REST in practice for IT and Cloud management (part 3: wrap-up)'>REST in practice for IT and Cloud management (part 3: wrap-up)</a></li>
+<li><a href='http://stage.vambenepe.com/archives/943' rel='bookmark' title='Permanent Link: Separating model from protocol in Cloud APIs'>Separating model from protocol in Cloud APIs</a></li>
+<li><a href='http://stage.vambenepe.com/archives/936' rel='bookmark' title='Permanent Link: VMWare publishes (and submits) vCloud API'>VMWare publishes (and submits) vCloud API</a></li>
+<li><a href='http://stage.vambenepe.com/archives/447' rel='bookmark' title='Permanent Link: Who said WS-Transfer is for REST?'>Who said WS-Transfer is for REST?</a></li>
+</ol>
+				
+<!-- AddThis Bookmark Post Button BEGIN -->
+<div><a href="http://www.addthis.com/bookmark.php?pub=vbp&url=http://stage.vambenepe.com/archives/863&title=REST in practice for IT and Cloud management (part 1: Cloud APIs)" title="Bookmark using any bookmark manager!" target="_blank"><img src="/pages/addthis.gif" width="125" height="16" border="0" alt="AddThis Social Bookmark Button" /></a> Follow <a href="http://twitter.com/vambenepe">@vambenepe</a> on Twitter.</div><!-- AddThis Bookmark Post Button END -->
+
+				<p class="postmetadata alt">
+					<small>
+						This entry was posted
+												on Thursday, July 16th, 2009 at 1:15 am						and is filed under <a href="http://stage.vambenepe.com/archives/category/amazon" title="View all posts in Amazon" rel="category tag">Amazon</a>, <a href="http://stage.vambenepe.com/archives/category/cloud-computing" title="View all posts in Cloud Computing" rel="category tag">Cloud Computing</a>, <a href="http://stage.vambenepe.com/archives/category/everything" title="View all posts in Everything" rel="category tag">Everything</a>, <a href="http://stage.vambenepe.com/archives/category/it-systems-management" title="View all posts in IT Systems Management" rel="category tag">IT Systems Management</a>, <a href="http://stage.vambenepe.com/archives/category/manageability" title="View all posts in Manageability" rel="category tag">Manageability</a>, <a href="http://stage.vambenepe.com/archives/category/management-integration" title="View all posts in Management integration" rel="category tag">Management integration</a>, <a href="http://stage.vambenepe.com/archives/category/rest" title="View all posts in REST" rel="category tag">REST</a>, <a href="http://stage.vambenepe.com/archives/category/soa" title="View all posts in SOA" rel="category tag">SOA</a>, <a href="http://stage.vambenepe.com/archives/category/soap" title="View all posts in SOAP" rel="category tag">SOAP</a>, <a href="http://stage.vambenepe.com/archives/category/soap-header" title="View all posts in SOAP header" rel="category tag">SOAP header</a>, <a href="http://stage.vambenepe.com/archives/category/soap-processing-model" title="View all posts in SOAP processing model" rel="category tag">SOAP processing model</a>, <a href="http://stage.vambenepe.com/archives/category/specs" title="View all posts in Specs" rel="category tag">Specs</a>, <a href="http://stage.vambenepe.com/archives/category/utility-computing" title="View all posts in Utility computing" rel="category tag">Utility computing</a>, <a href="http://stage.vambenepe.com/archives/category/virtualization" title="View all posts in Virtualization" rel="category tag">Virtualization</a>.
+						You can follow any responses to this entry through the <a href='http://stage.vambenepe.com/archives/863/feed'>RSS 2.0</a> feed.
+
+													You can <a href="#respond">leave a response</a>, or <a href="http://stage.vambenepe.com/archives/863/trackback" rel="trackback">trackback</a> from your own site.
+
+						
+					</small>
+				</p>
+
+			</div>
+		</div><div class="navigation">
+			<div class="alignleft">&laquo; <a href="http://stage.vambenepe.com/archives/856" rel="prev">YACSOE</a></div>
+			<div class="alignright"><a href="http://stage.vambenepe.com/archives/878" rel="next">Anthology of blog posts about protocols and data formats</a> &raquo;</div>
+		</div>
+
+
+
+	
+<!-- You can start editing here. -->
+
+	<h2 id="comments">34 Responses to &#8220;REST in practice for IT and Cloud management (part 1: Cloud APIs)&#8221;</h2>
+
+	<ol class="commentlist">
+
+	
+		<li class="alt" id="comment-79479">
+			<cite><a href='http://clouddevelopertips.blogspot.com' rel='external nofollow' class='url'>Shlomo</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-79479" title="">July 16th, 2009 at 1:42 pm</a> </small>
+
+			<p>Great article!</p>
+<p>It seems that namespaces would be a crucial feature for supporting federation of multiple providers behind a single service. Lacking namespaces, how can we make sense of the different semantics used by each implementation for the same HTTP verbs and HTTP headers?</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-79485">
+			<cite><a href='http://cloudscaling.com' rel='external nofollow' class='url'>Randy Bias</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-79485" title="">July 16th, 2009 at 2:12 pm</a> </small>
+
+			<p>Thanks for the analysis.  This is helpful.  Could you take a look at the latest OCCI cloud proposal and include that in any further writings?</p>
+<p>Thanks,</p>
+<p>&#8211;Randy</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-79488">
+			<cite><a href='http://stage.vambenepe.com' rel='external nofollow' class='url'>William Vambenepe</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-79488" title="">July 16th, 2009 at 2:34 pm</a> </small>
+
+			<p>Shlomo,</p>
+<p>I am with you on the need for namespaces, but I am confused by how you then want to apply them to HTTP verbs. The whole point is that these are common across all implementations, so this is not something you want to namespace-qualify. It does make sense for HTTP headers on the other hand (this is one of the things that SOAP addresses with its namespace-qualified headers).</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-79489">
+			<cite><a href='http://stage.vambenepe.com' rel='external nofollow' class='url'>William Vambenepe</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-79489" title="">July 16th, 2009 at 2:38 pm</a> </small>
+
+			<p>Randy,</p>
+<p>Thanks for the pointer. I had a quick look at <a href="http://wiki.cloudcommunity.org/wiki/Open_Cloud_Computing_Interface" rel="nofollow">http://wiki.cloudcommunity.org/wiki/Open_Cloud_Computing_Interface</a> and it looks interesting (it seems to make use of all the stuff I like in the Sun API). But what I see is just a list of design principles, not a spec. And not, unlike the others listed in the blog, something that has been implemented in front of a real Cloud. So I&#8217;ll put this in my &#8220;to watch&#8221; list. Is there a better link you can provide with a more flushed out version? Or is there a more advanced version that is internal to OGF?</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-79491">
+			<cite><a href='http://clouddevelopertips.blogspot.com' rel='external nofollow' class='url'>Shlomo</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-79491" title="">July 16th, 2009 at 3:31 pm</a> </small>
+
+			<p>William,</p>
+<p>As you say, different implementations have different semantics for GET and PUT to the same URL (e.g. changing the admin password). That needs to be ironed out either at the namespace level (not sure how) or in some other metadata. </p>
+<p>Better yet, standardize a given behavior.</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-79521">
+			<cite><a href='https://blog.sun.com/intheclouds' rel='external nofollow' class='url'>Thijs Metsch</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-79521" title="">July 17th, 2009 at 12:05 am</a> </small>
+
+			<p>Currently there is more current stuff going regarding OCCI at <a href="http://www.occi-wg.org" rel="nofollow">http://www.occi-wg.org</a>. The link you have is outdated &#8211; I&#8217;ll try to remove it. </p>
+<p>Currently there is no implementation yet &#8211; but not far away. Currently we are writing up the API spec.</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-79525">
+			<cite><a href='http://stage.vambenepe.com' rel='external nofollow' class='url'>William Vambenepe</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-79525" title="">July 17th, 2009 at 12:36 am</a> </small>
+
+			<p>Thanks for the clarification Thijs. I left my GGF/OGF account behind when I came to Oracle, so I&#8217;ll just wait for the spec to be publicly available.</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-79576">
+			<cite>Mark Hapner</cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-79576" title="">July 17th, 2009 at 1:46 pm</a> </small>
+
+			<p>Hi William,</p>
+<p>Nice post, I wanted to comment on the REST vs WS* point because there actually is a concrete, technical reason why REST is better for &#8216;services&#8217; that is getting lost in the general debate. This is a little long for a comment but hopefully it&#8217;s worth reading &#8230;</p>
+<p>Many look at REST as more-or-less a synonym for HTTP. In fact, what REST describes is a hypertext architecture. When you define a hypertext service (aka a REST service) the first thing you need to define is the hypertext information model the service presents to its users. The second thing you need to define is how HTTP is used to interact with this hypertext. There are some REST services such as AWS that also define how Soap is used to interact their hypertext. While Soap can be used as a means of operating on hypertext, it wasn&#8217;t designed for this job and that is why it&#8217;s cumbersome to use for this purpose. AWS is a hypertext service regardless of what protocol is used to interact with it.</p>
+<p>The Atom IETF standard is a good example of a &#8216;well defined&#8217; hypertext service. It is composed of RFC 4287 &#8211; The Atom Syndication Format and RFC 5023 &#8211; The Atom Publishing Protocol. RFC 4287 defines Atom&#8217;s hypertext. RFC 5023 defines how HTTP is used to operate on the Atom Feed hypertext.</p>
+<p>Many of the existing REST service descriptions interleave their description of their hypertext and how to operate on it with HTTP. This gives the impression that their hypertext information model (their resource and resource link information model) is less important than how it&#8217;s operated on with HTTP. This likely makes it simpler for developers to wrap their heads around but it obscures the fact that hypertext is the core service abstraction.</p>
+<p>Hypertext is more &#8216;workable&#8217; because it puts an information model directly on the web as resources and their embedded links (rather than hiding these resources behind some unique set of RPC signatures and superimposing some service specific &#8216;linking&#8217; concept). Developers understand RPC and find hypertext a bit of a challenge to grasp but once they do, they intuitively understand why it is more &#8216;workable&#8217; as a web service model.</p>
+<p>Applying this to the cloud services you have surveyed, it becomes clear that exposing cloud resources via hypertext is more workable than trying to expose it as an RPC &#8216;library&#8217;. Why, because the state and function of the cloud is easily modeled as &#8216;resources&#8217; and &#8216;links&#8217; and hypertext operations on these.</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-79594">
+			<cite><a href='http://stage.vambenepe.com' rel='external nofollow' class='url'>William Vambenepe</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-79594" title="">July 17th, 2009 at 5:09 pm</a> </small>
+
+			<p>Hi Mark,</p>
+<p>Great comment, thanks for taking the time. What you describe (much more thoroughly) is the conclusion I came to, that the one real difference that&#8217;s potentially meaningful for IT management protocols that follow REST is the embedded linkage (hypermedia) inherent to the architecture. And interestingly, it&#8217;s not currently being taken advantage of in the RESTful (or REST-like) implementations of the different Cloud API.</p>
+<p>In one of the future installments in this series, I plan to look at how this relates to the importance of relationships/associations in IT models (the IT management domain is a lot more explicit in modeling relationships than other domains).</p>
+<p>In another one (I have so many notes jotted down that I didn&#8217;t have room to capture in this blog entry that it could occupy me for months) I plan to examine if/why SOAP is actually a barrier to this style.</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-79599">
+			<cite>Mark Hapner</cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-79599" title="">July 17th, 2009 at 6:32 pm</a> </small>
+
+			<p>There are quite a few links in the AWS and Sun hypertext. </p>
+<p>It might be interesting for you to extract the hypertext one or two of these cloud services has defined to see if it makes sense.</p>
+<p>It is interesting to note that HTML does not provide namespaces but this hasn&#8217;t limited its capabilities. The reason is that links are a very effective mechanism for composing resources. Rather than composition via complicated &#8216;embedding&#8217; mechanisms such as namespaces, the web composes resources via links. If HTML hadn&#8217;t provided open-ended, embeddable links there would be no web.</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-79661">
+			<cite>Jorge L. Williams</cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-79661" title="">July 18th, 2009 at 11:09 am</a> </small>
+
+			<p>Hello William,</p>
+<p>I&#8217;m one of the software engineers at The Rackspace Cloud who worked on the design and development of the Cloud Servers API.  Thanks for your comments on the API.  We&#8217;re always open to review and critique as it helps keep us honest and exposes areas for improvement.  I&#8217;d like to make some clarifications and to lend a little perspective on the API from a ReST services point of view.</p>
+<p>Before going further,  let me first clarify that a GET on /servers/{id} and a PUT on /servers/{id} both operate on a representation of a server.  Thus, it is possible to GET a server, modify the name of that server, then PUT the server to have the change take effect.  The PUT operation is simply doing an update on a particular server and does not violate ReST semantics.  In the spec, we showcase the fact that you can use this PUT operation to modify the name of the server and its administrative password because those are the only aspects of the server that are currently modifiable via the API.  We&#8217;ll work to clarify this confusion in future revisions.</p>
+<p>I&#8217;d also like to note that you may have missed one of the things that makes us unique (as far as we know) in the world of Cloud management APIs and which may be particularly appealing to those of us who are used to working with WS-*:  While the Cloud Servers API adheres diligently to ReST principles, it also makes strong use of  XML Schema and is described in a machine processable manner (via a WADL).  Some of our reasons for using XML Schema are purely practical:  we are coding primarily in Java and Java has a host of tools that allow us to work easily with the schema language.  More importantly, however, XML Schema is valuable because it is rich enough to allow us to specify our data model in a machine processable and verifiable manner,  and flexible enough to customize to our needs.  In a very real sense, we use XML Schema to describe not just the structure of our XML request/response pairs,  but also as a means to provide a definition for our underlying entities.  The XML schema forms a “source of truth” for those entities and provides a guide when supporting other representations. That is not to say, however, that we take a singularly XML-focused approach.  One of the mistakes we made early on was to  attempt to auto-generate JSON based solely on XML instance documents.  This created JSON “objects” that were difficult to work with and seemed overly verbose. We now take a more “hands on” approach where-by the XML Schema defines the facets (or restrictions) of an underlying entity (a list of servers cannot contain more than 1000 servers,  uploaded files must be encoded in Base 64 and may not exceed 10 KB) but does not entirely define the structure of the representation when we&#8217;re not dealing with XML. Our goal is to take a best of both worlds approach where by both JSON and XML  are first class citizens that are both easy work with.  Additionally, we also leaving the door open to support other representations in future releases of the API.</p>
+<p>This leads me to a very important reason why we considered ReST for our public API in the first place. ReST provides a many-to-one relationship between representations and entities.  In ReST, it is the responsibility of the service to provide support for  conversions.  In SOAP there is only a single XML representation and it&#8217;s the client&#8217;s responsibility to convert.  Public services  have different kinds of clients and each typically wants to deal with a representation that make sense to them.  Internal,  middle-ware, and most Java-based clients typically want XML,  most external clients and particularly web-based clients want JSON,  and individuals typically want HTML pages.  HTTP provides a well established content negotiation protocol by which we can serve all of these clients in a consistent manner.  Our goal is to keep the number of barriers to entry low, and ReST allows us to do this in a manner that SOAP cannot.</p>
+<p>Finally, you mentioned caching in your article.  While I agree that it may be overkill from the perspective of a single request or even customer, it makes sense when talking about tens of thousands of accounts and servers.  In addition, there are a number of partner use cases that require heavy polling of many servers across many accounts.  We designed the caching features based on feedback and input from some of these partners.  The current design provides efficient mechanisms for polling and allows us to scale the API service, which is a win-win.  Also, please be aware that it is not possible for a client to obtain stale data from our services as we utilize purging mechanisms to ensure that objects served out of cache are always accurate and up to date.  Again, thanks for the feedback and we&#8217;ll work to emphasize this in future revisions of the spec.</p>
+<p>Regards,</p>
+<p>Jorge L. Williams, Ph.D.<br />
+Senior Software Engineer<br />
+The Rackspace Cloud</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-79705">
+			<cite><a href='http://stage.vambenepe.com' rel='external nofollow' class='url'>William Vambenepe</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-79705" title="">July 18th, 2009 at 10:26 pm</a> </small>
+
+			<p>Mark,</p>
+<p>I see the links in he Sun API, though not in the AWS EC2 API. Or are you referring to another AWS service than EC2?</p>
+<p>So the potential is there for the Sun API and your colleagues (and you if you are involved in the effort) have done their share. The next question is whether people will choose to exercise its hypertext capabilities or not. I don&#8217;t know what code has been written yet to use the Sun API, if any, but if it is just a port of code that was designed for EC2, GoGrid or other than they&#8217;ll just glance over this and treat it as just a somewhat peculiar form of RPC. So that it fits the mold.</p>
+<p>Because an API can be RESTful in the sense that it allows and encourages system that use it to follow REST principles, but in the end it&#8217;s the actual application making use of the API which is RESTful or not. That&#8217;s where the moment of truth is. Don&#8217;t you agree.</p>
+<p>Again, I think I agree with you on the preeminence of hypermedia among REST principles and the fact that the Sun API recognizes it.</p>
+<p>Your point about HTML not needing namespaces because it uses links is very interesting to me. I don&#8217;t think it&#8217;s quite a an apple to apple comparison but there definitely is something there that I need to think more about. I agree that if we have a more RESTful (or at least more link-friendly) system than we&#8217;ll do less embedding and more referencing. But the fact remains that different people will want to define structure with different semantics, and that&#8217;s something you need to take care of whether these new structures appear via embedding or via referencing. At this point, we are in the realm or semantic web and Linked Data more than REST, really. But again, I think there is a warning against over-engineering that is worth heading in your remark about the lack of namespaces in HTML.</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-79815">
+			<cite><a href='http://stage.vambenepe.com' rel='external nofollow' class='url'>William Vambenepe</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-79815" title="">July 20th, 2009 at 3:02 pm</a> </small>
+
+			<p>Hi Jorge,</p>
+<p>Thanks for the long and comprehensive comment. First let me make clear that my post was not meant as a review/critic of the APIs as much as an exploration to see what I can learn about the benefits of REST for IT mgmt protocols. But I did drop some criticism here and there and it&#8217;s great to have your clarifications/corrections on them.</p>
+<p>On the GET/PUT on /servers/{id} question I see what you mean. Indeed it would be great to clarify the doc to say that the PUT allows you to update the details and it just so happens that only the server name and the admin pwd are updatable right now. Right now in your doc, the title of the section that introduces this PUT is &#8220;Update Server Name / Administrative Password&#8221; so I don&#8217;t feel too stupid for my interpretation. On the other hand, I somehow turned &#8220;server name&#8221; into &#8220;admin username&#8221; and that&#8217;s just my mistake.</p>
+<p>Still, of these two properties only one (server name) actually appears in the GETable description. The password doesn&#8217;t (for obvious reasons). Now that there is a partial overlap (and that the intent is to have maximum possible overlap, subject to practicality/feasibility), it doesn&#8217;t shock me anymore. Just for old time sake, here is what WSDM defined as properties metadata (<a href="http://docs.oasis-open.org/wsdm/wsdm-muws2-1.1-spec-os-01.htm#_Toc129683812" rel="nofollow">http://docs.oasis-open.org/wsdm/wsdm-muws2-1.1-spec-os-01.htm#_Toc129683812</a>): Mutability, Modifiability, Valid Values, Valid Range, Static Values, Notifiability. Then WSRF went on to create WS-ResourceMetadata (see <a href="http://docs.oasis-open.org/wsrf/wsrf-ws_resource_metadata_descriptor-1.0-spec-cs-01.pdf)" rel="nofollow">http://docs.oasis-open.org/wsrf/wsrf-ws_resource_metadata_descriptor-1.0-spec-cs-01.pdf)</a> which, as far as I can remember, never made it to standards. At this point WSRF was so far into over-engineering that I think even the committee members had realized it (it took me a while but by then I, for one, had). Interestingly, this spec defines &#8220;modifiability&#8221; as either read-only or read-write, meaning that it failed to capture your write-only use case which is applicable for passwords.</p>
+<p>On your use of XSD, I didn&#8217;t touch on this because it wasn&#8217;t really the topic. Again, this isn&#8217;t a general review of the API, it&#8217;s just an investigation of the REST-related benefits that it exhibits. On this topic though I&#8217;ll just note that an explicit model is a good thing but that I don&#8217;t believe (anymore) that XSD has much to offer. I&#8217;ve touch on this in this entry (see the SML/XSD part): <a href="http://stage.vambenepe.com/archives/139" rel="nofollow">http://stage.vambenepe.com/archives/139</a>. The &#8220;we use XSDs&#8221; because it has tools&#8221; argument is one that scares me. But again, this is another topic.</p>
+<p>WRT to content negotiation, I&#8217;ll grant you that it&#8217;s native in HTTP in a way that SOAP does not leverage (or replicate). That being said, it is not an overwhelming argument because there is nothing in SOAP that prevents this from happening. For example, WS-Management has a wsman:Locale SOAP header that you can include in your request to request the response to be in a given language. Which is (at a higher level of the stack than representation) a form of content negotiation. With the &#8220;must-understand&#8221; mechanisms, SOAP headers are actually a better foundation for this than HTTP headers. But in HTTP the header is backed into the spec, while in SOAP it hasn&#8217;t even been defined generically, so I am not arguing that practicality for this is on the side of HTTP.</p>
+<p>For caching I still don&#8217;t get your explanation. Are you sharing the cache across customers? I would expect that security concerns would drastically constrain the universe of documents that can be cashed across customers. More importantly, I am very confused by the assertion that &#8220;it is not possible for a client to obtain stale data from our services as we utilize purging mechanisms to ensure that objects served out of cache are always accurate and up to date&#8221;. If that&#8217;s the case, then there is no caching concern in the API, period. As far as I (as a client) am concerned, there is no caching. Your implementation may cache behind the scenes, but it&#8217;s irrelevant to me. But if that&#8217;s the case, then why does your API doc return a 203/Cached code and a &#8220;last modified&#8221; header? Why would I care if this supposedly cached content is guaranteed to be up to date?</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-79891">
+			<cite>Mark Hapner</cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-79891" title="">July 21st, 2009 at 1:10 pm</a> </small>
+
+			<p>I have to admit that AWS is a bit light on its use of hypertext; however, it does provide various &#8216;list&#8217; GETs that return resources that contain sets of links. This hypertext is hidden away in its &#8216;API&#8217; documentation. AWS structures its services as a set of unique query actions and a number of these actions are not idempotent. The result is a service that is a mixture of hypertext and procedural. At its core, it is hypertext because it creates resources and offers them as URIs even if the resource is created with a GET instead of a POST.</p>
+<p>As you start looking at these services from a hypertext rather than an HTTP perspective, you begin to understand them better and it provides a more practical basis for comparing them. On the other hand, if you think of the representations that they produce in responses as just artifacts of their &#8216;API&#8217; they start to look like an arbitrary mishmash of HTTP. People see and understand the web as hypertext.  This is also the best way for programs and programmers to understand REST services. </p>
+<p>On the namespace subject, you might want to look at Atom Categories as an example of how to support specialization of hypertext. Categories allow a Feed to define a set of specialized Feed Entry types that extend the standard Entry hypertext. This is a very simple extension mechanism defined in the Atom Publishing Protocol. It is another example of where simple hypertext facilities often solve information integration problems better than the complexities of XML Schema.</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-79928">
+			<cite><a href='http://stage.vambenepe.com' rel='external nofollow' class='url'>William Vambenepe</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-79928" title="">July 21st, 2009 at 11:57 pm</a> </small>
+
+			<p>Mark,</p>
+<p>Your second paragraph is great. It&#8217;s more or less what I was trying to say in my response to your previous comment, when I wrote &#8220;in the end it’s the actual application making use of the API which is RESTful or not. That’s where the moment of truth is.&#8221;</p>
+<p>For all the talk about whether an API is restful or not, what really matters is how it is used rather than the details of what it spits out. It&#8217;s the usage model that you apply to it. The actual protocol may be more or less conducive to this model, but it is not the model by itself.</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-79937">
+			<cite><a href='http://stage.vambenepe.com/archives/878' rel='external nofollow' class='url'>William Vambenepe&#8217;s blog &raquo; Blog Archive &raquo; Anthology of blog posts about protocols and data formats</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-79937" title="">July 22nd, 2009 at 1:26 am</a> </small>
+
+			<p>[...] started with this &#8220;do we need WADL&#8221; post by Joe Gregorio (since the previous entry made me go back to WADL which is used by Rackspace). Under the guise of a Q&amp;A about WADL, [...]</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-80315">
+			<cite><a href='http://stage.vambenepe.com/archives/894' rel='external nofollow' class='url'>William Vambenepe&#8217;s blog &raquo; Blog Archive &raquo; REST in practice for IT and Cloud management (part 2: configuration management)</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-80315" title="">July 28th, 2009 at 2:07 am</a> </small>
+
+			<p>[...] Part 1 of the &#8220;REST in practice for IT and Cloud management&#8221; investigation looked at Cloud APIs from leading IaaS providers. It examined how RESTful they are and what concrete benefits derive from their RESTfulness. In part 2 we will now look at the configuration management domain. Even though it&#8217;s less trendy, it is just as useful, if not more, in understanding the practical value of REST for IT management. Plus, as long as Cloud deployments are mainly of the IaaS kind, you are still left with the problem of managing the configuration of everything that runs of top the virtual machines (OS, middleware, DB, applications&#8230;). Or, if you are a glass-half-full person, here is another way to look at it: the great thing about IaaS (and host virtualization in general) is that you can choose to keep your existing infrastructure, applications and management tools (including configuration management) largely unchanged. [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-80847">
+			<cite><a href='http://www.redmonk.com/cote/2009/07/30/itmanagement049/' rel='external nofollow' class='url'>People Over Process &raquo; &#8220;There&#8217;s a cloud for that.&#8221; - IT Management &amp; Cloud Podcast #49</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-80847" title="">July 30th, 2009 at 3:14 pm</a> </small>
+
+			<p>[...] lots of details on how all this IT Management gorp should be designed. I esp. like this line from one post in his series on REST in IT Management: &#8220;I can think of ways in which some REST principles [...]</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-81260">
+			<cite><a href='http://samj.net/' rel='external nofollow' class='url'>Sam Johnston</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-81260" title="">August 2nd, 2009 at 8:47 am</a> </small>
+
+			<p>William,</p>
+<p>Thanks for another intriguing read &#8211; I know how much time it takes to write posts like this and I don&#8217;t know where you get it all from.</p>
+<p>I&#8217;ve updated the temporary OCCI site to point at occi-wg.org and would like to hear your thoughts once we&#8217;ve got the current thinking own on paper.</p>
+<p>Sam</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-81593">
+			<cite><a href='http://stage.vambenepe.com' rel='external nofollow' class='url'>William Vambenepe</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-81593" title="">August 3rd, 2009 at 10:24 pm</a> </small>
+
+			<p>Sam,</p>
+<p>I&#8217;ll gladly take a look. But once again I am not giving thumbs up or down to any spec (though I may drop a few pointed comments here and there). I am mainly going through them in order to learn the industry state of the art.</p>
+<p>WV</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-82450">
+			<cite><a href='http://sites.google.com/site/derik66/' rel='external nofollow' class='url'>Derik Pereira</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-82450" title="">August 8th, 2009 at 6:08 am</a> </small>
+
+			<p>I think we should learn and use from BC (Before Cloud) to get to AC (After Cloud). In my world, BC is/was SNA, OSI, TCP/IP, Web.*, Java.*, Grid.*, SOA.*, Cloud.* &#8230; It seems that each vendor comes to the game of standardization with their own agenda. Once I was a vendor (so am guilty too). Ultimately, I think, we do need a Cloud stack (seems like we have 3 &#8230; IaaS, Paas, Aaas). Maybe, we do need 5 (hmm, just like TCP/IP) or maybe we need 7 (after all it seems that Nature.* happened in 7 layers along with OSI). Or maybe, we just let the vendors all roll the cloud out and interoperate later. Obviously, we may end up having 7 clouds (with 7 powerful vendors like the 7 oil commpanies or bells). All the same, your discussion seems very much in the SMaaS (ahh, see I created that &#8230; Service Management aaS) and somewhat towards IaaS. Anyhow, I think all the wisemen (WSDM, WSMF, WSsomething etc) seem to make sense. Then when all the suds (SOAP, REST and something) things then move into more a &#8220;how&#8221;. It is interesting that in the beginning (my world) there was command line things. It seems command line things are still here (I like that since I only remember my long term memories of command lines). I believe, the SEaas (SEcurity aaS) may end causing a small implosion in this whole Cloud.* (I think splat and stack makes sense). Obviously, I just created 5 layers from 3. Maybe, we should stick with 3 and then have some sub layers below each main layer (hmm, objectspeak or something). Now, if one was a developer (lets say Java or Python or something), then we have some type of frameworks, models or patterns). Now that gets even more interesting since those &#8220;seem&#8221; to be more higher level things (like all this stuff is really for some business service or process to make some money). hmm, that seems like an Enterprise Architecture type of thing. whoops, maybe we do need some kind of &#8220;Architecture&#8221; and rules for Cloud. Then again, each architecture will have that vendor tilt. All the same, it certainly is nice after all these years (from BC) to be able to read something and see AC happening. I do believe, there will always something beyond something else. Maybe, we should just go from Cloud.* to Cloud 6.0 (skip the releases in between). I think the Web 3.0 seems so numerical. Anyhow, I think we are all collectively getting somewhere. Obviously, when some standard does not seem to enhance the cloud it will surely just disappear (go extinct like the dinos). Finally, we do have to think about the OS.* (operating system animal). Linux.*, Unix.*, W.* &#8230; ie. OS.*. but that is another animal anyhow.</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-87328">
+			<cite><a href='http://stage.vambenepe.com/archives/936' rel='external nofollow' class='url'>William Vambenepe&#8217;s blog &raquo; Blog Archive &raquo; VMWare publishes (and submits) vCloud API</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-87328" title="">September 2nd, 2009 at 11:07 am</a> </small>
+
+			<p>[...] may be time to update the Cloud API comparison. After a very quick first pass, vCloud looks quite similar to the Sun Cloud API (that&#8217;s a [...]</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-88243">
+			<cite><a href='http://stage.vambenepe.com/archives/943' rel='external nofollow' class='url'>William Vambenepe&#8217;s blog &raquo; Blog Archive &raquo; Separating model from protocol in Cloud APIs</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-88243" title="">September 6th, 2009 at 5:41 pm</a> </small>
+
+			<p>[...] Thanks to the &#8220;REST is the new black&#8221; attitude in Cloud circles, there are lots of commonalities between these various Cloud APIs. Especially the more recent ones, those that I think of as &#8220;second generation&#8221; APIs: vCloud, Sun API, GoGrid and OCCI (Amazon EC2 is the main &#8220;1st generation&#8221; Cloud API, back when people weren&#8217;t too self-conscious about not just using HTTP but really &#8220;doing REST&#8221;). As an example of convergence between second generation specifications, see for example, how vCloud and the Sun API both use &#8220;202 Accepted&#8221; and a dedicated &#8220;status&#8221; resource to handle long-lived operations. More comparisons here. [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-88509">
+			<cite><a href='http://decaf.9apps.net/' rel='external nofollow' class='url'>Jurg van Vliet</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-88509" title="">September 8th, 2009 at 7:43 am</a> </small>
+
+			<p>reading your article i realized again how IT is changing fundamentally. a clear and concise interface (REST of whatever) allows for automating most of the management problems in IT resource management.</p>
+<p>i don&#8217;t have experience with large scale clouds, we mainly use one of the clouds to help our customers with the infrastructure for bringing and keeping their applications available to their users.</p>
+<p>there is the another benefit to a clear and concise interface to your cloud, big or small. you can manage your resources through different interfaces. and to keep your cloud &#8216;up&#8217; you can use this feature.</p>
+<p>we have created a native android application called decaf (<a href="http://decaf.9apps.net/" rel="nofollow">http://decaf.9apps.net/</a>), for managing amazon ec2 accounts. apart from operating your cloud artifacts you can now see the health of your own cloud graphically, for example. with a native android we are also able to monitor instances and receive/process sms alerts in a way that is meaningful.</p>
+<p>with an application like decaf we could do other interesting things as well. you cloud offload resource intensive tasks to amazon ec2, from your phone. although i don&#8217;t see the immediate problem this solution solves it is interesting. but i think google apps is a more appropriate cloud for this model.</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-92517">
+			<cite><a href='http://blog.resilient-it.com/' rel='external nofollow' class='url'>El Kaim William</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-92517" title="">September 25th, 2009 at 12:11 pm</a> </small>
+
+			<p>Hi Guys</p>
+<p>Very interesting and technical article and related list of posts &#8230;<br />
+Doing software since a long time, I think it could be great if all software vendors could take the time when submitting their API to: list their requirements, the non functional requirements and constraints, a high level UML model of the concept and then finally an API. When I was doing research it was also good to position itself towards existing stuff in the same area.<br />
+As a customer, my only feeling is that today exist around 5 differents specs that again will lock me in with a specific provider. It will also force me to &#8220;program&#8221; access to this API &#8230;<br />
+He Guys, do you think our Admins can program Java and are JSON and XML schema fluents?<br />
+At least we have some bloggers that take the time to make reviews.<br />
+Anyway, do you think my procurement manager will choose a cloud vendor based on its API? So if you want to be really user oriented, try to make it simple AND interoperable&#8230;</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-99303">
+			<cite><a href='http://adrianotto.com' rel='external nofollow' class='url'>Adrian Otto</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-99303" title="">November 12th, 2009 at 10:02 pm</a> </small>
+
+			<p>William Vambenepe,</p>
+<p>I&#8217;m an architect at the Rackspace Cloud and I work with Jorge Williams. I&#8217;m responsible for the part of the API system design that utilizes caching. The system will indicate to you that a cached entry was returned by using a 203/Cached response in cases where you repeatedly poll for something that has not yet changed state, or in cases where you are polling at a rate that&#8217;s impossibly fast. For example if you ask to reboot a server and ask 1000 times what it&#8217;s status is over the next minute before it&#8217;s even possible that the server has rebooted, and changed state. It&#8217;s a way we can gracefully indicate to the client to slow down the polling interval by consulting the max-age of the Cache-Control header along with the Last-Modified header value to indicate when you should poll again.</p>
+<p>&gt;As far as I (as a client) am concerned, there is no caching. Your<br />
+&gt; implementation may cache behind the scenes, but it’s irrelevant to me. </p>
+<p>That&#8217;s right, but we still respoectully indicate to you that we are doing that so that you have an indication of how to tune your polling interval for optimal results.</p>
+<p>&gt; But if that’s the case, then why does your API doc return a 203/Cached code<br />
+&gt; and a “last modified” header? Why would I care if this supposedly cached<br />
+&gt; content is guaranteed to be up to date?</p>
+<p>Functionally you don&#8217;t care. but operationally you do. You&#8217;ll care when other users of the API service start sending in thousands of polling requests per second on operations that do database lookups or back-end system API calls to produce the answer. That use pattern would slow the system down considerably for neighboring users, including you. We use the caching as a coarse method of QoS admission control to determine how much back-end work we will do and at what rate.</p>
+<p>I&#8217;m also responsible for the LIMITS design which further defines how often you should expect to run operations of various sorts. This is designed to control the rate at which we accept API calls that result in cache misses. By using these approaches in combination, we were able to produce an efficient system that gracefully handles most unintentional abuse of the API service. The neighboring users are efficiently spared from the unwanted work pattern, and very busy clients are minimally invaded by error conditions.</p>
+<p>Rackspace believes deeply in transparency in everything we do. We produced a system design with a supporting API specification that allows us to be as transparent as possible about how we are handling things on the back-end of the API service. The limits are clearly available for the client to see, and by using our 203/Cached return code, you know when you&#8217;re asking for something too frequently.</p>
+<p>Regards,</p>
+<p>Adrian Otto</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-100405">
+			<cite><a href='http://stage.vambenepe.com/archives/1161' rel='external nofollow' class='url'>William Vambenepe &#8212; REST in practice for IT and Cloud management (part 3: wrap-up)</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-100405" title="">December 10th, 2009 at 2:16 am</a> </small>
+
+			<p>[...] ago I shared some thoughts about how REST was (or could) be applied to IT and Cloud management. Part 1 was a comparison of the RESTful aspects of four well-known IaaS Cloud APIs and part 2 was an [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-101914">
+			<cite><a href='http://@ywumic' rel='external nofollow' class='url'>Y</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-101914" title="">January 19th, 2010 at 7:38 pm</a> </small>
+
+			<p>FYI: This blog is also cited and summarized here.<br />
+<a href="http://www.infoq.com/news/2009/07/rest-cloud-api-comparison" rel="nofollow">http://www.infoq.com/news/2009/07/rest-cloud-api-comparison</a></p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-102399">
+			<cite><a href='http://orchestratus.com/shlomoswidler.com/2009/10/what-language-does-cloud-speak-now-and.html' rel='external nofollow' class='url'>What Language Does the Cloud Speak, Now and In the Future?</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-102399" title="">February 5th, 2010 at 1:47 pm</a> </small>
+
+			<p>[...] REST in practice for IT and Cloud management (part 1: Cloud APIs) and (part 2: configuration management) [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-106004">
+			<cite><a href='http://somic.org/2010/05/04/developing-api-server-practical-rules-of-thumb/' rel='external nofollow' class='url'>Developing API Server &#8211; Practical Rules of Thumb</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-106004" title="">May 4th, 2010 at 1:39 am</a> </small>
+
+			<p>[...] Gehrcke about various types of AWS APIs and differences between RESTful and query API, and this blog post by William Vambenepe where he analyzes various IaaS API implementations (it&#8217;s a series of 3 [...]</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-108961">
+			<cite><a href='http://stage.vambenepe.com/archives/1538' rel='external nofollow' class='url'>William Vambenepe &#8212; Introducing the Oracle Cloud API</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-108961" title="">July 19th, 2010 at 1:29 am</a> </small>
+
+			<p>[...] from the get go in the slides and is, in my mind, a selling point for the specification. When I reviewed the main Cloud APIs available last summer (the first part in a &#8220;REST in practice for IT and Cloud [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-110324">
+			<cite><a href='http://www.cloudave.com/link/openstack-org-a-rackspace-hailmary-pass' rel='external nofollow' class='url'>Openstack.org - A Rackspace Hailmary Pass? | CloudAve</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-110324" title="">August 30th, 2010 at 7:04 am</a> </small>
+
+			<p>[...]  [...]</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-110561">
+			<cite><a href='http://www.cloudave.com/3211/updated-openstack-org-a-rackspace-hailmary-pass/' rel='external nofollow' class='url'>Updated: Openstack.org – A Rackspace Hailmary Pass?</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-110561" title="">September 5th, 2010 at 8:20 pm</a> </small>
+
+			<p>[...] influence any standardization of APIs. When there are legal risks involved in using Amazon API and a better API is available from Rackspace without the legal risks, it is only natural to support Rackspace API [...]</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-116699">
+			<cite><a href='http://stage.vambenepe.com/archives/1700' rel='external nofollow' class='url'>William Vambenepe &#8212; Amazon proves that REST doesn&#8217;t matter for Cloud APIs</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-116699" title="">December 6th, 2010 at 9:58 pm</a> </small>
+
+			<p>[...] who wrote a series of post examining &#8220;REST in practice for IT and Cloud management&#8221; (part 1, part 2 and part 3), to now declare that REST doesn&#8217;t matter, well go back to these posts. I [...]</p>
+
+		</li>
+
+	
+	
+	</ol>
+
+ 
+
+
+<h2 id="respond">Leave a Reply</h2>
+
+
+<form action="http://stage.vambenepe.com/wp-comments-post.php" method="post" id="commentform">
+
+
+<p><input type="text" name="author" id="author" value="" size="22" tabindex="1" />
+<label for="author"><small>Name </small></label></p>
+
+<p><input type="text" name="email" id="email" value="" size="22" tabindex="2" />
+<label for="email"><small>Mail (will not be published) </small></label></p>
+
+<p><input type="text" name="url" id="url" value="" size="22" tabindex="3" />
+<label for="url"><small>Website</small></label></p>
+
+
+<!--<p><small><strong>XHTML:</strong> You can use these tags: &lt;a href=&quot;&quot; title=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;acronym title=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote cite=&quot;&quot;&gt; &lt;cite&gt; &lt;code&gt; &lt;del datetime=&quot;&quot;&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=&quot;&quot;&gt; &lt;strike&gt; &lt;strong&gt; </small></p>-->
+
+<p><textarea name="comment" id="comment" style="width:100%;" rows="10" tabindex="4"></textarea></p>
+
+<p><input name="submit" type="submit" id="submit" tabindex="5" value="Submit Comment" />
+<input type="hidden" name="comment_post_ID" value="863" />
+</p>
+
+</form>
+
+
+
+	
+	</div>
+
+	<hr />
+	<center></center>
+	<div id="footer">The statements and opinions expressed here are my own and do not necessarily represent those of Oracle Corporation. Page design based on the <a href="http://themes.wordpress.net/columns/1-column/941/greenday-10/">Greenday</a> theme.
+        </div>
+</div>
+<!-- Start of StatCounter Code -->
+<script type="text/javascript">
+var sc_project=5358173; 
+var sc_invisible=1; 
+var sc_partition=47; 
+var sc_click_stat=1; 
+var sc_security="ad72d598"; 
+</script>
+
+<script type="text/javascript"
+src="http://www.statcounter.com/counter/counter.js"></script><noscript><div
+class="statcounter"><a title="wordpress counter"
+href="http://www.statcounter.com/wordpress.com/"
+target="_blank"><img class="statcounter"
+src="http://c.statcounter.com/5358173/0/ad72d598/1/"
+alt="wordpress counter" ></a></div></noscript>
+<!-- End of StatCounter Code -->
+				<!-- jaanu mei jaan -->
+</body>
+</html>
+
+<!-- Dynamic Page Served (once) in 0.801 seconds -->
