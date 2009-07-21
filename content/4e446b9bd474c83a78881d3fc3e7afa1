@@ -1,0 +1,741 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<!-- 
+  Theme: Letterhead  v1.1
+  Author: Bill Israel  [http://cubicle17.com/]
+  For: Tumblr  [http://tumblr.com/]
+  Terms: Free to use and alter, but please give credit.
+-->
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>The RunCodeRun Blog - TDD in a functional language: Uncle Bob's Bowling </title>
+	
+	<!-- DEFAULT COLORS -->
+	<meta name="color:Main Background" content="#ffffff"/>
+	<meta name="color:Title Background" content="#000000"/>
+  <meta name="color:Title Border" content="#666666"/>
+	<meta name="color:Text Color" content="#333333"/>
+	<meta name="color:Link Color" content="#aa2200"/>
+	<meta name="color:Heading Color" content="#171717"/>
+	<meta name="color:Image Border" content="#aaaaaa"/>
+	<meta name="color:Image Background" content="#eeeeee"/>
+	
+  <link rel="shortcut icon" href="http://24.media.tumblr.com/avatar_0c4525087fe4_16.gif"/>
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://feeds.runcoderun.com/runcoderun_blog"/>
+  
+  <!-- iPhone -->
+  <meta name="viewport" content="width=575"/>
+  <link rel="apple-touch-icon" href="http://28.media.tumblr.com/avatar_0c4525087fe4_128.gif"/>
+
+  <link href="http://runcoderun.com/stylesheets/prettify.css" type="text/css" rel="stylesheet" />
+  <script src="http://runcoderun.com/javascripts/prettify.js" type="text/javascript"></script>	
+
+	<style type="text/css" media="screen">
+	  body {
+	    background: #ffffff;
+	    color: #333333;
+	    font: normal 14px/1.45em Helvetica, Arial, sans-serif;
+	    margin: 0;
+	    padding: 0;
+	  }
+	  
+	  a, a:active, a:visited {
+	    color: #aa2200;
+	    font-weight: bold;
+	    text-decoration: none;
+	  }
+	  
+	  a:hover {
+	    text-decoration: underline;
+	  }
+	  
+	  h1, h2, h3, h4, h5, h6 {
+	    color: #171717;
+	    margin: 0;
+	    padding: 0;
+	  }
+	  
+	  blockquote, p, ol, ul {
+	    margin-top: 0;
+	    margin-bottom: 1.5em;
+	  }
+	  
+	  blockquote {
+	    border-left: 2px solid #333;
+	    font-style: italic;
+	    margin: 0 2em 1.5em 1.5em;
+	    padding-left: 1em;
+	  }
+	  
+	  
+	  /* TITLE */
+	  #title {
+	    background: #b3b3b3;
+            border-bottom: 10px solid #43568c;
+	    color: #ffffff;
+	    font-size: 1.5em;
+	    line-height: .55em;
+	    padding: 0 6em 0.25em;
+	  }
+	  
+	  #title a {
+            background: transparent url(http://runcoderun.com/images/v2/logo_interior_transparent.png) no-repeat scroll 0 5px;
+            display: block;
+            width: 219px;
+            height: 55px;
+	  }
+
+ 	  #title a span {
+	    display: none;
+	  }
+	  
+	  
+	  /* LAYOUT */
+	  #content, #previous-next {
+	    margin: 3em 25.5em 3em  9em;
+	    min-width: 480px;
+	  }
+	  
+	  #sidebar {
+	    float: right;
+	    margin: 3em 7.5em 0 0;
+	    width: 15em;
+	  }
+	  
+	  #previous-next {
+	    clear: right;
+	  }
+
+	  
+	  /* SIDEBAR */
+		#sidebar #search {
+			margin-bottom: 3em;
+		}
+	
+	  #sidebar #description {
+	    margin-bottom: 3em;
+	  }
+	  
+	  #sidebar p, #sidebar ul {
+	    font-size: .9em;
+      margin-left: 1em;
+	  }
+	  
+	  #sidebar ul {
+	    list-style: none;
+      margin-bottom: 3em;
+	    padding: 0;
+	  }
+	  
+	  
+	  /* FOLLOWING LIST */
+	  #following li {
+	    display: inline;
+	    margin-right: 1em;
+	  }
+  
+	    #following li a img {
+	      border: 0;
+	    }
+    
+    
+    /* COLOPHON */
+    #colophon {
+      border-top: 1px solid #43568c;
+      margin-top: 4.5em;
+      text-align: right;
+    }
+    
+    #colophon li {
+      font-size: .85em;
+    }
+
+		
+		/* Search Result Count */
+		#searchresultcount {
+			margin: 0 0 3em;
+		}
+	  
+	  
+	  /* CONTENT */
+	  #content h3 {
+	    font-size: 1.3em;
+	    margin-bottom: .5em;
+	  }
+	  
+	  
+	  /* DATES */
+	  .date {
+	    position: absolute;
+	    left: 2.5em;
+	    text-transform: uppercase;
+	    width: 3.5em;
+	  }
+	  
+	  .date .day {
+	    font-size: 1.3em;
+	  }
+	  
+	  .date a {
+	    border-top: 1px solid #aaa;
+	    display: block;
+	    font-size: 1.5em;
+	    font-weight: normal;
+	    margin-top: .25em;
+	    padding-top: .25em;
+	    text-align: right;
+	  }
+	  
+	  /* POST STYLES */
+	  .post {
+	    margin: 0 0 6em;
+	  }
+	  
+	  .regular h3 a, .conversation h3 a {
+	    color: #171717;
+	  }
+	  
+	  .quote big {
+	    color: #171717;
+      float: left;
+	    font: bold 4.5em/1px Georgia, serif;
+	    margin-top: .45em;
+	  }
+	  
+	  .quote .words {
+	    display: block;
+	    font-size: 1.25em;
+	    margin-left: 2.3em;
+	  }
+	  
+	  .quote .source {
+      display: block;
+      margin: .5em 0 1.5em 2.8em;
+	  }
+	  
+	  
+	  .photo img {
+	    background: #eeeeee;
+	    border: 1px solid #aaaaaa;
+	    padding: 3px;
+	  }
+	  
+	  .photo .caption, .video .caption, .audio .caption {
+	    display: block;
+	    margin: .5em 0 1.5em;
+	  }
+	  
+	  .conversation ul {
+	    list-style: none;
+	    padding-left: 1.5em;
+	  }
+	  
+	  .conversation ul li {
+	    margin-bottom: .25em;
+	  }
+	  
+	  .conversation ul li .person {
+	    font-weight: bold;
+	  }
+	  
+	  .conversation ul li .said {
+	    margin-left: .75em;
+	  }
+	  
+	  
+	  /* PREVIOUS NEXT LINKS */  
+	  #previous-next #older-entries {
+	    margin-right: 1em;
+	  }
+	  
+	  #previous-next #newer-entries {
+	    margin-left: 1em;
+	  }
+	  
+		.query { font-weight: bold; }
+	  
+	  /* CUSTOM CSS */
+	  #disqus_thread { 
+width: 60%;
+margin-left: 9em; }
+	</style>
+  
+<!--[if lt IE 7]>
+  <style type="text/css" media="screen">
+    #sidebar {
+      margin: 3em 3.75em 0 2.5em;
+    }
+  </style>
+<![endif]-->
+</head>
+<body>
+  <h1 id="title"><a href="/"><span>The RunCodeRun Blog</span></a></h1>
+
+  <div id="sidebar">
+		<h4>Search</h4>
+		<div id="search">
+			<form action="/search" method="get">
+			    <input type="text" size="15" name="q" value=""/>
+			    <input type="submit" value="Search"/>
+			</form>
+		</div>
+	
+    <h4>Like What You See?</h4>
+    <ul id="nav">
+      <li><a href="http://feeds.runcoderun.com/runcoderun_blog" id="rss">Get the RSS</a></li>
+      <li><a href="/archive" id="archive">Browse the Archive</a></li>
+    </ul>
+    
+    <h4>About</h4>
+    <div id="description">Official blog for <a href="http://runcoderun.com">RunCodeRun</a>: hosted continuous integration and developer tools for Rubyists.</div>
+    
+    
+    
+    <ul id="colophon">
+      <li><a href="http://tumblr.com/">Tumblr</a> powered</li>
+      <li><a href="http://cubicle17.com/">Bill Israel</a> designed</li>
+    </ul>
+  </div>
+
+  <div id="content" class="autopagerize_page_element">
+		
+	
+    
+    <div class="post">
+      
+      <div class="date">
+        Jul <span class="day">20</span> 2009
+        <a href="http://blog.runcoderun.com/post/145675117/tdd-in-a-functional-language-uncle-bobs-bowling">&#8734;</a>
+      </div>
+      
+      
+      
+      
+      <div class="regular">
+        <h3><a href="http://blog.runcoderun.com/post/145675117/tdd-in-a-functional-language-uncle-bobs-bowling">TDD in a functional language: Uncle Bob&#8217;s Bowling</a></h3>
+        <script type="text/javascript">
+/* Unobtrustive Code Highlighter By Dan Webb 11/2005
+   Version: 0.4
+    
+    Usage:
+        Add a script tag for this script and any stylesets you need to use
+        to the page in question, add correct class names to CODE elements, 
+        define CSS styles for elements. That's it! 
+    
+    Known to work on:
+        IE 5.5+ PC
+        Firefox/Mozilla PC/Mac
+        Opera 7.23 + PC
+        Safari 2
+        
+    Known to degrade gracefully on:
+        IE5.0 PC
+    
+    Note: IE5.0 fails due to the use of lookahead in some stylesets.  To avoid script errors
+    in older browsers use expressions that use lookahead in string format when defining stylesets.
+    
+    This script is inspired by star-light by entirely cunning Dean Edwards
+    http://dean.edwards.name/star-light/.  
+*/
+
+// replace callback support for safari.
+if ("a".replace(/a/, function() {return "b"}) != "b") (function(){
+  var default_replace = String.prototype.replace;
+  String.prototype.replace = function(search,replace){
+    // replace is not function
+    if(typeof replace != "function"){
+        return default_replace.apply(this,arguments)
+    }
+    var str = "" + this;
+    var callback = replace;
+    // search string is not RegExp
+    if(!(search instanceof RegExp)){
+        var idx = str.indexOf(search);
+        return (
+            idx == -1 ? str :
+            default_replace.apply(str,[search,callback(search, idx, str)])
+        )
+    }
+    var reg = search;
+    var result = [];
+    var lastidx = reg.lastIndex;
+    var re;
+    while((re = reg.exec(str)) != null){
+        var idx  = re.index;
+        var args = re.concat(idx, str);
+        result.push(
+            str.slice(lastidx,idx),
+            callback.apply(null,args).toString()
+        );
+        if(!reg.global){
+            lastidx += RegExp.lastMatch.length;
+            break
+        }else{
+            lastidx = reg.lastIndex;
+        }
+    }
+    result.push(str.slice(lastidx));
+    return result.join("")
+  }
+})();
+
+var CodeHighlighter = { styleSets : new Array };
+
+CodeHighlighter.addStyle = function(name, rules) {
+    // using push test to disallow older browsers from adding styleSets
+    if ([].push) this.styleSets.push({
+        name : name, 
+        rules : rules,
+        ignoreCase : arguments[2] || false
+    })
+    
+    function setEvent() {
+        // set highlighter to run on load (use LowPro if present)
+        if (typeof Event != 'undefined' && typeof Event.onReady == 'function') 
+          return Event.onReady(CodeHighlighter.init.bind(CodeHighlighter));
+        
+        var old = window.onload;
+        
+        if (typeof window.onload != 'function') {
+            window.onload = function() { CodeHighlighter.init() };
+        } else {
+            window.onload = function() {
+                old();
+                CodeHighlighter.init();
+            }
+        }
+    }
+    
+    // only set the event when the first style is added
+    if (this.styleSets.length==1) setEvent();
+}
+
+CodeHighlighter.init = function() {
+    if (!document.getElementsByTagName) return; 
+    if ("a".replace(/a/, function() {return "b"}) != "b") return; // throw out Safari versions that don't support replace function
+    // throw out older browsers
+    
+    var codeEls = document.getElementsByTagName("CODE");
+    // collect array of all pre elements
+    codeEls.filter = function(f) {
+        var a =  new Array;
+        for (var i = 0; i < this.length; i++) if (f(this[i])) a[a.length] = this[i];
+        return a;
+    } 
+    
+    var rules = new Array;
+    rules.toString = function() {
+        // joins regexes into one big parallel regex
+        var exps = new Array;
+        for (var i = 0; i < this.length; i++) exps.push(this[i].exp);
+        return exps.join("|");
+    }
+    
+    function addRule(className, rule) {
+        // add a replace rule
+        var exp = (typeof rule.exp != "string")?String(rule.exp).substr(1, String(rule.exp).length-2):rule.exp;
+        // converts regex rules to strings and chops of the slashes
+        rules.push({
+            className : className,
+            exp : "(" + exp + ")",
+            length : (exp.match(/(^|[^\\])\([^?]/g) || "").length + 1, // number of subexps in rule
+            replacement : rule.replacement || null 
+        });
+    }
+    
+    function parse(text, ignoreCase) {
+        // main text parsing and replacement
+        return text.replace(new RegExp(rules, (ignoreCase)?"gi":"g"), function() {
+            var i = 0, j = 1, rule;
+            while (rule = rules[i++]) {
+                if (arguments[j]) {
+                    // if no custom replacement defined do the simple replacement
+                    if (!rule.replacement) return "<span class=\"" + rule.className + "\">" + arguments[0] + "";
+                    else {
+                        // replace $0 with the className then do normal replaces
+                        var str = rule.replacement.replace("$0", rule.className);
+                        for (var k = 1; k <= rule.length - 1; k++) str = str.replace("$" + k, arguments[j + k]);
+                        return str;
+                    }
+                } else j+= rule.length;
+            }
+        });
+    }
+    
+    function highlightCode(styleSet) {
+        // clear rules array
+        var parsed, clsRx = new RegExp("(\\s|^)" + styleSet.name + "(\\s|$)");
+        rules.length = 0;
+        
+        // get stylable elements by filtering out all code elements without the correct className   
+        var stylableEls = codeEls.filter(function(item) { return clsRx.test(item.className) });
+        
+        // add style rules to parser
+        for (var className in styleSet.rules) addRule(className, styleSet.rules[className]);
+        
+            
+        // replace for all elements
+        for (var i = 0; i < stylableEls.length; i++) {
+            // EVIL hack to fix IE whitespace badness if it's inside a <pre>
+            if (/MSIE/.test(navigator.appVersion) && stylableEls[i].parentNode.nodeName == 'PRE') {
+                stylableEls[i] = stylableEls[i].parentNode;
+                
+                parsed = stylableEls[i].innerHTML.replace(/(<code[^>]*>)([^<]*)<\/code>/i, function() {
+                    return arguments[1] + parse(arguments[2], styleSet.ignoreCase) + ""
+                });
+                parsed = parsed.replace(/\n( *)/g, function() { 
+                    var spaces = "";
+                    for (var i = 0; i < arguments[1].length; i++) spaces+= "&nbsp;";
+                    return "\n" + spaces;  
+                });
+                parsed = parsed.replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;");
+                parsed = parsed.replace(/\n(<\/\w+>)?/g, "<br />$1").replace(/<br \/>[\n\r\s]*<br \/>/g, "<p><br/>");
+                
+            } else parsed = parse(stylableEls[i].innerHTML, styleSet.ignoreCase);
+            
+            stylableEls[i].innerHTML = parsed;
+        }
+    }
+    
+    // run highlighter on all stylesets
+    for (var i=0; i < this.styleSets.length; i++) {
+        highlightCode(this.styleSets[i]);  
+    }
+}
+
+// (?=[\[\]\{\}\(\) \^\,\#\']|$) is to avoid \b matching '-' boundaries
+CodeHighlighter.addStyle("clojure",{
+    "comment": {
+        exp: /;[^\n]+/
+    },
+    "parens": {
+        exp: /\(|\)/
+    },
+    "brackets": {
+        exp: /\[|\]/
+    },
+    "curlybrackets": {
+        exp: /\{|\}/
+    },
+    "keyword": {
+      exp: /(:{1,2}[\w|-]+)/
+    },
+    "specialvar": {
+      exp: /\b(\*print-length\*)(?=[\[\]\{\}\(\) \^\,\#\']|$)/
+    },
+    "specialops": {
+        exp: /\b(new|quote|\&|var|set\!|monitor-enter|recur|\.|do|fn\*|throw|monitor-exit|finally|let\*|loop\*|try|catch|if|def)(?=[\[\]\{\}\(\) \^\,\#\']|$)/
+    },
+    "function": {
+        exp: /\b(def|sorted-map|read-line|re-pattern|keyword\?|val|!|max-key|list\*|ns-aliases|\=\=|longs|special-form-anchor|instance\?|syntax-symbol-anchor|format|sequential\?|fn\?|empty|dorun|gensym|not\=|unchecked-multiply|bit-or|aset-byte|hash-set|add-watch|unchecked-dec|some|nil\?|string\?|second|keys|long-array|bit-set|sorted\?|ns-unalias|ns-publics|all-ns|long|add-classpath|false\?|await1|true\?|short|ns-unmap|repeat|zipmap|distinct|get-in|bit-xor|complement|get-validator|derive|aset-float|scan|commute|rem|set-validator|odd\?|symbol\?|proxy-call-with-super|ns-interns|re-matches|split-with|find-doc|rfirst|gen-and-load-class|import|symbol|vals|print-doc|select-keys|re-matcher|rand|deref|unchecked-inc|read|make-hierarchy|\+|number\?|descendants|into-array|last|unchecked-negate|integer\?|alter|prn|with-meta|floats|fnseq|butlast|-|reversible\?|rseq|send-off|seq\?|identical\?|print|bit-flip|zero\?|bit-and|re-groups|newline|cache-seq|replicate|distinct\?|remove-ns|ratio\?|xml-seq|vec|concat|update-in|vector|conj|bases|\/|unchecked-add|ref-set|assoc|seque|aset-char|boolean|read-string|neg\?|float-array|doubles|isa\?|remove-watch|print-str|gen-and-save-class|rsubseq|vector\?|split-at|ns-refers|create-struct|int-array|float|rrest|map|double-array|accessor|class\?|rand-int|aset-short|prn-str|iterate|slurp|mapcat|assoc-in|special-symbol\?|ref|find-var|inc|unchecked-subtract|ns-name|re-find|bit-not|construct-proxy|destructure|seq|to-array-2d|sorted-map-by|filter|var\?|key|class|re-seq|empty\?|test|create-ns|name|list\?|nthrest|aset|doall|macroexpand-1|not-any\?|resultset-seq|into|ffirst|bit-clear|load-reader|hash|print-ctor|associative\?|float\?|drop-last|replace|decimal\?|parents|map\?|quot|file-seq|send|reverse|count|get-proxy-class|set|comp|nth|byte|constantly|load|namespace|pr-str|<|rationalize|sort-by|cycle|peek|reduce|interleave|cons|macroexpand|var-set|str|aset-boolean|ns-imports|first|bean|\=|var-get|range|tree-seq|aset-double|enumeration-seq|ensure|find-ns|not-every\?|struct-map|>|max|proxy-mappings|identity|ints|min-key|subs|agent-errors|clear-agent-errors|printf|ns-resolve|method-sig|>\=|shutdown-agents|even\?|require|bit-shift-left|touch|compare|cast|supers|load-string|get|<\=|await|resolve|loaded-libs|force|partial|pmap|comparator|pos\?|char|take-while|refer|underive|in-ns|iterator-seq|ancestors|partition|contains\?|update-proxy|interpose|aset-int|load-file|apply|subvec|rest|keyword|ns-map|int|bigdec|aset-long|struct|array-map|bigint|dec|println|aget|pr|drop|gen-class|eval|aclone|pop|bit-shift-right|delay\?|num|disj|rational\?|merge-with|take-nth|double|line-seq|take|set\?|make-array|alias|use|alength|to-array|hash-map|bit-and-not|repeatedly|frest|remove|find|coll\?|drop-while|not-empty|print-special-doc|println-str|list|every\?|flush|sort|dissoc|not|agent|sorted-set|alter-var-root|merge|subseq|min|print-simple|bit-test|await-for|meta|unchecked-divide|rename-keys|union|select|project|join|intersection|map-invert|difference|rename|index|startparse-sax|parse|emit-element|emit|lefts|down|insert-left|up|next|path|children|vector-zip|append-child|zipper|branch\?|end\?|edit|replace|insert-right|root|insert-child|seq-zip|xml-zip|make-node|rights|node|right|left|remove|pany|par|pdistinct|pfilter-dupes|pfilter-nils|pmax|pmin|preduce|psort|psummary|pvec)(?=[\[\]\{\}\(\) \^\,\#\']|$)/
+    },
+    "macro": {
+        exp: /\b(time|remove-method|doseq|for|cond|fn|dosync|with-open|sync|let|dotimes|defmethod|lazy-cat|defstruct|with-in-str|loop|with-out-str|when-not|refer-clojure|\.\.|doto|proxy-super|assert|memfn|when-first|definline|defn-|comment|ns|with-precision|or|defn|with-local-vars|when-let|amap|->|defmacro|prefer-method|if-let|and|lazy-seq|declare|locking|delay|defmulti|proxy|defonce|when|areduce|binding|doc)(?=[\[\]\{\}\(\) \^\,\#\']|$)/
+    },
+    "string": {
+        exp: /"(\\"|[^"])*"/
+    },
+    /* "preencoded" is just a hack to stop the comment rule from inseting a semicolon after -> */
+    "preencoded": {
+        exp: /&gt;|&lt;|&amp;/
+    }
+});
+</script><p><style>
+.clojure .comment { color: gray; }
+.clojure .string {  color: teal; }
+.clojure .function { color: #00c; }
+.clojure .macro, .specialops { color: #60c; }
+.clojure .parens { color: #000; }
+.clojure .keyword { color: #c09; }
+.clojure .brackets { color: #006; }
+.clojure .curlybrackets { color: #906; }
+</style></p>
+
+<p>Want to see what TDD is like in a functional language? In this blog I will convert the Bowling Game example, as TDD&#8217;ed by Uncle Bob, to a more functional approach in Clojure.</p>
+
+<p>Uncle Bob Martin, well-known OO and agile guy, has used the Bowling Game to explore TDD in a variety of different languages. Most recently, he has been learning Clojure, and experiencing a disconnect from the idioms he would use in an OO language. I felt this same disconnect when I started using Clojure, and I think I have finally bent my brain into the shape needed to TDD functional code.</p>
+
+<p>I have taken <a href="http://blog.objectmentor.com/articles/2009/07/19/uncle-bob-jsps-learning-clojure">Uncle Bob&#8217;s example</a>, and converted it to a more functional approach while keeping tests passing at each step. This blog summarizes the key elements of my thinking, but of course you can also follow it step by step in the commit history of the <a href="http://github.com/stuarthalloway/clojure-bowling">clojure-bowling</a> repository.</p>
+
+<h2>A starting point</h2>
+
+<p>The initial commit of the project simply imports Uncle Bob&#8217;s code, and adds some supporting infrastructure (shell scripts to launch a REPL with all the code available, etc.)</p>
+
+<p>In addition, I chose to use the development edge of Clojure and clojure-contrib to take advantage of the new syntax for the <code>are</code> macro (more on that later). The repository includes compatible versions of these JAR files so you don&#8217;t have to download anything else.</p>
+
+<h2>Data, not objects</h2>
+
+<p>In OO, it is customary to invest a lot in how objects get <em>made</em>. So, the code includes functions like <code>new-game</code> that creates a game. This starts to get ugly with the functions that make test data. For example, the <code>roll-many</code> function creates many identical rolls of a bowling ball, and the <code>roll-list</code> takes an arbitrary list of rolls and adds them to the game. Using these functions leads to some pretty hard-to-read tests. For example, here is one that tests scoring a game that starts with a spare, followed by all gutterballs:</p>
+
+<pre><code class="clojure">(deftest one-spare
+  (is (= 16 (score
+    (roll-many
+      (roll-list (new-game) [5 5 3])
+      17 0)))))
+</code></pre>
+
+<p>Ouch. I can hear the parenthesis-haters sharpening their pitchforks in the background. But what happens if we think of the game as a simple sequence of data?</p>
+
+<pre><code class="clojure">"one spare" 16 (concat [5 5 3] (repeat 0))
+</code></pre>
+
+<p>In this tabular-looking expression, the <code>"one spare"</code> names the case being tested, the <code>16</code> is the expected score, and the <code>concat</code> builds the list of rolls: 5, 5, 3, 0, 0, 0 &#8230; Note that we are taking advantage of Clojure&#8217;s lazy collections to ignore exactly how many zeroes are needed.</p>
+
+<p>The tabular, <a href="http://fit.c2.com/">FIT</a>-like style of listing values is enabled by the <code>are</code> macro. There are tests for several different possible games, and it is easy to add more:</p>
+
+<pre><code class="clojure">(deftest test-various-games
+  (are [description expected-score game] (= expected-score (score game))
+       "gutter game" 0 (repeat 0)
+       "all ones" 20 (repeat 1)
+       "one spare" 16 (concat [5 5 3] (repeat 0))
+       "one strike" 24 (concat [10 3 4] (repeat 0))
+       "perfect game" 300 (repeat 10)
+       ))
+</code></pre>
+
+<h2>Recursion: a misstep</h2>
+
+<p>Scoring bowling is simple: &#8220;iterate over the frames of the game, adding the score for each.&#8221; Since we are using functional style, we will use recursion instead of iteration. Furthermore, since we are on the JVM, we will use Clojure&#8217;s explicit <code>recur</code> to trigger Tail-Call Optimization (TCO). Here is the original:</p>
+
+<pre><code class="clojure">(defn score [game]
+  (loop [frame 1 rolls game score 0]
+    (if (&gt; frame 10)
+      score
+      (let [frame-score (score-next-frame rolls)]
+        (recur (inc frame) (subvec rolls (frame-score 0)) 
+               (+ score (frame-score 1)))))))
+</code></pre>
+
+<p>That works, but I think I hear the parenthesis-bashers giggling again. The <code>score</code> function is pretty tough to read, especially the loop with five positional arguments. What is more troubling is that this function relies on a supporting infrastructure of five other functions, most of which don&#8217;t make much sense alone. Here is <code>score-spare</code>:</p>
+
+<pre><code class="clojure">(defn score-spare [rolls]
+  [2 (+ 10 (rolls 2))])
+</code></pre>
+
+<p>After puzzling a minute, it becomes clear: <code>score-spare</code> returns a pair:</p>
+
+<ul><li>the number of balls consumed by a spare frame</li>
+<li>the score for this specific spare frame (ten plus the extra ball in the next frame). </li>
+</ul><p>Now I can hear the OO crowd sharpening <em>their</em> spears: &#8220;With objects it would be clear what was being returned here: the <code>FrameStat</code> bean or some such.&#8221;</p>
+
+<h2>Sequence transformation!</h2>
+
+<p>Instead of thinking about iterating over the rolls, think about <em>transforming</em> the rolls into a sequence of the thing you really want: the frames. So, for example:</p>
+
+<pre><code class="clojure">; balls        =&gt; frames
+[10 1 4 5 5 3] =&gt; [[10 1 4] [1 4] [5 5 3]]
+</code></pre>
+
+<p>The new sequence includes in each frame the balls needed to score that frame. Here is an implementation:</p>
+
+<pre><code class="clojure">(defn frames
+  "Converts a sequence of rolls to a sequence of frames"
+  [rolls]
+  (when-let [rolls (seq rolls)]
+    (lazy-seq (cons (take (balls-to-score rolls) rolls)
+                    (frames (drop (frame-advance rolls) rolls))))))
+</code></pre>
+
+<p>This function grabs <code>(balls-to-score rolls)</code> to make a frame, and then drops <code>(frame-advance rolls)</code> balls to advance to the next frame. Unlike the previous <code>score-spare</code>, these new helper functions cleanly express domain knowledge.</p>
+
+<pre><code class="clojure">(defn balls-to-score
+  "How many balls contribute to this frame's score?"
+  [rolls]
+  (cond
+   (strike? rolls) 3
+   (spare? rolls) 3
+   :else 2))
+</code></pre>
+
+<p>Helper functions like <code>strike</code> and <code>spare</code> are also simple expressions of domain knowledge:</p>
+
+<pre><code class="clojure">(defn strike? [rolls]
+  (= 10 (first rolls)))
+</code></pre>
+
+<h2>Keeping score</h2>
+
+<p>With the toolkit of <code>frames</code> and its various helpers in place, it is simple to score an entire game. Just convert rolls to frames, score the frames, and sum the score. The function reads like a definition, once you are accustomed to the notions of map and reduce:</p>
+
+<pre><code class="clojure">(defn score-game
+  "Score a bowling game, passed as a sequence of rolls."
+  [rolls]
+  (reduce + (map score-frame (take 10 (frames rolls)))))    
+</code></pre>
+
+<h2>Build a toolkit, not a tool</h2>
+
+<p>Because all of the functions that support <code>score-game</code> are individually valuable tools, it is easy to implement new domain concepts. If you wanted to get the individual frame scores of a game in progress:</p>
+
+<pre><code class="clojure">(map score-frame (frames [10 10 10 10 10]))
+-&gt; (30 30 30 20 10)
+</code></pre>
+
+<p>Or the running score:</p>
+
+<pre><code class="clojure">; uses clojure.contrib.seq-utils.reductions
+(reductions + (map score-frame (frames [10 10 10 10 10])))
+-&gt; (30 60 90 110 120)
+</code></pre>
+
+<p>Or the number of strikes:</p>
+
+<pre><code class="clojure">(count (filter strike? (frames [10 0 10 0 10])))
+-&gt; 1    ; think about it
+</code></pre>
+
+<h2>Parting shots</h2>
+
+<p>There is a lot going on here, but the single most important step is <em>transforming sequences</em>. Because the code now transforms sequences of balls to sequences of frames, it can be used to do all kinds of things other than just scoring the entire game. Moreover, the code is now shorter (in lines of code) and also more readable. Ditto the tests.</p>
+
+<p>If you can think of some way to decompose a problem, TDD will help you build the individual pieces. But TDD does not help you choose the <em>best</em> decomposition. Functional decomposition is generally superior to object-oriented decomposition using mutable state.</p>
+
+<p>Note that the use of laziness in the scoring is slightly gratuitous in this example, since bowling games are of a fixed size. However, laziness is a very useful part of solving real-world sized problems, and it is almost as easy to write as non-lazy code. So I tend to write laziness-preserving transformations even when I <em>know</em> (famous last words) that domain entities will never get large.</p>
+
+<h2>Resources</h2>
+
+<ul><li>The functional programming chapter of my book <a href="http://www.pragprog.com/titles/shcloj/programming-clojure">Programming Clojure</a> has more discussion of sequence transformations.</li>
+<li>If you are new to Clojure, Mark Volkmann has written a long and thorough <a href="http://java.ociweb.com/mark/clojure/article.html">introductory article</a>.</li>
+<li>We are available to <a href="http://thinkrelevance.com/training/clojure">teach Clojure</a> to your team.</li>
+</ul>
+      </div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+    </div> <!-- end single post -->
+    
+  </div> <!-- end content -->
+  
+  <div id="previous-next" class="autopagerize_insert_before">
+    
+    Page 1 of 1
+    
+  </div>
+  
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-5197225-2");
+pageTracker._trackPageview();
+
+prettyPrint();
+</script>
+<!-- BEGIN TUMBLR CODE --><iframe src="http://assets.tumblr.com/iframe.html?8&src=http%3A%2F%2Fblog.runcoderun.com%2Fpost%2F145675117%2Ftdd-in-a-functional-language-uncle-bobs-bowling&amp;pid=145675117&amp;rk=FAPLxEJb&amp;lang=en_US&amp;name=runcoderun" scrolling="no" width="324" height="25" frameborder="0" style="position:absolute; z-index:1337; top:0px; right:0px; border:0px; background-color:transparent; overflow:hidden;" id="tumblr_controls"></iframe><!--[if IE]><script type="text/javascript">document.getElementById('tumblr_controls').allowTransparency=true;</script><![endif]--><script type="text/javascript">_qoptions={qacct:"p-19UtqE8ngoZbM"};</script><script type="text/javascript" src="http://edge.quantserve.com/quant.js"></script><noscript><img src="http://pixel.quantserve.com/pixel/p-19UtqE8ngoZbM.gif" style="display:none; border-width:0px; height:1px; width:1px;" alt=""/></noscript><!-- END TUMBLR CODE --></body>
+</html>
