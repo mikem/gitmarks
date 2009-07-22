@@ -1,0 +1,448 @@
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head profile="http://gmpg.org/xfn/11">
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta name="ICBM" content="39.666604, -76.380825">
+        <meta name="DC.title" content="Eric Florenzano's Blog">
+        <title>My Thoughts on NoSQL - Die in a Fire - Eric Florenzano&rsquo;s Blog</title>
+        <link rel="stylesheet" type="text/css" media="all" href="http://media.eflorenzano.com/css/reset.css">
+        <link rel="stylesheet" type="text/css" media="all" href="http://media.eflorenzano.com/css/text.css">
+        <link rel="stylesheet" type="text/css" media="all" href="http://media.eflorenzano.com/css/960.css">
+        <link rel="stylesheet" type="text/css" href="http://media.eflorenzano.com/css/style2.css">
+        
+    
+        <link rel="alternate" type="application/atom+xml" title="Eric Florenzano's Latest Posts for Tag Databases" href="/blog/feeds/posts/databases/">
+    
+        <link rel="alternate" type="application/atom+xml" title="Eric Florenzano's Latest Posts for Tag Editorial" href="/blog/feeds/posts/editorial/">
+    
+        <link rel="alternate" type="application/atom+xml" title="Eric Florenzano's Latest Posts for Tag NoSQL" href="/blog/feeds/posts/nosql/">
+    
+        <link rel="alternate" type="application/atom+xml" title="Eric Florenzano's Latest Posts for Tag Programming" href="/blog/feeds/posts/programming/">
+    
+
+        
+        <link rel="alternate" type="application/atom+xml" title="Eric Florenzano's Blog" href="/blog/feeds/all/">
+    </head>
+    <body>
+        <div class="container_16">
+            <div id="container" class="grid_16">
+                <div id="primary" class="grid_10 alpha">
+                    <div id="header">
+                        <h1><a href="/">Die in a Fire - Eric Florenzano&rsquo;s Blog</a><a id="why" href="/why/">Why the name?</a></h1>
+                    </div>
+                    
+    <a class="blogtitle" href="/blog/post/my-thoughts-nosql/">My Thoughts on NoSQL</a>
+    <div class="postbody"><p>Over the past few years, relational databases have fallen out of favor for a
+number of influential people in our industry.  I'd like to weigh in on that,
+but before doing so, I'd like to give my executive summary of the events leading up to
+this movement:</p>
+<p>In the late nineties and early thousands, websites were mostly read-only--a
+publisher would create some content and users would consume that content.
+The data access patterns for these types of applications became very
+well-understood, and as a result many tools were created and much research and
+development was done to further develop these technologies.</p>
+<p>As the web has grown more social, however, more and more it's the people
+themselves who have become the publishers.  And with that fundamental shift
+away from read-heavy architectures to read/write and write-heavy
+architectures, a lot of the way that we think about storing and retrieving
+data needed to change.</p>
+<p>Most people have done this by relying less on the features provided by
+traditional relational databases and engineering more database logic in their
+application code.  Essentially, they stop using relational databases the way
+they were intended to be used, and they instead use them as dumb data stores.</p>
+<p>Other people have engineered new database systems from the ground up, each
+with a different set of tradeoffs and differences from their relational
+database brethren.  It's these new databases that have some in our industry
+excited, and it's these databases that I'm going to focus on primarily in this
+post.</p>
+<p>(By the way, there's a whole lot more theory behind the movement away from
+SQL.  Primarily of interest is the CAP theorem and the Dynamo paper.  Both of
+these illustrate the necessary tradeoffs of between different approaches to
+designing databases.)</p>
+<div class="section" id="let-s-get-this-out-of-the-way">
+<h1>Let's get this out of the way</h1>
+<p>I love SQL.  More than even that, I love my precious ORM and being able to
+query for whatever information I want whenever I want it.  For the vast
+majority of sites out there (we're talking 99.9% of the sites out there,
+folks) it suits their needs very well, providing a good balance of ease of use
+and performance.</p>
+<p>There's no reason for them to switch away from SQL, and there's no way they
+will.  If there's one thing I <em>don't</em> like about this whole NoSQL movement,
+it's the presumption that everyone who's interested in alternative databases
+hates the status quo.  That's simply not true.</p>
+<p>But we're not talking about most sites out there, we're not talking about the
+status quo, we're talking about the few applications that need something
+totally different.</p>
+</div>
+<div class="section" id="tokyo-cabinet-tokyo-tyrant">
+<h1>Tokyo Cabinet / Tokyo Tyrant</h1>
+<p>Tokyo Cabinet (and its network interface, Tokyo Tyrant) is the logical
+successor to Berkeley DB--a blazing fast, open-source, embeddable key-value
+store that does just about what you would expect from its description.  It
+supports 3 modes of operation: hashtable mode, b-tree mode, and table mode.</p>
+<p>(Table mode still pretty much sucks, and I'm not convinced it's a good idea
+for the project since it's added bloat and other systems like RDBMs are
+probably better for storing tabular data, so I'm going to skip it.)</p>
+<p>Essentially, the API into Tokyo Cabinet is that of a gigantic associative
+array.  You give it a key and a value, and then later, given a key, it will
+give you back the value you put in.  Its largest assets are that it's fast and
+straightforward.</p>
+<p>If your problem is such that you have a small to medium-sized amount of data,
+which needs to be updated rapidly, and can be easily modeled in
+terms of keys and values (almost all scenarios can be rewritten in terms of
+keys and values, but some problems are easier to convert than others), then
+Tokyo Cabinet and Tokyo Tyrant are the way to go.</p>
+</div>
+<div class="section" id="couchdb">
+<h1>CouchDB</h1>
+<p>CouchDB is similar to Tokyo Cabinet in that it essentially maps keys to data,
+but CouchDB's philosophy is completely different. Instead of arbitrary data,
+its data has structure--it's a JSON object.  Instead of only being able to
+query by keys, you can upload functions that index your data for you and then
+you can call those functions.  All of this is done over a very simple REST
+interface.</p>
+<p>But none of this really matters.  None of these really set CouchDB apart,
+because you could just encode JSON data and store it in Tokyo Cabinet, you can
+maintain your own indexes of data fairly easily, and you can build a simple
+REST API in a matter of days, if not hours.</p>
+<p>What really sets CouchDB apart from the pack is it's innovative replication
+strategy.  It was written in such a way that nodes which are disconnected for
+long periods of time can reconnect, sync with each other, and reconcile their
+differences in a way that no other database (since Lotus Notes?) could do.</p>
+<p>It's functionality that allows for interesting and new distributed types of
+applications and data that I think could possibly change the way we take our
+applications offline.  I imagine that some day every computer will come with
+CouchDB pre-installed and it'll be a data store that we use without even
+knowing that we're using it.</p>
+<p>However, I wouldn't choose it for a super high scalability site with lots of
+data and sharding and replication and high availability and all those
+buzzwords, because I'm not convinced it's the right tool for that job, but I
+am convinced that its replication strategy will keep it relevant for years to
+come.</p>
+</div>
+<div class="section" id="redis">
+<h1>Redis</h1>
+<p>Wow, looking at the bullet points this database seems to do just about
+everything, perfectly!  Yeah, it's a bit prone to hyperbole and there are some
+great things about it, but a lot of it is hot air.  For example, it claims to
+support sharding but really all it does is have the client run a hash function
+on its key and use that to determine which server to send its value to.  This
+is something that any database can do.</p>
+<p>When you get down to it, Redis is a key-value store which provides a richer
+API than something like Tokyo Cabinet.  It does more operations in memory,
+only periodically flushing to disk, so there's more of a risk that you could
+lose data on a crash.  The tradeoff is that it's extremely fast, and it does
+some neat things like allow you to append a value to the end of a list of
+items already stored for a given key.</p>
+<p>It also has atomic operations.  This is honestly the only reason I find this
+project interesting, because the atomic operation support that it has means
+that it can be turned into a best-of-breed tally server.  If you are building
+a server to keep real-time counts of various things, you would be remiss to
+overlook Redis as a very viable option.</p>
+</div>
+<div class="section" id="cassandra">
+<h1>Cassandra</h1>
+<p>It's good to save the best for last, and that's exactly what I've done as I
+find Cassandra to be easily the most interesting non-relational database out
+there today.  Originally developed by Facebook, it was developed by some of
+the key engineers behind Amazon's famous Dynamo database.</p>
+<p>Cassandra can be thought of as a huge 4-or-5-level associative array, where
+each dimension of the array gets a free index based on the keys in that level.
+The real power comes from that optional 5th level in the associative array,
+which can turn a simple key-value architecture into an architecture where you
+can now deal with sorted lists, based on an index of your own specification.
+That 5th level is called a SuperColumn, and it's one of the reasons that
+Cassandra stands out from the crowd.</p>
+<p>Cassandra has no single points of failure, and can scale from one machine to
+several thousands of machines clustered in different data centers.  It has no
+central master, so any data can be written to any of the nodes in the cluster,
+and can be read likewise from any other node in the cluster.</p>
+<p>It provides knobs that can be tweaked to slide the scale between consistency
+and availability, depending on your particular application and problem domain.
+And it provides a high availability guarantee, that if one node goes down,
+another node will step in to replace it smoothly.</p>
+<p>Writing about all the features of Cassandra is a whole different post, but I
+am convinced that its data model is rich enough to support a wide variety of
+applications while providing the kind of extreme scalability and high
+availability features that few other databases can achieve--all while
+maintaining a lower latency than other solutions out there.</p>
+</div>
+<div class="section" id="conclusion">
+<h1>Conclusion</h1>
+<p>There are many other non-relational databases out there: HBase and Hypertable,
+which are replicating Google's BigTable despite its complexity and problems
+with single points of failure.  MongoDB is another database that has been
+getting some traction, but it seems to be a jack of all trades, master of
+none.  In short, the above databases are the ones that I find interesting
+right now, and I would use each of them for different use cases.</p>
+<p>What do you all think about this whole non-relational database thing?  Do you
+agree with my thoughts or do you think I'm full of it?</p>
+</div>
+</div>
+    <div class="postfooter">
+        <div class="reddit">
+            <script type="text/javascript">reddit_url='http://www.eflorenzano.com/blog/post/my-thoughts-nosql/'</script>
+            <script type="text/javascript">reddit_title='My Thoughts on NoSQL'</script>
+            <script type="text/javascript" src="http://reddit.com/button.js?t=1"></script>
+        </div>
+        <div class="clear">&nbsp;</div>
+        <p class="meta">Posted on July 21, 2009 at 6:44 a.m. and filed in <a href="/blog/tag/databases/">databases</a>, <a href="/blog/tag/editorial/">editorial</a>, <a href="/blog/tag/nosql/">nosql</a>, <a href="/blog/tag/programming/">programming</a></p>
+    </div>
+    <script type="text/javascript">var disqus_url = "http://www.eflorenzano.com/blog/post/my\x2Dthoughts\x2Dnosql/";</script>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript" src="http://disqus.com/forums/ericflorenzanosblog/embed.js"></script>
+    <noscript><p><a href="http://ericflorenzanosblog.disqus.com/?url=ref">View the discussion thread.</a></p></noscript>
+    <p><a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a></p>
+    
+
+                </div>
+                <div id="secondary" class="grid_4 omega">
+                    
+                        <div class="secondaryitem">
+                            <h2>Pages</h2>
+                            <ul>
+                                <li><a href="/aboutme/">About Me</a></li>
+                                <li><a href="/resume/">Resume</a></li>
+                                <li><a href="/projects/">Projects</a></li>
+                                <li><a href="/weight/">My Weight Loss</a></li>
+                                <li><a href="/contact/">Contact Me</a></li>
+                            </ul>
+                        </div>
+                        <div class="secondaryitem">
+                            <h2>Search</h2>
+                            <!-- SiteSearch Google -->
+                            <form method="get" action="http://www.google.com/custom" target="google_window">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <input type="hidden" name="domains" value="eflorenzano.com">
+                                            <label for="sbi" style="display: none">Enter your search terms</label>
+                                            <input type="text" name="q" maxlength="255" id="sbi">
+                                            <label for="sbb" style="display: none">Submit search form</label>
+                                        </td>
+                                        <td>
+                                            <input type="submit" name="sa" value="Google Search" id="sbb">
+                                        </td>
+                                    </tr>
+                                </table>
+                                <input type="radio" name="sitesearch" value="eflorenzano.com" id="ss1" checked="checked">
+                                <label for="ss1" title="Search eflorenzano.com">Here</label>
+                                <input type="radio" name="sitesearch" id="ss0">
+                                <label for="ss0" title="Search the Web">The Web</label>
+                                <input type="hidden" name="client" value="pub-3083259635578687">
+                                <input type="hidden" name="forid" value="1">
+                                <input type="hidden" name="ie" value="UTF-8">
+                                <input type="hidden" name="oe" value="UTF-8">
+                                <input type="hidden" name="safe" value="active">
+                                <input type="hidden" name="flav" value="0000">
+                                <input type="hidden" name="sig" value="Gxd-QmY5PdC5Vvmu">
+                                <input type="hidden" name="cof" value="GALT:#89A53E;GL:1;DIV:#EFEEBE;VLC:89A53E;AH:center;BGC:F4F2E3;LBGC:336699;ALC:003300;LC:003300;T:03455F;GFNT:ABC75F;GIMP:ABC75F;FORID:1">
+                                <input type="hidden" name="hl" value="en">
+                            </form>
+                            <!-- SiteSearch Google -->                    
+                        </div>
+                        
+                        <div class="secondaryitem">
+    <h2>Recent Blog Posts</h2>
+    <ul>
+        
+            <li><a href="/blog/post/object-lesson-how-respond-criticism/">An Object Lesson in How to Respond to Criticism</a></li>
+        
+            <li><a href="/blog/post/why-node-disappoints-me/">Why node.js disappoints me</a></li>
+        
+            <li><a href="/blog/post/we-need-new-word-open/">We need a new word for &quot;Open&quot;</a></li>
+        
+            <li><a href="/blog/post/how-do-we-kick-our-synchronous-addiction/">How do we kick our synchronous addiction?</a></li>
+        
+            <li><a href="/blog/post/you-care-about-facebook-you-just-might-not-know-it/">You care about Facebook, you just might not know it yet</a></li>
+        
+            <li><a href="/blog/post/my-thoughts-nosql/">My Thoughts on NoSQL</a></li>
+        
+    </ul>
+</div>
+                        <div class="secondaryitem">
+                            <h2>Syndication</h2>
+                            <ul>
+                                <li><a href="/blog/feeds/all/"><img src="http://media.eflorenzano.com/img/atom.gif" alt="Atom Feed"> All Content</a></li>
+                                <li><a href="/blog/feeds/latestposts/"><img src="http://media.eflorenzano.com/img/atom.gif" alt="Atom Feed"> Posts</a></li>
+                                <li><a href="/blog/feeds/latestlinks/"><img src="http://media.eflorenzano.com/img/atom.gif" alt="Atom Feed"> Links</a></li>
+                            </ul>
+                        </div>
+                        <div class="secondaryitem">
+    <h2>Archives</h2>
+    <ul>
+        
+            <li><a href="/blog/archive/2010/10/">October 2010</a></li>
+        
+            <li><a href="/blog/archive/2010/9/">September 2010</a></li>
+        
+            <li><a href="/blog/archive/2010/5/">May 2010</a></li>
+        
+            <li><a href="/blog/archive/2010/2/">February 2010</a></li>
+        
+            <li><a href="/blog/archive/2009/11/">November 2009</a></li>
+        
+            <li><a href="/blog/archive/2009/7/">July 2009</a></li>
+        
+            <li><a href="/blog/archive/2009/4/">April 2009</a></li>
+        
+            <li><a href="/blog/archive/2009/3/">March 2009</a></li>
+        
+            <li><a href="/blog/archive/2009/2/">February 2009</a></li>
+        
+            <li><a href="/blog/archive/2009/1/">January 2009</a></li>
+        
+            <li><a href="/blog/archive/2008/11/">November 2008</a></li>
+        
+            <li><a href="/blog/archive/2008/9/">September 2008</a></li>
+        
+            <li><a href="/blog/archive/2008/7/">July 2008</a></li>
+        
+            <li><a href="/blog/archive/2008/6/">June 2008</a></li>
+        
+            <li><a href="/blog/archive/2008/5/">May 2008</a></li>
+        
+            <li><a href="/blog/archive/2008/4/">April 2008</a></li>
+        
+            <li><a href="/blog/archive/2008/3/">March 2008</a></li>
+        
+            <li><a href="/blog/archive/2008/2/">February 2008</a></li>
+        
+            <li><a href="/blog/archive/2008/1/">January 2008</a></li>
+        
+            <li><a href="/blog/archive/2007/12/">December 2007</a></li>
+        
+            <li><a href="/blog/archive/2007/9/">September 2007</a></li>
+        
+            <li><a href="/blog/archive/2007/8/">August 2007</a></li>
+        
+            <li><a href="/blog/archive/2007/7/">July 2007</a></li>
+        
+            <li><a href="/blog/archive/2007/4/">April 2007</a></li>
+        
+            <li><a href="/blog/archive/2007/3/">March 2007</a></li>
+        
+            <li><a href="/blog/archive/2007/2/">February 2007</a></li>
+        
+            <li><a href="/blog/archive/2006/12/">December 2006</a></li>
+        
+    </ul>
+</div>
+                        <div class="secondaryitem">
+                            <h2>Find Me On...</h2>
+                            <ul>
+                                <li><a href="http://twitter.com/ericflo" rel="me">Twitter</a></li>
+                                <li><a href="http://friendfeed.com/ericflo" rel="me">FriendFeed</a></li>
+                                <li><a href="http://www.flickr.com/photos/83888483@N00/" rel="me">Flickr</a></li>
+                                <li><a href="http://iastate.facebook.com/profile.php?id=16904779" rel="me">Facebook</a></li>
+                                <li><a href="http://digg.com/users/floguy/" rel="me">Digg</a></li>
+                                <li><a href="http://djangopeople.net/ericflo/" rel="me">Django People</a></li>
+                                <li><a href="http://technorati.com/people/technorati/ericflo/" rel="me">Technorati</a></li>
+                                <li><a href="http://www.djangosnippets.org/users/ericflo/" rel="me">Djangosnippets</a></li>
+                            </ul>
+                        </div>
+                        <div class="secondaryitem">
+                            <h2>My Projects</h2>
+                            <ul>
+                                <li><a href="http://radiosox.com/">Radiosox</a></li>
+                                <li><a href="http://app.pictionnected.com/">Pictionnected</a></li>
+                                <li><a href="http://realitypick.com/">RealityPick</a></li>
+                            </ul>
+                        </div>
+                        <div class="secondaryitem">
+    <h2>Blogroll</h2>
+    <ul>
+        
+            <li><a href="http://oebfare.com/" rel="friend met colleague">Oebfare</a></li>
+        
+            <li><a href="http://whenaway.blogspot.com/" rel="friend met co-resident">Preston</a></li>
+        
+            <li><a href="http://ejohn.org/blog/" rel="contact colleague">John Resig</a></li>
+        
+            <li><a href="http://www.thauber.com/" rel="friend met co-worker colleague neighbor">Tony Hauber</a></li>
+        
+            <li><a href="http://www.getharitan.homeip.net/blog/" rel="friend met colleague">Tim Jenkins</a></li>
+        
+            <li><a href="http://damienkatz.net/" rel="contact colleague">Damien Katz</a></li>
+        
+            <li><a href="http://www.holovaty.com/blog/" rel="contact met colleague">Holovaty.com</a></li>
+        
+            <li><a href="http://justinlilly.com/" rel="friend met colleague">Justin Lilly</a></li>
+        
+            <li><a href="http://www.moteldemoka.com/" rel="">Motel de Moka</a></li>
+        
+            <li><a href="http://www.wilwheaton.typepad.com/" rel="contact">WWdN: In Exile</a></li>
+        
+            <li><a href="http://daringfireball.net/" rel="contact">Daring Fireball</a></li>
+        
+            <li><a href="http://adam.gomaa.us/blog/" rel="contact met colleague">Adam Gomaa Blog</a></li>
+        
+            <li><a href="http://blog.howiworkdaily.com/" rel="contact colleague">Kevin Fricovsky</a></li>
+        
+            <li><a href="http://insin.webfactional.com/weblog/" rel="contact colleague">The Buchanologue</a></li>
+        
+            <li><a href="http://www.crankycoder.com/" rel="acquaintance colleague">www.crankycoder.com</a></li>
+        
+            <li><a href="http://erik.karulf.com/" rel="friend met colleague">Planned Spontaneity</a></li>
+        
+            <li><a href="http://blog.ianbicking.org/" rel="contact met colleague">Ian Bicking: a blog</a></li>
+        
+            <li><a href="http://jtauber.com/blog/" rel="friend met colleague">James Tauber&#39;s Blog</a></li>
+        
+            <li><a href="http://www.b-list.org/" rel="contact met colleague">The B-List: Entries</a></li>
+        
+            <li><a href="http://www.jacobian.org/writing/" rel="contact met colleague">Jacobian.org Articles</a></li>
+        
+            <li><a href="http://avalonstar.com/" rel="acquaintance co-worker">avalonstar:distortion</a></li>
+        
+            <li><a href="http://www2.jeffcroft.com/" rel="contact">JeffCroft.com Journal</a></li>
+        
+            <li><a href="http://www.nedbatchelder.com/blog/" rel="contact met colleague">Ned Batchelder&#39;s Blog</a></li>
+        
+            <li><a href="http://www.pointy-stick.com/blog/" rel="contact colleague">Defying Classification</a></li>
+        
+            <li><a href="http://simonwillison.net/" rel="contact colleague">Simon Willison&#39;s Weblog</a></li>
+        
+            <li><a href="http://www.lightmotionandmagic.com/blog/" rel="friend met parent">Light, Motion and Magic</a></li>
+        
+            <li><a href="http://bob.pythonmac.org/feed/atom/" rel="contact met colleague">from __future__ import *</a></li>
+        
+            <li><a href="http://leahculver.com/" rel="contact colleague">Leah Culver&#39;s Stupid Blog</a></li>
+        
+            <li><a href="http://www.andyrutledge.com" rel="contact">Design View / Andy Rutledge</a></li>
+        
+            <li><a href="http://blog.michaeltrier.com/" rel="friend met colleague">Empty Thoughts - Living on the Edge</a></li>
+        
+            <li><a href="http://blog.leosoto.com/" rel="contact colleague">random.choice([&#39;idea&#39;, &#39;rant&#39;, &#39;link&#39;, &#39;tip&#39;])</a></li>
+        
+    </ul>
+</div>
+                        <div class="secondaryitem">
+                            <h2>Badges</h2>
+                            <ul id="badgelist">
+                                <li><a href="http://www.djangoproject.com/"><img src="http://media.eflorenzano.com/img/djangoproject120x25.gif" alt="django badge"></a></li>
+                                <li><a href="http://httpd.apache.org/"><img src="http://media.eflorenzano.com/img/apache_badge.gif" alt="apache badge"></a></li>
+                                <li><a href="http://geourl.org/near?p=http://www.eflorenzano.com/"  title="check out my neighbors in meatspace"><img src="http://i.geourl.org/80x15/simple.png" alt="GeoURL"  border="0" width="80" height="15"></a></li>
+                                <li><a href="http://gmpg.org/xfn"><img src="http://media.eflorenzano.com/img/xfn-btn.gif" alt="XFN Friendly"></a></li>
+                                <li><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-html401" alt="Valid HTML 4.01 Transitional" height="31" width="88"></a></li>
+                                <li><div id="ironichitcounter"></div><script type="text/javascript" src="http://ironichitcounter.com/counter.js" charset="utf-8"></script>
+                            </ul>
+                        </div>
+                   
+                </div>
+            </div>
+            <div class="grid_16">
+                <div id="footer">
+                <p>Copyright &copy; 2006-2009 <a href="mailto:floguy@gmail.com">Eric Florenzano</a></p>
+                
+                </div>
+            </div>
+        </div>
+        
+            <script type="text/javascript">var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));</script>
+            <script type="text/javascript">var pageTracker = _gat._getTracker("UA-1959803-2");pageTracker._initData();pageTracker._trackPageview();</script>
+        
+    </body>
+</html>
