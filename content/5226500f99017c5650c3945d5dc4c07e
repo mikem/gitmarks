@@ -1,0 +1,995 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>Tapping into Android's sensors</title>
+<meta http-equiv="PICS-Label" content='(PICS-1.1 "http://www.icra.org/ratingsv02.html" l gen true r (cz 1 lz 1 nz 1 oz 1 vz 1) "http://www.rsac.org/ratingsv01.html" l gen true r (n 0 s 0 v 0 l 0) "http://www.classify.org/safesurf/" l gen true r (SS~~000 1))'/>
+<link rel="schema.DC" href="http://purl.org/DC/elements/1.0/"/>
+<link rel="SHORTCUT ICON" href="http://www.ibm.com/favicon.ico"/>
+<meta name="Owner" content="developerWorks Content/Raleigh/IBM"/>
+<meta name="DC.Language" scheme="rfc1766" content="en"/>
+<meta name="IBM.Country" content="ZZ"/>
+<meta name="Security" content="Public"/>
+<meta name="IBM.SpecialPurpose" content="SP001"/>
+<meta name="IBM.PageAttributes" content="sid=1003"/>
+<meta name="Source" content="v16 Template Generator"/>
+<meta name="Robots" content="index,follow"/>
+<meta name="Abstract" content="Android, a rich platform for application development, has an attractive set of user interface elements and data-management capabilities. Android also offers a healthy array of interfacing options. In this article, learn how to interact with Android's varied sensor options to monitor your environment. Sample code shows you how to record audio on an Android phone. Want to build your own baby monitor? Unlock your phone or a door with your own voice activation? Learn how to leverage the hardware capabilities of an Android-equipped device."/>
+<meta name="Description" content="Android, a rich platform for application development, has an attractive set of user interface elements and data-management capabilities. Android also offers a healthy array of interfacing options. In this article, learn how to interact with Android's varied sensor options to monitor your environment. Sample code shows you how to record audio on an Android phone. Want to build your own baby monitor? Unlock your phone or a door with your own voice activation? Learn how to leverage the hardware capabilities of an Android-equipped device."/>
+<meta name="Keywords" content="Android, open source, sensors, hardware, audio, java, recording, tttosca"/>
+<meta name="DC.Date" scheme="iso8601" content="2009-06-16"/>
+<meta name="DC.Type" scheme="IBM_ContentClassTaxonomy" content="CT316"/>
+<meta name="DC.Subject" scheme="IBM_SubjectTaxonomy" content="TT400"/>
+<meta scheme="IBM_WTMCategory" name="IBM.WTMCategory" content="SOFDCOSRZZ" />
+<meta name="DC.Rights" content="© Copyright IBM Corporation 2009"/>
+<meta name="IBM.Effective" scheme="W3CDTF" content="2009-06-16"/>
+<meta name="title" content="Tapping into Android's sensors"/>
+
+<!-- HEADER_SCRIPTS_AND_CSS_INCLUDE -->
+<link href="//dw1.s81c.com/common/v16/css/all.css" media="all" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/common/v16/css/screen.css" media="screen,projection" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/common/v16/css/screen-uas.css" media="screen,projection" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/common/v16/css/zz/en/screen-fonts.css" media="screen,projection" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/common/v16/css/handheld.css" media="handheld" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/common/v16/css/print.css" media="print" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/common/v16/css/overlay.css" media="screen,projection" rel="stylesheet" title="www" type="text/css"/>
+
+<!-- dW-specific CSS -->
+<link href="//dw1.s81c.com/developerworks/css/dw-screen.css" media="screen,projection" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/developerworks/css/dw-screen-comments-ratings-signin.css" media="screen,projection" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/developerworks/js/jquery/cluetip98/jquery.cluetip.css" media="screen,projection" rel="stylesheet"  title="www" type="text/css" />
+
+<script src="//dw1.s81c.com/common/js/ibmcommon.js" type="text/javascript">//</script>
+<script src="//dw1.s81c.com/common/js/dynamicnav.js" type="text/javascript">//</script>
+
+<!-- dW functional JS -->
+<script language="JavaScript" src="//dw1.s81c.com/developerworks/js/urltactic.js" type="text/javascript"></script>
+<!-- Rating_START -->
+<script language="JavaScript" src="//dw1.s81c.com/developerworks/js/artrating/showrating.js" type="text/javascript"></script>
+<style type="text/css">
+.metavalue {
+  display: none;
+}
+</style>
+<!-- Rating_END --><!-- RESERVED_HEADER_INCLUDE -->
+<script language="javascript" src="//dw1.s81c.com/developerworks/js/ajax1.js" type="text/javascript"></script>
+<script language="javascript" src="//dw1.s81c.com/developerworks/js/search_counter-maverick.js" type="text/javascript"></script>
+<script language="javascript" src="//dw1.s81c.com/developerworks/js/request_referer_capture-maverick.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+ <!--
+ setDefaultQuery('');
+ //-->
+</script>
+<script language="JavaScript" type="text/javascript">
+ <!--
+ function openNewWindow(url,tar,arg){window.open(url,tar,arg);}
+ //-->
+</script>
+<!-- Include file support -->
+<script language="JavaScript" type="text/javascript">
+(function($) {
+	jQuery.extend({
+		getInc: function(u,d){
+			if(u==null)return;
+			jQuery.ajax({
+	    		type: "GET",
+			url: u,
+			dataType: "text",
+	        	success: function(t) {
+				jQuery(d).html(t);
+				ibmCommon.initShowHide(jQuery(d).children()[0]);			
+			},
+			async: true
+			});
+		}
+	});
+})(jQuery);
+</script>
+</head>
+
+<body id="ibm-com">
+<div id="ibm-top" class="ibm-landing-page">
+
+<!-- MASTHEAD_BEGIN -->
+<div class="ibm-access"><a href="#ibm-content">Skip to main content</a></div>
+<div id="ibm-masthead">
+<div id="ibm-logo"><a href="http://www.ibm.com/"><img height="50" src="//dw1.s81c.com/i/v16/t/ibm-logo.gif" width="110" alt="IBM®" /></a></div>
+<ul id="ibm-geo"><li id="ibm-country" class="ibm-first">Country/region</li><li id="ibm-change-country">[ <a href="http://www.ibm.com/developerworks/country/">select</a> ]</li></ul>
+  <form id="ibm-search-form" action="//www.ibm.com/developerworks/search/searchResults.jsp" method="get" name="form1"><input type="hidden" name="searchType" value="1"/><input type="hidden" name="searchSite" value="dW"/><p>
+<span id="ibm-search-scope">
+<label for="sn"><img src="//dw1.s81c.com/i/c.gif" width="1" height="1" alt="Search in:"/></label>
+<select name="searchScope" id="sn">
+<option value="dW" selected="selected">All of dW</option>
+<option value="dW">-----------------</option>
+<option value="aixunix">&nbsp;AIX and UNIX</option>
+<option value="db2">&nbsp;Information Mgmt</option>
+<option value="lotus">&nbsp;Lotus</option>
+<option value="rdd">&nbsp;Rational</option>
+<option value="tivoli">&nbsp;Tivoli</option>  
+<option value="WSDD">&nbsp;WebSphere</option>
+<option value="dW">-----------------</option> 
+<option value="javaZ">&nbsp;Java technology</option> 
+<option value="linuxZ">&nbsp;Linux</option> 
+<option value="opensrcZ">&nbsp;Open source</option>
+<option value="webservZ">&nbsp;SOA/Web services</option>
+<option value="webarchZ">&nbsp;Web development</option>  
+<option value="xmlZ">&nbsp;XML</option>
+<option value="dW">-----------------</option>
+<option value="forums">&nbsp;dW forums</option> 
+<option value="dW">-----------------</option>
+<option value="aI">University</option>
+<option value="dW">-----------------</option>
+<option value="aW">alphaWorks</option>
+<option value="dW">-----------------</option>
+<option value="all">All of IBM</option>
+</select>
+</span>
+
+<label for="q"><img alt="Search for:" height="1" width="1" src="//dw1.s81c.com/i/c.gif" /></label><input type="text" name="query" maxlength="100" id="q"/><input type="submit" id="ibm-search" class="ibm-btn-search" name="Search" value="Search" /></p></form>
+<div id="ibm-site-name">
+<!-- IBM site name container -->
+</div>
+<div id="ibm-universal-nav">
+<ul><li id="ibm-unav-home" class="ibm-first"><a href="http://www.ibm.com/">Home</a></li><li id="ibm-unav-solutions"><a href="http://www.ibm.com/solutions/">Solutions</a></li><li id="ibm-unav-services"><a href="http://www.ibm.com/technologyservices/">Services</a></li><li id="ibm-unav-products"><a href="http://www.ibm.com/products/">Products</a></li><li id="ibm-unav-support"><a href="http://www.ibm.com/support/">Support &amp; downloads</a></li><li id="ibm-unav-myibm"><a href="http://www.ibm.com/account/">My IBM</a></li></ul>
+</div>
+</div>
+<!-- MASTHEAD_END -->
+
+<div id="ibm-pcon">
+
+<!-- CONTENT_BEGIN -->
+<div id="ibm-content">
+
+<!-- Navigation_Trail_BEGIN -->
+<!-- &nbsp; -->
+      <div id="ibm-content-head"><ul id="ibm-navigation-trail"><li class="ibm-first"><a href="http://www.ibm.com/developerworks/">developerWorks</a></li><li><a href="http://www.ibm.com/developerworks/opensource/">Open source</a></li><li><a href="http://www.ibm.com/developerworks/views/opensource/library.jsp">Technical library</a></li></ul></div>
+<!-- Navigation_Trail_END -->
+
+<!-- dW_Summary Area_START -->
+<div id="dw-summary-article">
+
+<div class="dw-content-head">
+<h1>Tapping into Android's sensors</h1><p><em>Monitor your environment from near or far</em></p>
+</div>
+
+<div class="ibm-container-body ibm-two-column">
+
+<div class="ibm-column ibm-first">
+<div class="author"><a class="dwauthor" rel="#authortip1" href="#author1">Frank Ableson</a>, Software designer</div><div id="authortip1" class="dwauthor-onload-state ibm-no-print">Frank Ableson is an entrepreneur and software developer in northern New Jersey, specializing in mobile and embedded application software. He is currently authoring a book about Android application development for Manning Publications. His professional interests are embedded systems, wireless communications, and automotive electronics. His biggest fans are his wife, Nikki, and their children.
+</div>
+<p></p>
+<p><b>Summary:</b>&nbsp; Android, a rich platform for application development, has an attractive
+       set of user interface elements and data-management capabilities.  Android also
+       offers a healthy array of interfacing options. In this article, learn how to
+       interact with Android's varied
+       sensor options to monitor your environment.  Sample code shows you how to record audio on an Android
+       phone.  Want to build your own baby monitor?  Unlock your phone or a door with
+       your own voice activation?  Learn how to leverage the hardware capabilities of an
+       Android-equipped device.</p>
+
+<div id="dw-tag-content" class="ibm-no-print"></div><div id="dw-moretags-access" class="ibm-access"></div>
+<p class="ibm-no-print"><div id="dw-tag-this" class="ibm-no-print"><a class="ibm-external-link" onclick="jQuery.launchTagThisWindow(); return false;" href="#">Tag this!</a></div><div id="interestShow" class="ibm-no-print"></div></p>
+</div>
+
+<div class="ibm-column ibm-second">
+<p class="leading"><b>Date:</b>&nbsp; 16 Jun  2009
+<br /><b>Level: </b>&nbsp;Intermediate
+
+<br /><b>Also available in:&nbsp;</b>
+
+
+&nbsp;<a href="http://www.ibm.com/developerworks/ru/library/os-android-sensor/">Russian</a> 
+&nbsp;<a href="http://www.ibm.com/developerworks/jp/opensource/library/os-android-sensor/">Japanese</a> 
+
+
+
+<br />
+<br /><b>Activity:</b>&nbsp; 64707 views
+<br /><b>Comments:</b> &nbsp; <span id="nCmts"><img alt="" src="//dw1.s81c.com/developerworks/i/circle-preloader.gif" height="12" width="50" /><img alt="" src="//dw1.s81c.com/i/c.gif" height="14" width="1" /></span>
+<!-- Rating_Area_Begin -->
+<div id="art-rating-summary"></div>
+<!-- Rating_Area_End -->
+</p>
+</div>
+
+</div>
+</div>
+<!-- dW_Summary_Area_END -->
+
+<!-- CONTENT_BODY -->
+<div id="ibm-content-body">
+
+<!-- MAIN_COLUMN_BEGIN -->
+<div id="ibm-content-main">
+
+<!-- Related_Searches_Area -->
+<!-- Related_Searches_Area_Begin -->
+<script type="text/javascript" language="javascript">
+	     capture_referrer();
+</script>
+
+<div id="dw-related-searches-article" style="display:none">
+<div class="ibm-container ibm-alternate-two">
+<div class="ibm-container-body">
+
+<!--  START : HTML FOR ARTICLE SEARCH -->
+  <div id="article_results" style="display:block"></div>
+<!--  END : HTML FOR ARTICLE SEARCH -->
+
+</div>
+</div>
+</div>
+<!-- Related_Searches_Area_End -->
+<!-- MAIN_COLUMN_CONTAINER_BEGIN -->
+<div class="ibm-container">
+
+<!-- MAIN_COLUMN_CONTENT_BEGIN -->
+<p><a name="N10067"><span class="atitle">Introduction</span></a></p>
+
+<p>The Android platform is ideal, especially for Java&#8482; developers, for creating innovative
+    applications through the use of hardware sensors. Learn some
+    of the interfacing options available for Android applications, including using the
+    sensor subsystem and recording audio snippets.</p>
+
+<p>What type of applications might you build that would leverage the hardware capabilities
+    of an Android-equipped device?  Anything that needs electronic eyes and ears is a good
+    candidate.  A baby monitor, a security system, or even a seismograph comes to mind. 
+    Though you can't be in two places at once, metaphysically, Android might help bridge
+    that gap in some practical ways.  Throughout this article, keep in mind that
+    the Android device in use is not merely a "cell phone" but perhaps a device deployed in a fixed location with wireless network connectivity, such as EDGE or WiFi. <a href="#download">Download</a> the source files for the examples in this
+    article.</p>
+    
+    <div class="ibm-alternate-rule"><hr/></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="N10079"><span class="atitle">Android sensor capabilities</span></a></p>
+
+<p>One refreshing aspect of working with the Android platform is that you can access some
+    of the "goodies" within the device itself.  Historically, the inability to
+    access the underlying hardware of a device has been frustrating to mobile
+    developers.  Though the Android Java environment
+    still sits between you and the metal, the Android development team brings much of the
+    hardware's capability to the surface.  The platform is open source, so you have the
+    flexibility to roll up your sleeves and write some code to accomplish your tasks. </p>
+ 
+    <p>If it is not already installed, you might want to <a href="http://developer.android.com/sdk/1.5_r1/index.html">download</a>
+     the Android SDK.  You can also <a href="http://developer.android.com/reference/android/hardware/package-summary.html">browse</a>
+     the contents of the android.hardware package and follow along with the examples in
+     this article.    The <a href="http://developer.android.com/reference/android/media/package-summary.html">android.media package</a> contains classes that provide useful and novel functions.  </p>
+    
+    <p>Some of the hardware-oriented features exposed in the Android SDK are described
+        below.</p>
+    
+    <br /><a name="table1"><b>Table 1. Hardware-oriented features exposed in the Android SDK</b></a><br />
+    <table border="0" cellpadding="0" cellspacing="0" class="ibm-data-table" summary="Hardware-oriented features exposed in the Android SDK" width=""><tr><th>Feature</th><th>Description</th></tr><tr><td><code>android.hardware.Camera</code></td><td>A class that enables your application to interact with the camera to snap a photo,
+    acquire images for a preview screen, and modify parameters used to govern how the camera operates.</td></tr><tr><td><code>android.hardware.SensorManager</code></td><td>A class that permits access to the sensors available within the Android platform.  Not
+    every Android-equipped device will support all of the sensors in the <code>SensorManager</code>, though it's exciting to think about the possibilities.
+    (See below for a brief discussion of available sensors.)</td></tr><tr><td><code>android.hardware.SensorListener</code></td><td>An interface implemented by a class that wants to receive updates to sensor values as
+    they change in real time.  An application implements this interface to monitor one or
+    more sensors available in the hardware. For example, the <a href="#download">code</a> in
+    this article contains a class that implements this interface to monitor the
+    orientation of the device and the built-in accelerometer.</td></tr><tr><td><code>android.media.MediaRecorder</code></td><td>A class, used to record media samples, that can be useful for recording
+                audio activity within a specific location (such as a baby nursery).  Audio
+                clippings can also be analyzed for identification purposes in an
+                access-control or security application. For example, it could be helpful
+                to open the door to your time-share with your voice, rather than having to meet with the realtor to get a key.</td></tr><tr><td><code>android.FaceDetector</code></td><td>A class that permits basic recognition of a person's face as
+                contained in a bitmap.  You cannot get much more personal than your face.  Using this
+    as a device lock means no more passwords to remember &#8212; biometrics capability on a cell phone.</td></tr><tr><td>android.os.*</td><td>A package containing several useful classes for interacting with the operating
+    environment, including power management, file watcher, handler, and message classes.
+    Like many portable devices, Android-powered phones can consume a tremendous amount of
+    power.  Keeping a device "awake" at the right time to be in position to monitor an
+    event of interest is a design aspect that deserves attention up front.</td></tr><tr><td><code>java.util.Date</code><br />
+<code>java.util.Timer</code><br />
+<code>java.util.TimerTask</code></td><td>When measuring events in the real world, date and time are often significant.  For
+    example, the <code>java.util.Date</code> class lets you get a time stamp
+    when a particular event or condition is encountered.  You can use <code>java.util.Timer</code> and <code>java.util.TimerTask</code> to
+    perform periodic tasks, or point-in-time tasks, respectively.</td></tr></table>
+    <br />
+
+<p>The android.hardware.SensorManager contains several constants, which represent different aspects of Android's sensor system, including:
+</p><dl>
+<dt><b>Sensor type</b></dt>
+    <dd>Orientation, accelerometer, light, magnetic field, proximity, temperature, etc.</dd>
+    <dt><b>Sampling rate</b></dt>
+    <dd>Fastest, game, normal, user interface.  When an
+        application requests a specific sampling rate, it is really only a hint, or
+        suggestion, to the sensor subsystem.  There is no guarantee of a particular rate being available.</dd>
+    <dt><b>Accuracy</b></dt>
+   <dd> High, low, medium, unreliable.</dd>
+</dl>
+    <p> The <code>SensorListener</code> interface is central to sensor
+        applications.  It includes two required methods:</p>
+
+<ul>
+<li>The <code>onSensorChanged(int sensor,float values[])</code> method is
+    invoked whenever a sensor value has changed.  The method is invoked only for sensors being monitored by this application (more on this below).  The arguments to the method include an integer that identifies the sensor that changed, along with an array of float values representing the sensor data itself. Some sensors provide only a single data value, while others provide three float values.  The orientation and accelerometer sensors each provide three data values.</li>
+    <li>The <code>onAccuracyChanged(int sensor,int accuracy)</code> method
+        is invoked when the accuracy of a sensor has been changed.  The arguments are two
+        integers: One represents the sensor, and the other represents the new accuracy value for that sensor.</li>
+</ul>
+
+<p>To interact with a sensor, an application must register to listen for activity
+    related to one or more sensors.  Registering takes place with the
+    <code>registerListener</code> method of the <code>SensorManager</code> class.  The <a href="#list1">code example</a> in this article demonstrates how an application registers and unregisters a <code>SensorListener</code>.</p>
+
+<p>Remember, not every Android-equipped device supports any or all of the sensors defined
+    in the SDK.  Your application should degrade gracefully if a particular sensor is not available on a specific device.</p>
+
+<div class="ibm-alternate-rule"><hr/></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="N10160"><span class="atitle">Sensor example</span></a></p>
+
+<p>The sample application simply monitors changes to the orientation and accelerometer
+    sensors (see <a href="#download">Download</a> for the source code). When changes are received, the sensor values are displayed on the screen in <code>TextView</code> widgets.  Figure 1 shows the application in action.</p> 
+ 
+
+<br /><a name="N10173"><b>Figure 1.  Monitoring acceleration and orientation</b></a><br />
+<img alt="Monitoring acceleration and orientation" height="480" src="fig01.jpg" width="320"/>
+<br />
+    <br />
+
+<p>The application was created using the Eclipse environment with the Android Developer
+    Tools plug-in. (For more information about developing Android applications with Eclipse,
+    see <a href="#resources">Resources</a>.) Listing 1 shows the code for this application.</p>
+
+<br /><a name="list1"><b>Listing 1. IBMEyes.java</b></a><br /><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">
+
+package com.msi.ibm.eyes;
+import android.app.Activity;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.TextView;
+import android.hardware.SensorManager;
+import android.hardware.SensorListener;
+public class IBMEyes extends Activity implements SensorListener {
+    final String tag = "IBMEyes";
+    SensorManager sm = null;
+    TextView xViewA = null;
+    TextView yViewA = null;
+    TextView zViewA = null;
+    TextView xViewO = null;
+    TextView yViewO = null;
+    TextView zViewO = null;
+
+    /** Called when the activity is first created. */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+       // get reference to SensorManager
+        sm = (SensorManager) getSystemService(SENSOR_SERVICE);
+        setContentView(R.layout.main);
+        xViewA = (TextView) findViewById(R.id.xbox);
+        yViewA = (TextView) findViewById(R.id.ybox);
+        zViewA = (TextView) findViewById(R.id.zbox);
+        xViewO = (TextView) findViewById(R.id.xboxo);
+        yViewO = (TextView) findViewById(R.id.yboxo);
+        zViewO = (TextView) findViewById(R.id.zboxo);
+    }
+    public void onSensorChanged(int sensor, float[] values) {
+        synchronized (this) {
+            Log.d(tag, "onSensorChanged: " + sensor + ", x: " + 
+values[0] + ", y: " + values[1] + ", z: " + values[2]);
+            if (sensor == SensorManager.SENSOR_ORIENTATION) {
+                xViewO.setText("Orientation X: " + values[0]);
+                yViewO.setText("Orientation Y: " + values[1]);
+                zViewO.setText("Orientation Z: " + values[2]);
+            }
+            if (sensor == SensorManager.SENSOR_ACCELEROMETER) {
+                xViewA.setText("Accel X: " + values[0]);
+                yViewA.setText("Accel Y: " + values[1]);
+                zViewA.setText("Accel Z: " + values[2]);
+            }            
+        }
+    }
+    
+    public void onAccuracyChanged(int sensor, int accuracy) {
+    	Log.d(tag,"onAccuracyChanged: " + sensor + ", accuracy: " + accuracy);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+      // register this class as a listener for the orientation and accelerometer sensors
+        sm.registerListener(this, 
+                SensorManager.SENSOR_ORIENTATION |SensorManager.SENSOR_ACCELEROMETER,
+                SensorManager.SENSOR_DELAY_NORMAL);
+    }
+    
+    @Override
+    protected void onStop() {
+        // unregister listener
+        sm.unregisterListener(this);
+        super.onStop();
+    }    
+}
+</pre></td></tr></table><br />
+
+<p>The application was written as a normal activity-based application because it is simply updating the screen with data obtained from the sensors.  In an application where the device may be performing other activities in the foreground, constructing an application as a service would be more appropriate.</p>
+
+<p>The <code>onCreate</code> method of the activity gets a reference to the
+    <code>SensorManager</code>, where all sensor-related functions take
+    place.  The <code>onCreate</code> method also establishes references to
+    the six <code>TextView</code> widgets you'll need to update with sensor data values.</p>
+
+<p>The <code>onResume()</code> method uses the reference to the <code>SensorManager</code> to register for sensor updates from the <code>registerListener</code> method:</p>
+    
+    <ul>
+        <li>The first parameter is an instance of a
+    class that implements the <code>SensorListener</code> interface. </li>
+       <li> The second parameter is a bitmask of the desired sensors.  In this case, the application
+           is requesting data from <code>SENSOR_ORIENTATION</code> and <code>SENSOR_ACCELEROMETER</code>. </li> 
+    <li>The third
+    parameter is a hint for the system to indicate how quickly the application requires
+    updates to the sensor values.</li>
+    </ul>
+    
+    <p>When the application (activity) is paused, you want to
+    unregister the listener so you no longer receive sensor updates.  This is accomplished
+    with the <code>unregisterListener</code> method of the <code>SensorManager</code>.  The only parameter is the instance of the <code>SensorListener</code>.</p>
+    
+    <p>In both the <code>registerListener</code> and <code>unregisterListener</code> method calls, the application uses the keyword
+        <code>this</code>.  Note the <code>implements</code>
+        keyword in the class definition where it's declared that this class implements the
+        <code>SensorListener</code> interface. That is why you pass this to <code>registerListener</code> and <code>unregisterListener</code>.</p>
+
+<p>A <code>SensorListener</code> must implement the two methods <code>onSensorChange</code> and <code>onAccuracyChanged</code>.  The
+    example application is really not concerned with the accuracy of the sensors, but rather the current X, Y, and Z values of the sensors.   The <code>onAccuracyChanged</code> method is essentially doing nothing; it just adds a log entry each time it is invoked.</p>
+
+<p>It seems that the <code>onSensorChanged</code> method is invoked
+    constantly, as the accelerometer and orientation sensors are rapidly sending data. 
+    Take a look at the first parameter to determine which sensor is sending data.  Once
+    the sending sensor is identified, the appropriate UI elements are updated
+    with data contained in the array of float values passed as the second
+    argument to the method.  While the example is simply displaying those values, in more
+    sophisticated applications, the values would be analyzed, compared to previous values,
+    or put through some sort of pattern recognition algorithm to determine what the user (or outside environment) is doing.</p>
+
+<p>Now that you've examined the sensor subsystem, the next section reviews a code sample
+    that records some audio on an Android phone.  The sample was run on the DEV1 development device.</p>
+
+<div class="ibm-alternate-rule"><hr/></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="N1021A"><span class="atitle">Using the MediaRecorder</span></a></p>
+
+<p>The android.media package contains classes to interact with the media subsystem.  The
+    <code>android.media.MediaRecorder</code> class is used to take samples
+    of media, including audio and video.  The <code>MediaRecorder</code>
+    operates as a state machine.  You need to set various parameters, such as source device and format.  Once set, the recording may begin for an arbitrary amount of time until subsequently stopped.</p>
+
+<p>Listing 2 contains code for recording audio on an Android device.  The code shown does
+    not include the UI elements of the application (see <a href="#download">download</a> for the full source code).</p>
+
+<br /><a name="N10236"><b>Listing 2. Recording an audio snippet</b></a><br /><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">
+
+MediaRecorder mrec ;
+File audiofile = null;
+private static final String TAG="SoundRecordingDemo";
+protected void startRecording() throws IOException 
+{
+   mrec.setAudioSource(MediaRecorder.AudioSource.MIC);
+   mrec.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+   mrec.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+   if (mSampleFile == null) 
+   {
+       File sampleDir = Environment.getExternalStorageDirectory();
+       try 
+       { 
+          audiofile = File.createTempFile("ibm", ".3gp", sampleDir);
+       }
+       catch (IOException e) 
+       {
+           Log.e(TAG,"sdcard access error");
+           return;
+       }
+   }
+   mrec.setOutputFile(audiofile.getAbsolutePath());
+   mrec.prepare();
+   mrec.start();
+}
+protected void stopRecording() 
+{
+   mrec.stop();
+   mrec.release();
+   processaudiofile(audiofile.getAbsolutePath());
+}
+protected void processaudiofile() 
+{
+   ContentValues values = new ContentValues(3);
+   long current = System.currentTimeMillis();
+   values.put(MediaStore.Audio.Media.TITLE, "audio" + audiofile.getName());
+   values.put(MediaStore.Audio.Media.DATE_ADDED, (int) (current / 1000));
+   values.put(MediaStore.Audio.Media.MIME_TYPE, "audio/3gpp");
+   values.put(MediaStore.Audio.Media.DATA, audiofile.getAbsolutePath());
+   ContentResolver contentResolver = getContentResolver();
+   
+   Uri base = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+   Uri newUri = contentResolver.insert(base, values);
+   
+   sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, newUri));
+}
+</pre></td></tr></table><br />
+
+<p>In the <code>startRecording</code> method, an instance of a <code>MediaRecorder</code> is instantiated and initialized:</p>
+
+<ul>
+<li>The input source is set to the microphone (<code>MIC</code>).</li>
+<li>The output format is set to 3GPP (*.3gp files), which is a media format geared toward mobile devices.</li>
+<li>The encoder is set to the <code>AMR_NB</code>, which is an audio format,
+    sampling at 8 KHz.  The NB is for narrow band.  The <a href="#resources">SDK documentation</a> explains the different data formats and the available encoders. </li>
+</ul>
+
+<p>The audio file is stored on the storage card, rather than in internal memory.  <code>External.getExternalStorageDirectory()</code> returns the name of the
+    storage card location, and a temporary file name is created in that directory.  This
+    file is then associated with the <code>MediaRecorder</code> instance by
+    a call to the <code>setOutputFile</code> method.  The audio data will be stored in this file.</p>
+
+<p>The <code>prepare</code> method is invoked to finalize the initialization
+    of the <code>MediaRecorder</code>.  When you're ready to commence the
+    recording process, the <code>start</code> method is called.  Recording
+    takes place to the file on the storage card until the <code>stop</code> method is invoked.  The release method frees resources allocated to the <code>MediaRecorder</code> instance.</p>
+
+<p>Once the audio sample has been taken, there are a few actions that can take place:</p>
+
+<ul>
+<li>Add the audio to the media library on the device.</li>
+<li>Perform some pattern recognition steps to identify the sound:
+<ul><li>Is this the baby crying?</li>
+<li>Is this the owner's voice, and should we unlock the phone?</li>
+<li>Is this the "open-sesame" phrase that unlocks the door to the secret entrance?</li></ul></li>
+<li>Automatically upload the audio file to a network location for processing.</li>
+</ul>
+
+<p>In the code sample, the <code>processaudiofile</code> method adds the
+    audio to the media library.  An <code>Intent</code> is used to notify the on-device media application that new content is available.</p>  
+
+<p>One final note about this snippet of code:  If you try it, it won't record the audio at
+first.  You will see a file created, but there will be no audio.  You need to add a permission to the AndroidManifest.xml file:</p>
+    
+<table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">
+&lt;uses-permission android:name="android.permission.RECORD_AUDIO"&gt;&lt;/uses-permission&gt;</pre></td></tr></table><br />
+
+<p>At this point, you've learned a bit about interacting with Android sensors and recording
+    audio.  The next section takes a broader view of application architecture related to data gathering and reporting systems.</p>
+
+<div class="ibm-alternate-rule"><hr/></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="N102B2"><span class="atitle">Android as a sensor platform</span></a></p>
+
+<p>The Android platform boasts a healthy variety of sensor options for monitoring the
+    environment.  With this array of input or stimulus options, coupled with capable computational and networking functions, Android becomes an attractive platform for building real-world systems. Figure 2 shows a simplistic view of the relationship between inputs, application logic, and notification methods or outputs.  </p>
+ 
+
+<br /><a name="N102BD"><b>Figure 2. Block diagram for an Android-centric sensor system</b></a><br />
+<img alt="Block diagram for an Android-centric sensor system" height="153" src="fig02.gif" width="351"/>
+<br />
+    <br />
+
+<p>This architecture is flexible; application logic can be split between the local Android
+    device and a server-side resource that can tap into larger databases and computing
+    power.  For example, an audio track recorded on the local Android device can be
+    <code>POST</code>ed to a Web server where the data is compared against a database of voice
+    patterns.  This is clearly just scratching the surface of the possibilities. 
+    Hopefully you're motivated to dig deeper into bringing Android to platforms beyond mobile phones.</p>
+
+<div class="ibm-alternate-rule"><hr/></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="N102D2"><span class="atitle">Summary</span></a></p>
+
+<p>In this article, you got an introduction to Android sensors.  Sample applications
+    measured orientation and acceleration, and interacted with the recording capabilities
+    using the <code>MediaRecorder</code> class.  Android is a flexible,
+    attractive platform for building real-world systems.  The Android space is maturing
+    rapidly, and it is going places.  Be sure to keep an eye on this platform. </p>
+
+
+<!-- CMA ID: 395918 --> <!-- Site ID: 1 --><!--XSLT stylesheet used to transform this file: dw-document-html-6.0.xsl-->
+<br /><div class="ibm-alternate-rule"><hr/></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><span class="atitle"><a name="download">Downloads</a></span></p><table width="100%" class="ibm-data-table" cellspacing="0" cellpadding="0" border="0"><tr><th scope="col">Description</th><th scope="col">Name</th><th scope="col">Size</th><th scope="col">Download method</th></tr><tr><td class="tb-row" scope="row">The Eyes source code</td><td nowrap="nowrap">os-android-sensorEyes.zip</td><td nowrap="nowrap">28KB</td><td nowrap="nowrap"><a class="fbox" href="http://www.ibm.com/developerworks/apps/download/index.jsp?contentid=395918&amp;filename=os-android-sensorEyes.zip&amp;method=http&amp;locale=worldwide">
+                    
+                    HTTP
+                    </a></td></tr><tr><td class="tb-row" scope="row">IBMAudio source code</td><td nowrap="nowrap">os-android-sensorIBMAudio.zip</td><td nowrap="nowrap">33KB</td><td nowrap="nowrap"><a class="fbox" href="http://www.ibm.com/developerworks/apps/download/index.jsp?contentid=395918&amp;filename=os-android-sensorIBMAudio.zip&amp;method=http&amp;locale=worldwide">
+                    
+                    HTTP
+                    </a></td></tr></table><p><a href="/developerworks/library/whichmethod.html" class="ibm-forward-link">Information about download methods</a></p><br />
+<p><a name="resources"><span class="atitle">Resources</span></a></p><p><b>Learn</b></p><ul><li>
+        The <a href="http://developer.android.com">Android developers site</a> 
+        offers documentation, downloads, blogs, and more. <br /><br /></li><li> 
+        Read about Android's sponsor, 
+        <a href="http://www.openhandsetalliance.com/">Open Handset Alliance</a>, a group of 47 technology and mobile companies who have come together to accelerate innovation in mobile and offer consumers a richer, less expensive, and better mobile experience. 
+    <br /><br /></li><li>
+        <a href="http://manning.com/ableson">Dive deeper</a> with a look at
+        Unlocking Android. <br /><br /></li><li>
+        Learn more about the 
+        <a href="http://en.wikipedia.org/wiki/Dalvik_virtual_machine">Dalvik Virtual Machine</a>. 
+    <br /><br /></li><li>
+        Check out the 
+        <a href="http://video.google.com/videosearch?q=dalvik+virtual+machine&amp;oe=utf-8&amp;rls=org.mozilla:en-US:official&amp;client=firefox-a&amp;um=1&amp;ie=UTF-8&amp;ei=-oXGSYqzF9XDtweCkZnJCg&amp;sa=X&amp;oi=video_result_group&amp;resnum=4&amp;ct=title#">tutorials</a> 
+        hosted on YouTube that discuss the internals of the Dalvik VM. 
+    <br /><br /></li><li>
+        <a href="http://manning.com/ableson">
+            <i>Unlocking Android: A Developer's Guide</i></a> provides concise, hands-on instruction for the Android operating system and development tools. <br /><br /></li><li>
+        To listen to interesting interviews and discussions for software developers, check out <a href="http://www.ibm.com/developerworks/podcast/" onmouseover="linkQueryAppend(this)">developerWorks  podcasts</a>.<br /><br /></li><li>
+        Stay current with developerWorks' <a href="http://www.ibm.com/developerworks/offers/techbriefings/" onmouseover="linkQueryAppend(this)">Technical events and webcasts</a>.<br /><br /></li><li> 
+        Follow <a href="http://twitter.com/developerworks">developerWorks on Twitter</a>.<br /><br /></li><li>
+        Check out upcoming conferences, trade shows, webcasts, and other <a href="http://www.ibm.com/developerworks/views/opensource/events.jsp" onmouseover="linkQueryAppend(this)">Events</a> around the world that are of interest to IBM open source developers.<br /><br /></li><li>
+        Visit the developerWorks <a href="http://www.ibm.com/developerworks/opensource" onmouseover="linkQueryAppend(this)">Open source zone</a> for extensive how-to information, tools, and project updates to help you develop with open source technologies and use them with IBM's products.<br /><br /></li><li>
+        Watch and learn about IBM and open source technologies and product functions with the no-cost <a href="http://www.ibm.com/developerworks/offers/lp/demos/" onmouseover="linkQueryAppend(this)">developerWorks On demand demos</a>.<br /><br /></li></ul><p><b>Get products and technologies</b></p><ul><li>
+        <a href="http://developer.android.com">Download</a> the Android SDK. <br /><br /></li><li>
+        <a href="http://eclipse.org">Download</a> the latest Eclipse IDE. <br /><br /></li><li>
+        Innovate your next open source development project with <a href="http://www.ibm.com/developerworks/downloads/" onmouseover="linkQueryAppend(this)">IBM trial software</a>, available for download or on DVD.<br /><br /></li><li> Download
+        <a href="http://www.ibm.com/developerworks/downloads/" onmouseover="linkQueryAppend(this)">IBM product evaluation versions</a>
+        or <a href="http://www.ibm.com/developerworks/downloads/soasandbox/" onmouseover="linkQueryAppend(this)">explore 
+            the online trials in the IBM SOA Sandbox</a> and get your hands on application development tools and middleware products from
+        DB2&#174;, Lotus&#174;, Rational&#174;, Tivoli&#174;, and WebSphere&#174;.<br /><br /></li></ul><p><b>Discuss</b></p><ul><li>
+        Participate in <a href="http://www.ibm.com/developerworks/blogs" onmouseover="linkQueryAppend(this)">developerWorks blogs</a> and get involved in the developerWorks community.<br /><br /></li></ul>
+<p><a name="author"><span class="atitle">About the author</span></a></p><div class="ibm-container ibm-portrait-module ibm-alternate-two"><div class="ibm-container-body"><p><a name="author1"></a>Frank Ableson is an entrepreneur and software developer in northern New Jersey, specializing in mobile and embedded application software. He is currently authoring a book about Android application development for Manning Publications. His professional interests are embedded systems, wireless communications, and automotive electronics. His biggest fans are his wife, Nikki, and their children.
+</p></div></div>
+<!-- MAIN_COLUMN_CONTENT_END -->
+
+<!-- OVERLAYS_START -->
+<!-- Report_Abuse_Start -->
+<div class="ibm-common-overlay ibm-no-print" id="reportabuseoverlay">
+   <div class="ibm-head"><p><a class="ibm-common-overlay-close" href="#">Close [x]</a></p></div>
+   <div class="ibm-body">
+      <div class="ibm-main">
+         <a class="ibm-access" name="reportabuseoverlay">Report abuse help</a>   
+         <div class="ibm-title"><h1>Report abuse</h1></div>
+         <div class="ibm-container ibm-alternate">
+            <p><strong>Thank you.</strong>  This entry has been flagged for moderator attention.</p>
+            <div class="ibm-overlay-rule"><hr /></div>
+            <div class="ibm-buttons-row">
+               <input type="button" onclick="ibmCommon.Overlays.hide('reportabuseoverlay');return false;" class="ibm-btn-cancel-sec dw-btn-cancel-sec" name="ibm-cancel" value="Close" />
+            </div>
+         </div>
+      </div> 
+   </div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Report_Abuse_Error_Start -->
+<div class="ibm-common-overlay ibm-no-print" id="reportabuseoverlayerror">
+   <div class="ibm-head"><p><a class="ibm-common-overlay-close" href="#">Close [x]</a></p></div>
+   <div class="ibm-body">
+      <div class="ibm-main">
+         <a class="ibm-access" name="reportabuseoverlayerror">Report abuse help</a>   
+         <div class="ibm-title"><h1>Report abuse</h1></div>
+         <div class="ibm-container ibm-alternate">
+            <p class="ibm-ind-error"><strong>Report abuse submission failed.  Please try again later.</strong></p>
+            <div class="ibm-overlay-rule"><hr /></div>
+            <div class="ibm-buttons-row">
+               <input type="button" onclick="ibmCommon.Overlays.hide('reportabuseoverlayerror');return false;" class="ibm-btn-cancel-sec dw-btn-cancel-sec" name="ibm-cancel" value="Close" />
+            </div>
+         </div>
+      </div> 
+   </div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Sign in OVERLAY STARTS HERE --> 
+<div id="fdiv"></div>
+<div class="ibm-common-overlay" id="signin_overlay">
+<div class="ibm-head">
+<p><a class="ibm-common-overlay-close" href="#" onclick="clearForm();">Close [x]</a></p>
+</div>
+<div class="ibm-body">
+<div class="ibm-main">
+<div class="ibm-title ibm-subtitle">
+<h1>developerWorks: Sign in</h1>
+<div id="ibm-overlay-error-signin" class="no-display"></div>
+</div>
+
+<div class="ibm-container ibm-alternate ibm-buttons-last">
+<div class="ibm-container-body">
+<p class="ibm-overlay-intro">If you do not have an IBM ID and password, <a href="#" onclick="(function () {window.location='/developerworks/dwwi/DWAuthRouter?m=reg&amp;d='+encodeURIComponent(location.href);})();">register here</a>.</p>
+<form class="ibm-column-form" id="sFormId" action="" method="post" name="sForm" onsubmit="return false;">
+<p><label for="ibmid">IBM ID:</label><span><input name="ibm-id" id="ibmid" size="25" value="" class="required" type="text" onkeypress="handleEP(event,this.form);" /><br /><a class="ibm-forward-link" href="/developerworks/dwwi/jsp/WSHelp.jsp?lang=en_US">Forgot your IBM ID?</a></span>   
+</p> 
+<p><label for="password">Password:</label><span><input name="password" id="password" size="25" value="" class="required" type="password" onkeypress="handleEP(event,this.form);" /><br /><a class="ibm-forward-link" href="#" onclick="(function () {window.location='https://www.ibm.com/account/profile?page=forgot&amp;lang=en_US&amp;appname=ibm&amp;required=null&amp;d='+encodeURIComponent(getAuthUrl())+'%3Fm%3Dloginpage%26lang%3Den_US%26d%3D'+encodeURIComponent(location.href);})();">Forgot your password?</a><br /><a class="ibm-forward-link" href="#" onclick="(function () {window.location='https://www.ibm.com/account/profile?page=chpw&amp;lang=en_US&amp;appname=ibm&amp;required=null&amp;d='+encodeURIComponent(location.href);})();">Change your password?</a></span></p> 
+<p class="no-bottom-padding"> 
+   <label for="AfterSignIn">After sign in:</label> 
+   <span>
+
+      <select name="SignInAction" id="AfterSignIn">
+          <option value="">Stay on the current page</option>
+          <option value="/developerworks/mydeveloperworks/profiles/html/myProfileView.do">Go to My developerWorks profile</option>
+          <option value="/developerworks/mydeveloperworks/homepage/">Go to My developerWorks homepage</option>
+      </select>
+   </span>
+</p>
+<div class="ibm-overlay-rule"><hr /></div>
+<p>By clicking <strong>Submit</strong>, you agree to the developerWorks <a href="/developerworks/mydeveloperworks/terms?lang=en">terms of use</a>.</p>
+<div class="ibm-buttons-row">
+   <p><input class="ibm-btn-arrow-pri" name="ibm-submit" value="Submit" onclick="signin();return false;" type="button" /><span class="ibm-sep">&nbsp;</span>
+<input value="Cancel" type="button" name="ibm-cancel" class="ibm-btn-cancel-sec" onclick="clearForm();ibmCommon.Overlays.hide('signin_overlay');return false;"/></p>
+</div>
+</form>
+<div class="ibm-overlay-rule"><hr /></div>
+<p>The first time you sign into developerWorks, a My developerWorks profile is created for you. This profile includes the first name, last name, and display name contained in the profile you created when you registered with My developerWorks. Selected information in your My developerWorks profile is displayed to the public, but you may edit the information at any time. Your first name, last name (unless you choose to hide them), and display name will accompany the content that you post. </p>
+<div class="dw-overlay-legal"><p>All information submitted is secure.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Sign in OVERLAY ENDS HERE --> 
+ 
+
+<!-- Display name OVERLAY STARTS HERE --> 
+<div class="ibm-common-overlay" id="displayname_overlay">
+<div class="ibm-head">
+<p><a class="ibm-common-overlay-close" href="#" onclick="clearForm();">Close [x]</a></p>
+</div>
+<div class="ibm-body">
+<div class="ibm-main">
+<div class="ibm-title ibm-subtitle">
+<h1>Choose your display name</h1>
+<div id="ibm-overlay-error-dname" class="no-display"></div>
+</div>
+<div class="ibm-container ibm-alternate ibm-buttons-last">
+<div class="ibm-container-body">
+<p class="ibm-overlay-intro">The first time you sign in to developerWorks a profile is created for you, so you need to choose a display name.  Your display name accompanies the content you post on developerWorks.</p>
+
+<form id="dFormId" method="post" action="" name="dForm" onsubmit="return false;" class="ibm-column-form">
+<p><label for="displayname">Display name:</label><span><input name="displayname" id="displayname" size="25" value="" type="text" onkeypress="handleEP(event,this.form);" /></span><span class="ibm-form-note">(Must be between 3 &ndash; 31 characters.)</span>
+</p>
+<p><strong>Note:</strong>  Please choose a display name between 3-31 characters. Your display name must be unique in the developerWorks community and should not be your email for privacy reasons.</p>
+<div class="ibm-overlay-rule"><hr />
+</div>
+<p>By clicking Submit, you agree to the developerWorks <a href="/developerworks/mydeveloperworks/terms?lang=en">terms of use</a>.</p>
+<div class="ibm-buttons-row">
+   <p><input class="ibm-btn-arrow-pri" name="ibm-submit" value="Submit" onclick="signin();return false;" type="button" /><span class="ibm-sep">&nbsp;</span>
+<input value="Cancel" type="button" name="ibm-cancel" class="ibm-btn-cancel-sec" onclick="clearForm();ibmCommon.Overlays.hide('displayname_overlay');return false;" /></p>
+</div>
+</form>
+<div class="ibm-overlay-rule"><hr /></div>
+<div class="dw-overlay-legal"><p>All information submitted is secure.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Display name OVERLAY ENDS HERE -->
+<!-- OVERLAYS_END -->
+
+<!-- RATINGS START -->
+<p class="ibm-no-print"><span class="atitle"><a name="iratings">Rate this article</a></span></p>
+<input id="art-rating" name="ratinga" type="hidden" value="0"/><div id="art-rating-module"></div>
+<script language="JavaScript" type="text/javascript">
+// <![CDATA[
+   // widget div id and article id as args
+   window.artRating.init('art-rating-module','art-rating-summary');
+// ]]>
+</script>
+<!-- RATINGS END -->
+
+<!-- INLINE_COMMENTS_START -->
+<p class="ibm-no-print"><span class="atitle"><a name="icomments">Comments</a></span></p>
+<script language="JavaScript" src="//dw1.s81c.com/developerworks/js/showcomments.js" type="text/javascript">//</script>
+<div id="threadShow"></div>
+<script language="JavaScript" type="text/javascript">
+// <![CDATA[
+ jQuery('threadShow').showComments('95%',5,'nCmts','icomments');
+// ]]>
+</script>
+<!-- INLINE_COMMENTS_END -->
+
+<p class="ibm-ind-link ibm-back-to-top"><a class="ibm-anchor-up-link" href="#ibm-pcon">Back to top</a></p>
+<p><a href="http://www.ibm.com/developerworks/ibm/trademarks/">Trademarks</a> &nbsp;|&nbsp; <a href="https://www.ibm.com/developerworks/mydeveloperworks/terms/">My developerWorks terms and conditions</a></p>
+
+<!-- Overlays -->
+<!-- Zone/Leaf_Interest_Overlay_Start -->
+<div class="ibm-common-overlay ibm-no-print" id="dwmyinterestadd">
+<div class="ibm-head"><p><a class="ibm-common-overlay-close" href="#close">Close [x]</a></p></div>
+<div class="ibm-body">
+<div class="ibm-main">
+<a class="ibm-access" name="dwmyinterestaddhelp">Help: Update or add to My dW interests</a>   
+<div class="ibm-title"><h1>What's this?</h1></div>
+<div class="ibm-container ibm-alternate">
+<p>This little timesaver lets you update your My developerWorks profile with just one click!  The general subject of this content (AIX and UNIX, Information Management, Lotus, Rational, Tivoli, WebSphere, Java, Linux, Open source, SOA and Web services, Web development, or XML) will be added to the interests section of your profile, if it's not there already.  You only need to be logged in to My developerWorks.</p>
+<p>And what's the point of adding your interests to your profile?  That's how you find other users with the same interests as yours, and see what they're reading and contributing to the community.  Your interests also help us recommend relevant developerWorks content to you.</p>
+<p><a href="https://www.ibm.com/developerworks/mydeveloperworks/profiles/home.do?lang=en">View your My developerWorks profile</a></p>
+<p class="ibm-access"><a href="#interestShow">Return from help</a></p>
+</div> 
+</div>
+</div>
+<div class="ibm-footer"></div>
+</div>
+
+<div class="ibm-common-overlay ibm-no-print" id="dwmyinterestremove">
+<div class="ibm-head"><p><a class="ibm-common-overlay-close" href="#close">Close [x]</a></p></div>
+<div class="ibm-body">
+<div class="ibm-main">
+<a class="ibm-access" name="dwmyinterestremovehelp">Help: Remove from My dW interests</a> 
+<div class="ibm-title"><h1>What's this?</h1></div>
+<div class="ibm-container ibm-alternate">
+<p>Removing this interest does not alter your profile, but rather removes this piece of content from a list of all content for which you've indicated interest.  In a future enhancement to My developerWorks, you'll be able to see a record of that content.</p>
+<p><a href="https://www.ibm.com/developerworks/mydeveloperworks/profiles/home.do?lang=en">View your My developerWorks profile</a></p>
+<p class="ibm-access"><a href="#interestShow">Return from help</a></p>
+</div> 
+</div>
+</div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Zone/Leaf_Interest_Overlay_End --></div>
+<!-- MAIN_COLUMN_CONTAINER_END -->
+
+<!-- Rating_Meta_BEGIN -->
+<!--Rating_Meta_BEGIN--><div class="metavalue">static.content.url=http://www.ibm.com/developerworks/js/artrating/</div><div class="metavalue">SITE_ID=1</div><div class="metavalue">Zone=Open source</div><div class="metavalue">ArticleID=395918</div><div class="metavalue">ArticleTitle=Tapping into Android's sensors</div><div class="metavalue">publish-date=06162009</div><div class="metavalue">author1-email=fableson@msiservices.com</div><div class="metavalue">author1-email-cc=</div><script language="javascript" type="text/javascript">document.write('<div class="metavalue">url='+location.href.replace('<', '%3C')+'</div>');</script><!--Rating_Meta_END-->
+<!-- Rating_Meta_END -->
+
+</div>
+<!-- MAIN_COLUMN_END-->
+
+<!-- RIGHT_COLUMN_BEGIN -->
+<div id="ibm-content-sidebar">
+<div id="ibm-social-tools-sidebar" class="ibm-share-this"></div>
+
+<!-- RIGHT_COLUMN_CONTENT_BEGIN --> 
+<div class="ibm-container"><h2>Table of contents</h2><div class="ibm-container-body"><img alt="" height="1" width="1" src="//www.ibm.com/i/c.gif"/><ul class="ibm-bullet-list"><li><a class="ibm-feature-link" href="#N10067">Introduction</a></li><li><a class="ibm-feature-link" href="#N10079">Android sensor capabilities</a></li><li><a class="ibm-feature-link" href="#N10160">Sensor example</a></li><li><a class="ibm-feature-link" href="#N1021A">Using the MediaRecorder</a></li><li><a class="ibm-feature-link" href="#N102B2">Android as a sensor platform</a></li><li><a class="ibm-feature-link" href="#N102D2">Summary</a></li><li><a class="ibm-feature-link" href="#download">Downloads</a></li><li><a class="ibm-feature-link" href="#resources">Resources</a></li><li><a class="ibm-feature-link" href="#author">About the author</a></li><li><a class="ibm-feature-link" href="#icomments">Comments</a></li></ul></div></div>
+<!--XSLT stylesheet used to transform this content: s-danube.xsl--><div class="ibm-container"><h2>Local resources</h2><div class="ibm-container-body"><img src="//www.ibm.com/developerworks/i/spot-danube.jpg" alt="" border="0" height="58" width="188"/><ul class="ibm-bullet-list"><li><a href="http://www.ibm.com/developerworks/cn/?S_TACT=105AGY81&amp;S_CMP=danube_as_as" class="ibm-feature-link">developerWorks 中国</a></li><li><a href="http://www.ibm.com/developerworks/jp/?S_TACT=105AGY81&amp;S_CMP=danube_as_as" class="ibm-feature-link">developerWorks Japan</a></li><li><a href="http://www.ibm.com/developerworks/kr/?S_TACT=105AGY81&amp;S_CMP=danube_as_as" class="ibm-feature-link">developerWorks 한국</a></li><li><a href="http://www.ibm.com/developerworks/vn/?S_TACT=105AGY81&amp;S_CMP=danube_as_as" class="ibm-feature-link">developerWorks Vietnam</a></li><li><a href="http://www.ibm.com/developerworks/views/global/techbriefing.jsp?end_no=100&amp;lcl_sort_order=desc&amp;sort_order=asc&amp;expand=&amp;start_no=1&amp;show_all=false&amp;geo_by=Asia+Pacific&amp;sort_by=Date&amp;search_by=&amp;topic_by=All+Topics&amp;show_abstract=true?S_TACT=105AGY81&amp;S_CMP=danube_as_as" class="ibm-feature-link">Technical Briefings in Asia</a></li></ul></div></div>
+<!--XSLT stylesheet used to transform this content: s-community.xsl--><div class="ibm-container"><h2>My developerWorks community</h2><div class="ibm-container-body"><p>Interact, share, and communicate with developers worldwide.</p><div class="ibm-rule"><hr/></div><ul class="ibm-bullet-list"><li><a href="https://www.ibm.com/developerworks/mydeveloperworks/homepage/web/getuserpref?ca=dma-" class="ibm-feature-link">My Home</a></li><li><a href="https://www.ibm.com/developerworks/mydeveloperworks/profiles/home.do?lang=en&amp;ca=dma-" class="ibm-feature-link">Profiles</a></li><li><a href="https://www.ibm.com/developerworks/mydeveloperworks/groups/service/html/allcommunities?ca=dma-" class="ibm-feature-link">Groups</a></li><li><a href="https://www.ibm.com/developerworks/mydeveloperworks/blogs/?ca=dma-" class="ibm-feature-link">Blogs</a></li><li><a href="https://www.ibm.com/developerworks/mydeveloperworks/bookmarks/?ca=dma-" class="ibm-feature-link">Bookmarks</a></li><li><a href="https://www.ibm.com/developerworks/mydeveloperworks/activities/service/html/mainpage?ca=dma-" class="ibm-feature-link">Activities</a></li><li><a href="http://www.ibm.com/developerworks/mydeveloperworks/files?ca=dma-" class="ibm-feature-link">Files</a></li><li><a href="http://www.ibm.com/developerworks/mydeveloperworks/wikis?ca=dma-" class="ibm-feature-link">Wikis</a></li><li><a href="http://www.ibm.com/developerworks/forums/?ca=dma-" class="ibm-feature-link">Forums</a></li><li><a href="http://www.ibm.com/developerworks/podcast/?ca=dma-" class="ibm-feature-link">Podcasts</a></li></ul><div class="ibm-rule"><hr/></div><p class="ibm-ind-link"><a href="https://www.ibm.com/developerworks/mydeveloperworks/?ca=dma-" class="ibm-forward-link">My developerWorks overview</a></p></div></div>
+<!-- Tagging_Start -->
+<div id="dw-tag-cloud-container" class="ibm-container dw-hidetag"><h2>Tags</h2>
+<div id="dw-tag-help"><a class="dwauthor" rel="#tagtip" id="dwtagtip"><img alt="Help" height="16" width="16" align="top" src="//dw1.s81c.com/developerworks/i/help_icon.gif"/></a></div>
+<div id="tagtip" class="dwauthor-onload-state ibm-no-print">Use the <strong>search field</strong> to find all types of content in My developerWorks with that tag.<p>Use the <strong>slider bar</strong> to see more or fewer tags.</p><p>For articles in technology zones (such as Java technology, Linux, Open source, XML), <strong>Popular tags</strong> shows the top tags 
+for <em>all technology zones</em>.  For articles in product zones (such as Info Mgmt, Rational, WebSphere), <strong>Popular tags</strong> shows the top tags for <em>just that product zone</em>.</p><p>For articles in technology zones (such as Java technology, Linux, Open source, XML), <strong>My tags</strong> shows your tags for <em>all technology zones</em>.  For articles in product zones (such as Info Mgmt, Rational, WebSphere), <strong>My tags</strong> shows your tags for <em>just that product zone</em>.</p></div>
+<div class="ibm-access">Use the search field to find all types of content in My developerWorks with that tag.  <em>Popular tags</em> shows the top tags for this particular content zone (for example, Java technology, Linux, WebSphere).  <em>My tags</em> shows your tags for this particular content zone (for example, Java technology, Linux, WebSphere).</div>
+<div class="ibm-container-body">
+<div class="dw-tag-search"><form action="//www.ibm.com/developerworks/mydeveloperworks/bookmarks/html?lang=en" method="get" id="actualtagform" onsubmit="popupform(this, 'join')">
+<p><label for="tagfield"><strong>Search all tags</strong></label><input id="tagfield" name="tag" type="text" maxlength="20" size="17" />&nbsp;<input src="//dw1.s81c.com/i/v16/buttons/short-btn.gif" type="image" class="ibm-btn-view" alt="submit search" title="submit search" value="Search" /></p></form></div>
+<div class="ibm-rule"><hr/></div>
+<div id="dw-tag-select">
+<div id="dw-tag-select-popular"><p><strong>Popular article tags</strong>&nbsp;|&nbsp;<br /><a id="a-my" href="javascript:;">My article tags</a><a href="#dw-tag-access" class="ibm-access">Skip to tags list</a></p></div>
+<div id="dw-tag-select-my" class="dw-hidetag"><p><a id="a-popular" href="javascript:;">Popular article tags</a>&nbsp;|&nbsp;<br /><strong>My article tags</strong></p><a href="#dw-tag-access" class="ibm-access">Skip to tags list</a></div>
+<div id="dw-tag-cloud"></div>  
+</div>   
+</div>
+</div>
+<!-- Tagging_End -->
+<!-- Dig_Deeper -->
+<div class="ibm-container"><h2>Dig deeper into Open source on developerWorks</h2><div class="ibm-container-body"><ul class="ibm-link-list"><li class="ibm-first"><a href="http://www.ibm.com/developerworks/opensource/" class="ibm-forward-link">Overview</a></li><li><a href="http://www.ibm.com/developerworks/opensource/newto/" class="ibm-forward-link">New to Open source</a></li><li><a href="http://www.ibm.com/developerworks/views/opensource/projects.jsp" class="ibm-forward-link">Projects</a></li><li><a href="http://www.ibm.com/developerworks/views/opensource/library.jsp" class="ibm-forward-link">Technical library (articles, tutorials, and more)</a></li><li><a href="http://www.ibm.com/developerworks/opensource/training/" class="ibm-forward-link">Training</a></li><li><a href="http://www.ibm.com/developerworks/forums/dw_osforums.jsp" class="ibm-forward-link">Forums</a></li><li><a href="http://www.ibm.com/developerworks/views/opensource/events.jsp" class="ibm-forward-link">Events</a></li><li><a href="http://www.ibm.com/developerworks/newsletter/" class="ibm-forward-link">Newsletter</a></li></ul></div></div>
+<!-- High_Visibility_Offer -->
+<!--XSLT stylesheet used to transform this content: s-highvisibilityoffer.xsl--><div class="ibm-container"><h2>Stay ahead of the latest cloud trends</h2><div class="ibm-container-body"><img width="188" height="70" border="0" alt="Stay ahead of the latest cloud trends" src="//www.ibm.com/developerworks/i/hivis-w-cloudzone.jpg"/><p class="ibm-ind-link"><a href="https://www.ibm.com/developerworks/cloud/index.html?ca=dti-cloudzone" class="ibm-forward-link">Cloud Computing resources from developerWorks</a></p></div></div>
+<!-- Special_Offers -->
+<div class="ibm-container"><h2>Special offers</h2><div class="ibm-container-body"><p class="dw-special-offers"><a href="https://www-304.ibm.com/partnerworld/wps/servlet/ContentHandler/2011_beacon_awards_developerworks.html?ca=dti-dwbeacon"><img src="//www.ibm.com/developerworks/i/tile_v16_beacon2010.gif" width="158" height="50" border="0" alt="Partner Award Most Innovative use of dW" /></a></p><p class="dw-special-offers"><a href="http://www.ibm.com/developerworks/downloads/?ca=dti-rdownload#rational"><img src="//www.ibm.com/developerworks/i/tile_v16_r-download.gif" width="158" height="50" border="0" alt="Download and evaluate Rational software" /></a></p><p class="dw-special-offers"><a href="http://www.ibm.com/developerworks/views/linux/libraryview.jsp?type_by=Tutorials&amp;ca=dti-linuxtutorial"><img src="//www.ibm.com/developerworks/i/tile_v16_learnfast-l.gif" width="158" height="50" border="0" alt="Learn fast with free IBM Linux tutorials" /></a></p><div class="ibm-rule"><hr/></div><p class="ibm-ind-link"><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/downloads/?ca=dti-tilemoreoffers">Trial software offers</a></p></div></div>
+<!-- RIGHT_COLUMN_CONTENT_END -->
+
+</div>
+<!-- RIGHT_COLUMN_END -->
+
+<!-- CONTENT_BODY_END -->
+</div>
+
+</div>
+<!-- CONTENT_END -->
+
+ <!-- END_IBM-PCON -->
+</div>
+
+<!-- FOOTER_BEGIN -->
+<div id="ibm-page-tools">
+<!-- IBM page tools container -->
+</div>
+<div id="ibm-footer">
+<ul>
+<li class="ibm-first"><a href="http://www.ibm.com/ibm/">About IBM</a></li>
+<li><a href="http://www.ibm.com/privacy/">Privacy</a></li>
+<li><a href="http://www.ibm.com/contact/">Contact</a></li>
+<li><a href="http://www.ibm.com/legal/">Terms of use</a></li>
+</ul>
+</div>
+<!-- FOOTER_END -->
+
+ <!-- END_IBM-TOP -->
+</div>
+ 
+ <!-- SCRIPTS_INCLUDE_BEGIN -->
+<!-- JQuery start -->
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/jquery/cluetip98/jquery.dimensions-1.2.js"></script>
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/jquery/cluetip98/jquery.hoverIntent.minified.js"></script>
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/jquery/cluetip98/jquery.cluetip.js"></script>
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/jquery/tagging/ui.core-1.7.1.js"></script>
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/jquery/tagging/ui.slider-1.7.1.js"></script>
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/jquery/tagging/dwjquerytags.js"></script>
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/si/flash-detect.js"></script>
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/si/dwsi.js"></script>
+<script type="text/javascript" language="JavaScript">
+	jQuery.noConflict();     
+	// Put all your code in your document ready area
+	jQuery(document).ready(function(jQuery) {
+	// Do jQuery stuff using jQuery 
+	jQuery('a.dwauthor').cluetip({
+		local: true,
+		showTitle: false,
+		positionBy: 'bottomTop',
+		sticky: true,	
+		mouseOutClose: true,
+		closeText: '<img src="//dw1.s81c.com/developerworks/js/jquery/cluetip98/i/x.gif" alt="Close" />',
+		arrows: false,
+		dropShadow: true,
+		cluetipClass: 'dwbasic'
+		});
+
+		//tagging
+		login="false";
+		userid="";
+		whichTags = "init";
+		pCont = "";
+		mCont = "";
+		signInMCont = "";
+		accessCont = "";
+		pValue = 0;
+		mValue = 0;
+
+		rBHash = null;
+		rBHash = new Object();
+		rBHash['viperLang'] = 'en';
+		rBHash['urlLang'] = 'en';
+		rBHash['tagThisWinTitle'] = 'Tagit';
+		rBHash['pTags1'] = 'Popular tags';
+		rBHash['pTags2'] = 'End of Popular tags';
+		rBHash['mTags1'] = 'My tags';
+		rBHash['mTags2'] = 'End of My tags';
+		rBHash['alt1'] = 'Loading Content';
+		rBHash['noATags'] = 'No active tags';
+		rBHash['signIn1'] = 'Please ';
+		rBHash['signIn2'] = 'sign in';
+		rBHash['signIn3'] = ' to access';
+		rBHash['signIn4'] = 'My Tags';
+		rBHash['signIn5'] = 'To access My Tags, please ';
+		rBHash['signIn6'] = 'sign in';
+		rBHash['signIn7'] = 'Read Popular tags';
+
+		zoneHash = new Object();
+		zoneHash['aix'] = 'AIX and UNIX zone';
+		zoneHash['data'] = 'Information Management zone';
+		zoneHash['lotus'] = 'Lotus zone';
+		zoneHash['rational'] = 'Rational zone';
+		zoneHash['tivoli'] = 'Tivoli zone';
+		zoneHash['websphere'] = 'WebSphere zone';
+		zoneHash['architecture'] = 'Technical library';
+		zoneHash['autonomic'] = 'Technical library';
+		zoneHash['java'] = 'Technical library';
+		zoneHash['cloud'] = 'Technical library';
+		zoneHash['industry'] = 'Technical library';
+		zoneHash['library'] = 'Technical library';
+		zoneHash['linux'] = 'Technical library';
+		zoneHash['opensource'] = 'Technical library';
+		zoneHash['power'] = 'Technical library';
+		zoneHash['webservices'] = 'Technical library';
+		zoneHash['web'] = 'Technical library';
+		zoneHash['xml'] = 'Technical library';
+		zoneHash['wireless'] = 'Technical library';
+		jQuery.checkRB();
+		jQuery.getPopularTags("/developerworks/dwtags/dwjquerytabtags?lang=" + rBHash['viperLang'] + "&base=" + jQuery.getNormalizedZoneUrl(location.href));
+		jQuery.getUserTags();
+		if(jQuery.isTutorial(location.href) == "true") {
+			jQuery.getTagsForContent("/developerworks/tagging/UseCaseServlet?lang=" + rBHash['viperLang'] + "&format=maverick&cType=tutorials&use_case=geturltags&action=gettags&url=" + jQuery.normalizeUrl(location.href));
+		}
+		else {
+			jQuery.getTagsForContent("/developerworks/tagging/UseCaseServlet?lang=" + rBHash['viperLang'] + "&format=maverick&cType=articles&use_case=geturltags&action=gettags&url=" + jQuery.normalizeUrl(location.href));
+
+		}
+		
+		// si
+		initSI();
+	});
+ </script>
+ <!-- JQuery end -->
+ <!-- Overlay js -->
+<script language="JavaScript" src="//dw1.s81c.com/common/js/overlay.js" type="text/javascript"></script>
+<!-- My dW Interest article -->
+<script language="JavaScript" src="//dw1.s81c.com/developerworks/js/showinterest.js" type="text/javascript">//</script>
+<script language="JavaScript" type="text/javascript">
+        // <![CDATA[
+			var contentId = '';
+			var contentAreas = '';
+			var caArr = [];
+			contentId = '395918';
+			contentAreas = 'opensource';
+			if(contentAreas != ''){caArr = contentAreas.split(',');}
+			var loginLink = 'https://www.ibm.com/developerworks/dwwi/DWAuthRouter?m=loginpage&d=' + encodeURIComponent(window.location);jQuery('interestShow').showInterest(contentId,'dw-article',{'int_tops':[246,9,214],'int_prods':[], 'int_prod_fam':[],'int_cont_area':caArr},
+'<div id="dw-interest-anon"><a id="intAnonBtn" class="ibm-external-link" href="">Update My dW interests</a> (<a class="dw-interest" href="' + loginLink + '">Log in</a> | <a class="dw-interest" href="#overlay" onclick="ibmCommon.Overlays.show(\'dwmyinterestadd\', this);return false;">What\'s this?</a>) <a class="ibm-access" href="#dwmyinterestaddhelp">Skip to help for Update My dW interests</a></div>',
+'<div id="dw-interest-add"><a id="intSelectBtn" class="ibm-external-link" href="">Add to My dW interests</a> (<a class="dw-interest" href="#overlay" onclick="ibmCommon.Overlays.show(\'dwmyinterestadd\', this);return false;">What\'s this?</a>) <a class="ibm-access" href="#dwmyinterestaddhelp">Skip to help for Add to My dW interests</a></div>',
+'<div id="dw-interest-remove">Added to My dW interests (<a class="dw-interest" href="https://www.ibm.com/developerworks/mydeveloperworks/profiles/html/myProfileView.do?lang=en">Edit</a>)</div>'
+);
+// ]]>
+</script><!-- BEGIN: Use this section to set page specific variables for the Unica Page Tag -->
+<script language="JavaScript">var NTPT_PGEXTRA="ibmSkillLevel=3&ibmAdoptPhase=-&ibmRole=-";</script>
+<!--END --><!-- SCRIPTS_INCLUDE_END -->
+
+<div id="ibm-metrics">
+<script src="//dw1.s81c.com/common/stats/stats.js" type="text/javascript">//</script>
+</div>
+
+</body>
+</html>
