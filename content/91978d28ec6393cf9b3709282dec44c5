@@ -1,0 +1,2358 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	
+	
+	<title>O2 Huawei E169 USB modem Gentoo GNU/Linux, 09/05/09, All that you know</title>	
+	<meta name="description" content="">
+	
+	
+	<link rel="stylesheet" href="/blogbuilder/media/css/layout.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="/blogbuilder/media/css/mime_icons.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="/blogbuilder/media/styles/curvycat/style.css" title="curvycat" type="text/css" media="screen">
+	
+	
+		
+	
+	<link rel="alternate stylesheet" href="/blogbuilder/media/styles/blank/style.css" title="Blank Style" type="text/css" media="screen">
+	
+	
+	
+	<!--[if lt IE 7]>
+	<style type="text/css">
+	
+	/* don't show rounded corners as it can't do it properly */
+	#utilityBarLeft { display: none; }
+	#utilityBarRight { display: none; }
+	
+	</style>
+	<![endif]-->
+	
+	<link rel="stylesheet" href="/blogbuilder/media/css/lightbox.css" type="text/css" media="screen">
+	
+	<style type="text/css" media="screen">
+		
+	</style>
+	
+	<link rel="stylesheet" href="/blogbuilder/media/css/print.css" type="text/css" media="print">
+		
+		
+<script type="text/javascript" src="/blogbuilder/media/js/equaliseheight.js"></script>
+
+<script type="text/javascript" src="/blogbuilder/media/js/prototype.js"></script>
+<script type="text/javascript" src="/blogbuilder/media/js/blogbuilder.js"></script>
+<script type="text/javascript" src="/blogbuilder/media/js/embed.js"></script>
+<script type="text/javascript" src="/blogbuilder/media/js/scriptaculous.js"></script>
+<script type="text/javascript" src="/blogbuilder/media/js/lightbox.js"></script>
+<script type="text/javascript" src="/blogbuilder/media/js/audio-player.js"></script>	
+
+
+
+
+
+<!--[if lt IE 7]>
+<script type="text/javascript">
+
+sfHover = function() {
+  var sfEls = document.getElementById("nav").getElementsByTagName("LI");
+  for (var i=0; i<sfEls.length; i++) {
+    sfEls[i].onmouseover=function() {
+      this.className+=" sfhover";
+    }
+    sfEls[i].onmouseout=function() {
+      this.className=this.className.replace(new RegExp(" sfhover\\b"), "");
+    }
+  }
+}
+if (window.attachEvent) window.attachEvent("onload", sfHover);
+
+</script>
+<![endif]-->
+
+	<link rel="microsummary" type="application/x.microsummary+xml" href="http://blogs.warwick.ac.uk/mli/entry/o2_huawei_e169?microsummary=microsummary">
+
+	<link rel="search" 
+		  type="application/opensearchdescription+xml" 
+		  title="Warwick Blogs" 
+		  href="http://search.warwick.ac.uk/static/search/blogsosd.xml">
+
+</head>
+
+
+	<body id="entries-page">
+
+
+
+<!-- Body -->
+<div id="leftshading">
+<div id="rightshading">
+<div id="mainContent">
+
+	<!-- Banner -->
+	
+
+<div id="banner">
+	<div id="logoBanner">
+		<div id="topBar"></div>
+		<div id="bannerImageRight"></div>
+		<div id="bannerImageLeft"></div>	
+	
+		<div id="siteLogoBar"><a title="" href="/mli/">All that you know</a></div>
+	</div>
+	
+	<div id="utilityBar">
+		<div id="utilityBarLeft"></div>
+		<div id="utilityBarRight"></div>
+
+	<ul id="bloglinks">
+		<li><a href="/showall">Warwick Blogs</a></li>
+		
+		<li><span class="pipe"> | </span><a href="/mli/contact/">Contact me</a></li>
+	
+	
+		<li><span class="pipe"> | </span><a href="/mli/about/">still thinking about this</a></li>
+	
+	
+	
+	
+	
+	
+	
+	
+
+	</ul>
+	
+<ul id="nav">
+	
+	
+	
+	
+	
+	
+	
+		<li><a href="https://websignon.warwick.ac.uk/origin/slogin?shire=https%3A%2F%2Fblogs.warwick.ac.uk%2Fblogbuilder%2Fshire&providerId=urn%3Ablogs.warwick.ac.uk%3Ablogbuilder%3Aservice&target=http%3A%2F%2Fblogs.warwick.ac.uk%2Fmli%2Fentry%2Fo2_huawei_e169">Sign in</a></li>
+	
+	
+	</ul>
+	</div>
+
+</div>
+	
+	<div id="container"> 
+	
+	
+
+	<!-- Main Content -->	
+	
+	
+
+
+<div class="content" id="centreContent">
+
+<div id="entries">
+
+
+
+
+
+<script type="text/javascript">
+var showed = {};
+
+function showComments(entryId,blogId) {
+	if (showed[entryId]) {
+		Effect.toggle('comments_' + entryId,'blind',{duration:1.5});
+		/* This would reload every time 
+		 * Element.show('commentpopup_' + entryId);
+	  	 * Element.hide('commentclose_' + entryId);
+	  	 * showed[entryId] = false;
+	  	 */
+	  	 
+	  	/* Instead, don't reload after the first time */
+	  	Effect.toggle('comments_' + entryId,'blind',{duration:1.5,afterFinish:function(request){Element.hide('spinner_' + entryId);}});
+	  	if (document.getElementById('commentpopup_' + entryId).style.display == 'none') {
+	  		Element.show('commentpopup_' + entryId);
+	  		Element.hide('commentclose_' + entryId);
+	  	} else {
+	  		Element.hide('commentpopup_' + entryId);
+	  		Element.show('commentclose_' + entryId);	  	
+	  	}
+	  	
+	  	return;
+	} else {
+		showed[entryId] = true;
+	}
+
+	Element.show('spinner_' + entryId);
+
+	new Ajax.Updater('comments_' + entryId,'/blogbuilder/admin/comments/get.spr',
+	 {asynchronous:true, 
+	  evalScripts:true, 
+	  onComplete:function(request)
+	  {
+	  	Effect.toggle('comments_' + entryId,'blind',{duration:1.5,afterFinish:function(request){Element.hide('spinner_' + entryId);}});
+	  	if (document.getElementById('commentpopup_' + entryId).style.display == 'none') {
+	  		Element.show('commentpopup_' + entryId);
+	  		Element.hide('commentclose_' + entryId);
+	  	} else {
+	  		Element.hide('commentpopup_' + entryId);
+	  		Element.show('commentclose_' + entryId);	  	
+	  	}
+	  }, 
+	  method:'get',
+	  parameters:'blog=' + blogId + '&entryId=' + entryId + "&ms=" + new Date().getTime()});
+}
+
+
+function checkComment(passedForm) {
+	var form = passedForm.form;
+	if (form.name.value.length <= 0) {
+		alert("Please provide a name");
+		return false;
+	}
+	if (form.questionAnswer.value.length <= 0) {
+		alert("You must answer the question or your comment will be rejected");
+		return false;
+	}
+	if (form.content.value.length <= 0) {
+		alert("You must write a comment");
+		return false;
+	}
+	if (form.content.value.length > 4000) {
+		alert("Your comment is too long, must be 4000 characters at most, it is currently " + form.content.value.length + "characters");
+		return false;
+	}
+	return true;
+}
+
+
+
+
+String.prototype.trim = function() {
+	// Replace repeated spaces, newlines and tabs with a single space
+	return this.replace(/^\s*|\s(?=\s)|\s*$/g, "");
+}
+
+	function ajaxCheckComment(passedForm,entryId,blogId) {
+			if (!checkComment(passedForm)) {
+				return false;
+			}
+			
+			passedForm.form.submit.value='Please wait...';
+			Element.update('commentInfo_' + entryId,'Please wait&hellip;');
+		  	Element.show('commentInfo_' + entryId);
+			new Effect.Highlight('commentInfo_' + entryId, {duration: 1.5,restorecolor: 'none'});
+				
+//			var form = Form.serialize(passedForm.form);
+			var form = encodeForm(passedForm.form);
+				
+			var options = {
+                   method : 'post',
+                   postBody : form + '&ajax=true',
+                   asynchronous: true,
+                   onComplete : function(request) {
+                       // reload the comments window
+                    	       
+                        var response = request.responseText.trim();
+                        var success = true;
+                                   
+                        if (response.length > 5 && response.substring(0,5) == "Error") {
+                        	success = false;
+                        }
+                        
+                        if (success) {
+	                        new Ajax.Updater('comments_' + entryId,'/blogbuilder/admin/comments/get.spr',
+			 				{
+			 					asynchronous:true, 
+			  					evalScripts:true, 
+							    onComplete:function(request)
+			 				 	{
+					  				//make some kind of message pop up
+					  				passedForm.form.submit.value='Comment posted';
+					  				Element.update('commentInfo_' + entryId,'Your comment has been posted');
+					  				Element.show('commentInfo_' + entryId);
+									new Effect.Highlight('commentInfo_' + entryId, {duration: 1.5,restorecolor: 'none'});
+							    }, 
+								method:'get',
+			  					parameters:'blog=' + blogId + '&entryId=' + entryId + "&ms=" + new Date().getTime()
+			  				});
+	                    } else {
+                        	//make some kind of message pop up
+					  		passedForm.form.submit.value='Add comment';
+					  		Element.update('commentInfo_' + entryId,response);
+					  		Element.show('commentInfo_' + entryId);
+							new Effect.Highlight('commentInfo_' + entryId, {duration: 1.5,startcolor:'#ff3333',restorecolor: 'none'});
+                        }                      
+              		} 
+                 };
+                 
+   			new Ajax.Request('/blogbuilder/admin/comments/postAjax.spr?blog=' + blogId + '&entryId=' + entryId, options);
+		}
+		
+		
+function encodeForm(form) {
+	var elements = Form.getElements(form);
+    var queryComponents = new Array();
+
+    for (var i = 0; i < elements.length; i++) {
+    	var name = elements[i].name;
+    	var value = elements[i].value;
+    	var queryComponent = ''
+    	if (elements[i].type == 'text' || elements[i].type == 'hidden' || elements[i].type == 'textarea') {
+			queryComponent = name + "=" + postEncode(value);      
+		} else {
+			queryComponent = Form.Element.serialize(elements[i]);
+		}
+		if (queryComponent) {
+        	queryComponents.push(queryComponent);
+		}
+    }
+
+    var output = queryComponents.join('&');
+    
+    return output;
+}
+		
+function postEncode(input) {
+	var output = '';
+	var size = input.length;
+	for(var i=0; i<size; i++) {
+	   	var c = input.charCodeAt(i).toString();
+    	if (c>127) {
+	    	output += '%26%23' + c + '%3B';	
+    	} else {
+	    	output += encodeURIComponent(input.substr(i,1));
+    	}	
+	}
+	return output;
+}
+
+
+
+function refreshRating(blogId,entryId,fieldId) {
+	new Ajax.Updater(fieldId,'/blogbuilder/admin/rating/ajaxRating.spr',
+	 	{
+	 		asynchronous:true, 
+		  	evalScripts:true, 
+	  		method:'get',
+	  		parameters:'blog=' + blogId + '&entryId=' + entryId + '&ms=' + new Date().getTime()
+	  	});
+}
+
+function rateEntry(blogId,entryId,callbackId) {
+	var options = {
+        method : 'post',
+        parameters : 'blog=' + blogId + '&entryId=' + entryId,
+        asynchronous: true,
+        onComplete : function(request) {
+        	refreshRating(blogId,entryId,callbackId);
+    	}   
+    };
+   	new Ajax.Request('/blogbuilder/admin/rating/rateEntry.spr', options);
+}
+
+function unrateEntry(blogId,entryId,callbackId) {
+	var options = {
+        method : 'post',
+        parameters : 'blog=' + blogId + '&entryId=' + entryId,
+        asynchronous: true,
+        onComplete : function(request) {
+        	refreshRating(blogId,entryId,callbackId);
+    	}   
+    };
+   	new Ajax.Request('/blogbuilder/admin/rating/unrateEntry.spr', options);
+}
+
+
+		
+</script>
+
+
+
+
+
+<div class="day">
+
+<h2 class="dateheader">May 09, 2009</h2>
+<div class="entry">
+
+<div class="entryBody">
+
+	
+
+
+
+
+		
+
+		
+			
+				
+				
+
+
+
+
+
+
+	
+	<h3 class="entryHeader">
+		
+		
+		
+			
+				
+					<span class="caps">O2 </span>Huawei <span class="caps">E169 USB</span> modem Gentoo <span class="caps">GNU</span>/Linux
+				
+				
+			
+		
+		
+		
+		
+		
+	</h3>
+	
+		
+		
+
+		
+			
+			
+				
+				
+				
+				
+			
+			
+			
+		
+
+<p>This post is for anyone having problems getting the O2-provided Huawei <span class="caps">E169 USB</span> modem to work under Linux. I&rsquo;ll assumed you&rsquo;ve searched elsewhere and have an idea of what is going on.</p>
+
+<p>In my case, I had a Gentoo <span class="caps">GNU</span>/Linux desktop without internet access although I did have a Windows XP laptop to help me. The best thing to do is use the <span class="caps">USB</span> modem on the laptop, connect up your desktop by ethernet cable and share the Dial-up connection in order to download any packages you may need.</p>
+
+<p>gentoo-sources-2.6.28 is a good enough kernel to get things to work.</p>
+
+<p>emerge usbutils ppp wvdial</p>
+
+<p>cd /usr/src/linux<br />
+   sudo make menuconfig<br />
+   (Refer to Gentoo handbook for full details of installing a new kernel.)</p>
+
+<pre>
+Device drivers ---&gt;
+    Network device support ---&gt;
+        &lt;M&gt; PPP (point-to-point protocol) support
+        &lt;M&gt; PPP support for async serial ports 
+    USB support ---&gt;
+        &lt;M&gt; OHCI HCD support
+        &lt;M&gt; USB Mass Storage support (provides usb-storage so it can be unloaded)
+        &lt;M&gt; USB Serial Converter support (provides usbserial, very important)
+            [*] USB Generic Serial Driver
+            &lt;M&gt; USB driver for GSM and CDMA modems (provides 'option' module, v. important)
+</pre>
+<p>sudo make -j 3<br />
+   (Install kernel.)<br />
+   sudo make modules_install<br />
+   (Which installs the kernel modules. Restart computer.)</p>
+
+ Plug in device when you have a terminal open. /usr/sbin/lsusb<br />
+ should give<br />
+
+<snip></snip>
+<br />
+ Bus 004 Device 006: ID 12d1:1001 Huawei Technologies Co., Ltd. <span class="caps">E620 USB</span> Modem<br />
+
+<snip></snip>
+<p>(**) &lt;- marker. Read ahead to see why this is here.</p>
+
+<p>lsmod</p>
+
+<p>should ideally not show &lsquo;usb-storage&rsquo;</p>
+
+<p>sudo rmmod usb-storage</p>
+
+<p>just in case.</p>
+
+<p>sudo modprobe usbserial vendor=0&times;12d1 product=0&times;1001</p>
+
+<p>then</p>
+
+<p>ls /dev/ttyU*</p>
+
+<p>should give<br />
+   /dev/ttyUSB0 /dev/ttyUSB1 /dev/ttyUSB2<br />
+   if only /dev/ttyUSB0 is shown, then unload modules &lsquo;usbserial&rsquo; and &lsquo;option&rsquo;, unplug device and try again from the marker (**).</p>
+
+<p>sudo wvdialconf</p>
+
+<p>to get a template /etc/wvdial.conf for editing. Refer to <a href="https://help.ubuntu.com/community/DialupModemHowto/Huawei/E220/wvdial.conf">https://help.ubuntu.com/community/DialupModemHowto/Huawei/E220/wvdial.conf</a> and other websites to aid configuration.</p>
+
+<p><span class="caps">APN</span> (Access Point Name) mobile.o2.co.uk<br />
+   user: o2web<br />
+   pass: password<br />
+   Phone number should be *99***1# otherwise try *99#</p>
+
+<p>When you have your /etc/wvdial.conf set up properly, connect with</p>
+
+<p>sudo wvdial 
+  <list of="of" dialer="dialer" settings="settings"></list>
+</p>
+
+<p>One section I have is</p>
+
+<pre>
+[Dialer internet]
+Init5 = AT+CGDCONT=1,&quot;IP&quot;,&quot;mobile.o2.co.uk&quot; 
+Stupid Mode = 1
+</pre>
+<p>Try <br />
+   Carrier Check = no<br />
+   in your defaults if you get no carrier errors.</p>
+
+<p>Good luck!</p>
+
+
+
+
+			
+		
+		
+		<br/>
+
+		<p class="smallcopy entryfooter">
+		
+		<span class="author">
+		<img src="/blogbuilder/media/images/tiny_author.gif" title="Research Staff: Chemistry" alt=""/>
+				Michael Li</span> <span class="entryFooterSpacer">: </span>
+		
+		
+		<span class="datetime">
+		
+
+		
+			<a href="/mli/daily/090509/" title="Read all entries written on this date">09 May 2009</a> 21:50
+		
+		</span>
+		
+		<span class="entryrating" id="entryrating_094d73991f407a3f0121270066e232a7">
+			
+			
+			
+
+		</span>
+		
+		<span class="taglist">
+		
+			
+			
+				|&nbsp;<img src="/blogbuilder/media/images/admin/tag-icon.gif" alt=""/>&nbsp;Tags:&nbsp;<a href="/mli/tag/huawei/" title="" rel="tag">Huawei</a>&nbsp;<a href="/mli/tag/o2/" title="" rel="tag">O2</a>&nbsp;<a href="/mli/tag/usb_modem/" title="" rel="tag">Usb Modem</a>
+			
+		
+		</span>
+		
+
+
+	
+
+
+
+	
+	
+		<span class="commentpopup hasComments">
+		|&nbsp;<img src="/blogbuilder/media/images/tiny_comment.gif" alt=""/> <a href="#comments" title="Read or add comments">Comments&nbsp;(2)</a>
+		</span>
+	
+	
+
+
+		
+
+		
+
+		
+
+		
+		<span class="reportlink">
+		|&nbsp;<img src="/blogbuilder/media/images/tiny_pling.gif" alt="">&nbsp;<a href="/blogbuilder/admin/reportAbuse.spr?blog=094d7399ff3efb2000ff425b10e5066a&amp;entryId=094d73991f407a3f0121270066e232a7" title="Tell the University if you think there may be a problem with this entry">Report&nbsp;a&nbsp;problem</a>
+		</span>
+		
+		
+
+
+		</p>
+
+</div>
+<div class="entryTail">
+	<div id="comments">
+	<a name="comments"></a>
+
+	
+	
+	
+	
+
+	<h3 class="commentsHeader"><img src="/blogbuilder/media/images/commenticonlarge.gif" alt="-"/> 
+	
+	
+	
+		
+		
+		
+			2 comments by 1 or more people
+		
+	
+	
+	
+		<img src="/blogbuilder/media/images/padlock.gif" title="Only commentable by: Alumni,Staff,Students" alt="Not publicly viewable" />
+	
+	</h3>
+	
+	
+	
+	
+	
+
+
+
+
+
+
+
+
+<ol class="commentsList">
+	
+	 
+		
+		
+		
+
+
+
+	
+	
+		<li class="commentItem nonLoggedInComment" title="Comment by a non-logged in user">	
+	
+	
+	
+	
+		<a name="comment1"></a>
+	
+	
+	<span class="comment_tl"></span>
+	<span class="comment_tr"></span>
+	<span class="comment_bl"></span>
+	<span class="comment_br"></span>
+	
+	
+		
+	
+	
+		<h4 class="commentauthor">mcbluegreen</h4>
+	
+	
+	
+	
+		<p>I have a short question. I too have a desktop on which I want to install Gentoo, but no internet connection for downloading the sources. However, I too have a Windows XP machine with an <span class="caps">USB</span> modem. How can I connect those two with an ethernet cable?</p>
+
+<p>Many thanx</p>
+
+
+	
+		
+		
+	
+	
+	<p class="smallcopy commentfooter">
+	
+	
+	
+	25 Jun 2009,&nbsp;07:43
+	 
+	
+		
+			
+		
+		
+	
+	
+	
+	
+	</p>
+	</li>
+	 
+		
+		
+		
+
+
+
+	
+		
+			<li class="commentItem authorComment" title="Comment by the author of this entry">
+		
+		
+	
+	
+	
+	
+	
+		<a name="comment2"></a>
+	
+	
+	<span class="comment_tl"></span>
+	<span class="comment_tr"></span>
+	<span class="comment_bl"></span>
+	<span class="comment_br"></span>
+	
+	
+		
+	
+	
+		<h4 class="commentauthor">Michael Li</h4>
+	
+	
+	
+		<p>Connect laptop to desktop, boot laptop, connect to the internet using <span class="caps">USB</span> modem</p>
+
+<p>Go to the network connections on laptop (where ever the ethernet wired connection and <span class="caps">USB</span> modem are shown together). Select both the ethernet connect and <span class="caps">USB</span> modem connection together (use Ctrl and mouse), right click on one and select <strong>bridge connection</strong>.</p>
+
+<p>Wait for completion. Boot desktop. Desktop should recognize it can acquire an internet connection via the ethernet cable. (<em>This assumes you&rsquo;ve either installed Gentoo already or you are booting from a LiveCD which you have downloaded per the Gentoo handbook instructions as one of the installation options given.</em>)</p>
+
+<p>Be careful you don&rsquo;t go over your allowance on the <span class="caps">USB</span> modem as the charges can quickly spiral into the thousands of pounds (so I hear). The installation CDs vary from 140 MB for minimal advanced usage to 710 MB for a fool-proof LiveCD. The installation is the most network intensive part of the Gentoo life cycle: expect hundreds of megabytes of sources if you&rsquo;re fussy about what you want on your desktop.</p>
+
+
+	
+	
+		
+		
+	
+	
+	<p class="smallcopy commentfooter">
+	
+	
+	
+	26 Jun 2009,&nbsp;22:43
+	 
+	
+		
+			
+		
+		
+	
+	
+	
+	
+	</p>
+	</li>
+	
+</ol>
+
+
+<a name="commentForm_"></a>
+
+<div id="commentInfo_" style="width:50%;margin-left:auto;margin-right:auto;margin-top:5px;margin-bottom:5px;clear:both;background:#ddd;color:#333;border:1px solid #333;font-size:1.5em;text-align:center;padding:5px;display:none;"></div>
+
+	<div id="commentform">
+	<hr id="commentRuler">
+	<h4>Add a comment</h4>
+
+	
+	
+		You are not allowed to comment on this entry as it has restricted commenting permissions.
+		
+	</div>
+
+
+	</div>
+
+	
+		<div id="trackbacks">
+		<a name="trackbacks"></a>
+		<h3 title="Trackbacks can be turned off in the entry edit screen or globally in the blog admin appearance screen">Trackbacks</h3>
+
+		<p class="smallcopy entryfooter">
+			Trackback URL: http://blogs.warwick.ac.uk/mli/entry/o2_huawei_e169/trackback/
+		</p>
+        
+        
+        
+	
+		</div>
+	
+
+
+	</div>
+
+</div>
+</div>
+</div>
+</div>
+	
+	<!-- Side Content -->
+	
+<div class="content" id="sideContent">
+
+<div id="sideContentHeader"></div>
+<div id="sideContentMainContainer"><div id="sideContentMain">
+
+<div class="noindex">
+
+
+
+
+
+	
+	
+		
+
+
+
+
+
+
+
+		
+
+
+<div id="calendar" class="sideContentItem">
+
+<div class="innerSidebarContent">
+	<h2><a href="/mli/monthly/0509/">May 2009</a></h2>
+	<table class="calendar" summary="Calendar of entries">
+		<thead>
+      		<tr>
+        		<th id="monday" abbr="Monday">Mo</th>
+        		<th id="tuesday" abbr="Tuesday">Tu</th>
+        		<th id="wednesday" abbr="Wednesday">We</th>
+        		<th id="thursday" abbr="Thursday">Th</th>
+        		<th id="friday" abbr="Friday">Fr</th>
+        		<th id="saturday" abbr="Saturday">Sa</th>
+       		 	<th id="sunday" abbr="Sunday">Su</th>
+      		</tr>
+    	</thead>
+    	<tfoot>
+		<tr>
+			<td colspan="2">
+				
+					<a href="/mli/monthly/0409/">Apr</a>
+				
+			</td>
+			<td colspan="3">
+				| &nbsp;<a href="/mli/newentries/">Today</a>&nbsp; |
+			</td>
+			<td colspan="2">
+				
+			</td>
+		</tr>
+		</tfoot>
+    	<tbody>
+	
+	
+		
+		
+		
+		
+		
+			<tr>
+			
+			
+			
+				
+					
+						
+					
+					
+					
+					
+					
+					
+					
+				
+			
+				
+					<td headers="monday">&nbsp;&nbsp;</td>					
+					
+				
+				
+			
+			
+				
+					
+					
+						
+					
+					
+					
+					
+					
+					
+				
+			
+				
+					<td headers="tuesday">&nbsp;&nbsp;</td>					
+					
+				
+				
+			
+			
+				
+					
+					
+					
+						
+					
+					
+					
+					
+					
+				
+			
+				
+					<td headers="wednesday">&nbsp;&nbsp;</td>					
+					
+				
+				
+			
+			
+				
+					
+					
+					
+					
+						
+					
+					
+					
+					
+				
+			
+				
+					<td headers="thursday">&nbsp;&nbsp;</td>					
+					
+				
+				
+			
+			
+				
+					
+					
+					
+					
+					
+										
+					
+					
+					
+				
+			
+				
+				
+									
+				
+			
+			
+				
+					
+					
+					
+					
+					
+					
+						
+					
+					
+				
+			
+				
+				
+			
+			
+				
+					
+					
+					
+					
+					
+					
+					
+						
+					
+				
+			
+				
+				
+			
+		
+		
+		
+			
+			
+			
+			
+			
+								
+			
+			
+			
+		
+		
+		
+		
+			<td headers="friday" >1</td>
+		
+		
+		
+	
+		
+		
+		
+		
+			
+		
+		
+		
+		
+			
+			
+			
+			
+			
+			
+				
+			
+			
+		
+		
+		
+		
+			<td headers="saturday" >2</td>
+		
+		
+		
+	
+		
+		
+		
+		
+			
+		
+		
+		
+		
+			
+			
+			
+			
+			
+			
+			
+				
+			
+		
+		
+		
+		
+			<td headers="sunday" >3</td>
+		
+		
+		</tr>
+	
+		
+		
+		
+		
+			<tr>
+		
+		
+		
+		
+			
+				
+			
+			
+			
+			
+			
+			
+			
+		
+		
+		
+		
+			<td headers="monday" >4</td>
+		
+		
+		
+	
+		
+		
+		
+		
+			
+		
+		
+		
+		
+			
+			
+				
+			
+			
+			
+			
+			
+			
+		
+		
+		
+		
+			<td headers="tuesday" >5</td>
+		
+		
+		
+	
+		
+		
+		
+		
+			
+		
+		
+		
+		
+			
+			
+			
+				
+			
+			
+			
+			
+			
+		
+		
+		
+		
+			<td headers="wednesday" >6</td>
+		
+		
+		
+	
+		
+		
+		
+		
+			
+		
+		
+		
+		
+			
+			
+			
+			
+				
+			
+			
+			
+			
+		
+		
+		
+		
+			<td headers="thursday" >7</td>
+		
+		
+		
+	
+		
+		
+		
+		
+			
+		
+		
+		
+		
+			
+			
+			
+			
+			
+								
+			
+			
+			
+		
+		
+		
+		
+			<td headers="friday" >8</td>
+		
+		
+		
+	
+		
+		
+		
+		
+			
+		
+		
+		
+		
+			
+			
+			
+			
+			
+			
+				
+			
+			
+		
+		
+		
+			
+			<td headers="saturday" ><a title="1 entry on 09 May 2009" 
+				href="/mli/daily/090509/">9</a></td>	
+			
+			
+		
+		
+		
+		
+	
+		
+		
+		
+		
+			
+		
+		
+		
+		
+			
+			
+			
+			
+			
+			
+			
+				
+			
+		
+		
+		
+		
+			<td headers="sunday" >10</td>
+		
+		
+		</tr>
+	
+		
+		
+		
+		
+			<tr>
+		
+		
+		
+		
+			
+				
+			
+			
+			
+			
+			
+			
+			
+		
+		
+		
+		
+			<td headers="monday" >11</td>
+		
+		
+		
+	
+		
+		
+		
+		
+			
+		
+		
+		
+		
+			
+			
+				
+			
+			
+			
+			
+			
+			
+		
+		
+		
+		
+			<td headers="tuesday" >12</td>
+		
+		
+		
+	
+		
+		
+		
+		
+			
+		
+		
+		
+		
+			
+			
+			
+				
+			
+			
+			
+			
+			
+		
+		
+		
+		
+			<td headers="wednesday" >13</td>
+		
+		
+		
+	
+		
+		
+		
+		
+			
+		
+		
+		
+		
+			
+			
+			
+			
+				
+			
+			
+			
+			
+		
+		
+		
+		
+			<td headers="thursday" >14</td>
+		
+		
+		
+	
+		
+		
+		
+		
+			
+		
+		
+		
+		
+			
+			
+			
+			
+			
+								
+			
+			
+			
+		
+		
+		
+		
+			<td headers="friday" >15</td>
+		
+		
+		
+	
+		
+		
+		
+		
+			
+		
+		
+		
+		
+			
+			
+			
+			
+			
+			
+				
+			
+			
+		
+		
+		
+		
+			<td headers="saturday" >16</td>
+		
+		
+		
+	
+		
+		
+		
+		
+			
+		
+		
+		
+		
+			
+			
+			
+			
+			
+			
+			
+				
+			
+		
+		
+		
+		
+			<td headers="sunday" >17</td>
+		
+		
+		</tr>
+	
+		
+		
+		
+		
+			<tr>
+		
+		
+		
+		
+			
+				
+			
+			
+			
+			
+			
+			
+			
+		
+		
+		
+		
+			<td headers="monday" >18</td>
+		
+		
+		
+	
+		
+		
+		
+		
+			
+		
+		
+		
+		
+			
+			
+				
+			
+			
+			
+			
+			
+			
+		
+		
+		
+		
+			<td headers="tuesday" >19</td>
+		
+		
+		
+	
+		
+		
+		
+		
+			
+		
+		
+		
+		
+			
+			
+			
+				
+			
+			
+			
+			
+			
+		
+		
+		
+		
+			<td headers="wednesday" >20</td>
+		
+		
+		
+	
+		
+		
+		
+		
+			
+		
+		
+		
+		
+			
+			
+			
+			
+				
+			
+			
+			
+			
+		
+		
+		
+		
+			<td headers="thursday" >21</td>
+		
+		
+		
+	
+		
+		
+		
+		
+			
+		
+		
+		
+		
+			
+			
+			
+			
+			
+								
+			
+			
+			
+		
+		
+		
+		
+			<td headers="friday" >22</td>
+		
+		
+		
+	
+		
+		
+		
+		
+			
+		
+		
+		
+		
+			
+			
+			
+			
+			
+			
+				
+			
+			
+		
+		
+		
+		
+			<td headers="saturday" >23</td>
+		
+		
+		
+	
+		
+		
+		
+		
+			
+		
+		
+		
+		
+			
+			
+			
+			
+			
+			
+			
+				
+			
+		
+		
+		
+		
+			<td headers="sunday" >24</td>
+		
+		
+		</tr>
+	
+		
+		
+		
+		
+			<tr>
+		
+		
+		
+		
+			
+				
+			
+			
+			
+			
+			
+			
+			
+		
+		
+		
+		
+			<td headers="monday" >25</td>
+		
+		
+		
+	
+		
+		
+		
+		
+			
+		
+		
+		
+		
+			
+			
+				
+			
+			
+			
+			
+			
+			
+		
+		
+		
+		
+			<td headers="tuesday" >26</td>
+		
+		
+		
+	
+		
+		
+		
+		
+			
+		
+		
+		
+		
+			
+			
+			
+				
+			
+			
+			
+			
+			
+		
+		
+		
+		
+			<td headers="wednesday" >27</td>
+		
+		
+		
+	
+		
+		
+		
+		
+			
+		
+		
+		
+		
+			
+			
+			
+			
+				
+			
+			
+			
+			
+		
+		
+		
+		
+			<td headers="thursday" >28</td>
+		
+		
+		
+	
+		
+		
+		
+		
+			
+		
+		
+		
+		
+			
+			
+			
+			
+			
+								
+			
+			
+			
+		
+		
+		
+		
+			<td headers="friday" >29</td>
+		
+		
+		
+	
+		
+		
+		
+		
+			
+		
+		
+		
+		
+			
+			
+			
+			
+			
+			
+				
+			
+			
+		
+		
+		
+		
+			<td headers="saturday" >30</td>
+		
+		
+		
+	
+		
+		
+		
+		
+			
+		
+		
+		
+		
+			
+			
+			
+			
+			
+			
+			
+				
+			
+		
+		
+		
+		
+			<td headers="sunday" >31</td>
+		
+		
+		</tr>
+	
+	
+	
+	</tbody>
+	</table>
+</div>
+</div>
+	
+
+
+
+	
+	
+		
+
+
+
+
+
+
+<div class="nofollow sideContentItem">
+<div id="blogSearch">
+	
+		<h2>Search this blog</h2>
+	
+
+
+
+	
+
+<div class="innerSidebarContent">
+<form action="http://search.warwick.ac.uk/search/blogsearch.html" method="get" name="search_form"> 
+<p>
+<input id="searchText" name="q" size="15" autocomplete="off" title="Type a word or phrase, then click Go"> 
+<input name="indexSection" type="hidden" value="blogs"/>
+<input name="urlPrefix" type="hidden" value="http://blogs.warwick.ac.uk/mli/">
+<input name="sortBy" type="hidden" value="date">
+<input type="image" alt="Go" id="search_go" src="/blogbuilder/media/images/go.gif" />
+<img alt="Spinner" id="search_spinner" src="/blogbuilder/media/images/firefox-spinner.gif" style="display:none;" />
+</p>
+<script type="text/javascript">
+new Form.Element.Observer('searchText', 1, function(element, value) 
+{new Ajax.Updater('search_results','/blogbuilder/sysadmin/livesearch/micro.html?urlPrefix=http://blogs.warwick.ac.uk/mli/&indexSection=blogs&sortBy=date',
+ {asynchronous:true, 
+  evalScripts:true, 
+  onComplete:function(request){Element.show('search_go');Element.hide('search_spinner');fixme();}, 
+  onLoading:function(request){Element.hide('search_go');Element.show('search_spinner');fixme();}, 
+  method:'post', 
+  parameters:'q=' + value })})
+
+
+</script>
+<style type="text/css">
+ div#search_results ul li {background-image:none; padding-left:0}
+ div#search_results ul {padding-left:0}
+#rhsContent .content ul {padding-left:0}
+
+</style>
+<div id="search_results" ></div>
+</form>
+
+</div>
+</div>
+</div>
+	
+
+
+
+	
+	
+		
+
+
+
+
+
+
+<div class="nofollow">
+
+
+
+
+<div id="taglist" class="sideContentItem">
+
+	<h2>Tags</h2>
+
+<div class="innerSidebarContent">
+<ul>
+
+<li>
+<a title="
+
+Recommended (13 entries)
+
+
+" href="/mli/tag/recommended/">Recommended</a> (13)</li>
+
+<li>
+<a title="
+
+Language (11 entries)
+
+
+" href="/mli/tag/language/">Language</a> (11)</li>
+
+<li>
+<a title="
+
+
+Pertaining to operating systems based on the Linux kernel
+
+" href="/mli/tag/linux/">Linux</a> (9)</li>
+
+<li>
+<a title="
+
+Random (4 entries)
+
+
+" href="/mli/tag/random/">Random</a> (4)</li>
+
+<li>
+<a title="
+
+Todo (3 entries)
+
+
+" href="/mli/tag/todo/">Todo</a> (3)</li>
+
+</ul>
+</div>
+
+</div>
+
+</div>
+	
+
+
+
+	
+	
+		
+
+
+
+
+
+<div class="nofollow">
+
+
+
+<div id="sidefavourites" class="sideContentItem">
+
+	<h2>Favourite blogs</h2>
+
+<div class="innerSidebarContent">
+<ul id="folderlist">
+	
+		
+		<li class="folder"><a class="foldername" title="View the blogs and entries in this folder" href="/mli/favs/my_favourites/">Worth a visit</a>
+
+			<ul>
+				
+				
+					<li class="blog">
+						<a href="/mli/favs/my_favourites/?item=094d73990234bc24010235f03b690294" title="View entries from: A celebration of mediocrity">A celebration of mediocrity</a>&nbsp;<a href="/antonyholmes/"><img src="/blogbuilder/media/images/admin/subscriptions/goto.gif" title="Go to 'A celebration of mediocrity'" alt="Go to 'A celebration of mediocrity'"/></a>
+					</li>
+				
+					<li class="blog">
+						<a href="/mli/favs/my_favourites/?item=094d7399033ca1d20103adb1707f1f40" title="View entries from: Ashutosh's blog">Ashutosh's blog</a>&nbsp;<a href="/atrivedi/"><img src="/blogbuilder/media/images/admin/subscriptions/goto.gif" title="Go to 'Ashutosh's blog'" alt="Go to 'Ashutosh's blog'"/></a>
+					</li>
+				
+					<li class="blog">
+						<a href="/mli/favs/my_favourites/?item=094d7399033ca1d20103adb093371f3f" title="View entries from: But yes, but no, but yes, but no, but yeah">But yes, but no, but yes, but no, but yeah</a>&nbsp;<a href="/akyrtzoglou/"><img src="/blogbuilder/media/images/admin/subscriptions/goto.gif" title="Go to 'But yes, but no, but yes, but no, but yeah'" alt="Go to 'But yes, but no, but yes, but no, but yeah'"/></a>
+					</li>
+				
+					<li class="blog">
+						<a href="/mli/favs/my_favourites/?item=094d73990293619b0102985c087a04f6" title="View entries from: Free to fly.">Free to fly.</a>&nbsp;<a href="/peilee/"><img src="/blogbuilder/media/images/admin/subscriptions/goto.gif" title="Go to 'Free to fly.'" alt="Go to 'Free to fly.'"/></a>
+					</li>
+				
+					<li class="blog">
+						<a href="/mli/favs/my_favourites/?item=094d73990258dffa0102592e29c400a9" title="View entries from: Hannah's blog">Hannah's blog</a>&nbsp;<a href="/hannahpidsley/"><img src="/blogbuilder/media/images/admin/subscriptions/goto.gif" title="Go to 'Hannah's blog'" alt="Go to 'Hannah's blog'"/></a>
+					</li>
+				
+					<li class="blog">
+						<a href="/mli/favs/my_favourites/?item=094d73990258dffa0102592f744d00af" title="View entries from: Hollyzone">Hollyzone</a>&nbsp;<a href="/hollycruise/"><img src="/blogbuilder/media/images/admin/subscriptions/goto.gif" title="Go to 'Hollyzone'" alt="Go to 'Hollyzone'"/></a>
+					</li>
+				
+					<li class="blog">
+						<a href="/mli/favs/my_favourites/?item=094d73990502c2e201053008d1fa23ca" title="View entries from: Lahari's">Lahari's</a>&nbsp;<a href="/laharidealwis/"><img src="/blogbuilder/media/images/admin/subscriptions/goto.gif" title="Go to 'Lahari's'" alt="Go to 'Lahari's'"/></a>
+					</li>
+				
+					<li class="blog">
+						<a href="/mli/favs/my_favourites/?item=094d739902afaf0c0102d1bb98692af4" title="View entries from: Nothing to see here">Nothing to see here</a>&nbsp;<a href="/tretout/"><img src="/blogbuilder/media/images/admin/subscriptions/goto.gif" title="Go to 'Nothing to see here'" alt="Go to 'Nothing to see here'"/></a>
+					</li>
+				
+					<li class="blog">
+						<a href="/mli/favs/my_favourites/?item=094d7399046d40aa010481edbe991a25" title="View entries from: Reverie">Reverie</a>&nbsp;<a href="/yanglu/"><img src="/blogbuilder/media/images/admin/subscriptions/goto.gif" title="Go to 'Reverie'" alt="Go to 'Reverie'"/></a>
+					</li>
+				
+					<li class="blog">
+						<a href="/mli/favs/my_favourites/?item=094d73990238f74f010250d628922a28" title="View entries from: Ritesh's blog">Ritesh's blog</a>&nbsp;<a href="/riteshkrishna/"><img src="/blogbuilder/media/images/admin/subscriptions/goto.gif" title="Go to 'Ritesh's blog'" alt="Go to 'Ritesh's blog'"/></a>
+					</li>
+				
+					<li class="blog">
+						<a href="/mli/favs/my_favourites/?item=094d73990270648101028cb921bc28ec" title="View entries from: Welcome to the North">Welcome to the North</a>&nbsp;<a href="/andrewk/"><img src="/blogbuilder/media/images/admin/subscriptions/goto.gif" title="Go to 'Welcome to the North'" alt="Go to 'Welcome to the North'"/></a>
+					</li>
+				
+					<li class="blog">
+						<a href="/mli/favs/my_favourites/?item=094d73990234bc24010235f083bf0296" title="View entries from: [TBA]">[TBA]</a>&nbsp;<a href="/tstein/"><img src="/blogbuilder/media/images/admin/subscriptions/goto.gif" title="Go to '[TBA]'" alt="Go to '[TBA]'"/></a>
+					</li>
+				
+				
+			</ul>
+		</li>
+		
+	
+		
+		<li class="folder"><a class="foldername" title="View the blogs and entries in this folder" href="/mli/favs/blog-little_people_who_i_know/">blog-little people who i know</a>
+
+			<ul>
+				
+				
+					<li class="blog">
+						<a href="/mli/favs/blog-little_people_who_i_know/?item=094d739902706481010283250b7a1ab2" title="View entries from: ...">...</a>&nbsp;<a href="/yichan/"><img src="/blogbuilder/media/images/admin/subscriptions/goto.gif" title="Go to '...'" alt="Go to '...'"/></a>
+					</li>
+				
+					<li class="blog">
+						<a href="/mli/favs/blog-little_people_who_i_know/?item=094d73990270648101028323b2ea1aaf" title="View entries from: Martyn's blog">Martyn's blog</a>&nbsp;<a href="/mrittman/"><img src="/blogbuilder/media/images/admin/subscriptions/goto.gif" title="Go to 'Martyn's blog'" alt="Go to 'Martyn's blog'"/></a>
+					</li>
+				
+					<li class="blog">
+						<a href="/mli/favs/blog-little_people_who_i_know/?item=094d73990270648101028325c5551ab3" title="View entries from: Schreibfaul in Warwick">Schreibfaul in Warwick</a>&nbsp;<a href="/ulrichjanus/"><img src="/blogbuilder/media/images/admin/subscriptions/goto.gif" title="Go to 'Schreibfaul in Warwick'" alt="Go to 'Schreibfaul in Warwick'"/></a>
+					</li>
+				
+					<li class="blog">
+						<a href="/mli/favs/blog-little_people_who_i_know/?item=094d73990270648101028caf181628d3" title="View entries from: imemine">imemine</a>&nbsp;<a href="/ioanadumitrescu/"><img src="/blogbuilder/media/images/admin/subscriptions/goto.gif" title="Go to 'imemine'" alt="Go to 'imemine'"/></a>
+					</li>
+				
+				
+			</ul>
+		</li>
+		
+	
+</ul>
+</div>
+</div>
+
+
+</div>
+	
+
+
+
+	
+	
+		
+
+
+
+
+
+
+
+<div id="galleries" class="sideContentItem">
+
+	<h2>Galleries</h2>
+
+<div class="innerSidebarContent">
+<ul>
+
+
+
+<li><strong><a href="/mli/slideshow/">Slideshow of all galleries</a></strong></li>
+
+
+	
+
+	<li><a href="/mli/gallery/in_pictures/">In Pictures</a> (1 images)</li>
+
+
+	
+
+
+
+</ul>
+</div>
+</div>
+	
+
+
+
+	
+	
+		
+
+
+
+
+
+
+<div class="nofollow">
+
+
+
+
+<div id="mostrecentcomments" class="sideContentItem">
+
+	<h2>Most recent comments</h2>
+
+<div class="innerSidebarContent">
+<ul>
+
+<li>
+	LK Bennett has seen the last of me. What a shame for them, as this &hellip; by 
+	
+		Tania
+	
+	
+	on this <a title="L. K. Bennett at Bicester Village" href="/mli/entry/l_k_bennett/">entry</a></li>
+
+<li>
+	Connect laptop to desktop, boot laptop, connect to the internet usi&hellip; by 
+	
+		Michael Li
+	
+	
+	on this <a title="O2 Huawei E169 USB modem Gentoo GNU/Linux" href="/mli/entry/o2_huawei_e169/">entry</a></li>
+
+<li>
+	I have a short question. I too have a desktop on which I want to in&hellip; by 
+	
+		mcbluegreen
+	
+	
+	on this <a title="O2 Huawei E169 USB modem Gentoo GNU/Linux" href="/mli/entry/o2_huawei_e169/">entry</a></li>
+
+<li>
+	Hi all! In response to all the complains regarding customers servic&hellip; by 
+	
+		Susan
+	
+	
+	on this <a title="L. K. Bennett at Bicester Village" href="/mli/entry/l_k_bennett/">entry</a></li>
+
+<li>
+	I have just written a very nice complaint letter about my shoes to &hellip; by 
+	
+		Monica
+	
+	
+	on this <a title="L. K. Bennett at Bicester Village" href="/mli/entry/l_k_bennett/">entry</a></li>
+
+</ul>
+</div>
+</div>
+
+
+</div>
+	
+
+
+
+	
+	
+		
+
+
+
+
+
+
+<div class="nofollow">
+
+
+<div id="mostrecententries" class="sideContentItem">
+
+	<h2>Blog archive</h2>
+
+<div class="innerSidebarContent" id="blogArchive_094d73990c14a6c2010c14a78cf5080b">
+
+<img src="/blogbuilder/media/images/popup/tab-spinner.gif" /> Loading&hellip;
+
+<script type="text/javascript">
+Event.observe(window,'load', function() {
+	new Ajax.Updater(
+		'blogArchive_094d73990c14a6c2010c14a78cf5080b',
+		'/blogbuilder/admin/showArchive.spr',
+		{
+			asynchronous: true,
+			method: 'get',
+			parameters: 'blog=094d7399ff3efb2000ff425b10e5066a',
+			evalScripts: true
+		}
+	);
+});
+</script>
+
+</div>
+</div>
+</div>
+
+<script style="text/javascript">
+function toggleArchive(elm) {
+	if (elm.parentNode.className == 'collapsed') {
+		elm.parentNode.className = 'expanded';
+		elm.innerHTML = '&#9660;';
+	} else {
+		elm.parentNode.className = 'collapsed';
+		elm.innerHTML = '&#9658;';
+	}
+}
+
+function toggleEntries(elm, monthName, year, ignoreToggle) {
+
+	if (!ignoreToggle) {
+		toggleArchive(elm);
+	}
+	
+	//el = elm.parentNode.getElementsByClassName('entriesList')[0];
+	
+	var childnodes = elm.parentNode.childNodes;
+	
+	for (var i=0; i<childnodes.length;i++) {
+		if (childnodes[i].className && childnodes[i].className.indexOf('entriesList') != -1) {
+			el = childnodes[i];
+			break;
+		}
+	}
+	
+	if (el.className && el.className.indexOf('loaded') == -1) {
+		// load and at the end, add the "loaded" classname
+		var params = 'year=' + year + '&monthName=' + monthName;
+		
+		
+			params += '&blog=094d7399ff3efb2000ff425b10e5066a';
+		
+		
+		new Ajax.Request('/blogbuilder/admin/showEntryTitlesForMonth.spr',
+			{
+				method: 'get',
+				parameters: params,
+				onComplete: function(response) {
+					el.innerHTML = response.responseText;
+					el.className = el.className += ' loaded';
+				}
+			}
+		);
+	}
+}
+</script>
+	
+
+
+
+	
+	
+		
+
+
+
+
+
+
+<div class="nofollow">
+<div id="entrytypes" class="sideContentItem">
+
+	<h2>Types of entry</h2>
+
+<div class="innerSidebarContent">
+<ul>
+
+
+	<li><a href="/mli/entrytype/book/">Book reviews</a></li>
+	<li><a href="/mli/entrytype/dvd/">DVD reviews</a></li>
+	<li><a href="/mli/entrytype/music/">Music reviews</a></li>
+	<li><a href="/mli/entrytype/game/">Video game reviews</a></li>
+	<li><a href="/mli/entrytype/movie/">Movie reviews</a></li>
+	<li><a href="/mli/entrytype/tv/">TV show reviews</a></li>
+	<li><a href="/mli/entrytype/answer/">Prompt responses</a></li>
+
+</ul>
+</div>
+</div>
+</div>
+	
+
+
+
+	
+	
+		
+
+
+
+
+	
+<div class="nofollow">
+	
+
+
+</div>
+	
+
+
+
+<div id="signincopyrightfooter" class="sideContentItem">
+
+
+	Not signed in<br />
+	<a href="https://websignon.warwick.ac.uk/origin/slogin?shire=https%3A%2F%2Fblogs.warwick.ac.uk%2Fblogbuilder%2Fshire&providerId=urn%3Ablogs.warwick.ac.uk%3Ablogbuilder%3Aservice&target=http%3A%2F%2Fblogs.warwick.ac.uk%2Fmli%2Fentry%2Fo2_huawei_e169">Sign in</a>
+
+<br/><br/>
+Powered by <a href="/showall" title="BlogBuilder home page">BlogBuilder</a> 
+<br/>
+<a href="http://www2.warwick.ac.uk/services/its/servicessupport/web/blogs/terms/" title="Copyright and privacy statement">&copy; MMX</a> 
+
+</div>
+
+<!-- end of noindex div -->
+</div>
+
+</div></div>
+<div id="sideContentFooter"></div>
+
+</div>
+
+	</div>
+
+</div>
+</div>
+</div>
+
+
+
+</body>
+</html>
