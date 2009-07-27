@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr">
+
+<head profile="http://gmpg.org/xfn/11">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>kelvin quee  &raquo; Blog Archive   &raquo; How-To: Configure Huawei E169 Dongle</title>
+
+<meta name="generator" content="WordPress 2.2.2" /> <!-- leave this for stats -->
+
+<link rel="stylesheet" href="http://www.kquee.com/blog/wp-content/themes/default/style.css" type="text/css" media="screen" />
+<link rel="alternate" type="application/rss+xml" title="kelvin quee RSS Feed" href="http://www.kquee.com/blog/feed/" />
+<link rel="pingback" href="http://www.kquee.com/blog/xmlrpc.php" />
+
+<style type="text/css" media="screen">
+
+	#page { background: url("http://www.kquee.com/blog/wp-content/themes/default/images/kubrickbgwide.jpg") repeat-y top; border: none; }
+
+</style>
+
+	<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.kquee.com/blog/xmlrpc.php?rsd" />
+</head>
+<body>
+<div id="page">
+
+
+<div id="header">
+	<div id="headerimg">
+		<h1><a href="http://www.kquee.com/blog/">kelvin quee</a></h1>
+		<div class="description">Perspectives on Technology, Business, Marketing and Communications from the tiny island-nation of Singapore</div>
+	</div>
+</div>
+<hr />
+
+	<div id="content" class="widecolumn">
+
+	
+		<div class="navigation">
+			<div class="alignleft">&laquo; <a href="http://www.kquee.com/blog/2008/03/27/geek-terminal-website-hacked/">Geek Terminal Website Hacked</a></div>
+			<div class="alignright"><a href="http://www.kquee.com/blog/2008/11/30/101/">InteresThink 3: Causes and Ideas is Here!</a> &raquo;</div>
+		</div>
+
+		<div class="post" id="post-98">
+			<h2><a href="http://www.kquee.com/blog/2008/08/08/how-to-configure-huawei-e169-dongle/" rel="bookmark" title="Permanent Link: How-To: Configure Huawei E169 Dongle">How-To: Configure Huawei E169 Dongle</a></h2>
+
+			<div class="entry">
+				<p>I signed up for Mobile Broadband with Singtel and got a free <a href="http://www.huawei.com/mobileweb/en/products/view.do?id=1181">Huawei E169 dongle</a>. It is a pretty powerful thing with a 3G modem, a mini-SD card reader and a emulated CD-ROM drive. Unfortunately, this confuses most systems. Since I don&#8217;t really care for the mini-SD card reader or the windows drivers in the emulated CD-ROM drive, this guide will be about how to get the 3G modem to work.</p>
+<p>It&#8217;s really simple actually but there was alot of trial and error. I&#8217;ve tested it on multiple computers and on pro-longed usage. I&#8217;m using Ubuntu 8.04 and it works beautifully. It should work with all other systems too. Here are the 3 steps required - </p>
+<p>(1) Download the <a href="http://www.draisberghof.de/usb_modeswitch/">USB Modeswitch</a>. You require this to switch to the 3G modem full-time. Compile it. If you&#8217;re on x86 systems and a little lazy, you can <a href='http://www.kquee.com/blog/vault/usb_modeswitch.tar.gz' title='usb_modeswitchtar.gz'>download the binary here</a>.</p>
+<p>(2) Run - </p>
+<blockquote><p>$ lsusb<br />
+Bus 004 Device 003: ID 12d1:1001 Huawei Technologies Co., Ltd. E620 USB Modem</p></blockquote>
+<p>Run - </p>
+<blockquote><p>$ ./usb_modeswitch -v 0&#215;12d1 -p 0&#215;1001 -H 1</p>
+<p> * usb_modeswitch: tool for controlling &#8220;flip flop&#8221; mode USB devices<br />
+ * Version 0.9.4 (C) Josua Dietze 2008<br />
+ * Works with libusb 0.1.12 and probably other versions</p>
+<p>Looking for default devices<br />
+ Found default devices (1)<br />
+Prepare switching, accessing latest device<br />
+ OK, Huawei control message successfully sent.<br />
+-> See /proc/bus/usb/devices (or call lsusb) for changes. Bye</p></blockquote>
+<p>(3) Now you can dial up using most dialup software. wvdial works best for me. Here is what I run - </p>
+<blockquote><p>$ wvdial /etc/wvdial.conf</p></blockquote>
+<p>The configuration file reads like this -</p>
+<blockquote><p>[Dialer Defaults]<br />
+Init1 = ATZ<br />
+Init2 = ATQ0 V1 E1 S0=0 &#038;C1 &#038;D2 +FCLASS=0<br />
+Init3 = AT+CGDCONT=1,&#8221;IP&#8221;,&#8221;internet&#8221;<br />
+Stupid Mode = 1<br />
+ISDN = 0<br />
+Modem Type = Analog Modem<br />
+Phone = *99#<br />
+Modem = /dev/ttyUSB0<br />
+Username = NA<br />
+Dial Command = ATDT<br />
+Password = pass<br />
+Baud = NA</p></blockquote>
+<p>Somehow, it managed to detect the DNS servers. For Singtel, they are - 165.21.100.88 and 165.21.83.88. If you are on M1, Starhub or other ISPs and have success with them, please share your experience and configuration settings below.</p>
+<p>Hope that helps!</p>
+
+				
+				<p class="postmetadata alt">
+					<small>
+						This entry was posted
+												on Friday, August 8th, 2008 at 12:41 pm						and is filed under <a href="http://www.kquee.com/blog/category/technology/workarounds/" title="View all posts in Workarounds" rel="category tag">Workarounds</a>,  <a href="http://www.kquee.com/blog/category/technology/" title="View all posts in Technology" rel="category tag">Technology</a>.
+						You can follow any responses to this entry through the <a href='http://www.kquee.com/blog/2008/08/08/how-to-configure-huawei-e169-dongle/feed/'>RSS 2.0</a> feed.
+
+													You can <a href="#respond">leave a response</a>, or <a href="http://www.kquee.com/blog/2008/08/08/how-to-configure-huawei-e169-dongle/trackback/" rel="trackback">trackback</a> from your own site.
+
+						
+					</small>
+				</p>
+
+			</div>
+		</div>
+
+	
+<!-- You can start editing here. -->
+
+	<h3 id="comments">2 Responses to &#8220;How-To: Configure Huawei E169 Dongle&#8221;</h3>
+
+	<ol class="commentlist">
+
+	
+		<li class="alt" id="comment-18510">
+			<cite>Andy</cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-18510" title="">December 6th, 2008 at 5:57 pm</a> </small>
+
+			<p>When I run</p>
+<p>sudo usb_modeswitch -v 0×12d1 -p 0×1001 -d 1 or<br />
+sudo usb_modeswitch -v 0×12d1 -p 0×1001 -H 1</p>
+<p>I get this error message:</p>
+<p>Quote:<br />
+No default vendor/product ID given. Aborting</p>
+<p>Problem / Solution: the X-character in 0&#215;12d1 and 0&#215;1001<br />
+need to be the letter &#8220;x&#8221;, no multiplication symbol, please correct / point out this error.</p>
+
+		</li>
+
+	
+	
+		<li id="comment-18511">
+			<cite>Steve</cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-18511" title="">December 9th, 2008 at 3:49 am</a> </small>
+
+			<p>I thought the E160G had the Mini SD reader not the E169G?</p>
+<p>Any way to get the reader working in Linux but switching over to allow dialup as well?</p>
+
+		</li>
+
+	
+	
+	</ol>
+
+ 
+
+
+<h3 id="respond">Leave a Reply</h3>
+
+
+<form action="http://www.kquee.com/blog/wp-comments-post.php" method="post" id="commentform">
+
+
+<p><input type="text" name="author" id="author" value="" size="22" tabindex="1" />
+<label for="author"><small>Name (required)</small></label></p>
+
+<p><input type="text" name="email" id="email" value="" size="22" tabindex="2" />
+<label for="email"><small>Mail (will not be published) (required)</small></label></p>
+
+<p><input type="text" name="url" id="url" value="" size="22" tabindex="3" />
+<label for="url"><small>Website</small></label></p>
+
+
+<!--<p><small><strong>XHTML:</strong> You can use these tags: <code>&lt;a href=&quot;&quot; title=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;acronym title=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote cite=&quot;&quot;&gt; &lt;code&gt; &lt;em&gt; &lt;i&gt; &lt;strike&gt; &lt;strong&gt; </code></small></p>-->
+
+<p><textarea name="comment" id="comment" cols="100%" rows="10" tabindex="4"></textarea></p>
+
+<p><input name="submit" type="submit" id="submit" tabindex="5" value="Submit Comment" />
+<input type="hidden" name="comment_post_ID" value="98" />
+</p>
+
+</form>
+
+
+
+	
+	</div>
+
+
+<hr />
+<div id="footer">
+<!-- If you'd like to support WordPress, having the "powered by" link somewhere on your blog is the best way, it's our only promotion or advertising. -->
+	<p>
+		kelvin quee is proudly powered by
+		<a href="http://wordpress.org/">WordPress</a>
+		<br /><a href="http://www.kquee.com/blog/feed/">Entries (RSS)</a>
+		and <a href="http://www.kquee.com/blog/comments/feed/">Comments (RSS)</a>.
+		<!-- 18 queries. 2.485 seconds. -->
+	</p>
+</div>
+</div>
+
+<!-- Gorgeous design by Michael Heilemann - http://binarybonsai.com/kubrick/ -->
+
+		</body>
+</html>
