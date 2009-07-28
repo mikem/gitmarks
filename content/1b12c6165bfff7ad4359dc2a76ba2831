@@ -1,0 +1,821 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="verify-v1" content="iXp+BXanBnHs/ReaiGLCifeVzrjd53f3NGNF2QCXqzA=" />
+		<link rel="icon" href="/favicon.ico" type="image/png" />
+		<link rel="shortcut icon" href="/favicon.ico" type="image/png" />
+		<meta http-equiv="Content-Style-Type" content="text/css" />
+		<meta name="generator" content="MediaWiki 1.14.0" />
+		<meta name="keywords" content="Xorg RandR 1.2,ATI Mobility Radeon 7000,Installing Ubuntu on a ThinkPad R60e,Intel,Radeon,Sample Fn-F7 script,T30,Ubuntu 7.10,X31,X32,X Series" />
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="ThinkWiki (en)" />
+		<link title="Creative Commons" type="application/rdf+xml" href="/index.php?title=Xorg_RandR_1.2&amp;action=creativecommons" rel="meta" />
+		<link rel="copyright" href="http://www.gnu.org/copyleft/fdl.html" />
+		<link rel="alternate" type="application/rss+xml" title="ThinkWiki RSS Feed" href="http://www.thinkwiki.org/index.php?title=Special:RecentChanges&amp;feed=rss" />
+		<link rel="alternate" type="application/atom+xml" title="ThinkWiki Atom Feed" href="http://www.thinkwiki.org/index.php?title=Special:RecentChanges&amp;feed=atom" />
+		<title>Xorg RandR 1.2 - ThinkWiki</title>
+		<style type="text/css" media="screen,projection">/*<![CDATA[*/ @import "/skins/thinkwiki/main.css?9"; /*]]>*/</style>
+		<link rel="stylesheet" type="text/css" media="print" href="/skins/common/commonPrint.css" />
+		<link rel="meta" href="http://www.thinkwiki.org/labels.rdf" type="application/rdf+xml" title="ICRA labels" />
+		<meta http-equiv="pics-label" content='(pics-1.1 "http://www.icra.org/ratingsv02.html" comment "jusprog.de 1." l gen true for "http://www.thinkwiki.org/"  r (nz 0 vz 0 lz 0 oz 0 cb 1 nz 1 vz 1 lz 1 oz 1 ) "http://www.rsac.org/ratingsv01.html" l gen true for "http://www.thinkwiki.org/" r (n 0 s 0 v 0 l 0))'>
+		<meta http-equiv="pics-Label" content='(pics-1.1 "http://www.icra.org/pics/vocabularyv03/" comment "jusprog.de 1." l gen true for "http://www.thinkwiki.org/" r (n 0 s 3 v 0 l 0 oa 0 ob 0 oc 0 od 0 oe 0 of 0 og 0 oh 0 c 1))'>
+		<!--[if lt IE 5.5000]><style type="text/css">@import "/skins/thinkwiki/IE50Fixes.css";</style><![endif]-->
+		<!--[if IE 5.5000]><style type="text/css">@import "/skins/thinkwiki/IE55Fixes.css";</style><![endif]-->
+		<!--[if IE 6]><style type="text/css">@import "/skins/thinkwiki/IE60Fixes.css";</style><![endif]-->
+		<!--[if IE 7]><style type="text/css">@import "/skins/thinkwiki/IE70Fixes.css?1";</style><![endif]-->
+		<!--[if lt IE 7]><script type="text/javascript" src="/skins/common/IEFixes.js"></script>
+		<meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+		
+		<script type= "text/javascript">/*<![CDATA[*/
+		var skin = "thinkwiki";
+		var stylepath = "/skins";
+		var wgArticlePath = "/wiki/$1";
+		var wgScriptPath = "";
+		var wgScript = "/index.php";
+		var wgVariantArticlePath = false;
+		var wgActionPaths = {};
+		var wgServer = "http://www.thinkwiki.org";
+		var wgCanonicalNamespace = "";
+		var wgCanonicalSpecialPageName = false;
+		var wgNamespaceNumber = 0;
+		var wgPageName = "Xorg_RandR_1.2";
+		var wgTitle = "Xorg RandR 1.2";
+		var wgAction = "view";
+		var wgArticleId = "4948";
+		var wgIsArticle = true;
+		var wgUserName = null;
+		var wgUserGroups = null;
+		var wgUserLanguage = "en";
+		var wgContentLanguage = "en";
+		var wgBreakFrames = false;
+		var wgCurRevisionId = "49464";
+		var wgVersion = "1.14.0";
+		var wgEnableAPI = true;
+		var wgEnableWriteAPI = true;
+		var wgSeparatorTransformTable = ["", ""];
+		var wgDigitTransformTable = ["", ""];
+		var wgRestrictionEdit = [];
+		var wgRestrictionMove = [];
+		/*]]>*/</script>
+                
+		<script type="text/javascript" src="/skins/common/wikibits.js?1"><!-- wikibits js --></script>
+		<script type="text/javascript" src="/index.php?title=-&amp;action=raw&amp;gen=js&amp;useskin=thinkwiki"><!-- site js --></script>
+		<!-- Head Scripts -->
+				<script type="text/javascript" src="/skins/common/ajax.js?195"></script>
+	</head>
+<body  class="mediawiki  ltr">
+	<div id="globalWrapper">
+		<div id="column-content">
+	<div id="content">
+		<a name="top" id="top"></a>
+<div id="siteDescription" style="display:none;"><h1>ThinkWiki - Linux Thinkpad Notebook Wiki</h1><h3>This is ThinkWiki, the Wiki Web for ThinkPad users. Here you find anything you need to install your favourite Linux distribution on your Lenovo or IBM ThinkPad.</h3></div>
+<div id="topAdverts" style="height:60px;"><div style="float:left;">
+<script type="text/javascript"><!--
+google_ad_client = "pub-9115710338321120";
+// ThinkWiki Banner
+google_ad_slot = "9529067919";
+google_ad_width = 468;
+google_ad_height = 60;
+if (screen.width>=800 && screen.width<1280) {
+// ThinkWiki Halfbanner
+google_ad_slot = "7414443686";
+google_ad_width = 234;
+google_ad_height = 60;
+}
+if (screen.width>1280) {
+// ThinkWiki Leaderboard
+google_ad_slot = "7314569023";
+google_ad_width = 728;
+google_ad_height = 90;
+}
+//-->
+</script>
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+</div>
+<div style="float:right;" class="plainlinks">
+<script type="text/javascript"><!--
+google_ad_slot = "9529067919"; /* ThinkWiki Banner */
+google_ad_width = 468;
+google_ad_height = 60;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+<!--
+<table><tr><td>   
+<a href="http://www.ecoupons.com/thinkwiki.php"><img src="http://www.ecoupons.com/thinkwiki2.php" width="468" height="60" alt="eCoupons" /></a>
+</td></tr></table>
+-->
+</div>
+</div><div class="splitbar"></div><br />
+				<h1 class="firstHeading">Xorg RandR 1.2</h1>
+<div id="socialBookMarks" class="sharesb"> 
+<ul>
+<li>Bookmark with:</li>
+<li class="delicious"> 
+<a id="delicious" title="Post this story to Delicious" href="http://del.icio.us/post?url=http://www.thinkwiki.org/wiki/Xorg_RandR_1.2&amp;title=Xorg RandR 1.2 - ThinkWiki">Delicious</a> 
+</li>
+<li class="digg"> 
+<a id="digg" title="Post this story to Digg" href="http://digg.com/submit?url=http://www.thinkwiki.org/wiki/Xorg_RandR_1.2&amp;title=Xorg RandR 1.2 - ThinkWiki">Digg</a> 
+</li>
+<li class="reddit"> 
+<a id="reddit" title="Post this story to reddit" href="http://reddit.com/submit?url=http://www.thinkwiki.org/wiki/Xorg_RandR_1.2&amp;title=Xorg RandR 1.2 - ThinkWiki">reddit</a> 
+</li>
+<li class="facebook"> 
+<a id="facebook" title="Post this story to Facebook" href="http://www.facebook.com/sharer.php?u=http://www.thinkwiki.org/wiki/Xorg_RandR_1.2">Facebook</a> 
+</li>
+<li class="stumbleupon"> 
+<a id="stumbleupon" title="Post this story to StumbleUpon" href="http://www.stumbleupon.com/submit?url=http://www.thinkwiki.org/wiki/Xorg_RandR_1.2&amp;title=Xorg RandR 1.2 - ThinkWiki">StumbleUpon</a> 
+</li>
+</ul>
+</div>
+		<div id="bodyContent">
+			<h3 id="siteSub">From ThinkWiki</h3>
+			<div id="contentSub"></div>
+									<div id="jump-to-nav">Jump to: <a href="#column-one">navigation</a>, <a href="#sbi">search</a></div>			<!-- start content -->
+			<table id="toc" class="toc" summary="Contents"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1"><a href="#Overview"><span class="tocnumber">1</span> <span class="toctext">Overview</span></a></li>
+<li class="toclevel-1"><a href="#Supported_drivers"><span class="tocnumber">2</span> <span class="toctext">Supported drivers</span></a></li>
+<li class="toclevel-1"><a href="#xorg.conf"><span class="tocnumber">3</span> <span class="toctext">xorg.conf</span></a></li>
+<li class="toclevel-1"><a href="#Using__.24_xrandr"><span class="tocnumber">4</span> <span class="toctext">Using  $ xrandr</span></a>
+<ul>
+<li class="toclevel-2"><a href="#First_discover_what_we_have"><span class="tocnumber">4.1</span> <span class="toctext">First discover what we have</span></a></li>
+<li class="toclevel-2"><a href="#Using_xrandr_to_do_useful_things"><span class="tocnumber">4.2</span> <span class="toctext">Using xrandr to do useful things</span></a></li>
+<li class="toclevel-2"><a href="#Now_automate_it_on_login"><span class="tocnumber">4.3</span> <span class="toctext">Now automate it on login</span></a></li>
+<li class="toclevel-2"><a href="#Sample_Fn-F7_script"><span class="tocnumber">4.4</span> <span class="toctext">Sample Fn-F7 script</span></a></li>
+<li class="toclevel-2"><a href="#GUIs"><span class="tocnumber">4.5</span> <span class="toctext">GUIs</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1"><a href="#Summing_up"><span class="tocnumber">5</span> <span class="toctext">Summing up</span></a>
+<ul>
+<li class="toclevel-2"><a href="#the_Virtual_screen"><span class="tocnumber">5.1</span> <span class="toctext">the Virtual screen</span></a></li>
+<li class="toclevel-2"><a href="#Output_port_names"><span class="tocnumber">5.2</span> <span class="toctext">Output port names</span></a></li>
+<li class="toclevel-2"><a href="#Note_for_Gnome_users"><span class="tocnumber">5.3</span> <span class="toctext">Note for Gnome users</span></a></li>
+<li class="toclevel-2"><a href="#Note_for_Ubuntu_Gutsy_users"><span class="tocnumber">5.4</span> <span class="toctext">Note for Ubuntu Gutsy users</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1"><a href="#Gleanings"><span class="tocnumber">6</span> <span class="toctext">Gleanings</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Notes_from_xserver-xorg-video-intel.readme"><span class="tocnumber">6.1</span> <span class="toctext">Notes from xserver-xorg-video-intel.readme</span></a></li>
+<li class="toclevel-2"><a href="#Xorg_mailing_list"><span class="tocnumber">6.2</span> <span class="toctext">Xorg mailing list</span></a></li>
+<li class="toclevel-2"><a href="#Notes_for_X31.2C_X32.2C_T30_.2F_Radeon_7000.2C_Radeon_7500_users"><span class="tocnumber">6.3</span> <span class="toctext">Notes for X31, X32, T30 / Radeon 7000, Radeon 7500 users</span></a>
+<ul>
+<li class="toclevel-3"><a href="#Further_Note"><span class="tocnumber">6.3.1</span> <span class="toctext">Further Note</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-1"><a href="#References"><span class="tocnumber">7</span> <span class="toctext">References</span></a></li>
+</ul>
+</td></tr></table><script type="text/javascript"> if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } </script>
+<a name="Overview" id="Overview"></a><h2> <span class="mw-headline"> Overview </span></h2>
+<p><b>X RandR </b>is used to configure which display ports are enabled (e.g. LCD, VGA and DVI), and to configure display modes and properties such as orientation, reflection and DPI.
+</p><p>This is the simplest and most powerful way to get multi-monitor systems working using recent versions of Linux such as <a href="/wiki/Category:Ubuntu_7.10" title="Category:Ubuntu 7.10">Ubuntu 7.10</a> and Fedora 8 with graphics chipsets such as the Intel 945GM/GMS and ATI Radeon found in Thinkpads.
+</p><p><b>xrandr</b> is the command line interface to the RandR X extension. As usual with X, good documentation is hard to find; first try the following commands:
+</p>
+<ul><li> <code style="white-space:nowrap;color:#495988;background-color:white;">$ xrandr --help</code>
+</li><li> <code style="white-space:nowrap;color:#495988;background-color:white;">$ man xrandr</code>
+</li></ul>
+<ul><li> for Intel graphics: <code style="white-space:nowrap;color:#495988;background-color:white;">$ man intel</code>
+</li><li> for ATI graphics: <code style="white-space:nowrap;color:#495988;background-color:white;">$ man radeon</code>
+</li></ul>
+<p>The rest of this page refers to a laptop with a built in 1024x768 pixel screen and an external 1600x1200 VGA monitor. Simply replace the relevant numbers with your own system specifications and all should work fine.
+</p>
+<a name="Supported_drivers" id="Supported_drivers"></a><h2> <span class="mw-headline"> Supported drivers </span></h2>
+<pre><a href="/wiki/Category:Ubuntu_7.10" title="Category:Ubuntu 7.10">Ubuntu 7.10</a> <b>Gutsy Gibbon</b>
+</pre>
+<ul><li> X.org <a href="/wiki/Intel" title="Intel">intel</a> driver, version&nbsp;??? (included in Xorg&nbsp;???) and later. Ubuntu version: <a href="https://launchpad.net/ubuntu/+source/xserver-xorg-video-intel/2:2.1.1-0ubuntu2" class="external text" title="https://launchpad.net/ubuntu/+source/xserver-xorg-video-intel/2:2.1.1-0ubuntu2" rel="nofollow">2:2.1.1-0ubuntu2</a> with <a href="https://launchpad.net/ubuntu/gutsy/i386/xrandr/1:1.2.2-0ubuntu1" class="external text" title="https://launchpad.net/ubuntu/gutsy/i386/xrandr/1:1.2.2-0ubuntu1" rel="nofollow">xrandr 1:1.2.2-0ubuntu1</a>
+</li></ul>
+<ul><li> X.org <a href="/wiki/Radeon" title="Radeon">radeon</a> driver, 6.7.192 and later (in ubuntu <a href="http://packages.ubuntu.com/gutsy/x11/xserver-xorg-video-ati" class="external text" title="http://packages.ubuntu.com/gutsy/x11/xserver-xorg-video-ati" rel="nofollow">gutsy</a> and <a href="http://packages.ubuntu.com/hardy/x11/xserver-xorg-video-ati" class="external text" title="http://packages.ubuntu.com/hardy/x11/xserver-xorg-video-ati" rel="nofollow">hardy</a>, but they still have <a href="http://bugs.launchpad.net/bugs/148408" class="external text" title="http://bugs.launchpad.net/bugs/148408" rel="nofollow">very serious issues</a> for some Thinkpads).
+</li></ul>
+<a name="xorg.conf" id="xorg.conf"></a><h2> <span class="mw-headline"> xorg.conf </span></h2>
+<p>Recent versions of xorg.conf intended for use with xrandr 1.2 considerably simplify the video section of the configuration. If you upgrading from an earlier version you may find your existing xorg.conf works against the effective deployment of xrandr. So it is best to start with a new Xorg configuration.
+</p><p><b>An updated Xorg.conf should:</b>
+</p>
+<ul><li> omit dual Device/Screen/Monitor sections
+</li><li> omit MonitorLayout option and Screen lines from the remaining Device section
+</li><li> omit dual Screen lines from the ServerLayout section
+</li><li> omit RightOf/LeftOf indication to the remaining Screen line in ServerLayout section
+</li><li> add a "Virtual 2048 2048" line in SubSection "Display" to create a large virtual screen 
+</li></ul>
+<p>To create a new xorg.conf for Ubuntu and other Debian based distributions, connect the external display to the VGA port, turn on that display, and run
+</p>
+<pre>   <code style="white-space:nowrap;color:#495988;background-color:white;">$ sudo dpkg-reconfigure -phigh xserver-xorg</code>
+</pre>
+<p>Since Ubuntu 9.04 and later Debian releases the above command doesn't actually do anything and to create a new xorg.conf file you need to stop X and then type 
+</p>
+<pre>   <code style="white-space:nowrap;color:#495988;background-color:white;">$ sudo X -configure</code>
+</pre>
+<p>which will create an xorg.conf.new file in the home folder of the user you are logged in (or /root if logged in as root)
+</p><p>The resulting <tt style="white-space:nowrap;color:#996600;background-color:white;">/etc/X11/xorg.conf</tt> should include something like
+</p>
+<pre>   Section "Device"
+       Identifier	"Intel Corporation Mobile 945GM/GMS, 943/940GML Express Integrated Graphics Controller"
+       Driver		"intel"
+       BusID		"PCI:0:2:0"
+       <b># ADD THIS IF YOUR LAPTOP DOES NOT HAVE A TV CONNECTOR or DOCKING STATION </b>
+       <b>Option          "monitor-TV"   "TV" </b>
+   EndSection
+   Section "Monitor"
+       Identifier	"Generic Monitor"
+       Option		"DPMS"
+   EndSection
+   <b># ADD THIS IF YOUR LAPTOP DOES NOT HAVE A TV CONNECTOR or DOCKING STATION </b>
+   <b>Section "Monitor" </b>
+       <b>Identifier      "TV" </b>
+       <b>Option          "Ignore" "True" </b>
+   EndSection 
+   Section "Screen"
+       Identifier	"Default Screen"
+       Device		"Intel Corporation Mobile 945GM/GMS, 943/940GML Express Integrated Graphics Controller"
+       Monitor		"Generic Monitor"
+       DefaultDepth	24
+   
+       SubSection "Display"
+           Depth		24
+           Modes		"1600x1200" "1280x1024" "1024x768" "800x600" "640x480"
+           <b># ADD A VIRTUAL LINE TO PROVIDE FOR THE LARGEST SCREENS YOU WILL HOTPLUG </b>
+           <b>Virtual              2048 2048 </b>
+       EndSubSection
+   EndSection
+   Section "ServerLayout"
+       Identifier	"Default Layout"
+       Screen		"Default Screen"
+       InputDevice	"Generic Keyboard"
+       InputDevice	"Configured Mouse"
+       InputDevice     "stylus"	"SendCoreEvents"
+       InputDevice     "cursor"	"SendCoreEvents"
+       InputDevice     "eraser"	"SendCoreEvents"
+       InputDevice	"Synaptics Touchpad"
+   EndSection
+</pre>
+<p><br />
+Just a hint:
+If you want to use TV-out but not VGA for example, you should change these sections:
+</p>
+<pre>
+Section &quot;Device&quot;
+        Identifier      &quot;Intel Corporation Mobile 945GM/GMS, 943/940GML Express Integrated Graphics Controller&quot;
+        Driver          &quot;intel&quot;
+        BusID           &quot;PCI:0:2:0&quot;
+        Option          &quot;monitor-VGA&quot;  &quot;VGA&quot;
+        Option          &quot;monitor-TV&quot;   &quot;TV&quot;
+        Option          &quot;monitor-LVCD&quot; &quot;LVCD&quot;
+EndSection
+
+Section &quot;Monitor&quot;
+        Identifier      &quot;VGA&quot;
+        Option &quot;Ignore&quot; &quot;true&quot;
+EndSection
+
+Section &quot;Monitor&quot;
+        Identifier      &quot;LVCD&quot;
+        Option          &quot;DPMS&quot;
+EndSection
+
+Section &quot;Monitor&quot;
+        Identifier      &quot;TV&quot;
+        Option  &quot;Ignore&quot; &quot;false&quot;
+EndSection
+</pre>
+<p><br />
+After creating a clean <tt style="white-space:nowrap;color:#996600;background-color:white;">xorg.conf</tt>, restart X and logon.
+</p><p>You may find you have a display only on the external VGA screen at its default max resolution; do not worry - xrandr can fix this.
+</p>
+<a name="Using__.24_xrandr" id="Using__.24_xrandr"></a><h2> <span class="mw-headline"> Using  <code style="white-space:nowrap;color:#495988;background-color:white;">$ xrandr</code> </span></h2>
+<a name="First_discover_what_we_have" id="First_discover_what_we_have"></a><h3> <span class="mw-headline"> First discover what we have </span></h3>
+<p>Open a terminal window to use the command line: 'Applications:Accessories:Terminal'
+</p>
+<div style="margin:10px 20px 0 20px; border: 1px solid #d5f0d0; padding: 0px 0px 0 0px; background-color:#f5fcf0;">
+<div style="width:2.4em; padding: 0 1em 0em 1em; background-color:#d5f0d0; font-weight:bold;">Hint:</div>
+<div style="padding: 2px 1em 2px 1em;">First look at the 'help' and 'man' pages. 
+</div>
+</div>
+<pre><code style="white-space:nowrap;color:#495988;background-color:white;">$ xrandr --help</code>
+<code style="white-space:nowrap;color:#495988;background-color:white;">$ man xrandr</code>
+</pre>
+<p>To find what version of xrandr is running, type the following command:
+</p>
+<pre><code style="white-space:nowrap;color:#495988;background-color:white;">$  xrandr -v</code>
+   Server reports RandR version 1.2
+</pre>
+<p>To query what screens are connected, type the following: (The output shown indicates nothing is connected to the VGA port.)
+</p>
+<pre><code style="white-space:nowrap;color:#495988;background-color:white;">$  xrandr -q </code>
+Screen 0: minimum 320 x 200, current 1024 x 768, maximum 1920 x 1440
+VGA disconnected (normal left inverted right)
+ LVDS connected 1024x768+0+0 (normal left inverted right) 304mm x 228mm
+   1024x768       60.0*+   50.0  
+   800x600        60.3  
+   640x480        60.0     59.9  
+TV disconnected (normal left inverted right)
+</pre>
+<p>If you see the 'TV disconnected' line but have neither TV connector nor docking station (eg Thinkpad R60e) then add to the Monitor and Device sections of xorg.conf as noted above. This will prevent the external (VGA) flashing off for a few seconds every time xrandr is used. (Newer versions of the intel driver may fix this.) 
+</p><p>The same command as above, but with the VGA monitor plugged in and powered off, should give something like the following output: (The VGA monitor is now shown as 'connected'.)
+</p>
+<pre><code style="white-space:nowrap;color:#495988;background-color:white;">$  xrandr -q </code>
+Screen 0: minimum 320 x 200, current 1024 x 768, maximum 1920 x 1440
+VGA connected (normal left inverted right)
+   1920x1440@60   60.0  
+   1920x1440      60.0  
+   1600x1200@60   60.0  
+   1600x1200      60.0  
+   1280x960       60.0  
+   640x480@60     60.0  
+LVDS connected 1024x768+0+0 (normal left inverted right) 304mm x 228mm
+   1024x768       60.0*+   50.0  
+   800x600        60.3  
+   640x480        60.0     59.9  
+TV disconnected (normal left inverted right)
+</pre>
+<p>Powering on the VGA monitor and issuing the same command again will give the following output: (The size and position of the VGA output within the virtual screen is now shown.)
+</p>
+<pre><code style="white-space:nowrap;color:#495988;background-color:white;">$  xrandr -q </code>
+Screen 0: minimum 320 x 200, current 2624 x 1200, maximum 2624 x 2048
+VGA connected 1600x1200+1024+0 (normal left inverted right) 367mm x 275mm
+   1600x1200      60.0*+
+   1920x1440@60   60.0  
+   1600x1200@60   60.0  
+   640x480@60     60.0  
+   640x480        60.0  
+LVDS connected 1024x768+0+0 (normal left inverted right) 304mm x 228mm
+   1024x768       60.0*+   50.0  
+   800x600        60.3  
+   640x480        60.0     59.9  
+TV disconnected (normal left inverted right)
+</pre>
+<p>For bug reporting and diagnosis use xrandr with the verbose option:
+</p>
+<pre><code style="white-space:nowrap;color:#495988;background-color:white;">$  xrandr --verbose</code>
+</pre>
+<a name="Using_xrandr_to_do_useful_things" id="Using_xrandr_to_do_useful_things"></a><h3> <span class="mw-headline"> Using xrandr to do useful things </span></h3>
+<p>In general the commands will specify the output name and either --off or --auto. In the examples here the external screen is named <i>VGA</i>, as used by the Intel driver, with an ATI card the name will probably be <i>VGA-0</i>. In general use <code style="white-space:nowrap;color:#495988;background-color:white;">$  xrandr -q</code> to discover the appropriate output names for your configuration. The --auto option will select the preferred resolution for each output, this is starred(*) in the <code style="white-space:nowrap;color:#495988;background-color:white;">$  xrandr -q</code> listing and is normally the best resolution available. It is also possible to set a particular mode eg --mode 1024x768.
+</p><p>First clone the two screens, (the smaller screen will display the top left portion of the virtual screen)
+</p>
+<pre><code style="white-space:nowrap;color:#495988;background-color:white;">$  xrandr --output LVDS --auto --output VGA --auto --same-as LVDS</code>
+</pre>
+<p>To turn off the VGA monitor. 
+</p>
+<pre><code style="white-space:nowrap;color:#495988;background-color:white;">$  xrandr  --output VGA --off </code>
+</pre>
+<p><i>Note: This apparently reboots X&nbsp;!!! - cf. <a href="http://crunchbanglinux.org/forums/post/45226/#p45226" class="external autonumber" title="http://crunchbanglinux.org/forums/post/45226/#p45226" rel="nofollow">[1]</a></i>
+</p><p>To turn the VGA monitor back on, with its viewport to the right of the laptop monitor:
+</p>
+<pre><code style="white-space:nowrap;color:#495988;background-color:white;">$  xrandr --output VGA --auto --right-of LVDS</code>
+</pre>
+<p>This will probably give an error message similar to:
+</p>
+<pre>   xrandr: screen cannot be larger than 1600x1600 (desired size 2624x1200)
+</pre>
+<p>This can be fixed by editing xorg.conf and changing the <i>virtual</i> line (see example above) to something like:
+</p>
+<pre>   Virtual 2624 1200
+</pre>
+<p>Note that the maximum supported size of the virtual desktop for the Intel 945GM series of chipset with 3D acceleration enabled, is 2048x2048. The virtual screen can be larger but DRI will be disabled. This may matter if you like games and compiz desktop effects, or if you want Google Earth to display in better than geological time. Obviously the larger the virtual desktop, the more graphics memory is used. So for good performance with a shared graphics system such as Intel the Virtual should be no larger than necessary. 
+</p><p>It is possible to set screen locations as <i>--left-of</i>, <i>--right-of</i>, <i>--above</i> and <i>--below</i>. Assuming displays sizes of 1024x768 and 1200x1600:
+</p>
+<pre><code style="white-space:nowrap;color:#495988;background-color:white;">$  xrandr --output LVDS --auto --output VGA --auto --right-of LVDS</code>
+and
+<code style="white-space:nowrap;color:#495988;background-color:white;">$  xrandr --output LVDS --mode 1024x768 --pos 0x0 --output VGA  --mode 1600x1200 --pos 1024x0</code>
+</pre>
+<p>are equivalent. Both will place the external monitor to the right of the laptop display within the virtual screen.
+</p><p>If the Virtual size is only 2048 wide the above command will fail as the combined width of the two displays exceeds the maximum virtual size. However it is possible to have overlap the display viewports. So to fit within the 2048 limit:
+</p>
+<pre><code style="white-space:nowrap;color:#495988;background-color:white;">$  xrandr --output VGA --mode 1024x768 --pos 0x0 --output VGA  --mode 1600x1200 --pos 448x0</code>
+</pre>
+<a name="Now_automate_it_on_login" id="Now_automate_it_on_login"></a><h3> <span class="mw-headline"> Now automate it on login </span></h3>
+<p>To configure xrandr automatically during the first login, save this script to your computer as /etc/X11/Xsession.d/45custom_xrandr-settings:
+</p>
+<pre class="bash" style="font-family:monospace;">&nbsp;
+<span style="color: #666666; font-style: italic;"># If an external monitor is connected, place it with xrandr</span>
+&nbsp;
+<span style="color: #666666; font-style: italic;"># External output may be &quot;VGA&quot; or &quot;VGA-0&quot; or &quot;DVI-0&quot; or &quot;TMDS-1&quot;</span>
+<span style="color: #007800;">EXTERNAL_OUTPUT</span>=<span style="color: #ff0000;">&quot;VGA&quot;</span>
+<span style="color: #007800;">INTERNAL_OUTPUT</span>=<span style="color: #ff0000;">&quot;LVDS&quot;</span>
+<span style="color: #666666; font-style: italic;"># EXTERNAL_LOCATION may be one of: left, right, above, or below</span>
+<span style="color: #007800;">EXTERNAL_LOCATION</span>=<span style="color: #ff0000;">&quot;right&quot;</span>
+&nbsp;
+<span style="color: #000000; font-weight: bold;">case</span> <span style="color: #ff0000;">&quot;<span style="color: #007800;">$EXTERNAL_LOCATION</span>&quot;</span> <span style="color: #000000; font-weight: bold;">in</span>
+       left<span style="color: #000000; font-weight: bold;">|</span>LEFT<span style="color: #7a0874; font-weight: bold;">&#41;</span>
+               <span style="color: #007800;">EXTERNAL_LOCATION</span>=<span style="color: #ff0000;">&quot;--left-of <span style="color: #007800;">$INTERNAL_OUTPUT</span>&quot;</span>
+               <span style="color: #000000; font-weight: bold;">;;</span>
+       right<span style="color: #000000; font-weight: bold;">|</span>RIGHT<span style="color: #7a0874; font-weight: bold;">&#41;</span>
+               <span style="color: #007800;">EXTERNAL_LOCATION</span>=<span style="color: #ff0000;">&quot;--right-of <span style="color: #007800;">$INTERNAL_OUTPUT</span>&quot;</span>
+               <span style="color: #000000; font-weight: bold;">;;</span>
+       top<span style="color: #000000; font-weight: bold;">|</span>TOP<span style="color: #000000; font-weight: bold;">|</span>above<span style="color: #000000; font-weight: bold;">|</span>ABOVE<span style="color: #7a0874; font-weight: bold;">&#41;</span>
+               <span style="color: #007800;">EXTERNAL_LOCATION</span>=<span style="color: #ff0000;">&quot;--above <span style="color: #007800;">$INTERNAL_OUTPUT</span>&quot;</span>
+               <span style="color: #000000; font-weight: bold;">;;</span>
+       bottom<span style="color: #000000; font-weight: bold;">|</span>BOTTOM<span style="color: #000000; font-weight: bold;">|</span>below<span style="color: #000000; font-weight: bold;">|</span>BELOW<span style="color: #7a0874; font-weight: bold;">&#41;</span>
+               <span style="color: #007800;">EXTERNAL_LOCATION</span>=<span style="color: #ff0000;">&quot;--below <span style="color: #007800;">$INTERNAL_OUTPUT</span>&quot;</span>
+               <span style="color: #000000; font-weight: bold;">;;</span>
+       <span style="color: #000000; font-weight: bold;">*</span><span style="color: #7a0874; font-weight: bold;">&#41;</span>
+               <span style="color: #007800;">EXTERNAL_LOCATION</span>=<span style="color: #ff0000;">&quot;--left-of <span style="color: #007800;">$INTERNAL_OUTPUT</span>&quot;</span>
+               <span style="color: #000000; font-weight: bold;">;;</span>
+<span style="color: #000000; font-weight: bold;">esac</span>
+&nbsp;
+xrandr <span style="color: #000000; font-weight: bold;">|</span><span style="color: #c20cb9; font-weight: bold;">grep</span> <span style="color: #007800;">$EXTERNAL_OUTPUT</span> <span style="color: #000000; font-weight: bold;">|</span> <span style="color: #c20cb9; font-weight: bold;">grep</span> <span style="color: #ff0000;">&quot; connected &quot;</span>
+<span style="color: #000000; font-weight: bold;">if</span> <span style="color: #7a0874; font-weight: bold;">&#91;</span> <span style="color: #007800;">$?</span> <span style="color: #660033;">-eq</span> 0 <span style="color: #7a0874; font-weight: bold;">&#93;</span>; <span style="color: #000000; font-weight: bold;">then</span>
+    xrandr <span style="color: #660033;">--output</span> <span style="color: #007800;">$INTERNAL_OUTPUT</span> <span style="color: #660033;">--auto</span> <span style="color: #660033;">--output</span> <span style="color: #007800;">$EXTERNAL_OUTPUT</span> <span style="color: #660033;">--auto</span> <span style="color: #007800;">$EXTERNAL_LOCATION</span>
+    <span style="color: #666666; font-style: italic;"># Alternative command in case of trouble:</span>
+    <span style="color: #666666; font-style: italic;"># (sleep 2; xrandr --output $INTERNAL_OUTPUT --auto --output $EXTERNAL_OUTPUT --auto $EXTERNAL_LOCATION) &amp;</span>
+<span style="color: #000000; font-weight: bold;">else</span>
+    xrandr <span style="color: #660033;">--output</span> <span style="color: #007800;">$INTERNAL_OUTPUT</span> <span style="color: #660033;">--auto</span> <span style="color: #660033;">--output</span> <span style="color: #007800;">$EXTERNAL_OUTPUT</span> <span style="color: #660033;">--off</span>
+<span style="color: #000000; font-weight: bold;">fi</span>
+&nbsp;</pre>
+<p>When X starts, it will be mirrored across both screens until someone logs in. At that point this script will execute and xrandr will position the external monitor.
+</p><p>Note: On some machines the script above will not work although it seems to be executed correctly (no effect on resolution). In this case, try the commented-out alternative command line.
+</p>
+<a name="Sample_Fn-F7_script" id="Sample_Fn-F7_script"></a><h3> <span class="mw-headline"> <a href="/wiki/Sample_Fn-F7_script" title="Sample Fn-F7 script">Sample Fn-F7 script</a> </span></h3>
+<p>For further examples of the use of xrandr commands, and scripts to switch the display using the Function key Fn-F7 see <a href="/wiki/Sample_Fn-F7_script" title="Sample Fn-F7 script">Sample Fn-F7 script</a>.
+</p>
+<a name="GUIs" id="GUIs"></a><h3> <span class="mw-headline"> GUIs </span></h3>
+<p>Several graphical frontends are available for xrandr (all using GTK):
+</p>
+<ul><li> <a href="http://gitweb.freedesktop.org/?p=xorg/app/grandr.git" class="external text" title="http://gitweb.freedesktop.org/?p=xorg/app/grandr.git" rel="nofollow">Grandr</a>
+</li><li> <a href="http://www.albertomilone.com/urandr.html" class="external text" title="http://www.albertomilone.com/urandr.html" rel="nofollow">URandR</a>
+</li><li> <a href="http://christian.amsuess.com/tools/arandr/" class="external text" title="http://christian.amsuess.com/tools/arandr/" rel="nofollow">ARandR</a>
+</li><li> <a href="http://sourceforge.net/projects/zarfy/" class="external text" title="http://sourceforge.net/projects/zarfy/" rel="nofollow">Zarfy</a> &mdash; A GUI to libxrandr. It presents the user with visual representaion of active displays on an interactive map of the screen memory. Features free postioning, configuration saving, scripting for R&amp;R and an alternate gui for switching between monitors.
+</li></ul>
+<p>It is possible to have Fn-F7 run such a GUI, see <a href="/wiki/Sample_Fn-F7_script#Having_Fn-F7_run_a_RandR_GUI" title="Sample Fn-F7 script">Sample Fn-F7 script#Having Fn-F7 run a RandR GUI</a>.
+</p>
+<a name="Summing_up" id="Summing_up"></a><h2> <span class="mw-headline"> Summing up </span></h2>
+<p><b>xrandr</b> enables dynamic resizing of screens, switching both external and laptop screens on and off, and the applications windows can be dragged from one screen to the other. None of this requires configuring anything special for <tt style="white-space:nowrap;color:#996600;background-color:white;">/etc/X11/xorg.conf</tt>.
+</p>
+<a name="the_Virtual_screen" id="the_Virtual_screen"></a><h3> <span class="mw-headline"> the Virtual screen </span></h3>
+<p>A Virtual line is needed in the 'Display' SubSection of the of xorg.conf; it determines the size of the frame buffer into which the displays must fit. Without it the maximum virtual size will be limited to the size of the largest display that was connected when X was started. The maximum virtual size cannot be changed once X starts so needs to be large enough to accommodate the largest combination of displays you want to hotplug without having to restart X. If it is greater than 2048x2048 and you are using an Intel 945 (or less) chip then DRI is not possible. Making the Virtual size square makes rotation easy. A bigger Virtual requires more memory. 
+</p>
+<div style="margin:10px 20px 0 20px; border: 1px solid #eeddbb; padding: 0px 0px 0 0px; background-color:#fcf9e0;">
+<div style="width:3.1em; padding: 0 1em 0em 1em; background-color:#eeddbb;"><b>NOTE!</b></div>
+<div style="padding: 2px 1em 2px 1em;">With recent distributions which use KMS, the virtual size may be larger such as on the Intel 945 where the virtual size is now 4096x4096. However going beyond 2048x2048 still has implications, such as no support for 3D graphics (Compiz) and no Xvideo</div>
+</div>
+<p><a href="/wiki/File:Intel-DualHead.png" class="image" title="monitor windows must fit within the virtual screen"><img alt="monitor windows must fit within the virtual screen" src="/images/a/ac/Intel-DualHead.png" width="526" height="256" border="0" /></a>
+</p>
+<a name="Output_port_names" id="Output_port_names"></a><h3> <span class="mw-headline"> Output port names </span></h3>
+<p><b>Intel driver - UMS</b>
+</p>
+<ul><li> <b>VGA</b>  -  Analog VGA output
+</li><li> <b>LVDS</b> -  Laptop panel
+</li><li> <b>DP1</b> - DisplayPort output
+</li><li> <b>TV</b>   -  Integrated TV output
+</li><li> <b>TMDS-1</b> - First DVI SDVO output
+</li><li> <b>TMDS-2</b> - Second DVI SDVO output
+</li></ul>
+<p>The <b>SDVO</b> and <b>DVO TV</b> outputs are not supported by the driver at this time.
+</p><p><b>Intel driver - KMS</b>
+</p>
+<ul><li> <b>LVDS1</b> -  Laptop panel
+</li><li> <b>VGA1</b>  -  Analog VGA output
+</li><li> <b>DVI1</b>  - Digital video output
+</li></ul>
+<p><b><a href="/wiki/Radeon" title="Radeon">radeon</a> driver </b>
+</p>
+<ul><li> <b>VGA-0</b>  - Analog VGA output
+</li><li> <b>LVDS</b>   - Laptop panel
+</li><li> <b>S-video</b>     - Integrated TV output
+</li><li> <b>DVI-0</b>  - DVI output
+</li></ul>
+<a name="Note_for_Gnome_users" id="Note_for_Gnome_users"></a><h3> <span class="mw-headline"> Note for Gnome users </span></h3>
+<p>Gnome places the menu bar on screen 0 and thus with the Intel chip and driver Screen 0 (the external VGA monitor) will always be the default display if it is connected. This applies even if the external monitor is switched off but the cable connected: if you have a blank laptop monitor check if you have anything plugged in to the VGA port. Also beware that desktop icons and windows can disappear into the invisible parts of the virtual display. (see diagram below).  If you want the panel(s) to appear by default on a different head, drag it to the head you want it on and GNOME will keep it there.
+</p><p>The gnome panel can be moved by holding ALT and dragging them to another screen.
+</p>
+<a name="Note_for_Ubuntu_Gutsy_users" id="Note_for_Ubuntu_Gutsy_users"></a><h3> <span class="mw-headline"> Note for Ubuntu Gutsy users </span></h3>
+<p>There is a  Graphical Configuration Tool, (<a href="https://launchpad.net/ubuntu/+source/displayconfig-gtk/0.2+20070731ubuntu1" class="external text" title="https://launchpad.net/ubuntu/+source/displayconfig-gtk/0.2+20070731ubuntu1" rel="nofollow">displayconfig-gtk</a>) included with <a href="/wiki/Category:Ubuntu_7.10" title="Category:Ubuntu 7.10">Ubuntu 7.10</a>. At present <a href="https://bugs.launchpad.net/ubuntu/+source/displayconfig-gtk" class="external text" title="https://bugs.launchpad.net/ubuntu/+source/displayconfig-gtk" rel="nofollow">it dosn't work too well</a>.  It is found in the menu: 'System: Administration: Screens and Graphics'. As using it will wreck your xorg.conf, I recommend removing it.
+</p>
+<a name="Gleanings" id="Gleanings"></a><h2> <span class="mw-headline"> Gleanings </span></h2>
+<a name="Notes_from_xserver-xorg-video-intel.readme" id="Notes_from_xserver-xorg-video-intel.readme"></a><h3> <span class="mw-headline"> Notes from xserver-xorg-video-intel.readme </span></h3>
+<p><b>Known Limitations</b>
+- No support for "zaphod mode" dualhead.  This is the mode in which two
+Device sections are placed in the config file, and doesn't support DRI or
+many other features.  Instead, only "MergedFB-style" dualhead is supported.
+- No support for X Screens larger than 2048 pixels in either direction
+before the 965.  This reflects hardware limitations in the x direction on
+those older chips, and limits dualhead functionality.  It may be possible to
+extend the limit vertically on these older chips.
+- i855 XV may cause hangs.  This was present in the previous release, and no
+workaround is known.
+- SDVO TV-out cards not supported.  This should be fixed in the next
+release.
+- Gray output with integrated TV-out and PAL TVs.
+- EXA support unstable on i845.
+- Some GM965 systems, such as the Thinkpad T61, probe the TV as being connected
+even when no output connector is available. 
+</p><p><b>Common issues not caused by the driver</b>
+- Font sizes (DPI) are wrong.  Some displays incorrectly report their
+physical size, which is harmless on most OSes that always assume 96dpi
+displays.  This can be fixed through quirks for specific monitors in the X
+Server, and the output of xrandr --prop along with a physical measurement of
+the screen size in a bug report against the server can help get that fixed.
+- gnome-panel is located in the middle of the screen.  gnome-panel places
+itself within head #0's boundaries, which doesn't work well with a second
+head covering the same area as head #0 but larger.
+- Older resolution-changing applications have poor results in
+multihead systems.  Previous extensions such as RandR 1.1 exposed only a
+single output to client programs, and those requests map poorly to multi-head
+systems.  Currently, those requests map to just one of the outputs in the
+RandR 1.2 environment, and those applications need to be updated to RandR 1.2
+API when available for better results.
+</p>
+<a name="Xorg_mailing_list" id="Xorg_mailing_list"></a><h3> <span class="mw-headline"> Xorg mailing list </span></h3>
+<p><a href="http://lists.freedesktop.org/archives/xorg/2007-June/025469.html" class="external text" title="http://lists.freedesktop.org/archives/xorg/2007-June/025469.html" rel="nofollow">FreeDesktop.org 2007-June 025469</a>
+<a href="http://lists.freedesktop.org/archives/xorg/2007-June/025484.html" class="external text" title="http://lists.freedesktop.org/archives/xorg/2007-June/025484.html" rel="nofollow">FreeDesktop.org 2007-June 025484</a>
+<a href="http://lists.freedesktop.org/archives/xorg/2007-July/026340.html" class="external text" title="http://lists.freedesktop.org/archives/xorg/2007-July/026340.html" rel="nofollow">FreeDesktop.org 2007-July 026340</a>
+</p><p>the 3D engine has an 11 bit coordinate space at one point making it
+impossible to draw to areas beyond 2048x2048. At another point, it has a
+stride limit of 8192 bytes, so you can't even draw to a subset of a
+larger frame buffer.
+</p><p>One more bit in both of these registers would have solved the problem
+for pretty much any supportable monitor configuration (the chip can only
+support two single-channel DVI outputs at the most; 1920 is the widest
+size supported at single-channel speeds).
+</p><p>For multiple monitors, the driver could allocate multiple frame buffers
+and step through them one at a time with appropriate clipping. It would
+be icky, but could be made to work.
+</p><p>Of course, the latest hardware (965G/965GM) has plenty of coordinate
+space, which does tend to reduce the odds that someone will get excited
+enough to go fix the driver for older chips.
+</p><p>The Gnome menu bar lands on Xinerama Screen 0 at this
+point, which isn't currently something that you can set through RandR.  On Intel the allocation to Screen 0 is determined by CRTC order and LVDS only runs on screen 1.
+</p><p><a href="http://lists.freedesktop.org/archives/xorg/2007-June/026053.html" class="external text" title="http://lists.freedesktop.org/archives/xorg/2007-June/026053.html" rel="nofollow">FreeDesktop.org 2007-June 026053</a>
+</p><p><a href="http://lists.freedesktop.org/archives/xorg/2007-August/027616.html" class="external text" title="http://lists.freedesktop.org/archives/xorg/2007-August/027616.html" rel="nofollow">Blanking of external screen when using xrandr</a>
+</p>
+<pre>It's checking to see if you have anything connected to the TV output.
+To do that, it needs to temporarily unplug the VGA.
+ You can avoid this by ignoring the TV output
+   Section "Monitor"
+       Identifier      "TV"
+       Option          "Ignore" "True"
+   EndSection
+   Section "Device"
+      Option      "monitor-TV" "TV"
+   EndSection
+If your machine cannot ever have a TV adapter (even with a docking station),
+we can add a quirk to the driver to never look at the TV output.  That requires 
+the pci subsystem values (from lspci -n -v) to plug into the quirk table.
+</pre>
+<p><a href="http://lists.freedesktop.org/archives/xorg/2007-August/027632.html" class="external text" title="http://lists.freedesktop.org/archives/xorg/2007-August/027632.html" rel="nofollow">default for 'Virtual'</a>
+</p>
+<pre>&gt; Version 2.1.1-0ubuntu2 seems to set the default Virtual size (maximum 
+&gt; screen size) to 1920 x 1920, if there is no entry in xorg.conf. I take 
+&gt; it the maximum screen size for the i915 chipset family is 2048 x 2048, 
+&gt; so why not have it at that? This would make dualscreen setups a bit easier.
+  The default settings is found by taking the largest resolution in either 
+x or y dimension and making a square from that. This allows for easy 
+rotation should you want to do so.
+  I believe you should be able to do dual screen up to 8192x8192, though 
+only through two monitors (Only two pipes are available for output), but 
+that 3D acceleration is only supported up to 2048x2048. Thus as soon as 
+you set your virtual size above 2048x2048, you lose 3D acceleration.
+  The current driver cannot reallocate the frame buffer, so whatever size
+you start with is the maximum the screen can ever become, and that this
+amount of physical memory is tied down for the whole X server run.
+</pre>
+<p><a href="http://lists.freedesktop.org/archives/xorg/2007-August/027507.html" class="external text" title="http://lists.freedesktop.org/archives/xorg/2007-August/027507.html" rel="nofollow">Primary output for Laptop + external screen</a>
+</p>
+<pre>&gt;the desired behavior of the video 
+&gt; drivers in typical laptop situations with an internal display and an 
+&gt; external screen attached (extending the desktop).
+&gt; 
+&gt; Currently for example the intel driver uses the external screen as the 
+&gt; primary output. It is listed first with xrandr. I'm not sure if this is 
+&gt; intentional or just coincidence.
+    It's coincidence -- the laptop hardware has two crtcs, and the LVDS can
+only be driven by the second.
+    Note that RandR doesn't really want the order to be significant; it
+would be better if the desktop environment knew about outputs and could
+refer to a specific output as 'primary' or 'holds toolbar' or whatever.
+</pre>
+<p><a href="mailto:gekkoman@illimitable.com" class="external text" title="mailto:gekkoman@illimitable.com" rel="nofollow">&nbsp;</a> Uncovered a workaround for black and white TV-out "known limitation" listed above on a intel 945GM chipset running i810-2.1.1 driver and xrandr-1.2.2. Get TV running in black and white. Then run command.
+</p><p>xrandr --output TV --set TV_FORMAT PAL; xrandr --output TV --mode 1024x768
+</p><p>substitute TV_FORMAT and mode as required.  Note that the command "xrandr --output TV --set TV_FORMAT PAL" gives an error but appears to work as the subsequent mode change converts screen to colour.
+</p>
+<a name="Notes_for_X31.2C_X32.2C_T30_.2F_Radeon_7000.2C_Radeon_7500_users" id="Notes_for_X31.2C_X32.2C_T30_.2F_Radeon_7000.2C_Radeon_7500_users"></a><h3> <span class="mw-headline"> Notes for X31, X32, T30 / Radeon 7000, Radeon 7500 users </span></h3>
+<p><a href="/wiki/Category:X31" title="Category:X31">X31</a> and <a href="/wiki/Category:X32" title="Category:X32">X32</a> have an <a href="/wiki/ATI_Mobility_Radeon_7000" title="ATI Mobility Radeon 7000">ATI Mobility Radeon 7000</a> with only 16MB RAM. This is not enough for big screens and DRI. Neither with <a href="/wiki/Radeon" title="Radeon">radeon</a>-default virtual size of 2048x1200, nor with a customized virtual of 2304x1024 (for one 1024x768 and one 1280x1024 screen). But this only applies for 24-bit color depth. Using only 16-bit and DRI works fine with the big virtual screen.
+</p><p>If you really want 24-bit depth, and do not need a bigger screen as your LCD, try setting Virtual to "1024 768", this will enable DRI in 24-bit too, but you won't be able to extend your screen anymore (well, clone will still work though).
+</p>
+<a name="Further_Note" id="Further_Note"></a><h4> <span class="mw-headline"> Further Note </span></h4>
+My <a href="/wiki/Category:T30" title="Category:T30">T30</a> (Radeon 7500) with the Xorg radeonhd driver version 1.2.1-1 (from Debian unstable) reports the following:<code><pre>
+(II) RADEON(0): Detected total video RAM=16384K, accessible=65536K (PCI BAR=131072K)
+(--) RADEON(0): Mapped VideoRAM: 16384 kByte (64 bit DDR SDRAM)
+(II) RADEON(0): Color tiling enabled by default
+(WW) RADEON(0): Requested desktop size exceeds surface limts for tiling, ColorTiling disabled
+(II) RADEON(0): Max desktop size set to 2304x1024
+</pre></code>
+<p>I don't understand exactly what this means, but it <b>does</b> support the entire large desktop at 24 bit depth, even though the card reports only 16M "total video RAM".
+</p>
+<a name="References" id="References"></a><h2> <span class="mw-headline"> References </span></h2>
+<ul><li> XRandR 1.2
+<ul><li> <a href="http://gitweb.freedesktop.org/?p=xorg/proto/randrproto.git;f=randrproto.txt;a=blob" class="external text" title="http://gitweb.freedesktop.org/?p=xorg/proto/randrproto.git;f=randrproto.txt;a=blob" rel="nofollow">RandR 1.2 protocol specifications</a> - this defines the model and terminology
+</li><li> <a href="http://wiki.x.org/wiki/XDC2007Notes#head-11895d48723a8d0308571bec8829b7cc3ef87d7b" class="external text" title="http://wiki.x.org/wiki/XDC2007Notes#head-11895d48723a8d0308571bec8829b7cc3ef87d7b" rel="nofollow">In Xorg Developer Conference 2007</a>
+</li><li> <a href="http://burtonini.com/blog/computers/randr-2007-02-06-17-50" class="external text" title="http://burtonini.com/blog/computers/randr-2007-02-06-17-50" rel="nofollow">tutorial blog post</a>
+</li></ul>
+</li></ul>
+<ul><li> Ubuntu
+<ul><li> Version 7.10 (Gutsy) of Ubuntu includes support for Xorg 7.3 with RandR 1.2 <a href="https://wiki.ubuntu.com/Xorg7.3Integration" class="external text" title="https://wiki.ubuntu.com/Xorg7.3Integration" rel="nofollow">Xorg 7.3</a>
+</li><li> <a href="/wiki/Installing_Ubuntu_on_a_ThinkPad_R60e" title="Installing Ubuntu on a ThinkPad R60e">Installing Ubuntu on a ThinkPad R60e</a> for a revised and more specific version of this page
+</li><li> <a href="https://launchpad.net/ubuntu/+source/xserver-xorg-video-intel/" class="external text" title="https://launchpad.net/ubuntu/+source/xserver-xorg-video-intel/" rel="nofollow">Ubuntu source for Intel</a>
+</li><li> <a href="https://bugs.launchpad.net/xserver-xorg-driver-ati/+bug/148408" class="external text" title="https://bugs.launchpad.net/xserver-xorg-driver-ati/+bug/148408" rel="nofollow">gutsy version of xserver-xorg-ati has some major problems on ATI Radeon</a> for (<a href="/wiki/Category:X_Series" title="Category:X Series">Category:X Series</a>) and possibly others.  The solution is to downgrade to the <a href="https://launchpad.net/ubuntu/feisty/i386/xserver-xorg-video-ati/1:6.6.3-2ubuntu6" class="external text" title="https://launchpad.net/ubuntu/feisty/i386/xserver-xorg-video-ati/1:6.6.3-2ubuntu6" rel="nofollow">feisty version</a>
+</li></ul>
+</li></ul>
+<ul><li> X.org
+<ul><li> <a href="http://lists.freedesktop.org/mailman/listinfo/xorg" class="external text" title="http://lists.freedesktop.org/mailman/listinfo/xorg" rel="nofollow">FreeDesktop.org mailing list</a>
+</li><li> <a href="http://lists.freedesktop.org/archives/xorg/" class="external text" title="http://lists.freedesktop.org/archives/xorg/" rel="nofollow">FreeDesktop.org Xorg archive</a>
+</li></ul>
+</li></ul>
+<ul><li> Useful page to supplement the minimal documentation  <a href="http://wiki.x.org/wiki/Development/Documentation/HowVideoCardsWork" class="external text" title="http://wiki.x.org/wiki/Development/Documentation/HowVideoCardsWork" rel="nofollow">How video cards work</a>
+</li><li> <a href="http://wiki.debian.org/XStrikeForce/ReleaseNotes" class="external text" title="http://wiki.debian.org/XStrikeForce/ReleaseNotes" rel="nofollow">xserver-xorg-core  and xserver-xorg-video-intel might cause some trouble but also brings nice features.</a>
+</li><li> <a href="http://andrew.mcmillan.net.nz/taxonomy/term/18" class="external text" title="http://andrew.mcmillan.net.nz/taxonomy/term/18" rel="nofollow">Seamless Monitor Hotplugging with X Windows</a>
+</li><li> <a href="http://www.intellinuxgraphics.org/" class="external text" title="http://www.intellinuxgraphics.org/" rel="nofollow">Linux Graphics Drivers from Intel</a>
+</li><li> <a href="http://zdzichubg.jogger.pl/2007/05/07/xrandr-1-2-sweetness/" class="external text" title="http://zdzichubg.jogger.pl/2007/05/07/xrandr-1-2-sweetness/" rel="nofollow">blog post</a> with xrandr-1.2 commands and photos. Narrative is in polish.
+</li></ul>
+
+<!-- 
+NewPP limit report
+Preprocessor node count: 246/1000000
+Post-expand include size: 4642/2097152 bytes
+Template argument size: 924/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key thinkwiki_org:pcache:idhash:4948-0!1!0!!en!2!edit=0 and timestamp 20101224172949 -->
+<div class="printfooter">
+Retrieved from "<a href="http://www.thinkwiki.org/wiki/Xorg_RandR_1.2">http://www.thinkwiki.org/wiki/Xorg_RandR_1.2</a>"</div>
+			<div id='catlinks' class='catlinks'><div id="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Categories</a>:&#32;<span dir='ltr'><a href="/wiki/Category:Ubuntu_7.10" title="Category:Ubuntu 7.10">Ubuntu 7.10</a></span> | <span dir='ltr'><a href="/wiki/Category:X31" title="Category:X31">X31</a></span> | <span dir='ltr'><a href="/wiki/Category:X32" title="Category:X32">X32</a></span> | <span dir='ltr'><a href="/wiki/Category:T30" title="Category:T30">T30</a></span></div></div>			<!-- end content -->
+			<div class="visualClear"></div>
+		</div>
+	</div>
+		</div>
+		<div id="column-one">
+	<div id="p-cactions" class="portlet">
+		<h5>Views</h5>
+		<ul>
+				 <li id="ca-nstab-main" class="selected"><a href="/wiki/Xorg_RandR_1.2">Page</a></li>
+				 <li id="ca-talk"><a href="/wiki/Talk:Xorg_RandR_1.2">Discussion</a></li>
+				 <li id="ca-viewsource"><a href="/index.php?title=Xorg_RandR_1.2&amp;action=edit">View source</a></li>
+				 <li id="ca-history"><a href="/index.php?title=Xorg_RandR_1.2&amp;action=history">History</a></li>
+		</ul>
+	</div>
+	<div class="portlet" id="p-personal">
+		<h5>Personal tools</h5>
+		<div class="pBody">
+			<ul>
+			<li class="head">thinkwiki.org <a href="http://www.vaiowiki.org/">vaiowiki.org</a></li>
+				<li id="pt-login"><a href="/index.php?title=Special:UserLogin&amp;returnto=Xorg_RandR_1.2">Log in / create account</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-logo">
+		<a style="background-image: url(/skins/thinkwiki/thinkwiki-logo.png);" href="/wiki/ThinkWiki" title="ThinkWiki"></a>
+	</div>
+	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
+		<div class='portlet' id='p-navigation'>
+		<h5>Navigation</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-mainpage"><a href="/wiki/ThinkWiki">ThinkWiki</a></li>
+				<li id="n-ThinkPad-models"><a href="/wiki/Category:Models">ThinkPad models</a></li>
+				<li id="n-Categories"><a href="/wiki/Category:ThinkWiki">Categories</a></li>
+				<li id="n-recentchanges"><a href="/wiki/Special:RecentChanges">Recent changes</a></li>
+				<li id="n-randompage"><a href="/wiki/Special:Random">Random page</a></li>
+				<li id="n-help"><a href="/wiki/Help:Contents">Help</a></li>
+				<li id="n-Literature"><a href="/wiki/ThinkWiki:Book_Store">Literature</a></li>
+				<li id="n-Support-ThinkWiki"><a href="/wiki/ThinkWiki:Support">Support ThinkWiki</a></li>
+			</ul>
+		</div>
+	</div>
+		<div id="p-search" class="portlet">
+		<h5><label for="sbi">Search</label></h5>
+		<div id="searchBody" class="pBody">
+    <form method="get" action="http://www.thinkwiki.org/wiki/Special:GoogleFind" target="_top"><div>
+          <input type="hidden" name="domains" value="www.thinkwiki.org"></input>
+          <input type="text" name="q" maxlength="255" value="" id="sbi" accesskey="f"></input>
+          <input type="submit" name="sa" value="Google Search" id="sbb" class="searchButton"></input>
+          <input type="hidden" name="sitesearch" value="www.thinkwiki.org" id="ss1"></input>
+          <input type="hidden" name="client" value="pub-9115710338321120"></input>
+          <input type="hidden" name="forid" value="1"></input>
+          <input type="hidden" name="channel" value="1405984697"></input>
+          <input type="hidden" name="ie" value="ISO-8859-1"></input>
+          <input type="hidden" name="oe" value="ISO-8859-1"></input>
+          <input type="hidden" name="sig" value="myLy8cf2xe40P1pS"></input>
+          <input type="hidden" name="cof" value="GALT:#606060;GL:1;DIV:#336699;VLC:663399;AH:center;BGC:FFFFFF;LBGC:336699;ALC:002bb8;LC:002bb8;T:000000;GFNT:002bb8;GIMP:002bb8;FORID:9"></input>
+          <input type="hidden" name="hl" value="en"></input>
+     </div></form>
+                                                                          
+		</div>
+	</div>
+
+<div class="portlet" id="p-sponsor">
+<h5>Our sponsor</h5> 
+<div class="pBody">
+<a href="http://www.thinkwiki.org/wiki/Special:SponsorLink"><img src="/skins/thinkwiki/Ecoupons_128x35.png" alt="Get Coupons for Lenovo Thinkpad" /></a><br />
+Get <a href="http://www.ecoupons.com/">Coupons</a> for <a href="http://www.ecoupons.com/coupon-code/Thinkpad">Lenovo Thinkpad</a>
+</div>
+</div>
+
+	<div class="portlet" id="p-tb">
+		<h5>Toolbox</h5>
+		<div class="pBody">
+			<ul>
+				<li id="t-whatlinkshere"><a href="/wiki/Special:WhatLinksHere/Xorg_RandR_1.2">What links here</a></li>
+				<li id="t-recentchangeslinked"><a href="/wiki/Special:RecentChangesLinked/Xorg_RandR_1.2">Related changes</a></li>
+<li id="t-specialpages"><a href="/wiki/Special:SpecialPages">Special pages</a></li>
+				<li id="t-print"><a href="/index.php?title=Xorg_RandR_1.2&amp;printable=yes">Printable version</a></li>				<li id="t-permalink"><a href="/index.php?title=Xorg_RandR_1.2&amp;oldid=49464">Permanent link</a></li>			</ul>
+		</div>
+	</div>
+
+<div class="portlet" id="p-ads">  
+<h5>Advertisements</h5>
+<div class="pBody">
+<script type="text/javascript">/*<![CDATA[*/
+google_ad_client = "pub-9115710338321120";
+google_ad_slot = "6147617222";google_ad_width = 120;google_ad_height = 600;
+// TextLinks
+google_ad_slot = "1900339349";
+google_ad_width = 120;
+google_ad_height = 90;
+/*]]>*/</script>
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+</div>
+</div>
+<div class="portlet" id="p-ads2">
+<h5>eBay</h5>
+<div class="pBody">
+<script type="text/javascript" src="http://lapi.ebay.com/ws/eBayISAPI.dll?EKServer&amp;ai=d%7Fh%7Dtuvw&amp;bdrcolor=666666&amp;cid=0&amp;eksize=8&amp;encode=ISO-8859-1&amp;endcolor=FF0000&amp;endtime=y&amp;fbgcolor=EFEFEF&amp;fntcolor=000000&amp;fs=0&amp;gallery=y&amp;hdrcolor=FFFFCC&amp;hdrimage=10&amp;hdrsrch=n&amp;img=y&amp;lnkcolor=0000FF&amp;logo=12&amp;minprice=150&amp;num=25&amp;numbid=y&amp;paypal=n&amp;popup=y&amp;prvd=1&amp;query=Thinkpad&amp;r0=4&amp;shipcost=n&amp;sid=ThinkWiki+SideSquare&amp;siteid=0&amp;sort=MetaEndSort&amp;sortby=endtime&amp;sortdir=asc&amp;srchdesc=n&amp;tbgcolor=FFFFFF&amp;tlecolor=333333&amp;tlefs=0&amp;tlfcolor=FFFFFF&amp;track=2273029&amp;width=570"></script>
+</div>
+</div>
+
+		</div><!-- end of the left (by default at least) column -->
+			<div class="visualClear"></div>
+			<div id="footer">
+<!--				<div id="f-poweredbyico"><a href="http://www.mediawiki.org/"><img src="/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" /></a></div>
+-->
+<div id="f-poweredbyico">
+<a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10-blue" alt="Valid XHTML 1.0 Transitional" height="31" width="88" /></a>
+<br /><br />
+<a href="http://jigsaw.w3.org/css-validator/"><img style="border:0;width:88px;height:31px" src="http://jigsaw.w3.org/css-validator/images/vcss-blue" alt="CSS is valid" /></a>
+<!--
+<br /><br />
+<img src="/mediawiki/skins/thinkwiki/juspro_ani_engl.gif" />
+-->
+</div>
+				<div id="f-copyrightico"><a href="http://www.gnu.org/copyleft/fdl.html"><img src="/skins/common/images/gnu-fdl.png" alt='GNU Free Documentation License 1.2' /></a></div>
+			<ul id="f-list">
+				<li id="lastmod"> This page was last modified on 25 August 2010, at 13:26.</li>
+				<li id="viewcount">This page has been accessed 604,087 times.</li>
+				<li id="copyright">Content is available under <a href="http://www.gnu.org/copyleft/fdl.html" class="external " title="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.2</a>.</li>
+				<li id="privacy"><a href="/wiki/ThinkWiki:Privacy_policy" title="ThinkWiki:Privacy policy">Privacy policy</a></li>
+				<li id="about"><a href="/wiki/ThinkWiki:About" title="ThinkWiki:About">About ThinkWiki</a></li>
+				<li id="disclaimer"><a href="/wiki/ThinkWiki:General_disclaimer" title="ThinkWiki:General disclaimer">Terms of use</a></li>
+			</ul>
+
+<div id="footer-ads">
+<br />
+<ul>
+<li>
+<script type="text/javascript">/*<![CDATA[*/
+google_ad_client = "pub-9115710338321120";
+google_ad_slot = "9630938728";
+google_ad_width = 728;
+google_ad_height = 15;
+/*]]>*/</script>
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+</li> 
+</ul>
+<ul><li><!--<a href="http://www.ecomparison.co.uk">eComparison Loans</a> | --><a href="http://www.welcome.co.uk/carFinance.php">Welcome Car Finance</a> | <a href="http://www.graduatecareer.co.uk">Pareto Graduate Recruitment</a> | <a href="http://www.debtbusterloans.com">Secured Loans</a></li></ul>
+<ul><li><!-- P.1.2.521.1311653981 --><a href="http://www.creditmotorsports.com">United Specialties</a> | <a href="http://www.creditmotorsports.com">Renegade Motorhomes</a> | <a href="http://www.bloomingdesert.com">Arizona Landscaping</a> | <a href="http://www.tampabayvets.net">Tampa Vet</a></li></ul>
+<br />
+<ul>
+<li>Hosting, Design, Structure and ad placement by <a href="http://www.bytefeed.de/">bytefeed</a>.</li>
+</ul>
+<!-- Here Kontera -->
+<script type='text/javascript'><!--
+var dc_AdLinkColor='blue';var dc_UnitID=14;var dc_PublisherID=43478;var dc_adprod='ADL';
+-->
+</script>
+<script type='text/javascript' src='http://kona.kontera.com/javascript/lib/KonaLibInline.js'></script>
+</div>
+		</div>
+		
+	
+		<script type="text/javascript">if (window.runOnloadHook) runOnloadHook();</script>
+</div>
+<!-- Served in 0.080 secs. --><script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-752482-1");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>
+<br />
+<script type="text/javascript"><!--
+amzn_cl_tag="thinkwiki-21";
+amzn_cl_categories="a,c,d,f,e";
+//--></script>
+<!--
+<script type="text/javascript" src="http://cls.assoc-amazon.de/de/s/cls.js"></script>
+-->
+</body></html>
