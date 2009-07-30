@@ -1,0 +1,253 @@
+<html>
+  <head>
+    <title>Haskell mode for Vim</title>
+  </head>
+  <body>
+    [<a href="http://community.haskell.org/~claus">Claus Reinke</a>]
+    [<a href="screencasts.html">Haskell Mode Screencasts</a>]
+    [<a href="http://trac.haskell.org/haskellmode-vim/">Haskell Mode Trac</a>]
+    [<a href="http://libraryinstitute.wordpress.com/tag/haskellmode/">Haskell Mode Blog Entries</a>]
+    [<a href="http://code.haskell.org/haskellmode-vim/_darcs/rss2.xml">source repo rss feed</a>]
+
+<h2>Haskell mode for Vim</h2>
+
+<p>
+There is no such thing as a one-ring-to-rule-them-all Haskell mode
+for Vim, but syntax highlighting comes as standard, and most Vimmers
+have their own collection of Vim script plugins, to activate and
+enhance at least some of Vim's multitude of source code editing
+functionality. This page is about <a
+  href="http://community.haskell.org/~claus/">my</a> own versions, you can find
+other efforts in haskell.org's <a
+  href="http://www.haskell.org/haskellwiki/Libraries_and_tools/Program_development#Vim">Vim
+  corner</a>.
+</p>
+
+<p>
+If you've not used these haskellmode plugins before, or haven't used Vim
+at all, you might find this <a href="screencasts.html">short series of
+  screencasts</a> interesting. It offers a quick tour of the features
+available when editing Haskell code with Vim, haskellmode for Vim, not
+to mention other Vim plugins. Don't forget to visit <a
+  href="http://www.vim.org">vim.org</a> for more scripts, tips, and full
+online version of Vim's built-in help.
+</p>
+
+<p>
+Let me know if these plugins work for you, they keep evolving whenever
+I run into a persistent issue that I'd like them to help me with, and
+I sometimes introduce bugs!-) Things should work on all ghc/vim platforms;
+there are not always useful defaults for all platforms, and sometimes the
+Haddock docs are not installed by default, so you might have to do some
+configuring, but I have tried to fix bugs as they were reported (feature
+suggestions are also welcome, but may take longer). <em>Please note that I have not
+been able to spend the necessary time on my Haskell interests recently, and
+that also implies occasional gaps in updates to these haskellmode plugins
+(please remain patient, and <a
+href="http://trac.haskell.org/haskellmode-vim/">keep reporting issues</a>,
+especially when newer versions GHC/Haddock/etc interfere with the way the
+plugins work).</em>
+</p>
+
+<p>
+<dl>
+<dt>Files:</dt>
+<dd>
+  <dl>
+
+  <dt>current: <a
+  href="vimfiles/haskellmode-20101118.vba">vimfiles/haskellmode-20101118.vba</a>
+  </dt>
+  <dd>
+  <p>
+  All in one, as a <a
+  href="http://vimdoc.sourceforge.net/htmldoc/pi_vimball.html#vimball">vimball</a>
+  archive. This is the recommended way of installing these plugins (if you just
+  want to extract the sources or need to install in other than the default
+  location, please check the <a
+  href="http://vimdoc.sourceforge.net/htmldoc/pi_vimball.html#vimball">vimball
+  documentation</a>). After installation, try <code>:help haskellmode</code> to
+  find out more details about the features provided by these haskell mode
+  plugins (or peek at the <a
+  href="http://code.haskell.org/haskellmode-vim/doc/haskellmode.txt">help file
+  source</a> here).
+  </p>
+  
+  <p>
+  There is a <a
+  href="http://code.haskell.org/haskellmode-vim/haskellmode-files.txt">log of open issues and recent
+  changes</a> and an <a
+  href="http://trac.haskell.org/haskellmode-vim/">issue tracker for your bug
+  reports</a>. You can also try to follow the <a
+  href="http://libraryinstitute.wordpress.com/tag/haskellmode/">haskellmode tag
+  on my blog</a> to keep up to date with plugin development and occasional
+  update releases.
+  </p>
+  </dd>
+  
+</dd>
+
+<dt>Source repo:</dt>
+<dd>
+  <dl>
+
+  <dt>There is a darcs repo: <a
+  href="http://code.haskell.org/haskellmode-vim/">http://code.haskell.org/haskellmode-vim/</a>
+  with an
+  <a href="http://code.haskell.org/haskellmode-vim/_darcs/rss2.xml">rss feed</a>
+  for commit messages.
+  </dt>
+  <dd>
+  <p>
+  Not needed for general use (you can unpack the sources from the vimballs),
+  but useful if you want to prepare patches, or if you want to keep local
+  modifications, or if you just generally prefer source control repos over
+  vimballs (see <a href="http://darcs.net/">darcs home page</a>).
+  <pre>
+  darcs get http://code.haskell.org/haskellmode-vim/
+  darcs pull -a http://code.haskell.org/haskellmode-vim/
+  </pre>
+  </p>
+  </dd>
+
+  <dd>
+
+  <!--
+  <dl>
+
+  <dt>The vimball archive contains the following files (which you should not
+    need to download seperately - they're just here if you want to look before
+    downloading the vimball):
+  </dt>
+
+  <dt><a href="vimfiles/doc/haskellmode.txt">vimfiles/doc/haskellmode.txt</a>
+  </dt>
+  <dd>
+  helpfile for the haskell mode plugins (initial version contributed
+  by Alex Tarkovsky). after installation, just try :help haskellmode
+  to find out more details about the features provided by these
+  haskell mode plugins (or have a peek at the helpfile provided
+  here, it is lightly annotated text). if you do not use the vimball
+  above, you will need to run :helptags (see :help :helptags) by hand.
+  </dd>
+
+  <dt><a href="vimfiles/compiler/ghc.vim">vimfiles/compiler/ghc.vim</a></dt>
+  <dd>set basic error format and makeprg, to enable use of quickfix
+  mode with ghci. also provide 'show type', 'add type declaration', 'show
+  info', 'create tags file', insert-mode completion based on ghci
+  browsing current and imported modules.
+  </dd>
+
+  <dt><a href="vimfiles/ftplugin/haskell.vim">vimfiles/ftplugin/haskell.vim</a></dt>
+  <dd>generic haskell filetype plugin. defines module import
+  format, to enable vim's functionality for searching in and
+  completing wrt imported files. 
+  </dd>
+
+  <dt><a href="vimfiles/autoload/haskellmode.vim">vimfiles/autoload/haskellmode.vim</a></dt>
+  <dd>auxiliary functions used by the other scripts to identify Haskell 
+      identifiers, gather imports as well as some list ops.
+  </dd>
+
+  <dt><a href="vimfiles/ftplugin/haskell_doc.vim">vimfiles/ftplugin/haskell_doc.vim</a></dt>
+  <dd>lots of functionality based on haddock's indices (you'll need a
+  local installation of the haddock-generated html for the libraries,
+  and might need to adjust some paths, eg to your HTML browser),
+  including opening docs for id under cursor, completion of id under
+  cursor wrt haddock indices, adding import for id under cursor. see
+  comments at top of file for more info. </dd>
+
+  <dt><a href="vimfiles/ftplugin/haskell_hpaste.vim">vimfiles/ftplugin/haskell_hpaste.vim</a>
+  <dd>([alpha] experimental support for editing haskell paste buffer
+  entries at <a href="http://hpaste.org">hpaste.org</a>)
+  </dd>
+
+  </dl>
+  -->
+
+  </dd>
+
+  </dl>
+</dd>
+<dt>Setup:</dt>
+<dd>
+  <p>
+  use the vimball archive (vimball is a standard plugin, and straightforward to
+  use; mostly open the archive in Vim and source it, <code>:so %</code>; for
+  details and alternatives, see <a
+  href="http://vimdoc.sourceforge.net/htmldoc/pi_vimball.html#vimball">:help
+  vimball</a>) - it will copy the individual scripts to your .vim/ or vimfiles/
+  directory and install the helpfile. 
+  <!-- can't see them anymore?
+  the scripts can also be found in the <a
+  href="http://haskell.org/haskellwiki/Gentoo">official
+  Gentoo Haskell overlay</a> (thanks to Alex Tarkovsky).
+  -->
+  </p>
+  <p>
+  the haskell_*.vim files from the filetype-plugin directory will be
+  loaded automatically when editing haskell files (<em>NB: this assumes that
+  you have set</em> <tt>:filetype plugin on</tt> -- see <tt>:help
+  filetype-plugin-on</tt>). to configure the web browser and to load the ghc
+  compiler plugin for .hs file, add the following in your .vimrc:
+  <pre>
+  " use ghc functionality for haskell files
+  au Bufenter *.hs compiler ghc
+
+  " switch on syntax highlighting
+  syntax on
+
+  " enable filetype detection, plus loading of filetype plugins
+  filetype plugin on
+
+  " configure browser for haskell_doc.vim
+  let g:haddock_browser = "insert path to your web browser"
+    "let g:haddock_browser = "C:/Program Files/Opera/Opera.exe"
+    "let g:haddock_browser = "C:/Program Files/Mozilla Firefox/firefox.exe"
+    "let g:haddock_browser = "C:/Program Files/Internet Explorer/IEXPLORE.exe"
+  </pre>
+  For Macs, Sean Leather <a href="http://splonderzoek.blogspot.com/2009/04/haskell-mode-for-vim-on-mac.html">recommends</a> (would all other Mac users be happy with <a href="http://trac.haskell.org/haskellmode-vim/ticket/4">this as default</a>?)
+  <pre>
+  " Configure browser for haskell_doc.vim
+  let g:haddock_browser = "open"
+  let g:haddock_browser_callformat = "%s %s"
+  </pre>
+  next, edit some Haskell file, call ':DocSettings', and check
+  whether you are happy with what the script has found:
+  g:haddock_browser will be called to display HTML docs (if you 
+  need to send your browser into the background, you could set
+  g:haddock_browser_callformat), s:libraries should point to your
+  local copy of the haddock files (if it doesn't, you could set
+  g:haddock_docdir), and s:haddock_indexfile should be a place where
+  vim can cache the information it gathers from the HTML files, so
+  that it only has to do that once per version of the libraries 
+  (you can specify another directory for this cache file by setting
+  g:haddock_indexfiledir); if you're happy with the settings,
+  :DocIndex will populate the index, and :ExportDocIndex
+  will store it for future use  
+  </p>
+  <p>
+  Btw, if your GHC installation came without documentation, you can find
+  documentation tarballs at <a
+    href="http://www.haskell.org/ghc/docs/">http://www.haskell.org/ghc/docs/</a>.
+  </p>
+  <p>
+  Before version 20090430, haskellmode used to <tt>set
+  completeopt=menu,menuone,longest</tt>. I still recommend having <tt>menu,menuone</tt>
+  in there, but haskellmode no longer interferes with that setting, and in future,
+  other haskellmode menus will take a lead from the presence or absence of menuone
+  there (<tt>_?</tt> already does).
+  </p>
+</dd>
+
+<dt>Acknowledgements:</dt>
+<dd>
+Thanks to all of you who have provided feedback and suggestions on
+earlier versions, especially on removing portability issues.
+</dd>
+</dl>
+</p>
+
+  </body>
+</html>
+
