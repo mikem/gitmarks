@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+		<title>How to clone virtual machine with VmWare Server &laquo;  Alexey Kovyrin&#039;s Blog</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="google-site-verification" content="xej1fi9n_u1ujEeSsQ_6hC0lwItDDWuFtA7r_lleXGI" />
+
+		<link rel="stylesheet" href="http://kovyrin.net/wp-content/themes/kovyrin/style.css" type="text/css" media="screen" />
+		<!--[if IE]>
+		<script src=" http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+
+		<link rel="alternate" type="application/rss+xml" title="Alexey Kovyrin&#039;s Blog RSS Feed" href="http://kovyrin.net/feed/" />
+		<link rel="alternate" type="application/atom+xml" title="Alexey Kovyrin&#039;s Blog Atom Feed" href="http://kovyrin.net/feed/atom/" />
+		<link rel="pingback" href="http://kovyrin.net/xmlrpc.php" />
+		<meta property="fb:admins" content="502144512" />
+
+								
+		<link rel="alternate" type="application/rss+xml" title="Alexey Kovyrin&#039;s Blog &raquo; How to clone virtual machine with VmWare Server Comments Feed" href="http://kovyrin.net/2007/04/08/how-to-clone-virtual-machine-with-vmware-server/feed/" />
+<style type="text/css">.codecolorer-container { padding: 0px; margin: 10px 0px; }
+.codecolorer-container *, .codecolorer * { font-size: 12px; }</style>
+<link rel='stylesheet' id='openid-css'  href='http://kovyrin.net/wp-content/plugins/openid/f/openid.css?ver=519' type='text/css' media='all' />
+<link rel='stylesheet' id='shadowbox-css-css'  href='http://kovyrin.net/wp-content/plugins/shadowbox-js/shadowbox/shadowbox.css?ver=3.0.3' type='text/css' media='screen' />
+<link rel='stylesheet' id='shadowbox-extras-css'  href='http://kovyrin.net/wp-content/plugins/shadowbox-js/css/extras.css?ver=3.0.3' type='text/css' media='screen' />
+<link rel='stylesheet' id='codecolorer-css'  href='http://kovyrin.net/wp-content/plugins/codecolorer/codecolorer.css?ver=0.9.8' type='text/css' media='screen' />
+<script type='text/javascript' src='http://kovyrin.net/wp-includes/js/jquery/jquery.js?ver=1.4.2'></script>
+<script type='text/javascript' src='http://kovyrin.net/wp-includes/js/comment-reply.js?ver=20090102'></script>
+<script type='text/javascript' src='http://kovyrin.net/wp-content/themes/kovyrin/jquery.scrollTo.js?ver=3.0'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://kovyrin.net/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://kovyrin.net/wp-includes/wlwmanifest.xml" /> 
+<link rel='index' title='Alexey Kovyrin&#039;s Blog' href='http://kovyrin.net/' />
+<link rel='start' title='First post' href='http://kovyrin.net/2006/02/26/first-post/' />
+<link rel='prev' title='MySQL Master-Master replication manager released' href='http://kovyrin.net/2007/04/05/mysql-master-master-replication-manager-released/' />
+<link rel='next' title='SOS!' href='http://kovyrin.net/2007/04/20/sos/' />
+<meta name="generator" content="WordPress 3.0" />
+<link rel='canonical' href='http://kovyrin.net/2007/04/08/how-to-clone-virtual-machine-with-vmware-server/' />
+<link rel='shortlink' href='http://wp.me/pM9NY-1t' />
+<link rel="stylesheet" href="http://kovyrin.net/wp-content/plugins/contact-form-7/stylesheet.css" type="text/css" />
+			<!-- Added by "del.icio.us - Bookmark this!", a WordPress Plugin of Arne Brachhold, v1.2 -->
+			<script type="text/javascript" language="JavaScript">
+				//<![CDATA[
+				//Bookmark on del.icio.us
+				function dbt_bookmark(targetURL,service) {
+					//URL of this document
+					if(!service) service='delicious';
+					var loc=(targetURL && targetURL.length>0?targetURL:location.href);
+					//Strip out any anchors
+					var apos=loc.indexOf('#');
+					loc=encodeURIComponent((apos>0?loc.substring(0,apos):loc));
+					
+					//Get Title and encode
+					var title = encodeURIComponent(document.title); 
+					
+					var url='';
+					
+					//Redirect to service
+					if(service=='digg') url='http://www.digg.com/submit?phase=2&url=' + loc + '&title=' + title;
+					else if(service=='newsvine') url='http://www.newsvine.com/_tools/seed&save?u=' + loc + '&h=' + title;
+					else if(service=='furl') url='http://www.furl.net/storeIt.jsp?p=1&u='+ loc +'&t=' + title;
+					else if(service=='blinklist') url='http://www.blinklist.com/index.php?Action=Blink/addblink.php&Description=&Url=' + loc + '&Title=' + title;
+					else url='http://del.icio.us/post?v=2&url=' + loc + '&amp;title=' + title;
+					
+					location.href = url;
+					return false;
+				}
+				//]]>
+			</script>
+				</head>
+
+	<body>
+		<div id="container">
+			<header id="page-header">
+				<h2>
+					<a href="http://kovyrin.net/">
+						<span>Alexey Kovyrin&#039;s Blog</span>
+					</a>
+				</h2>
+				<p>Yet Another Admin's Blog</p>
+				<nav id="menu">
+					<ul>
+						<li class="home"><a href="/">Home</a></li>
+						<li class="resume"><a href="/resume/">Resume/CV</a></li>
+						<li class="projects"><a href="/projects/">Projects</a></li>
+						<li class="books"><a target='_blank' href="http://photo.kovyrin.net/">Photos</a></li>
+						<li class="contact"><a href="/contact/">Contact</a></li>
+					</ul>
+				</nav>
+			</header>
+			<div id="page-content">
+
+	<section id="content">
+
+	
+
+		<article class="post-91 post type-post hentry category-databases" id="post-91">
+			<header>
+				<h1><a href="http://kovyrin.net/2007/04/08/how-to-clone-virtual-machine-with-vmware-server/" rel="bookmark" title="Permanent Link to How to clone virtual machine with VmWare Server">How to clone virtual machine with VmWare Server</a></h1>
+				<p class="meta">
+					Posted by Alexey Kovyrin under <a href="http://kovyrin.net/category/databases/" title="View all posts in Databases" rel="category tag">Databases</a>  &#183; <a href='http://kovyrin.net/2007/04/08/how-to-clone-virtual-machine-with-vmware-server/lang/ru/'><img src="http://kovyrin.net/wp-content/plugins/polyglot_flags/ru.png" alt="русский" title="русский" /></a>  									</p>
+			</header>
+			<aside>
+				<time datetime="2007-04-08">Sun 8<br />Apr<br />2007</time>
+			</aside>
+			<section class="text">
+				<p>Today I was doing some pre-release testing of <a href="http://code.google.com/p/mysql-master-master/">our software</a> and to test it I was needed three separate servers running MySQL. After some thinking I decided to use my &#8220;old&#8221; workstation (actually it is pretty powerful Sempron with 2Gb of RAM, but now I use my macbook as a primary workstation) and start 3 separate virtual servers there. Of course, as all admins, I&#8217;m little bit lazy and installing Debian on all three machines was not appropriate solution <img src='http://kovyrin.net/wp-includes/images/smilies/icon_wink.gif' alt=';-)' class='wp-smiley' /> . So, I&#8217;ve created one machine, installed brand-new <a href="http://www.debian.org/">Debian Etch</a> there and then begun to look for solution to clone this machine to run it in three copies. After all these operations were done, I&#8217;ve decided to spend time I&#8217;ve saved with this simple trick to describe here how to clone <a href="http://www.vmware.com/products/server/">VmWare Server</a> virtual machine without any pain.</p>
+<p><span id="more-91"></span></p>
+<p>First of all, we need to find where all our virtual machines are in our system. After small search I&#8217;ve found vmware files in <b>/var/lib/vmware/Virtual Machines</b>. There are some set of directories each corresponds to some of your already created virtual machines. In my case I was interested in cloning virtual machine with name <b>db1</b> to new machine <b>db2</b> and then to <b>db3</b>.</p>
+<p>I&#8217;ve copied entire <b>db1</b> directory to new one:</p>
+<div class="codecolorer-container bash twitlight" style="overflow:auto;white-space:nowrap;"><table cellspacing="0" cellpadding="0"><tbody><tr><td class="line-numbers"><div>1<br /></div></td><td><div class="bash codecolorer">scoundrel<span class="sy0">@</span>scoundrel-desktop:<span class="sy0">/</span>var<span class="sy0">/</span>lib<span class="sy0">/</span>vmware<span class="sy0">/</span>Virtual Machines$ <span class="kw2">cp</span> <span class="re5">-ax</span> db1 db2</div></td></tr></tbody></table></div>
+</p>
+<p>Next step was to rename virtual machine&#8217;s disk image (maybe it is not necessary but I decided that it would be better to perform this operation). To manage vmware disk images you could use <b>vmware-diskmanager</b> tool which resides in vmware&#8217;s binary directory (<b>/vmware/bin</b> in my case):</p>
+<div class="codecolorer-container bash twitlight" style="overflow:auto;white-space:nowrap;"><table cellspacing="0" cellpadding="0"><tbody><tr><td class="line-numbers"><div>1<br /></div></td><td><div class="bash codecolorer">scoundrel<span class="sy0">@</span>scoundrel-desktop:<span class="sy0">/</span>var<span class="sy0">/</span>lib<span class="sy0">/</span>vmware<span class="sy0">/</span>Virtual Machines<span class="sy0">/</span>db2$ <span class="sy0">/</span>vmware<span class="sy0">/</span>bin<span class="sy0">/</span>vmware-vdiskmanager <span class="re5">-n</span> db1.vmdk db2.vmdk</div></td></tr></tbody></table></div>
+</p>
+<p>Next (and, actually, last) step was to rename virtual machine config and change disk image name in this config file:</p>
+<div class="codecolorer-container bash twitlight" style="overflow:auto;white-space:nowrap;"><table cellspacing="0" cellpadding="0"><tbody><tr><td class="line-numbers"><div>1<br />2<br /></div></td><td><div class="bash codecolorer">scoundrel<span class="sy0">@</span>scoundrel-desktop:<span class="sy0">/</span>var<span class="sy0">/</span>lib<span class="sy0">/</span>vmware<span class="sy0">/</span>Virtual Machines<span class="sy0">/</span>db2$ <span class="kw2">mv</span> db1 db2<br />
+scoundrel<span class="sy0">@</span>scoundrel-desktop:<span class="sy0">/</span>var<span class="sy0">/</span>lib<span class="sy0">/</span>vmware<span class="sy0">/</span>Virtual Machines<span class="sy0">/</span>db2$ <span class="kw2">sed</span> <span class="re5">-i</span> <span class="st_h">'s/db1.vmdk/db2.vmdk/'</span> db2</div></td></tr></tbody></table></div>
+</p>
+<p>That&#8217;s it! Now we can start this new machine with VMware server console, it would ask as to change machine&#8217;s UUID (which is machines MAC address) and after uuid change this machine will get new IP address from dhcp server (in my case &#8211; wifi router). As always it was easy and funny. Stay tuned and I&#8217;ll say you why you should not use MySQL&#8217;s config file (my.cnf) to setup replication (this hint is for my next post).</p>
+
+
+<hr><p><b>Related posts:</b></p><ol><li><a href='http://kovyrin.net/2006/04/17/typical-nginx-configurations/' rel='bookmark' title='Permanent Link: Typical Configurations Overview For Nginx HTTP(S) Reverse Proxy/Web Server'>Typical Configurations Overview For Nginx HTTP(S) Reverse Proxy/Web Server</a></li>
+<li><a href='http://kovyrin.net/2006/04/02/provider-independent-ip-address/' rel='bookmark' title='Permanent Link: How To Get &#8220;Provider Independent&#8221; IP Address For Your Home Server?'>How To Get &#8220;Provider Independent&#8221; IP Address For Your Home Server?</a></li>
+<li><a href='http://kovyrin.net/2006/04/04/nginx-small-powerful-web-server/' rel='bookmark' title='Permanent Link: Nginx &#8211; Small, But Very Powerful and Efficient Web Server'>Nginx &#8211; Small, But Very Powerful and Efficient Web Server</a></li>
+<li><a href='http://kovyrin.net/2006/04/29/monitoring-nginx-with-rrdtool/' rel='bookmark' title='Permanent Link: Monitoring nginx Server Statistics With rrdtool'>Monitoring nginx Server Statistics With rrdtool</a></li>
+<li><a href='http://kovyrin.net/2006/03/06/how-to-delegate-subdomain/' rel='bookmark' title='Permanent Link: Hosting Tricks:  How to delegate DNS-management for some subdomain to off-site DNS-server'>Hosting Tricks:  How to delegate DNS-management for some subdomain to off-site DNS-server</a></li>
+</ol>			</section>
+			<footer>
+												<p class="comments">
+					<a href="http://kovyrin.net/2007/04/08/how-to-clone-virtual-machine-with-vmware-server/#comments" title="Comment on How to clone virtual machine with VmWare Server">11 Comments &#187;</a> |
+					<a href="#" onclick="return dbt_bookmark('http://blog.kovyrin.net/2009/02/17/loops-plugin-for-rails-and-merb-released/');" >Bookmark on del.icio.us</a>
+				</p>
+				<p class="postmetadata alt">
+					<small>
+						This entry was posted
+												on Sunday, April 8th, 2007 at 11.43 pm						and is filed under <a href="http://kovyrin.net/category/databases/" title="View all posts in Databases" rel="category tag">Databases</a>.
+						You can follow any responses to this entry through the <a href='http://kovyrin.net/2007/04/08/how-to-clone-virtual-machine-with-vmware-server/feed/'>RSS 2.0</a> feed.
+
+													Both comments and pings are currently closed.
+
+						
+					</small>
+				</p>
+			</footer>
+
+			
+<!-- You can start editing here. -->
+
+	<section id="comments">
+		<header><h3>11 Responses to this entry</h3></header>
+
+			
+	<article id="comment-74386">
+		<header>
+			<a href='http://vmportal.info/?p=54' rel='external nofollow' class='url'>Vm Портал | Ссылки 11.04.2007. Русскоязычные ресурсы по виртуализации.</a> says:
+			<time><a href="http://kovyrin.net/2007/04/08/how-to-clone-virtual-machine-with-vmware-server/comment-page-1/#comment-74386">2007-04-11 at 10.48 am</a></time>
+		</header>
+		<aside>
+					</aside>
+		<section class="text">
+			<p>[...] Как клонировать виртуальную машину при использовании VmWare Server &#8211; Алексей Ковырин делится личным опытом [...]</p>
+		</section>
+		<footer id="comment-reply-74386" class="reply">
+					</footer>
+	
+	</article>	
+	<article id="comment-134987">
+		<header>
+			<a href='http://oslb.wordpress.com/2007/08/29/make-a-copy-of-virtual-machine-with-vmware-server/' rel='external nofollow' class='url'>Make a copy of virtual machine with Vmware Server &laquo; Linux Screw</a> says:
+			<time><a href="http://kovyrin.net/2007/04/08/how-to-clone-virtual-machine-with-vmware-server/comment-page-1/#comment-134987">2007-08-29 at 6.37 pm</a></time>
+		</header>
+		<aside>
+					</aside>
+		<section class="text">
+			<p>[...] Continue reading about virtual machines cloning with Vmware Server&#8230; [...]</p>
+		</section>
+		<footer id="comment-reply-134987" class="reply">
+					</footer>
+	
+	</article>	
+	<article id="comment-139172">
+		<header>
+			<a href='http://www.linuxscrew.com/2007/08/29/make-a-copy-of-virtual-machine-with-vmware-server/' rel='external nofollow' class='url'>Make a copy of virtual machine with Vmware Server | Linux Screw</a> says:
+			<time><a href="http://kovyrin.net/2007/04/08/how-to-clone-virtual-machine-with-vmware-server/comment-page-1/#comment-139172">2007-09-11 at 5.25 am</a></time>
+		</header>
+		<aside>
+					</aside>
+		<section class="text">
+			<p>[...] Continue reading about virtual machines cloning with Vmware Server&#8230; [...]</p>
+		</section>
+		<footer id="comment-reply-139172" class="reply">
+					</footer>
+	
+	</article>	
+	<article id="comment-171197">
+		<header>
+			fabio says:
+			<time><a href="http://kovyrin.net/2007/04/08/how-to-clone-virtual-machine-with-vmware-server/comment-page-1/#comment-171197">2007-11-23 at 4.42 pm</a></time>
+		</header>
+		<aside>
+			<img alt='' src='http://0.gravatar.com/avatar/68e61ca780f9739e13777752c2356b36?s=64&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D64&amp;r=G' class='avatar avatar-64 photo' height='64' width='64' />		</aside>
+		<section class="text">
+			<p>I can confirm it is not mandatory to rename vm disk.</p>
+<p>So cloning VMs could be even faster!!</p>
+		</section>
+		<footer id="comment-reply-171197" class="reply">
+					</footer>
+	
+	</article>	
+	<article id="comment-200784">
+		<header>
+			<a href='http://mirakle.wordpress.com/2008/01/26/hello-world/' rel='external nofollow' class='url'>Cloning a virtual machine in VMWare &laquo; Mirakulous happenings&#8230;</a> says:
+			<time><a href="http://kovyrin.net/2007/04/08/how-to-clone-virtual-machine-with-vmware-server/comment-page-1/#comment-200784">2008-01-26 at 11.22 pm</a></time>
+		</header>
+		<aside>
+					</aside>
+		<section class="text">
+			<p>[...] <a href="http://blog.kovyrin.net/2007/04/08/how-to-clone-virtual-machine-with-vmware-server/trackback/ " rel="nofollow">http://blog.kovyrin.net/2007/04/08/how-to-clone-virtual-machine-with-vmware-server/trackback/ </a> [...]</p>
+		</section>
+		<footer id="comment-reply-200784" class="reply">
+					</footer>
+	
+	</article>	
+	<article id="comment-219906">
+		<header>
+			<a href='http://agendanation.net' rel='external nofollow' class='url'>Would-be Cloner</a> says:
+			<time><a href="http://kovyrin.net/2007/04/08/how-to-clone-virtual-machine-with-vmware-server/comment-page-1/#comment-219906">2008-03-03 at 7.36 pm</a></time>
+		</header>
+		<aside>
+			<img alt='' src='http://0.gravatar.com/avatar/e0e55491ec28080f14e48dff6064f229?s=64&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D64&amp;r=G' class='avatar avatar-64 photo' height='64' width='64' />		</aside>
+		<section class="text">
+			<p>I am using vmware-server-1.0.4-56528 on Ubuntu 7.10 and I cannot find the vmware-diskmanager utility. In fact, there is no /vmware/bin on my system. I built vmware-server and vmware-mui from sources, is there another package I should have downloaded?</p>
+		</section>
+		<footer id="comment-reply-219906" class="reply">
+					</footer>
+	
+	</article>	
+	<article id="comment-230328">
+		<header>
+			bakermd says:
+			<time><a href="http://kovyrin.net/2007/04/08/how-to-clone-virtual-machine-with-vmware-server/comment-page-1/#comment-230328">2008-04-18 at 1.01 pm</a></time>
+		</header>
+		<aside>
+			<img alt='' src='http://1.gravatar.com/avatar/f804f4c49b54e020dfb184bf5d4762c7?s=64&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D64&amp;r=G' class='avatar avatar-64 photo' height='64' width='64' />		</aside>
+		<section class="text">
+			<p>Would-be Cloner:<br />
+find / | grep vmware-diskmanager</p>
+		</section>
+		<footer id="comment-reply-230328" class="reply">
+					</footer>
+	
+	</article>	
+	<article id="comment-230464">
+		<header>
+			Jdog says:
+			<time><a href="http://kovyrin.net/2007/04/08/how-to-clone-virtual-machine-with-vmware-server/comment-page-1/#comment-230464">2008-05-08 at 9.44 pm</a></time>
+		</header>
+		<aside>
+			<img alt='' src='http://1.gravatar.com/avatar/5b3eb599b698993b1b568c7dacd5a622?s=64&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D64&amp;r=G' class='avatar avatar-64 photo' height='64' width='64' />		</aside>
+		<section class="text">
+			<p>I appreciate this-you got me started on fixing my issue.  Keep on!</p>
+		</section>
+		<footer id="comment-reply-230464" class="reply">
+					</footer>
+	
+	</article>	
+	<article id="comment-230711">
+		<header>
+			<a href='http://macchese.wordpress.com/2008/07/10/ubuntu-virtuale-e-clonato/' rel='external nofollow' class='url'>ubuntu: virtuale e clonato! &laquo; body and soul</a> says:
+			<time><a href="http://kovyrin.net/2007/04/08/how-to-clone-virtual-machine-with-vmware-server/comment-page-1/#comment-230711">2008-07-10 at 1.48 pm</a></time>
+		</header>
+		<aside>
+					</aside>
+		<section class="text">
+			<p>[...] per scontato il punto 1), eseguiamo la procedura del punto 2) secondo quanto scritto in questo link e aggiungiamo la nuova virtual machine al server vmware (punto [...]</p>
+		</section>
+		<footer id="comment-reply-230711" class="reply">
+					</footer>
+	
+	</article>	
+	<article id="comment-230865">
+		<header>
+			Ken Garland says:
+			<time><a href="http://kovyrin.net/2007/04/08/how-to-clone-virtual-machine-with-vmware-server/comment-page-1/#comment-230865">2008-08-11 at 8.38 pm</a></time>
+		</header>
+		<aside>
+			<img alt='' src='http://1.gravatar.com/avatar/b5a485cbf36d6bdd97bca019ced32354?s=64&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D64&amp;r=G' class='avatar avatar-64 photo' height='64' width='64' />		</aside>
+		<section class="text">
+			<p>great write up. one quick note to more recent virtual server users, configs now have a .vmx extension on the end so you would do:</p>
+<p>mv db1.vmx db2.vmx<br />
+sed -i &#8216;s/db1.vmdk/db2.vmdk/&#8217; db2.vmx</p>
+<p>in step three.</p>
+		</section>
+		<footer id="comment-reply-230865" class="reply">
+					</footer>
+	
+	</article>	
+	<article id="comment-230915">
+		<header>
+			J42B says:
+			<time><a href="http://kovyrin.net/2007/04/08/how-to-clone-virtual-machine-with-vmware-server/comment-page-1/#comment-230915">2008-08-27 at 12.25 am</a></time>
+		</header>
+		<aside>
+			<img alt='' src='http://1.gravatar.com/avatar/772cc8a42e48c39e4402dacfb2a63890?s=64&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D64&amp;r=G' class='avatar avatar-64 photo' height='64' width='64' />		</aside>
+		<section class="text">
+			<p>You might like to try running:<br />
+vmware-vdiskmanager<br />
+Look in /usr/bin<br />
+Also..might need to run with sudo</p>
+		</section>
+		<footer id="comment-reply-230915" class="reply">
+					</footer>
+	
+	</article>	</section>
+
+
+
+		</article>
+
+	
+	</section>
+
+				<footer id="page-footer">
+					Copyright &#169; 2010 Alexey Kovyrin |
+					Designed by <a href="http://kovyrina.info/">Tatyana Kovyrina</a> |
+    				Developed by <a href="http://kpumuk.info/">Dmytro Shteflyuk</a>
+				</footer>
+			</div>
+
+			<nav id="sidebar">
+	<div class="sidebar-row">
+		<section id="search-form">
+			<header><h3>Search this Site</h3></header>
+			<form action="/">
+				<p>
+					<input id="search-query" type="text" name="s" value="Enter Keyword..." onfocus="if (this.value == 'Enter Keyword...') this.value='';" onblur="if (this.value == '') this.value='Enter Keyword...';" />
+					<input id="search-button" type="submit" value="Search" />
+				</p>
+			</form>
+		</section>
+	</div>
+	
+	<div class="sidebar-row">
+		<section id="categories" class="left">
+			<header><h3>Categories</h3></header>
+			<ul>
+			  	<li class="cat-item cat-item-43"><a href="http://kovyrin.net/category/admin-tips/" title="View all posts filed under Admin-tips">Admin-tips</a> (32)
+</li>
+	<li class="cat-item cat-item-7"><a href="http://kovyrin.net/category/blog/" title="View all posts filed under Blog">Blog</a> (15)
+</li>
+	<li class="cat-item cat-item-23"><a href="http://kovyrin.net/category/databases/" title="View all posts filed under Databases">Databases</a> (36)
+</li>
+	<li class="cat-item cat-item-20"><a href="http://kovyrin.net/category/dev/" title="View all posts filed under Development">Development</a> (58)
+</li>
+	<li class="cat-item cat-item-1"><a href="http://kovyrin.net/category/general/" title="General posts">General</a> (6)
+</li>
+	<li class="cat-item cat-item-10"><a href="http://kovyrin.net/category/humor/" title="View all posts filed under Humor">Humor</a> (5)
+</li>
+	<li class="cat-item cat-item-45"><a href="http://kovyrin.net/category/links/" title="View all posts filed under Links">Links</a> (16)
+</li>
+	<li class="cat-item cat-item-35"><a href="http://kovyrin.net/category/projects/" title="View all posts filed under My Projects">My Projects</a> (24)
+</li>
+	<li class="cat-item cat-item-19"><a href="http://kovyrin.net/category/networks/" title="View all posts filed under Networks">Networks</a> (34)
+</li>
+			</ul>
+		</section>
+
+		<section id="archives" class="right">
+			<header><h3>Archives</h3></header>
+			<ul>
+					<li><a href='http://kovyrin.net/2010/08/' title='August 2010'>August 2010</a>&nbsp;(1)</li>
+	<li><a href='http://kovyrin.net/2010/07/' title='July 2010'>July 2010</a>&nbsp;(3)</li>
+	<li><a href='http://kovyrin.net/2010/05/' title='May 2010'>May 2010</a>&nbsp;(1)</li>
+	<li><a href='http://kovyrin.net/2010/04/' title='April 2010'>April 2010</a>&nbsp;(1)</li>
+	<li><a href='http://kovyrin.net/2010/02/' title='February 2010'>February 2010</a>&nbsp;(1)</li>
+	<li><a href='http://kovyrin.net/2010/01/' title='January 2010'>January 2010</a>&nbsp;(1)</li>
+	<li><a href='http://kovyrin.net/2009/11/' title='November 2009'>November 2009</a>&nbsp;(1)</li>
+	<li><a href='http://kovyrin.net/2009/08/' title='August 2009'>August 2009</a>&nbsp;(1)</li>
+	<li><a href='http://kovyrin.net/2009/07/' title='July 2009'>July 2009</a>&nbsp;(2)</li>
+	<li><a href='http://kovyrin.net/2009/02/' title='February 2009'>February 2009</a>&nbsp;(2)</li>
+	<li><a href='http://kovyrin.net/2009/01/' title='January 2009'>January 2009</a>&nbsp;(1)</li>
+	<li><a href='http://kovyrin.net/2008/12/' title='December 2008'>December 2008</a>&nbsp;(1)</li>
+	<li><a href='http://kovyrin.net/2008/11/' title='November 2008'>November 2008</a>&nbsp;(1)</li>
+	<li><a href='http://kovyrin.net/2008/10/' title='October 2008'>October 2008</a>&nbsp;(3)</li>
+	<li><a href='http://kovyrin.net/2008/08/' title='August 2008'>August 2008</a>&nbsp;(1)</li>
+	<li><a href='http://kovyrin.net/2008/07/' title='July 2008'>July 2008</a>&nbsp;(3)</li>
+	<li><a href='http://kovyrin.net/2008/06/' title='June 2008'>June 2008</a>&nbsp;(1)</li>
+	<li><a href='http://kovyrin.net/2008/05/' title='May 2008'>May 2008</a>&nbsp;(1)</li>
+	<li><a href='http://kovyrin.net/2008/04/' title='April 2008'>April 2008</a>&nbsp;(4)</li>
+	<li><a href='http://kovyrin.net/2008/03/' title='March 2008'>March 2008</a>&nbsp;(2)</li>
+	<li><a href='http://kovyrin.net/2008/02/' title='February 2008'>February 2008</a>&nbsp;(1)</li>
+	<li><a href='http://kovyrin.net/2008/01/' title='January 2008'>January 2008</a>&nbsp;(1)</li>
+	<li><a href='http://kovyrin.net/2007/12/' title='December 2007'>December 2007</a>&nbsp;(1)</li>
+	<li><a href='http://kovyrin.net/2007/11/' title='November 2007'>November 2007</a>&nbsp;(2)</li>
+	<li><a href='http://kovyrin.net/2007/10/' title='October 2007'>October 2007</a>&nbsp;(5)</li>
+	<li><a href='http://kovyrin.net/2007/09/' title='September 2007'>September 2007</a>&nbsp;(1)</li>
+	<li><a href='http://kovyrin.net/2007/08/' title='August 2007'>August 2007</a>&nbsp;(3)</li>
+	<li><a href='http://kovyrin.net/2007/07/' title='July 2007'>July 2007</a>&nbsp;(2)</li>
+	<li><a href='http://kovyrin.net/2007/06/' title='June 2007'>June 2007</a>&nbsp;(2)</li>
+	<li><a href='http://kovyrin.net/2007/05/' title='May 2007'>May 2007</a>&nbsp;(4)</li>
+	<li><a href='http://kovyrin.net/2007/04/' title='April 2007'>April 2007</a>&nbsp;(5)</li>
+	<li><a href='http://kovyrin.net/2007/01/' title='January 2007'>January 2007</a>&nbsp;(1)</li>
+	<li><a href='http://kovyrin.net/2006/12/' title='December 2006'>December 2006</a>&nbsp;(2)</li>
+	<li><a href='http://kovyrin.net/2006/11/' title='November 2006'>November 2006</a>&nbsp;(5)</li>
+	<li><a href='http://kovyrin.net/2006/10/' title='October 2006'>October 2006</a>&nbsp;(4)</li>
+	<li><a href='http://kovyrin.net/2006/09/' title='September 2006'>September 2006</a>&nbsp;(1)</li>
+	<li><a href='http://kovyrin.net/2006/08/' title='August 2006'>August 2006</a>&nbsp;(9)</li>
+	<li><a href='http://kovyrin.net/2006/06/' title='June 2006'>June 2006</a>&nbsp;(1)</li>
+	<li><a href='http://kovyrin.net/2006/05/' title='May 2006'>May 2006</a>&nbsp;(3)</li>
+	<li><a href='http://kovyrin.net/2006/04/' title='April 2006'>April 2006</a>&nbsp;(8)</li>
+	<li><a href='http://kovyrin.net/2006/03/' title='March 2006'>March 2006</a>&nbsp;(24)</li>
+	<li><a href='http://kovyrin.net/2006/02/' title='February 2006'>February 2006</a>&nbsp;(8)</li>
+			</ul>
+			<p class="more">
+				<a href="#" class="down" onclick="scroll_archives(1);return false;">Down</a>
+				<a href="#" class="up up-inactive" onclick="scroll_archives(-1);return false;">Up</a>
+			</p>
+		</section>
+	</div>
+
+	<div class="sidebar-row">
+		<section id="rss-feeds" class="left">
+			<header><h3>RSS Feeds</h3></header>
+			<a href="#" class="rss-icon">Entries RSS</a>
+			<ul>
+				<li><a rel="alternate" type="application/rss+xml" href="http://feeds.feedburner.com/Homo-Adminus">Entries RSS (Eng)</a></li>
+				<li><a rel="alternate" type="application/rss+xml" href="http://feeds.feedburner.com/Homo-Adminus-Ru">Entries RSS (Rus)</a></li>
+				<li><a rel="alternate" type="application/rss+xml" href="http://kovyrin.net/comments/feed/" >Comments RSS</a></li>
+			</ul>
+		</section>
+
+		<section id="languages" class="right">
+			<header><h3>Languages</h3></header>
+			<ul>
+				<li><a href="lang-pref/en/"><span class="en"></span> English</a></li>
+				<li><a href="lang-pref/ru/"><span class="ru"></span> Russian</a></li>
+			</ul>
+		</section>
+	</div>
+
+	<div class="sidebar-row">
+		<section class="links left">
+			<header><h3>Me and My Friends</h3></header>
+	<ul class='xoxo blogroll'>
+<li><a href="http://canada.kovyrin.net" rel="me" target="_blank">Canada Immigration Blog</a></li>
+<li><a href="http://kpumuk.info/" rel="friend met colleague co-resident">Dmytro Shteflyuk&#8217;s Blog</a></li>
+<li><a href="http://esl-advices.blogspot.com/" rel="me">ESL Advices Blog</a></li>
+<li><a href="http://photo.kovyrin.net" rel="me" title="Scoundrel With a Camera">My Photo Blog</a></li>
+<li><a href="http://kovyrina.info" rel="contact colleague co-resident sibling muse date" title="Tatyana Kovyrina: Web designer">My Wife&#8217;s Site</a></li>
+<li><a href="http://scalexis.com/" rel="me" title="Web performance and scalability consulting">Scalexis Inc</a></li>
+
+	</ul>
+
+		</section>
+		<section class="links right">
+			<header><h3>My Projects</h3></header>
+	<ul class='xoxo blogroll'>
+<li><a href="http://www.bestcookvideos.com" title="Free cooking videos, cooking lessons, chef videos">Best Cooking Videos</a></li>
+<li><a href="http://www.bestechvideos.com/" rel="me" title="Screencasts, Webinars, Technical Videos, Conference Videos, etc">Best Tech Videos</a></li>
+<li><a href="http://github.com/kovyrin/db-charmer" title="ActiveRecord Connections Magic (slaves, multiple connections, etc)">DbCharmer Rails Plugin</a></li>
+<li><a href="http://code.google.com/p/innodb-tools/" title="This set of tools could be used to check and repair innodb tablespaces used in MySQL to store data from innodb tables.">Innodb Recovery Toolset</a></li>
+<li><a href="http://github.com/kovyrin" title="me@github">My Open-Source Projects</a></li>
+<li><a href="http://github.com/kovyrin/loops/tree/master" rel="me" title="Simple background loops framework for rails and merb">Rails Loops Plugin</a></li>
+
+	</ul>
+
+		</section>
+	</div>
+
+	<div class="sidebar-row">
+		<section id="photos" class="left">
+			<header><h3>Flickr Photos</h3></header>
+			<ul>
+				<li><a href="http://www.flickr.com/photos/kovyrin/5283299130/" title="Testing Camera+"><img src="http://farm6.static.flickr.com/5050/5283299130_5c6dbf90fc_s.jpg" alt="Testing Camera+" /></a></li><li><a href="http://www.flickr.com/photos/kovyrin/5126037251/" title="Tanya"><img src="http://farm2.static.flickr.com/1215/5126037251_c6f9536ce7_s.jpg" alt="Tanya" /></a></li><li><a href="http://www.flickr.com/photos/kovyrin/5125966609/" title="Tanya"><img src="http://farm5.static.flickr.com/4067/5125966609_f988d7d745_s.jpg" alt="Tanya" /></a></li><li><a href="http://www.flickr.com/photos/kovyrin/5082143519/" title="Tanya"><img src="http://farm5.static.flickr.com/4105/5082143519_475bb30f9e_s.jpg" alt="Tanya" /></a></li><li><a href="http://www.flickr.com/photos/kovyrin/5079956914/" title="***"><img src="http://farm5.static.flickr.com/4018/5079956914_38271906af_s.jpg" alt="***" /></a></li><li><a href="http://www.flickr.com/photos/kovyrin/5079198965/" title="***"><img src="http://farm5.static.flickr.com/4145/5079198965_0e7e1b05d9_s.jpg" alt="***" /></a></li>			</ul>
+		</section>
+		<section id="twitter" class="right">
+			<header><h3>Twitter Timeline</h3></header>
+			<div>
+			  <embed src="http://twitter.com/flash/twitter_badge.swf" flashvars="color1=3355443&amp;type=user&amp;id=6016702" quality="high" width="176" height="176" name="twitter_badge" align="middle" allowScriptAccess="always" wmode="transparent" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" /><br>
+			  <a style="font-size: 10px" href="http://twitter.com/kovyrin">follow me on http://twitter.com</a></div>
+		</section>
+	</div>
+
+	<div class="sidebar-row">
+		<section class="links left">
+		    <header><h3>Interesting Links</h3></header>
+	<ul class='xoxo blogroll'>
+<li><a href="http://www.mysqlperformanceblog.com/mysql-consulting/" rel="friend colleague">MySQL Consulting</a></li>
+<li><a href="http://www.percona.com/services/data-recovery-services-mysql.html" title="Perform Data Recovery for MySQL Server when data was lost or dammaged for any reason">MySQL Data Recovery</a></li>
+<li><a href="http://mysql-mmm.org/" title="MySQL Master-Master Replication Manager">MySQL Master-Master</a></li>
+<li><a href="http://www.sphinxsearch.com/" rel="contact met colleague" title="Free open-source SQL full-text search engine">Sphinx Search Engine</a></li>
+
+	</ul>
+
+		</section>
+		<section class="links right">
+		    <header><h3>Blogroll</h3></header>
+	<ul class='xoxo blogroll'>
+<li><a href="http://coding.scribd.com/" rel="met co-worker" title="Scribd developers&#8217; and ops&#8217; blog">coding@scribd blog</a></li>
+<li><a href="http://www.mysqlperformanceblog.com/">MySQL Performance</a></li>
+<li><a href="http://www.planetmysql.org/">Planet MySQL</a></li>
+<li><a href="http://www.xaprb.com/blog/">Xaprb</a></li>
+
+	</ul>
+
+		</section>
+	</div>	
+</nav>
+		</div>
+		<script type='text/javascript' src='http://kovyrin.net/wp-includes/js/jquery/jquery.form.js?ver=2.02m'></script>
+<script type='text/javascript' src='http://kovyrin.net/wp-content/plugins/contact-form-7/contact-form-7.js?ver=1.10.1'></script>
+<script type='text/javascript' src='http://kovyrin.net/wp-admin/admin-ajax.php?action=shadowboxjs&#038;cache=ed1004eebc5bab68f0d54754e141ca1a&#038;ver=3.0.3'></script>
+<script type='text/javascript' src='http://cdn.wibiya.com/Toolbars/dir_0593/Toolbar_593720/Loader_593720.js?ver=3.0'></script>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-114073-7");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+<!-- Begin Shadowbox JS -->
+<script type="text/javascript">
+	var shadowbox_conf = {
+		animate: true,
+		animateFade: true,
+		animSequence: "sync",
+		autoDimensions: false,
+		modal: false,
+		showOverlay: true,
+		overlayColor: "#000",
+		overlayOpacity: 0.8,
+		flashBgColor: "#000000",
+		autoplayMovies: true,
+		showMovieControls: true,
+		slideshowDelay: 0,
+		resizeDuration: 0.35,
+		fadeDuration: 0.35,
+		displayNav: true,
+		continuous: false,
+		displayCounter: true,
+		counterType: "default",
+		counterLimit: 10,
+		viewportPadding: 20,
+		handleOversize: "resize",
+		handleUnsupported: "link",
+		initialHeight: 160,
+		initialWidth: 320,
+		enableKeys: true,
+		skipSetup: false,
+		flashParams: {bgcolor:"#000000", allowFullScreen:true},
+		flashVars: {},
+		flashVersion: "9.0.0"
+
+	};
+	Shadowbox.init(shadowbox_conf);
+</script>
+<!-- End Shadowbox JS -->
+
+<!--stats_footer_test--><script src="http://stats.wordpress.com/e-201051.js" type="text/javascript"></script>
+<script type="text/javascript">
+st_go({blog:'11477438',v:'ext',post:'91'});
+var load_cmc = function(){linktracker_init(11477438,91,2);};
+if ( typeof addLoadEvent != 'undefined' ) addLoadEvent(load_cmc);
+else load_cmc();
+</script>
+	</body>
+</html>
