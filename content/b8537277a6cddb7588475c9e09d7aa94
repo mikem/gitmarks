@@ -1,0 +1,673 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-Strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>How to Debug Bash Scripts | Ayman Hourieh</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    
+    
+    <link href="/media/css/screen.r1272223596.css" rel="stylesheet" type="text/css" media="screen,projection" />
+    <link href="/media/css/print.r1271024851.css" rel="stylesheet" type="text/css" media="print" />
+    
+      <script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-4076003-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+    
+  </head>
+
+  <body>
+    <div id="container">
+      <div id="header">
+        <h1><a href="/">Ayman Hourieh</a></h1>
+      </div>
+      <div id="nav">
+        <ul>
+          <li><a href="/">Blog</a></li>
+          <li><a href="/photos">Photos</a></li>
+          <li><a href="/activitystream">Activity Stream</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+        <form action="/search" method="get">
+          <p>
+            <input type="text" name="q" value="" size="18" maxlength="128" />
+            <input type="submit" class="button" value="Search" />
+          </p>
+        </form>
+      </div>
+      <div id="content">
+        
+          <h2 class="content-title">How to Debug Bash Scripts</h2>
+          <div class="content-body">
+            
+  <div class="post ">
+    <div class="post-body">
+      
+      
+
+  <p><a href="http://en.wikipedia.org/wiki/Bash">Bash</a> is the default scripting language in most Linux systems. Its usage ranges from an interactive command interpreter to a scripting language for writing complex programs. Debugging facilities are a standard feature of compilers and interpreters, and bash is no different in this regard. In this article, I will explain various techniques and tips for debugging Bash scripts.</p>
+<div class="toc">
+<ul>
+<li><a href="#tracing-script-execution">Tracing script execution</a><ul>
+<li><a href="#adding-line-numbers-to-tracing-output">Adding line numbers to tracing output</a></li>
+<li><a href="#tracing-part-of-a-script">Tracing part of a script</a></li>
+</ul>
+</li>
+<li><a href="#logging">Logging</a></li>
+<li><a href="#using-the-bash-debugger">Using the Bash debugger</a></li>
+</ul>
+</div>
+<h3 id="tracing-script-execution">Tracing script execution</h3>
+<p>You can instruct Bash to print debugging output as it interprets you scripts. When running in this mode, Bash prints commands and their arguments before they are executed.</p>
+<p>To see how this works, let's try it on an example script. The following simple script greets the user and prints the current date:</p>
+<div class="codehilite"><pre><span class="c">#!/bin/bash</span>
+<span class="nb">echo</span> <span class="s2">&quot;Hello $USER,&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;Today is $(date +&#39;%Y-%m-%d&#39;)&quot;</span>
+</pre></div>
+
+
+<p>To trace the execution of the script, use <code>bash -x</code> to run it:</p>
+<div class="codehilite"><pre><span class="nv">$ </span>bash -x example_script.sh
++ <span class="nb">echo</span> <span class="s1">&#39;Hello ayman,&#39;</span>
+Hello ayman,
+++ date +%Y-%m-%d
++ <span class="nb">echo</span> <span class="s1">&#39;Today is 2009-08-24&#39;</span>
+Today is 2009-08-24
+</pre></div>
+
+
+<p>In this mode, Bash prints each command (with its expanded arguments) before executing it. Debugging output is prefixed with a number of <code>+</code> signs to indicate nesting. This output helps you see exactly what the script is doing, and understand why it is not behaving as expected.</p>
+<h4 id="adding-line-numbers-to-tracing-output">Adding line numbers to tracing output</h4>
+<p>In large scripts, it may be helpful to prefix this debugging output with the script name, line number and function name. You can do this by setting the following environment variable:</p>
+<div class="codehilite"><pre><span class="nb">export </span><span class="nv">PS4</span><span class="o">=</span><span class="s1">&#39;+${BASH_SOURCE}:${LINENO}:${FUNCNAME[0]}: &#39;</span>
+</pre></div>
+
+
+<p>Let's trace our example script again to see the new debugging output:</p>
+<div class="codehilite"><pre><span class="nv">$ </span>bash -x example_script.sh
++example_script.sh:2:: <span class="nb">echo</span> <span class="s1">&#39;Hello ayman,&#39;</span>
+Hello ayman,
+++example_script.sh:3:: date +%Y-%m-%d
++example_script.sh:3:: <span class="nb">echo</span> <span class="s1">&#39;Today is 2009-08-24&#39;</span>
+Today is 2009-08-24
+</pre></div>
+
+
+<h4 id="tracing-part-of-a-script">Tracing part of a script</h4>
+<p>Sometimes, you are only interested in tracing one part of your script. This can be done by calling <code>set -x</code> where you want to enable tracing, and calling <code>set +x</code> to disable it. Let's apply this to our example script:</p>
+<div class="codehilite"><pre><span class="c">#!/bin/bash</span>
+<span class="nb">echo</span> <span class="s2">&quot;Hello $USER,&quot;</span>
+<span class="nb">set</span> -x
+<span class="nb">echo</span> <span class="s2">&quot;Today is $(date %Y-%m-%d)&quot;</span>
+<span class="nb">set</span> +x
+</pre></div>
+
+
+<p>Now, let's run the script:</p>
+<div class="codehilite"><pre><span class="nv">$ </span>./example_script.sh
+Hello ayman,
+++example_script.sh:4:: date +%Y-%m-%d
++example_script.sh:4:: <span class="nb">echo</span> <span class="s1">&#39;Today is 2009-08-24&#39;</span>
+Today is 2009-08-24
++example_script.sh:5:: <span class="nb">set</span> +x
+</pre></div>
+
+
+<p>Notice that we no longer need to run the script with <code>bash -x</code>.</p>
+<h3 id="logging">Logging</h3>
+<p>Tracing script execution is sometimes too verbose, especially if you are only interested in a limited number of events, like calling a certain function or entering a certain loop. In this case, it's better to log the events you are interested in. Logging can be achieved with something as simple as a function that prints a string to <code>stderr</code>:</p>
+<div class="codehilite"><pre>_log<span class="o">()</span> <span class="o">{</span>
+  <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$_DEBUG&quot;</span> <span class="o">==</span> <span class="s2">&quot;true&quot;</span> <span class="o">]</span>; <span class="k">then</span>
+<span class="k">    </span><span class="nb">echo </span>1&gt;&amp;2 <span class="s2">&quot;$@&quot;</span>
+  <span class="k">fi</span>
+<span class="o">}</span>
+</pre></div>
+
+
+<p>Now you can embed logging messages into your script by calling this function:</p>
+<div class="codehilite"><pre>_log <span class="s2">&quot;Copying files...&quot;</span>
+cp src/* dst/
+</pre></div>
+
+
+<p>Log messages are printed only if the <code>_DEBUG</code> variable is set to <code>true</code>. This allows you to toggle the printing of log messages depending on your needs. You don't need to modify your script in order to change this variable; you can set it on the command line:</p>
+<div class="codehilite"><pre><span class="nv">$ _DEBUG</span><span class="o">=</span><span class="nb">true</span> ./example_script.sh
+</pre></div>
+
+
+<h3 id="using-the-bash-debugger">Using the Bash debugger</h3>
+<p>If you are writing a complex script and you need a full-fledged debugger to debug it, then you can use <a href="http://bashdb.sourceforge.net/">bashdb</a>, the Bash debugger. The debugger contains all the features that you would expect, like breakpoints, stepping in and out of functions, and attaching to running scripts. Its interface is a bit similar to gdb. You can read the <a href="http://bashdb.sourceforge.net/bashdb.html">documentation of bashdb</a> for more information.</p>
+
+
+    </div>
+    <div class="share">
+      <p>
+  <a href="http://twitter.com/home?status=How+to+Debug+Bash+Scripts:+http%3A%2F%2Faymanh.com%2Fhow-debug-bash-scripts+via+@aymanh" title="Tweet this post." rel="nofollow"><img src="http://aymanh.com/media/img/share/twitter.png" alt="Twitter" /></a>
+  <a href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Faymanh.com%2Fhow-debug-bash-scripts&amp;t=How+to+Debug+Bash+Scripts" title="Share on Facebook." rel="nofollow"><img src="http://aymanh.com/media/img/share/facebook.png" alt="Facebook" /></a>
+  <a href="http://www.google.com/buzz/post?url=http%3A%2F%2Faymanh.com%2Fhow-debug-bash-scripts" title="Post on Google Buzz" rel="nofollow"><img src="http://aymanh.com/media/img/share/buzz.png" alt="Google Buzz" /></a>
+  <a href="http://reddit.com/submit?url=http%3A%2F%2Faymanh.com%2Fhow-debug-bash-scripts&amp;title=How+to+Debug+Bash+Scripts" title="Submit this post to reddit.com." rel="nofollow"><img src="http://aymanh.com/media/img/share/reddit.png" alt="Reddit" /></a>
+  <a href="http://news.ycombinator.com/submitlink?u=http%3A%2F%2Faymanh.com%2Fhow-debug-bash-scripts&amp;t=How+to+Debug+Bash+Scripts" title="Submit this post to Hacker News." rel="nofollow"><img src="http://aymanh.com/media/img/share/hackernews.png" alt="Hacker News" /></a>
+  <a href="http://www.stumbleupon.com/submit?url=http%3A%2F%2Faymanh.com%2Fhow-debug-bash-scripts&amp;title=How+to+Debug+Bash+Scripts" title="Thumb this up at StumbleUpon." rel="nofollow"><img src="http://aymanh.com/media/img/share/stumbleit.png" alt="StumbleUpon" /></a>
+  <a href="http://digg.com/submit?phase=2&amp;url=http%3A%2F%2Faymanh.com%2Fhow-debug-bash-scripts&amp;title=How+to+Debug+Bash+Scripts" title="Digg this post to digg.com." rel="nofollow"><img src="http://aymanh.com/media/img/share/digg.png" alt="Digg" /></a>
+  <a href="http://del.icio.us/post?url=http%3A%2F%2Faymanh.com%2Fhow-debug-bash-scripts&amp;title=How+to+Debug+Bash+Scripts" title="Bookmark this post at del.icio.us." rel="nofollow"><img src="http://aymanh.com/media/img/share/delicious.png" alt="Delicious" /></a>
+</p>
+
+    </div>
+    <div class="post-info">
+      
+
+Tags: <ul class="tags">
+  
+    <li><a href="/category/bash" class="tag">Bash</a>,</li>
+  
+    <li><a href="/category/debugging" class="tag">Debugging</a>,</li>
+  
+    <li><a href="/category/linux" class="tag">Linux</a></li>
+  
+</ul>
+<ul>
+  <li>| <a href="/how-debug-bash-scripts" class="permalink" title="Permanent link to this post.">Permalink</a></li>
+  
+  <li>| <a href="/how-debug-bash-scripts#comments" class="comment-count">15 comments</a></li>
+  <li>| <span class="date">Posted by <a href="/">Ayman Hourieh</a> on August 24, 2009.</span></li>
+</ul>
+
+    </div>
+  </div>
+
+  
+  
+  <div id="comments">
+    <a name="comments"></a>
+    <h3 class="comments-title">Comments</h3>
+    
+      
+      <div class="comment ">
+        <h5 class="comment-name">
+          <a name="c272"></a>
+          <a rel="nofollow" href="http://www.spacerodent.org/">Dennis Roberts</a>
+        </h5>
+        <img src="http://www.gravatar.com/avatar/9f69b2264111480cc6147a9ba4792f09?d=identicon&amp;s=40" alt="Dennis Roberts's gravatar" class="comment-gravatar" />
+        <div class="comment-body">
+          
+
+  <p>I liked your write up.  I have been using Linux for the last 10 years and not a day goes by that I don't learn something new.  The PS4 is new to me.  I also like your log function.</p>
+
+
+        </div>
+        <br class="clear" />
+        <p class="comment-date"><a href="/how-debug-bash-scripts#c272" title="Permanent link to this comment.">Posted at 5:20 a.m. on August 25, 2009</a></p>
+      </div>
+      
+    
+      
+      <div class="comment ">
+        <h5 class="comment-name">
+          <a name="c273"></a>
+          Anonymous
+        </h5>
+        <img src="http://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?d=identicon&amp;s=40" alt="Anonymous's gravatar" class="comment-gravatar" />
+        <div class="comment-body">
+          
+
+  <p>Today is 2009-08-25</p>
+
+
+        </div>
+        <br class="clear" />
+        <p class="comment-date"><a href="/how-debug-bash-scripts#c273" title="Permanent link to this comment.">Posted at 8:30 a.m. on August 25, 2009</a></p>
+      </div>
+      
+    
+      
+      <div class="comment ">
+        <h5 class="comment-name">
+          <a name="c274"></a>
+          Anonymous
+        </h5>
+        <img src="http://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?d=identicon&amp;s=40" alt="Anonymous's gravatar" class="comment-gravatar" />
+        <div class="comment-body">
+          
+
+  <p>Excellent - thanks!</p>
+<ul>
+<li>Andre.</li>
+</ul>
+
+
+        </div>
+        <br class="clear" />
+        <p class="comment-date"><a href="/how-debug-bash-scripts#c274" title="Permanent link to this comment.">Posted at 9:19 a.m. on August 25, 2009</a></p>
+      </div>
+      
+    
+      
+      <div class="comment ">
+        <h5 class="comment-name">
+          <a name="c275"></a>
+          Abdul Fattah
+        </h5>
+        <img src="http://www.gravatar.com/avatar/76d15044a41a884176e225db7c5cb48f?d=identicon&amp;s=40" alt="Abdul Fattah's gravatar" class="comment-gravatar" />
+        <div class="comment-body">
+          
+
+  <p>Thanks Ayman, very useful tips :)</p>
+
+
+        </div>
+        <br class="clear" />
+        <p class="comment-date"><a href="/how-debug-bash-scripts#c275" title="Permanent link to this comment.">Posted at 10:48 a.m. on August 25, 2009</a></p>
+      </div>
+      
+    
+      
+      <div class="comment ">
+        <h5 class="comment-name">
+          <a name="c276"></a>
+          Anonymous
+        </h5>
+        <img src="http://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?d=identicon&amp;s=40" alt="Anonymous's gravatar" class="comment-gravatar" />
+        <div class="comment-body">
+          
+
+  <p>I'd highly recommend all your bash scripts start off by:</p>
+<div class="codehilite"><pre>set -e
+</pre></div>
+
+
+<p>This will abort the rest of the script if any of the commands you run return non-0. This will help find and avoid what would have otherwise been silent lurking problems.</p>
+
+
+        </div>
+        <br class="clear" />
+        <p class="comment-date"><a href="/how-debug-bash-scripts#c276" title="Permanent link to this comment.">Posted at 11:12 a.m. on August 25, 2009</a></p>
+      </div>
+      
+    
+      
+      <div class="comment ">
+        <h5 class="comment-name">
+          <a name="c277"></a>
+          decasm
+        </h5>
+        <img src="http://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?d=identicon&amp;s=40" alt="decasm's gravatar" class="comment-gravatar" />
+        <div class="comment-body">
+          
+
+  <p>The logging function you have there is good, but for larger projects, <a rel="nofollow" href="http://sites.google.com/a/forestent.com/projects/log4sh">log4sh</a> might be best.</p>
+
+
+        </div>
+        <br class="clear" />
+        <p class="comment-date"><a href="/how-debug-bash-scripts#c277" title="Permanent link to this comment.">Posted at 1:19 p.m. on August 25, 2009</a></p>
+      </div>
+      
+    
+      
+      <div class="comment ">
+        <h5 class="comment-name">
+          <a name="c278"></a>
+          Drew
+        </h5>
+        <img src="http://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?d=identicon&amp;s=40" alt="Drew's gravatar" class="comment-gravatar" />
+        <div class="comment-body">
+          
+
+  <p>Vivid articles.
+thinks</p>
+
+
+        </div>
+        <br class="clear" />
+        <p class="comment-date"><a href="/how-debug-bash-scripts#c278" title="Permanent link to this comment.">Posted at 2:08 p.m. on August 25, 2009</a></p>
+      </div>
+      
+    
+      
+      <div class="comment ">
+        <h5 class="comment-name">
+          <a name="c279"></a>
+          Dunk
+        </h5>
+        <img src="http://www.gravatar.com/avatar/7db4466d6b2e0c4f2eea27ad56c9f81b?d=identicon&amp;s=40" alt="Dunk's gravatar" class="comment-gravatar" />
+        <div class="comment-body">
+          
+
+  <p>set -o xtrace</p>
+
+
+        </div>
+        <br class="clear" />
+        <p class="comment-date"><a href="/how-debug-bash-scripts#c279" title="Permanent link to this comment.">Posted at 5:13 p.m. on August 25, 2009</a></p>
+      </div>
+      
+    
+      
+      <div class="comment ">
+        <h5 class="comment-name">
+          <a name="c280"></a>
+          <a rel="nofollow" href="http://mbudisic.wordpress.com">Marko</a>
+        </h5>
+        <img src="http://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?d=identicon&amp;s=40" alt="Marko's gravatar" class="comment-gravatar" />
+        <div class="comment-body">
+          
+
+  <p>Hey Ayman, thanks a lot! I'm still fairly new to bash scripting and there some really nice tips here...</p>
+
+
+        </div>
+        <br class="clear" />
+        <p class="comment-date"><a href="/how-debug-bash-scripts#c280" title="Permanent link to this comment.">Posted at 6:17 p.m. on August 25, 2009</a></p>
+      </div>
+      
+    
+      
+      <div class="comment ">
+        <h5 class="comment-name">
+          <a name="c281"></a>
+          <a rel="nofollow" href="http://100psequence.blogspot.com/">omid8bimo</a>
+        </h5>
+        <img src="http://www.gravatar.com/avatar/c5ee8548a805908d932b9511a9ed0604?d=identicon&amp;s=40" alt="omid8bimo's gravatar" class="comment-gravatar" />
+        <div class="comment-body">
+          
+
+  <p>cool notes dude :)
+pretty useful</p>
+
+
+        </div>
+        <br class="clear" />
+        <p class="comment-date"><a href="/how-debug-bash-scripts#c281" title="Permanent link to this comment.">Posted at 6:57 p.m. on August 25, 2009</a></p>
+      </div>
+      
+    
+      
+      <div class="comment superuser">
+        <h5 class="comment-name">
+          <a name="c282"></a>
+          <a  href="http://aymanh.com/">Ayman Hourieh</a>
+        </h5>
+        <img src="http://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?d=identicon&amp;s=40" alt="Ayman Hourieh's gravatar" class="comment-gravatar" />
+        <div class="comment-body">
+          
+
+  <p>Thanks for your comment. Glad to know that you found it useful.</p>
+
+
+        </div>
+        <br class="clear" />
+        <p class="comment-date"><a href="/how-debug-bash-scripts#c282" title="Permanent link to this comment.">Posted at 7:09 p.m. on August 25, 2009</a></p>
+      </div>
+      
+    
+      
+      <div class="comment superuser">
+        <h5 class="comment-name">
+          <a name="c283"></a>
+          <a  href="http://aymanh.com/">Ayman Hourieh</a>
+        </h5>
+        <img src="http://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?d=identicon&amp;s=40" alt="Ayman Hourieh's gravatar" class="comment-gravatar" />
+        <div class="comment-body">
+          
+
+  <p>"<code>set -o x</code>" is the short form of "<code>set -o xtrace</code>".</p>
+
+
+        </div>
+        <br class="clear" />
+        <p class="comment-date"><a href="/how-debug-bash-scripts#c283" title="Permanent link to this comment.">Posted at 7:11 p.m. on August 25, 2009</a></p>
+      </div>
+      
+    
+      
+      <div class="comment ">
+        <h5 class="comment-name">
+          <a name="c284"></a>
+          Thell
+        </h5>
+        <img src="http://www.gravatar.com/avatar/264f0eb14624a2e354464318ec4f00b5?d=identicon&amp;s=40" alt="Thell's gravatar" class="comment-gravatar" />
+        <div class="comment-body">
+          
+
+  <p>Your sharing this info is greatly appreciated.</p>
+<p>That PS4 was just what the doctor ordered.</p>
+<p>It has been added to:: http://mywiki.wooledge.org/BashGuide/Practices/Debugging</p>
+
+
+        </div>
+        <br class="clear" />
+        <p class="comment-date"><a href="/how-debug-bash-scripts#c284" title="Permanent link to this comment.">Posted at 4:47 p.m. on September 3, 2009</a></p>
+      </div>
+      
+    
+      
+      <div class="comment ">
+        <h5 class="comment-name">
+          <a name="c285"></a>
+          missnoerrors
+        </h5>
+        <img src="http://www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?d=identicon&amp;s=40" alt="missnoerrors's gravatar" class="comment-gravatar" />
+        <div class="comment-body">
+          
+
+  <p>Useful and concise info and comments. Thanks! 
+set -e is what I was looking for to control build script, now it'll get a logging upgrade too!</p>
+
+
+        </div>
+        <br class="clear" />
+        <p class="comment-date"><a href="/how-debug-bash-scripts#c285" title="Permanent link to this comment.">Posted at 4:58 a.m. on October 3, 2009</a></p>
+      </div>
+      
+    
+      
+      <div class="comment ">
+        <h5 class="comment-name">
+          <a name="c286"></a>
+          <a rel="nofollow" href="http://polprav.blogspot.com/">Polprav</a>
+        </h5>
+        <img src="http://www.gravatar.com/avatar/6a6c740874612d755e2456b314710d90?d=identicon&amp;s=40" alt="Polprav's gravatar" class="comment-gravatar" />
+        <div class="comment-body">
+          
+
+  <p>Hello from Russia!
+Can I quote a post in your blog with the link to you?</p>
+
+
+        </div>
+        <br class="clear" />
+        <p class="comment-date"><a href="/how-debug-bash-scripts#c286" title="Permanent link to this comment.">Posted at 2:06 p.m. on October 20, 2009</a></p>
+      </div>
+      
+    
+  </div>
+  
+
+  <div class="comments-form">
+  
+    <h3>Post a comment</h3>
+    
+<form action="/comments/post/" method="post" class="comments-form">
+  <fieldset>
+    
+    
+      
+        <input type="hidden" name="content_type" value="blog.post" id="id_content_type" />
+      
+    
+      
+        <input type="hidden" name="object_pk" value="13" id="id_object_pk" />
+      
+    
+      
+        <input type="hidden" name="timestamp" value="1293078600" id="id_timestamp" />
+      
+    
+      
+        <input type="hidden" name="security_hash" value="049424183ea34242092eecc8deb41ea06b8b66cf" id="id_security_hash" />
+      
+    
+      
+        
+        <p  >
+          <label for="id_name">Name: * </label>
+          <input id="id_name" type="text" name="name" maxlength="50" />
+        </p>
+      
+    
+      
+        
+        <p  >
+          <label for="id_email">Email address:  <span class="label-help">(will never be published)</span></label>
+          <input type="text" name="email" id="id_email" />
+        </p>
+      
+    
+      
+        
+        <p  >
+          <label for="id_url">URL:  </label>
+          <input type="text" name="url" id="id_url" />
+        </p>
+      
+    
+      
+        
+        <p  >
+          <label for="id_comment">Comment: * </label>
+          <textarea id="id_comment" rows="10" cols="40" name="comment"></textarea>
+        </p>
+      
+    
+      
+        
+        <p   style="display: none;">
+          <label for="id_honeypot">If you enter anything in this field your comment will be treated as spam:  </label>
+          <input type="text" name="honeypot" id="id_honeypot" />
+        </p>
+      
+    
+    <p>
+      <input type="submit" name="post" class="button" value="Post" />
+      <input type="submit" name="preview" class="button" value="Preview" />
+    </p>
+    <p>HTML is not allowed. You can use <a href="http://daringfireball.net/projects/markdown/syntax">markdown syntax</a> to format your comment.</p>
+  </fieldset>
+</form>
+
+  
+  </div>
+
+          </div>
+        
+      </div>
+      
+        
+
+<div id="sidebar">
+
+  <h2>About</h2>
+  <p><img src="/media/img/misc/ayman-hourieh.small.jpg" alt="Ayman Hourieh" id="img-about" /></p>
+  <p><a href="http://en.wikipedia.org/wiki/Computer_science">Computer Science</a> graduate, <a href="http://www.opensource.org/">Open Source</a> enthusiast and Software engineer (<a href="http://en.wikipedia.org/wiki/Reliability_engineering#Software_reliability">Site reliability</a>) at <a href="http://www.google.com/">Google</a>.</p>
+  <p>I'm 27 years old. I live in Dublin, Ireland.</p>
+  <p>This is my personal blog. The views expressed on these pages are mine alone and not those of my employer.</p>
+  <p><a href="/about">More</a></p>
+
+  <h2>Feeds</h2>
+  <p>
+    <a href="/rss.xml"><img src="/media/img/misc/feed.png" alt="RSS Feed" class="img-feed" /></a>
+    <a href="http://twitter.com/aymanh"><img src="/media/img/misc/twitter.png" alt="Follow me on Twitter" class="img-feed" /></a>
+  </p>
+
+  <h2>Books</h2>
+  <p><a href="http://www.amazon.com/Django-Website-Development-Ayman-Hourieh/dp/1847196780/">Django 1.0 Website Development</a></p>
+  <p><a href="http://www.amazon.com/Django-Website-Development-Ayman-Hourieh/dp/1847196780/"><img src="/media/img/misc/django-1.0-website-development.jpg" alt="Django 1.0 Website Development" class="img-book" /></a></p>
+  <p>Build powerful web applications, quickly and cleanly, with the Django application framework.</p>
+  <p>The second edition of my Django book. Published by Packt Publishing in March 2009.</p>
+
+  <h2>Tags</h2>
+  <div id="tag-cloud">
+    <p>
+      
+      
+        <a href="/category/article" class="tag-4">Article</a>
+      
+        <a href="/category/bash" class="tag-1">Bash</a>
+      
+        <a href="/category/book" class="tag-1">Book</a>
+      
+        <a href="/category/coding" class="tag-4">Coding</a>
+      
+        <a href="/category/css" class="tag-1">CSS</a>
+      
+        <a href="/category/debugging" class="tag-2">Debugging</a>
+      
+        <a href="/category/django" class="tag-2">Django</a>
+      
+        <a href="/category/drupal" class="tag-1">Drupal</a>
+      
+        <a href="/category/file" class="tag-1">File</a>
+      
+        <a href="/category/firefox" class="tag-2">Firefox</a>
+      
+        <a href="/category/git" class="tag-1">Git</a>
+      
+        <a href="/category/internet" class="tag-3">Internet</a>
+      
+        <a href="/category/javascript" class="tag-3">JavaScript</a>
+      
+        <a href="/category/linux" class="tag-3">Linux</a>
+      
+        <a href="/category/opensource" class="tag-4">OpenSource</a>
+      
+        <a href="/category/personal" class="tag-1">Personal</a>
+      
+        <a href="/category/php" class="tag-1">PHP</a>
+      
+        <a href="/category/presentation" class="tag-1">Presentation</a>
+      
+        <a href="/category/pycon" class="tag-1">PyCon</a>
+      
+        <a href="/category/python" class="tag-3">Python</a>
+      
+        <a href="/category/security" class="tag-1">Security</a>
+      
+        <a href="/category/testing" class="tag-1">Testing</a>
+      
+        <a href="/category/tips" class="tag-1">Tips</a>
+      
+        <a href="/category/turbogears" class="tag-1">TurboGears</a>
+      
+        <a href="/category/tutorial" class="tag-1">Tutorial</a>
+      
+        <a href="/category/vim" class="tag-1">Vim</a>
+      
+        <a href="/category/webdev" class="tag-3">WebDev</a>
+      
+        <a href="/category/xhtml" class="tag-1">XHTML</a>
+      
+    </p>
+  </div>
+
+</div>
+
+      
+      <div id="footer">
+        <p>Copyright &copy; 2004, 2010 Ayman Hourieh.</p>
+        <p>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 License</a>.</p>
+        <p>This is my personal blog. The views expressed on these pages are mine alone and not those of my employer.</p>
+        <p>Powered By <a href="http://djangoproject.org/">Django</a>.</p>
+      </div>
+    </div>
+  </body>
+
+</html>
