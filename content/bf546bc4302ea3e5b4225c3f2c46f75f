@@ -1,0 +1,956 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>apfelmus - Fun with Morse Code</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="Heinrich Apfelmus" />
+  <meta name="description" content="Wanted: a short and clever morse code decoder in Haskell. This article presents a series of successively smaller solutions that gradually include computer science concepts like dichotomic search, stack-based languages and finally deforestation, an optimization technique specific to purely functional languages like Haskell." />
+  <meta name="keywords" content="Wanted: a short and clever morse code decoder in Haskell. This article presents a series of successively smaller solutions that gradually include computer science concepts like dichotomic search, stack-based languages and finally deforestation, an optimization technique specific to purely functional languages like Haskell." />
+  <meta name="date" content="Tue, 01 Sep 2009 17:33:00 +0200" />
+  
+  <link rel="stylesheet" href="../format.css" type="text/css" />
+  <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="/rss.xml" />
+  
+<!-- Flattr parameters -->
+<script type="text/javascript">var flattr_btn = 'compact';var flattr_uid = '20632';var flattr_tle = 'Fun with Morse Code';var flattr_dsc = 'Wanted: a short and clever morse code decoder in Haskell. This article presents a series of successively smaller solutions that gradually include computer science concepts like dichotomic search, stack-based languages and finally deforestation, an optimization technique specific to purely functional languages like Haskell.';var flattr_cat = 'text';var flattr_lng = 'en_GB'; // actually, it's american spelling...var flattr_tag = 'morse code, dichotomic search, reverse polish notation, deforestation, catamorphism, Haskell, functional programming';var flattr_url = 'http://apfelmus.nfshost.com/articles/fun-with-morse-code.html';</script>
+<!-- DISQUS parameters -->
+<script type="text/javascript">
+var disqus_developer = 0;
+var disqus_url       = 'http://apfelmus.nfshost.com/articles/fun-with-morse-code.html';
+var debug            = location.href.indexOf('file://') >= 0;
+</script>
+
+</head>
+<!-- body -->
+<body>
+<!-- head -->
+<div id="header"><div id="box">&nbsp;</div></div>
+<!-- sidebar -->
+<div id="sidebar">
+<div class="section">Home</div>
+<ul><li><a href="../about.html">About</a>
+</li><li><a href="../links.html">Links</a>
+</li></ul>
+<div class="section">Haskell articles</div>
+<ul>
+<li><a href="../articles/monoid-fingertree.html">Monoids and Finger Trees</a></li>
+<li><a href="../articles/operational-monad.html">The Operational Monad Tutorial</a></li>
+<li><a href="../articles/quicksearch.html">Quicksort and k<sup>th</sup> Minimum</a></li>
+<li><a href="../articles/implicit-heaps.html">Implicit Heaps</a></li>
+<li><a href="../articles/random-permutations.html">Random Permutations</a></li>
+<li><a href="../articles/debit-method.html">Debit Method</a></li>
+<li><a href="../articles/fun-with-morse-code.html">Fun with Morse Code</a></li>
+</ul>
+<div class="section">Haskell blog</div>
+<ul>
+<li><a href="../blog/2010/10/07-frp-implementing-abstractions.html">FRP and a rule of thumb for implementing abstractions</a></li>
+<li><a href="../blog/2010/07/02-fixed-points-video.html">A video/slideshow hybrid about the fixed point combinator</a></li>
+<li><a href="../blog/2010/06/01-gadts-video.html">A video that explains GADTs</a></li>
+</ul>
+</div>
+
+<div id="contents">
+<!-- -->
+<ul id="share">
+  <li>
+  <a href="http://www.reddit.com/r/haskell/submit?url=http://apfelmus.nfshost.com/articles/fun-with-morse-code.html"><span class="left">comments? on reddit! </span><span class="right"><img src="http://www.reddit.com/static/spreddit5.gif" alt="submit to reddit" border="0" /></span></a>
+  
+    <li><span class="left">like it? flattr me! </span><span class="right"> <script src="http://api.flattr.com/button/load.js" type="text/javascript"></script></span>
+</ul>
+<!-- text contents -->
+<div id="text">
+<!-- title -->
+<h1 class="title">Fun with Morse Code</h1>
+<div id="toc"><div style="padding-bottom:2ex;">Table of contents</div>
+<div id="TOC"
+><ul
+  ><li
+    ><a href="#introduction"
+      >Introduction</a
+      ></li
+    ><li
+    ><a href="#a-simple-first-solution"
+      >A simple first solution</a
+      ></li
+    ><li
+    ><a href="#dichotomic-search"
+      >Dichotomic search</a
+      ></li
+    ><li
+    ><a href="#reverse-polish-notation"
+      >Reverse Polish Notation</a
+      ></li
+    ><li
+    ><a href="#deforestation"
+      >Deforestation</a
+      ><ul
+      ><li
+	><a href="#chopping-trees"
+	  >Chopping trees</a
+	  ><ul
+	  ><li
+	    ><a href="#call-graph"
+	      >Call graph</a
+	      ></li
+	    ><li
+	    ><a href="#a-combinator..."
+	      >A combinator…</a
+	      ></li
+	    ><li
+	    ><a href="#revealed"
+	      >…revealed!</a
+	      ></li
+	    ></ul
+	  ></li
+	><li
+	><a href="#a-chainsaw-called-catamorphism"
+	  >A chainsaw called ‘catamorphism’</a
+	  ><ul
+	  ><li
+	    ><a href="#derivation"
+	      >Derivation</a
+	      ></li
+	    ><li
+	    ><a href="#general-pattern"
+	      >General pattern</a
+	      ></li
+	    ></ul
+	  ></li
+	></ul
+      ></li
+    ><li
+    ><a href="#where-to-go-from-here"
+      >Where to go from here</a
+      ><ul
+      ><li
+	><a href="#cutting-words"
+	  >Cutting words</a
+	  ></li
+	><li
+	><a href="#polish-notation-and-parsing"
+	  >Polish notation and parsing</a
+	  ></li
+	><li
+	><a href="#comparing-to-c"
+	  >Comparing to C</a
+	  ></li
+	></ul
+      ></li
+    ></ul
+  ></div
+>
+</div>
+<!-- body -->
+<p
+><em
+  >This article previously appeared in <a href="http://themonadreader.wordpress.com/2009/07/29/issue-14/"
+    >issue 14</a
+    > of <a href="http://themonadreader.wordpress.com/"
+    >The Monad.Reader</a
+    >.</em
+  ></p
+><div id="introduction"
+><h1
+  ><a href="#TOC"
+    >Introduction</a
+    ></h1
+  ><p
+  >In a <a href="http://www.reddit.com/r/programming/comments/7xjqb/who_can_write_the_smallesttidiestcleverest_morse/" title="Reddit user CharlieDancey asking for a clever morse code translator"
+    >post</a
+    > to <a href="http://www.reddit.com/r/programming" title="Programming reddit"
+    >reddit</a
+    >, user CharlieDancey presented a challenge to write a short and clever morse code decoder. Of course, what could be more clever than writing it in Haskell? ;-)</p
+  ><p
+  >In the following, I’ll present a series of solutions that gradually include <a href="http://en.wikipedia.org/wiki/Dichotomic_search" title="Wikipedia on Dichotomic Search"
+    >dichotomic search</a
+    > (the straightforward generalization of <a href="http://en.wikipedia.org/wiki/Binary_search"
+    >binary search</a
+    >), <a href="http://en.wikipedia.org/wiki/Stack-based" title="Wikipedia on Stack-based Languagues"
+    >stack-based languages</a
+    > or <a href="http://en.wikipedia.org/wiki/Reverse_Polish_notation" title="Wikipedia on Reverse Polish Notation"
+    >reverse polish notation</a
+    >, and finally <a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.51.646" title="Andrew Gill, John Launchbury, Simon Peyton Jones. A short cut to deforestation. 1993"
+    >deforestation</a
+    > (also called <a href="http://donsbot.wordpress.com/tag/fusion/" title="Don Stewart on Fusion"
+    >fusion</a
+    >), an optimization technique specific to purely functional languages like Haskell.</p
+  ><p
+  >For your convenience, source code for the individual sections is <a href="http://apfelmus.nfshost.com/articles/fun-with-morse-code/code.zip" title="Accompanying source code for 'Fun with Morse Code'"
+    >available</a
+    >.</p
+  ></div
+><div id="a-simple-first-solution"
+><h1
+  ><a href="#TOC"
+    >A simple first solution</a
+    ></h1
+  ><p
+  ><a href="http://en.wikipedia.org/wiki/Morse_Code" title="Wikipedia on Morse Code"
+    >Morse code</a
+    > was designed to be produced and read, or rather heard by humans, who have to memorize the following table:</p
+  ><p
+  ><a href="http://en.wikipedia.org/wiki/File:International_Morse_Code.svg"
+    ><img src="http://apfelmus.nfshost.com/articles/fun-with-morse-code/morse-table.png" alt="International Morse Code" width="400" /></a
+    ></p
+  ><p
+  >To write a program that decodes sequences of dots and dashes like</p
+  ><pre
+  ><code
+    >-- --- .-. ... .    -.-. --- -.. .
+</code
+    ></pre
+  ><p
+  >into letters, we will have to store this table in some form. For instance, we could store each letter and corresponding morse code in a big <a href="http://en.wikipedia.org/wiki/Association_list" title="Wikipedia on Association List"
+    >association list</a
+    ></p
+  ><pre
+  ><code
+    >type MorseCode = String
+
+dict :: [(MorseCode, Char)]
+dict =
+    [(&quot;.-&quot;   , 'A'),
+     (&quot;-...&quot; , 'B'),
+     (&quot;-.-.&quot; , 'C'),
+     ...
+</code
+    ></pre
+  ><p
+  >which we name <code
+    >dict</code
+    > because it’s a dictionary translating between the latin alphabet and morse code. To decode a letter, we simply browse through this list to determine whether it contains a given code of dots and dashes</p
+  ><pre
+  ><code
+    >decodeLetter :: MorseCode -&gt; Char
+decodeLetter code = maybe ' ' id $ lookup code dict
+</code
+    ></pre
+  ><p
+  >Decoding a whole sequence of letters is done with</p
+  ><pre
+  ><code
+    >decode = map decodeLetter . words
+</code
+    ></pre
+  ><p
+  >so that we have for example</p
+  ><pre
+  ><code
+    >&gt; decode &quot;-- --- .-. ...    . -.-. --- -.. .&quot;
+&quot;MORSECODE&quot;
+</code
+    ></pre
+  ><p
+  >Of course, association lists are a rather slow data structure. A <a href="http://en.wikipedia.org/wiki/Binary_search_tree" title="Wikipedia on Binary Search Tree"
+    >binary search tree</a
+    >, <a href="http://en.wikipedia.org/wiki/Trie" title="Wikipedia on Trie"
+    >trie</a
+    >, or <a href="http://en.wikipedia.org/wiki/Hash_table" title="Wikipedia on Hash Table"
+    >hash table</a
+    > would be a better choice. But fortunately, it is very easy to change data structures in Haskell. All you have to do is to a qualified import of a different module, such as <a href="http://www.haskell.org/ghc/docs/latest/html/libraries/containers/Data-Map.html" title="The 'Data.Map' module"
+    >Data.Map</a
+    >, and change the definition of <code
+    >dict</code
+    > to</p
+  ><pre
+  ><code
+    >dict :: Data.Map.Map MorseCode Char
+dict = Data.Map.fromList $
+    [(&quot;.-&quot;   , 'A'),
+     (&quot;-...&quot; , 'B'),
+     (&quot;-.-.&quot; , 'C'),
+     ...
+</code
+    ></pre
+  ><p
+  >and use <code
+    >Data.Map.lookup</code
+    > instead of <code
+    >Data.List.lookup</code
+    >.</p
+  ></div
+><div id="dichotomic-search"
+><h1
+  ><a href="#TOC"
+    >Dichotomic search</a
+    ></h1
+  ><p
+  >Faithfully replicating the morse code table is clear and preferable, but makes for quite large source code. So, let’s make an exception today and think of something <a href="http://en.wikiquote.org/wiki/Brian_Kernighan" title="Quotes by Brian Kernighan"
+    >as clever as we can</a
+    >.</p
+  ><p
+  >The idea is the following: whenever an encoded letter starts with a dash <code
+    >'-'</code
+    >, we know that it can’t be for example an A or E, because those start with a dot <code
+    >'.'</code
+    >. And if the next symbol is a dot, then it can’t be a G or M because their second symbol is a dash. With each symbol we read, more and more alternatives disappear until we are left with a single alternative. We can depict this with a binary tree:</p
+  ><p
+  ><a href="http://en.wikipedia.org/wiki/File:Morse_code_tree3.png"
+    ><img src="http://apfelmus.nfshost.com/articles/fun-with-morse-code/morse-tree.png" alt="Tree for deciphering morse code" width="550" /></a
+    ></p
+  ><p
+  >At each node, the left subtree contains all the letters that can be obtained by adding a dot to the current letter, while the right subtree contains those letters that can be obtained with a dash. This is illustrated by means of a dotted line connected to the left subtree and a dashed line connected to the right subtree.</p
+  ><p
+  >Now, to decode a letter, we simply start at the root of the tree and follow the dotted or dashed lines depending on the symbols read. For instance, to decode the sequence <code
+    >&quot;-...&quot;</code
+    >, we have to go right once and then left thrice, ending up at the letter B. This procedure is also called <a href="http://en.wikipedia.org/wiki/Dichotomic_search" title="Wikipedia on Dichotomic Search"
+    >dichotomic search</a
+    > because at each point in our search for the right letter, we ask a yes/no question “Dot or dash?” (a <a href="http://en.wikipedia.org/wiki/Dichotomy" title="Wikipedia on Dichotomy"
+    >dichotomy</a
+    >) that partitions the remaining search space into to disjoint parts.</p
+  ><p
+  >Let’s implement this in Haskell. First, we assume that our dictionary is given as a tree</p
+  ><pre
+  ><code
+    >data Tree a = Leaf
+            | Branch { tag   :: a
+                     , left  :: Tree a
+                     , right :: Tree a }
+
+dict :: Tree Char
+dict = Branch ' ' (Branch 'E' ... ) (Branch 'T' ...)
+</code
+    ></pre
+  ><p
+  >Of course, writing out the <code
+    >dict</code
+    > tree in full is going to be repetitive and boring, but let’s just imagine we have already done that. Then, decoding a letter by walking down the tree is simply a <a href="http://en.wikipedia.org/wiki/Fold_(higher-order_function)" title="Wikipedia on Fold"
+    >left fold</a
+    > over the code word</p
+  ><pre
+  ><code
+    >decodeLetter = tag . foldl (flip step) dict
+    where
+    step '.' = left
+    step '-' = right
+</code
+    ></pre
+  ><p
+  >In this case, the accumulated value of the fold is the current subtree, although the term “accumulate” is a bit misleading in that we don’t make the dictionary bigger; we make it smaller by passing to a subtree.</p
+  ><p
+  >The curious reader may notice that we have actually implemented a <a href="http://en.wikipedia.org/wiki/Trie" title="Wikipedia on Trie"
+    >trie</a
+    >.</p
+  ></div
+><div id="reverse-polish-notation"
+><h1
+  ><a href="#TOC"
+    >Reverse Polish Notation</a
+    ></h1
+  ><p
+  >Now, let’s reduce the source code needed for the dictionary tree. In Haskell, we’d have to write something like</p
+  ><pre
+  ><code
+    >dict = Branch ' ' (Branch 'E' ... ) (Branch 'T' ...)
+</code
+    ></pre
+  ><p
+  >Compared to the association list, we got rid of the dots <code
+    >'.'</code
+    > and dashes <code
+    >'-'</code
+    >, they have been made implicit in the structure of our tree. But we still need a lot of parenthesis and applications of the <code
+    >Branch</code
+    > function.</p
+  ><p
+  >A clever way to get rid of parenthesis is <a href="http://en.wikipedia.org/wiki/Reverse_Polish_notation" title="Wikipedia on Reverse Polish Notation"
+    >reverse polish notation</a
+    >, commonly used in <a href="http://en.wikipedia.org/wiki/Stack-based" title="Wikipedia on Stack-based Languagues"
+    >stack-based languages</a
+    >. The idea is that a program in such a language is a sequence of instructions that pop and push values from a stack. For example,</p
+  ><pre
+  ><code
+    >1 2 +
+</code
+    ></pre
+  ><p
+  >is a program to calculate 1 plus 2. Reading from left to right, the first instruction is <code
+    >1</code
+    > which pushes the integer 1 onto the stack. The second instruction is <code
+    >2</code
+    >, pushing 2 onto the stack. And finally, the instruction <code
+    >+</code
+    > pops the two topmost integers from the stack and pushes their sum onto the stack. This procedure is visualized as follows:</p
+  ><img src="http://apfelmus.nfshost.com/articles/fun-with-morse-code/stack.png" alt="Execution of the stack-based program  1 2 +  " width="350" /><p
+  >To see how that eliminates the need for parenthesis, take a look the program</p
+  ><pre
+  ><code
+    >1 2 + 3 4 + +
+</code
+    ></pre
+  ><p
+  >which calculates the sum (1+2)+(3+4).</p
+  ><p
+  >To build our dictionary tree, we are going to devise a very similar language. Instead of integers, the stack will store whole trees. In analogy to the numerals, there will be an instruction for pushing a <code
+    >Leaf</code
+    > onto the stack; and in analogy to <code
+    >+</code
+    >, there is going to be an instruction for applying the <code
+    >Branch</code
+    > constructor to the two topmost subtrees.</p
+  ><p
+  >Here’s the program for building the tree, stored as a string:</p
+  ><pre
+  ><code
+    >program :: String
+program = &quot;__5__4H___3VS__F___2 UI__L__+_ R__P___1JWAE&quot;
+       ++ &quot;__6__=B__/_XD__C__YKN__7_Z__QG__8_ __9__0 OMT &quot;
+</code
+    ></pre
+  ><p
+  >Each character represents one instruction. The underscore <code
+    >'_'</code
+    > pushes a <code
+    >Leaf</code
+    > onto the stack while all the other character push a <code
+    >Branch</code
+    > tagged with the character in question onto the stack. The interpreter for this tiny programming language can be written using a simple <a href="http://en.wikipedia.org/wiki/Fold_(higher-order_function)" title="Wikipedia on Fold"
+    >left fold</a
+    >:</p
+  ><pre
+  ><code
+    >dict = interpret program
+where
+    interpret         = head . foldl exec []
+    exec xs       '_' = Leaf         : xs    -- push Leaf
+    exec (x:y:xs)  c  = Branch c y x : xs    -- combine subtrees
+</code
+    ></pre
+  ><p
+  >The stack <code
+    >xs</code
+    > is represented as a list of trees.</p
+  ></div
+><div id="deforestation"
+><h1
+  ><a href="#TOC"
+    >Deforestation</a
+    ></h1
+  ><p
+  >We have found a concise way to represent the morse code dictionary in source code, but cleverness does not end here. For instance, how about eliminating the tree entirely?</p
+  ><div id="chopping-trees"
+  ><h2
+    ><a href="#TOC"
+      >Chopping trees</a
+      ></h2
+    ><div id="call-graph"
+    ><h3
+      ><a href="#TOC"
+	>Call graph</a
+	></h3
+      ><p
+      >More precisely, it seems wasteful to construct the dictionary tree by creating leaves and connecting branches only to deconstruct them again when decoding letters. Wouldn’t it be more efficient to interpret the <a href="#dichotomic-search"
+	>morse code tree</a
+	> as a <em
+	>call graph</em
+	> rather than as a data structure <code
+	>Tree Char</code
+	>?</p
+      ><p
+      >In other words, imagine say a function <code
+	>e</code
+	> corresponding to the node labeled ‘E’ in the tree, and working as follows:</p
+      ><pre
+      ><code
+	>e :: MorseCode -&gt; Char
+e ('.':ds) = i ds
+e ('-':ds) = a ds
+e []       = 'E'
+</code
+	></pre
+      ><p
+      >If the next symbol is a dot or dash, we proceed with the functions <code
+	>i</code
+	> or <code
+	>a</code
+	> corresponding to <code
+	>'I'</code
+	> and <code
+	>'A'</code
+	> respectively. And in case we have already reached the end of the code, we know that we have decoded an <code
+	>'E'</code
+	>. The functions <code
+	>i</code
+	> and <code
+	>a</code
+	> work just like <code
+	>e</code
+	>, except that they proceed with other letters; and the morse code tree becomes their <em
+	>call graph</em
+	>.</p
+      ></div
+    ><div id="a-combinator..."
+    ><h3
+      ><a href="#TOC"
+	>A combinator…</a
+	></h3
+      ><p
+      >Now, writing all these functions by hand would be most error-prone and tedious, they all look the same. But abstracting repetitive patterns is exactly where functional programming shines; we are to devise a combinator that automates the boring parts of the code for us.</p
+      ><p
+      >What does this combinator look like? Well, the non-boring parts are the letter it represents and the two follow-up functions, so these will be parameters:</p
+      ><pre
+      ><code
+	>combinator :: Char                   -- letter
+           -&gt; (MorseCode -&gt; Char)    -- function for dot
+           -&gt; (MorseCode -&gt; Char)    -- function for dash
+           -&gt; (MorseCode -&gt; Char)    -- result function
+</code
+	></pre
+      ><p
+      >That’s all we need; we can implement</p
+      ><pre
+      ><code
+	>combinator c x y = \code -&gt; case code of
+    '.':ds -&gt; x ds
+    '-':ds -&gt; y ds
+    []     -&gt; c
+</code
+	></pre
+      ><p
+      >which allows us to write</p
+      ><pre
+      ><code
+	>e = combinator 'E' i a
+i = combinator 'I' s u
+... etc ...
+</code
+	></pre
+      ></div
+    ><div id="revealed"
+    ><h3
+      ><a href="#TOC"
+	>…revealed!</a
+	></h3
+      ><p
+      >But wait, what have we done? The type signature of <code
+	>combinator</code
+	> looks exactly like that of</p
+      ><pre
+      ><code
+	>Branch :: Char         -- letter
+       -&gt; Tree Char    -- tree for dot
+       -&gt; Tree Char    -- tree for dash
+       -&gt; Tree Char    -- result tree
+</code
+	></pre
+      ><p
+      >but with the type <code
+	>Tree Char</code
+	> replaced by <code
+	>(MorseCode -&gt; Char)</code
+	>! In fact, let’s rename the combinator to lowercase <code
+	>branch</code
+	></p
+      ><pre
+      ><code
+	>branch c x y = \code -&gt; case code of
+    '.':ds -&gt; x ds
+    '-':ds -&gt; y ds
+    []     -&gt; c
+</code
+	></pre
+      ><p
+      >and observe that the tree of functions now reads</p
+      ><pre
+      ><code
+	>e = branch 'E' i a
+i = branch 'I' s u
+... etc ...
+</code
+	></pre
+      ><p
+      >or</p
+      ><pre
+      ><code
+	>e = branch 'E' (branch 'I' ... ) (branch 'A' ...)
+</code
+	></pre
+      ><p
+      >if we inline the function definitions. But this is of course just the tree from the <a href="#dichotomic-search"
+	>section</a
+	> on dichotomic search with each <code
+	>Branch</code
+	> replaced by <code
+	>branch</code
+	>!</p
+      ><p
+      >In other words, <code
+	>branch</code
+	> is like a drop-in replacement for the constructor <code
+	>Branch</code
+	>. To implement the morse code tree directly as functions instead of as an algebraic data type, we simply replace every occurrence of <code
+	>Branch</code
+	> with <code
+	>branch</code
+	> in our previous code. Thus, we have a new implementation</p
+      ><pre
+      ><code
+	>dict :: MorseCode -&gt; Char
+dict = interpret program
+    where
+    interpret         = head . foldl exec []
+    exec xs       '_' = leaf         : xs    -- push leaf
+    exec (x:y:xs)  c  = branch c y x : xs    -- combine subtrees
+
+decodeLetter = dict
+</code
+	></pre
+      ><p
+      >where</p
+      ><pre
+      ><code
+	>leaf = undefined
+</code
+	></pre
+      ><p
+      >is a trivial replacement for the <code
+	>Leaf</code
+	> constructor.</p
+      ></div
+    ></div
+  ><div id="a-chainsaw-called-catamorphism"
+  ><h2
+    ><a href="#TOC"
+      >A chainsaw called ‘catamorphism’</a
+      ></h2
+    ><div id="derivation"
+    ><h3
+      ><a href="#TOC"
+	>Derivation</a
+	></h3
+      ><p
+      >To further understand how and why the replacement of <code
+	>Branch</code
+	> by <code
+	>branch</code
+	> works, it is instructive to derive it systematically from just the program text.</p
+      ><p
+      >In particular, consider the implementation of <code
+	>decodeLetter</code
+	> from the <a href="#dichotomic-search"
+	>earlier section</a
+	> on dichotomic search:</p
+      ><pre
+      ><code
+	>decodeLetter :: MorseCode -&gt; Char
+decodeLetter = tag . foldl (flip step) dict
+    where
+    step '.' = left
+    step '-' = right
+</code
+	></pre
+      ><p
+      >In this formulation, the focus is on the recursion over the input string performed by <code
+	>foldl</code
+	>, neglecting the recursive descent into the dictionary tree. Let’s systematically rewrite this code to highlight the latter.</p
+      ><p
+      >First, we interpret it as converting the dictionary tree into a function that decodes letters</p
+      ><pre
+      ><code
+	>decodeLetter = decodeWith dict
+
+decodeWith :: Tree Char -&gt; (MorseCode -&gt; Char)
+decodeWith dict = tag . foldl (flip step) dict
+    where
+    step '.' = left
+    step '-' = right
+</code
+	></pre
+      ><p
+      >Then, we turn the <code
+	>foldl</code
+	> into explicit recursion</p
+      ><pre
+      ><code
+	>decodeWith dict []     = tag dict
+decodeWith dict (d:ds) = decodeWith (step d dict) ds
+    where
+    step '.' = left
+    step '-' = right
+</code
+	></pre
+      ><p
+      >and dissolve the <code
+	>step</code
+	> function into the pattern matching</p
+      ><pre
+      ><code
+	>decodeWith dict []       = tag dict
+decodeWith dict ('.':ds) = decodeWith (left  dict) ds
+decodeWith dict ('-':ds) = decodeWith (right dict) ds
+</code
+	></pre
+      ><p
+      >We group the pattern matching on the input code into a case expression</p
+      ><pre
+      ><code
+	>decodeWith dict = \code -&gt; case code of
+    []       -&gt; tag dict
+    ('.':ds) -&gt; decodeWith (left  dict) ds
+    ('-':ds) -&gt; decodeWith (right dict) ds
+</code
+	></pre
+      ><p
+      >and finally, we replace the field selectors by pattern matching on the tree, also noting the case of <code
+	>Leaf</code
+	>:</p
+      ><pre
+      ><code
+	>decodeWith Leaf           = undefined
+decodeWith (Branch c x y) = \code -&gt; case code of
+    []       -&gt; c
+    ('.':ds) -&gt; (decodeWith x) ds
+    ('-':ds) -&gt; (decodeWith y) ds
+</code
+	></pre
+      ><p
+      >The recursion on the tree is apparent now, <code
+	>decodeWith</code
+	> simply traverses both subtrees and combines the results. We can make this even more evident by appealing to the combinator we defined in the previous section:</p
+      ><pre
+      ><code
+	>decodeWith Leaf           = leaf
+decodeWith (Branch c x y) = branch c (decodeWith x) (decodeWith y)
+</code
+	></pre
+      ><p
+      >In other words, <code
+	>decodeWith</code
+	> takes a tree and simply substitutes each <code
+	>Leaf</code
+	> constructor with <code
+	>leaf</code
+	> and each <code
+	>Branch</code
+	> constructor with <code
+	>branch</code
+	>.</p
+      ><img src="http://apfelmus.nfshost.com/articles/fun-with-morse-code/decodeWith.png" alt="Substituting constructors  Branch  with functions  branch" width="500" /><p
+      >Of course, first using <code
+	>Branch</code
+	> and then replacing it with <code
+	>branch</code
+	> is a waste; we should rather use <code
+	>branch</code
+	> from the start and thus cut away the intermediate tree. That’s exactly what we’ve done in the <a href="#revealed"
+	>previous section</a
+	>!</p
+      ></div
+    ><div id="general-pattern"
+    ><h3
+      ><a href="#TOC"
+	>General pattern</a
+	></h3
+      ><p
+      >Replacing constructors is a very general pattern, not restricted to binary trees. For instance, you probably know following function:</p
+      ><pre
+      ><code
+	>foldr f z []     = z
+foldr f z (x:xs) = x `f` foldr f z xs
+</code
+	></pre
+      ><p
+      >It’s the good old <a href="http://en.wikipedia.org/wiki/Fold_(higher-order_function)" title="Wikipedia on Fold"
+	>fold</a
+	>! And at its heart, it just replaces the constructors of the list data type: <code
+	>z</code
+	> is the substitute for the empty list <code
+	>[]</code
+	>, and <code
+	>f</code
+	> is put in lieu of the <code
+	>(:)</code
+	> constructor.</p
+      ><p
+      >In its honor, any function that substitutes constructors in such fashion is known as a <a href="http://en.wikipedia.org/wiki/Catamorphism" title="Wikipedia on Catamorphism"
+	>generalized fold</a
+	>. A more exotic but commonly used alternative name is “<a href="http://en.wikipedia.org/wiki/Catamorphism" title="Wikipedia on Catamorphism"
+	>catamorphism</a
+	>”. In other words, <code
+	>decodeWith</code
+	> is a catamorphism.</p
+      ><p
+      >In this generality, the idea of <a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.51.646" title="Andrew Gill, John Launchbury, Simon Peyton Jones. A short cut to deforestation. 1993"
+	>deforestation</a
+	> is that instead of first constructing a data structure and then chopping it up with a catamorphism, it is more efficient to saw the pieces properly at the time of creation. For example, creating a list and then adding all elements</p
+      ><pre
+      ><code
+	>sum [1..100] = foldr (+) 0 (enumFromTo 1 100)
+</code
+	></pre
+      ><p
+      >is less efficient than adding the elements as they are created</p
+      ><pre
+      ><code
+	>sumFromTo a b                            -- changes to enumFromTo
+    | a &gt; b     = 0                      -- 0 replaces []
+    | otherwise = a + sumFromTo (a+1) b  -- + replaces (:)
+</code
+	></pre
+      ><p
+      >Merging two functions in this fashion is also called <a href="http://donsbot.wordpress.com/tag/fusion/" title="Don Stewart on Fusion"
+	>fusion</a
+	>.</p
+      ><p
+      >Performing deforestation manually, as we did, sacrifices reusability: the morse code tree only exists as a call graph and cannot be printed out anymore, and <code
+	>sumFromTo</code
+	> is not nearly as useful as are <code
+	>sum</code
+	> and <code
+	>enumFromTo</code
+	> were.</p
+      ><p
+      >Hence, the goal is to teach the compiler to <em
+	>automatically</em
+	> fuse catamorphisms with their structure creating counterparts, the so called <a href="http://en.wikipedia.org/wiki/Anamorphism" title="Wikipedia on Anamorphism"
+	>anamorphisms</a
+	>. That’s what efforts like <a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.51.646" title="Andrew Gill, John Launchbury, Simon Peyton Jones. A short cut to deforestation. 1993"
+	>a short-cut to deforestation</a
+	> and the recent <a href="http://www.cse.unsw.edu.au/~dons/papers/CLS07.html" title="Duncan Coutts, Roman Leshchinskiy, Don Stewart. Stream Fusion, From Lists to Streams to Nothing at All. 2007"
+	>stream fusion</a
+	> are set out to do, yielding dramatic gains in efficiency while preserving the compositional style.</p
+      ></div
+    ></div
+  ></div
+><div id="where-to-go-from-here"
+><h1
+  ><a href="#TOC"
+    >Where to go from here</a
+    ></h1
+  ><p
+  >I hope you had fun doodling around with morse code; I certainly did. If you long for more, here a few suggestions:</p
+  ><div id="cutting-words"
+  ><h2
+    ><a href="#TOC"
+      >Cutting words</a
+      ></h2
+    ><p
+    >While we’re at it, the intermediate lists created by <code
+      >words</code
+      > in</p
+    ><pre
+    ><code
+      >decode = map decodeLetter . words
+</code
+      ></pre
+    ><p
+    >can be deforested as well and fused into the letter decoding. Try it yourself, or see the <a href="http://apfelmus.nfshost.com/articles/fun-with-morse-code/code.zip" title="Accompanying source code for 'Fun with Morse Code'"
+      >example source code</a
+      >.</p
+    ></div
+  ><div id="polish-notation-and-parsing"
+  ><h2
+    ><a href="#TOC"
+      >Polish notation and parsing</a
+      ></h2
+    ><p
+    ><a href="http://en.wikipedia.org/wiki/Polish_notation" title="Wikipedia on Polish Notation"
+      >Polish notation</a
+      >, the converse of reverse polish notation, puts function symbols before their arguments and is thus closer to the Haskell syntax. When the arities of the functions are known in advance, like 2 for <code
+      >Branch</code
+      > and 0 for <code
+      >Leaf</code
+      >, this notation doesn’t require parenthesis either. Write a <code
+      >program</code
+      > in polish notation and a corresponding tiny interpreter to create the morse code tree.</p
+    ></div
+  ><div id="comparing-to-c"
+  ><h2
+    ><a href="#TOC"
+      >Comparing to C</a
+      ></h2
+    ><p
+    >Since deforestation is supposed to make things faster, how about comparing our deforested morse code tree to say an implementation in C? But instead of doing benchmarks, let me give two general remarks on the machine representation.</p
+    ><p
+    >First, one might think that the call graph we’ve built is compiled to function calls, with <code
+      >e</code
+      > calling <code
+      >i</code
+      > or <code
+      >a</code
+      > and each function having different machine code, just as we originally intended. But this is actually not the case. When defined with <code
+      >branch</code
+      >, the functions are represented as <a href="http://en.wikipedia.org/wiki/Closure_(computer_science)" title="Wikipedia on Closure"
+      >closures</a
+      >, sharing the same machine code but carrying different records that store their free variables <code
+      >c</code
+      >, <code
+      >x</code
+      > and <code
+      >y</code
+      >. This is not very different from storing <code
+      >c</code
+      >, <code
+      >x</code
+      > and <code
+      >y</code
+      > in a <code
+      >Branch</code
+      > constructor. <a href="http://www.haskell.org/haskellwiki/Template_Haskell" title="Template Haskell"
+      >Template Haskell</a
+      > or some kind of <a href="http://en.wikipedia.org/wiki/Partial_evaluation" title="Wikipedia on Partial Evaluation"
+      >partial evaluation</a
+      > would be needed to hard-code the free variables into the executable. For more on the Haskell execution model, take a look at the <a href="http://hackage.haskell.org/trac/ghc/wiki/Commentary/Rts/HaskellExecution" title="GHC commentary on the Haskell Execution model"
+      >GHC commentary</a
+      >.</p
+    ><p
+    >Second, all our implementations decipher a letter by follow a chain of pointers: descending a tree means following pointers to deeper nodes, and making procedure calls means repeatedly jumping to different code parts. This of course raises questions of <a href="http://en.wikipedia.org/wiki/Locality_of_reference" title="Wikipedia on CPU Cache Locality"
+      >cache locality</a
+      >, <a href="http://en.wikipedia.org/wiki/Branch_predictor" title="Wikipedia on Branch Prediction"
+      >branch prediction</a
+      > or memory requirements for storing all these pointers.</p
+    ><p
+    >In C, however, there is another technique available: instead of following a chain of pointers to get to the destination, the address of the final stop is calculated directly with pointer arithmetic. The following example illustrates this:</p
+    ><pre
+    ><code
+      >#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+char buf[99], tree[] = &quot; ETIANMSURWDKGOHVF L PJBXCYZQ  &quot;;
+int main() {
+    while (scanf(&quot;%s&quot;, buf)) {
+        int n, t=0;
+        for(n=0; buf[n]!=0; n++)
+            t = 2*t + 1 + (buf[n]&amp;1); /* compute destination */
+        putchar(tree[t]);             /* fetch letter */
+    }
+}
+</code
+      ></pre
+    ><p
+    >Here, the tree is represented as an array and paths to nodes are encoded as (zero-less) binary numbers. The program calculates the path <code
+      >t</code
+      > to the proper letter and then fetches it with an O(1) memory lookup. Compare also the <a href="http://www.reddit.com/r/programming/comments/7xjqb/who_can_write_the_smallesttidiestcleverest_morse/c07p22i" title="Solution in C by reddit user kayamon"
+      >morse code translator by reddit user kayamon</a
+      >.</p
+    ><p
+    >Since the number of memory accesses is kept to a minimum, this technique is the most efficient; but it is impossible to reproduce with algebraic data types alone. Fortunately, <a href="http://www.haskell.org/haskellwiki/Arrays" title="Array libraries in Haskell"
+      >arrays libraries</a
+      > are readily available in Haskell as well.</p
+    ><p
+    >The main drawback of this approach, and of arrays in general, is the lack of clarity; indices are notorious for being non-descript and messy. The raw index arithmetic in the example C code above sure seems like magic!</p
+    ><p
+    >Such magic is best hidden behind a descriptive abstract data type. How about rewriting the example in Haskell such that <code
+      >decodeLetter</code
+      > looks exactly like the one in the <a href="#dichotomic-search"
+      >section on dichotomic search</a
+      >? In other words, the abstract data type is to support the functions <code
+      >left</code
+      >, <code
+      >right</code
+      > and <code
+      >tag</code
+      >. One possible solution can be found in the <a href="http://apfelmus.nfshost.com/articles/fun-with-morse-code/code.zip" title="Accompanying source code for 'Fun with Morse Code'"
+      >source code accompanying this article</a
+      >.</p
+    ></div
+  ></div
+>
+</div>
+<div id="footer">Heinrich Apfelmus<br/>Tue, 01 Sep 2009 17:33:00 +0200</div>
+<!-- DISQUS -->
+
+</div>
+<!-- DISQUS again -->
+</body>
+</html>
