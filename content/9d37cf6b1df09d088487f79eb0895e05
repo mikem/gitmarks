@@ -1,0 +1,504 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>Petabytes on a budget: How to build cheap cloud storage | Backblaze Blog</title>
+
+<link rel="stylesheet" href="http://blog.backblaze.com/wp-content/themes/anvys-10/style.css" type="text/css" media="screen, print" />
+
+<link rel="stylesheet" href="http://blog.backblaze.com/wp-content/themes/anvys-10/comments-style.css" type="text/css" media="screen, print" />
+
+<link rel="alternate" type="application/rss+xml" title="Backblaze Blog RSS Feed" href="http://blog.backblaze.com/feed/" />
+<link rel="alternate" type="application/atom+xml" title="Backblaze Blog Atom" href="http://blog.backblaze.com/feed/atom/" />
+<link rel="pingback" href="http://blog.backblaze.com/xmlrpc.php" />
+
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://blog.backblaze.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://blog.backblaze.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 2.5.1" />
+
+
+<!-- all in one seo pack 1.4.6.3 [243,331] -->
+<meta name="description" content="At Backblaze, we provide unlimited storage to our customers for only $5 per month, so we had to figure out how to store hundreds of petabytes of customer data" />
+<!-- /all in one seo pack -->
+<link rel="stylesheet" type="text/css" media="screen" href="http://blog.backblaze.com/wp-content/plugins/sociable/sociable.css" />
+</head>
+
+<body>
+
+<div align="center">
+<div id="top_container">
+<div id="top_left_main">
+<div align="left"><a href="http://www.backblaze.com"><img src="/wp-content/uploads/2008/03/logo_blog.gif" alt="Backblaze logo" width="229" height="52" border="0"/></a></div>
+</div><!-- end left_main -->
+<!-- End top_right  -->
+</div>
+<!-- End top_containter -->
+</div><!-- end center -->
+
+<div id="navbarcontainer" >
+<div align="center">
+<div id="center_bar">
+<div id="navbar">
+<ul>		
+<li><a href='#'><span id="nav_blank"></span></a></li>
+<li><a href='http://www.backblaze.com/index.html'  ><span id="nav_home">Home</span></a></li>
+<li><a href='http://www.backblaze.com/internet-backup.html'><span  id="nav_tour">How it Works</span></a></li>
+<li><a href='https://secure.backblaze.com/buy.htm'><span  id="nav_buy">Buy Now</span></a></li>
+<li><a href='http://www.backblaze.com/online-backup-about.html'><span id="nav_company">About Us</span></a></li>
+<li><a href='https://secure.backblaze.com/partners.htm'><span id="nav_partner">Partners</span></a></li>
+</ul>	
+</div><!-- end navbar -->
+		
+<div align="right">
+<table cellpadding="0" cellspacing="0" height="26">
+<tr><td colspan="5" height="6"></td></tr>
+<tr><td><img src="/wp-content/uploads/2008/03/nav_corner_tl.gif" width="5" height="4" /></td>
+			    <td background="/wp-content/uploads/2008/03/nav_corner_t.gif"></td>
+			    <td background="/wp-content/uploads/2008/03/nav_corner_midt.gif"></td>
+			    <td background="/wp-content/uploads/2008/03/nav_corner_t.gif"></td>
+			    <td><img src="/wp-content/uploads/2008/03/nav_corner_tr.gif" width="5" height="4" /></td>
+		  </tr>
+			  <tr>
+			    <td background="/wp-content/uploads/2008/03/nav_corner_l.gif"></td>
+			    <td class="helpwidth" height="22" background="/wp-content/uploads/2008/03/nav_corner_bg.gif"><div align="center"><a href="http://www.backblaze.com/help.html" class="nav_help">Help Me</a></div></td>
+			    <td background="/wp-content/uploads/2008/03/nav_corner_mid.gif" width="5"></td>
+		        <td class="signinwidth" background="/wp-content/uploads/2008/03/nav_corner_bg.gif"><div align="center"><a href="https://secure.backblaze.com/user_signin.htm" class="nav_help">Sign In to Restore</a></div></td>
+		        <td background="/wp-content/uploads/2008/03/nav_corner_r.gif"></td>
+			  </tr>
+			  <tr>
+			    <td><img src="/wp-content/uploads/2008/03/nav_corner_bl.gif" width="5" height="4" /></td>
+			    <td background="/wp-content/uploads/2008/03/nav_corner_b.gif"></td>
+			    <td background="/wp-content/uploads/2008/03/nav_corner_midb.gif"></td>
+		        <td background="/wp-content/uploads/2008/03/nav_corner_b.gif"></td>
+		        <td><img src="/wp-content/uploads/2008/03/nav_corner_br.gif" width="5" height="4" /></td>
+			  </tr>
+			</table>
+            
+</div><!-- right -->
+</div><!-- navbar -->
+</div><!-- center -->
+</div><!--END navbarCONTAINER-->
+
+<div id="wrap">
+<div id="header">
+<!--
+<h1 class="headertitle"><strong><a href="http://blog.backblaze.com/">Backblaze Blog</a></strong></h1>
+-->
+</div>
+
+   <div class="content">
+
+            <div class="post" id="post-150">
+         <h2><a href="http://blog.backblaze.com/2009/09/01/petabytes-on-a-budget-how-to-build-cheap-cloud-storage/" rel="bookmark" title="Petabytes on a budget:<BR> How to build cheap cloud storage">Petabytes on a budget:<BR> How to build cheap cloud storage</a></h2>
+<span class="post_author">Tim Nufire </span> <span class="post_date">September 1</span>
+
+         <div class="post2">      <p><img src="http://blog.backblaze.com/wp-content/uploads/2009/08/backblaze-cheap-cloud-server-storage2.jpg" alt="Backblaze 67 Terabyte Server" /><br />
+At Backblaze, we provide unlimited storage to our customers for only $5 per month, so we had to figure out how to store hundreds of petabytes of customer data in a reliable, scalable way—and keep our costs low. After looking at several overpriced commercial solutions, we decided to build our own custom Backblaze Storage Pods: 67 terabyte 4U servers for $7,867.</p>
+<p>What we actually provide for our customers is <a href="http://www.backblaze.com">online backup</a> for home and <a href="https://secure.backblaze.com/business.htm">business online backup</a> for work. However, in this post, we&#8217;ll share how to make one of these storage pods, and you’re welcome to use this design. Our hope is that by sharing, others can benefit and, ultimately, refine this concept and send improvements back to us. Evolving and lowering costs is critical to our continuing success at Backblaze.</p>
+<p>Below is a video that shows a 3-D model of the Backblaze Storage Pod. Continue reading to learn the exact details of the design.</p>
+<p>
+<object width="560" height="448"><param name="movie" value="http://www.youtube.com/v/Wm7Rp5u8Q1g&#038;hl=en&#038;fs=1&#038;"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/Wm7Rp5u8Q1g&#038;hl=en&#038;fs=1&#038;" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="560" height="448"></embed></object><br />
+<br />
+ <a href="https://www.backblaze.com/files/backblaze-storage-pod-3d-design.zip">You can download the full 3-D model of the Backblaze Storage Pod here. </a><br />
+<br />
+<span id="more-150"></span></p>
+<h3>Backblaze Needs Plenty of Reliable, Cheap Storage</h3>
+<p>To say that Backblaze needs lots of storage is an understatement. We’re a backup service, so our datacenter contains a complete copy of all of our customers’ data, plus multiple versions of files that change. In rough terms, every time one of our customers buys a hard drive, Backblaze needs another hard drive. A long time ago we stopped measuring storage in our datacenter in gigabytes or terabytes and started measuring in petabytes.  </p>
+<p>To get a sense of what this looks like, here is a shot of me deploying new pods in our datacenter. The small stack of six pods in the rack I&#8217;m working on contains just under half a petabyte of storage.<br />
+<a href="http://blog.backblaze.com/wp-content/uploads/2009/08/tim-datacenter-servers.jpg"><br />
+<img src="http://blog.backblaze.com/wp-content/uploads/2009/08/tim-backblaze-datacenter-servers.jpg" alt="Tim in Datacenter" border="0" /></a></p>
+<p>To offer our service at a reasonable price, we need affordable storage at a multi-petabyte scale.</p>
+<h3>No One Sells Cheap Storage, so We Designed It</h3>
+<p>Before realizing that we had to solve this storage problem ourselves, we considered Amazon S3, Dell or Sun Servers, NetApp Filers, EMC SAN, etc.  As we investigated these traditional off-the-shelf solutions, we became increasingly disillusioned by the expense. When you strip away the marketing terms and fancy logos from any storage solution, data ends up on a hard drive. But when we priced various off-the-shelf solutions, the cost was 10 times as much (or more) than the raw hard drives. Here’s a comparison chart of the price for one petabyte from various venders:<br />
+<img src="http://blog.backblaze.com/wp-content/uploads/2009/08/cost-of-a-petabyte-chart.jpg" alt="Cost of a Petabyte Chart" /><br />
+Based on the expense, we decided to build our own Backblaze Storage Pods. We had two primary goals: Keep upfront costs low by using consumer-grade drives and readily available commodity components and be as power and space efficient as possible by using green components and squeezing a lot of storage into a small box. </p>
+<p>The result is a 4U rack-mounted Linux-based server that contains 67 terabytes at a material cost of $7,867, the bulk of which goes to purchase the drives themselves. This translates to just three-tenths of one penny per gigabyte per month over the course of three years. Even including the surrounding costs—such as electricity, bandwidth, space rental, and IT administrators’ salaries—Backblaze spends one-tenth of the price in comparison to using Amazon S3, Dell Servers, NetApp Filers, or an EMC SAN.</p>
+<h3>What Makes a Backblaze Storage Pod</h3>
+<p>A Backblaze Storage Pod is a self-contained unit that puts storage online. It’s made up of a custom metal case with commodity hardware inside. Specifically, one pod contains one Intel Motherboard with four SATA cards plugged into it. The nine SATA cables run from the cards to nine port multiplier backplanes that each have five hard drives plugged directly into them (45 hard drives in total).<br />
+<img src="http://blog.backblaze.com/wp-content/uploads/2009/08/backblaze-storage-pod-main-components.jpg" alt="Backblaze Pod Items" /></p>
+<p>Above is an exploded diagram, and you can see a detailed parts list in Appendix A at the bottom of this post. The two most important factors to note are that the cost of the hard drives dominates the price of the overall pod and that the rest of the system is made entirely of commodity parts.</p>
+<h3>Wiring It Up: How to Assemble a Backblaze Storage Pod</h3>
+<p>The power wiring diagram of a Backblaze Storage Pod is seen below.  Power supply units (PSUs) provide most of their power on two different voltages: 5V and 12V.  We use two power supplies in the pod because 45 drives draw a lot of 5V power, yet high wattage ATX PSUs provide most of their power on 12V.  This is not an accident: 1,500 watt and larger ATX power supplies are designed for powerful 3-D graphics cards that need the extra power on the 12V rail.  We could have switched to a power supply designed for servers, but two ATX PSUs are cheaper.<br />
+<img src="http://blog.backblaze.com/wp-content/uploads/2009/08/backblaze-storage-pod-power-wiring-diagram.jpg" alt="Server Power Wiring Diagram" /></p>
+<p>PSU1 powers the front three fans and port multiplier backplanes 1,2,3,4, and 7. PSU2 powers everything else.  (See Appendix A for a detailed list of the custom connectors on each PSU.) To power the port multiplier backplanes, the power cables run from the PSUs through four holes in the divider metal plate that holds the fans at the center of the case (near the base of the fans) and then continue to the underside of the nine backplanes. Each port multiplier backplane has two molex male connectors on the underside. Hard drives draw the most power during initial spin-up, so if you power up both PSUs at the same time, it can draw a large (14 amp) spike of 120V power from the socket. We recommend powering up PSU1 first, waiting until the drives are spun-up (and the power draw decreases to a reasonable level), and then powering up PSU2. Fully booted, the entire pod will draw approximately 4.8 amps idle and up to 5.6 amps under heavy load.</p>
+<p>Below is a picture of a partially assembled Backblaze Storage Pod (click on the photo for a larger image). The metal case has screws mounted on the bottom, facing upward, where we attach nylon standoffs (the small white pieces in the picture below). Nylon helps dampen vibration, and this dampening is a critical aspect of server design. The circuit boards shown on top of the nylon standoffs are a few of the nine SATA port multiplier backplanes that take a single SATA connection on their underside and allow five hard drives to be mounted vertically and plugged into the topside of the board. All the power and SATA cables run underneath the port multiplier backplanes. One of the backplanes in the picture below is fully populated with hard drives to show the positioning.</p>
+<p><a href="http://blog.backblaze.com/wp-content/uploads/2009/08/backblaze-storage-pod-partially-assembled-large.jpg"><img src="http://blog.backblaze.com/wp-content/uploads/2009/08/backblaze-storage-pod-partially-assembled.jpg" alt="Backblaze Server Partial Assembly"   border="0" /></a></p>
+<p>A note about drive vibration: The drives vibrate too much if you leave them sitting as shown in the picture above, so we add an &#8220;anti-vibration sleeve&#8221; (essentially a rubber band) around the hard drive in between the red metal grid and the drives. This seats the drives tightly in the rubber. We also lay a large (16&#8243; x 17&#8243; x 1/8&#8243;) piece of foam along top of the hard drives after all 45 are in the case. The lid then screws down on top of the foam to hold the drives securely. In the future, we will dedicate an entire blog post to vibration.</p>
+<p>The SATA wiring diagram is seen below.<br />
+<img src="http://blog.backblaze.com/wp-content/uploads/2009/08/backblaze-storage-pod-sata-cable-wiring-diagram.jpg" alt="SATA Wiring Diagram" /><br />
+The Intel Motherboard has four SATA cards plugged into it: three SYBA two-port SATA cards and one Addonics four-port card. The nine SATA cables connect to the top of the SATA cards and run in tandem with the power cables. All nine SATA cables measure 36 inches and use locking 90-degree connectors on the backplane end and non-locking straight connectors into the SATA cards.</p>
+<p>A note about SATA chipsets: Each of the port multiplier backplanes has a Silicon Image SiI3726 chip so that five drives can be attached to one SATA port. Each of the SYBA two-port PCIe SATA cards has a Silicon Image SiI3132, and the four-port PCI Addonics card has a Silicon Image SiI3124 chip. We use only three of the four available ports on the Addonics card because we have only nine backplanes. We don’t use the SATA ports on the motherboard because, despite Intel’s claims of port multiplier support in their ICH10 south bridge, we noticed strange results in our performance tests. Silicon Image pioneered port multiplier technology, and their chips work best together.</p>
+<h3>A Backblaze Storage Pod Runs Free Software</h3>
+<p>A Backblaze Storage Pod isn&#8217;t a complete building block until it boots and is on the network. The pods boot 64-bit Debian 4 Linux and the JFS file system, and they are self-contained appliances, where all access to and from the pods is through HTTPS. Below is a layer cake diagram.<br />
+<img src="http://blog.backblaze.com/wp-content/uploads/2009/08/backblaze-storage-pod-software-layer-cake-diagram.jpg" alt="Software Layering Cake Diagram" /><br />
+Starting at the bottom, there are 45 hard drives exposed through the SATA controllers. We then use the fdisk tool on Linux to create one partition per drive. On top of that, we cluster 15 hard drives into a single RAID6 volume with two parity drives (out of the 15). The RAID6 is created with the mdadm utility. On top of that is the JFS file system, and the only access we then allow to this totally self-contained storage building block is through HTTPS running custom Backblaze application layer logic in Apache Tomcat 5.5. After taking all this into account, the formatted (useable) space is 87 percent of the raw hard drive totals. One of the most important concepts here is that to store or retrieve data with a Backblaze Storage Pod, it is always through HTTPS. There is no iSCSI, no NFS, no SQL, no Fibre Channel. None of those technologies scales as cheaply, reliably, goes as big, nor can be managed as easily as stand-alone pods with their own IP address waiting for requests on HTTPS.</p>
+<h3>A Backblaze Storage Pod is a Building Block</h3>
+<p>We have been extremely happy with the reliability and excellent performance of the pods, and a Backblaze Storage Pod is a fully contained storage server.  But the intelligence of where to store data and how to encrypt it, deduplicate it, and index it is all at a higher level (outside the scope of this blog post). When you run a datacenter with thousands of hard drives, CPUs, motherboards, and power supplies, you are going to have hardware failures—it’s irrefutable.  Backblaze Storage Pods are building blocks upon which a larger system can be organized that doesn’t allow for a single point of failure.   Each pod in itself is just a big chunk of raw storage for an inexpensive price; it is not a &#8220;solution&#8221; in itself.</p>
+<h3>Cloud Storage: The Next Step</h3>
+<p>The first step to building cheap cloud storage is to already have cheap storage, and above we demonstrate how to create your own. If all you need is cheap storage, this may suffice. If you need to build a cloud, you’ve got more work ahead of you.</p>
+<p>Building a cloud includes not only deploying a large quantity of hardware, but, critically, deploying software to manage it. At Backblaze we have developed software that de-duplicates and chops data into blocks; encrypts and transfers it for backup; reassembles, decrypts, re-duplicates, and packages the data for recovery; and monitors and manages the entire cloud storage system. This process is proprietary technology that we have developed over the years.</p>
+<p>You may have your own system for this process and incorporate the Backblaze Storage Pod design, or you may simply seek inexpensive storage that won’t be deployed as part of a cloud. In either case, you’re free to use the storage pod design above. If you do, we would appreciate credit at Backblaze and welcome any insights, though this isn’t a requirement. Please note that because we’re not selling the design or the storage pods themselves, we provide no support nor warranties.</p>
+<p>Coming next: In the next few weeks, we&#8217;ll talk about iPhone vibration sensors, swiss cheese pod designs, why electricity costs more than bandwidth, and more about the design of big cloud storage.</p>
+<h3>Credits and Standing on the Shoulders of Giants</h3>
+<p>The Backblaze Storage Pod design would not have been possible without an enormous amount of help, usually requested with little notice, from some amazingly smart and generous people who answered our questions, worked with us, and provided key insights at critical moments. First, we thank Chris Robertson for the inspiration to build our own storage and his early work on prototypes; Kurt Schaefer for advice on metal work and the concept of &#8220;furniture&#8221; for circuit boards; Dominic Giampaolo from Apple Computer for his advice on hard drives, vibration, and certifications; Stuart Cheshire from Apple Computer and Nick Tingle from Alcatel-Lucent for low-level network advice; Aaron Emigh (EVP &amp; GM, Core Technology) at Six Apart for his help on initial design work; Gary Orenstein for insight into drive reliability and the storage industry in general; Jonathan Beck for invaluable advice on vibration, fans, cooling, and case design; Steve Smith (Senior Design Manager), Imran Pasha (Director of Software Engineering), and Alex Chervet (Director of Strategic Marketing) at Silicon Image who helped us debug SATA protocol problems and loaned us 10 different SATA cards to test against; James Lee at Chyang Fun Industries in Taiwan for customizing SATA boards to simplify our design; Wes Slimick, Richard Crockett, Don Shields, and Robert Knowles from Western Digital for their help debugging Western Digital drive logs; Christa Carey, Jennifer Hurd, and Shirley Evely at Protocase for putting up with hundreds of small 3-D case design tweaks; Chester Yeung at Central Computer for coming through quickly and repeatedly with locally supplied parts when it really mattered; Mason Lee at Zippy for power supply advice and custom wiring harnesses; and Angela Lai for knowing just the right people and providing gracious introductions.</p>
+<p>Finally, we thank the thousands of engineers who slaved away for millions of hours to bring us the pod components that are either inexpensive or totally free, such as the Intel Processor, Gigabit Ethernet, ridiculously dense hard drives, Linux, Tomcat, JFS, etc. We realize we’re standing on the shoulders of giants.</p>
+<h3>Appendix A: Detailed Backblaze Storage Pod Parts List</h3>
+<div style="width: 560px">
+<div class="row_whiteh">
+<div class="cell_description"><strong>Item</strong></div>
+<div class="cell_qty"><strong>Qty</strong></div>
+<div class="cell_price"><strong>Price</strong></div>
+<div class="cell_total"><strong>Total</strong></div>
+</div>
+<div class="row_whiteh">
+<div class="cell_description"><strong>1.5 TB SATA Data Drive</strong><br />
+<span class="grey50">Seagate ST31500341AS 1.5TB Barracuda 7200.11 SATA 3Gb/s 3.5&#8243;</span></div>
+<div class="cell_qty">45</div>
+<div class="cell_price">$120.00</div>
+<div class="cell_total">$5,400</div>
+</div>
+<div class="row_whiteh">
+<div class="cell_description"><strong>4U Enclosure</strong> - <a href="https://www.backblaze.com/files/backblaze-storage-pod-3d-design.zip">Download the 3-D model</a><br />
+  <span class="grey50">Custom Designed 4U Red Backblaze Storage Pod Enclosure</span></div>
+<div class="cell_qty">1</div>
+<div class="cell_price">$748.00</div>
+<div class="cell_total">$748</div>
+</div>
+<div class="row_whiteh">
+<div class="cell_description"><strong>760 Watt Power Supply</strong><br />
+  <span class="grey50">Zippy PSM-5760 760 Watt Power Supply with Custom Wiring (qtys of 200+)</span></div>
+<div class="cell_qty">2</div>
+<div class="cell_price">$270.00</div>
+<div class="cell_total">$540</div>
+</div>
+<div class="row_whiteh">
+<div class="cell_description"><strong>Port Muliplier Backplanes</strong><br />
+  <span class="grey50">Chyang Fun Industry (CFI Group) CFI-B53PM 5 Port Backplane (SiI3726)</span></div>
+<div class="cell_qty">9</div>
+<div class="cell_price">$42.00</div>
+<div class="cell_total">$378</div>
+</div>
+<div class="row_whiteh">
+<div class="cell_description"><strong>3.3 GHz Intel Core 2 CPU</strong><br />
+  <span class="grey50">Intel E8600 Wolfdale 3.33 GHz LGA 775 65W Dual-Core Processor</span></div>
+<div class="cell_qty">1</div>
+<div class="cell_price">$280.00</div>
+<div class="cell_total">$280</div>
+</div>
+<div class="row_whiteh">
+<div class="cell_description"><strong>2 Port PCIe SATA II Card</strong><br />
+  <span class="grey50">Syba SD-SA2PEX-2IR PCI Express SATA II Controller Card (SiI3132)</span></div>
+<div class="cell_qty">3</div>
+<div class="cell_price">$35.00</div>
+<div class="cell_total">$105</div>
+</div>
+<div class="row_whiteh">
+<div class="cell_description"><strong>4 Port PCI SATA II Card</strong><br />
+  <span class="grey50">Addonics ADSA4R5 4-Port SATA II PCI Controller (SiI3124)</span></div>
+<div class="cell_qty">1</div>
+<div class="cell_price">$70.00</div>
+<div class="cell_total">$70</div>
+</div>
+<div class="row_whiteh">
+<div class="cell_description"><strong>Motherboard</strong><br />
+  <span class="grey50">Intel BOXDG43NB LGA 775 G43 ATX Motherboard</span></div>
+<div class="cell_qty">1</div>
+<div class="cell_price">$85.00</div>
+<div class="cell_total">$85</div>
+</div>
+<div class="row_whiteh">
+<div class="cell_description"><strong>Case Fan</strong><br />
+  <span class="grey50">Mechatronics G1238M12B1-FSR 120 x 38 mm 2,800 RPM 12V Fan</span></div>
+<div class="cell_qty">6</div>
+<div class="cell_price">$13.60</div>
+<div class="cell_total">$82</div>
+</div>
+<div class="row_whiteh">
+<div class="cell_description"><strong>4GB DDR2 800 RAM</strong><br />
+  <span class="grey50">Kingston KVR800D2N6K2/4G 2&#215;2GB 240-Pin SDRAM DDR2 800 (PC2 6400)</span></div>
+<div class="cell_qty">1</div>
+<div class="cell_price">$50.00</div>
+<div class="cell_total">$50</div>
+</div>
+<div class="row_whiteh">
+<div class="cell_description"><strong>80 GB PATA Boot Drive</strong><br />
+  <span class="grey50">Western Digital Caviar WD800BB 80GB 7200 RPM IDE Ultra ATA100 3.5&#8243;</span></div>
+<div class="cell_qty">1</div>
+<div class="cell_price">$38.00</div>
+<div class="cell_total">$38</div>
+</div>
+<div class="row_whiteh">
+<div class="cell_description"><strong>On/Off Switch</strong><br />
+  <span class="grey50">FrozenCPU ele-302 Bulgin Vandal Momentary LED Power Switch 12&#8243; 2-pin</span></div>
+<div class="cell_qty">1</div>
+<div class="cell_price">$30.00</div>
+<div class="cell_total">$30</div>
+</div>
+<div class="row_whiteh">
+<div class="cell_description"><strong>SATA II Cable</strong><br />
+  <span class="grey50">SATA II Cable, 90 Degrees/straight with Locking Connectors</span></div>
+<div class="cell_qty">9</div>
+<div class="cell_price">$2.00</div>
+<div class="cell_total">$18</div>
+</div>
+<div class="row_whiteh">
+<div class="cell_description"><strong>Nylon Backplane Standoffs</strong><br />
+  <span class="grey50">Fastener SuperStore 1/4&#8243; Round Nylon Standoffs Female/Female 4-40 x 3/4&#8243;</span></div>
+<div class="cell_qty">72</div>
+<div class="cell_price">$0.17</div>
+<div class="cell_total">$12</div>
+</div>
+<div class="row_whiteh">
+<div class="cell_description"><strong>HD Anti-Vibration Sleeves</strong><br />
+  <span class="grey50">Aero Rubber Co. 3.0 x .500 inch EPDM (0.03&#8243; Wall)</span></div>
+<div class="cell_qty">45</div>
+<div class="cell_price">$0.23</div>
+<div class="cell_total">$10</div>
+</div>
+<div class="row_whiteh">
+<div class="cell_description"><strong>Power Supply Vibration Dampener</strong><br />
+  <span class="grey50">Vantec VDK-PSU Power Supply Vibration Dampener</span></div>
+<div class="cell_qty">2</div>
+<div class="cell_price">$4.50</div>
+<div class="cell_total">$9</div>
+</div>
+<div class="row_whiteh">
+<div class="cell_description"><strong>Fan Mount (front)</strong><br />
+  <span class="grey50">Acousti Ultra Soft Anti-Vibration Fan Mount AFM02</span></div>
+<div class="cell_qty">12</div>
+<div class="cell_price">$0.40</div>
+<div class="cell_total">$5</div>
+</div>
+<div class="row_whiteh">
+<div class="cell_description"><strong>Fan Mount (middle)</strong><br />
+<span class="grey50">Acousti Ultra Soft Anti-Vibration Fan Mount AFM03</span></div>
+<div class="cell_qty">12</div>
+<div class="cell_price">$0.40</div>
+<div class="cell_total">$5</div>
+</div>
+<div class="row_whiteh">
+<div class="cell_description"><strong>Nylon Screws</strong><br />
+  <span class="grey50">Small Parts MPN-0440-06P-C Nylon Pan Head Phillips Screw 4-40 x 3/8&#8243;</span></div>
+<div class="cell_qty">72</div>
+<div class="cell_price">$0.02</div>
+<div class="cell_total">$1</div>
+</div>
+<div class="row_whiteh">
+<div class="cell_description"><strong>Foam Rubber Pad</strong><br />
+  <span class="grey50">House of Foam 16&#8243; x 17&#8243; x 1/8&#8243; Foam Rubber Pad</span></div>
+<div class="cell_qty">1</div>
+<div class="cell_price">$1.00</div>
+<div class="cell_total">$1</div>
+</div>
+<div class="row_grand_total">
+<div class="cell_description"><strong>TOTAL</strong></div>
+<div class="cell_qty">&nbsp;</div>
+<div class="cell_price">&nbsp;</div>
+<div class="cell_total"><strong>$7,867</strong></div>
+</div>
+</div>
+<div class="clearit"></div>
+<p><BR><br />
+<strong>Custom wiring harnesses for PSU1 (1st Zippy power supply):</strong>
+<ul>
+<li>5x 4-pin 90-degree molex HD connectors with two connectors each. Length should be 36&#8243; to the farthest connector, 32.5&#8243; to the closest (3.5&#8243; apart)</li>
+<li>3x 4-pin 12V fan connectors that should be 32&#8243; in length with extender and RPM signal that can attach to motherboard</li>
+</ul>
+<p><BR><br />
+<strong>Custom wiring harnesses for PSU2 (2nd Zippy power supply):</strong>
+<ul>
+<li>1x 24-pin motherboard connector, 8&#8243;</li>
+<li>1x 4-pin ATX12V for CPU, 8&#8243;</li>
+<li>4x 4-pin 90-degree molex HD connectors with two connectors each. Length should be 36&#8243; to the farthest connector, 32.5&#8243; to the closest (3.5&#8243; apart)</li>
+<li>1x 4-pin 90-degree molex connector, 12&#8243; long</li>
+<li>3x 3-pin, 12V fan connectors, 12&#8243; long, with extender for RPM signal that can attach to motherboard</li>
+</ul>
+<p><BR><br />
+<strong>SATA Chipsets</strong>
+<ul>
+<li>SiI3726 on each port multiplier backplane to attach five drives to one SATA port.  </li>
+<li>SiI3132 on each of the three PCIe SATA cards to attach two backplanes each (six ports total)</li>
+<li>SiI3124 on the one PCI SATA card to attach up to four port multiplier backplanes (we only use three of the four ports)</li>
+</ul>
+
+<div class="sociable">
+<span class="sociable_tagline">
+Share this with:
+	<span>These icons link to social bookmarking sites where readers can share and discover new web pages.</span>
+</span>
+<ul>
+	<li><a rel="nofollow" target="_blank" href="http://digg.com/submit?phase=2&amp;url=http%3A%2F%2Fblog.backblaze.com%2F2009%2F09%2F01%2Fpetabytes-on-a-budget-how-to-build-cheap-cloud-storage%2F&amp;title=Petabytes%20on%20a%20budget%3A%3CBR%3E%20How%20to%20build%20cheap%20cloud%20storage" title="Digg"><img src="http://blog.backblaze.com/wp-content/plugins/sociable/images/digg.png" title="Digg" alt="Digg" class="sociable-hovers" /></a></li>
+	<li><a rel="nofollow" target="_blank" href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fblog.backblaze.com%2F2009%2F09%2F01%2Fpetabytes-on-a-budget-how-to-build-cheap-cloud-storage%2F&amp;t=Petabytes%20on%20a%20budget%3A%3CBR%3E%20How%20to%20build%20cheap%20cloud%20storage" title="Facebook"><img src="http://blog.backblaze.com/wp-content/plugins/sociable/images/facebook.png" title="Facebook" alt="Facebook" class="sociable-hovers" /></a></li>
+	<li><a rel="nofollow" target="_blank" href="http://twitthis.com/twit?url=http%3A%2F%2Fblog.backblaze.com%2F2009%2F09%2F01%2Fpetabytes-on-a-budget-how-to-build-cheap-cloud-storage%2F" title="TwitThis"><img src="http://blog.backblaze.com/wp-content/plugins/sociable/images/twitter.png" title="TwitThis" alt="TwitThis" class="sociable-hovers" /></a></li>
+</ul>
+</div>
+
+<div class="postinfo">
+
+
+
+Tags: <a href="http://blog.backblaze.com/category/cloud-storage/" title="View all posts in Cloud Storage" rel="category tag">Cloud Storage</a>,  <a href="http://blog.backblaze.com/category/techbytes/" title="View all posts in TechBytes" rel="category tag">TechBytes</a> <!-- @ 01/09/2009 
+|  -->
+</div> 
+            <!--
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+				xmlns:dc="http://purl.org/dc/elements/1.1/"
+				xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+			<rdf:Description rdf:about="http://blog.backblaze.com/2009/09/01/petabytes-on-a-budget-how-to-build-cheap-cloud-storage/"
+    dc:identifier="http://blog.backblaze.com/2009/09/01/petabytes-on-a-budget-how-to-build-cheap-cloud-storage/"
+    dc:title="Petabytes on a budget: How to build cheap cloud storage"
+    trackback:ping="http://blog.backblaze.com/2009/09/01/petabytes-on-a-budget-how-to-build-cheap-cloud-storage/trackback/" />
+</rdf:RDF>            -->
+
+      </div>
+      </div>
+<BR><BR>
+      
+            <div class="nav">&laquo; <a href="http://blog.backblaze.com/2009/08/31/photographer-portfolio-saved-by-backblaze/">Photographer portfolio saved by Backblaze</a> -  <a href="http://blog.backblaze.com/2009/09/25/fallout-of-the-backblaze-storage-pod-post/">Fallout of the Backblaze Storage Pod post</a> &raquo;</div>
+      
+      
+      </div>
+
+<div id="sidebar">
+
+ 
+
+
+
+<h2 class="sidetit"></h2>
+<ul>
+<li><span class="home"><a href="http://blog.backblaze.com" class="sidebar_nav_color">Blog Home</a></span></li>
+
+<li><span class="feed"><a href="http://blog.backblaze.com/feed/" class="sidebar_nav_color">Feed RSS</a></span></li>
+</ul><BR>
+The developers of Backblaze post on this weblog about online backup, keeping data safe and other rants about life. Visit the <a href="https://www.backblaze.com/internet-backup.html"> How it Works</a> page to learn more.<BR><BR>
+
+
+
+<div class="top-left"></div>
+<div class="top-right"></div>
+<div class="inside">
+<p align="center" class="notopgap nobottomgap"><b>Start backing up  your files online</b>: <a href="https://www.backblaze.com/download.htm">Get started </a><BR>
+<a href="https://www.backblaze.com/download.htm">
+<img id="image29" src="http://blog.backblaze.com/wp-content/uploads/2008/03/b_download_small.gif" alt="Download Backblaze Online Backup" border="0"/></a>
+</div>
+<div class="bottom-left"></div>
+<div class="bottom-right"></div>
+
+<br />
+<div class="search-form">
+ 
+<form method="get" id="searchform"  
+action="http://blog.backblaze.com/"> 
+<input type="text" value="Search"  
+name="s" id="s"  
+onblur="if (this.value == '')  
+{this.value = 'Search';}"  
+onfocus="if (this.value == 'Search')  
+{this.value = '';}" /> 
+<input type="hidden" id="searchsubmit" /> 
+</form>
+</div>
+
+<BR />
+
+
+<table width="150" border="0" cellpadding="8" cellspacing="0" bgcolor="#f3f5f8">
+  <tr>
+    <td style="font-family:'Lucida Grande', Tahoma, Sans-Serif; font-size:13px; color:#000000"><div align="center"><a href="http://twitter.com/backblaze" style="color:#000000;">Follow us on<br />
+        <img src="http://blog.backblaze.com/wp-content/uploads/2009/08/twitter-badge.png" width="85" height="36" border="0" /></a></div></td>
+  </tr>
+</table>
+<br />
+
+<table width="150" border="0" cellpadding="8" cellspacing="0" bgcolor="#f3f5f8">
+  <tr>
+    <td style="font-family:'Lucida Grande', Tahoma, Sans-Serif; font-size:13px; color:#000000"><div align="center"><a href="http://www.facebook.com/backblaze" style="color:#000000;">Become a fan on<br />
+              <img src="http://blog.backblaze.com/wp-content/uploads/2009/08/facebook-badge.png" width="85" height="36" border="0" /></a></div></td>
+  </tr>
+</table>
+<BR /><BR />
+<div class="tags">
+<div class="tags_title">Tags</div>
+<ul>
+	<li class="cat-item cat-item-15"><a href="http://blog.backblaze.com/category/backblaze-for-business/" title="View all posts filed under Backblaze for Business">Backblaze for Business</a>
+</li>
+	<li class="cat-item cat-item-10"><a href="http://blog.backblaze.com/category/backblaze-fun/" title="View all posts filed under Backblaze Fun">Backblaze Fun</a>
+</li>
+	<li class="cat-item cat-item-16"><a href="http://blog.backblaze.com/category/backblaze-tips-tricks/" title="View all posts filed under Backblaze Tips &amp; Tricks">Backblaze Tips &amp; Tricks</a>
+</li>
+	<li class="cat-item cat-item-4"><a href="http://blog.backblaze.com/category/backup-awareness-month/" title="View all posts filed under Backup Awareness Month">Backup Awareness Month</a>
+</li>
+	<li class="cat-item cat-item-20"><a href="http://blog.backblaze.com/category/backup-devices/" title="View all posts filed under Backup Devices">Backup Devices</a>
+</li>
+	<li class="cat-item cat-item-21"><a href="http://blog.backblaze.com/category/backup-needs/" title="View all posts filed under Backup Needs">Backup Needs</a>
+</li>
+	<li class="cat-item cat-item-12"><a href="http://blog.backblaze.com/category/backup-news/" title="View all posts filed under Backup News">Backup News</a>
+</li>
+	<li class="cat-item cat-item-7"><a href="http://blog.backblaze.com/category/cloud-storage/" title="View all posts filed under Cloud Storage">Cloud Storage</a>
+</li>
+	<li class="cat-item cat-item-9"><a href="http://blog.backblaze.com/category/customer-stories/" title="View all posts filed under Customer Stories">Customer Stories</a>
+</li>
+	<li class="cat-item cat-item-11"><a href="http://blog.backblaze.com/category/data-loss/" title="View all posts filed under Data Loss">Data Loss</a>
+</li>
+	<li class="cat-item cat-item-13"><a href="http://blog.backblaze.com/category/events/" title="View all posts filed under Events">Events</a>
+</li>
+	<li class="cat-item cat-item-14"><a href="http://blog.backblaze.com/category/kudos/" title="View all posts filed under Kudos">Kudos</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://blog.backblaze.com/category/mac-love/" title="View all posts filed under Mac Love">Mac Love</a>
+</li>
+	<li class="cat-item cat-item-3"><a href="http://blog.backblaze.com/category/offers/" title="View all posts filed under Offers">Offers</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="http://blog.backblaze.com/category/release/" title="View all posts filed under Release">Release</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://blog.backblaze.com/category/startup-life/" title="View all posts filed under Startup Life">Startup Life</a>
+</li>
+	<li class="cat-item cat-item-8"><a href="http://blog.backblaze.com/category/tech-news/" title="View all posts filed under Tech News">Tech News</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://blog.backblaze.com/category/techbytes/" title="View all posts filed under TechBytes">TechBytes</a>
+</li>
+	<li class="cat-item cat-item-1"><a href="http://blog.backblaze.com/category/uncategorized/" title="View all posts filed under Uncategorized">Uncategorized</a>
+</li>
+</ul>
+</div>
+<BR />
+
+
+
+
+<p><a href="http://fusion.google.com/add?feedurl=http://feeds.feedburner.com/BackblazeBlog"><img src="http://buttons.googlesyndication.com/fusion/add.gif" width="104" height="17" style="border:0" alt="Add to Google Reader or Homepage"/></a></p>
+<p><a href="http://add.my.yahoo.com/rss?url=http://feeds.feedburner.com/BackblazeBlog" title="Backblaze Blog"><img src="http://us.i1.yimg.com/us.yimg.com/i/us/my/addtomyyahoo4.gif" alt="" style="border:0"/></a></p>
+<p><a href="http://www.bloglines.com/sub/http://feeds.feedburner.com/BackblazeBlog" title="Backblaze Blog" type="application/rss+xml"><img src="http://www.bloglines.com/images/sub_modern11.gif" alt="Subscribe in Bloglines" style="border:0"/></a></p>
+
+
+</div>
+
+
+
+<div id="footer_container">
+<div id="footer_left"> <a href="https://www.backblaze.com/terms">Terms</a> | <a href="https://www.backblaze.com/privacy/index.html">Privacy</a> | <a href="https://www.backblaze.com/support_feedback.html">Feedback</a>  </div>
+<div id="footer_right">Copyright 2007-2009</div>
+
+</div><!-- END footer_container -->
+
+
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-2694151-2");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>
+
+
+
+</div>
+
+</body>
+<script type="text/javascript" language="javascript">llactid=18640</script> 
+<script type="text/javascript" language="javascript" src="http://t2.trackalyzer.com/trackalyze.js"></script>
+</html>
