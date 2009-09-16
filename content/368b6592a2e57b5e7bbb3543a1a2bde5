@@ -1,0 +1,1571 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+
+<html>
+<head>
+	<title>InfoQ: Radical Simplification Through Polyglot and Poly-paradigm Programming</title>
+    
+	
+	<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="copyright" content="&copy; 2006 C4Media" />
+<meta name="author" content="alex[at]c4media[dot]com" />
+
+	
+	
+    <link rel="stylesheet" type="text/css" media="screen" href="http://cdn1.infoq.com/styles/style.css;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19" />
+    <link rel="stylesheet" type="text/css" media="print" href="http://cdn1.infoq.com/styles/print.css;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19" />
+    <!--[if LTE IE 6]>
+    <link rel="stylesheet" type="text/css" media="screen" href="/styles/style-ie.css;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19" />
+    <![endif]-->
+    <link rel="shortcut icon" href="http://cdn4.infoq.com/favicon.ico;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19" type="image/x-icon">
+    
+    <script src="http://cdn1.infoq.com/scripts/combinedJs_en.js;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19" type="text/javascript"></script>
+	
+	
+	
+
+	
+	<meta name="keywords" content="polyglot polyparadigm programming,Architecture,Language Design,Module Systems,Programming,QCon San Francisco 2008,OOP,Aspect Oriented Programming,QCon,Functional Programming,"/>
+	<meta name="description" content="This presentation attacks the problem of software complexity and how various modularity paradigms (e.g., object, functions, aspects) simplify complexity and help separate concerns. This talk explores  the design problems where these paradigms are most applicable and extract rules of thumb for when to use them. We will also look at language support for these paradigms."/>
+	
+	<script type="text/javascript" src="http://cdn1.infoq.com/scripts/scrubber/flashPlayercombinedJsPresentation.js;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19?20101115"></script>
+	<script type="text/javascript">
+    	$(document).ready(function() {
+            init();
+            setVerticalView();
+         });
+	</script>
+
+</head>
+
+<body >
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	var bannerURL='/ads/skyscraper.action;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19';
+	var textLinksHomepageURL='/ads/homepageads.action;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19';
+	var textLinksLeftBarURL='/ads/textlinks.action;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19';
+	var rightbarURL='/rightbar.action;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19';
+	var comunityWidgetUrl='/widgets/communityWidget.action;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19';
+</script> 
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+var loginLanguage='en';
+var loginURL='/login.action;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19';
+var registerURL='/reginit.action;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19';
+var reactivateURL='/reactivate.action;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19';
+var reserpasswordURL='/resetpassword.action;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19';
+var loggedIn=false;
+var logoutURL='/logout.action;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19';
+var editUserURL='/edituser.action;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19';
+var aboutURL='/about;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19';
+var homeURL='/;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19';
+</script>
+<div id="tooltip" style="display:none;"></div>
+<div id="loginWindow" style="display:none;">
+	
+
+
+
+
+
+
+<div id="innerLoginWindow" class="popup login-popup" style="display:none; z-index: 25550; position: absolute;">
+		<div class="popup-wrapper">
+			<p class="popup-close"><a href="javascript:void(0);" onclick="javascript:hideLoginWindow();">Close</a></p>
+			<h2>Existing Users:</h2>
+			<div id="loginArea">
+				<div id="loginAreaFields">
+					<form onsubmit="doLogin();return false;" style="margin-bottom: 1px;">
+						<p><label for="username">Email:</label> <input id="username" name="username" style="width: 100%;" type="text"></p>
+						<p><label for="password">Password:</label> <input id="password" name="password" style="width: 100%;" onkeydown="if ((event.which &amp;&amp; event.which == 13)||(event.keyCode &amp;&amp; event.keyCode == 13)){doLogin();return false;} else return true;" type="password"></p>
+						<p><input value="Login" type="submit"></p>
+					</form>	
+				</div>
+				<div id="loginUpperArea" style="display:none;"></div>
+				<div style="display: none; text-align: left; padding-top:2px; padding-bottom:2px;" id="loginMessage"></div>
+				<div style="display: none; text-align: left; padding-top:2px; padding-bottom:2px;" id="forgotMessage">					
+					<p><a style="text-decoration:none;" href="javascript:void(0);" onClick="javascript:showResetPasswordWindow();">Forgot password?</a></p>
+				</div>
+				<hr>
+				<h2>New Users:</h2>
+				<p><a style="text-decoration:none; font-weight:bold;" href="/reginit.action;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19">Register now</a></p>				
+			</div>
+		</div>
+</div>
+</div>
+<div id="tagPopup" style="display:none;"></div>
+<div id="container">
+	<h1 class="logo"><a href="#">InfoQ</a></h1>
+
+	
+
+
+
+
+
+
+
+
+
+<div id="header">
+	<p class="skip"><a href="#content">Skip to Content</a></p>
+
+	<div id="quote"><p>Tracking change and innovation in the enterprise software development community</p></div>
+
+	<div style="float: left;width: 29%;position: relative;margin: 0 0 2px 0;padding: 0;">
+		
+
+
+
+
+
+
+
+
+<p style="margin:0;padding: 6px 37px 0 0;margin: 0;float: right;">
+	En | <a href="/cn/;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19">中文</a> | <a href="/jp/;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19">日本語</a> | <a href="/br/;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19">Br</a>
+	
+</p>
+<p style="margin: 0;padding: 6px 9px;text-align:left;">
+	
+	
+</p>
+	</div>
+	<div class="clearer" style="height: 0px;"></div>
+</div>
+
+	
+
+	
+	<div id="columns_container">
+	<div id="content">
+	<div id="content-wrapper">
+		
+		<div class="box">
+			
+			
+
+    <h2>
+    	Presentation
+    </h2>
+    <div class="top-corners"><div></div></div>
+    <div class="box-content">
+    <div class="box-content-2">
+    <div class="box-content-3">
+    
+    
+    	<p class="h1-r">Recorded at:<br />
+   			<a href="http://qconsf.com/sf2009/?utm_source=infoq&amp;utm_medium=listing&amp;utm_campaign=listingpresentations" target="_blank">
+				<img style="max-height:65px;" src="/resource/presentations/polyglot-polyparadigm-programming/en/promoimage/qcon_logo3.jpg;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19" alt="Recorded at" />
+        	</a>
+        </p>
+    
+
+	
+		
+	
+    <h1><a href="/presentations/polyglot-polyparadigm-programming;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19" rel="permalink">Radical Simplification Through Polyglot and Poly-paradigm Programming</a></h1>
+
+	<div class="info">
+		Presented by
+		
+			
+		
+		<strong><a
+	
+	href="/author/Dean-Wampler;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19"
+
+ class="editorlink">
+Dean Wampler</a>
+</strong> 
+		on
+		Sep 14, 2009
+		<span style="margin-left:15px;">
+			Length&nbsp;00:53:55
+		</span>
+		
+		
+		
+		
+	</div>
+	<dl class="tags2">
+		<dt class="community">Community</dt>
+		
+			<dd><a href="/architecture;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19" name="architecture" id="1,389" onclick="try {CategoryPopup.showPopup(this);} catch(e) {}; return false;">Architecture</a></dd>
+		
+		
+	   	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dt class="topics">Topics</dt>
+
+   	<dd>
+   		
+   			
+   			<a href="/LanguageDesign;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19" name="LanguageDesign" id="3,886" onclick="try {CategoryPopup.showPopup(this);} catch(e) {}; return false;">Language Design</a>
+    
+   		,
+   	</dd>
+
+   	<dd>
+   		
+   			
+   			<a href="/module-systems;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19" name="module-systems" id="5,240" onclick="try {CategoryPopup.showPopup(this);} catch(e) {}; return false;">Module Systems</a>
+    
+   		,
+   	</dd>
+
+   	<dd>
+   		
+   			
+   			<a href="/Programming;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19" name="Programming" id="210" onclick="try {CategoryPopup.showPopup(this);} catch(e) {}; return false;">Programming</a>
+    
+   		
+   	</dd>
+
+
+	<dt class="topics">Tags</dt>
+	
+		<dd>
+			
+				
+				<a href="/qcon;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19" name="qcon" id="597" onclick="try {CategoryPopup.showPopup(this);} catch(e) {}; return false;">QCon</a>
+    
+			,
+		</dd>
+	
+		<dd>
+			
+				
+				<a href="/fp;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19" name="fp" id="362" onclick="try {CategoryPopup.showPopup(this);} catch(e) {}; return false;">Functional Programming</a>
+    
+			,
+		</dd>
+	
+		<dd>
+			
+				
+				<a href="/QConSanFrancisco2008;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19" name="QConSanFrancisco2008" id="4,072" onclick="try {CategoryPopup.showPopup(this);} catch(e) {}; return false;">QCon San Francisco 2008</a>
+    
+			,
+		</dd>
+	
+		<dd>
+			
+				
+				<a href="/AspectOrientedProgramming;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19" name="AspectOrientedProgramming" id="3,852" onclick="try {CategoryPopup.showPopup(this);} catch(e) {}; return false;">Aspect Oriented Programming</a>
+    
+			,
+		</dd>
+	
+		<dd>
+			
+				
+				<a href="/oop;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19" name="oop" id="468" onclick="try {CategoryPopup.showPopup(this);} catch(e) {}; return false;">OOP</a>
+    
+			
+		</dd>
+	
+
+	   
+       	<dt class="topics" style="color:red;">
+	<img src="/styles/i/notice.gif" style="vertical-align:middle;margin-top:-1px;*margin-top:0;"/>
+</dt>
+<dd>
+	The next QCon is in <a href="http://qconlondon.com/london-2011/?utm_source=infoq&utm_medium=banner&utm_campaign=listingvideos" target="_blank" style="color:blue;">London March 7-11</a>, Join us!
+</dd>
+
+    </dl>
+
+	
+
+
+
+
+
+
+
+<!-- AddThis Button BEGIN -->
+<div class="addthis_toolbox addthis_default_style" style="width:100%;height:19px;">
+	<a href="http://www.addthis.com/bookmark.php?v=250&amp;username=infoq" class="addthis_button" 
+		style="text-decoration:none;color:#1C497B; padding:0 2px; float:left; font-weight: bold;font-size: 85%;">
+		Share				
+		<img src="http://s7.addthis.com/static/btn/sm-plus.gif"  width="16" height="15" border="0" alt="Share" />
+	</a>
+	<span class="addthis_separator">|</span>
+	<a class="addthis_button_facebook"></a>
+	<a class="addthis_button_digg"></a>
+	<a class="addthis_button_dzone"></a>
+	<a class="addthis_button_slashdot"></a>
+	<a class="addthis_button_twitter"></a>
+	<a class="addthis_button_reddit"></a>
+	<a class="addthis_button_delicious"></a>
+	<a class="addthis_button_email"></a>
+</div>
+<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=infoq"></script>
+<!-- AddThis Button END -->
+
+
+	<div style="height:10px;">&nbsp;</div>
+	
+	
+
+    <script type="text/javascript">
+        var slides=new Array('/resource/presentations/polyglot-polyparadigm-programming/en/slides/1.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/2.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/3.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/4.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/5.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/6.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/7.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/8.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/9.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/10.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/11.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/12.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/13.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/14.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/15.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/16.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/17.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/18.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/19.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/20.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/21.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/22.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/23.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/24.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/25.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/26.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/27.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/28.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/29.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/30.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/31.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/32.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/33.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/34.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/35.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/36.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/37.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/38.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/39.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/40.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/41.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/42.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/43.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/44.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/45.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/46.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/47.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/48.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/49.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/50.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/51.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/52.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/53.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/54.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/55.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/56.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/57.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/58.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/59.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/60.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/61.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/62.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/63.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/64.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/65.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/66.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/67.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/68.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/69.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/70.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/71.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/72.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/73.swf','/resource/presentations/polyglot-polyparadigm-programming/en/slides/74.swf');
+        var TIMES = new Array(0,10,45,75,100,115,175,195,210,220,235,320,355,390,420,490,540,600,640,710,730,805,810,820,840,875,900,945,960,990,1105,1130,1185,1250,1275,1285,1355,1370,1430,1440,1465,1470,1515,1540,1560,1575,1620,1640,1645,1720,1735,1760,1780,1790,1815,1845,1930,1990,2045,2120,2160,2180,2310,2315,2355,2395,2450,2485,2490,2510,2550,2630,2700,2720,3235);
+        var EXPRESSINSTALL_SWF = "/flash/expressinstall.swf;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19";
+        var jsclassref='aHR0cDovL2Zsdi50aHJ1aGVyZS5uZXQvcHJlc2VudGF0aW9ucy8wOC1ub3YtcG9seWdsb3QtYW5kLXBvbHktcGFyLmZsdg==';
+    </script>
+    
+	
+	
+    <div id="presentationContent" style="width: 100%;">
+       <div class="viewSelector" style="background-color: #eeeeee; border: 1px solid rgb(221, 221, 221); padding: 5px; text-align: right; margin-bottom: 3px;">
+            Select your view: <a id="lvv" href="javascript:setVerticalView();Tracker.doTrackPresentationDisplayChange('vertical');" style="font-weight: bold;color: black;text-decoration: none;">vertical</a>  |  <a id="lhv" href="javascript:setHorizontalView();Tracker.doTrackPresentationDisplayChange('horizontal');" style="color: #1C497B;text-decoration: none;">horizontal</a>
+       </div>
+       <div id="playerComponent" style="padding: 5px; border: 1px solid rgb(221, 221, 221); width: 320px; height: 590px; float: left; overflow: hidden;">
+              <object id="FLVScrubber" width="320" height="240" style="float:left;"
+                      classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+                      codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0">
+                        <param name="movie" value="/flash/FLVScrubber.swf;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19"/>
+                        <param name="bgcolor" value="#000000"/>
+                        <param name="allowScriptAccess" value="sameDomain"/>
+                        <param name="allowFullScreen" value="true"/>
+                        <param name="wmode" value="transparent">
+                        <param name="flashVars"
+                               value="previewImage=http://cdn2.infoq.com/styles/i/logo_scrubber.png;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19&secondsToHide=2&bridgeName=FLVScrubber"/>
+                        <embed src="/flash/FLVScrubber.swf;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19" width="320" height="240"
+                               bgcolor="#000000"
+                               allowScriptAccess="sameDomain"
+                               allowFullScreen="true"
+                               wmode="transparent"
+                               flashVars="previewImage=http://cdn4.infoq.com/styles/i/logo_scrubber.png;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19&secondsToHide=2&bridgeName=FLVScrubber"
+                               type="application/x-shockwave-flash"
+                               pluginspage="http://www.adobe.com/go/getflashplayer">
+                        </embed>
+               </object>
+                              
+            <div id="clearLine" style="display:block; height:0px; "></div>
+			<div id="summaryComponent" style="background-color: rgb(247, 247, 247); height: 350px; overflow: auto; padding-left: 3px;">
+					<b>Summary</b>
+					<br/>
+					This presentation attacks the problem of software complexity and how various modularity paradigms (e.g., object, functions, aspects) simplify complexity and help separate concerns. This talk explores  the design problems where these paradigms are most applicable and extract rules of thumb for when to use them. We will also look at language support for these paradigms.
+					<br/>
+					<br/>
+					<b>Bio</b>
+					<br/>
+					Dean Wampler, Ph.D., is a Consultant at Object Mentor, Inc., where he helps clients improve their code using Agile methods like Test-Driven Development, Refactoring, and the best combinations of languages and modularity paradigms (so called "polyglot programming"), like Object-Oriented, Aspect-Oriented, and Functional Programming.
+			        
+						<br/>
+						<br/>
+						<b>About the conference</b>
+						<br/>
+						QCon is a conference that is organized by the community, for the community.The result is a high quality conference experience where a tremendous amount of attention and investment has gone into having the best content on the most important topics presented by the leaders in our community. QCon is designed with the technical depth and enterprise focus of interest to technical team leads, architects, and project managers.
+			        
+			</div>
+       </div>
+	   <div id="slideArea" style="padding: 5px; width: 770px; border: 1px solid rgb(221, 221, 221); height: 600px; float: left;">
+				<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,14,0" width="100%" height="100%">
+					<param name="movie" value="/resource/presentations/polyglot-polyparadigm-programming/en/slides/1.swf"/>
+					<param name="quality" value="high"/>
+					<param name="bgcolor" value="#ffffff"/>
+					<param name="wmode" value="transparent">
+					<embed src="/resource/presentations/polyglot-polyparadigm-programming/en/slides/1.swf" quality="high" bgcolor="#ffffff" width="100%" height="100%" name="VSPlayer" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />
+				</object>
+	   </div>
+	</div>
+	
+	<div class="clearer"></div>
+	
+	<script type="text/javascript">
+		var verticalView = true;
+		FlashDetect.check(9, "presentationContent", "The presentation player requires <a href='http://www.macromedia.com/go/getflashplayer' target='_blank'>Flash version 9</a>.", "Please install <a target='_blank' href='http://www.adobe.com/go/getflashplayer'>Flash player</a>.");
+        function setSlideAreaHorizontal(){
+            var slideAreaWidth = $("#presentationContent").width() - $("#playerComponent").width()-20;
+            var ratio = 100 - (slideAreaWidth * 100) / 720;
+            desiredHeight = 540 - (540 * ratio) / 100;
+            $("#slideArea").height(desiredHeight-10); // -10 because of 5px padding on #slideArea
+            $("#slideArea").width(slideAreaWidth-10); // -10 because of 5px padding on #slideArea
+            if(desiredHeight-10>300){
+              $("#playerComponent").height(desiredHeight-10);
+              $("#summaryComponent").height(desiredHeight-250);
+            } else{
+              $("#playerComponent").height(300);
+              $("#summaryComponent").height(60);
+            }
+		}
+		$(window).resize(function() {
+			if(verticalView) {
+            	setSlideAreaVertical();
+			}
+			else {
+            	setSlideAreaHorizontal();
+			}
+		});
+		function setSlideAreaVertical(){
+			var slideAreaWidth = $("#playerComponent").width();
+			var ratio = 100 - (slideAreaWidth * 100) / 720;
+			desiredHeight = 540 - (540 * ratio) / 100;
+            $("#slideArea").height(desiredHeight);
+            $("#slideArea").width(slideAreaWidth);
+		}
+
+		function setHorizontalView() {
+			$('#lhv').css('font-weight','bold');
+			$('#lhv').css('color', '#000000');
+			$('#lvv').css('font-weight','normal');
+			$('#lvv').css('color', '#1C497B');			
+			$('#playerComponent').css('width','320px');			
+			$('#FLVScrubber').css('margin-right','0px');
+			$('#summaryComponent').css('height','350px');					
+			$('#playerComponent').css('height','590px');
+			$('#clearLine').css('height','240px');
+			$('#slideArea').css('margin-left','6px');			
+			setSlideAreaHorizontal();
+			verticalView = false;
+			
+		}
+
+		function setVerticalView() {
+			$('#lvv').css('font-weight','bold');
+			$('#lvv').css('color', '#000000');
+			$('#lhv').css('font-weight','normal');
+			$('#lhv').css('color', '#1C497B');
+			$('#playerComponent').css('width','auto');
+			$('#FLVScrubber').css('margin-right','10px');
+			$('#summaryComponent').css('height','240px');
+			$('#playerComponent').css('height','240px');
+			$('#clearLine').css('height','0px');
+			$('#slideArea').css('margin-left','0px');
+			setSlideAreaVertical();
+			verticalView = true;
+		}
+
+	</script>
+		
+	
+
+
+
+
+
+
+
+
+<div class="vendor-content-box">
+	
+	<h3>Related<span class="vendor">Vendor</span>Content</h3>
+
+	
+	
+	
+	
+	
+		
+			
+		
+		<p class="entrydemo f_vcrbottom" jsh="{&quot;title&quot;:&quot;Architecting the Ultimate Service Security Control Point&quot;,&quot;id&quot;:1236}">
+			<a href="/vendorcontent/show.action;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19?vcr=1236" >
+				Architecting the Ultimate Service Security Control Point
+			</a>
+		</p>
+	
+		
+			
+		
+		<p class="entrydemo f_vcrbottom" jsh="{&quot;title&quot;:&quot;Yes, SQL!  Uri Cohen Reviews  Distributed Data Stores, and using SQL in a Distributed World&quot;,&quot;id&quot;:1263}">
+			<a href="/vendorcontent/show.action;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19?vcr=1263" target="_blank">
+				Yes, SQL!  Uri Cohen Reviews  Distributed Data Stores, and using SQL in a Distributed World
+			</a>
+		</p>
+	
+		
+			
+		
+		<p class="entrydemo f_vcrbottom" jsh="{&quot;title&quot;:&quot;DataPower: Messaging, ESB, Cloud, Security as an Appliance&quot;,&quot;id&quot;:1178}">
+			<a href="/vendorcontent/show.action;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19?vcr=1178" >
+				DataPower: Messaging, ESB, Cloud, Security as an Appliance
+			</a>
+		</p>
+	
+		
+			
+		
+		<p class="entrydownload f_vcrbottom" jsh="{&quot;title&quot;:&quot;Profile SQL &amp; .NET together with ANTS Performance Profiler - Download free trial&quot;,&quot;id&quot;:1213}">
+			<a href="/vendorcontent/show.action;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19?vcr=1213" target="_blank">
+				Profile SQL & .NET together with ANTS Performance Profiler - Download free trial
+			</a>
+		</p>
+	
+		
+			
+		
+		<p class="entrypdf f_vcrbottom" jsh="{&quot;title&quot;:&quot;Security Appliance Showdown- Intel Expressway vs IBM Datapower &quot;,&quot;id&quot;:1143}">
+			<a href="/vendorcontent/show.action;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19?vcr=1143" target="_blank">
+				Security Appliance Showdown- Intel Expressway vs IBM Datapower 
+			</a>
+		</p>
+	
+	
+	
+	
+		
+		
+	
+	
+	
+	
+	
+</div>
+
+    
+	
+	
+
+
+
+
+
+
+
+
+		
+	
+	
+		
+	
+
+
+
+
+
+
+<script type='text/javascript'>
+var replyEnabled=true;
+var forumID=1;
+var threadID=13047;
+var previewText='Preview';
+var pleaseWait='Please Wait ...';	
+var reply='Reply';
+var postMessage='Post Message';	
+var errorSubject='Please enter a subject.';	
+var errorBody='You can not post a blank message. Please type your message and try again.';
+var cancel='Cancel';
+var goBackOrEdit='Go Back/Edit';
+var re='Re:';
+var lastMessage=0;
+var stopWatchText='Stop Watching Thread';
+var startWatchText='Watch Thread';
+var descending='false';
+var ctxPath= '';
+var postAddress= ctxPath + '/forum/post!post.action?language=' + 'en';
+var postAddWatches= ctxPath + '/forum/watches!add.action';
+var postRemoveWatches= ctxPath + '/forum/watches!remove.action';
+var loggedIn=false;	
+
+
+var forumNotificationDefault=false;
+
+</script>
+
+<script src="/scripts/forum.js;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19" type='text/javascript'></script>
+<script type="text/javascript" src='/dwr/interface/ForumNotifications.js;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19'></script>
+
+	<div class="comments-header">
+	    <h3>No comments</h3>
+	    <p>
+			
+				
+				
+	                <span id="watch">
+	                    <a href="javascript:void(0)" class="comment-watch" onClick="javascript:loggedIn?startWatch():showLoginWindow(this,ALIGN_RIGHT,new Function('startWatch();'));">
+	                        Watch Thread
+	                    </a>
+	                </span>	
+				
+				
+			<a href="javascript:void(0)" class="comment-reply" onClick="javascript:loggedIn?replyFromTooltip(47582,true):showLoginWindow(this,ALIGN_RIGHT,new Function('replyFromTooltip(47582,true)'));">Reply</a>
+		</p>
+	</div>
+	
+	<span id="newMessage" style="display:none;"></span>
+	
+	<span id="replyTree_47582"></span>	  	
+	<span id="replyMessage_47582"></span>
+	
+	
+	<div class="comments-sort">
+		<span id="comments-sort" style="display: none;" >
+			
+			
+				<a class="comment-sort-desc" href="javascript:changeOrder(2);">Sort by date descending</a>
+			
+		</span>
+	</div>
+	
+	<ol class="comments">
+	
+	
+	
+	
+	<span id="lastMessages"></span>
+	<span id="replyFlatMessage_47582"></span>
+	
+	</ol>
+
+	
+    <div class="box-bottom"></div>
+    </div>
+    </div> 
+    <div class="bottom-corners"><div></div></div>
+    </div> 	
+
+
+			
+		</div>
+		
+	</div></div>
+	
+
+	
+	<div id="sidebar">
+	<div id="sidebar-wrapper">
+		
+
+
+
+
+
+
+<div class="s-logo">
+	
+	<p class="r-logo"><a href="/;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19"><img src="http://cdn1.infoq.com/styles/i/logo.gif;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19" alt="InfoQ"/></a></p>
+</div>
+
+
+		
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<span style="font-size: x-small;#font-size: xx-small;">
+
+    
+    
+516,020 Nov unique visitors
+</span>
+<div style="margin-top:5px; height:60px">
+	<a href="http://qconlondon.com/london-2011/?utm_source=infoq&utm_medium=banner&utm_campaign=buttonimage" target="_blank">
+	   <img src="http://cdn1.infoq.com/styles/i/qcon/london_2011/QCL2011_140x60_3.jpg;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19" style="width:100%; height:60px"/>
+	</a>
+</div>
+
+
+		    
+		
+		
+
+
+
+
+
+
+
+
+	<div class="box-simple">
+		<div class="box-simple-top"></div>
+		<div id="mainLoginArea" class="box-simple-content">
+			
+			
+			<ul>
+	            <li><a href="/reginit.action;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19">Register</a></li>
+			    <li><a href="javascript:void(0)" onClick="javascript:showLoginWindow(this,ALIGN_LEFT,new Function('void(0);'));">Login</a></li>
+	            <li><a href="/about;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19">About us</a></li>
+	            
+	            
+				
+			    <li><a href='http://www.qconferences.com/'>QCon</a></li>
+			    
+			</ul>
+			
+		</div>
+		<div class="box-simple-bottom"></div>
+	</div>
+
+
+		
+
+
+
+
+
+
+
+
+
+<div id="mainCommunitiesArea" class="box">
+    <h2>Your Communities</h2>
+    <div class="top-corners"><div></div></div>
+    <div class="box-content">
+    <div class="box-content-2">
+    	
+
+
+
+
+
+
+<script language="JavaScript">
+var communityChangeMessage = 'Your new preferences will be used starting with the next refresh.';
+</script>	
+
+<div id="communities">
+    <ul>
+	
+		<li><input type="checkbox" name="java" value="true" checked="checked" id="community1" onclick="includeExcludeCommunity(this);"/>
+ <a href='/java/'>Java</a></li>
+	
+		<li><input type="checkbox" name="dotnet" value="true" checked="checked" id="community4" onclick="includeExcludeCommunity(this);"/>
+ <a href='/dotnet/'>.NET</a></li>
+	
+		<li><input type="checkbox" name="ruby" value="true" checked="checked" id="community5" onclick="includeExcludeCommunity(this);"/>
+ <a href='/ruby/'>Ruby</a></li>
+	
+		<li><input type="checkbox" name="soa" value="true" checked="checked" id="community2" onclick="includeExcludeCommunity(this);"/>
+ <a href='/soa/'>SOA</a></li>
+	
+		<li><input type="checkbox" name="agile" value="true" checked="checked" id="community3" onclick="includeExcludeCommunity(this);"/>
+ <a href='/agile/'>Agile</a></li>
+	
+		<li><input type="checkbox" name="architecture" value="true" checked="checked" id="community1389" onclick="includeExcludeCommunity(this);"/>
+ <a href='/architecture/'>Architecture</a></li>
+	
+		<li><input type="checkbox" name="operations" value="true" checked="checked" id="community5827" onclick="includeExcludeCommunity(this);"/>
+ <a href='/operations/'>Operations</a></li>
+	
+    </ul>
+</div>
+<div id="communitiesMessage"></div>
+    </div></div>
+    <div class="bottom-corners"><div></div></div>
+</div>
+
+
+
+
+		
+
+
+
+
+
+
+
+<script type="text/javascript">
+	function doSearch(countryCode){		
+		var searchString = document.getElementById("searchId").value;
+		document.getElementById("searchTerm").value =  searchString;		
+		document.getElementById("cse-search-box").submit();
+	}
+	
+	function clearSearchText(){	
+		var searchtext =  document.getElementById("searchId").value
+		if(searchtext==JSResource.search){
+			document.getElementById("searchId").value="";
+		}
+	}
+</script>
+
+	
+
+
+			
+<form id="cse-search-box" onsubmit="customOnsubmit(); return true;" action="/search.action;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19" method="GET">
+<table class="wwFormTable">
+
+	<input type="hidden" name="queryString" size="20" id="searchTerm"/>
+</table>
+</form>
+
+
+<script>
+	function customOnsubmit() {
+		
+	}
+</script>
+
+
+
+
+	
+	<div style="background: url('http://cdn2.infoq.com/styles/i/bg-search.gif;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19') no-repeat 0 4px;">	
+			
+		
+			<input type="text" name="search" id="searchId" value="Search" style="width: 80%; border: 0px none; background-color: transparent; height: 19px; padding-left:5px; padding-right:0px; padding-top:3px; padding-bottom:0;" onclick="clearSearchText();" onkeypress="if ((event.which && event.which == 13)||(event.keyCode && event.keyCode == 13)){doSearch('');}" onblur="if(this.value=='') this.value=JSResource.search"/>
+				
+			<a href="#" onclick="doSearch('');return false;"><img src="http://cdn1.infoq.com/styles/i/btn-search.gif;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19" alt="Search" /></a> 
+	</div>
+
+		
+
+
+
+
+
+
+
+<div class="box-simple">
+<div class="box-simple-top"></div>
+<div id="featuredTopics" class="box-simple-content">
+
+    <h2>Featured Topics</h2>
+    <div>
+		<ul>
+			<li><a href="/agile_techniques/;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19">Agile Techniques</a></li>
+            <li><hr style="width: 100%; height: 1px; border: 0; color: #C8C8C8; background-color: #C8C8C8;"/></li>			
+			<li><a href="/scrum/;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19">Scrum</a></li>
+        </ul>
+	</div>
+		
+</div>
+<div class="box-simple-bottom"></div>
+</div>
+	
+		
+
+
+
+
+
+
+
+
+<!-- Widgets -->
+
+
+
+
+
+
+			
+
+
+<!-- /Widgets -->
+
+
+<div class="box-simple" id="leftskyscraper">
+	
+		
+	
+
+
+
+
+
+
+
+
+
+	<div class="box-simple-top"></div>
+	<div class="box-simple-content">
+		<p class="banner" id="bannerparagraph">
+			
+				<a class="towerAdLeft" id="sk-218" href="/ads/redirectBannerAction.action?i=218&amp;url=http%3A%2F%2Fwww.infoq.com%2Fvendorcontent%2Fshow.action%3Fvcr%3D1174" target="_blank"><img src="/resource/skyscraper/218/Intel_webinar banner.gif;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19"/></a>
+			
+			
+		</p>
+	</div>
+	<div class="box-simple-bottom"></div>
+
+</div>
+
+
+
+	<div class="box-simple">
+		<div class="box-simple-top"></div>
+		<div class="box-simple-content adsTower2">
+			<div style="width:120px;background:white;"  id="leftbartextlinks">
+				
+
+
+
+
+
+
+
+	<h3>Sponsored Links</h3>
+	
+		<p>DataPower:<br/><a id="tl-212" href="/ads/textLinkUrlAction.action?i=212&url=http%3A%2F%2Fwww.infoq.com%2Fvendorcontent%2Fshow.action%3Fvcr%3D1178" target="_blank">Messaging, ESB,<br/>Cloud, Security<br/>as an Appliance</a></p>
+	
+		<p>Scaling Scrum<br/>in the enterprise?<br/>ScrumWorks Pro<br/>can help.<br/><a id="tl-173" href="/ads/textLinkUrlAction.action?i=173&url=http%3A%2F%2Fdanube.com%2Fscrumworks%2Fpro%2Ftrial" target="_blank">Start a trial today</a></p>
+	
+		<p>Do It Yourself<br/>Agile<br/><a id="tl-218" href="/ads/textLinkUrlAction.action?i=218&url=http%3A%2F%2Fwww.infoq.com%2Fvendorcontent%2Fshow.action%3Fvcr%3D1207" target="_blank">Download the<br/>Free eBook</a></p>
+	
+		<p>Agile Practices to<br/>Improve <a id="tl-210" href="/ads/textLinkUrlAction.action?i=210&url=http%3A%2F%2Fwww.infoq.com%2Fvendorcontent%2Fshow.action%3Fvcr%3D1176" target="_blank">Project<br/>Management<br/>Organization (PMO)</a><br/>Effectiveness</p>
+	
+		<p><IMG SRC="http://ad.doubleclick.net/ad/N4270.InfoQ/B5065075;sz=1x1;ord=1293265121454?" BORDER=0 WIDTH=1 HEIGHT=1 ALT="Advertisement">Download<br/>new <a id="tl-219" href="/ads/textLinkUrlAction.action?i=219&url=http%3A%2F%2Fad.doubleclick.net%2Fclk%3B233482166%3B57451623%3Bh" target="_blank">Adobe&reg;<br/>Flash&reg; Builder&trade;</a></p>
+	
+
+			</div>
+		</div>
+		<div class="box-simple-bottom"></div>
+	</div>
+
+
+<div style="margin-top:5px;">
+	<a href="http://planet.infoq.com/" target="_blank">
+	   <img src="http://cdn1.infoq.com/styles/i/banners/banner-InfoQ_Planet.jpg;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19" style="width:140px;"/>
+	</a>
+</div>
+
+<div class="box-simple">
+	<div class="box-simple-top"></div>
+	<div class="box-simple-content">
+		<p class="banner">
+			<img src="http://cdn3.infoq.com/styles/i/banners/books.jpg;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19" usemap="#booksmap" alt="" />
+			<map name="booksmap">
+				  <area href="http://www.infoq.com/minibooks/scrum-xp-from-the-trenches" alt="Scrum and XP from the Trenches" title="Scrum and XP from the Trenches" shape=rect coords="0,104,120,129">
+				  <area href="http://www.infoq.com/minibooks/starting-struts2" alt="Starting Struts 2" title="Starting Struts 2" shape=rect coords="0,136,120,151">		     	
+				  <area href="http://www.infoq.com/minibooks/agile-patterns" alt="Agile Patterns: The Technical Cluster" title="Agile Patterns: The Technical Cluster" shape=rect coords="0,156,120,186">
+				  <area href="http://www.infoq.com/minibooks/grails" alt="Getting Started with Grails" title="Getting Started with Grails" shape=rect coords="-1,224,119,249">
+				  <area href="http://www.infoq.com/minibooks/domain-driven-design-quickly" alt="Domain Driven Design Quickly" title="Domain Driven Design Quickly" shape=rect coords="0,258,120,283">
+				  <area href="http://www.infoq.com/minibooks/scrum-checklists" alt="Scrum Checklists" title="Scrum Checklists" shape=rect coords="0,291,120,306">
+				  <area href="http://www.infoq.com/minibooks/enterprise-soa" alt="Enterprise SOA Adoption Strategies" title="Enterprise SOA Adoption Strategies" shape=rect coords="0,315,120,338">
+				  <area href="http://www.infoq.com/minibooks/vsnettt" alt="Visual Studio .NET Tips and Tricks" title="Visual Studio .NET Tips and Tricks" shape=rect coords="0,345,120,370">
+				  <area href="http://www.infoq.com/minibooks/JTDS" alt="Java Transaction Design Strategies" title="Java Transaction Design Strategies" shape=rect coords="0,379,120,404">
+				  <area href="http://www.infoq.com/minibooks/ruby" alt="Little Ruby Book" title="Little Ruby Book" shape="rect" coords="1,192,120,218" />
+				  <area href="http://www.infoq.com/minibooks/kanban-scrum-minibook" alt="Kanban and Scrum" title="Kanban and Scrum" shape="rect" coords="1,69,124,97"/>
+			</map>
+		</p>
+	</div>
+	<div class="box-simple-bottom"></div>
+</div>
+
+
+				
+		<div class="sidebar-bottom"></div>
+	</div>
+	</div>
+	
+		
+	
+
+
+
+
+
+
+
+<div style="position: absolute; z-index: 1000; left: 0px; top: 0px; width: 100%; height: 100%; display: none;" id="disabledZone">
+	<div style="position: absolute; top: 0px; right: 0px; background: none repeat scroll 0% 0% red; color: white; font-family: Arial,Helvetica,sans-serif; padding: 4px;" id="messageZone">Loading...</div>
+</div>
+
+<!-- right side start -->
+
+	<div id="rightbar">
+	<div id="right-wrapper">
+	    <!-- box start -->
+	    <div class="box">
+	        <h2>Educational Content</h2>
+	        <ul class="menu" id="tabsmenu">
+	   			<li id="tab_ALL_EXCEPT_NEWS" class="m-ALL_EXCEPT_NEWS-on"><a href="#" onclick="ContentSummary.switchTab('ALL_EXCEPT_NEWS');return false;">All</a></li>
+	            <li id="tab_ARTICLE" class="m-ARTICLE-off"><a href="#" onclick="ContentSummary.switchTab('ARTICLE');return false;">Articles</a></li>
+	            <li id="tab_PRESENTATION" class="m-PRESENTATION-off"><a href="#" onclick="JSResource.presentationsTab();return false;">Presentations</a></li>
+	            <li id="tab_INTERVIEW" class="m-INTERVIEW-off"><a href="#" onclick="JSResource.interviewsTab();return false;">Interviews</a></li>
+	            <li id="tab_MINIBOOK" class="m-MINIBOOK-off"><a href="#" onclick="JSResource.minibooksTab();return false;">Minibooks</a></li>
+	        </ul>
+		    <div class="top-corners"><div></div></div>
+		    
+		    <div class="box-content">
+			    <div class="box-content-2">
+			    <div id="rightbarcontentbox" class="box-content-3">
+                    
+					
+                        
+						
+								
+<form id="tabstateform" onsubmit="customOnsubmit(); return true;" action="">
+<table class="wwFormTable">
+
+	<input id="startIndex" type="hidden" name="startIndex" value="0"/>
+	<input id="selectedTab" type="hidden" name="selectedTab" value="ALL_EXCEPT_NEWS"/>
+	<input id="rightBarLanguage" type="hidden" name="language" value="en" />
+</table>
+</form>
+
+
+<script>
+	function customOnsubmit() {
+		
+	}
+</script>
+
+
+
+
+
+	
+	
+		
+	
+	<div class="entry" id="entry1">
+    	<h1 class="ex-interviews"><a href="/interviews/adrian-cole-jclouds">What’s Next for jclouds?</a></h1>
+    	
+        	<p class="image"><a href="/interviews/adrian-cole-jclouds"><img src="/resource/interviews/adrian-cole-jclouds/en/smallimage/cole.JPG" alt="" /></a></p>
+        
+        <p>Adrian Cole discusses his jclouds project, which is an open source library that helps Java developers get started in the cloud using their Java development skills. Cole also discusses jclouds’ future.</p>
+        <ul class="info link-col" style="margin-left:0px;">
+            <li>
+							
+				<a href="/operations" name="operations" id="5,827" onclick="try {CategoryPopup.showPopup(this);} catch(e) {}; return false;">Operations</a>,				
+				
+							
+				<a href="/java" name="java" id="1" onclick="try {CategoryPopup.showPopup(this);} catch(e) {}; return false;">Java</a>,				
+				
+			
+			</li>
+	        <li class="author">	        	
+	        	
+					
+				
+				<strong><a
+	
+	href="/author/Adrian-Cole"
+
+ class="editorlink">
+Adrian Cole</a>
+</strong>				
+				
+				Dec 23, 2010
+	        	
+	        </li>
+    	    
+    	    	 
+    		 
+        </ul>
+    </div>
+    
+    	
+    
+    
+        
+    <div class="clearer"></div>
+
+	
+	
+		
+	
+	<div class="entry" id="entry2">
+    	<h1 class="ex-interviews"><a href="/interviews/eifrem-graphdbs">Emil Eifrem on Neo4j and Graph Databases</a></h1>
+    	
+        	<p class="image"><a href="/interviews/eifrem-graphdbs"><img src="/resource/interviews/eifrem-graphdbs/en/smallimage/eifrem.JPG" alt="" /></a></p>
+        
+        <p>Emil Eifrem explains graph databases, what domains they fit well, and the state of Neo4j. Also: how graph databases stack up against RDBMs. </p>
+        <ul class="info link-col" style="margin-left:0px;">
+            <li>
+							
+				<a href="/architecture" name="architecture" id="1,389" onclick="try {CategoryPopup.showPopup(this);} catch(e) {}; return false;">Architecture</a>,				
+				
+							
+				<a href="/ruby" name="ruby" id="5" onclick="try {CategoryPopup.showPopup(this);} catch(e) {}; return false;">Ruby</a>,				
+				
+							
+				<a href="/java" name="java" id="1" onclick="try {CategoryPopup.showPopup(this);} catch(e) {}; return false;">Java</a>,				
+				
+			
+			</li>
+	        <li class="author">	        	
+	        	
+					
+				
+				<strong><a
+	
+	href="/author/Emil-Eifrem"
+
+ class="editorlink">
+Emil Eifrem</a>
+</strong>				
+				
+				Dec 23, 2010
+	        	
+	        </li>
+    	    
+    	    	 
+    		 
+        </ul>
+    </div>
+    
+    	
+    	<div id="banner300x250" style="clear: both; padding-top: 5px;">
+	    	<div id="adIndex2" class="adContour">
+	    	</div>
+			<span class="banner_announcement">advertisement</span>
+		</div>
+		<script type="text/javascript">
+			ContentSummary.forceBannerDisplay=true;
+		</script>
+    	
+    
+    
+        
+    <div class="clearer"></div>
+
+	
+	
+		
+	
+	<div class="entry" id="entry3">
+    	<h1 class="ex-presentations"><a href="/presentations/Continuous-Delivery">Continuous Delivery</a></h1>
+    	
+        	<p class="image"><a href="/presentations/Continuous-Delivery"><img src="/resource/presentations/Continuous-Delivery/en/smallimage/Jez Humble.JPG" alt="" /></a></p>
+        
+        <p>Jez Humble talks on the importance of Continuous Delivery, outlining principles and practices, explaining continuous integration, various ways of testing, canary releasing, and migrating data.</p>
+        <ul class="info link-col" style="margin-left:0px;">
+            <li>
+							
+				<a href="/operations" name="operations" id="5,827" onclick="try {CategoryPopup.showPopup(this);} catch(e) {}; return false;">Operations</a>,				
+				
+							
+				<a href="/agile" name="agile" id="3" onclick="try {CategoryPopup.showPopup(this);} catch(e) {}; return false;">Agile</a>,				
+				
+			
+			</li>
+	        <li class="author">	        	
+	        	
+					
+				
+				<strong><a
+	
+	href="/author/Jez-Humble"
+
+ class="editorlink">
+Jez Humble</a>
+</strong>				
+				
+				Dec 23, 2010
+	        	
+	        </li>
+    	    
+    	    	 
+    		 
+        </ul>
+    </div>
+    
+    	
+    
+    
+        
+    <div class="clearer"></div>
+
+	
+	
+		
+	
+	<div class="entry" id="entry4">
+    	<h1 class="ex-presentations"><a href="/presentations/NoSQL-at-Twitter">NoSQL at Twitter</a></h1>
+    	
+        	<p class="image"><a href="/presentations/NoSQL-at-Twitter"><img src="/resource/presentations/NoSQL-at-Twitter/en/smallimage/Kevin Weil.JPG" alt="" /></a></p>
+        
+        <p>Kevin Weil presents how Twitter does data analysis using Scribe for logging, base analysis with Pig/Hadoop, and specialized data analysis with HBase, Cassandra, and FlockDB.</p>
+        <ul class="info link-col" style="margin-left:0px;">
+            <li>
+							
+				<a href="/architecture" name="architecture" id="1,389" onclick="try {CategoryPopup.showPopup(this);} catch(e) {}; return false;">Architecture</a>,				
+				
+			
+			</li>
+	        <li class="author">	        	
+	        	
+					
+				
+				<strong><a
+	
+	href="/author/Kevin-Weil"
+
+ class="editorlink">
+Kevin Weil</a>
+</strong>				
+				
+				Dec 23, 2010
+	        	
+	        </li>
+    	    
+    	    	 
+    		 
+        </ul>
+    </div>
+    
+    	
+    
+    
+        
+    <div class="clearer"></div>
+
+	
+	
+		
+	
+	<div class="entry" id="entry5">
+    	<h1 class="ex-presentations"><a href="/presentations/Big-Balls-of-Mud">Big Balls of Mud in Agile Development: Can We Avoid Them?</a></h1>
+    	
+        	<p class="image"><a href="/presentations/Big-Balls-of-Mud"><img src="/resource/presentations/Big-Balls-of-Mud/en/smallimage/Joseph Yoder.JPG" alt="" /></a></p>
+        
+        <p>Joseph Yoder explores why much of the software development comes as BBoM, what leads to such code and what can be done to contain it and keep it to a manageable size, offering possible Agile solutions</p>
+        <ul class="info link-col" style="margin-left:0px;">
+            <li>
+							
+				<a href="/agile" name="agile" id="3" onclick="try {CategoryPopup.showPopup(this);} catch(e) {}; return false;">Agile</a>,				
+				
+			
+			</li>
+	        <li class="author">	        	
+	        	
+					
+				
+				<strong><a
+	
+	href="/author/Joseph-Yoder"
+
+ class="editorlink">
+Joseph Yoder</a>
+</strong>				
+				
+				Dec 22, 2010
+	        	,
+	        </li>
+    	    
+    	    	
+	    	    	<li class="comments">
+	    	    		<a href="/presentations/Big-Balls-of-Mud"><span>&nbsp;</span>	    	    		
+	    		    		3    		    		    		    		
+	    		    	</a>
+	    		    </li>
+    		   	 
+    		 
+        </ul>
+    </div>
+    
+    	
+    
+    
+        
+    <div class="clearer"></div>
+
+	
+	
+		
+	
+	<div class="entry" id="entry6">
+    	<h1 class="ex-presentations"><a href="/presentations/Lean-Groovy">Slimmed Down Software - A Lean, Groovy Approach</a></h1>
+    	
+        	<p class="image"><a href="/presentations/Lean-Groovy"><img src="/resource/presentations/Lean-Groovy/en/smallimage/Hamlet D`Arcy.JPG" alt="" /></a></p>
+        
+        <p>Hamlet D'Arcy explains the Lean principles - Eliminate Waste, Build Quality In, Create Knowledge, Defer Commitment, Deliver Fast, Respect People, Optimize the Whole – in the context of using Groovy.</p>
+        <ul class="info link-col" style="margin-left:0px;">
+            <li>
+							
+				<a href="/agile" name="agile" id="3" onclick="try {CategoryPopup.showPopup(this);} catch(e) {}; return false;">Agile</a>,				
+				
+			
+			</li>
+	        <li class="author">	        	
+	        	
+					
+				
+				<strong><a
+	
+	href="/author/Hamlet-D%27Arcy"
+
+ class="editorlink">
+Hamlet D'Arcy</a>
+</strong>				
+				
+				Dec 22, 2010
+	        	
+	        </li>
+    	    
+    	    	 
+    		 
+        </ul>
+    </div>
+    
+    	
+    
+    
+        
+    <div class="clearer"></div>
+
+	
+	
+		
+	
+	<div class="entry" id="entry7">
+    	<h1 class="ex-articles"><a href="/articles/agile-team-spaces">Breaking Down Walls, Building Bridges,  and Takin’ Out the Trash</a></h1>
+    	
+        	<p class="image"><a href="/articles/agile-team-spaces"><img src="/resource/articles/agile-team-spaces/en/smallimage/small image.jpg" alt="" /></a></p>
+        
+        <p>Agile Team Rooms can help double the productivity of an Agile Team. The most common approach the Caves and Commons. At Menlo they do things differently and Lisamarie Babik has documented their setup.</p>
+        <ul class="info link-col" style="margin-left:0px;">
+            <li>
+							
+				<a href="/agile" name="agile" id="3" onclick="try {CategoryPopup.showPopup(this);} catch(e) {}; return false;">Agile</a>,				
+				
+			
+			</li>
+	        <li class="author">	        	
+	        	
+					
+				
+				<strong><a
+	
+	href="/author/Lisamarie-Babik-and-Richard-Sheridan"
+
+ class="editorlink">
+Lisamarie Babik and Richard Sheridan</a>
+</strong>				
+				
+				Dec 22, 2010
+	        	,
+	        </li>
+    	    
+    	    	
+	    	    	<li class="comments">
+	    	    		<a href="/articles/agile-team-spaces"><span>&nbsp;</span>	    	    		
+	    		    		7    		    		    		    		
+	    		    	</a>
+	    		    </li>
+    		   	 
+    		 
+        </ul>
+    </div>
+    
+    	
+    
+    
+        
+    <div class="clearer"></div>
+
+	
+	
+		
+	
+	<div class="entry" id="entry8">
+    	<h1 class="ex-interviews"><a href="/interviews/laurie-williams-agile">Laurie Williams: Getting to Comparative Agility</a></h1>
+    	
+        	<p class="image"><a href="/interviews/laurie-williams-agile"><img src="/resource/interviews/laurie-williams-agile/en/smallimage/williams.JPG" alt="" /></a></p>
+        
+        <p>Laurie Williams, who heads the Software Engineering Research group at North Carolina State University, discusses her research into Agile principles and practices. </p>
+        <ul class="info link-col" style="margin-left:0px;">
+            <li>
+							
+				<a href="/agile" name="agile" id="3" onclick="try {CategoryPopup.showPopup(this);} catch(e) {}; return false;">Agile</a>,				
+				
+			
+			</li>
+	        <li class="author">	        	
+	        	
+					
+				
+				<strong><a
+	
+	href="/author/Laurie-Williams"
+
+ class="editorlink">
+Laurie Williams</a>
+</strong>				
+				
+				Dec 22, 2010
+	        	
+	        </li>
+    	    
+    	    	 
+    		 
+        </ul>
+    </div>
+    
+    	
+    
+    
+        
+    <div class="clearer"></div>
+
+
+<ul class="newsnav link-col">
+
+
+    <li><a href="#" onclick="ContentSummary.setStartIndex('8');return false;">Older &gt;</a></li>
+
+</ul>
+
+	                <!-- Rightbar:10ms -->
+    
+    				<div class="clearer"></div>
+				    <div class="box-bottom"></div>
+				</div>
+				</div>
+				<div class="bottom-corners"><div></div></div>
+			</div>
+		</div>
+		<!-- box end -->
+		<script type="text/javascript">
+			ContentSummary.determine300x250BannerPosition();
+		</script>
+	</div>
+	</div>
+
+<!-- right side end -->
+
+	</div>
+
+	<div class="clearer"></div>
+
+	
+
+
+
+
+
+
+
+
+
+	<div id="footer">
+		<table cellspacing="2" cellpadding="0" width="68%">
+			<tr>
+				<th colspan="6">Contact us</th>
+			</tr>
+			<tr>
+				<td><a href="mailto:feedback@infoq.com" name="feedback">General Feedback</a><br /><span>feedback@infoq.com</span></td>
+				<td><a href="mailto:bugs@infoq.com" name="bugs">Bugs</a><br /><span>bugs@infoq.com</span></td>
+				<td><a href="mailto:sales@infoq.com" name="sales">Advertising</a><br /><span>sales@infoq.com</span></td>
+				<td><a href="mailto:editors@infoq.com" name="editors">Editorial</a><br /><span>editors@infoq.com</span></td>
+				<td><a href="http://twitter.com/infoq" target="_blank">Twitter</a><br /><span>http://twitter.com/infoq</span></td>
+				<td><a href="http://groups.google.com/group/infoq" target="_blank">InfoQ Discussion Group</a><br /><span>http://groups.google.com/group/infoq</span></td>
+			</tr>
+		</table>
+		<div class="copyright">
+	    	<th colspan="6">
+	    		InfoQ.com and all content copyright &#169; 2006-2010 C4Media Inc.
+				InfoQ.com hosted at <a href="http://www.contegix.com/">Contegix</a>, the best ISP we've ever worked with.
+				<a href="/PrivacyPolicy.jsp;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19">Privacy policy</a>
+	    	</th>
+		</div>
+	</div>
+
+
+</div>
+
+<script src="http://cdn2.infoq.com/scripts/__utm.js;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19" type="text/javascript"></script>
+<script src="/dwr/engine.js;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19" type="text/javascript"></script>
+<script src="/dwr/interface/UserCategoryUtil.js;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19" type="text/javascript"></script>
+<script src="/dwr/interface/DWRRewriteAction.js;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19" type="text/javascript"></script>
+<script type="text/javascript">
+	ContentSummary.setSelectedTab('en');
+</script>
+
+
+
+
+
+
+
+<script type="text/javascript">
+	var includeName = 'Include';
+	var excludeName = 'Exclude';
+	var includeHint = 'You can include this category.';
+	var excludeHint = 'You can exclude this category.';
+	var excludeCategoryMessage = 'You can re-include from your profile personalization, or right now.<BR />';
+	var viewallCategoryMessage = 'You can view all items that belong to this category.';
+	var busyMessage = 'Please wait...';
+	var contextPath = '' + '/';
+	var viewallCategoryPath= '';
+	var includeExcludeLink= true;
+</script>
+
+
+
+
+
+
+
+
+
+
+	<script src="/dwr/interface/UserConfirmation.js;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19" type="text/javascript"></script>
+	<script type="text/javascript">UserConfirmation.confirm('pdJodlAVCWn4il78GfI5nr5C5Ts2aJsO');</script>
+
+<script src="http://cdn4.infoq.com/scripts/tracker.js;jsessionid=F9727F81E5FAB41C1CECF2E74F881F19" type="text/javascript"></script>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-6608133-2");
+
+
+	pageTracker._setCustomVar(1, "userregistered", "false");
+
+pageTracker._setCustomVar(2, "userprefs", "0");
+} catch(err) {}
+pageTracker._trackPageview();
+Tracker.doTrackVcrImpressions();
+Tracker.doTrackPresentationDefaultDisplay();
+</script>
+
+
+</body>
+</html>
+
