@@ -1,0 +1,797 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Haskell: The Confusing Parts</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- <meta name="generator" content="pandoc" /> -->
+    <link rel="stylesheet" href="blag/newspaper.css"
+    type="text/css" media="all" />
+  </head>
+  <body>
+    <div id='main'>
+<div id="dear-reddit">
+<h3>Dear Reddit:</h3><p
+>This page is very much a work in progress, and not yet meant to be consumed by the general public. But now that there&rsquo;s a thread going, feel free to make all kinds of comments about stuff I have or haven&rsquo;t covered yet (syntactic or otherwise) and I&rsquo;ll decide whether it belongs here. (Often as not, it does.)</p
+>Also, this page will eventually move.</div>
+<div id="haskell-the-confusing-parts"
+><h1
+  >Haskell: The Confusing Parts</h1
+  ><p
+  >If you&rsquo;re used to the C family of languages, or the closely related family of &ldquo;scripting languages,&rdquo; Haskell&rsquo;s syntax (mainly) is a bit baffling at first. For some people, it can even seem like it&rsquo;s sneaking out from under you every time you think you understand it. This is sort of a FAQ for people who are new to Haskell, or scared away by its syntax.</p
+  ><p
+  >Use this as a cheat sheet, not a textbook.</p
+  ><div id="misc-stuff-you-should-know-already"
+  ><h2
+    >Misc. Stuff You Should Know Already</h2
+    ><p
+    >Quick review, because if you&rsquo;ve heard of Haskell, you should also have heard of most of this. <code
+      >foo :: Bar baz -&gt; Bar quux</code
+      > is a type signature for the function <code
+      >foo</code
+      >, where <code
+      >Bar baz</code
+      > is the type of argument it takes, and <code
+      >Bar quux</code
+      > is the type of the return value. Function application looks like <code
+      >sin x</code
+      >, not <code
+      >sin(x)</code
+      >, because the latter would just look goofy with curried functions (<code
+      >map foo bar</code
+      > vs. <code
+      >map(foo)(bar)</code
+      >). List syntax (<code
+      >[1,2,3,4]</code
+      >) is sugar for &ldquo;cons&rdquo; syntax (<code
+      >1 : 2 : 3 : 4 : []</code
+      >). An enumerated list looks like <code
+      >[1..10]</code
+      >, and a list comprehension looks like <code
+      >[ x | x &lt;- [1..10] ]</code
+      >.</p
+    ><p
+    >There&rsquo;s no <code
+      >null</code
+      > and no <code
+      >void</code
+      >. Every variable has to have a value, even if it&rsquo;s a placeholder. The standard placeholder value is the empty tuple, <code
+      >()</code
+      >, a.k.a. &ldquo;unit.&rdquo; The type of <code
+      >()</code
+      > is also <code
+      >()</code
+      >.</p
+    ><p
+    >Haskell&rsquo;s syntax is indirectly based on ML, so if you stop reading here and go learn OCaml instead, some of this information will still be kinda useful.</p
+    ><p
+    >I rhyme &ldquo;Haskell&rdquo; with &ldquo;ask Elle,&rdquo; but everyone else rhymes it with &ldquo;rascal&rdquo; because otherwise people keep mishearing it as &ldquo;Pascal,&rdquo; and nobody wants that (except trolls).</p
+    ></div
+  ><div id="type-names-and-constructors"
+  ><h2
+    >Type Names and Constructors</h2
+    ><p
+    >There are two completely separate namespaces in any Haskell source file: The value namespace, and the type namespace. The former is where functions, literals, patterns, etc. reside, and the latter is where you&rsquo;ll find type constructors, typeclasses, and type variables.</p
+    ><p
+    >Haskell has no need for reflection 90% of the time, so rather than make the type and value namespaces visually distinct with syntax conventions, the designers actually reused many of the same conventions in both namespaces. Thus, in order to know what <code
+      >Foo bar baz</code
+      > means, you have to know whether it&rsquo;s in the type namespace or the value namespace. Fortunately, you only have to look for the type namespace in the following places:</p
+    ><ol style="list-style-type: decimal;"
+    ><li
+      >The &ldquo;has type&rdquo; <code
+	>(::)</code
+	> operator can appear as an expression in parentheses, or a separate declaration. The stuff on the left of the operator is in the value namespace, and the stuff on the right is in the type namespace, as in <code
+	>5 :: Int</code
+	>.</li
+      ><li
+      >The <code
+	>type</code
+	> keyword declares a type alias (like <code
+	>typedef</code
+	> in C). Everything in that declaration is in the type namespace.</li
+      ><li
+      >In a <code
+	>class ... where</code
+	> declaration, everything between <code
+	>class</code
+	> and <code
+	>where</code
+	> is in the type namespace.</li
+      ><li
+      >Same deal for <code
+	>instance ... where</code
+	>.</li
+      ><li
+      >In a <code
+	>data</code
+	> (or <code
+	>newtype</code
+	>) declaration, any new constructor names to the <em
+	>right</em
+	> of the <code
+	>=</code
+	> sign are in the value namespace. Stuff between curly braces (when using the record syntax) follows the rules for <code
+	>(::)</code
+	>. Everything else is in the type namespace.</li
+      ></ol
+    ><p
+    >The <code
+      >data</code
+      > and <code
+      >newtype</code
+      > declarations (the latter is a subset of the former) are probably the worst offenders. Just to be clear, the <span class="RedBG">highlighted</span> parts are in the value namespace:</p
+    ><pre class="sourceCode haskell"><code><span class="Keyword"
+    >data</span
+    ><span class="Normal NormalText"
+    > Pizza a b = <span class="RedBG">Pepperoni</span> a</span
+    ><br
+     /><span class="Normal NormalText"
+    >               | <span class="RedBG">TheWorks</span> {</span
+    ><br
+     /><span class="Normal NormalText"
+    >                  </span
+    ><span class="Function FunctionDefinition"
+    ><span class="RedBG">sauce</span> ::</span
+    ><span class="Normal NormalText"
+    > a,</span
+    ><br
+     /><span class="Normal NormalText"
+    >                  </span
+    ><span class="Function FunctionDefinition"
+    ><span class="RedBG">toppings</span> ::</span
+    ><span class="Normal NormalText"
+    > [b]</span
+    ><br
+     /><span class="Normal NormalText"
+    >                 }</span
+    ><br
+     /><span class="Normal NormalText"
+    >               </span
+    ><span class="Keyword"
+    >deriving</span
+    ><span class="Normal NormalText"
+    > (</span
+    ><span class="Keyword Class"
+    >Eq</span
+    ><span class="Normal NormalText"
+    >, </span
+    ><span class="Keyword Class"
+    >Ord</span
+    ><span class="Normal NormalText"
+    >, </span
+    ><span class="Keyword Class"
+    >Show</span
+    ><span class="Normal NormalText"
+    >)</span
+    ><br
+/></code>
+</pre>
+<p
+    >(Still writing this section. Leave comments on reddit if you have any particular concerns about it!)</p
+    ></div
+  ><div id="avoiding-too-many-parentheses"
+  ><h2
+    >Avoiding Too Many Parentheses</h2
+    ><p
+    >Lisp is known for hating infix notation, but Haskell embraces it. All functions are operators and all operators are functions. There are ten levels of operator precedence (0 through 9), not counting function application (<code
+      >foo bar</code
+      >), which binds tighter than any operator. That means you can always write <code
+      >x + sin y</code
+      > instead of <code
+      >x + (sin y)</code
+      >.</p
+    ><p
+    >Function infix notation (backticks) will turn any function into an operator at precedence level 4 (although the precedence can be changed for individual functions). Operators always take two arguments. This means that whenever you have <code
+      >foo (bar 1) (baz 5)</code
+      >, you can change it to <code
+      >bar 1 `foo` baz 5</code
+      >. You can only use backticks around a function name, not an arbitrary expression, so if you want to write something like <code
+      >x `f g` y</code
+      >, you have to bind <code
+      >f g</code
+      > to some intermediate name (with <code
+      >let</code
+      > or <code
+      >where</code
+      >).</p
+    ><p
+    >Any operator (including <code
+      >`foo`</code
+      >) can be written in prefix notation by surrounding it with parentheses: <code
+      >(+)</code
+      >, <code
+      >(==)</code
+      >, <code
+      >(`div`)</code
+      >. These are called <em
+      >sections,</em
+      > and they&rsquo;re regular functions like <code
+      >map</code
+      > and <code
+      >sin</code
+      >. For example, instead of <code
+      >2 + 2</code
+      >, you can write <code
+      >(+) 2 2</code
+      >. You can even leave off either the left or right operand to curry an operator. For example, <code
+      >(`div` 0)</code
+      > is a function that takes one argument and divides it by zero.</p
+    ><p
+    >There are two operators in Haskell that don&rsquo;t show up in many other languages: Apply <code
+      >($)</code
+      > and compose <code
+      >(.)</code
+      >. These have very simple definitions (below) and are used frequently either for currying or just for the sake of leaving out some parentheses.</p
+    ><pre class="sourceCode haskell"
+    ><code
+      ><span class="Comment"
+	>-- Actual definitions:</span
+	><br
+	 /><span class="Normal NormalText"
+	>f $ x = f x</span
+	><br
+	 /><span class="Normal NormalText"
+	>(f . g) x = f (g x)</span
+	><br
+	 /><br
+	 /><span class="Comment"
+	>-- Some quick examples of using these. The following line...</span
+	><br
+	 /><span class="Function"
+	>putStrLn</span
+	><span class="Normal NormalText"
+	> (</span
+	><span class="Function"
+	>take</span
+	><span class="Normal NormalText"
+	> </span
+	><span class="DecVal Decimal"
+	>12</span
+	><span class="Normal NormalText"
+	> (</span
+	><span class="Function"
+	>map</span
+	><span class="Normal NormalText"
+	> foo (bar ++ </span
+	><span class="String"
+	>&quot;ack&quot;</span
+	><span class="Normal NormalText"
+	>)))</span
+	><br
+	 /><br
+	 /><span class="Comment"
+	>--  ...can be rewritten as...</span
+	><br
+	 /><span class="Function"
+	>putStrLn</span
+	><span class="Normal NormalText"
+	> $ </span
+	><span class="Function"
+	>take</span
+	><span class="Normal NormalText"
+	> </span
+	><span class="DecVal Decimal"
+	>12</span
+	><span class="Normal NormalText"
+	> $ </span
+	><span class="Function"
+	>map</span
+	><span class="Normal NormalText"
+	> foo $ bar ++ </span
+	><span class="String"
+	>&quot;ack&quot;</span
+	><br
+	 /><br
+	 /><span class="Normal NormalText"
+	>(</span
+	><span class="Function"
+	>putStrLn</span
+	><span class="Normal NormalText"
+	> . </span
+	><span class="Function"
+	>take</span
+	><span class="Normal NormalText"
+	> </span
+	><span class="DecVal Decimal"
+	>12</span
+	><span class="Normal NormalText"
+	> . </span
+	><span class="Function"
+	>map</span
+	><span class="Normal NormalText"
+	> foo) (bar ++ </span
+	><span class="String"
+	>&quot;ack&quot;</span
+	><span class="Normal NormalText"
+	>)</span
+	><br
+	 /><br
+	 /><span class="Function"
+	>putStrLn</span
+	><span class="Normal NormalText"
+	> . </span
+	><span class="Function"
+	>take</span
+	><span class="Normal NormalText"
+	> </span
+	><span class="DecVal Decimal"
+	>12</span
+	><span class="Normal NormalText"
+	> . </span
+	><span class="Function"
+	>map</span
+	><span class="Normal NormalText"
+	> foo $ bar ++ </span
+	><span class="String"
+	>&quot;ack&quot;</span
+	><br
+	 /></code
+      ></pre
+    ><p
+    >In terms of good Haskell style, the last example above is preferable to the others. By the way, note that <code
+      >($)</code
+      > has the lowest precedence (zero) of any operator, so you can almost always use arbitrary syntax on either side of it.</p
+    ></div
+  ><div id="writing-functions"
+  ><h2
+    >Writing Functions</h2
+    ><p
+    >It&rsquo;s called <em
+      >functional</em
+      > programming for a reason. Haskell actually permits more ways of turning functions into other functions than any other language I&rsquo;ve ever seen (even J). The scariest-looking of these is easily the lambda notation:</p
+    ><pre class="sourceCode haskell"
+    ><code
+      ><span class="Comment"
+	>-- The following are equivalent.</span
+	><br
+	 /><span class="Normal NormalText"
+	>f x = (x, foo) </span
+	><span class="Comment"
+	>-- &quot;Normal&quot; definition</span
+	><br
+	 /><span class="Normal NormalText"
+	>f = \x -&gt; (x, foo) </span
+	><span class="Comment"
+	>-- Definition using a lambda expression</span
+	><br
+	 /></code
+      ></pre
+    ><p
+    >A lambda expression, which defines an anonymous function, starts with a backslash (which is special syntax, not an operator) and extends till the next semicolon/newline/closing (brace|bracket|paren). The arrow (always <code
+      >-&gt;</code
+      >, never <code
+      >=&gt;</code
+      >) separates the argument list from the body of the function. You can use pattern matching in the argument list (eg. <code
+      >\3 -&gt; 4</code
+      >), but it&rsquo;s generally a bad idea, because you can only write one branch, and if that fails it&rsquo;ll throw a runtime exception. If you need to do pattern matching, you should do it in a separate function, and pass that function in place of the lambda.</p
+    ><p
+    >It&rsquo;s pretty rare to see explicit lambda expressions in Haskell, either way, because there are much nicer ways of writing anonymous functions. For example, anywhere you might write <code
+      >\x -&gt; foo x [1..10]</code
+      >, you should instead write <code
+      >flip foo [1..10]</code
+      >, where <code
+      >flip</code
+      > is a standard Prelude function that <em
+      >flips</em
+      > the first two arguments of whatever function you give it. The <code
+      >curry</code
+      > and <code
+      >uncurry</code
+      > functions stand in for <code
+      >\f x y -&gt; f (x, y)</code
+      > and <code
+      >\f (x, y) -&gt; f x y</code
+      >, respectively.</p
+    ><p
+    >There&rsquo;s a whole bunch of other stuff I can&rsquo;t even think of right now. To see some of it, go into the IRC channel and play around with lambdabot&rsquo;s <code
+      >@pl</code
+      > command.</p
+    ></div
+  ><div id="statements-vsexpressions"
+  ><h2
+    >Statements vs.&nbsp;Expressions</h2
+    ><p
+    >There&rsquo;s no difference between statements and expressions in Haskell. If something is not an expression, then it&rsquo;s a declaration, even if the language definition calls it a statement.</p
+    ><p
+    >This is more important than you think. A lot of newbies wander into the IRC channel wondering why the following code doesn&rsquo;t work:</p
+    ><pre class="sourceCode haskell"
+    ><code
+      ><span class="Normal NormalText"
+	>main = </span
+	><span class="Keyword"
+	>do</span
+	><br
+	 /><span class="Normal NormalText"
+	>  foo &lt;- </span
+	><span class="Function"
+	>getLine</span
+	><br
+	 /><span class="Normal NormalText"
+	>  </span
+	><span class="Function"
+	>putStrLn</span
+	><span class="Normal NormalText"
+	> </span
+	><span class="String"
+	>&quot;Pull my finger&quot;</span
+	><br
+	 /><span class="Normal NormalText"
+	>  </span
+	><span class="Keyword"
+	>if</span
+	><span class="Normal NormalText"
+	> </span
+	><span class="Function"
+	>length</span
+	><span class="Normal NormalText"
+	> foo &lt; </span
+	><span class="DecVal Decimal"
+	>9000</span
+	><br
+	 /><span class="Normal NormalText"
+	>     </span
+	><span class="Keyword"
+	>then</span
+	><span class="Normal NormalText"
+	> </span
+	><span class="Function"
+	>return</span
+	><span class="Normal NormalText"
+	> ()</span
+	><br
+	 /><span class="Normal NormalText"
+	>     </span
+	><span class="Keyword"
+	>else</span
+	><span class="Normal NormalText"
+	> sunglasses &lt;- </span
+	><span class="Function"
+	>getLine</span
+	><span class="Normal NormalText"
+	> </span
+	><span class="Comment"
+	>-- Whoops</span
+	><br
+	 /><span class="Normal NormalText"
+	>          </span
+	><span class="Function"
+	>putStrLn</span
+	><span class="Normal NormalText"
+	> </span
+	><span class="String"
+	>&quot;YEEEEAAHHH&quot;</span
+	><br
+	 /></code
+      ></pre
+    ><p
+    >The problem is that the special <code
+      >do</code
+      > syntax fools people into thinking that they&rsquo;ve somehow escaped into an imperative language, when in reality, it&rsquo;s syntactic sugar for the <code
+      >&gt;&gt;=</code
+      > and <code
+      >&gt;&gt;</code
+      > operators and the <code
+      >\foo -&gt; ...</code
+      > lambda notation. Yes, this has to do with monads, and no, I&rsquo;m not going to explain them. Go read <a href="http://book.realworldhaskell.org/read/monads.html"
+      >the appropriate chapter</a
+      > of <em
+      >Real World Haskell,</em
+      > or check out <a href="http://blog.sigfpe.com/2006/08/you-could-have-invented-monads-and.html"
+      >&ldquo;You could have invented monads.&rdquo;</a
+      > I <em
+      >will</em
+      > point out that <code
+      >return</code
+      > is, in fact, not a return statement. It&rsquo;s a function, and an inappropriately named function, at that. Writing <code
+      >return ()</code
+      > in your <code
+      >do</code
+      > block will <strong
+      >not</strong
+      > cause the function to return.</p
+    ></div
+  ><div id="the-indentation-thing"
+  ><h2
+    >The Indentation Thing</h2
+    ><p
+    >The keywords <code
+      >let</code
+      >, <code
+      >where</code
+      >, <code
+      >do</code
+      >, and <code
+      >of</code
+      > (as in <code
+      >case foo of</code
+      >) begin <em
+      >layout blocks</em
+      >. Under the hood, a block is enclosed in braces with the lines separated by semicolons. You can write your code this way by hand, if you like, and whitespace between the braces will be as insignificant as it gets in Haskell:</p
+    ><pre class="sourceCode haskell"
+    ><code
+      ><span class="Keyword"
+	>module</span
+	><span class="Normal NormalText"
+	> Main </span
+	><span class="Keyword"
+	>where</span
+	><span class="Normal NormalText"
+	>{main=</span
+	><span class="Keyword"
+	>do</span
+	><span class="Normal NormalText"
+	>{</span
+	><span class="Function"
+	>putStrLn</span
+	><span class="Normal NormalText"
+	> </span
+	><span class="String"
+	>&quot;Look at me&quot;</span
+	><span class="Normal NormalText"
+	>;</span
+	><span class="Function"
+	>putStrLn</span
+	><br
+	 /><span class="String"
+	>&quot;I'm writing all my code on four lines&quot;</span
+	><span class="Normal NormalText"
+	>;dice};dice=</span
+	><span class="Keyword"
+	>do</span
+	><span class="Normal NormalText"
+	>{input&lt;-</span
+	><span class="Function"
+	>getLine</span
+	><span class="Normal NormalText"
+	>;</span
+	><br
+	 /><span class="Keyword"
+	>let</span
+	><span class="Normal NormalText"
+	>{</span
+	><span class="Function FunctionDefinition"
+	>val::</span
+	><span class="DataType TypeConstructor"
+	>Int</span
+	><span class="Normal NormalText"
+	>;val=</span
+	><span class="Function"
+	>read</span
+	><span class="Normal NormalText"
+	> input};putStrLn$ </span
+	><span class="String"
+	>&quot;What a &quot;</span
+	><span class="Normal NormalText"
+	>++</span
+	><span class="Keyword"
+	>if</span
+	><span class="Normal NormalText"
+	> val&lt;</span
+	><span class="DecVal Decimal"
+	>5</span
+	><span class="Normal NormalText"
+	> </span
+	><span class="Keyword"
+	>then</span
+	><br
+	 /><span class="String"
+	>&quot;small number&quot;</span
+	><span class="Normal NormalText"
+	>else </span
+	><span class="String"
+	>&quot;not-so-small number&quot;</span
+	><span class="Normal NormalText"
+	>};}</span
+	><br
+	 /></code
+      ></pre
+    ><p
+    >Obviously, this is not the preferred way to format your code. Haskell provides the whitespace-sensitive &ldquo;layout&rdquo; syntax as sugar for the above. After a layout keyword, the compiler will look for the next non-whitespace character (skipping both comments and newlines). If that character is a left brace, it parses the non-layout syntax directly. Otherwise, it compares all the lines after that to the column where that first character appeared.</p
+    ><p
+    >I prefer to explain the rest of the process using a visual aid:</p
+    ><a name="visualaid"><pre class="sourceCode haskell"><code><span class="Keyword"
+    >module</span
+    ><span class="Normal NormalText"
+    > Main </span
+    ><span class="Keyword"
+    >where</span
+    ><br /><br
+     /><span class="Comment"
+    >-- The first 'f' below designates &quot;column N&quot;</span
+    ><br
+     /><span class="Normal NormalText"
+    >main = </span
+    ><span class="Keyword"
+    >do</span
+    ><span class="RedBG"> </span
+      ><span class="Normal NormalText"
+    >foo </span
+    ><span class="DecVal Decimal"
+    >1</span
+    ><br
+     /><span class="RedBG"
+       >          </span><span class="Normal NormalText">foo </span
+    ><span class="DecVal Decimal"
+    >2</span
+    ><br
+     /><span class="RedBG"
+    >          </span
+    ><span class="Keyword"
+    >if</span
+    ><span class="Normal NormalText"
+    > pizza</span
+    ><br
+     /><span class="RedBG"
+       >          </span><span class="Normal NormalText"
+       >   </span
+    ><span class="Comment"
+    >-- Two lines indented further than N</span
+    ><br
+     /><span class="RedBG"
+       >          </span
+       ><span class="Normal NormalText">   </span
+    ><span class="Keyword"
+    >then</span
+    ><span class="Normal NormalText"
+    > foo </span
+    ><span class="DecVal Decimal"
+    >5</span
+    ><br
+     /><span class="RedBG"
+       >          </span><span class="Normal NormalText">   </span
+    ><span class="Keyword"
+    >else</span
+    ><span class="Normal NormalText"
+    > bar </span
+    ><span class="DecVal Decimal"
+    >8</span
+    ><br
+     /><span class="RedBG"
+       >          </span><span class="Normal NormalText">bar </span
+    ><span class="DecVal Decimal"
+    >3</span
+    ><br
+     /><span class="Normal NormalText"
+    >baz = quux </span
+    ><span class="Comment"
+    >-- First line indented less than N</span
+    ><br
+     /></code
+  ></pre></a><p
+    >The red background is the left &ldquo;margin&rdquo; of the layout block. The compiler inserts a virtual left curly brace before the first &ldquo;foo.&rdquo; Every other line that lines up <strong
+      >exactly</strong
+      > with column N gets a virtual semicolon inserted before it. (The <code
+      >if/then/else</code
+      > expression is considered one &ldquo;line&rdquo; in the block.) When the compiler reaches a line indented less than N columns, it inserts a virtual right curly brace, ending the layout block. Thus, the above code desugars to the following:</p
+    ><pre class="sourceCode haskell"
+    ><code
+      ><span class="Keyword"
+	>module</span
+	><span class="Normal NormalText"
+	> Main </span
+	><span class="Keyword"
+	>where</span
+	><br
+	 /><br
+	 /><span class="Normal NormalText"
+	>{main = </span
+	><span class="Keyword"
+	>do</span
+	><span class="Normal NormalText"
+	> {foo </span
+	><span class="DecVal Decimal"
+	>1</span
+	><br
+	 /><span class="Normal NormalText"
+	>          ;foo </span
+	><span class="DecVal Decimal"
+	>2</span
+	><br
+	 /><span class="Normal NormalText"
+	>          ;</span
+	><span class="Keyword"
+	>if</span
+	><span class="Normal NormalText"
+	> pizza</span
+	><br
+	 /><span class="Normal NormalText"
+	>             </span
+	><span class="Keyword"
+	>then</span
+	><span class="Normal NormalText"
+	> foo </span
+	><span class="DecVal Decimal"
+	>5</span
+	><br
+	 /><span class="Normal NormalText"
+	>             </span
+	><span class="Keyword"
+	>else</span
+	><span class="Normal NormalText"
+	> bar </span
+	><span class="DecVal Decimal"
+	>8</span
+	><br
+	 /><span class="Normal NormalText"
+	>          ;bar </span
+	><span class="DecVal Decimal"
+	>3</span
+	><br
+	 /><span class="Normal NormalText"
+	>};baz = quux</span
+	><br
+	 /><span class="Normal NormalText"
+	>}</span
+	><br
+	 /></code
+      ></pre
+    ><p
+    >Note that an outer block (which I have also desugared) encloses all the declarations in the file, and that the default module declaration (<code
+      >module Main where</code
+      >) is inserted by the compiler at the top of any file that does not explicitly declare a module. This is why you can&rsquo;t split a &ldquo;normal&rdquo; function definition across two lines without indenting the second line.</p
+    ><p
+    >If you like using tab characters for indentation, note that Haskell (like most languages) defines a tab as eight columns. There&rsquo;s no GHC extension to change this behavior, but you can compensate by adjusting your style. A common practice is to start a new line after a layout keyword, and indent by one &ldquo;tab&rdquo; width. (Keep in mind that the first non-whitespace character in the block, rather than the keyword itself, is what determines the block&rsquo;s indentation level.)</p
+    ><pre class="sourceCode haskell"
+    ><code
+      ><span class="Normal NormalText"
+	>example = </span
+	><span class="Keyword"
+	>do</span
+	><br
+	 /><span class="Normal NormalText"
+	>  foo</span
+	><br
+	 /><span class="Normal NormalText"
+	>  bar</span
+	><br
+	 /></code
+      ></pre
+    ><p
+    >There&rsquo;s one other fairly common source of grief. A lot of people, when writing pure functions, get into the habit of lining up the titular keywords in an <code
+      >if/then/else</code
+      > branch. And then they get to monadic code, and the following doesn&rsquo;t work:</p
+    ><pre class="sourceCode haskell"
+    ><code
+      ><span class="Normal NormalText"
+	>main = </span
+	><span class="Keyword"
+	>do</span
+	><br
+	 /><span class="Normal NormalText"
+	>  </span
+	><span class="Keyword"
+	>if</span
+	><span class="Normal NormalText"
+	> foo</span
+	><br
+	 /><span class="Normal NormalText"
+	>  </span
+	><span class="Keyword"
+	>then</span
+	><span class="Normal NormalText"
+	> bar</span
+	><br
+	 /><span class="Normal NormalText"
+	>  </span
+	><span class="Keyword"
+	>else</span
+	><span class="Normal NormalText"
+	> baz</span
+	><br
+	 /></code
+      ></pre
+    ><p
+    >After layout desugaring, this parses as <code
+      >if foo; then bar; else baz</code
+      >. The issue is simply that semicolons are not allowed in an <code
+      >if/then/else</code
+      >.</p
+    ></div
+  ></div
+>    </div>
+  </body>
+</html>
+
+
+
+
