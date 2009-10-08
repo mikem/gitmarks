@@ -1,0 +1,1195 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta name="robots" content="index,follow"/>
+	<title>Expert to Expert&#58; Rich Hickey and Brian Beckman - Inside Clojure &#124; Going Deep &#124; Channel 9</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="generator" content="Rev9"/>
+	<meta name="WT.z_bdb" content="1"/>
+	<meta name="msapplication-task" content="name=Coffeehouse;action-uri=/forums/coffeehouse;icon-uri=/styles/images/favicon.ico"/>
+	<meta name="msapplication-task" content="name=Browse All Content;action-uri=/Browse;icon-uri=/styles/images/favicon.ico"/>
+	<meta name="msapplication-task" content="name=Shows;action-uri=/Browse/Shows;icon-uri=/styles/images/favicon.ico"/>
+	<link rel="shortcut icon" type="image/vnd.microsoft.icon" href="/styles/images/favicon.ico"/>
+	<link rel="apple-touch-icon" href="/styles/images/favicon_129x129.png"/>
+	<link href="/styles/global.css?v=c4RBEDpCu19QrrJOEy4QH3a3gEY1" media="all" rel="stylesheet" type="text/css" />
+	<link href="/styles/print.css" media="print" rel="stylesheet" type="text/css"/>
+	<link href="/styles/handheld.css" media="handheld" rel="stylesheet" type="text/css"/>
+	<link href="/styles/rating.css?v=c4RBEDpCu19QrrJOEy4QH3a3gEY1" media="all" rel="stylesheet" type="text/css" />
+	<link href="/styles/comments.css?v=c4RBEDpCu19QrrJOEy4QH3a3gEY1" media="all" rel="stylesheet" type="text/css" />
+	<link href="/styles/sourcecode.css?v=c4RBEDpCu19QrrJOEy4QH3a3gEY1" media="all" rel="stylesheet" type="text/css" />
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<link href="/styles/admin.css?v=c4RBEDpCu19QrrJOEy4QH3a3gEY1" media="all" rel="stylesheet" type="text/css" />
+	
+	<link href="/styles/entry.css?v=c4RBEDpCu19QrrJOEy4QH3a3gEY1" media="all" rel="stylesheet" type="text/css" />
+	<link href="/scripts/sh/sh.css?v=c4RBEDpCu19QrrJOEy4QH3a3gEY1" media="all" rel="stylesheet" type="text/css" />
+	<link href="&#47;Shows&#47;Going&#43;Deep&#47;Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure&#47;RSS" title="Comment Feed - Expert to Expert&#58; Rich Hickey and Brian Beckman - Inside Clojure" rel="alternate" type="application/rss+xml"/>
+	<meta name="description" content="Clojure&#38;nbsp&#59;is a dynamic programming language created by&#38;nbsp&#59;Rich Hickey&#38;nbsp&#59;that targets both the Java Virtual Machine and the CLR. It is designed to be a general-purpose language, combining&#13;&#10; the approachability and interactive development of a scripting language with an efficient and robust infrastructure for multithreaded programming. Clojure is a compiled language - it compiles directly to JVM bytecode, yet remains completely dynamic. Every&#13;&#10; feature supported by Clojure is supported at runtime. Clojure provides easy access to the Java frameworks, with optional type hints and type inference, to ensure that calls to Java can avoid reflection.Clojure is a dialect of Lisp, and shares with Lisp the code-as-data philosophy and a powerful macro system. Clojure is predominantly a functional programming language, and features a rich set of immutable, persistent data structures. When mutable state is needed,&#13;&#10; Clojure offers a software transactional memory system and reactive Agent system that ensure clean, correct, multithreaded designs.Astrophysicist and Software Architect Brian Beckman interviews Rich Hickey to dig into the details of this very interesting language. If you don&#39;t know much about Clojure and the general problems it aims to solve, well, watch and listen carefully to this great&#13;&#10; conversation with plenty of whiteboarding and outstanding questions. Expert to Expert simply rocks&#33; Thank you for spending time with us, Rich&#33; Clojure is great&#33;PS&#58; You can&#38;nbsp&#59;donate to the Clojure project should you feel so inclined."/>
+	<meta name="WT.entryid" content="Entry:WebView:e076bbb028424fbe9bf69dea00431cb0"/>
+	<meta name="Search.PageType" content="Entry.Item"/>
+		<meta name="Search.SectionType" content="Shows"/>
+		<meta name="Search.Section" content="Going&#43;Deep"/>
+	<meta name="title" content="Expert to Expert&#58; Rich Hickey and Brian Beckman - Inside Clojure"/>
+	<meta name="Search.Title" content="Expert to Expert&#58; Rich Hickey and Brian Beckman - Inside Clojure"/>
+	<meta name="tweetmeme-title" content="Expert to Expert&#58; Rich Hickey and Brian Beckman - Inside Clojure"/><meta name="Search.Author" content="Charles"/><meta name="Search.Author" content="Charles"/>
+		<link type="image/jpeg" rel="videothumbnail" href="http&#58;&#47;&#47;ecn.channel9.msdn.com&#47;o9&#47;ch9&#47;8&#47;4&#47;0&#47;2&#47;9&#47;4&#47;E2EBeckmanHickeyClojure_512_ch9.png"/>
+		<link rel="image_src" href="http&#58;&#47;&#47;ecn.channel9.msdn.com&#47;o9&#47;ch9&#47;8&#47;4&#47;0&#47;2&#47;9&#47;4&#47;E2EBeckmanHickeyClojure_512_ch9.png"/><meta name="Search.Image" content="http&#58;&#47;&#47;ecn.channel9.msdn.com&#47;o9&#47;ch9&#47;8&#47;4&#47;0&#47;2&#47;9&#47;4&#47;E2EBeckmanHickeyClojure_320_ch9.png"/>
+	<link rel="canonical" href="http&#58;&#47;&#47;channel9.msdn.com&#47;Shows&#47;Going&#43;Deep&#47;Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure"/>
+	<meta name="CommentCount" content="27"/>
+	<!-- <meta name="keywords" content="${Model.Entry.Tags.ToString}" /> -->
+	<noscript><link href="/styles/noscript.css?v=c4RBEDpCu19QrrJOEy4QH3a3gEY1" media="all" rel="stylesheet" type="text/css" /></noscript>
+	<!--[if gt IE 8]><link href="/styles/ie9beta1.css?v=c4RBEDpCu19QrrJOEy4QH3a3gEY1" media="all" rel="stylesheet" type="text/css" /><![endif]-->
+	<!--[if lt IE 8]><link href="/styles/ie7_6.css?v=c4RBEDpCu19QrrJOEy4QH3a3gEY1" media="all" rel="stylesheet" type="text/css" /><![endif]-->
+	<!--[if lt IE 7]><link href="/styles/ie6.css?v=c4RBEDpCu19QrrJOEy4QH3a3gEY1" media="all" rel="stylesheet" type="text/css" /><![endif]-->
+		<script src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.4.min.js" type="text/javascript"></script>
+
+	<script src="/scripts/globals.js?v=c4RBEDpCu19QrrJOEy4QH3a3gEY1" type="text/javascript"></script>
+	<script src="/scripts/videoplayer.js?v=c4RBEDpCu19QrrJOEy4QH3a3gEY1" type="text/javascript"></script>
+	<script src="/scripts/entry.js?v=c4RBEDpCu19QrrJOEy4QH3a3gEY1" type="text/javascript"></script>
+	
+</head>
+<body class="hasSidebar entry ">
+<div class="branding">
+	<div class="toolbar">
+		<div class="container"><ul>
+    <li class="followus"><a href="http://twitter.com/ch9">Follow Us @Ch9</a></li>
+	<li class="subscribe"><a href="&#47;Feeds&#47;RSS">Subscribe to Channel 9</a></li>
+	<!--IE7 needs a return here-->
+		<li class="signIn"><a href="https://login.live.com/login.srf?wa=wsignin1.0&amp;rpsnv=11&amp;ct=1293265081&amp;rver=6.1.6195.0&amp;wp=MBI&amp;wreply=http:%2F%2Fchannel9.msdn.com%2Fshows%2FGoing%2BDeep%2FExpert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure&amp;id=47159">Sign In</a></li>
+</ul>
+		</div>
+	</div>
+	<div class="navigation">
+		<div class="container"><div class="logo"><a href="/">Channel&#160;9</a></div><div class="search">	
+	<span class="g l t"></span><span class="g l m"></span><span class="g l b"></span><span class="g c t"></span><span class="g c b"></span><span class="g r t"></span><span class="g r m"></span><span class="g r b"></span>     
+	<form action="/search">
+		<div class="inputHolder">
+			<input type="text" class="text inactive" value="Search this site" name="term" autocomplete="off"/>
+			<span class="bing logo"></span>
+			<div class="submitHolder">
+				<input class="theSubmit" type="image" alt="Submit" src="/styles/images/BingSearchSprite.png"/>
+			</div>
+		</div>
+	</form>
+</div>
+
+<ul>
+    <li class="browse">
+		<a href="&#47;Browse">Browse</a>
+		<ul class="rounded">
+			<li><a href="&#47;Browse&#47;Tags">Tags</a></li>
+			<li><a href="&#47;Browse&#47;Shows">Shows</a></li>
+			<li><a href="&#47;Browse&#47;Series">Series</a></li>
+			<li><a href="&#47;Browse&#47;Blogs">Blogs</a></li>
+			<li><a href="&#47;Browse&#47;Authors">Authors</a></li>
+		</ul>
+	</li>
+    <li class="learn">
+		<a href="&#47;Learn">Learn</a>
+		<ul class="rounded">
+			<li><a href="&#47;Learn&#47;Courses">Courses</a></li>
+			<li><a href="&#47;Blogs&#47;Learn">Announcements</a></li>
+		</ul>
+	</li>
+    <li class="forums">
+		<a href="&#47;Forums">Forums</a>
+		<ul class="rounded">
+			<li><a href="&#47;Forums&#47;Coffeehouse">Coffeehouse</a></li>
+			<li><a href="&#47;Forums&#47;Feedback">Site Feedback</a></li>
+			<li><a href="&#47;Forums&#47;TechOff">Tech Off</a></li>
+		</ul>
+	</li>
+    <li class="about">
+		<a href="&#47;About">About</a>
+	</li>
+</ul>
+
+		</div>
+	</div>
+</div>
+<div class="mainHolder">
+	<div class="mainContent text">
+			<div class="breadcrumbs"><ul><li class="first"><a href="/Browse/Shows">Shows</a></li><li class="last"><a href="/Shows/Going+Deep">Going&#160;Deep</a></li></ul></div>
+
+<div class="entry">
+	<div class="entry-header">
+		<h1>Expert to Expert: Rich Hickey and Brian Beckman - Inside&#160;Clojure</h1>
+		<ul class="entry-data">
+			<li class="date">
+					Posted: Oct 06, 2009 at 10&#58;29 AM
+			</li>
+			<li class="author">
+				By:
+					<a href="&#47;Niners&#47;Charles">Charles</a>
+			</li>
+			<li class="rating">
+<div class="rating">
+	<div class="rating-average">
+		<form>
+			<fieldset>
+					<input type="radio" value="0.25"/>
+					<input type="radio" value="0.5"/>
+					<input type="radio" value="0.75"/>
+					<input type="radio" value="1"/>
+					<input type="radio" value="1.25"/>
+					<input type="radio" value="1.5"/>
+					<input type="radio" value="1.75"/>
+					<input type="radio" value="2"/>
+					<input type="radio" value="2.25"/>
+					<input type="radio" value="2.5"/>
+					<input type="radio" value="2.75"/>
+					<input type="radio" value="3"/>
+					<input type="radio" value="3.25"/>
+					<input type="radio" value="3.5"/>
+					<input type="radio" value="3.75"/>
+					<input type="radio" value="4" checked="checked"/>
+					<input type="radio" value="4.25"/>
+					<input type="radio" value="4.5"/>
+					<input type="radio" value="4.75"/>
+					<input type="radio" value="5"/>
+			</fieldset>
+		</form>
+	</div>
+	<p class="avg-rating">Avg Rating: <span>4</span></p>
+</div><div class="rating-count">(13)</div>
+
+			</li>
+			<li class="views">
+					<span class="count">69,596</span> Views
+			</li><li class="comments">
+				<a href="#comments"><span class="count">27</span> Comments</a>
+			</li>
+			<li class="sharelinks">
+				<div class="retweet" data-tweet_url="http&#58;&#47;&#47;channel9.msdn.com&#47;Shows&#47;Going&#43;Deep&#47;Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure" data-tweet_related="ch9"></div>
+				<a class="fb_share" data-share_url="http&#58;&#47;&#47;channel9.msdn.com&#47;Shows&#47;Going&#43;Deep&#47;Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure"></a>
+			</li>
+		</ul>
+	</div>
+	<div class="entry-content">
+			<div id="video">
+				<a href="http&#58;&#47;&#47;ecn.channel9.msdn.com&#47;o9&#47;ch9&#47;8&#47;4&#47;0&#47;2&#47;9&#47;4&#47;E2EBeckmanHickeyClojure_ch9.mp4" style="background-image:url(http&#58;&#47;&#47;ecn.channel9.msdn.com&#47;o9&#47;ch9&#47;8&#47;4&#47;0&#47;2&#47;9&#47;4&#47;E2EBeckmanHickeyClojure_512_ch9.png);">
+					<img src="/styles/images/PlayButton512.png" alt="Click To Play"/><div class="entry-caption">53 minutes, 56 seconds</div>
+				</a><ul class="silverlight"><li>
+						<a rel="Wmv" href="http&#58;&#47;&#47;ecn.channel9.msdn.com&#47;o9&#47;ch9&#47;8&#47;4&#47;0&#47;2&#47;9&#47;4&#47;E2EBeckmanHickeyClojure_ch9.wmv"></a>
+					</li>
+				</ul><ul class="html5"><li>
+						<a rel="Mp4" href="http&#58;&#47;&#47;ecn.channel9.msdn.com&#47;o9&#47;ch9&#47;8&#47;4&#47;0&#47;2&#47;9&#47;4&#47;E2EBeckmanHickeyClojure_ch9.mp4"></a>
+					</li>
+				</ul>
+			</div>
+	<div id="video-download">
+		<h3>Download</h3>
+		<div class="help">
+			<img src="/styles/images/bg-help.gif"/>
+			<div class="popup rounded">
+				<h3>How do I download the videos?</h3>
+				<ul class="default">
+					<li>
+						To download, right click the file type you would like and pick 
+						&#8220;Save target as&#8230;&#8221; or &#8220;Save link as&#8230;&#8221;
+					</li>
+				</ul>
+				<h3>Why should I download videos from Channel9?</h3>
+				<ul class="default">
+					<li>It's an easy way to save the videos you like locally.</li>
+					<li>You can save the videos in order to watch them offline.</li>
+					<li>If all you want is to hear the audio, you can download the MP3!</li>
+				</ul>
+				<h3>Which version should I choose?</h3>
+				<ul class="default">
+					<li>
+						If you want to view the video on your PC, XBox or Media Center, 
+						download the High Quality WMV file (this is the highest quality version 
+						we have available).
+					</li>
+					<li>
+						If you'd like a lower bitrate version, to reduce the download time or 
+						cost, then choose the Medium Quality WMV file.
+					</li>
+					<li>If you have a Zune, iPhone, or iPod device, choose the MP4 file.</li>
+					<li>If you just want to hear the audio of the video, choose the MP3 file.</li>
+				</ul>
+			</div>
+		</div>
+		<p class="note">Right click &#8220;Save as&#8230;&#8221;</p>
+		<ul class="download"><li>
+					
+		<a href="http&#58;&#47;&#47;ecn.channel9.msdn.com&#47;o9&#47;ch9&#47;8&#47;4&#47;0&#47;2&#47;9&#47;4&#47;E2EBeckmanHickeyClojure_2MB_ch9.wmv">High Quality WMV</a> <span class="usage">&#40;PC, XBox, MCE&#41;</span>
+			</li><li>
+					
+		<a href="http&#58;&#47;&#47;ecn.channel9.msdn.com&#47;o9&#47;ch9&#47;8&#47;4&#47;0&#47;2&#47;9&#47;4&#47;E2EBeckmanHickeyClojure_ch9.mp3">MP3</a> <span class="usage">&#40;Audio only&#41;</span>
+			</li><li>
+          
+		<a href="http&#58;&#47;&#47;ecn.channel9.msdn.com&#47;o9&#47;ch9&#47;8&#47;4&#47;0&#47;2&#47;9&#47;4&#47;E2EBeckmanHickeyClojure_ch9.mp4">MP4</a> <span class="usage">&#40;iPod, Zune HD&#41;</span>
+			</li><li>
+			</li><li>
+					
+		<a href="http&#58;&#47;&#47;ecn.channel9.msdn.com&#47;o9&#47;ch9&#47;8&#47;4&#47;0&#47;2&#47;9&#47;4&#47;E2EBeckmanHickeyClojure_ch9.wmv">Medium Quality WMV</a> <span class="usage">&#40;Lo-band, Mobile&#41;</span>
+			</li><li>
+			</li><li>
+          
+		<a href="mms&#58;&#47;&#47;mschnlnine.wmod.llnwd.net&#47;a1809&#47;d1&#47;ch9&#47;8&#47;4&#47;0&#47;2&#47;9&#47;4&#47;E2EBeckmanHickeyClojure_s_ch9.wmv">WMV</a> <span class="usage">&#40;WMV Video&#41;</span>
+			</li>
+		</ul>
+	</div>
+
+		<div id="entry-body">
+			<a shape="rect" href="http://clojure.org/" shape="rect" target="_blank">Clojure</a>&nbsp;is a dynamic programming language created by&nbsp;Rich Hickey&nbsp;that targets both the Java Virtual Machine and the CLR. It is designed to be a general-purpose language, combining
+ the approachability and interactive development of a scripting language with an efficient and robust infrastructure for multithreaded programming. Clojure is a compiled language - it compiles directly to JVM bytecode, yet remains completely dynamic. Every
+ feature supported by Clojure is supported at runtime. Clojure provides easy access to the Java frameworks, with optional type hints and type inference, to ensure that calls to Java can avoid reflection.<br /><br />Clojure is a dialect of Lisp, and shares with Lisp the code-as-data philosophy and a powerful macro system. Clojure is predominantly a functional programming language, and features a rich set of immutable, persistent data structures. When mutable state is needed,
+ Clojure offers a software transactional memory system and reactive Agent system that ensure clean, correct, multithreaded designs.<br /><br />Astrophysicist and Software Architect Brian Beckman interviews Rich Hickey to dig into the details of this very interesting language. If you don't know much about Clojure and the general problems it aims to solve, well, watch and listen carefully to this great
+ conversation with plenty of whiteboarding and outstanding questions. Expert to Expert simply rocks! Thank you for spending time with us, Rich! Clojure is great!<br /><br />PS: You can&nbsp;<a href="http://clojure.org/funding" target="_blank">donate to the Clojure project</a> should you feel so inclined.<br />
+		</div>
+	</div><div id="entry-tags">
+		<h3>Tags:</h3>
+		<ul><li>
+				<a href="&#47;Tags&#47;brian&#43;beckman">Brian Beckman</a>, 
+			</li><li>
+				<a href="&#47;Tags&#47;clojure">Clojure</a>, 
+			</li><li>
+				<a href="&#47;Tags&#47;dynamic&#43;languages">Dynamic Languages</a>, 
+			</li><li>
+				<a href="&#47;Tags&#47;expert&#43;to&#43;expert">Expert to Expert</a>, 
+			</li><li>
+				<a href="&#47;Tags&#47;jvm">JVM</a>, 
+			</li><li>
+				<a href="&#47;Tags&#47;programming">Programming</a>, 
+			</li><li>
+				<a href="&#47;Tags&#47;programming&#43;languages">Programming Languages</a>
+			</li>
+		</ul>
+	</div><div class="comments follow">
+		<a name="comments"></a>
+		<div class="comments-header">
+			<h2>Follow the Discussion</h2>
+			<ul>
+				<li class="subscribe">
+					<a href="&#47;Shows&#47;Going&#43;Deep&#47;Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure&#47;RSS">Subscribe to these comments</a>
+				</li>
+			</ul>
+		</div>
+		<ul class="posts"><li>
+<div class="author">
+		<a class="button" href="/Niners/exoteric"><img alt="Bent Rasmussen" class="avatar" src="https://rev9.blob.core.windows.net/avatar/d5cade37-abff-4c03-ad1d-c90a5c0919e3.png" title="Bent Rasmussen" /><span class="name">exoteric</span></a><span class="caption">wrap 'n&#160;roll</span>
+</div>
+
+<div class="post" id="c633904479210000000">
+	<div class="post-header">
+		<a class="permalink" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633904479210000000" title="Comment Permalink">Oct 06, 2009 at 10:45&#160;AM</a>
+				<a class="add quote button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633904479210000000" title="exoteric">quote</a>
+				<a class="add reply button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633904479210000000" title="exoteric">reply</a>
+	</div>
+	<div class="post-content">
+			
+<p>Brian Beckman And Rich Hickey! ARGHHHHH <img src='http://ecn.channel9.msdn.com/o9/content/images/emoticons/emotion-2.gif' alt='Big Smile' /></p>
+<p>Loading...</p>
+<p>&nbsp;</p>
+<p>I'm quite impressed with the persistence characteristic of Clojure. That's a kind of purity of its own.</p>
+<p>&nbsp;</p>
+<p>Clojure and Scala look like the hot languages of the day and both run on JVM and also CLR.</p>
+<p></p>
+<ul>
+<li><a href="http://www.mail-archive.com/clojure@googlegroups.com/msg09387.html">ClojureCLR</a>
+</li><li><a href="http://github.com/kevinoneill/clojure-contrib/tree/master/clojurescript">ClojureScript</a>
+</li><li><a href="http://www.scala-lang.org/node/168">Scala on CLR</a> </li></ul>
+<p></p>
+<p>Must revisit <a href="http://wiki.jvmlangsummit.com/images/a/ab/HickeyJVMSummit2009.pdf">
+Are We There Yet?</a></p>
+<p><a href="http://wiki.jvmlangsummit.com/images/a/ab/HickeyJVMSummit2009.pdf"></a></p>
+<p><a href="http://wiki.jvmlangsummit.com/images/a/ab/HickeyJVMSummit2009.pdf"></a></p>
+
+	</div>
+</div>
+
+			</li><li>
+<div class="author">
+		<a class="button" href="/Niners/vcomrhencke"><img alt="vcomrhencke" class="avatar" src="http://mschnlnine.vo.llnwd.net/d1/Dev/App_Themes/C9/images/avatars/c9classic/default.gif" title="vcomrhencke" /><span class="name">vcomrhencke</span></a>
+</div>
+
+<div class="post" id="c633904518910000000">
+	<div class="post-header">
+		<a class="permalink" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633904518910000000" title="Comment Permalink">Oct 06, 2009 at 11:51&#160;AM</a>
+				<a class="add quote button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633904518910000000" title="vcomrhencke">quote</a>
+				<a class="add reply button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633904518910000000" title="vcomrhencke">reply</a>
+	</div>
+	<div class="post-content">
+			
+<p>I had no idea Clojure supported the CLR...!</p>
+<p>&nbsp;</p>
+<p>This is great! &nbsp;Thanks for the awesome video!</p>
+
+	</div>
+</div>
+
+			</li><li>
+<div class="author">
+		<a class="button" href="/Niners/ivan_"><img alt="ivan_" class="avatar" src="http://ecn.channel9.msdn.com/o9/avatars/ivan__c9.jpg" title="ivan_" /><span class="name">ivan_</span></a><span class="caption">g</span>
+</div>
+
+<div class="post" id="c633904611900000000">
+	<div class="post-header">
+		<a class="permalink" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633904611900000000" title="Comment Permalink">Oct 06, 2009 at 2:26&#160;PM</a>
+				<a class="add quote button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633904611900000000" title="ivan_">quote</a>
+				<a class="add reply button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633904611900000000" title="ivan_">reply</a>
+	</div>
+	<div class="post-content">
+			
+<p>This is great! great! great! </p>
+<p>&nbsp;</p>
+<p>I would like to see the continuation of this discussion! </p>
+<p>&nbsp;</p>
+<p>Finally I can use Lisp,&nbsp;before I completely forget it. </p>
+<p>It's been more than 10 years since I last work on it, but Clojure makes perfect sense to try out some real world scenarios.
+</p>
+<p>&nbsp;</p>
+
+	</div>
+</div>
+
+			</li><li>
+<div class="author">
+		<a class="button" href="/Niners/Sonicflare"><img alt="Sonicflare" class="avatar" src="http://mschnlnine.vo.llnwd.net/d1/Dev/App_Themes/C9/images/avatars/c9classic/default.gif" title="Sonicflare" /><span class="name">Sonicflare</span></a>
+</div>
+
+<div class="post" id="c633904623310000000">
+	<div class="post-header">
+		<a class="permalink" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633904623310000000" title="Comment Permalink">Oct 06, 2009 at 2:45&#160;PM</a>
+				<a class="add quote button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633904623310000000" title="Sonicflare">quote</a>
+				<a class="add reply button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633904623310000000" title="Sonicflare">reply</a>
+	</div>
+	<div class="post-content">
+			
+<p>Wow, that's really awesome!</p>
+
+	</div>
+</div>
+
+			</li><li>
+<div class="author">
+		<a class="button" href="/Niners/RobertL"><img alt="RobertL" class="avatar" src="http://mschnlnine.vo.llnwd.net/d1/Dev/App_Themes/C9/images/avatars/c9classic/default.gif" title="RobertL" /><span class="name">RobertL</span></a>
+</div>
+
+<div class="post" id="c633904654250000000">
+	<div class="post-header">
+		<a class="permalink" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633904654250000000" title="Comment Permalink">Oct 06, 2009 at 3:37&#160;PM</a>
+				<a class="add quote button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633904654250000000" title="RobertL">quote</a>
+				<a class="add reply button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633904654250000000" title="RobertL">reply</a>
+	</div>
+	<div class="post-content">
+			
+<p>&quot;<br />Status: definitely alpha. Developers only at this point.<br />Alpha = rough edges, incomplete features, slow.<br />&quot;</p>
+<p>This from the ClojureCLR link dated feb 2009, is this still the case? Would love to be able to actually use Clojure on .Net</p>
+
+	</div>
+</div>
+
+			</li><li class="owner 
+					staff">
+<div class="author">
+		<a class="button" href="/Niners/Charles"><img alt="Charles" class="avatar" src="http://ecn.channel9.msdn.com/o9/avatars/Charles_c9.jpg" title="Charles" /><span class="name">Charles</span></a><span class="caption">Welcome&#160;Change</span>
+</div>
+
+<div class="post" id="c633904665390000000">
+	<div class="post-header">
+		<a class="permalink" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633904665390000000" title="Comment Permalink">Oct 06, 2009 at 3:55&#160;PM</a>
+				<a class="add quote button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633904665390000000" title="Charles">quote</a>
+				<a class="add reply button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633904665390000000" title="Charles">reply</a>
+	</div>
+	<div class="post-content">
+			
+<p>I'm pretty sure it's getting more stable. I'll ask Rich.</p>
+<p>C</p>
+
+	</div>
+</div>
+
+			</li><li>
+<div class="author">
+		<a class="button" href="/Niners/GrantB"><img alt="Grant Boyle" class="avatar" src="http://mschnlnine.vo.llnwd.net/d1/Dev/App_Themes/C9/images/avatars/c9classic/default.gif" title="Grant Boyle" /><span class="name">GrantB</span></a><span class="caption">What the hell are we supposed to use man? Harsh&#160;language?</span>
+</div>
+
+<div class="post" id="c633904677930000000">
+	<div class="post-header">
+		<a class="permalink" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633904677930000000" title="Comment Permalink">Oct 06, 2009 at 4:16&#160;PM</a>
+				<a class="add quote button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633904677930000000" title="GrantB">quote</a>
+				<a class="add reply button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633904677930000000" title="GrantB">reply</a>
+	</div>
+	<div class="post-content">
+			
+<p>Nice stuff. I like the deep language design topics.</p>
+<p>&nbsp;</p>
+<p>For those that might be interested....</p>
+<p>&nbsp;</p>
+<p>Clojure for Java Programmers</p>
+<p><a href="http://clojure.blip.tv/file/982823/">http&#58;&#47;&#47;clojure.blip.tv&#47;file&#47;982823&#47;</a></p>
+
+	</div>
+</div>
+
+			</li><li>
+<div class="author">
+		<a class="button" href="/Niners/dot_tom"><img alt="Tom Kirby-Green" class="avatar" src="http://ecn.channel9.msdn.com/o9/avatars/dot_tom_c9.jpg" title="Tom Kirby-Green" /><span class="name">dot_tom</span></a>
+</div>
+
+<div class="post" id="c633904843990000000">
+	<div class="post-header">
+		<a class="permalink" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633904843990000000" title="Comment Permalink">Oct 06, 2009 at 8:53&#160;PM</a>
+				<a class="add quote button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633904843990000000" title="dot_tom">quote</a>
+				<a class="add reply button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633904843990000000" title="dot_tom">reply</a>
+	</div>
+	<div class="post-content">
+			
+<p>Channel 9 seems to be on a roll at the moment. Erik appears to be a Functional Force of Nature and now we've got Brian back! Awesome. I'm not saying they
+<em>are</em> connected, but if the apparent increase in the rate of innovation and related deep thinking in the fields of programming languages, tools and runtimes is due in some small part to having the comfort factor of a fast-enough single threaded future
+ removed then the 'retreat' to multicore is one of the best things to happen to the software industry in the last seven years.</p>
+
+	</div>
+</div>
+
+			</li><li>
+<div class="author">
+		<a class="button" href="/Niners/exoteric"><img alt="Bent Rasmussen" class="avatar" src="https://rev9.blob.core.windows.net/avatar/d5cade37-abff-4c03-ad1d-c90a5c0919e3.png" title="Bent Rasmussen" /><span class="name">exoteric</span></a><span class="caption">wrap 'n&#160;roll</span>
+</div>
+
+<div class="post" id="c633904969480000000">
+	<div class="post-header">
+		<a class="permalink" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633904969480000000" title="Comment Permalink">Oct 07, 2009 at 12:22&#160;AM</a>
+				<a class="add quote button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633904969480000000" title="exoteric">quote</a>
+				<a class="add reply button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633904969480000000" title="exoteric">reply</a>
+	</div>
+	<div class="post-content">
+			
+<p>The implications of the statement &quot;objects conflate value and identity&quot; and &quot;this is broken&quot; appears to me to me that the CLR model is broken (shock!) since the CLR operates on {C,MS}IL which maintains the C#/VB notion of objects. Correct?</p>
+<p>&nbsp;</p>
+<p>Even if Clojure can be built on the CLR and JVM, can we say that these VM's are appropriate for the paradigm shift that's only just begun?</p>
+<p>&nbsp;</p>
+<p>It's actually quite astonishing, this view of an object as a timeline of values, where each value is its state in a point in time.&nbsp;Also, I love the connection between Clojure &quot;objects&quot; and IObservable. Reminds me of Brian's comment &quot;...mutable, and very
+ observably so&quot;. Almost like IO on steroids since IO deals with properties whereas here you can take the whole object and it becomes a timeline.</p>
+<p>&nbsp;</p>
+<p>A language like this which these powerful datastructures built into the language is quite appealing even if conventional wisdom is to not have it in libraries. D does the same with its maps although its notion of a map is completely traditional and imperative.</p>
+<p>&nbsp;</p>
+<p>It's quite disturbing that in this world of increasing immutability, the BCL stands out as incredibly mutable. Is this good enough to build the future on do you think or can we no longer hide that the imperative style language(s) that the CLR was founded
+ on and the BCL was written in is broken for the future? Looks like a big reconstruction project. And what primitives do you choose to rebuild it for the future. Task and Future ain't cutting it.</p>
+<p>&nbsp;</p>
+<p>I love the concepts of Clojure even if the LISPy syntax &quot;red pill&quot; may be too tough swallow. But there's no reason why something like this could not underpin many DSL's, such as what we see in &quot;Oslo&quot;.</p>
+<p>&nbsp;</p>
+<p>And the reference to Timewarp brings up again the connection between programs and the OS and what the OS offers programs and how it interacts with them. Sounds like a great potential interview.</p>
+<p>&nbsp;</p>
+<p>Hmm...</p>
+
+	</div>
+</div>
+
+			</li><li>
+<div class="author">
+		<a class="button" href="/Niners/dot_tom"><img alt="Tom Kirby-Green" class="avatar" src="http://ecn.channel9.msdn.com/o9/avatars/dot_tom_c9.jpg" title="Tom Kirby-Green" /><span class="name">dot_tom</span></a>
+</div>
+
+<div class="post" id="c633905050790000000">
+	<div class="post-header">
+		<a class="permalink" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905050790000000" title="Comment Permalink">Oct 07, 2009 at 2:37&#160;AM</a>
+				<a class="add quote button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905050790000000" title="dot_tom">quote</a>
+				<a class="add reply button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905050790000000" title="dot_tom">reply</a>
+	</div>
+	<div class="post-content">
+			
+<p>Yeah I only got round to reading this a couple of weeks ago:</p>
+<p>&nbsp;</p>
+<p>&nbsp;&nbsp; <a href="http://wiki.jvmlangsummit.com/images/a/ab/HickeyJVMSummit2009.pdf">
+http://wiki.jvmlangsummit.com/images/a/ab/HickeyJVMSummit2009.pdf</a></p>
+<p>&nbsp;</p>
+<p>And by the end couldn't help feeling that we are definately trending towards a very different, post OO, world. The prize wil go to the company that produces a language product that enables the same economics in terms of being able to hire VB type developers
+ and yet contains at its heart these fundamental 'new' approaches.</p>
+
+	</div>
+</div>
+
+			</li><li>
+<div class="author">
+		<a class="button" href="/Niners/rhm"><img alt="rhm" class="avatar" src="http://ecn.channel9.msdn.com/o9/avatars/rhm_c9.jpg" title="rhm" /><span class="name">rhm</span></a>
+</div>
+
+<div class="post" id="c633905101360000000">
+	<div class="post-header">
+		<a class="permalink" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905101360000000" title="Comment Permalink">Oct 07, 2009 at 4:02&#160;AM</a>
+				<a class="add quote button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905101360000000" title="rhm">quote</a>
+				<a class="add reply button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905101360000000" title="rhm">reply</a>
+	</div>
+	<div class="post-content">
+			
+<p>It's LISP! It keeps coming back like Freddie Kruger.</p>
+
+	</div>
+</div>
+
+			</li><li>
+<div class="author">
+		<a class="button" href="/Niners/RobertL"><img alt="RobertL" class="avatar" src="http://mschnlnine.vo.llnwd.net/d1/Dev/App_Themes/C9/images/avatars/c9classic/default.gif" title="RobertL" /><span class="name">RobertL</span></a>
+</div>
+
+<div class="post" id="c633905176480000000">
+	<div class="post-header">
+		<a class="permalink" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905176480000000" title="Comment Permalink">Oct 07, 2009 at 6:07&#160;AM</a>
+				<a class="add quote button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905176480000000" title="RobertL">quote</a>
+				<a class="add reply button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905176480000000" title="RobertL">reply</a>
+	</div>
+	<div class="post-content">
+			
+<p><a href="http://xkcd.com/297/">http://xkcd.com/297/</a>&nbsp;&nbsp;<img src='http://ecn.channel9.msdn.com/o9/content/images/emoticons/emotion-1.gif' alt='Smiley' /></p>
+
+	</div>
+</div>
+
+			</li><li>
+<div class="author">
+		<a class="button" href="/Niners/exoteric"><img alt="Bent Rasmussen" class="avatar" src="https://rev9.blob.core.windows.net/avatar/d5cade37-abff-4c03-ad1d-c90a5c0919e3.png" title="Bent Rasmussen" /><span class="name">exoteric</span></a><span class="caption">wrap 'n&#160;roll</span>
+</div>
+
+<div class="post" id="c633905231250000000">
+	<div class="post-header">
+		<a class="permalink" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905231250000000" title="Comment Permalink">Oct 07, 2009 at 7:38&#160;AM</a>
+				<a class="add quote button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905231250000000" title="exoteric">quote</a>
+				<a class="add reply button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905231250000000" title="exoteric">reply</a>
+	</div>
+	<div class="post-content">
+			
+<p>In your dreams! <img src='http://ecn.channel9.msdn.com/o9/content/images/emoticons/emotion-5.gif' alt='Wink' /></p>
+
+	</div>
+</div>
+
+			</li><li class="owner 
+					staff">
+<div class="author">
+		<a class="button" href="/Niners/Charles"><img alt="Charles" class="avatar" src="http://ecn.channel9.msdn.com/o9/avatars/Charles_c9.jpg" title="Charles" /><span class="name">Charles</span></a><span class="caption">Welcome&#160;Change</span>
+</div>
+
+<div class="post" id="c633905264840000000">
+	<div class="post-header">
+		<a class="permalink" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905264840000000" title="Comment Permalink">Oct 07, 2009 at 8:34&#160;AM</a>
+				<a class="add quote button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905264840000000" title="Charles">quote</a>
+				<a class="add reply button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905264840000000" title="Charles">reply</a>
+	</div>
+	<div class="post-content">
+			
+<p>Clojure-CLR is hosted <a href="http://github.com/richhickey/clojure-clr">here</a>.
+</p>
+<p>C</p>
+
+	</div>
+</div>
+
+			</li><li class="owner 
+					staff">
+<div class="author">
+		<a class="button" href="/Niners/Charles"><img alt="Charles" class="avatar" src="http://ecn.channel9.msdn.com/o9/avatars/Charles_c9.jpg" title="Charles" /><span class="name">Charles</span></a><span class="caption">Welcome&#160;Change</span>
+</div>
+
+<div class="post" id="c633905269820000000">
+	<div class="post-header">
+		<a class="permalink" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905269820000000" title="Comment Permalink">Oct 07, 2009 at 8:43&#160;AM</a>
+				<a class="add quote button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905269820000000" title="Charles">quote</a>
+				<a class="add reply button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905269820000000" title="Charles">reply</a>
+	</div>
+	<div class="post-content">
+			
+<p>Both the JVM and CLR are not in stasis... They will evolve to meet the needs of the future. I'm not sure disgarding them in the light of new programming languages with different semantics for objects is correct.&nbsp;&nbsp;It's just too early to tell if the general
+ purpose mainstream programming community is willing or able to throw away their current toolbox as opposed to simply adding new tools to it... I think what you're seeing with C# and VB.NET becoming more hybrid in nature (functional &#43; imperative &#43; dynamic)
+ is a trend that will continue. The question &quot;how long can a single language be used to solve most problems&quot; is a very good one. Time will tell, I guess...</p>
+<p>&nbsp;</p>
+<p>C</p>
+
+	</div>
+</div>
+
+			</li><li>
+<div class="author">
+		<a class="button" href="/Niners/ivan_"><img alt="ivan_" class="avatar" src="http://ecn.channel9.msdn.com/o9/avatars/ivan__c9.jpg" title="ivan_" /><span class="name">ivan_</span></a><span class="caption">g</span>
+</div>
+
+<div class="post" id="c633905271600000000">
+	<div class="post-header">
+		<a class="permalink" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905271600000000" title="Comment Permalink">Oct 07, 2009 at 8:46&#160;AM</a>
+				<a class="add quote button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905271600000000" title="ivan_">quote</a>
+				<a class="add reply button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905271600000000" title="ivan_">reply</a>
+	</div>
+	<div class="post-content">
+			
+<p>Actually LISP is not that hard if you don't have to&nbsp;balance parenthesis manually. 10-15 years ago it was a pain, but with modern&nbsp;IDEs it should be very easy. And you can event apply C like formatting:</p>
+<p>(</p>
+<p>&nbsp;&nbsp;&nbsp; &nbsp;func1</p>
+<p>&nbsp;&nbsp;&nbsp; (</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; func2 x y</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; )</p>
+<p>&nbsp;&nbsp;&nbsp; (</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; func3 a&nbsp; b</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; )</p>
+<p>)</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><img src='http://ecn.channel9.msdn.com/o9/content/images/emoticons/emotion-1.gif' alt='Smiley' /> it becomes very straight forward. </p>
+
+	</div>
+</div>
+
+			</li><li>
+<div class="author">
+		<a class="button" href="/Niners/exoteric"><img alt="Bent Rasmussen" class="avatar" src="https://rev9.blob.core.windows.net/avatar/d5cade37-abff-4c03-ad1d-c90a5c0919e3.png" title="Bent Rasmussen" /><span class="name">exoteric</span></a><span class="caption">wrap 'n&#160;roll</span>
+</div>
+
+<div class="post" id="c633905312260000000">
+	<div class="post-header">
+		<a class="permalink" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905312260000000" title="Comment Permalink">Oct 07, 2009 at 9:53&#160;AM</a>
+				<a class="add quote button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905312260000000" title="exoteric">quote</a>
+				<a class="add reply button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905312260000000" title="exoteric">reply</a>
+	</div>
+	<div class="post-content">
+			
+<p>One thing that appears pretty clear is that CLR/JVM are built for (static) imperative object-oriented languages, since that is what characterizes IL itself. Both of these paradigms are under attack - although Scala has shown a remarkable compromise, marrying
+ object-orientedness and declarativeness. If the CLR is able to track purity, at least immutability, then maybe all the old baggage wohn't matter too much. It's also clear that on the continuum of adaptation we see small changes that allow explicit expression
+ of parallelism in a convenient way, although very much depending on some level of purity. LINQ and Rx are more significant changes, although still nested in very impure host languages. It's still quite fascinating: what should be the &quot;bottom language&quot; - the
+ language that everything else is expressed in terms of. Also interesting is the interaction between operating system and VM. We've already seen some discussion on this Dave Probert on the UMS and in the Flapjax interview.</p>
+<p>&nbsp;</p>
+<p>Observing C-9 . . . <img src='http://ecn.channel9.msdn.com/o9/content/images/emoticons/emotion-1.gif' alt='Smiley' /></p>
+
+	</div>
+</div>
+
+			</li><li class=" 
+					microsoft">
+<div class="author">
+		<a class="button" href="/Niners/brianbec"><img alt="brianbec" class="avatar" src="http://mschnlnine.vo.llnwd.net/d1/Dev/App_Themes/C9/images/avatars/c9classic/default.gif" title="brianbec" /><span class="name">brianbec</span></a>
+</div>
+
+<div class="post" id="c633905323820000000">
+	<div class="post-header">
+		<a class="permalink" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905323820000000" title="Comment Permalink">Oct 07, 2009 at 10:13&#160;AM</a>
+				<a class="add quote button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905323820000000" title="brianbec">quote</a>
+				<a class="add reply button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905323820000000" title="brianbec">reply</a>
+	</div>
+	<div class="post-content">
+			
+<p>It's no accident that Emacs (your grandfather's IDE)&nbsp;&#43; Lisp go together like, mmmmm, tea &amp; crumpets? caramel &amp; peanuts? sunshine &amp; daisies? drum &amp; bass? All but the core of Emacs is written in ELisp, and Emacs has a zillion indentation and paren-balancing
+ tricks for making coding of Lisp (a.k.a. Lots of Insipid Silly Parentheses) tolerable.
+</p>
+
+	</div>
+</div>
+
+			</li><li>
+<div class="author">
+		<a class="button" href="/Niners/exoteric"><img alt="Bent Rasmussen" class="avatar" src="https://rev9.blob.core.windows.net/avatar/d5cade37-abff-4c03-ad1d-c90a5c0919e3.png" title="Bent Rasmussen" /><span class="name">exoteric</span></a><span class="caption">wrap 'n&#160;roll</span>
+</div>
+
+<div class="post" id="c633905329980000000">
+	<div class="post-header">
+		<a class="permalink" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905329980000000" title="Comment Permalink">Oct 07, 2009 at 10:23&#160;AM</a>
+				<a class="add quote button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905329980000000" title="exoteric">quote</a>
+				<a class="add reply button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905329980000000" title="exoteric">reply</a>
+	</div>
+	<div class="post-content">
+			
+<p>And follow-up to your excellent interview, Brian.</p>
+<p>&nbsp;</p>
+<p><a href="http://www.infoq.com/presentations/Value-Identity-State-Rich-Hickey">Persistent Data Structures &amp; Managed References</a>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Quotes of the talk:</p>
+<ul>
+<li>&quot;<em>Unless you think of composites as values, you're doomed, You might not be doomed now, but you'll be doomed in the future.</em>&quot;
+</li><li>&quot;<em>...and our class libraries have destroyed our brains in this area</em>&quot; (speaking of mutable objects, specifically a mutable date object)
+</li></ul>
+<p>And the paper mentioned: &quot;<em><a href="http://www.cs.kent.ac.uk/people/staff/dat/miranda/wadler87.pdf">Why calculating is better than scheming</a></em>&quot;</p>
+<p><a href="http://www.infoq.com/presentations/Value-Identity-State-Rich-Hickey"></a></p>
+
+	</div>
+</div>
+
+			</li><li>
+<div class="author">
+		<a class="button" href="/Niners/staceyw"><img alt="William Stacey" class="avatar" src="http://ecn.channel9.msdn.com/o9/avatars/staceyw_c9.jpg" title="William Stacey" /><span class="name">staceyw</span></a><span class="caption">Before C# there was&#160;darkness...</span>
+</div>
+
+<div class="post" id="c633905627680000000">
+	<div class="post-header">
+		<a class="permalink" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905627680000000" title="Comment Permalink">Oct 07, 2009 at 6:39&#160;PM</a>
+				<a class="add quote button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905627680000000" title="staceyw">quote</a>
+				<a class="add reply button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905627680000000" title="staceyw">reply</a>
+	</div>
+	<div class="post-content">
+			
+<p>What ever happened to that&nbsp;project Brian was working on (back in a vid with Erik on monads).&nbsp; Is he almost ready to c9 it?&nbsp; Language, library, or other?</p>
+
+	</div>
+</div>
+
+			</li><li class="owner 
+					staff">
+<div class="author">
+		<a class="button" href="/Niners/Charles"><img alt="Charles" class="avatar" src="http://ecn.channel9.msdn.com/o9/avatars/Charles_c9.jpg" title="Charles" /><span class="name">Charles</span></a><span class="caption">Welcome&#160;Change</span>
+</div>
+
+<div class="post" id="c633905629420000000">
+	<div class="post-header">
+		<a class="permalink" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905629420000000" title="Comment Permalink">Oct 07, 2009 at 6:42&#160;PM</a>
+				<a class="add quote button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905629420000000" title="Charles">quote</a>
+				<a class="add reply button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905629420000000" title="Charles">reply</a>
+	</div>
+	<div class="post-content">
+			
+<p>Stay tuned <img src='http://ecn.channel9.msdn.com/o9/content/images/emoticons/emotion-1.gif' alt='Smiley' /><br />C</p>
+
+	</div>
+</div>
+
+			</li><li>
+<div class="author">
+		<a class="button" href="/Niners/joechung"><img alt="Joe Chung" class="avatar" src="http://mschnlnine.vo.llnwd.net/d1/Dev/App_Themes/C9/images/avatars/c9classic/default.gif" title="Joe Chung" /><span class="name">joechung</span></a>
+</div>
+
+<div class="post" id="c633905686650000000">
+	<div class="post-header">
+		<a class="permalink" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905686650000000" title="Comment Permalink">Oct 07, 2009 at 8:17&#160;PM</a>
+				<a class="add quote button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905686650000000" title="joechung">quote</a>
+				<a class="add reply button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905686650000000" title="joechung">reply</a>
+	</div>
+	<div class="post-content">
+			
+<p>(func1</p>
+<p>&nbsp;&nbsp;&nbsp; (func2 x y)</p>
+<p>&nbsp;&nbsp;&nbsp; (func3 a b))</p>
+<p>&nbsp;</p>
+<p>would look better IMHO though</p>
+<p>&nbsp;</p>
+<p>(func1 (func2 x y) (func3 a b))</p>
+<p>&nbsp;</p>
+<p>isn't all that bad to begin with.</p>
+<p>&nbsp;</p>
+<p>So glad to see the Clojure for the CLR project revitalized! Kudos for getting Rich Hickey in a C9 interview, guys!</p>
+
+	</div>
+</div>
+
+			</li><li>
+<div class="author">
+		<a class="button" href="/Niners/dmiller"><img alt="David Miller" class="avatar" src="http://mschnlnine.vo.llnwd.net/d1/Dev/App_Themes/C9/images/avatars/c9classic/default.gif" title="David Miller" /><span class="name">dmiller</span></a>
+</div>
+
+<div class="post" id="c633905775980000000">
+	<div class="post-header">
+		<a class="permalink" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905775980000000" title="Comment Permalink">Oct 07, 2009 at 10:46&#160;PM</a>
+				<a class="add quote button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905775980000000" title="dmiller">quote</a>
+				<a class="add reply button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905775980000000" title="dmiller">reply</a>
+	</div>
+	<div class="post-content">
+			
+<p>I just updated the status on ClojureCLR from 'alpha' to 'beta'.&nbsp;&nbsp; This is not an attempt to improve the code via wishful thinking, but an update to the README to bring it in accord with the current state of the code.</p>
+<p>&nbsp;</p>
+<p>The project is under active development.&nbsp;&nbsp; It is usable.&nbsp; Only beta because of some things that still need work: a few missing things in CLR interop (assembly-qualified names for types, handling generic types); a need for an installer for casual users (as
+ opposed to the current install process more suitable for the hardy); and some more tuning for performance.&nbsp; The wiki on the github site (<a href="http://github.com/richhickey/clojure-clr">http://github.com/richhickey/clojure-clr</a>) is the best place to get
+ a sense of what remains to be done.</p>
+<p>&nbsp;</p>
+<p>What it needs most at the moment is people using it.</p>
+
+	</div>
+</div>
+
+			</li><li>
+<div class="author">
+		<a class="button" href="/Niners/exoteric"><img alt="Bent Rasmussen" class="avatar" src="https://rev9.blob.core.windows.net/avatar/d5cade37-abff-4c03-ad1d-c90a5c0919e3.png" title="Bent Rasmussen" /><span class="name">exoteric</span></a><span class="caption">wrap 'n&#160;roll</span>
+</div>
+
+<div class="post" id="c633905817970000000">
+	<div class="post-header">
+		<a class="permalink" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905817970000000" title="Comment Permalink">Oct 07, 2009 at 11:56&#160;PM</a>
+				<a class="add quote button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905817970000000" title="exoteric">quote</a>
+				<a class="add reply button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633905817970000000" title="exoteric">reply</a>
+	</div>
+	<div class="post-content">
+			
+<p>It looks like the intuition that a LISP(y) language like Clojure could be a nice compilation target for other languages, due to its extremely simple foundations, is not completely insane: I found this paper on compiling
+<a href="http://www.cs.utah.edu/~kathyg/java-to-scheme.pdf">Java to Scheme</a>&nbsp;(many times you see compiling Scheme to Java instead; reminding me of Gilad Bracha's statement about having a dynamic language at the bottom and decorating it with types afterwards:
+ static on dynamic, not dynamic on static). The same should apply equally well to C#, VB et al. What do you think about the idea of using something like Clojure as the &quot;bottom language&quot; rather than just a top-language? In particular having more or less all
+ data expressed in the nice Clojure datatypes? Sounds nice, except for mutable objects, reading...</p>
+<p>&nbsp;</p>
+<p>PS - <a href="http://lambda-the-ultimate.org/node/2317">The feasibility of Haskell in Scheme</a></p>
+
+	</div>
+</div>
+
+			</li><li class=" 
+					microsoft">
+<div class="author">
+		<a class="button" href="/Niners/brianbec"><img alt="brianbec" class="avatar" src="http://mschnlnine.vo.llnwd.net/d1/Dev/App_Themes/C9/images/avatars/c9classic/default.gif" title="brianbec" /><span class="name">brianbec</span></a>
+</div>
+
+<div class="post" id="c633949462670000000">
+	<div class="post-header">
+		<a class="permalink" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633949462670000000" title="Comment Permalink">Nov 27, 2009 at 11:17&#160;AM</a>
+				<a class="add quote button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633949462670000000" title="brianbec">quote</a>
+				<a class="add reply button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c633949462670000000" title="brianbec">reply</a>
+	</div>
+	<div class="post-content">
+			
+<p>I've always liked the idea of a collection of interacting BCLs, each in its own little isolated realm of innocent, joyful imperativeness&nbsp;(that is, each in its own &quot;ambient monad,&quot; whether that be just an appdomain or a whole process). Now, just design interprocess
+ or inter-domain communication as monadic binds in serial and in parallel, plunk the whole thing down in a synchronization and scheduling discipline, and away you go.&nbsp;The synch-and-scheduling discipline could be Time Warp (though we still need to formulate
+ the Time Warp monad precisely), or it could be IObserv* (we know this monad), or delimited continuations and coroutines (likely isomorphic to IObserv*).&nbsp;</p>
+
+	</div>
+</div>
+
+			</li><li>
+<div class="author">
+		<a class="button" href="/Niners/frou"><img alt="frou" class="avatar" src="http://ecn.channel9.msdn.com/o9/avatars/frou_c9.jpg" title="frou" /><span class="name">frou</span></a>
+</div>
+
+<div class="post" id="c634086842970000000">
+	<div class="post-header">
+		<a class="permalink" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c634086842970000000" title="Comment Permalink">May 05, 2010 at 12:24&#160;PM</a>
+				<a class="add quote button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c634086842970000000" title="frou">quote</a>
+				<a class="add reply button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c634086842970000000" title="frou">reply</a>
+	</div>
+	<div class="post-content">
+			
+<p>That was just great.</p>
+<p>&nbsp;</p>
+<p>It's really a&nbsp;privilege to have access to material like this for free, so thank you.&nbsp;</p>
+
+	</div>
+</div>
+
+			</li><li class="owner 
+					staff">
+<div class="author">
+		<a class="button" href="/Niners/Charles"><img alt="Charles" class="avatar" src="http://ecn.channel9.msdn.com/o9/avatars/Charles_c9.jpg" title="Charles" /><span class="name">Charles</span></a><span class="caption">Welcome&#160;Change</span>
+</div>
+
+<div class="post" id="c634093958800000000">
+	<div class="post-header">
+		<a class="permalink" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c634093958800000000" title="Comment Permalink">May 13, 2010 at 6:04&#160;PM</a>
+				<a class="add quote button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c634093958800000000" title="Charles">quote</a>
+				<a class="add reply button" href="/Shows/Going+Deep/Expert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure#c634093958800000000" title="Charles">reply</a>
+	</div>
+	<div class="post-content">
+			
+<p>You're welcome! Much more to come!</p>
+<p>C</p>
+
+	</div>
+</div>
+
+			</li>
+		</ul>
+<div id="adminRemoveComment" class="text">
+	<h2 class="removeThisComment">Remove this comment</h2>
+	<h2 class="removeThisThread">Remove this thread</h2>
+	<div class="message alert"></div>
+	<form method="POST" action="#">
+		<input name="__RequestVerificationToken" type="hidden" value="oO5ijp6W2He0s4d/sQTX5FehBOZO97gPSxZzGVTAk4DcUvaDhX/kxNjDUpciSDP9ONLd2cD/+6Z/jDhLmt2UzEeqXMqgcUFuMiIGcXNpUIkBCs8AEljPD3fIRK5RrrbNjEisTyzBMoogNAtAnWeGTyoUfnQ=" />
+		<dl>
+			<dt>
+				<input type="radio" name="reason" value="Spam" id="deleteCommentReasonSpam" checked="checked"/>
+			</dt>
+			<dd>
+				<label for="deleteCommentReasonSpam">Spam</label>
+			</dd>
+			<dt>
+				<input type="radio" name="reason" value="guidlines" id="deleteCommentReasonGuidlines"/>
+			</dt>
+			<dd>
+				<label for="deleteCommentReasonGuidlines">Violates C9 guidelines</label>
+			</dd>
+			<dt>
+				<input type="radio" name="reason" value="language" id="deleteCommentLanguage"/>
+			</dt>
+			<dd>
+				<label for="deleteCommentLanguage">Foul language</label>
+			</dd>
+			<dt>
+				<input type="radio" name="reason" value="attack" id="deleteCommentPersonalAttack"/>
+			</dt>
+			<dd>
+				<label for="deleteCommentPersonalAttack">Personal attacks</label>
+			</dd>
+		</dl>
+		<input type="submit" value="Remove Comment" class="submit removeThisComment"/>
+		<input type="submit" value="Remove Thread" class="submit removeThisThread"/>
+	</form>
+	<a class="close" href="#">close</a>
+</div>
+
+
+
+
+	</div>
+
+<div class="comments add-comment">
+		<div class="comments-header">
+			<h2>Comment on the Post</h2>
+		</div><div class="goSignIn">
+			<p><strong>Already have a Channel 9 account?</strong> Please <a href="https://login.live.com/login.srf?wa=wsignin1.0&amp;rpsnv=11&amp;ct=1293265081&amp;rver=6.1.6195.0&amp;wp=MBI&amp;wreply=http:%2F%2Fchannel9.msdn.com%2Fshows%2FGoing%2BDeep%2FExpert-to-Expert-Rich-Hickey-and-Brian-Beckman-Inside-Clojure&amp;id=47159">sign&#160;in</a></p>
+		</div>
+		<form method="post" id="commentState" class="commentform">
+			<div class="validation-summary-valid" id="validationSummary"><ul><li style="display:none"></li>
+</ul></div>
+			<fieldset>
+				<ol>
+					<li class="subject">
+						<span class="field-validation-valid" id="CommentState_Subject_validationMessage"></span>
+						<label for="CommentState_Subject">Are you human? If so, leave this field blank.</label>
+						<input id="CommentState_Subject" name="CommentState.Subject" type="text" value="" />
+					</li>
+						<li>
+							<span class="field-validation-valid" id="CommentState_AnonymousUser_DisplayName_validationMessage"></span>
+							<label for="CommentState_AnonymousUser_DisplayName">Name</label>
+							<input id="CommentState_AnonymousUser_DisplayName" name="CommentState.AnonymousUser.DisplayName" type="text" value="" />
+						</li>
+						<li>
+							<span class="field-validation-valid" id="CommentState_AnonymousUser_Email_validationMessage"></span>
+							<label for="CommentState_AnonymousUser_Email">Email</label>
+							<input id="CommentState_AnonymousUser_Email" name="CommentState.AnonymousUser.Email" type="text" value="" />
+						</li>
+					<li class="textarea">
+							<span class="field-validation-valid" id="CommentState_AnonymousBody_validationMessage"></span>
+							<label for="CommentState_AnonymousBody">Comment</label>
+							<textarea autocomplete="off" class="non-html" cols="100" id="CommentState_AnonymousBody" name="CommentState.AnonymousBody" rows="10">
+</textarea>
+					</li>
+				</ol>
+			</fieldset>
+			<input name="__RequestVerificationToken" type="hidden" value="+adSzQUUcSsOI0zNPvOuvefKCsC6I8wtWgILYw9vNcgaKMTknWymIjle3KJPjPsk93NIRDIJleM2/o01olj4nJJ9DTyOeIejGETdaqsfqXCH+Yxxit2VvZfjfp+i8aVmD26/zHd3diSE30u7QhqqMq+t4ZQ=" />
+			<p class="submit">
+				<input type="submit" value="Comment"/>
+			</p>
+		</form><script type="text/javascript">
+//<![CDATA[
+if (!window.mvcClientValidationMetadata) { window.mvcClientValidationMetadata = []; }
+window.mvcClientValidationMetadata.push({"Fields":[{"FieldName":"CommentState.Subject","ReplaceValidationMessageContents":true,"ValidationMessageId":"CommentState_Subject_validationMessage","ValidationRules":[]},{"FieldName":"CommentState.AnonymousUser.DisplayName","ReplaceValidationMessageContents":true,"ValidationMessageId":"CommentState_AnonymousUser_DisplayName_validationMessage","ValidationRules":[{"ErrorMessage":"The Name field is required.","ValidationParameters":{},"ValidationType":"required"}]},{"FieldName":"CommentState.AnonymousUser.Email","ReplaceValidationMessageContents":true,"ValidationMessageId":"CommentState_AnonymousUser_Email_validationMessage","ValidationRules":[{"ErrorMessage":"The Email field is required.","ValidationParameters":{},"ValidationType":"required"},{"ErrorMessage":"Please enter a valid email address","ValidationParameters":{},"ValidationType":"email"}]},{"FieldName":"CommentState.AnonymousBody","ReplaceValidationMessageContents":true,"ValidationMessageId":"CommentState_AnonymousBody_validationMessage","ValidationRules":[]}],"FormId":"commentState","ReplaceValidationSummary":true,"ValidationSummaryId":"validationSummary"});
+//]]>
+</script>
+</div>
+
+</div>
+
+
+
+	</div>
+
+	<div class="pageNavHolder">
+	</div>
+
+	<div class="sidebarHolder">
+
+	
+	<div class="sidebar">
+			<div class="related series">
+				<h2>
+					More episodes 
+					in this show
+				</h2><ul><li>
+			<a href="&#47;Shows&#47;Going&#43;Deep&#47;Lecture-Series-Erik-Meijer-Functional-Programming-Fundamentals-Chapter-1">
+	<img class="thumb" src="http&#58;&#47;&#47;ecn.channel9.msdn.com&#47;o9&#47;ch9&#47;7&#47;9&#47;3&#47;4&#47;9&#47;4&#47;C9LecturesMeijerFunctionalChapter1_320_ch9.png" alt="C9 Lectures&#58; Dr. Erik Meijer - Functional Programming Fundamentals, Chapter 1 of 13"/>
+	<span class="title">C9 Lectures: Dr. Erik Meijer - Functional&#8230;</span></a>
+	</li><li>
+			<strong>
+	<img class="thumb" src="http&#58;&#47;&#47;ecn.channel9.msdn.com&#47;o9&#47;ch9&#47;8&#47;4&#47;0&#47;2&#47;9&#47;4&#47;E2EBeckmanHickeyClojure_320_ch9.png" alt="Expert to Expert&#58; Rich Hickey and Brian Beckman - Inside Clojure"/>
+	<span class="title">Expert to Expert: Rich Hickey and Brian Beckman -&#8230;</span></strong>
+	</li><li>
+			<a href="&#47;Shows&#47;Going&#43;Deep&#47;Lecture-Series-Erik-Meijer-Functional-Programming-Fundamentals-Chapter-2">
+	<img class="thumb" src="http&#58;&#47;&#47;ecn.channel9.msdn.com&#47;o9&#47;ch9&#47;8&#47;9&#47;3&#47;4&#47;9&#47;4&#47;C9LecturesMeijerFPC2_320_ch9.png" alt="C9 Lectures&#58; Dr. Erik Meijer - Functional Programming Fundamentals, Chapter 2 of 13"/>
+	<span class="title">C9 Lectures: Dr. Erik Meijer - Functional&#8230;</span></a>
+	</li>
+</ul>
+
+				<p class="more"><a href="&#47;Shows&#47;Going&#43;Deep">See More</a></p>
+			</div>
+			<div class="related">
+				<h2>Related posts</h2><ul><li>
+			<a href="&#47;Shows&#47;Going&#43;Deep&#47;C9-Lectures-Dr-Ralf-Lmmel-Advanced-Functional-Programming-Type-Classes">
+	<img class="thumb" src="http&#58;&#47;&#47;ecn.channel9.msdn.com&#47;o9&#47;ch9&#47;7020&#47;567020&#47;C9LecturesRalfLaemmelAFPTypeClasses_320_ch9.png" alt="C9 Lectures&#58; Dr. Ralf L&#228;mmel - Advanced Functional Programming - Type Classes"/>
+	<span class="title">C9 Lectures: Dr. Ralf Lämmel - Advanced Functional&#8230;</span></a>
+	</li><li>
+			<a href="&#47;Shows&#47;Going&#43;Deep&#47;C9-Lectures-Dr-Ralf-Lmmel-Advanced-Functional-Programming-Evolution-of-an-Interpreter">
+	<img class="thumb" src="http&#58;&#47;&#47;ecn.channel9.msdn.com&#47;o9&#47;previewImages&#47;100&#47;569400_100x75.jpg" alt="C9 Lectures&#58; Dr. Ralf L&#228;mmel - Advanced Functional Programming - Evolution of an Interpreter"/>
+	<span class="title">C9 Lectures: Dr. Ralf Lämmel - Advanced Functional&#8230;</span></a>
+	</li><li>
+			<a href="&#47;Shows&#47;Going&#43;Deep&#47;Wes-Dyer-and-Jeffrey-Van-Gogh-Inside-Rx-Virtual-Time">
+	<img class="thumb" src="http&#58;&#47;&#47;ecn.channel9.msdn.com&#47;o9&#47;ch9&#47;6149&#47;566149&#47;DyerVanGoghRxVirtualTime_320_ch9.png" alt="Wes Dyer and Jeffrey Van Gogh&#58; Rx Virtual Time"/>
+	<span class="title">Wes Dyer and Jeffrey Van Gogh: Rx Virtual Time</span></a>
+	</li>
+</ul>
+
+			</div>
+	</div>	
+	</div>
+</div>
+
+<div class="footer">
+	<div class="container">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/us/" class="ccl">
+	<img alt="Creative Commons License" src="/styles/images/somerights20.png"/>
+</a>
+<p class="copyright">
+	&copy; 2010 Microsoft. <a href="/info">Except where designated</a> as licensed by <br/>
+	<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/us/">Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 License</a>,<br/>
+	Microsoft reserves all rights associated with the materials on this site.
+</p>
+<ul>
+	<li class="subscribe"><a href="&#47;Feeds&#47;RSS">Subscribe to Channel 9</a></li>
+	<li class="followus"><a href="http://twitter.com/ch9">Follow Us @Ch9</a></li>
+	<li class="feedback"><a href="http://r.ch9.ms/feedback">Feedback</a></li>
+	<li class="privacy"><a href="http://privacy.microsoft.com">Privacy Statement</a></li>
+	<li class="termsofuse"><a href="http://www.microsoft.com/info/cpyright.mspx">Terms Of Use</a></li>
+	<li class="codeofconduct"><a href="&#47;CodeOfConduct">Code Of Conduct</a></li>
+	<li class="contactus"><a href="&#47;ContactUs">Contact Us</a></li>
+</ul>
+
+	</div>
+</div>
+	<script src="/scripts/jquery/jqueryUI/jquery-ui-1.8.6/core_widget.js?v=c4RBEDpCu19QrrJOEy4QH3a3gEY1" type="text/javascript"></script>
+	<script src="/scripts/ratings.js?v=c4RBEDpCu19QrrJOEy4QH3a3gEY1" type="text/javascript"></script>
+	<script src="/scripts/comments.js?v=c4RBEDpCu19QrrJOEy4QH3a3gEY1" type="text/javascript"></script>
+	<script src="/scripts/markDirty.js?v=c4RBEDpCu19QrrJOEy4QH3a3gEY1" type="text/javascript"></script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<script src="/scripts/admin/removeComment.js?v=c4RBEDpCu19QrrJOEy4QH3a3gEY1" type="text/javascript"></script>
+	<script src="/scripts/tiny_mce/tiny_mce-3.3.9.2/tiny_mce.js?v=c4RBEDpCu19QrrJOEy4QH3a3gEY1" type="text/javascript"></script>
+	<script src="/scripts/tiny_mce/tiny_mce-3.3.9.2/jquery.tinymce.js?v=c4RBEDpCu19QrrJOEy4QH3a3gEY1" type="text/javascript"></script>
+	<script src="/scripts/tiny_mce_init.js?v=c4RBEDpCu19QrrJOEy4QH3a3gEY1" type="text/javascript"></script>
+	<script src="/scripts/validation.js?v=c4RBEDpCu19QrrJOEy4QH3a3gEY1" type="text/javascript"></script>
+	<script src="/scripts/syntaxhighlighter.js?v=c4RBEDpCu19QrrJOEy4QH3a3gEY1" type="text/javascript"></script>
+	<script src="/scripts/sharing_init.js?v=c4RBEDpCu19QrrJOEy4QH3a3gEY1" type="text/javascript"></script>
+	<!--[if gt IE 8]><script src="/scripts/ie9_perf.js?v=c4RBEDpCu19QrrJOEy4QH3a3gEY1" type="text/javascript"></script><![endif]--><!-- START OF SmartSource Data Collector TAG -->
+<!-- Copyright (c) 1996-2009 WebTrends Inc.  All rights reserved. -->
+<!-- Version: MS.3.0.0 -->
+<script src="/scripts/wt.js?v=c4RBEDpCu19QrrJOEy4QH3a3gEY1" type="text/javascript"></script>
+
+<!-- Warning: The two script blocks below must remain inline. Moving them to an external -->
+<!-- JavaScript include file can cause serious problems with cross-domain tracking.      -->
+<script type="text/javascript">
+	//<![CDATA[
+var _tag=new WebTrends();
+_tag.dcsid="dcs1wotjh10000w0irc493s0e_6x1g";
+_tag.fpcdom=".channel9.msdn.com";
+_tag.dcsGetId();
+_tag.trackevents=true;
+//]]>>
+</script>
+
+<script type="text/javascript">
+	//<![CDATA[
+// Add custom parameters here.
+//_tag.DCSext.param_name=param_value;
+_tag.dcsCollect();
+//]]>>
+</script>
+
+<noscript>
+	<div>
+		<img alt="DCSIMG" id="DCSIMG" width="1" height="1" src="http://m.webtrends.com/dcs1wotjh10000w0irc493s0e_6x1g/njs.gif?dcsuri=/nojavascript&amp;WT.js=No&amp;WT.tv=MS.3.0.0"/>
+	</div>
+</noscript>
+<!-- END OF SmartSource Data Collector TAG -->
+
+</body>
+</html>
