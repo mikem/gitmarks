@@ -1,0 +1,285 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html dir='ltr' lang='en-US' xmlns='http://www.w3.org/1999/xhtml'>
+  <head profile='http://gmpg.org/xfn/11'>
+    <title>
+      200 Page Manual on Inversion of Control (plus or minus 199)
+    </title>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <meta content='yv5VvILGOWUiDER1MmUE9R6wQthPiQ2YWBAcTCofM0g' name='google-site-verification' />
+    <link href='/css/site.css' media='screen' rel='stylesheet' type='text/css' />
+    <link href='/css/screen.css' media='screen' rel='stylesheet' type='text/css' />
+    <link href='http://feeds.feedburner.com/wekeroad/EeKc' rel='alternate' type='application/atom+xml' />
+    <link href='http://blog.wekeroad.com' rel='index' title='Rob Conery' />
+    <!--[if lt IE 8]> <link rel="stylesheet" href="/css/lib/ie.css" type="text/css" media="screen, projection"> <![endif]-->
+    <link href='/css/shCore.css' media='screen' rel='stylesheet' type='text/css' />
+    <link href='/css/shThemeDefault.css' media='screen' rel='stylesheet' type='text/css' />
+    <script src='/scripts/shCore.js'></script>
+    <script src='/scripts/shBrushCSharp.js'></script>
+    <script src='/scripts/shBrushRuby.js'></script>
+    <script src='/scripts/shBrushXml.js'></script>
+  </head>
+  <body>
+    <div class='container'>
+      <div class='column span-24' id='elhead'>
+        <div class='column span-6 contact' id='owner'>
+          <a href='/contact'>
+            <img alt='Contact me' src='/images/contact.png' />
+          </a>
+        </div>
+        <div class='column span-10 logo' id='logo'>
+          <a class='logo' href='/' title="Rob Conery's Blog">
+            <h1>
+              <span>Rob Conery's Blog</span>
+            </h1>
+          </a>
+        </div>
+        <div class='column span-6 last subscriptions' id='subscriptions'>
+          <a href='http://feeds.feedburner.com/wekeroad/EeKc' target='_blank'>
+            <img alt='Subscriptions' src='/images/subscribe.png' />
+          </a>
+        </div>
+        <div class='column span-24' id='ribbon'>
+          <div class='column span-2'>
+            <a href='/search'>
+              Archives
+            </a>
+          </div>
+          <div class='column span-18' style='text-align:center'>
+            Hanalei, Hawaii 2010-12-24
+          </div>
+          <div class='column span-3 last' style='text-align:right'></div>
+          <a href='http://feeds.feedburner.com/wekeroad/EeKc'>
+            <img alt='' src='http://feeds.feedburner.com/~fc/wekeroad/EeKc?bg=99CCFF&amp;fg=444444&amp;anim=1' style='border:0;' width='88' />
+          </a>
+        </div>
+      </div>
+      <div class='column span-18 colborder'>
+        <div id='post'>
+          <h1>200 Page Manual on Inversion of Control (plus or minus 199)</h1>
+          <div id='article-summary'>
+            <p>I’d like to preface this treatise with an appeal to those of lesser intellect – please close your browser now. The concepts you read below are quite high-minded and we have a secret handshake you don’t know. We are “The IoC Community” and we rock the concepts yo.  For those who haven’t read the 200 page manual on IoC – well here ya go. If your little brain can’t handle the complexities of this post might I suggest turning on Howard Stern and Spolsky at the same time, full volume, and holding your breath until you see patterns in the air. This usually helps when wondering WTF Joel is talking about.  Let’s take a walk on the Cool Kid side of the street and see what Inversion of Control is all about…</p>
+          </div>
+          <div class='dateline'>
+            <p>Thursday, October 08, 2009</p>
+          </div>
+          <p>I’d like to preface this treatise with an appeal to those of lesser intellect – please close your browser now. The concepts you read below are quite high-minded and we have a secret handshake you don’t know. We are “The IoC Community” and we rock the concepts yo.</p>  <p>For those who haven’t read the 200 page manual on IoC – well here ya go. If your little brain can’t handle the complexities of this post might I suggest turning on Howard Stern and Spolsky at the same time, full volume, and holding your breath until you see patterns in the air. This usually helps when wondering WTF Joel is talking about.</p>  <p>Let’s take a walk on the Cool Kid side of the street and see what Inversion of Control is all about…</p> <!--more-->  <h2>The Setup: My Blog</h2>  <p>So I’m building my blog (more on that later) and it makes for a really good demo since most people understand blogs. So I’ll use it for this discussion. Let’s pretend I have a PostController (using MVC) and this thing shows Posts.</p>  <p>I have a single action called “Index” that grabs data from my database and sends it down to my view (let’s pretend I’m using Linq to SQL):</p>  <pre class="csharpcode"><span class="kwrd">public</span> ActionResult Index(){&#x000A;   var db=<span class="kwrd">new</span> Model.DataContext();&#x000A;   var posts=db.Posts.Where(x=&gt;x.IsPublished);&#x000A;   <span class="kwrd">return</span> View(posts);&#x000A;}</pre>
+          
+          <p>Groovy. Now let’s get on with this…</p>
+          
+          <h5>Analysis</h5>
+          
+          <p>What I’ve done here is pretty typical, and what you would see in any demo given at a Microsoft conference. The person writing this code can easily invoke the “This is a demo/small app so shutup” rule when the Cool Kids cry foul – and that would hold most likely as it would be either Hanselman or Scott Gu giving the demo and those guys have swagger like that. </p>
+          
+          <p>There’s no need for complexity at this point – which is true, however it should be noted that<strong> we’ve incurred what’s known as “Technical Debt”</strong> – which is akin to repairing a go-kart with duct tape. Like debt, you could live with it, but more than likely it will cause you problems as you build out your app.</p>
+          
+          <h2>The Next Step: Making Sure It Works</h2>
+          
+          <p>Typically what you might do, as a developer, is to hit F5 (Debug/Run) to see if data appears on your page. It’s still magic to me after all these years to see data from my DB hit the screen – I dig that rush and for a moment my little itch is scratched and I feel good about myself. I see data there – so it works.</p>
+          
+          <p>But then I begin to think – do I really want to hit F5 every time I want to make sure this page runs right? <strong>I’ll appease the Cool Kids and add a test:</strong></p>
+          
+          <pre class="csharpcode">[Test]&#x000A;<span class="kwrd">public</span> <span class="kwrd">void</span> Post_Should_Show_Posts(){&#x000A;   var controller=<span class="kwrd">new</span> PostController();&#x000A;   var view=controller.Index() <span class="kwrd">as</span> ViewResult();&#x000A;   var posts=view.ViewData.Model <span class="kwrd">as</span> IEnumerable&lt;Post&gt;;&#x000A;   Assert.IsGreaterThan(0,posts);&#x000A;}</pre>
+          
+          <p>&#160;</p>
+          
+          <p>What’s this test telling you if you put your programmer’s hat on? The title is a bit misleading as we don’t know what the view will actually “Show” – moreover we’re just testing that we have posts. </p>
+          
+          <p><strong>This test will fail – immediately – and it will keep failing no matter how much code we write</strong>. Why? Because I have no data in my database and this test will fail until I add some. Being the impatient type I add a record to my DB and my test passes.</p>
+          
+          <p>If your geek senses are tingling – that’s a good thing! This test is pointless to say the least – what “unit of functionality” is it testing? None. And if you look at this a bit longer you’ll start to realize that I’m not chanting or smoking a secret mix of techno-herb and sassy weed – I’m just using common sense and basic coding principles. What happens if I remove all records again? The test fails. Does that mean my Controller won’t show posts? Not at all – and this is one main reason the People Who Like Testing (Cool Kids) advocate against hitting the database.</p>
+          
+          <p class="wtf">Well what’s the point of testing Controllers then if it’s this hard!</p>
+          
+          <p>It’s not hard – it simply requires you to look a bit further and use some tricks – that’s all.</p>
+          
+          <h2>Rewind and Refactor: Using an Interface</h2>
+          
+          <p>Interfaces are scary to many developers at first – they seem rather pointless until you actually use them. In this sense they work perfectly since I don’t want to talk to my database at all – what I really want in my Controller is the ability to get data from *somewhere* (not necessarily a SQL Database). That’s the important part – and yes it’s an abstraction – but that’s one step towards the idea of “Loose Coupling”. </p>
+          
+          <p>When I wrote my initial Controller Action above (Index), I planted data access code right in it from Linq to Sql. In doing that I also made a decision that was explicit: whenever I use this controller, I also need to make sure I have my Linq to Sql classes set up and pointed to my Post database. This is called “coupling” and you can think of Linq To Sql and your PostController on a date, having babies if that helps.</p>
+          
+          <p>Let’s pretend I made an interface (IPostRepository) with a single method called “GetPosts()” which returns an IEnumerable&lt;Post&gt;. Now I can use it instead of Linq:</p>
+          
+          <pre class="csharpcode">IPostRepository repo;&#x000A;<span class="kwrd">public</span> ActionResult Index(){&#x000A;   var posts=repo.GetPosts();&#x000A;   <span class="kwrd">return</span> View(posts);&#x000A;}</pre>
+          
+          <p>This is a good first step – but how does it help me? I can’t instantiate an interface can I? So how the heck to I make this work?</p>
+          
+          <h2>Next Step: Dependency Injection</h2>
+          
+          <p>Put in plain English: our PostController has a dependency on data from the IPostRepository – it needs it to function (which is a dependency sort of like your college roommate needed to wake-n-bake in order to get moving). </p>
+          
+          <p>We could just implement our interface in a concrete class (let’s call it SQLPostRepository since we’re using SQL Server) somewhere and instantiate that:</p>
+          
+          <pre class="csharpcode">IPostRepository repo;&#x000A;<span class="kwrd">public</span> ActionResult Index(){&#x000A;   repo=<span class="kwrd">new</span> SQLPostRepository();&#x000A;   var posts=repo.GetPosts();&#x000A;   <span class="kwrd">return</span> View(posts);&#x000A;}</pre>
+          
+          <p>Now the code works, but we’ve traded one dependency for another (on SQLPostRepository) – what did we gain here? Well nothing actually – and the Cool Kids are getting pissed.</p>
+          
+          <p>What we should do is to allow the calling code to specify this dependency when creating the class, defaulting to the SQLPostRepository if nothing was set:</p>
+          
+          <pre class="csharpcode">IPostRepository repo;&#x000A;<span class="rem">//injectable constructor</span>&#x000A;<span class="kwrd">public</span> PostController(IPostRepository postRepository){&#x000A;   repo=postRepository;&#x000A;}&#x000A;&#x000A;<span class="rem">//default</span>&#x000A;<span class="kwrd">public</span> PostController(){&#x000A;   repo=<span class="kwrd">new</span> SQLPostRepository();&#x000A;}&#x000A;&#x000A;<span class="kwrd">public</span> ActionResult Index(){&#x000A;   var posts=repo.GetPosts();&#x000A;   <span class="kwrd">return</span> View(posts);&#x000A;}</pre>
+          
+          <p>This works, and now we can test this by sending in a fake repository (made up of in-memory lists) or we can use mocking, which basically “lies” about stuff. I’m going to sidestep the testing aspect here (easily will derail the post) as I want to stay on Dependency Injection and Inversion of Control.</p>
+          
+          <h5>Analysis.</h5>
+          
+          <p>On the face of it we’ve “loosened things up” which is always good as now we can plug in SubSonic instead of Linq to Sql if we wanted to, or next year we can use the [Groovy New ORM] that’s all the rage.</p>
+          
+          <p>There is a problem, however, with “Naked Dependency Injection”, and that problem is that Controllers typically have more than one dependency. There might be logging involved, email, a comment repository, user repository, etc and you’d have to inject each of these (and update all the calling code when you change stuff). </p>
+          
+          <p>It’s pretty easy to end up with “Constructors Gone Wild” by following this pattern, and on occasion you can end up with recursive construction – which is really ugly and a maintenance nightmare.</p>
+          
+          <h2>The Answer: Inversion of Control</h2>
+          
+          <p>It’s a strange name – Inversion of Control – it sounds like you’re turning your app inside out. Here’s what it means:</p>
+          
+          <p>Normally, when your class needs to use another class to do something it will instantiate an instance of that class, use it, and then discard it at some point. In this case our PostController class is controlling the instance of the IPostRepository – determining when it gets created and how. All these decisions being made for our IPostRepository – isn’t that just a bit presumptuous! </p>
+          
+          <p>Inversion of Control does the exact opposite. You have a thing called a “Container” that instantiates the classes and controls their lifetime (according to some rules you set) and it hands them out when asked for. In our blog app the control is removed entirely from the PostController and is “inverted” – handed completely to the container which tells your PostController “this is the object you’re going to get&#160; and you’re going to like it”.</p>
+          
+          <p>The IoC container is essentially a big playground of objects just waiting to be used and reused. As you can imagine, there’s a lot of freedom when your objects are cut free like this – you can setup all kinds of rules for them and even control their lifetime. Want to make one a singleton (yuck)? You can do this easily with a half-line of code. Want to set an object’s lifetime to that of the request? Same thing.</p>
+          
+          <p>I’ve used StructureMap a lot as it’s what I know – but Ninject or any other framework is pretty easy to pick up, no Big Brain required – so that’s what I’ll show you below.</p>
+          
+          <p>The first thing you do is to tell StructureMap what type of class you want when a given interface is used in a constructor. You do this in a thing called a “Registry”:</p>
+          
+          <pre class="csharpcode">    <span class="kwrd">public</span> <span class="kwrd">class</span> BlogRegistry : Registry {&#x000A;        <span class="kwrd">protected</span> <span class="kwrd">override</span> <span class="kwrd">void</span> configure() {&#x000A;            &#x000A;            ForRequestedType&lt;IPostRepository&gt;()&#x000A;                .TheDefaultIsConcreteType&lt;SQLPostRepository&gt;();&#x000A;           &#x000A;        }&#x000A;    }</pre>
+          
+          <p>&#160;</p>
+          
+          <p>Then, in your Application_Start you call it:</p>
+          
+          <pre class="csharpcode"><span class="kwrd">protected</span> <span class="kwrd">void</span> Application_Start()&#x000A;{&#x000A;    StructureMapConfiguration.AddRegistry(<span class="kwrd">new</span> BlogRegistry());&#x000A;}</pre>
+          
+          <p>Now when you want to use it, you ask StructureMap for an instance of the object:</p>
+          
+          <pre class="csharpcode">var repo=ObjectFactory.GetInstance&lt;IPostRepository&gt;();</pre>
+          
+          <p>&#160;</p>
+          
+          <p>On the face of it this might seem like a lot of code for nothing – and it’s a bit true. IoC is an investment in your application – not a direct deposit. What you gain is the ability to “unhinge” your classes from one another, reusing them in other applications as needed.</p>
+          
+          <p>Most importantly, as you’ll see below, I’ve lost all of my “technical debt” and not many things are more fun than being debt-free.</p>
+          
+          <p>In the case of my blog application, I can override my ControllerFactory and ask StructureMap to build my Controllers for me – this reduces my examples above to this:</p>
+          
+          <pre class="csharpcode">IPostRepository repo;&#x000A;&#x000A;<span class="kwrd">public</span> PostController(IPostRepository postRepository){&#x000A;   repo=postRepository;&#x000A;}&#x000A;&#x000A;<span class="kwrd">public</span> ActionResult Index(){&#x000A;   var posts=repo.GetPosts();&#x000A;   <span class="kwrd">return</span> View(posts);&#x000A;}</pre>
+          
+          <p>&#160;</p>
+          
+          <p>Now the Controller knows nothing of any implementation – which is awesome. </p>
+          
+          <h2>Summary</h2>
+          
+          <p>If you’d like to know more about DI/IoC (and some details on how to hook it up to an MVC App), I did a full hour’s video cast with Jeremy Miller (creator of Structure Map) and you can watch it here: <a href="http://www.asp.net/learn/mvc-videos/video-366.aspx">http://www.asp.net/learn/mvc-videos/video-366.aspx</a>. It’s about an hour long and I think the best of the entire MVC Storefront series.</p>
+          
+          <p>It took me just over an hour to write this post – how long did it take you to read it? Does IoC make more sense to you? <strong>Regardless if you think it’s worth it (you might think it’s crap) – is it too high-minded? Too complex?</strong></p>
+          
+          <blockquote>
+            <p>IoC containers take a simple, elegant, and useful concept, and make it something you have to study for two days with a 200-page manual. I personally am perplexed at how the IoC community took a beautiful, elegant article by Martin Fowler and turned it into a bunch of complex frameworks typically with 200-300 page manuals.</p>
+          </blockquote>
+          
+          <p>Am I a whole lot smarter than you?</p>
+          
+          <blockquote>
+            <p>I think that people who use IoC containers are (A) very smart and (B) lacking in empathy for people who aren't as smart as they are. Everything makes perfect sense to them, so they have trouble understanding that many ordinary programmers will find the concepts confusing. It's the curse of knowledge. The people who understand IoC containers have trouble believing that there are people who don't understand it.</p>
+          </blockquote>
+          
+          <p>Is it harder to read my final PostController versus my “Naked DI” Controller above?</p>
+          
+          <blockquote>
+            <p>I believe that if you use IoC containers, your code becomes, frankly, a lot harder to read. The number of places you have to look at to figure out what the code is trying to do goes up by at least one. And somewhere in heaven an angel cries out.</p>
+          </blockquote>
+          
+          <p>I mentioned in my last post, in the comments, that I’m no stranger to disagreeing with Joel. It crosses the line, however, when he advocates idiocy – the notion that *you* are too dumb to figure this stuff out.</p>
+          
+          <p>Are you?</p>
+        </div>
+      </div>
+      <div class='column span-4 last'>
+        <div class='column' id='adzerk'>
+          <div class='column' id='adzerk_ad_div'>
+            <script src='http://engine.theloungenet.com/Server/DOTNET/RCONERY/VERT'></script>
+          </div>
+          <div class='column' id='adzerk_by'>
+            <a href='http://theloungenet.com'>Ads by The Lounge</a>
+          </div>
+        </div>
+        <div class='column' style='margin-top:36px'>
+          <img src='/images/categories.png' />
+          <ul>
+            <li>
+              <a href='/category/opinion'>Opinion</a>
+            </li>
+            <li>
+              <a href='/category/subsonic'>SubSonic</a>
+            </li>
+            <li>
+              <a href='/category/tekpub'>Tekpub</a>
+            </li>
+            <li>
+              <a href='/category/mvc'>ASP.NET MVC</a>
+            </li>
+            <li>
+              <a href='/category/nosql'>NoSql</a>
+            </li>
+            <li>
+              <a href='/category/rails'>Rails</a>
+            </li>
+            <li>
+              <a href='/category/blog'>General posts</a>
+            </li>
+            <li>
+              <a href='/category/mvc-storefront'>MVC Storefront</a>
+            </li>
+            <li>
+              <a href='/category/hawaii'>Hawaii</a>
+            </li>
+            <li>
+              <a href='/category/vim'>Vim</a>
+            </li>
+            <li>
+              <a href='/category/vim-kata'>Vim Katas</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class='column span-24'>
+        <div class='column span-3'></div>
+        <div class='column span-2' style='padding-top:10px'>
+          <a class='twitter-share-button' data-count='vertical' data-via='robconery' href='http://twitter.com/share'>Tweet</a>
+        </div>
+        <div class='column span-2' style='padding-top:47px'>
+          <script src='http://platform.twitter.com/widgets.js' type='text/javascript'></script>
+          <a href='javascript:window.location=%22http://news.ycombinator.com/submitlink?u=%22+encodeURIComponent(document.location)+%22&amp;t=%22+encodeURIComponent(document.title)' style='color: #777; font-size: 2em;'>
+            <img src='/images/hackernews.png' style='border: 3px solid #ccc' title='Submit to Hacker News' />
+          </a>
+        </div>
+      </div>
+      <div class='column span-24 last' id='comments'></div>
+      <div class='column span-18' id='disqus_thread'>
+        <script src='http://disqus.com/forums/wekeroad/embed.js' type='text/javascript'></script>
+        <noscript>
+          <a href='http://disqus.com/forums/wekeroad/?url=ref'>View comments.</a>
+        </noscript>
+      </div>
+      <div id='gecko'>
+        <img src='/images/gecko.png' />
+      </div>
+    </div>
+    <div id='footer'>
+      <p>&copy; 2010 Rob Conery</p>
+    </div>
+  </body>
+</html>
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+  var pageTracker = _gat._getTracker("UA-85773-7");
+  pageTracker._trackPageview();
+} catch(err) {}</script>
+
+<!-- page cached: 2010-24-12 17:22:39 -->
+
