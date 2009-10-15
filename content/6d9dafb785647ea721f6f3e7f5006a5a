@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+	<head>
+		<title>Telnet - SMTP Commands (sending mail using telnet)</title>
+		<meta name="keywords" content="telnet, smtp, mail commands, smtp telnet, sending mail using telnet, telnet smtp howto" />
+		<meta name="description" content="How to connect to a mail server using telnet and sending mail." />
+		<meta http-equiv="content-type" content="text/html;charset=iso-8859-1" />
+		<link href="../resources/site.css" rel="stylesheet" type="text/css" />
+		<meta name="robots" content="index,follow" />
+		<style type="text/css" media="all">
+code	{font-family:courier;color:#ffffff}
+		</style>
+	</head>
+	<body>
+		<div align="center"><h2>Telnet - SMTP Commands (sending mail using telnet)</h2></div>
+		In order to access your mailbox you will need 3 things:
+		<ul>
+			<li>An active internet connection (an embarrasing stage to miss sometimes!)</li>
+			<li>The address of a mail server capable of relaying for you - usually provided by your dialup provider (e.g. mail.domain.ext)</li>
+			<li>A valid email address (e.g. mail@domain.ext)</li>
+		</ul>
+		The first thing to do is to open a connection from your computer to your mail server.<br />
+		<code>telnet mail.domain.ext 25</code><br />
+		You should receive a reply like:<br />
+		<code>Trying ???.???.???.???...<br />
+		Connected to mail.domain.ext.<br />
+		Escape character is '^]'.<br />
+		220 mail.domain.ext ESMTP Sendmail ?version-number?; ?date+time+gmtoffset?</code><br />
+		<br />
+		You will then need to delcare where you are sending the email from:<br />
+		<code>HELO local.domain.name</code> - dont worry too much about your local domain name although you really <i>should</i> use your exact fully qualified domain name as seen by the outside world the mail server has no choice but to take your word for it as of RFC822-RFC1123.<br />
+		This should give you:<br />
+		<code>250 mail.domain.ext Hello local.domain.name [loc.al.i.p], pleased to meet you</code><br />
+		<br />
+		Now give your email address:<br />
+		(On many mailservers the space after the : is required rather that optional. Thanks to Justing Goldberg)<br />
+		<code>MAIL FROM: mail@domain.ext</code><br />
+		Should yeild:<br />
+		<code>250 2.1.0 mail@domain.ext... Sender ok</code><br />
+		If it doesn't please see <a href="#errors">possible problems</a>.<br />
+		<br />
+		Now give the recipients address:<br />
+		<code>RCPT TO: mail@otherdomain.ext</code><br />
+		Should yeild:<br />
+		<code>250 2.1.0 mail@otherdomain.ext... Recipient ok</code><br />
+		If it doesn't please see <a href="#errors">possible problems</a>. Note Google mail servers require &lt; and &gt; around the email address (thanks to Paul Beattie).<br />
+		<br />
+		To start composing the message issue the command <code>DATA</code><br />
+		<br />
+		If you want a subject for your email type <code>Subject:-type subject here-</code> then press enter twice (these are needed to conform to RFC 882)<br />
+		<br />
+		You may now proceed to type the body of your message (e.g. <code>hello mail@otherdomain.ext from mail@domain.ext</code>)<br />
+		<br />
+		To tell the mail server that you have completed the message enter a single &quot;<code>.</code>&quot; on a line on it's own.<br />
+		The mail server should reply with: <code>250 2.0.0 ???????? Message accepted for delivery</code><br />
+		<br />
+		You can close the connection by issuing the <code>QUIT</code> command.<br />
+		The mailserver should reply with something like:<code>221 2.0.0 mail.domain.ext closing connection<br />Connection closed by foreign host.</code><br />
+		<br />
+		<br />
+		<a name="errors" /><h3>Here are a list of problems I've encountered and their fixes</h3>
+		<code>501 nouser@nosuchplace.here... Sender domain must exist</code><br />
+		The domain that you are sending from must exist<br />
+		<br />
+		<code>503 Need MAIL before RCPT</code><br />
+		A recipient has been specified before a sender.<br />
+		<br />
+		<code>550 mail@domain.ext... Relaying Denied</code><br />
+		The mail server has refused to relay mail for you, this may be for any number of reasons but typical resons include:<br />
+		Not using this provider for an internet connection and/or<br />
+		Not using an email address provided by the owner of the server.<br />
+		<br />
+		Some things to watch out for:<br />
+		1. If you type too quickly, sometimes it won't recognise your text (weird!)<br />
+		2. The backspace key sometimes does not work with some telnet clients (even though it may seem as though it does)<br />
+		<br />
+		I'll be putting more as and when I get them and figure out how to fix each problem.<br />
+		<br />
+		<br />
+		<a href="http://validator.w3.org/check/referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0!" border="0" height="31" width="88" /></a>
+	</body>
+</html>
