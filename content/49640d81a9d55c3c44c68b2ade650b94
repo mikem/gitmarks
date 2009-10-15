@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">
+<html>
+  <head>
+    <title>ClojureAndAndroidWithEmacsOnUbuntu</title>
+    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">
+    <link rel="stylesheet" type="text/css" charset="utf-8" media="all" href="style.css"/>
+  </head>
+  <body>
+    <div id="wrapper">
+    <div id="content">
+<p>
+<img src="images/common/Clojure_75.png" alt="" style="float: left;" /><img src="images/common/Android_75.png" alt="" style="float: right;" /><img src="images/common/Blank.gif" alt="" style="height: 25px;" />
+</p>
+
+<h1> Clojure and Android with Emacs on Ubuntu </h1>
+
+<h2> Prerequisites </h2>
+
+<p>
+This tutorial assumes that the following tutorials have been successfully completed:
+</p>
+
+<ul>
+<li>
+<a href="ClojureOnUbuntu.html">Clojure on Ubuntu</a>
+</li>
+<li>
+<a href="EmacsOnUbuntu.html">Emacs on Ubuntu</a>
+</li>
+<li>
+<a href="AndroidWithEmacsOnUbuntu.html">Android with Emacs on Ubuntu</a>
+</li>
+</ul>
+
+<h2> Install Clojure for Android </h2>
+
+<p>
+The current version of clojure requires some slight modifications for use on Android. Install and compile a patched version specifically for Android projects.
+</p>
+
+<pre class="code" &gt;>
+~$ cd ~/opt
+
+~$ git clone git://github.com/remvee/clojure.git clojure-android
+
+~$ cd clojure-android
+
+~$ ant
+</pre>
+
+<h2> Modify TestProject for Clojure </h2>
+
+<p>
+In the <a href="AndroidWithEmacsOnUbuntu.html">Android with Emacs on Ubuntu</a> tutorial, an application named TestProject was created and deployed to the Android emulator. Follow these steps to modify this pproject to use clojure instead of Java.
+</p>
+
+<p>
+Copy the android specific clojure.jar file to the project library directory.
+</p>
+
+<pre class="code" &gt;>
+~$ cp ~/opt/clojure-android/clojure.jar ~/projects/TestProject/libs
+</pre>
+
+<p>
+Backup the original, <code>activitycreator</code> generated build.xml file.
+</p>
+
+<pre class="code" &gt;>
+~$ cd ~/projects/TestProject
+
+~$ mv build.xml build.xml.org
+</pre>
+
+<p>
+Using a web browser, open the following project from Remco van 't Veer's github site.
+</p>
+
+<pre class="code" &gt;>
+
+http://github.com/remvee/clojurehelloandroid/tree/master
+
+</pre>
+
+<p>
+Download the following files to the <code>~/projects/TestProject</code> directory. To download the files from github correctly, open the file and then download the file using the link labeled <code>raw</code>.
+</p>
+
+<pre class="code" &gt;>
+build.xml
+
+compile.clj
+</pre>
+
+<p>
+Modify the second line in the new build.xml file to reflect the current project name.
+</p>
+
+<pre class="code" &gt;>
+&lt;project name="TestProject" default="debug"&gt;
+</pre>
+
+<p>
+Remove the existing <code>TestProject.java</code> source file (leaving the <code>R.java</code> file) and create a clojure-based source file.
+</p>
+
+<pre class="code" &gt;>
+~$ ~/projects/TestProject/src/us/riddell
+
+~$ rm TestProject.java
+
+~$ emacs TestProject.clj
+</pre>
+
+<p>
+Add the following source and save the file.
+</p>
+
+<pre class="code" &gt;>
+(ns us.riddell.TestProject
+  (:gen-class
+   :extends android.app.Activity
+   :exposes-methods {onCreate superOnCreate}))
+ 
+(defn -onCreate [this #^android.os.Bundle bundle]
+  (.superOnCreate this bundle)
+  (.setContentView this us.riddell.R$layout/main)
+  (let [tv (new android.widget.TextView this)]
+    (.setText tv "Hello Android from Clojure!")
+    (.setContentView this tv)))
+</pre>
+
+<p>
+Note: This version creates a new <code>TextView</code> which overrides the version in the <code>main.xml</code> file used in the previous tutorial.
+</p>
+
+<h2> Deploy Clojurized TestProject </h2>
+
+<p>
+Compile the project to make sure everything checks out.
+</p>
+
+<pre class="code" &gt;>
+M-x android-ant-compile
+</pre>
+
+<p>
+After a <code>BUILD SUCCESSFUL</code>, start the emulator and reinstall the project.
+</p>
+
+<pre class="code" &gt;>
+M-x android-start-emulator
+
+M-x android-ant-reinstall
+</pre>
+
+<p>
+After opening the application, the new greeting is displayed. The clojure version of the application does start more slowly than the Java version (by at least 4 seconds it seems.) Once loaded, however, the speed seems comparable. Since clojure has not been completely optimized for use within an Android envrionment, hopefully this delay is further reduced in the future.
+</p>
+
+<p>
+<img src="images/ClojureAndAndroidWithEmacsOnUbuntu/clojure_android_hello.png" alt="" style="border: 1px solid grey;" />
+</p>
+    </div>
+    </div>
+  </body>
+</html>
