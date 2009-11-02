@@ -1,0 +1,309 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="" type="image/x-icon" />
+  <title>All you should really know about Autoconf and Automake | GNU Smalltalk</title>
+  <style type="text/css" media="all">@import "/files/css/f61815651b7ebb1fe185cc416ea644a8.css";</style>
+    <script type="text/javascript"> </script>
+
+</head>
+
+<body>
+
+  <!-- header -->
+  <div id="header">
+          <div id="logo"><a href="/" title="Home"><img src="/files/gst_logo.png" alt="Home" /></a></div>
+        <!-- site name and slogan -->
+        <div id="siteNameSlogan">
+
+	  <!-- site name -->
+                      <h1>
+	      <a href="/" title="Home">GNU Smalltalk	      </a>
+	    </h1>
+	  <!-- end site name -->
+
+	  <!-- site slogan -->
+          	      <h2>
+	        The Smalltalk for those who can type	      </h2>
+	    <!-- end site slogan -->
+	  </div><!-- end site name and slogan -->
+
+      <!-- header block region -->
+      <!-- end header block region -->
+
+      <!-- primary links -->
+      <div id="menu">
+        <ul class="links-menu">
+<li><a href="/">Home page</a></li>
+<li><a href="/project/issues">Issue tracking</a></li>
+<li><a href="/wiki">Wiki</a></li>
+<li><a href="/step/steps-smalltalk-enhancement-proposals">STEPs</a></li>
+</ul> 
+      </div><!-- end primary links -->
+
+	<!-- search box -->
+		<div id="searchBox">
+	  <div class="wrap">
+	    <div class="form-item">
+	      <form action="/search/node"  method="post" id="search-theme-form">
+<div><div id="search" class="container-inline"><div class="form-item">
+ <input type="text" maxlength="128" name="search_theme_form_keys" id="edit-search-theme-form-keys"  size="15" value="" title="Enter the terms you wish to search for." class="form-text" />
+</div>
+<input type="submit" name="op" id="edit-submit" value="Search"  class="form-submit" />
+<input type="hidden" name="form_id" id="edit-search-theme-form" value="search_theme_form"  />
+</div>
+</div></form>
+	    </div>
+	  </div>
+	</div>
+	<!-- end search box -->
+  </div><!-- end header -->
+
+  <!-- content -->
+  <div id="contentWrapper">
+      <div id="primaryContent">
+                <div class="breadcrumb"><div class="breadcrumb"><a href="/">Home</a> » <a href="/blog">Blogs</a> » <a href="/blog/bonzinip">Paolo Bonzini&#039;s blog</a></div></div>        <h1 class="pageTitle">All you should really know about Autoconf and Automake</h1>                        	          <div class="node">
+                  <div class="submitted">By <a href="/user/bonzinip" title="View user profile.">Paolo Bonzini</a> - Posted on November 2nd, 2009</div> 
+        <div class="taxonomy">Tagged: <span class="first taxonomy_term_255"><a href="/tags/autoconf" rel="tag" title="" class="taxonomy_term_255">autoconf</a></span>
+&nbsp;&bull; &nbsp;<span class="taxonomy_term_256"><a href="/tags/automake" rel="tag" title="" class="taxonomy_term_256">automake</a></span>
+&nbsp;&bull; &nbsp;<span class="last taxonomy_term_72"><a href="/tags/tutorial" rel="tag" title="" class="taxonomy_term_72">tutorial</a></span>
+</div>    <div class="content"><p>So, here is the shortest possible tutorial on the autotools.</p>
+
+<p>The problem with autotools is that it is used for complicated things, and people cut-and-paste complicated things even when they ought to be simple. 99% of people just need a way to access .pc files and generate juicy Makefiles; the portability part is taken care by glib, sdl and so on.</p>
+
+<p>You can use then the following basic autotools setup, which is just 9 lines.  You can start from here and add more stuff (including libtool).</p>
+
+<ul>
+    <li> configure.ac:</li>
+</ul>
+
+<p><pre>AC_INIT([package], [version])
+AM_INIT_AUTOMAKE([foreign subdir-objects])
+AC_CONFIG_SRCDIR([configure.ac])
+AC_CONFIG_HEADERS([config.h])     # not even really needed
+AC_PROG_CC                        # or AC_PROG_CXX
+AC_CONFIG_FILES([Makefile])
+AC_OUTPUT</pre></p>
+
+<ul>
+    <li> Makefile.am:</li>
+</ul>
+
+<p><pre>bin_PROGRAMS = hello
+hello_SOURCES = hello.c</pre></p>
+
+<p>That's enough for:</p>
+
+<p><pre>$ autoreconf -fvi
+$ ./configure
+$ make</pre></p>
+
+<p>On top of this, for each package you need, you add:</p>
+
+<p><pre>PKG_CHECK_MODULES([cairo], [cairo])
+PKG_CHECK_MODULES([fontconfig], [fontconfig])</pre></p>
+
+<p>and</p>
+
+<p><pre>AM_CFLAGS = $(cairo_CFLAGS) $(fontconfig_CFLAGS)
+LIBS += $(cairo_LIBS) $(fontconfig_LIBS)</pre></p>
+
+<p>respectively in configure.ac (after AC_PROG_CC) and Makefile.am.</p>
+
+<p>Is that complicated?</p></div>
+    <div class="links"><span class="first blog_usernames_blog"><a href="/blog/bonzinip" title="Read bonzinip&#039;s latest blog entries." class="blog_usernames_blog">Paolo Bonzini&#039;s blog</a></span>
+&nbsp;&bull; &nbsp;<span class="last comment_add"><a href="/comment/reply/426#comment-form" title="Share your thoughts and opinions related to this posting." class="comment_add">Add new comment</a></span>
+</div>  </div>
+<div id="comments"><a id="comment-344"></a>
+  <div class="comment">
+        <div class="commentTitle"><a href="/blog/bonzinip/all-you-should-really-know-about-autoconf-and-automake#comment-344" class="active">You&#039;re right</a></div>
+    <div class="submitted">Submitted by Anonymous on Wed, 11/04/2009 - 22:24.</div>
+    <div class="content"><p>I understand most of the time it's copying from other configure.ac, even there's much documentation on autotools. You're completely right. People only needs a couple of minutes to look at how it works, and everyone can understand how it works. It's not all that complicated, and if you know how to use it (knowledge is really basic) it's way better than any other alternative out there.</p>
+
+<p>I'd add the maintainer mode to your post :)</p></div>
+    <div class="links"><span class="first last comment_reply"><a href="/comment/reply/426/344" class="comment_reply">reply</a></span>
+</div>
+  </div>
+<div class="indented"><a id="comment-345"></a>
+  <div class="comment">
+        <div class="commentTitle"><a href="/blog/bonzinip/all-you-should-really-know-about-autoconf-and-automake#comment-345" class="active">Thanks</a></div>
+    <div class="submitted">Submitted by <a href="/user/bonzinip" title="View user profile.">Paolo Bonzini</a> on Wed, 11/04/2009 - 22:55.</div>
+    <div class="content"><p>But I hate maintainer mode. :-)</p></div>
+    <div class="links"><span class="first last comment_reply"><a href="/comment/reply/426/345" class="comment_reply">reply</a></span>
+</div>
+  </div>
+</div><a id="comment-341"></a>
+  <div class="comment">
+        <div class="commentTitle"><a href="/blog/bonzinip/all-you-should-really-know-about-autoconf-and-automake#comment-341" class="active">Thanks for reposting this;</a></div>
+    <div class="submitted">Submitted by Anonymous on Tue, 11/03/2009 - 01:31.</div>
+    <div class="content"><p>Thanks for <a href="http://www.reddit.com/tb/a07fe" rel="nofollow">reposting</a> this; not everyone's a redditor and this is can be extremely useful.</p>
+
+<p>-lowell</p>
+
+<p>(where's the <em>name</em> field? Weird. <em>Anonymous</em> it is.)</p></div>
+    <div class="links"><span class="first last comment_reply"><a href="/comment/reply/426/341" class="comment_reply">reply</a></span>
+</div>
+  </div>
+<div class="indented"><a id="comment-342"></a>
+  <div class="comment">
+        <div class="commentTitle"><a href="/blog/bonzinip/all-you-should-really-know-about-autoconf-and-automake#comment-342" class="active">&gt; this is can be extremely</a></div>
+    <div class="submitted">Submitted by Anonymous on Tue, 11/03/2009 - 01:33.</div>
+    <div class="content"><p><pre>&gt; this is can be extremely useful</pre></p>
+
+<p>Oops. You know what I mean.</p></div>
+    <div class="links"><span class="first last comment_reply"><a href="/comment/reply/426/342" class="comment_reply">reply</a></span>
+</div>
+  </div>
+</div><a id="comment-338"></a>
+  <div class="comment">
+        <div class="commentTitle"><a href="/blog/bonzinip/all-you-should-really-know-about-autoconf-and-automake#comment-338" class="active">Yup, still confused :P</a></div>
+    <div class="submitted">Submitted by Anonymous on Mon, 11/02/2009 - 19:30.</div>
+    <div class="content"><p>In the 1st snippet, I suspect <code>package</code> and <code>version</code> are meant to be replaced with the actual package name and version. Is it the same for <code>foreign</code>?<br />
+Also, what does the simple case <strong>not</strong> need? Will it autodetect dependancies between <code>.c</code>/<code>.h</code> files ? I thought autoconf generates Makefile.am from Makefile.in ?</p></div>
+    <div class="links"><span class="first last comment_reply"><a href="/comment/reply/426/338" class="comment_reply">reply</a></span>
+</div>
+  </div>
+<div class="indented"><a id="comment-340"></a>
+  <div class="comment">
+        <div class="commentTitle"><a href="/blog/bonzinip/all-you-should-really-know-about-autoconf-and-automake#comment-340" class="active">&gt; Is it the same for</a></div>
+    <div class="submitted">Submitted by Anonymous on Mon, 11/02/2009 - 21:00.</div>
+    <div class="content"><p>&gt; Is it the same for foreign?</p>
+
+<p>No foreign stays as is.</p>
+
+<p>&gt; Will it autodetect dependancies between .c/.h files?</p>
+
+<p>Yes</p>
+
+<p>&gt; I thought autoconf generates Makefile.am from Makefile.in ?</p>
+
+<p>autoconf <em>[edit from Paolo: configure]</em> generates Makefile from Makefile.in. automake generates Makefile.in from Makefile.am. So Makefile.am is all you need.</p></div>
+    <div class="links"><span class="first last comment_reply"><a href="/comment/reply/426/340" class="comment_reply">reply</a></span>
+</div>
+  </div>
+<a id="comment-339"></a>
+  <div class="comment">
+        <div class="commentTitle"><a href="/blog/bonzinip/all-you-should-really-know-about-autoconf-and-automake#comment-339" class="active">be my guest</a></div>
+    <div class="submitted">Submitted by <a href="/user/bonzinip" title="View user profile.">Paolo Bonzini</a> on Mon, 11/02/2009 - 20:46.</div>
+    <div class="content"><p>&gt; In the 1st snippet, I suspect package and version are meant to be <br />
+&gt; replaced with the actual package name and version.</p>
+
+<p>Yes.</p>
+
+<p>&gt; Is it the same for foreign?</p>
+
+<p>No.</p>
+
+<p>&gt; Also, what does the simple case not need?</p>
+
+<p>The next step could be detecting libraries such as pthreads, with AC_SEARCH_LIBS or AC_CHECK_LIB.</p>
+
+<p>&gt; Will it autodetect dependancies between .c/.h files ?</p>
+
+<p>Yes.</p>
+
+<p>&gt; I thought autoconf generates Makefile.am from Makefile.in ?</p>
+
+<p>automake generates Makefile.in from Makefile.am, configure generates Makefile from Makefile.in.</p>
+
+<p>autoreconf runs all four of aclocal, autoconf, autoheader and automake.</p></div>
+    <div class="links"><span class="first last comment_reply"><a href="/comment/reply/426/339" class="comment_reply">reply</a></span>
+</div>
+  </div>
+<div class="indented"><a id="comment-343"></a>
+  <div class="comment">
+        <div class="commentTitle"><a href="/blog/bonzinip/all-you-should-really-know-about-autoconf-and-automake#comment-343" class="active">what about the [] are they correct?</a></div>
+    <div class="submitted">Submitted by Anonymous on Tue, 11/03/2009 - 23:43.</div>
+    <div class="content"><p>Do I need the [] for foreign, Makefile etc?</p></div>
+    <div class="links"><span class="first last comment_reply"><a href="/comment/reply/426/343" class="comment_reply">reply</a></span>
+</div>
+  </div>
+<div class="indented"><a id="comment-346"></a>
+  <div class="comment">
+        <div class="commentTitle"><a href="/blog/bonzinip/all-you-should-really-know-about-autoconf-and-automake#comment-346" class="active">yes</a></div>
+    <div class="submitted">Submitted by <a href="/user/bonzinip" title="View user profile.">Paolo Bonzini</a> on Wed, 11/04/2009 - 22:56.</div>
+    <div class="content"><p>Yes, that's how arguments are delimited in m4.</p>
+
+<p>Technically they're not needed if they do not contain m4 macro names or the macros do not expand to text containing commas, but it's far far safer to just wrap <em>all</em> arguments with brackets.</p></div>
+    <div class="links"><span class="first last comment_reply"><a href="/comment/reply/426/346" class="comment_reply">reply</a></span>
+</div>
+  </div>
+</div></div></div></div>		      </div>
+        <!-- sidebars -->
+      <div id="sidebarLeft">  <div class="block block-menu" id="block-menu-74">
+        <div class="content">
+<ul class="menu">
+<li class="expanded"><a href="/documentation">Documentation</a>
+<ul class="menu">
+<li class="leaf"><a href="/documentation/books">Books</a></li>
+<li class="leaf"><a href="/faq">FAQ</a></li>
+
+</ul>
+</li>
+<li class="expanded"><a href="/community">Community</a>
+<ul class="menu">
+<li class="leaf"><a href="/blog">Blogs</a></li>
+<li class="leaf"><a href="/project">Hosted projects</a></li>
+<li class="leaf"><a href="/community/irc">IRC</a></li>
+<li class="leaf"><a href="/community/ml">Mailing list</a></li>
+<li class="leaf"><a href="/wiki">Wiki</a></li>
+
+</ul>
+</li>
+<li class="expanded"><a href="/download">Download</a>
+<ul class="menu">
+<li class="leaf"><a href="/download/cvs">Live sources (git)</a></li>
+
+</ul>
+</li>
+<li class="expanded"><a href="/development">Development</a>
+<ul class="menu">
+<li class="leaf"><a href="/development/roadmap">Roadmap</a></li>
+<li class="leaf"><a href="/development/contributing">Contributing</a></li>
+<li class="collapsed"><a href="/project/issues">Issue tracking</a></li>
+
+</ul>
+</li>
+<li class="expanded"><a href="/recent_changes">Recent changes</a>
+<ul class="menu">
+<li class="leaf"><a href="/recent_changes/new">New posts</a></li>
+<li class="leaf"><a href="/recent_changes/wiki">Wiki changes</a></li>
+
+</ul>
+</li>
+
+</ul>
+</div>
+ </div>
+</div>      <div id="sidebarRight">  <div class="block block-user" id="block-user-0">
+    <h2 class="title">User login</h2>    <div class="content"><form action="/blog/bonzinip/all-you-should-really-know-about-autoconf-and-automake?destination=node%2F426"  method="post" id="user-login-form">
+<div><div class="form-item">
+ <label for="edit-name">Username: <span class="form-required" title="This field is required.">*</span></label>
+ <input type="text" maxlength="60" name="name" id="edit-name"  size="15" value="" class="form-text required" />
+</div>
+<div class="form-item">
+ <label for="edit-pass">Password: <span class="form-required" title="This field is required.">*</span></label>
+ <input type="password" name="pass" id="edit-pass"  maxlength="60"  size="15"  class="form-text required" />
+</div>
+<input type="submit" name="op" id="edit-submit" value="Log in"  class="form-submit" />
+<div class="item-list"><ul><li><a href="/user/register" title="Create a new user account.">Create new account</a></li><li><a href="/user/password" title="Request new password via e-mail.">Request new password</a></li></ul></div><input type="hidden" name="form_id" id="edit-user-login-block" value="user_login_block"  />
+
+</div></form>
+</div>
+ </div>
+</div>  </div><!-- end content -->
+
+  <!-- footer -->
+  <div id="footer">
+    
+  <div class="block block-block" id="block-block-1">
+        <div class="content"><p>Copyright (C) <a href="http://www.fsf.org" rel="nofollow">Free Software Foundation, Inc.</a> - <a href="/credits" rel="nofollow">Credits</a></p>
+
+<p>GNU Smalltalk is part of the <a href="http://www.gnu.org" rel="nofollow">GNU Project</a>.</p></div>
+ </div>
+ 
+  </div><!-- end footer -->
+  </body>
+</html>
