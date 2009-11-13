@@ -1,0 +1,385 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.1//EN' 'http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd'>
+<html><head><title>ongoing by Tim Bray &#xb7; Concur.next &#x2014; References</title>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
+<link rel='stylesheet' type='text/css' media='screen' title='sans' href='/ongoing/sans.css' />
+<link rel='alternate stylesheet' type='text/css' media='screen' title='serif' href='/ongoing/serif.css' />
+<script type='text/javascript' src='/ongoing/ongoing.js'></script>
+<link rel='alternate' type='application/atom+xml' title='Atom (full content)' href='/ongoing/ongoing.atom' />
+<!-- Generated from XML source code using Perl, Expat, Emacs, Mysql, Ruby, Java, and ImageMagick.  Industrial-strength technology, baby. -->
+</head><body>
+<div id='banner'><h1>Concur.next &#x2014; References</h1><div id='search'><form action="http://www.google.com/search"><div>Search <input size="15" name="as_q" /><input type="hidden" name="hl" value="en" /><input type="hidden" name="ie" value="UTF-8" /><input type="hidden" name="btnG" value="Google+Search" /><input type="hidden" name="as_qdr" value="all" /><input type="hidden" name="as_occt" value="any" /><input type="hidden" name="as_dt" value="i" /><input type="hidden" name="as_sitesearch" value="tbray.org" /></div></form></div></div>
+<div id='centercontent'>
+<p>These, &#x201c;refs&#x201d; for short, are one of the three tools offered by 
+<a href='http://clojure.org/'>Clojure</a> to make concurrency practical and
+manageable.  Herewith a walk-through of code that uses them to
+accomplish a simple task in a highly concurrent fashion.</p>
+
+<p>[This is part of the
+<a href='/ongoing/When/200x/2009/09/27/Concur-dot-next'>Concur.next
+series</a>.]</p>
+
+<p><i>[Update: There are a ton of comments; I&#x2019;ve added some reactions at the bottom.]</i></p>
+
+<p id='p-1' class='p1'><span class='h2'>The Problem</span> &#xb7; 
+It&#x2019;s one that&#x2019;s been much-discussed in this space: reading all the lines in a
+large file and computing some simple statistics.  It was the discovery that
+this sort of script ran faster on my Mac laptop than a pricey industrial-grade
+Sun server that originally motivated the
+<a href='/ongoing/When/200x/2007/09/20/Wide-Finder'>Wide Finder</a> work.</p>
+
+<p>What I would really like to come out of all this work would be a set of
+tools, accessible to ordinary programmers, that help them accomplish everyday
+tasks with code that makes good use of many of the compute engines on a modern
+multi-core processor.</p>
+
+<p>I keep coming back to this &#x201c;read lines and compute stats&#x201d; task because it&#x2019;s
+as simple as you can imagine, it occurs in the real world, and if I can&#x2019;t
+manage that one maybe that&#x2019;s a signal that the whole project is doomed.</p>
+
+<p>If you want an application to process lines out of a file concurrently,
+you need, first, to parallelize the process of reading the file, and second,
+parallelize the application code.</p>
+
+<p id='p-2' class='p1'><span class='h2'>Paralines</span> &#xb7; 
+This is Clojure code I wrote to parallelize the line-reading part of
+the problem.  I&#x2019;m not sure what the right name is for a splodge of Clojure
+code: &#x201c;Module&#x201d;? &#x201c;Package&#x201d;? Whatever; let&#x2019;s ignore Paralines for the purposes
+of this essay; I&#x2019;ll get back to it later.  It offers a function called
+<code>read-lines</code>; here&#x2019;s its doc string:</p>
+
+<blockquote><p><code>([file-name destination all-done user-data params])<br />
+
+Reads the named file and feeds the lines one at a time to the function
+&#x27;destination&#x27;, which will be called in parallel on many threads with two
+arguments, the first being a line from the file, the second &#x27;user-data&#x27;.
+When all the lines have been processed, the the &#x27;all-done&#x27; function will be 
+called with &#x27;user-data&#x27; as its single argument.  The &#x27;destination&#x27; function
+will be called on multiple threads in parallel, so its logic must be 
+thread-safe.  There is no guarantee in which order the lines from the file
+will be processed.  The &#x27;params&#x27; argument is a map; the default values for the
+number of threads and file block-size may be overridden with the
+:width and :block-size values
+respectively.</code></p>
+</blockquote>
+<p id='p-3' class='p1'><span class='h2'>Popular</span> &#xb7; 
+This is the little Clojure script I wrote to solve the original Wide Finder
+problem: read an Apache logfile from this blog and find the ten most popular
+pieces; for a refresher, see the
+<a href='/ongoing/When/200x/2007/09/20/Wide-Finder'>original Ruby script</a>.
+It calls Paralines like so:</p>
+
+<code><pre>(read-lines &#x22;data/O.1m&#x22; proc-line report (ref {}) {})</pre></code>
+<p>In this invocation <code>data/O.1m</code> is the one-million-line sample of
+logfile data.  <code>proc-line</code> is the function to which each line will
+be passed. <code>report</code> is the function which will be used to report on
+the results of the run.</p>
+
+<p>The second-last argument, <code>(ref&#xa0;{})</code>, is more interesting.  This
+will be passed as the second argument to each invocation of
+<code>proc-line</code> and as the sole argument to the final
+<code>report</code> invocation.  It&#x2019;s meant to be used to hold the
+program&#x2019;s state as it does its computations.</p>
+
+<p><code>{}</code> is the Clojure idiom for an empty <code>map</code> (think
+hash table).  The <code>ref</code> function produces a reference, a thing that
+(unlike most things in Clojure) can be changed, and in particular can be
+changed safely in a concurrent environment.  The notion of using a hash table
+to build up state in this kind of work should hardly be surprising to anyone
+who&#x2019;s ever written a Perl script.</p>
+
+<p>And we&#x2019;re going to use it just as we would in a Perl script; the hash will
+be keyed by the URIs of <span class="o">ongoing</span> pieces, and the values
+will just be integers, how many times we&#x2019;ve seen each one so far in the logfile.</p>
+
+<p>The final argument, <code>{}</code>, is an empty hash table which tells
+Paralines to use the default block-size and thread-count.</p>
+
+<p id='p-4' class='p1'><span class='h2'><code>proc-line</code></span> &#xb7; 
+Paralines calls this function once for each line, the first argument
+being the line as a string, the second being that hash-table-reference that we
+set up at the beginning.</p>
+
+<pre><code>1 (def re #&#x22;GET /ongoing/When/\d\d\dx/(\d\d\d\d/\d\d/\d\d/[^ .]+) &#x22;)
+2
+3 (defn proc-line [ line so-far ]
+4   (let [hit (re-find re line)
+5         target (if hit (last hit) nil)]
+6     (if target (record target so-far))))</code></pre>
+<p>Line 1: in Clojure a string with <code>#</code> in front is a regular
+  expression.  I find it pleasing that I can use pretty well the same
+  regexes in Perl, Ruby, Java, and now anything built on the Java
+  platform.</p>
+
+<p>Line 3: The ref to the hash where the results live will be called
+<code>so-far</code> from here on in.</p>
+
+<p>Line 4: <code>re-find</code> uses the <code>java.util.regex</code> library
+to scan the string.</p>
+
+<p>Line 5: If <code>re-find</code> missed it returns nil.  If it hits, it
+returns a list whose first member is the whole match, then <code>$1</code>,
+<code>$2</code>, and so on.  Since I only have one <code>()</code>-group,
+it&#x2019;ll always be of size two and I can use
+<code>last</code> to fish out <code>$1</code>.</p>
+
+<p>Line 6: Assuming the regex hit, we call <code>record</code> with the
+interesting part of the URI and the <code>so-far</code> hash ref.</p>
+
+<p id='p-5' class='p1'><span class='h2'><code>record</code></span> &#xb7; 
+Here is where we start to use Clojure references.</p>
+
+<pre><code>1 (defn record [target so-far]
+2   (let [ counter (@so-far target) ]
+3     (if counter
+4       (incr counter)
+5       (incr (new-counter so-far target)))))</code></pre>
+<p>Line 2: Remember that <code>so-far</code> isn&#x2019;t the results hash table,
+it&#x2019;s a ref.  The <code>@</code> means &#x201c;reach through the ref and extract the
+value&#x201d;, apparently ignoring concurrency issues.</p>
+
+<p>In Clojure, a hash is just a function; so <code>(@so-far&#xa0;target)</code>
+says &#x201c;reach through the ref, get the hash table, and look up the target in
+it&#x201d;.</p>
+
+<p>Lines 3-4: If counter is non-nil, that means we&#x2019;ve already seen this target
+and have started counting references to it.  So we just use the
+<code>incr</code> function to increment that counter.</p>
+
+<p>Line 5: We didn&#x2019;t find a counter for this target, so we&#x2019;re going to have to
+use <code>new-counter</code> to add one to the hash table;
+<code>new-counter</code> also returns the counter it just added, so we can
+increment it.</p>
+
+<p id='p-6' class='p1'><span class='h2'><code>incr</code></span> &#xb7; 
+What could be simpler than adding one to a counter?  Well, except for, this
+is running in (a potentially large number of) parallel threads, more than one
+of which might be wanting to increment this counter at the same time.</p>
+
+<p>Above, we said that the values in the hash table were the occurrence
+counts, but that wasn&#x2019;t quite accurate.  They&#x2019;re actually Clojure refs to the
+occurrence counts, so we can run in parallel.</p>
+
+<pre><code>1 (defn incr [ counter ]
+2   (dosync (alter counter inc)))</code></pre>
+<p>All the magic is in Line 2.  First, since we&#x2019;re going to update a
+reference, we have to call <code>dosync</code> to launch a &#x201c;transaction&#x201d;, the STM voodoo that
+Clojure uses to make this possible and safe.</p>
+
+<p>Inside the dosync, we use <code>alter</code> to send the <code>inc</code>
+function to the actual integer with the count.  Since Clojure always uses
+immutable values as opposed to traditional variables, what actually happens is
+it creates a new integer and rejiggers the <code>counter</code> ref to point
+to that.</p>
+
+<p id='p-7' class='p1'><span class='h2'><code>new-counter</code></span> &#xb7; 
+This is the function that gets called when we&#x2019;re trying to record the
+occurrence of a URI but the hash doesn&#x2019;t yet contain a counter for it.</p>
+
+<pre><code>1 (defn new-counter [ so-far target ]
+2   (dosync
+3     (let [ c (@so-far target) counter (ref 0) ]
+4       (if c
+5         c
+6         (do
+7           (ref-set so-far (assoc @so-far target counter))
+8           counter)))))</code></pre>
+<p>Line 2: The function wraps itself up in a <code>dosync</code> because it&#x2019;s
+going to be poking and prodding at the hash reference quite a bit.</p>
+
+<p>Line 3: The part where we set <code>c</code> may be a little puzzling; we
+look the 
+target up in the hash table; but didn&#x2019;t we just do that, and call this
+function because it wasn&#x2019;t there?  Be careful: We&#x2019;re running in parallel, and
+someone else might have got in and added it, and counted a few occurrences
+even, while we weren&#x2019;t looking, and we wouldn&#x2019;t want to reset the count to
+zero accidentally.</p>
+
+<p>Remember that when we dereferenced the table in the
+higher-level <code>record</code> function by saying
+<code>(@so-far&#xa0;target)</code>, I said &#x201c;apparently ignoring concurrency issues&#x201d;.
+Well, not quite.  If another thread had been in this <code>new-counter</code>
+function, the <code>dosync</code> function and Clojure&#x2019;s concurrency magic
+would have prevented the dereference from seeing the hash in an inconsistent
+state.</p>
+
+<p>The second half of Line 3, assuming that we&#x2019;re probably going to need a new
+counter, goes ahead and creates a new ref-to-an-int for that purpose.</p>
+
+<p>Line 4-5: If <code>c</code> came back non-nil, that means that, yes indeed,
+someone came along and created the counter and we don&#x2019;t need to, we can just
+return it.</p>
+
+<p>Line 7: This is the normal path through the function, where we update the
+hash table with the new counter.  <code>ref-set</code> is like <code>alter</code>; I
+find it a bit more readable when the code is something more complicated than just
+<code>inc</code>.</p>
+
+<p><code>assoc</code> looks like it updates the hash table, but because we&#x2019;re
+living in the land of immutability it doesn&#x2019;t really, it creates a new one
+which differs only by having the new key/value pair.  This isn&#x2019;t as
+horrifically inefficient as it sounds, Clojure is smart about creating a &#x201c;new&#x201d;
+object by just twiddling pointers and re-using most of the old one.</p>
+
+<p id='p-8' class='p1'><span class='h2'><code>report</code></span> &#xb7; 
+We&#x2019;re about done; all that&#x2019;s left is the function that prints out the top
+ten most-referenced <span class="o">ongoing</span> pieces.</p>
+
+<pre><code>(defn report [ so-far ]
+  (let [sorted (sort-by last (fn [a b] (&#x3e; @a @b)) @so-far) ]
+    (doseq [key (keys (take 10 sorted))]
+      (println (str &#x22;K &#x22; key &#x22; - &#x22; @(@so-far key))))))</code></pre>
+<p>There&#x2019;s nothing terribly exotic here, except for we have to throw a lot of
+<code>@</code> characters around to reach through the references to the table
+itself and then to the values in the key/value pairs.  Which is
+perfectly OK since this stage is read-only.</p>
+
+<p id='p-10' class='p1'><span class='h2'>Looking Back</span> &#xb7; 
+Note that actual collisions between concurrent threads are probably going
+to be rare in this implementation.  Most times when you probe the hash-table ref
+you&#x2019;ll find that yes, we&#x2019;re already counting this URI; no transaction
+required.  And most times when you increment the counter, probably no other
+threads are, so once again, the STM should work smoothly.</p>
+
+<p>So there, you have it; 30 or so lines of code that reliably and
+concurrently compute line-at-a-time statistics.</p>
+
+<p id='p-12' class='p1'><span class='h2'>Does This Actually Work?</span> &#xb7; 
+This section used to begin:</p>
+
+<blockquote><p>Not quite, at the moment.  I mean, it works fine for the first
+50 million 
+lines or so of the big dataset&#x2019;s quarter-billion, keeping my eight-core
+32-thread SPARC T2000 maxed, and I mean smokin&#x2019;, you can see the 50M blocks that
+Paralines is reading go by pop-pop-pop.  But then it hits its heap limit and
+descends into garbage-collection hell and thrashes its way to a miserable
+single-threaded standstill.</p>
+</blockquote>
+<p>No more!  I found the bug, due to a combination of some moderate stupidity
+on my part and an old and well-known
+<a href='http://bugs.sun.com/bugdatabase/view_bug.do;jsessionid=99227e05664f737f96932f3ec3c0?bug_id=4513622'>Java
+issue</a>, and killed it.</p>
+
+<p>It runs fine; see
+<a href='/ongoing/When/200x/2009/11/18/Clojure-Parallel-I-O'>Parallel I/O</a>
+for more.</p>
+
+<p id='p-11' class='p1'><span class='h2'>The Big Question</span> &#xb7; 
+Are the <code>ref</code> and <code>@</code> and <code>dosync</code> and
+<code>alter</code> and <code>ref-set</code> machinery accessible to ordinary
+programmers?  Will they figure out how to use them and use them correctly?
+Clearly this is a lot less painful than wrangling locks and threads, but on
+the other hand there is still careful thought required and places where you
+can go wrong.</p>
+
+<p>Is this a primitive that will be one of the distinguishing
+features of the Java of Concurrency?</p>
+
+<p id='p-13' class='p1'><span class='h2'>Reactions to Commenters</span> &#xb7; 
+On the question of whether agents would be a better fit; Well, maybe.  I
+don&#x2019;t think there&#x2019;s a single person on this green planet who is smart enough
+to predict, based on intuition, where the bottlenecks are going to happen in
+this kind of a setup.  Once I&#x2019;ve fought through the GC weirdness, I&#x2019;ll see if
+going to an agent-based system helps.</p>
+
+<p>I will point out that, until the GC conflagration broke out, this gave the
+appearance of running very efficiently on the Niagara box, with all the
+available threads maxed out.  So it may be that the Clojure mechanisms have
+hit an 80/20 point and further improvement is incremental.  We&#x2019;ll see.</p>
+
+<p>To Avi and others who suggested map/reduce or other more deeply-parallel
+approaches: Well, maybe.  Do bear in mind that I&#x2019;m trying to nail down The
+Simplest Thing That Will Really Help, not the most optimal solution regardless
+of complexity.</p>
+
+<p>To those who suggest that my performance problem is due to concurrency
+contention rather than GC: I really think you&#x2019;re wrong.  I have the GC
+diagnostics printing out, and I can <em>see</em> it descending into GC hell
+when it bottlenecks.</p>
+
+<p>To those advancing theories based on the number of unique counters, lines,
+and 
+so on: There are around 3,000 unique URIs, and a quarter-billion lines of
+data, just under 10% of which match the regex and will lead to an update.</p>
+
+<hr />
+<div id='commentHere'></div>
+<div id='footer'><p><b>Updated: 2009/11/19</b><br />
+<a href='/ongoing/' onclick="setActiveStyleSheet('serif'); return false;" onkeypress="setActiveStyleSheet('serif'); return false;" accesskey='p'>Serif</a> / <a href='/ongoing/' onclick="setActiveStyleSheet('sans'); return false;" onkeypress="setActiveStyleSheet('sans'); return false;" accesskey='p'>Sans-Serif</a><br />
+</p>
+</div>
+<hr/>
+<h2 id='comments'>Contributions</h2>
+<div class="comments"><p>Comment feed for <span class="o">ongoing</span>:<a href="/ongoing/comments.atom"><img src="/ongoing/Feed.png" alt="Comments feed"/></a></p><div class='comment-a' id='c1258057176.831794'><p class='from'>From: <a href='http://'>Patrick</a> (Nov 12 2009, at 12:19)</p><p>Would you like to post the entire code so I/we can poke at it?</p><p>Thanks for the detailed walk-thru.</p>
+<p><i>[<a href='#c1258057176.831794'>link</a>]</i></p></div><div class='comment-b' id='c1258057312.760683'><p class='from'>From: <a href='http://www.ihance.com/aboutus.aspx'>John Hart</a> (Nov 12 2009, at 12:21)</p><p>The method used (dosync locking around counter increments) only works if (a) the locking mechanism is cheap, and (b) the set of hits are distributed somewhat flatly.  You code up two assumptions:</p><p>"Most times when you probe the hash-table ref you&#8217;ll find that yes, we&#8217;re already counting this URI; no transaction required. And most times when you increment the counter, probably no other threads are, so once again, the STM should work smoothly."</p><p>If my each of my quarter-billion hits are to unique URLs, assumption (1) is false.  If 70% of my quarter-billion hits are to the same page, then assumption (2) is false.</p><p>Why a single shared global data structure?  Why not one user-data per thread, with results summing at the end?  Are you trying not to do that because "it's too complicated for ordinary programmers"?  I think the locking code (especially the "oh right I gotta rememember that someone may have already created this entry" in lines 4-5 of new-counter) is more complicated &amp; error-prone than exposing knowledge of threads/processes/etc but not requiring global locks.</p>
+<p><i>[<a href='#c1258057312.760683'>link</a>]</i></p></div><div class='comment-a' id='c1258058819.31534'><p class='from'>From: <a href='http://muckandbrass.com'>Chas Emerick</a> (Nov 12 2009, at 12:46)</p><p>I don't see a link to some source, but I'm not clear on why you're using refs.  Refs are for tracking *coordinated* change.  I've not followed the WideFinder "challenge", but it seems like each unit of work (a single line from a log file) is entirely encapsulated, so there's no need to constantly coordinate intermediate results line-by-line.</p><p>Given that, it seems that either (a) a simple pmap across a line-seq of the input file swap!-ing the aggregate state in a single atom or (b) dispatching lines to a set of agents (which do not correspond 1:1 with native threads, FYI) in round-robin fashion would be better.</p>
+<p><i>[<a href='#c1258058819.31534'>link</a>]</i></p></div><div class='comment-b' id='c1258060606.560087'><p class='from'>From: <a href='http://technomancy.us'>Phil</a> (Nov 12 2009, at 13:16)</p><p>I've got a version that uses agents; clocks in at twelve lines:</p><p><a href='http://p.hagelb.org/wide_finder.clj.html'>http://p.hagelb.org/wide_finder.clj.html</a></p><p>Haven't run it over any really beefy logs to get perf numbers yet though.</p>
+<p><i>[<a href='#c1258060606.560087'>link</a>]</i></p></div><div class='comment-a' id='c1258062859.287435'><p class='from'>From: <a href='http://'>Ben</a> (Nov 12 2009, at 13:54)</p><p>A splodge of Clojure code should obviously be called a "mojule".</p>
+<p><i>[<a href='#c1258062859.287435'>link</a>]</i></p></div><div class='comment-b' id='c1258072285.819960'><p class='from'>From: <a href='http://'>jwhitlark</a> (Nov 12 2009, at 16:31)</p><p>I believe your incr function could use commute instead of alter.  see <a href='http://clojure.org/api#commute'>http://clojure.org/api#commute</a></p><p>I don't know how much improvement it would make, though.</p>
+<p><i>[<a href='#c1258072285.819960'>link</a>]</i></p></div><div class='comment-a' id='c1258073945.195823'><p class='from'>From: <a href='http://patrickdlogan.posterous.com'>Patrick Logan</a> (Nov 12 2009, at 16:59)</p><p>I'd like to noodle on this, but some initial impressions... I don't think you have to do so many dereferences, nor do I think you have to synchronize so much.</p><p>From what I understand of the problem so far there are a few distinct cases...</p><p>1. You have a URL that is not in the map yet.</p><p>In this case if the map is in an atom, swap! the map with one where the URL is mapped to something with the value of 1.</p><p>2. You have a URL that is already in the map.</p><p>In this case if the URL is mapped to an atom then swap! the value in that atom by inc'ing it. You do not need to swap! the map in this case.</p><p>I think those two cases could be the core of the counting aspect of the problem. There's probably something lurking around the corner to simplify taking the top ten counts as well. </p><p>e.g. you may not want to sort them while still counting but you may keep them in a vector then either sort the vector in one thread or partition the vector into a thread per range of length N to coordinate sorting concurrently. </p><p>Or something... I think the next step for you is to think about using atoms and swap, dereferencing and syncing much less, and maybe sorting concurrently.</p>
+<p><i>[<a href='#c1258073945.195823'>link</a>]</i></p></div><div class='comment-b' id='c1258074566.231669'><p class='from'>From: <a href='http://'>pmf</a> (Nov 12 2009, at 17:09)</p><p>If you'd show the implementation of your read-lines-function, we might be able to pinpoint your leak. My superficial assumption is that there are implicit or explicit local references to the blocks in read-lines that will only get GCd on exit from read-lines.</p>
+<p><i>[<a href='#c1258074566.231669'>link</a>]</i></p></div><div class='comment-a' id='c1258079113.492486'><p class='from'>From: <a href='http://'>Joshua</a> (Nov 12 2009, at 18:25)</p><p>We have some sims that run into the same issue with the Java garbage collector. It would be nice if there was more available to use different garbage collectors or tweak it to not hammer the system in these cases.</p>
+<p><i>[<a href='#c1258079113.492486'>link</a>]</i></p></div><div class='comment-b' id='c1258080180.659140'><p class='from'>From: <a href='http://'>Jeremy Corbett</a> (Nov 12 2009, at 18:43)</p><p>This may not help but its worth trying -XX:+DoEscapeAnalysis.  Any objects that stay in a thread will not touch the heap.  </p>
+<p><i>[<a href='#c1258080180.659140'>link</a>]</i></p></div><div class='comment-a' id='c1258086369.950929'><p class='from'>From: <a href='http://patrickdlogan.posterous.com'>Patrick Logan</a> (Nov 12 2009, at 20:26)</p><p>Correction to my first comment...</p><p>The map should be held by an agent not an atom. The action for the agent would be to update the map for the URL as with an atom.</p><p>But with an atom there would be a race condition where some other thread updated the map for the same URL. An agent would serialize actions. </p><p>If the agent has just previously updated the map for the same URL the action would inc the counter for the URL. Otherwise it would initialize a counter to 1 for the URL.</p><p>The counter would still be an atom as the only requirement is to inc whatever value the counter currently has.</p>
+<p><i>[<a href='#c1258086369.950929'>link</a>]</i></p></div><div class='comment-b' id='c1258086843.21499'><p class='from'>From: <a href='http://'>Dan Davies Brackett</a> (Nov 12 2009, at 20:34)</p><p>If you are looking around, and asking for help, some details of what you've found so far would help anyone interested in contributing help =) For example, when you kill -QUIT the JVM for a stack trace on standard out, is GC (or a wait for it) actually what's going on? Have you run any heap dumps through jhat or whatever that analyzer is called to see the objects-by-type bar charts?</p>
+<p><i>[<a href='#c1258086843.21499'>link</a>]</i></p></div><div class='comment-a' id='c1258087224.308659'><p class='from'>From: <a href='http://'>Mark</a> (Nov 12 2009, at 20:40)</p><p>I don't see any obvious memory leaks in this code, maybe the problem is in read-lines which you didn't show?</p><p>Your code will likely have even better throughput if you use atoms instead of refs, since you're not really doing anything that requires the full power of refs.</p><p>Using a ref/atom for both the hash table and the individual counters is an interesting approach, it would be very interesting to see whether it makes much of a difference to only put the overall hash table in a ref/atom as one big immutable object.  If you have done this experiment already, it would be great if you would report these results.</p>
+<p><i>[<a href='#c1258087224.308659'>link</a>]</i></p></div><div class='comment-b' id='c1258092353.999657'><p class='from'>From: <a href='http://tkil.livejournal.com/'>tkil</a> (Nov 12 2009, at 22:05)</p><p>@Joshua -- "It would be nice if there was more available to use different garbage collectors or tweak it to not hammer the system in these cases."</p><p>There is some flexibility.  A few years ago, we had a server load that would go in to GC land for 30 seconds every 10 minutes or so, and would bring our web page to a halt.</p><p>It turns out that there's a much more incremental GC algorithm that you can specify; from memory, it was the "server" algorithm (instead of the "workstation" algo?), and it had high / low water knobs, etc.</p><p>Might be worth looking into -- but then again, this is all from 5+ years ago, so I have no idea if the current JVMs still offer this.</p><p><a href='http://java.sun.com/docs/hotspot/gc5.0/gc_tuning_5.html'>http://java.sun.com/docs/hotspot/gc5.0/gc_tuning_5.html</a></p><p>Looks like the "concurrent low pause collector" is the one I'm thinking of.</p><p>Good luck!</p>
+<p><i>[<a href='#c1258092353.999657'>link</a>]</i></p></div><div class='comment-a' id='c1258099300.490014'><p class='from'>From: <a href='http://'>Mark</a> (Nov 13 2009, at 00:01)</p><p>Now that I've read Patrick Logan's comment, I agree that holding the map in an agent is even better than holding it in an atom.</p><p>I'm pretty sure that once you switch to an agent, you can just use a regular immutable hash map as the value inside the agent, rather than a map where the counters are atoms or refs.  So the code will be cleaner as well.</p>
+<p><i>[<a href='#c1258099300.490014'>link</a>]</i></p></div><div class='comment-b' id='c1258105208.151312'><p class='from'>From: <a href='http://avibryant.com'>Avi Bryant</a> (Nov 13 2009, at 01:40)</p><p>I'm with John Hart here - trying to do this in a single data structure seems odd, unless that's explicitly part of the point of the exercise.  This is the kind of problem for which map/reduce is, to me, very obviously the right pattern.</p>
+<p><i>[<a href='#c1258105208.151312'>link</a>]</i></p></div><div class='comment-a' id='c1258108017.962987'><p class='from'>From: <a href='http://'>Mark</a> (Nov 13 2009, at 02:26)</p><p>I think that Phil's version could run into problems if the dispatch to the agents happens faster than the agents can process them -- the agents mailbox would fill up which could cause a crash.</p>
+<p><i>[<a href='#c1258108017.962987'>link</a>]</i></p></div><div class='comment-b' id='c1258116906.348664'><p class='from'>From: <a href='http://'>gvb</a> (Nov 13 2009, at 04:55)</p><p>@John Hart has identified the problem, it is with dosync.</p><p>What you are doing is creating a global table and then serializing *all* access to it.  In database terms, you are *table* locking when you really want to be *row* locking most of the time.  When you create a new accumulator in the table (e.g. insert row), you will have to lock the table.  There is no way around this, but it will happen (relatively) infrequently.  When you increment an existing accumulator (update row), you want to *row* lock, not table lock.</p><p>I suspect your "memory leak/garbage collection" is really a table locking issue.  What your program is doing is creating a HUGE number of threads, each running a regex on a line.  Splitting the input file is non-blocking.  Running the regex on a line is non-blocking.  As a result, these run as fast as possible and as many threads as possible are created.</p><p>Then, when it comes time to update the accumulator in the table, one thread gets in and all the rest are blocked.  Since the input is spawning at a HUGE rate effectively an infinite number of threads, it overwhelms your system because of the dosync (global lock) bottleneck.</p><p>This is a *very* easy theory to test: if you remove the dosync calls, does you code run fast (and to completion)?  It will produce the wrong answers, but the exercise will tell you if your dosync is bottlenecking your code.</p><p>What you want for this algorithmic paradigm is a table lock only when you are creating a new "row", and a lock per row.  This allows most of the operations to run in parallel since most of the incrementers will be incrementing different "rows" (IP addresses).  I'm not familiar with Clojure, so I don't know if that is possible.  Your use of dosync implies only a global lock.  You need to create a per-entry lock and use that to increment the accumulator.</p><p>I think what you really want is a different algorithmic paradigm.  For instance, in an Erlang world, you would create an accumulator thread per IP address that needed to be incremented.  The regexp threads would no longer increment the accumulator directly (with a global or even a row lock), but instead would send a message "increment yourself" to the appropriate accumulator thread.  The Erlang message interface would inherently serialize the access to each unique IP address accumulator and would inherently parallelize the incrementing of disjoint IP addresses.</p><p>gvb</p>
+<p><i>[<a href='#c1258116906.348664'>link</a>]</i></p></div><div class='comment-a' id='c1258146067.183520'><p class='from'>From: <a href='http://'>Shawn Hoover</a> (Nov 13 2009, at 13:01)</p><p>record/incr look like a race condition. record reads the map outside of dosync and creates a new value to insert. Then incr does the update in dosync, because it has to. Multiple threads could read in parallel, create new counters (in parallel), and insert them (in serial).</p>
+<p><i>[<a href='#c1258146067.183520'>link</a>]</i></p></div><div class='comment-b' id='c1258148221.574546'><p class='from'>From: <a href='http://patrickdlogan.posterous.com'>Patrick Logan</a> (Nov 13 2009, at 13:37)</p><p>"trying to do this in a single data structure seems odd, unless that's explicitly part of the point of the exercise"</p><p>Yeah, I think this is where it gets into the specific details of the problem. Improving one step beyond the code in the post I think would be to put one map into an agent, with the values for each key being an atom.</p><p>Potential downside is if there are a *lot* of unique keys then adding each one to the single map is a serial thing. There could be multiple maps to allow more concurrency.</p><p>A big point for concurrency though is not to update a map on every URL increment, especially once tha URL is already "known".</p><p>One of the previous posts in this topic points out that this exercise is a microbenchmark for SMP coordination, so this particular post seems to be one of exploring the convenience foremost and performance somewhat of various clojure mechanisms.</p>
+<p><i>[<a href='#c1258148221.574546'>link</a>]</i></p></div><div class='comment-a' id='c1258151507.545988'><p class='from'>From: Ross Thomas (Nov 13 2009, at 14:31)</p><p>Hi Tim,</p><p>As cool as refs are, I'm with others in believing they're overkill in this situation :)</p><p>Here's a version I made that takes advantage of an even cooler feature of Clojure: lazy infinite sequences. I think it's correct, though I can't speak to its performance. Would be interesting to investigate how it scales.</p><p><a href='http://pastebin.com/f968c762'>http://pastebin.com/f968c762</a></p>
+<p><i>[<a href='#c1258151507.545988'>link</a>]</i></p></div></div></div>
+
+<div id='rightcontent'><div class='oo'><a id='to-home' href='/ongoing/'><span id='home'>ongoing</span></a></div>
+<div>
+<div class='principles'>
+<a href='/ongoing/WhatItIs'>What this is</a> &#xb7;
+<a href='/ongoing/ongoing.atom'><img title="Subscribe to ongoing" alt="Subscribe to ongoing" src="/ongoing/Feed.png"/></a><br/>
+<a href='/ongoing/Truth'>Truth</a> &#xb7;
+<a href='/ongoing/Biz'>Biz</a> &#xb7;
+<a href='/ongoing/Tech'>Tech</a></div>
+<a href='/ongoing/misc/Software'>software</a> &#xb7;
+<a href="http://www.textuality.com/goodmeta.html">G &amp; M</a> &#xb7;
+<a href='http://www.textuality.com/BillBray/'>Dad</a> 
+<a href='/ongoing/misc/Tim'>author</a> &#xb7;
+<a href='/ongoing/misc/Colophon'>colophon</a> &#xb7;
+<a href='/ongoing/misc/Copyright'>rights</a>
+</div>
+<div id='potd'><a id='tnA' href='/ongoing/goto-potd/'><img id='tnI' src='/ongoing/potd.png' alt='picture of the day' /></a></div>
+Around <a href='/ongoing/When/200x/2009/11/'>November</a> <a href='/ongoing/When/200x/2009/11/11/'>11</a>, <a href='/ongoing/When/200x/2009/'>2009</a>: <a href='/ongoing/When/200x/2009/11/14/CL-Closing-Up'>CL IX: Closing Up</a>
+&#xb7; <a href='/ongoing/When/200x/2009/11/15/Short_fragments'>Short-form Fragments</a>
+&#xb7; <a href='/ongoing/When/200x/2009/11/18/Clojure-Parallel-I-O'>Concur.next &#x2014; Parallel I/O</a>
+&#xb7; <a href='/ongoing/When/200x/2009/11/09/Eastern-Time'>Autumnal Blues</a>
+&#xb7; <a href='/ongoing/When/200x/2009/11/08/Short_fragments'>Short-form Fragments</a>
+<br />
+<div id='cats'>
+<p><a href='/ongoing/What/'>What?</a>
+<br/> &#xb7; <a  href='/ongoing/What/Technology'>Technology</a> (65 fragments)
+<br/> &#xb7; &#xb7; <a class='leaf'  href='/ongoing/What/Technology/Concurrency'>Concurrency</a> (66 more)
+</p>
+</div>
+
+<div id="fonts">
+<hr />
+<a href="/ongoing/" 
+ onclick="setActiveStyleSheet('serif'); return false;" 
+ onkeypress = "setActiveStyleSheet('serif'); return false;"
+ accesskey="p" id="serif">Serif</a>  &#xb7; 
+<a href="/ongoing/"
+ onclick="setActiveStyleSheet('sans'); return false;" 
+ onkeypress = "setActiveStyleSheet('sans'); return false;"
+ accesskey="p" id="sans">Sans-Serif</a>
+<hr />
+</div>
+<div class="employ">I work for Google, but the opinions expressed here are my own, and no other party necessarily
+agrees with them.<br/>
+A full disclosure of my professional interests is on the <a href='/ongoing/misc/Tim'>author</a> page. 
+</div>
+
+
+
+</div>
+</body>
+</html>
