@@ -1,0 +1,2250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html dir='ltr' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<head>
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+<script type="text/javascript">(function() { var a=window;function c(b){this.t={};this.tick=function(d,i,e){e=e?e:(new Date).getTime();this.t[d]=[e,i]};this.tick("start",null,b)}var f=new c;a.jstiming={Timer:c,load:f};try{var g=null;if(a.chrome&&a.chrome.csi)g=Math.floor(a.chrome.csi().pageT);if(g==null)if(a.gtbExternal)g=a.gtbExternal.pageT();if(g==null)if(a.external)g=a.external.pageT;if(g)a.jstiming.pt=g}catch(h){};a.tickAboveFold=function(b){b=b;var d=0;if(b.offsetParent){do d+=b.offsetTop;while(b=b.offsetParent)}b=d;b<=750&&a.jstiming.load.tick("aft")};var j=false;function k(){if(!j){j=true;a.jstiming.load.tick("firstScrollTime")}}a.addEventListener?a.addEventListener("scroll",k,false):a.attachEvent("onscroll",k);
+ })();</script>
+<meta content='true' name='MSSmartTagsPreventParsing'/>
+<meta content='blogger' name='generator'/>
+<link href='http://www.blogger.com/favicon.ico' rel='icon' type='image/vnd.microsoft.icon'/>
+<link href='http://blog.chromium.org/2009/11/2x-faster-web.html' rel='canonical'/>
+<link rel="alternate" type="application/atom+xml" title="Chromium Blog - Atom" href="http://blog.chromium.org/feeds/posts/default" />
+<link rel="alternate" type="application/rss+xml" title="Chromium Blog - RSS" href="http://blog.chromium.org/feeds/posts/default?alt=rss" />
+<link rel="service.post" type="application/atom+xml" title="Chromium Blog - Atom" href="http://www.blogger.com/feeds/2471378914199150966/posts/default" />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.blogger.com/rsd.g?blogID=2471378914199150966" />
+<link rel="alternate" type="application/atom+xml" title="Chromium Blog - Atom" href="http://blog.chromium.org/feeds/8996789345956713410/comments/default" />
+<!--[if IE]> <script> (function() { var html5 = ("abbr,article,aside,audio,canvas,datalist,details," + "figure,footer,header,hgroup,mark,menu,meter,nav,output," + "progress,section,time,video").split(','); for (var i = 0; i < html5.length; i++) { document.createElement(html5[i]); } })(); </script> <![endif]-->
+<title>Chromium Blog: A 2x Faster Web</title>
+<link href='http://www.google.com/uds/css/gsearch.css' rel='stylesheet' type='text/css'/>
+<link href='http://www.google.com/uds/css/gsearch_darkgrey.css' rel='stylesheet' type='text/css'/>
+<link href='http://www.google.com/css/gooey.css' rel='stylesheet' type='text/css'/>
+<link href='http://www.google.com/googleblogs/css/template_styles.css' rel='stylesheet' type='text/css'/>
+<link type='text/css' rel='stylesheet' href='http://www.blogger.com/static/v1/widgets/1743847221-widget_css_bundle.css' />
+ <link rel="stylesheet" type="text/css" href="http://www.blogger.com/dyn-css/authorization.css?targetBlogID=2471378914199150966&zx=2793c0c2-2de7-4978-8976-e6fd3997e4f2"/>
+<style type="text/css">#navbar-iframe { display:block }
+</style>
+
+<style id='page-skin-1' type='text/css'><!--
+/*
+/* custom header */
+.template_white h2, .template_white .post h3 a {color:#182E5F;}
+.template_white .post h3 a:hover  {color:#182E5F;}
+#template_fixed #footer-graphic {text-align:center; align:center; width:750px; margin-left:auto; margin-right:auto;}
+.template_white #footer-graphic {background-color:#fff; border-color:#4F94EA;}
+.header_img {margin-bottom:2em; margin-top:0; padding-top:0;}
+
+--></style>
+<script src='http://www.google.com/uds/api?file=uds.js&v=1.0&key=ABQIAAAA_YJR13Pfd1DLDQs4kgKbQxTxAb0xtwQQCqJhhTH0tdrRSrWJ4RR2PabXite0o1TcEPO2djBsg9GdFg' type='text/javascript'></script>
+<script language='Javascript' type='text/javascript'>
+var blogURL='http://blog.chromium.org/2009/11/2x-faster-web.html';
+ //<![CDATA[
+	 var coreSearch;
+
+
+    function SolutionLoad() {
+     var controlRoot = document.getElementById("searchControl");
+
+    // create the search control
+    coreSearch = new GSearchControl();
+    coreSearch.setLinkTarget(GSearch.LINK_TARGET_SELF);
+    coreSearch.setResultSetSize(GSearch.LARGE_RESULTSET);
+
+    // prep for decoupled search form
+    var searchFormElement = document.getElementById("searchform");
+    var drawOptions = new GdrawOptions();
+    drawOptions.setSearchFormRoot(searchFormElement);
+    drawOptions.setDrawMode(GSearchControl.DRAW_MODE_TABBED);
+  
+    // populate - web, this blog, all blogs
+    searcher = new GblogSearch();
+    searcher.setSiteRestriction(blogURL);
+    searcher.setUserDefinedLabel('This Blog');
+    coreSearch.addSearcher(searcher);
+ 
+    var searcher = new GwebSearch();
+    searcher.setUserDefinedLabel('');
+    coreSearch.addSearcher(searcher);
+
+    searcher = new GblogSearch();
+    searcher.setUserDefinedLabel('All Blogs');
+    coreSearch.addSearcher(searcher);
+
+
+    coreSearch.draw(controlRoot, drawOptions);
+    var submitBtn = (document.getElementById('searchform').getElementsByTagName('input'))[1];
+    submitBtn.onclick = clearPosts;
+    }
+
+
+function clearPosts() {
+ var main = document.getElementById('main-wrapper');
+ var posts = document.getElementById('post-wrapper');
+ posts.style.display='none';
+}
+
+  function registerLoadHandler(handler) {
+      //var node = window;
+      alert(document.getElementById('searchform'));
+      var node = (window.document.getElementById('searchform').getElementsByTagName("input"))[2];
+
+      if (node.addEventListener) {
+        node.addEventListener("onClick", handler, false);
+      } else if (node.attachEvent) {
+        node.attachEvent("onClick", handler);
+      } else {
+        node['onClick'] = handler;
+      }
+      return true;
+    }
+
+    //]]>
+</script>
+<script type='text/javascript'>
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-1870203-59']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<script type="text/javascript">
+if (window.jstiming) window.jstiming.load.tick('headEnd');
+</script></head>
+<body>
+<div class='navbar section' id='navbar'><div class='widget Navbar' id='Navbar1'><script type="text/javascript">
+    function setAttributeOnload(object, attribute, val) {
+      if(window.addEventListener) {
+        window.addEventListener("load",
+          function(){ object[attribute] = val; }, false);
+      } else {
+        window.attachEvent('onload', function(){ object[attribute] = val; });
+      }
+    }
+  </script>
+<iframe src="http://www.blogger.com/navbar.g?targetBlogID=2471378914199150966&amp;blogName=Chromium+Blog&amp;publishMode=PUBLISH_MODE_HOSTED&amp;navbarType=SILVER&amp;layoutType=LAYOUTS&amp;searchRoot=http%3A%2F%2Fblog.chromium.org%2Fsearch&amp;blogLocale=en&amp;homepageUrl=http%3A%2F%2Fblog.chromium.org%2F&amp;targetPostID=8996789345956713410" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" height="30px" width="100%" id="navbar-iframe" allowtransparency="true" title="Blogger Navigation and Search"></iframe>
+<div></div></div></div>
+<div class='template_white' id='template_fixed'>
+<div id='main-wrapper'>
+<!-- skip links for text browsers -->
+<span id='skiplinks' style='display:none;'>
+<a href='#main'>skip to main </a> |
+      <a href='#sidebar'>skip to sidebar</a>
+</span>
+<a href='http://blog.chromium.org/' style='text-decoration:none;'>
+<img class='header_img' src='http://google.com/googleblogs/images/headers/chromium_header_full.png'/>
+</a>
+<br style='clear:both;'/>
+<div id='content-wrapper'>
+<div id='sidebar'>
+<div class='sidebar section' id='sidebar'><div class='widget HTML' id='HTML2'>
+<h2 class='small'>Search our Blog</h2>
+<div class='widget-content'>
+<div id='searchform'></div>
+</div>
+</div><div class='widget BlogArchive' id='BlogArchive1'>
+<h2 class='small'>Archive</h2>
+<div class='widget-content'>
+<div id='ArchiveList'>
+<div id='BlogArchive1_ArchiveList'>
+<select id='BlogArchive1_ArchiveMenu'>
+<option value='http://blog.chromium.org/2010_12_01_archive.html'>December (6)</option>
+<option value='http://blog.chromium.org/2010_11_01_archive.html'>November (2)</option>
+<option value='http://blog.chromium.org/2010_10_01_archive.html'>October (2)</option>
+<option value='http://blog.chromium.org/2010_09_01_archive.html'>September (9)</option>
+<option value='http://blog.chromium.org/2010_08_01_archive.html'>August (7)</option>
+<option value='http://blog.chromium.org/2010_07_01_archive.html'>July (3)</option>
+<option value='http://blog.chromium.org/2010_06_01_archive.html'>June (13)</option>
+<option value='http://blog.chromium.org/2010_05_01_archive.html'>May (10)</option>
+<option value='http://blog.chromium.org/2010_04_01_archive.html'>April (3)</option>
+<option value='http://blog.chromium.org/2010_03_01_archive.html'>March (7)</option>
+<option value='http://blog.chromium.org/2010_02_01_archive.html'>February (3)</option>
+<option value='http://blog.chromium.org/2010_01_01_archive.html'>January (5)</option>
+<option value='http://blog.chromium.org/2009_12_01_archive.html'>December (11)</option>
+<option value='http://blog.chromium.org/2009_11_01_archive.html'>November (4)</option>
+<option value='http://blog.chromium.org/2009_09_01_archive.html'>September (3)</option>
+<option value='http://blog.chromium.org/2009_08_01_archive.html'>August (3)</option>
+<option value='http://blog.chromium.org/2009_07_01_archive.html'>July (2)</option>
+<option value='http://blog.chromium.org/2009_06_01_archive.html'>June (7)</option>
+<option value='http://blog.chromium.org/2009_05_01_archive.html'>May (2)</option>
+<option value='http://blog.chromium.org/2009_04_01_archive.html'>April (2)</option>
+<option value='http://blog.chromium.org/2009_03_01_archive.html'>March (2)</option>
+<option value='http://blog.chromium.org/2009_02_01_archive.html'>February (3)</option>
+<option value='http://blog.chromium.org/2009_01_01_archive.html'>January (5)</option>
+<option value='http://blog.chromium.org/2008_12_01_archive.html'>December (4)</option>
+<option value='http://blog.chromium.org/2008_11_01_archive.html'>November (2)</option>
+<option value='http://blog.chromium.org/2008_10_01_archive.html'>October (7)</option>
+<option value='http://blog.chromium.org/2008_09_01_archive.html'>September (8)</option>
+</select>
+</div>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=2471378914199150966&widgetType=BlogArchive&widgetId=BlogArchive1&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("BlogArchive1"));' target='configBlogArchive1' title='Edit'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div><div class='widget HTML' id='HTML1'>
+<h2 class='title'>Subscribe</h2>
+<div class='widget-content'>
+<p style="font-size:12px;"><a href="http://blog.chromium.org/feeds/posts/default" rel="alternate" type="application/rss+xml"><img alt="" style="vertical-align:middle;border:0; padding-right:5px;" src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png"/></a>&nbsp;<a href="http://blog.chromium.org/feeds/posts/default" rel="alternate" type="application/rss+xml">RSS Feed</a></p>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=2471378914199150966&widgetType=HTML&widgetId=HTML1&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("HTML1"));' target='configHTML1' title='Edit'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div><div class='widget HTML' id='HTML3'>
+<h2 class='title'>More Blogs from Google</h2>
+<div class='widget-content'>
+Visit our <a href="http://www.google.com/press/blogs/directory.html#tab0"> directory</a> for more information about Google blogs.
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=2471378914199150966&widgetType=HTML&widgetId=HTML3&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("HTML3"));' target='configHTML3' title='Edit'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div><div class='widget LinkList' id='LinkList2'>
+<h2>Useful links</h2>
+<div class='widget-content'>
+<ul>
+<li><a href='http://www.chromium.org/'>Chromium Homepage</a></li>
+<li><a href='http://www.google.com/chrome'>Google Chrome</a></li>
+<li><a href='http://googlechromereleases.blogspot.com/'>Google Chrome Release Notes</a></li>
+<li><a href='http://google-opensource.blogspot.com/'>Google Open Source Blog.</a></li>
+<li><a href='http://google-code-updates.blogspot.com/'>Google Code Blog</a></li>
+<li><a href='http://webkit.org/blog/'>WebKit Blog</a></li>
+</ul>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=2471378914199150966&widgetType=LinkList&widgetId=LinkList2&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("LinkList2"));' target='configLinkList2' title='Edit'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div><div class='widget HTML' id='HTML7'>
+<div class='widget-content'>
+<a href='http://www.blogger.com'><img alt='Powered By Blogger' src='http://www.blogger.com/buttons/blogger-powerby-blue.gif'/></a>
+</div>
+</div></div>
+</div>
+<div id='main-content'>
+<div class='main section' id='main'><div class='widget HTML' id='HTML8'>
+<div id='searchControl'></div>
+</div><div class='widget Blog' id='Blog1'>
+<div id='post-wrapper'>
+<div class='blog-posts hfeed'>
+<!-- google_ad_section_start -->
+<div class='post'>
+<a name='8996789345956713410'></a>
+<h3>
+<a href='http://blog.chromium.org/2009/11/2x-faster-web.html'>A 2x Faster Web</a>
+</h3>
+<p class='post-subhead'>
+Wednesday, November 11, 2009
+</p>
+<p class='post-subhead'>
+Labels:
+<a href='http://blog.chromium.org/search/label/New%20Features' rel='tag'>New Features</a>
+</p>
+<div class='post-body'>
+<p><div>Today we'd like to share with the web community information about SPDY, pronounced "SPeeDY", an early-stage research project that is part of our effort to <a href="http://code.google.com/speed">make the web faster</a>. SPDY is at its core an application-layer protocol for transporting content over the web. It is designed specifically for minimizing latency through features such as multiplexed streams, request prioritization and HTTP header compression.</div><div><br /></div><div>We started working on SPDY while exploring ways to optimize the way browsers and servers communicate. Today, web clients and servers speak HTTP. HTTP is an elegantly simple protocol that emerged as a web standard in 1996 after a series of experiments. HTTP has served the web incredibly well. We want to continue building on the web's tradition of experimentation and optimization, to further support the evolution of websites and browsers. So over the last few months, a few of us here at Google have been experimenting with new ways for web browsers and servers to speak to each other, resulting in a prototype web server and Google Chrome client with SPDY support.</div><div><br /></div><div>So far we have only tested SPDY in lab conditions. The initial results are very encouraging: when we download the top 25 websites over simulated home network connections, we see a significant improvement in performance - pages loaded up to 55% faster. There is still a lot of work we need to do to evaluate the performance of SPDY in real-world conditions. However, we believe that we have reached the stage where our small team could benefit from the active participation, feedback and assistance of the web community.</div><div><br /></div><div>For those of you who would like to learn more and hopefully contribute to our experiment, we invite you to review our early stage <a href="http://dev.chromium.org/spdy">documentation</a>, look at our current <a href="http://src.chromium.org/viewvc/chrome/trunk/src/net/flip/">code</a> and provide feedback through the Chromium <a href="http://groups.google.com/group/chromium-discuss/">Google Group</a>.</div><div><br /></div><span class="post-author">Posted by Mike Belshe, Software Engineer and Roberto Peon, Software Engineer </span><br /><div><span class="Apple-style-span"  style="font-size:small;">This post is cross-posted at the <a href="http://googleresearch.blogspot.com/2009/11/2x-faster-web.html">Google Research Blog</a></span></div>
+</p>
+</div>
+<div class='post-footer'>
+<p>
+<span class='post-footer-link'>
+</span>
+<span class='post-footer-link'>
+</span>
+<span class='post-footer-link'>
+</span>
+</p>
+</div>
+</div>
+<div class='comments' id='comments'>
+<a name='comments'></a>
+<h4>
+100
+comments:
+        
+</h4>
+<dl id='comments-block'>
+<dt class='comment-author ' id='c5877018406996813570'>
+<a name='c5877018406996813570'></a>
+<p>
+<a href='http://www.blogger.com/profile/05520799412323517745' rel='nofollow'>Adam Fisk</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Love it! Especially the interleaved channels and header compression. Great to see a group just throw their hat in the ring to start knocking out problems like this -- just the kind of proactive approach we need to create a better web!</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 10:43 AM
+<span class='item-control blog-admin pid-582083281'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=5877018406996813570' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c3095176714864821313'>
+<a name='c3095176714864821313'></a>
+<p>
+<a href='http://www.blogger.com/profile/05632200311022210342' rel='nofollow'>Jason M. Batchelor</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Any chance that this is what continues to hold up the Mac version of Chrome, or have I missed a release announcement?</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 11:20 AM
+<span class='item-control blog-admin pid-120959277'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=3095176714864821313' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c8614130830822608703'>
+<a name='c8614130830822608703'></a>
+<p>
+<a href='http://www.blogger.com/profile/15848494241404160186' rel='nofollow'>Artem Russakovskii</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>This might just be the most important announcement for the web in the past 10 years. Keep pushing, guys!</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 11:28 AM
+<span class='item-control blog-admin pid-1286539349'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=8614130830822608703' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c88554674095480710'>
+<a name='c88554674095480710'></a>
+<p>
+<a href='http://www.blogger.com/profile/06216121443348616742' rel='nofollow'>SiliconShaft</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>So by 2x Faster web you meant 1.5 times faster yeah?  Apart from that sounds great!  Keep going.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 11:36 AM
+<span class='item-control blog-admin pid-1403417238'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=88554674095480710' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c1554018337163926730'>
+<a name='c1554018337163926730'></a>
+<p>
+<a href='http://www.blogger.com/profile/12114729986555853555' rel='nofollow'>kar</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Looks very promising ...would definitely look at the code</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 11:45 AM
+<span class='item-control blog-admin pid-316039330'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=1554018337163926730' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c6999709278692244621'>
+<a name='c6999709278692244621'></a>
+<p>
+<a href='http://www.blogger.com/profile/02374739586203788564' rel='nofollow'>Digital Jedi</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Someone seems to think that Google is five guys working on one project at the one time.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 11:49 AM
+<span class='item-control blog-admin pid-52268691'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=6999709278692244621' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c823838275210722443'>
+<a name='c823838275210722443'></a>
+<p>
+<a href='http://www.blogger.com/profile/16638688246795990292' rel='nofollow'>dtiriba</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Can&#39;t wait</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 11:59 AM
+<span class='item-control blog-admin pid-1218770325'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=823838275210722443' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c1708090200133862930'>
+<a name='c1708090200133862930'></a>
+<p>
+<a href='http://www.blogger.com/profile/05632200311022210342' rel='nofollow'>Jason M. Batchelor</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Actually, if it was just 5 guys working on the project (Chrome, right?) I could understand the delay. As it is, the project team has produced how many releases of the Windows browser vs. how many releases of the Mac browser?<br /><br />I&#39;m much less interested in hearing how they&#39;ve engineered Web 3.0 than in hearing how they&#39;re coming with the products they&#39;ve already announced, personally. When I see a solid product for both platforms (as that&#39;s what they promised from the outset), then maybe I&#39;ll be interested in hearing of their new plans for the Web.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 12:06 PM
+<span class='item-control blog-admin pid-120959277'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=1708090200133862930' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c7802245758879054559'>
+<a name='c7802245758879054559'></a>
+<p>
+<a href='http://www.blogger.com/profile/14136785735581418383' rel='nofollow'>Mike Beltzner</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Despite potential difficulties with uptake, optimizing technologies for today&#39;s web uses has value. I&#39;ve created a <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=528288" rel="nofollow">bug in Mozilla&#39;s bug tracker</a> to follow this work as well.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 12:17 PM
+<span class='item-control blog-admin pid-808312532'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=7802245758879054559' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c5683108267766548790'>
+<a name='c5683108267766548790'></a>
+<p>
+<a href='http://www.blogger.com/profile/13845391500883890220' rel='nofollow'>Andrew Charlton</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Is this available in binary distributions of Chromium or is it source only for now?</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 12:17 PM
+<span class='item-control blog-admin pid-1890214056'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=5683108267766548790' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c8234973492589513698'>
+<a name='c8234973492589513698'></a>
+<p>
+<a href='http://www.blogger.com/profile/13334716399118276745' rel='nofollow'>GeLeTo</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>I see one downside to this. With only one TCP connection loosing a packet will pause the transmission of ALL resources till the the lost packet is retransmitted. Because of the way the TCP/IP congestion works - loosing a packet is not a rare occurrence. There are two ways around this - use multiple TCP streams or better - use UDP.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 12:28 PM
+<span class='item-control blog-admin pid-1883156026'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=8234973492589513698' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c7630694579707811760'>
+<a name='c7630694579707811760'></a>
+<p>
+<a href='http://www.blogger.com/profile/04189765427630924036' rel='nofollow'>admin</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Finally! -- web standards and a browser developed by the same team.  I can&#39;t wait to see SPDY in action and how it positively affects <a href="http://cloud.tier1ip.com" rel="nofollow">cloud-based services</a>.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 12:39 PM
+<span class='item-control blog-admin pid-345724073'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=7630694579707811760' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c5554039640357637980'>
+<a name='c5554039640357637980'></a>
+<p>
+<a href='http://www.blogger.com/profile/13334716399118276745' rel='nofollow'>GeLeTo</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>...(continued from my previous post) or use a modified implementation of the TCP protocol that gives the application some control over the packet sizes and allows out-of-order receiving of packets.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 12:48 PM
+<span class='item-control blog-admin pid-1883156026'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=5554039640357637980' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c7821945230774520912'>
+<a name='c7821945230774520912'></a>
+<p>
+<a href='http://www.blogger.com/profile/02859720940511191522' rel='nofollow'>Titio Pentelho</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Awesome.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 12:55 PM
+<span class='item-control blog-admin pid-1232240723'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=7821945230774520912' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c1823265160572515756'>
+<a name='c1823265160572515756'></a>
+<p>
+<a href='http://www.blogger.com/profile/17294832205855394228' rel='nofollow'>John &quot;Z-Bo&quot; Zabroski</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Are you aware that there is an IETF Working Group for something similar?<br /><br />The two proposed languages are Argot/XPL and EXI.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 1:00 PM
+<span class='item-control blog-admin pid-547322358'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=1823265160572515756' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c6244336827610938427'>
+<a name='c6244336827610938427'></a>
+<p>
+<a href='http://www.blogger.com/profile/06245902924949831131' rel='nofollow'>upal</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>I guess all in all its a move towards web 3.0. First the wave, then GO language and now SPDY. I also smelt something similar while someone described wave as old wine in new bottle as XMPP was invented in 1998 (ref: <a href="http://googlewavecommunity.com/forum/viewtopic.php?f=13&amp;t=78" rel="nofollow">Beginning of Web 3.0</a>).</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 1:03 PM
+<span class='item-control blog-admin pid-2023628863'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=6244336827610938427' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c5021488721235498725'>
+<a name='c5021488721235498725'></a>
+<p>
+<a href='http://www.blogger.com/profile/04886599442742162918' rel='nofollow'>Mike Belshe</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>@Jason - definitely not holding up the Mac.  The Mac team is working extremely hard, and they want to get you a quality release.  Sorry for the time it takes.<br /><br />@kar - keep your expectations low!  The first goal was to see how much faster we can get.  That will be a continuing process.  The code may be disappointingly simple, and there are bugs-a-plenty.  But feedback is welcome!<br /><br />@Andrew - the code is in chromium; it hasn&#39;t yet reached the chrome official releases.  It will eventually, but it needs more work.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 1:06 PM
+<span class='item-control blog-admin pid-233664377'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=5021488721235498725' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c3090475131630746368'>
+<a name='c3090475131630746368'></a>
+<p>
+<a href='http://www.blogger.com/profile/04886599442742162918' rel='nofollow'>Mike Belshe</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>@GeLeTo:  Packet loss is a huge concern, one which we&#39;re actively studying (want to help?)  We believe the answer will be in a protocol which can dynamically determine the right number of connections.<br /><br />There is a growing number of connections with little or no loss.  For these, 1 channel is optimal, as we can do better compression and better prioritization.<br /><br />However, even using multiple connections, SPDY fares better than HTTP today.  There are several reasons:  a) it&#39;s sending about 40% fewer packets.  This just makes it much less vulnerable to loss.  b) Losing a SYN packet in TCP is disproportionately expensive.  As per the TCP spec, the client must wait 3 seconds before retransmitting the first SYN.  This is an *enourmous* amount of time. While HTTP opens up to 6-8 connections per domain (meaning 6-8 SYN packets), SPDY uses 1.  In a random loss world, this means SPDY has fewer of these disproportionately expensive delays.  c) TCP is actually pretty good (when using SACK) at keeping throughput high in the presence of packet loss.  This is largely thanks to TCP&#39;s fast-retransmit algorithm.  Because SPDY more efficiently uses the channel and more often has continued data flowing, it is able to hit fast-retransmit cases much more frequently than HTTP can, where only a single request flows at a time.<br /><br />A lot more research needs to be done on this.  We need better packet loss simulators, a better packet loss model of the real world, and we need to figure out how (or when) to throttle up more connections.  I think we can get there.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 1:10 PM
+<span class='item-control blog-admin pid-233664377'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=3090475131630746368' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c2540436951777352319'>
+<a name='c2540436951777352319'></a>
+<p>
+<a href='http://www.blogger.com/profile/12810422593975325823' rel='nofollow'>Alexander Orlov</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>With an own browser Google has enough power to push this technology. Other companies will adopt it fastly if they see the benefits via Google&#39;s services.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 1:16 PM
+<span class='item-control blog-admin pid-1866176484'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=2540436951777352319' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c8637048407816593344'>
+<a name='c8637048407816593344'></a>
+<p>
+<a href='http://www.blogger.com/profile/08249668342752482392' rel='nofollow'>nwhite</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>@Jason M. Batchelor relax on the who OS X issue. Mac users generally use a great browser by default (Safari). Windows is the place where the evolution of the web is being slowed. I am glad to see google put priority in the Windows environment. With that said I&#39;ve had Chromium running on my OS X machine for a while now.<br /><br />http://build.chromium.org/buildbot/snapshots/chromium-rel-mac/<br /><br />@admin you mentioned &quot;Finally! -- web standards and a browser developed by the same team.&quot; <br /><br />There is nothing web standards about this. Its a proposed technology, if we find it beneficial as a community it could become a standard. Releasing software in no way makes it official or a standard.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 1:18 PM
+<span class='item-control blog-admin pid-289357616'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=8637048407816593344' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c8030493733996973056'>
+<a name='c8030493733996973056'></a>
+<p>
+<a href='http://www.blogger.com/profile/02323754866209858286' rel='nofollow'>Oliver Oli</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>spdy://www.google.com ?!?<br /><br />sorry, but the name SPDY is ridiculous and looks ugly.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 1:18 PM
+<span class='item-control blog-admin pid-1031811335'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=8030493733996973056' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c5039330013937550059'>
+<a name='c5039330013937550059'></a>
+<p>
+<a href='http://www.blogger.com/profile/08194604578343431697' rel='nofollow'>OneLifeLiveIt</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Not sure if you guys in the labs have heard of a company called Endace - they have some great packet capture hardware that may be of interest for the server side of your development. www.endace.com is the URL</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 1:23 PM
+<span class='item-control blog-admin pid-1580516060'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=5039330013937550059' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c7690655570650503321'>
+<a name='c7690655570650503321'></a>
+<p>
+<a href='http://www.blogger.com/profile/14018224925808657621' rel='nofollow'>Gherald L</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>If you&#39;re not replacing HTTP, but embracing and extending, then why not call it...HTTP 2.0 ?</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 1:35 PM
+<span class='item-control blog-admin pid-1626033085'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=7690655570650503321' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c5832919006598252198'>
+<a name='c5832919006598252198'></a>
+<p>
+<a href='http://www.blogger.com/profile/07844007446202116721' rel='nofollow'>Brandon</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>I have a 10 meg charter connection. 99% of all pages will load with out a blink of an eye a small fraction of pages that say have bad java code, bad css or crap in the headers they do not need will cause a slow down but most of the time not noticed. I think the biggest problem to a slow down in page loading is web sites that use flash excessively, FLASH is a horridly slow loading application under any circumstances. I for one useally click back out of websites that use flash. I tend to love the beautiful designs and pages that one can create with css and wordpress. Most themes in wordpress can be made very beautiful and fulfilling to the websites reader with out the need for flash. I think we need to work on a new method for streaming video and animation and not rely on flash. I know there are some other applications out there but I am picking on flash because most websites  that have heavy animation and or video use it. Very slow and outdated. Why should us developers focus on developing an open source a new protocol to make certain web companies bigger and more powerful. Its a great concept but I for one am not going to update my servers to a new method of delivering data in less its got its security in check and is a stable application. Trending article on my upcoming blog at: http://preview.tinyurl.com/yg5mu55<br /><br />Another thought also comes to mind no matter how fast a page can load on your end or how fast your browser can render the page. The server on the other needs to load the page just as fast. If your server is on a 1 meg uplink heaven forbid And you are using 50% processing power and have a overloaded hard drive then you are still going to run in to the same problems. It is not always the users of the internet that is the problem sometimes it is our servers and data centers that are the problem as well. What those everyone think about that suggestion.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 1:57 PM
+<span class='item-control blog-admin pid-1318128830'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=5832919006598252198' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c703355942371831694'>
+<a name='c703355942371831694'></a>
+<p>
+<a href='http://www.blogger.com/profile/03154631687028995445' rel='nofollow'>nickshanks</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>I am still advocating that browsers, proxies and caches support content type &quot;multipart/mixed&quot;<br /><br />This would be a great way to provide multiple related documents in one request, without having to use data: URIs within the HTML code itself.<br /><br />See this URL for an example:<br />http://web.nickshanks.com/browsers/safari/multipart<br /><br />This example also tests base64 and Content-ID support, but you don&#39;t need to use either of those.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 2:08 PM
+<span class='item-control blog-admin pid-1959978642'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=703355942371831694' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c8823286223593268429'>
+<a name='c8823286223593268429'></a>
+<p>
+<a href='http://www.blogger.com/profile/01503615548471482239' rel='nofollow'>Andreas</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Sounds promising, but I concur with the earlier comment of SiliconShaft: 55 % is NOT 2x faster! You should change the title of your post, Mike!</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 2:09 PM
+<span class='item-control blog-admin pid-1303077724'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=8823286223593268429' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c6425566874602241216'>
+<a name='c6425566874602241216'></a>
+<p>
+<a href='http://www.blogger.com/profile/15448157430641258219' rel='nofollow'>jms</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Not sure what OS you are using but I don&#39;t thing anyone is following the TCP spec anymore.  <br /><br />Why do you feel packet loss is the most important issue, what networks are you thinking about.  You would want to have some thought around object size as it relates to request priority and the relation to the TCP window size.<br /><br />Here is some good reading http://caia.swin.edu.au/talks/CAIA-TALK-080122A.pdf.  In addition, we did some work earlier this year modeling contention and the impact on efficient link utilization.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 2:25 PM
+<span class='item-control blog-admin pid-92630568'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=6425566874602241216' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c8056002618628621173'>
+<a name='c8056002618628621173'></a>
+<p>
+<a href='http://phreakhead.livejournal.com/' rel='nofollow'>phreakhead</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>This is a good start by Google, but I think if you are going to completely replace HTTP, you should do so in the most extreme way possible as to pave the way for websites 10-20 years from now. <br /><br />The minor tweaks SPDY is about is more like optimizing HTTP. Sure you can get things twice as fast, but why not 10x? 100x? <br /><br />Torrent technology has shown us that the fastest way to deliver content is via a distributed network. If HTTP could be replaced by a Torrent-like protocol, where each client in the network is actually a server as well, the web would be not only faster, but more reliable. A website&#39;s servers could go down, but the content would still be available since everyone viewing the site would also be a mirror! Slashdotting would be a thing of the past!<br /><br />You can read more on this idea and discuss it on <a href="http://phreakhead.livejournal.com/75600.html" rel="nofollow">The Distributed Web and Why Netbooks Are a Waste</a>.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 2:41 PM
+<span class='item-control blog-admin pid-1295776683'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=8056002618628621173' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c4494376388752782807'>
+<a name='c4494376388752782807'></a>
+<p>
+<a href='http://www.blogger.com/profile/08840168086446381489' rel='nofollow'>rmenglish@gmail.com</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>I&#39;ve never quite understood the TCP SYN timeout.  It&#39;s hard to believe there&#39;s a deep theoretical basis for a 3 second timeout, one that has somehow managed to remain stable for decades.  Moreover, even if TCP stacks were to adhere rigorously to the 3 second standard, it wouldn&#39;t stop applications from terminating and restarting connections in less than three seconds.  In that respect, 6-8 HTTP connections could be more tolerant of SYN losses, not less.  It all depends on whether the data stream is bound to a socket before or after the connection open is complete.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 2:48 PM
+<span class='item-control blog-admin pid-926005710'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=4494376388752782807' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c7136633246306968350'>
+<a name='c7136633246306968350'></a>
+<p>
+<a href='http://www.blogger.com/profile/17294832205855394228' rel='nofollow'>John &quot;Z-Bo&quot; Zabroski</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Silly me.  I forgot to link to the Working Group. It is 6LowApp.<br /><br />http://trac.tools.ietf.org/area/app/trac/wiki/6LowApp<br /><br />Argot/XPL was designed by David Ryan over the past decade,<br /><br />whereas EXI is basically a heavily compressed XML Infoset Model-conforming XML documentation.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 2:58 PM
+<span class='item-control blog-admin pid-547322358'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=7136633246306968350' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c1565498827252196119'>
+<a name='c1565498827252196119'></a>
+<p>
+<a href='http://www.blogger.com/profile/17294832205855394228' rel='nofollow'>John &quot;Z-Bo&quot; Zabroski</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>@rmenglish<br /><br />Originally, TCP&#39;s -ilities were poorly understood.<br /><br />In fact, TCP by itself is a bulky name without much meaning.  People are usually referring to TCP Vegas and TCP Reno.  These are different congestion detection and avoidance schemes.  Windowing size will be a huge factor in *propagation delay*.<br /><br />Bottom line: when you&#39;re discussing the performance of TCP, you have to be aware of what the network is.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 3:05 PM
+<span class='item-control blog-admin pid-547322358'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=1565498827252196119' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c5762066398222551597'>
+<a name='c5762066398222551597'></a>
+<p>
+<a href='http://www.blogger.com/profile/06892848417057747938' rel='nofollow'>Alex Noguera</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Cool, let&#39;s see what it is capable of...</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 3:17 PM
+<span class='item-control blog-admin pid-436851095'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=5762066398222551597' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c6083669035451663431'>
+<a name='c6083669035451663431'></a>
+<p>
+<a href='http://www.blogger.com/profile/10399440205203203938' rel='nofollow'>Brian Pontarelli</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>I worked on a project a number of years ago called IAP (Internet Application Protocol) that was very similar. We used a pure binary format that had a small header followed by a body. <br /><br />Some of the benefits of IAP were:<br /><br />  - Multiple requests and responses were always over the same connection<br /><br />  - It dictated semantics on true caching of content that were necessary for sporadically connected clients when they are offline<br /><br />  - It was oriented more around applications than static content and provided requests such as OpenApplication, GetData, InvokeAction, GetView, etc.<br /><br />  - It supported rich data types not just Strings, including int, float, char, string, arrays, etc. All data was transmitted in binary so no conversion was necessary (as long as the client was the same endian)<br /><br />  - It had built in parental controls<br /><br />  - It was fully multiplex capable<br /><br />  - It was stream capable<br /><br />  - It was designed around the concept of sporadically connected applications and client side storage<br /><br />  - It had built in security via request types called AuthenticateUser and AuthorizeUser<br /><br />- And more<br /> <br /><br />After a 2-3 years of development, we had a full server and a browser written. We were planning on starting to write the language for the browser that would replace HTML/JavaScript/CSS, but never got there. We were going to call it IAL. The idea of the language was to fix the mess that is HTML/JavaScript/CSS and make a much more powerful environment for applications. <br /><br />Everything worked quite nicely and was definitely a fun experiment. I&#39;m hoping that at some point a large enough company really takes a stab at rewriting HTTP/HTML/JavaScript/CSS/etc. I&#39;ve already proven that it is possible and makes sense and I&#39;m waiting to see what happens. <br /><br />It sounds like SPDY is a small step in the right direction, but has a huge way to go. HTML5 and all the new CSS and JavaScript work are decent, but they could definitely use an overhaul as well.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 3:18 PM
+<span class='item-control blog-admin pid-1844472714'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=6083669035451663431' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c4516835274551697185'>
+<a name='c4516835274551697185'></a>
+<p>
+<a href='http://www.blogger.com/profile/02164224750754560494' rel='nofollow'>Ronnie</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>&quot;Losing&quot; , the gerund of  the verb &quot;to lose&quot; is not spelt &quot;loosing&quot;.<br />:-)</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 3:32 PM
+<span class='item-control blog-admin pid-1704225539'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=4516835274551697185' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c5670847476566786707'>
+<a name='c5670847476566786707'></a>
+<p>
+<a href='http://www.blogger.com/profile/00715471347131654837' rel='nofollow'>Bob Hansen</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>I&#39;m interested in the details of the protocol, but it might be an interesting convergence to bring SPDY and SCTP together; that covers the &quot;one dropped packet&quot; concern.  Since SCTP takes care of stream identity at layer 4, it might make the SPDY protocol considerably simpler than trying to interleave streams in the HTTP layer.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 3:34 PM
+<span class='item-control blog-admin pid-288207187'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=5670847476566786707' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c3585696871362541309'>
+<a name='c3585696871362541309'></a>
+<p>
+<a href='http://www.blogger.com/profile/10153942071830658748' rel='nofollow'>Roberto</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>@oliver<br />Hopefully we&#39;d never see spdy://...<br />That would be contrary to our goal of speeding things up without requiring content to change!<br /><br />@phreakhead<br />I designed a p2p protocol in the past, and so have some love for new ideas... I think we have to take one step at a time, though.. One of the things we&#39;re attempting to do is design the protocol so that it is much easier to extend in the future. When/if we figure out that way to make things go 100X faster, hopefully changing or using the protocol won&#39;t be the bottleneck</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 3:39 PM
+<span class='item-control blog-admin pid-1665597395'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=3585696871362541309' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c2574012793571683792'>
+<a name='c2574012793571683792'></a>
+<p>
+<a href='http://www.blogger.com/profile/15448157430641258219' rel='nofollow'>jms</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Understanding TCP and the various implementations can be a life&#39;s work.  Remember TCP starts out with a small window size and then scales up (at least per the spec.) so dropping a connection and reestablishing would be painfully expensive both in terms of connection setup and window scaling.  <br /><br />John &quot;Z-Bo&quot; Zabroski is also correct that understanding the network in use is a requirement.<br /><br />Is this the forum for discussing engineering  / research issues?</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 3:39 PM
+<span class='item-control blog-admin pid-92630568'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=2574012793571683792' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c2672197241211523870'>
+<a name='c2672197241211523870'></a>
+<p>
+<a href='http://www.blogger.com/profile/17263277963136565891' rel='nofollow'>Mark</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>I see this being a great implementation to use for HTML5 WebSockets. But to replace HTML I don&#39;t see the value in a 50% speedup at the cost of a completely new protocol. Unless it becomes as trivial as installing mod_spdy on an alternate port or coming up with an upgrade mechanism like discussed for the WebSockets back end.<br /><br />PS: I implemented something very similar for use in a private application, nice to know I was on the right track.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 3:42 PM
+<span class='item-control blog-admin pid-1628033996'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=2672197241211523870' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c1379145262134237947'>
+<a name='c1379145262134237947'></a>
+<p>
+<a href='http://www.blogger.com/profile/04886599442742162918' rel='nofollow'>Mike Belshe</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>@brandon - of course you are right.  Browsers, servers, and the protocol all need to be faster :-)<br /><br />You&#39;re lucky to have 10Mbps, but the average user has ~1Mbps, and mobile users generally have far less than that.  But equally critical is the RT time, and you probably have a ~10ms, while those poor cell phones have 100-400ms RTTs!<br /><br />When you&#39;re on a 2Mbps link with a 20ms RTT, downloading a 350KB page (the average  top-25 webpage is about that size), it&#39;s going to take ~1.5s just to download.  Rendering in the browser is going to cost ~200-400ms (varies on the page), and server processing time usually is in the 50-250ms range.  As you can see, the relative performance of the network is pretty heavy.<br /><br />Your overall conclusion is still correct - web servers and browsers also need to improve.  But hopefully the data shows there is justification in looking at the network too.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 3:45 PM
+<span class='item-control blog-admin pid-233664377'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=1379145262134237947' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c7536506207511371359'>
+<a name='c7536506207511371359'></a>
+<p>
+<a href='http://www.blogger.com/profile/04558612755834018291' rel='nofollow'>tim</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>&quot;sorry, but the name SPDY is ridiculous and looks ugly.&quot;<br /><br />The name HTTP doesn&#39;t look ridiculous and ugly to you?</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 4:01 PM
+<span class='item-control blog-admin pid-217748620'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=7536506207511371359' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c1005907001245015995'>
+<a name='c1005907001245015995'></a>
+<p>
+<a href='http://www.blogger.com/profile/08685284593129209308' rel='nofollow'>Maxime</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Is there any public available web-server serving queries over SPDY ?</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 4:03 PM
+<span class='item-control blog-admin pid-1724934832'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=1005907001245015995' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c1262023444700112141'>
+<a name='c1262023444700112141'></a>
+<p>
+<a href='http://www.blogger.com/profile/01995495066810888030' rel='nofollow'>Jamie</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Will it be possible set up a SPDY proxy (similar to a SOCKS proxy) for sites that don&#39;t support it? That could make quite a difference on my rural ADSL connection. :)</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 4:07 PM
+<span class='item-control blog-admin pid-2074473566'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=1262023444700112141' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c2345691285119035930'>
+<a name='c2345691285119035930'></a>
+<p>
+<a href='http://www.blogger.com/profile/00310269551060538503' rel='nofollow'>BrandonLive</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Cool stuff Mike!<br /><br /><br /><br />@Ronnie - &quot;Losing&quot; isn&#39;t a gerund unless it&#39;s used as a noun.  &quot;Losing&quot; is the present participle form of &quot;to lose.&quot; :)</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 4:28 PM
+<span class='item-control blog-admin pid-681053731'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=2345691285119035930' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c380633212646058107'>
+<a name='c380633212646058107'></a>
+<p>
+<a href='http://www.blogger.com/profile/10153942071830658748' rel='nofollow'>Roberto</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>@Maxime<br />Hey there! Sorry, I&#39;m in charge of open-sourcing a sample server.. It is coming soon!</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 4:31 PM
+<span class='item-control blog-admin pid-1665597395'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=380633212646058107' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c117425884319245542'>
+<a name='c117425884319245542'></a>
+<p>
+<a href='http://www.blogger.com/profile/14400296661602557519' rel='nofollow'>yonan32</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>why aren&#39;t you building it on GO?</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 7:50 PM
+<span class='item-control blog-admin pid-570916071'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=117425884319245542' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c7898175214527298714'>
+<a name='c7898175214527298714'></a>
+<p>
+<a href='http://www.blogger.com/profile/17355438553931256202' rel='nofollow'>Adonim</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>oh yes concerning security, it would be nice if some sort of encryption would be enabled by default (so if the server supports ssl or some other sort of encryption you don&#39;t need to use a different url to get the benefit of encryption). many passwords are at risk because people are too lazy or uncanny to enter the httpS:// in front of their email site or whatnot.<br />I would like it to be able to make use of the new pentium instruction sets for encryption. also some way for authentication or rather verfication that the connection hasn&#39;t been comprimised although that might be for a higher level protocol to do..</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 8:41 PM
+<span class='item-control blog-admin pid-785688094'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=7898175214527298714' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c1988930242286510413'>
+<a name='c1988930242286510413'></a>
+<p>
+<a href='http://www.blogger.com/profile/12625858127219086227' rel='nofollow'>Ian</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Looking forward to whatever comes of this. I&#39;m a firm believer in squeezing every last bit of web performance out of my hardware/connection as possible, and this is certainly a way to do that.<br /><br />Looking forward to publicly available client/server versions that will gracefully scale down to plain old HTTP when some Luddite decides to view a page i IE :p</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 9:00 PM
+<span class='item-control blog-admin pid-130722505'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=1988930242286510413' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c3400652027631240078'>
+<a name='c3400652027631240078'></a>
+<p>
+<a href='http://www.blogger.com/profile/00379375457677336560' rel='nofollow'>viji</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Nice to see that google is taking the web forward...</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 10:29 PM
+<span class='item-control blog-admin pid-333545652'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=3400652027631240078' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c509920478317555717'>
+<a name='c509920478317555717'></a>
+<p>
+<a href='http://www.blogger.com/profile/03441604867277990120' rel='nofollow'>Oleg Bezorudko-Chyrykalov</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>50% faster is not 2x faster guys... Though I am glad to see the advances.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 12, 2009 11:29 PM
+<span class='item-control blog-admin pid-486030315'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=509920478317555717' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c2599858923741806427'>
+<a name='c2599858923741806427'></a>
+<p>
+<a href='http://www.blogger.com/profile/04000518849658399601' rel='nofollow'>Reivall</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<span class='deleted-comment'>This post has been removed by the author.</span>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 13, 2009 1:12 AM
+<span class='item-control blog-admin '>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=2599858923741806427' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c6915856326325663734'>
+<a name='c6915856326325663734'></a>
+<p>
+<a href='http://www.blogger.com/profile/04000518849658399601' rel='nofollow'>Javier Daza Conejero</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Nice work from google, seems they take care of the evolution of the web. I think that SSL should be standar in web conections, people don&#39;t take care about security for themselves. Now to take a view into the code</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 13, 2009 1:13 AM
+<span class='item-control blog-admin pid-215934359'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=6915856326325663734' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c6074158793966070411'>
+<a name='c6074158793966070411'></a>
+<p>
+<a href='http://www.blogger.com/profile/11499198449994089631' rel='nofollow'>Remi Grumeau</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Only Google can do that ...</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 13, 2009 1:34 AM
+<span class='item-control blog-admin pid-1048319476'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=6074158793966070411' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c7677809051154869615'>
+<a name='c7677809051154869615'></a>
+<p>
+<a href='http://www.blogger.com/profile/02164224750754560494' rel='nofollow'>Ronnie</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>&quot;Losing&quot; is spelt &quot;losing&quot; not &quot;loosing&quot; :-)<br /><br />R</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 13, 2009 3:01 AM
+<span class='item-control blog-admin pid-1704225539'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=7677809051154869615' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c8079906443885472581'>
+<a name='c8079906443885472581'></a>
+<p>
+<a href='http://www.blogger.com/profile/04418602790473138764' rel='nofollow'>rasputnik</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>The nice thing these days is that advancing the state of the art doesn&#39;t necessarily need browser support.<br /><br />More and more http clients are non-browsers anyway<br />(server-server).<br /><br />Down at the desktop: is there anything stopping Javascript/GWT from retrieving content via non-http protocols?</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 13, 2009 3:07 AM
+<span class='item-control blog-admin pid-1655140481'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=8079906443885472581' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c6713337195190984862'>
+<a name='c6713337195190984862'></a>
+<p>
+<a href='http://www.blogger.com/profile/05325747977860980151' rel='nofollow'>Bud</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>@Google - I think that this work is great, but testing that shows 55% improved load times versus live testing, will show the difference. Of course, it will be a while before something like this is adopted on a large scale. However, I look forward to it.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 13, 2009 7:45 AM
+<span class='item-control blog-admin pid-1852292502'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=6713337195190984862' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c6345384928897577494'>
+<a name='c6345384928897577494'></a>
+<p>
+<a href='http://www.blogger.com/profile/17640505514490981738' rel='nofollow'>Charles</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>A most interesting project.  My company supplies Internet connectivity via sync satellites.  We&#39;re already currently processing both TCP (via XTP) and HTTP in the middle, to accelerate performance.  I&#39;d be interested in helping, perhaps in the following ways:<br /><br />1) Specs: I&#39;d be interested in reviewing the specs and tech roadmap.  At first glance, I couldn&#39;t find them.  Specifically I&#39;d like to make sure all the protocols remain cooperative and there are no unexpected interactions with existing processing systems.  This project uses edge processing and we already have processing systems near the middle.  We should strive for synergistic operation.  In addition, we may be able to point out defacto requirements (at least for us) that are not obvious at first glance - in both the technical and business arenas.<br /><br />2) Testing - Ultimately, if this catches on, we&#39;ll be interested in testing the protocols over our system.  Perhaps we can contribute along the way.<br /><br />I can move forward with the developer and testing groups.  If you have any further connections to suggest, just let me know.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 13, 2009 8:49 AM
+<span class='item-control blog-admin pid-737572601'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=6345384928897577494' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c8925248170189393609'>
+<a name='c8925248170189393609'></a>
+<p>
+<a href='http://www.blogger.com/profile/17640505514490981738' rel='nofollow'>Charles</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Sorry - I am best contacted at:<br />C_Bergren@hotmail.com</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 13, 2009 8:58 AM
+<span class='item-control blog-admin pid-737572601'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=8925248170189393609' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c3981332421145015495'>
+<a name='c3981332421145015495'></a>
+<p>
+<a href='http://www.blogger.com/profile/05632200311022210342' rel='nofollow'>Jason M. Batchelor</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Okay, okay... color me embarrassed... I have looked many times, and haven&#39;t found the link to the Mac version until this series of comments. Thank you very much.<br /><br />I&#39;ve been trying out the latest build today... very nice, very slick... I&#39;m liking it a lot so far.<br /><br />So, my apologies for coming off like a dweeb... still, could someone ask the Mac team to post something in regard to their progress on Chromium, so those (like me) can see that the needle is still in motion?<br /><br />Thanks again!</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 13, 2009 10:08 AM
+<span class='item-control blog-admin pid-120959277'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=3981332421145015495' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c5838629216920096114'>
+<a name='c5838629216920096114'></a>
+<p>
+<a href='http://www.blogger.com/profile/11240498869095243978' rel='nofollow'>Joe</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>50% less time taken and 2 times faster are synonymous.  If you guys think about what you&#39;re saying for a moment, you believe that in order for something to be 2 times faster, it must take 100% less time.<br /><br />That wouldn&#39;t be two times faster, that would be infinity times faster.<br /><br />If a page loads in four seconds under HTTP, and two seconds in SPDY, then it just took 50% less time, but is &quot;twice as fast.&quot;</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 13, 2009 10:36 AM
+<span class='item-control blog-admin pid-977449312'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=5838629216920096114' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c2051299209279595987'>
+<a name='c2051299209279595987'></a>
+<p>
+<a href='http://www.blogger.com/profile/02340731619715153384' rel='nofollow'>kkll2</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Please push SCTP instead. It solves the same problem, but in more general fashion and will benefit more applications (don&#39;t be selfish, HTTP is not everything).</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 13, 2009 1:24 PM
+<span class='item-control blog-admin pid-1987831319'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=2051299209279595987' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c9007244554693797039'>
+<a name='c9007244554693797039'></a>
+<p>
+<a href='http://www.blogger.com/profile/16834819743540543204' rel='nofollow'>nkuehn</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Hi<br /><br />I really like SPDY - in my opinion it hits a sweet spot because it seems to be designed around downwards-compatibility (no internet routing hardware changes affected and no hurt to UAs that don&#39;t support it) and HTTP transparency (neither the server application developer nor the client html-css-js developer need to change their habits, best practices, knowledge or existing applications). <br /><br />Especially the transparency could be adressed stronger in the communication of SPDY because imho it is key to fast adoption by web developers.( mod_proxy_http2spdy / mod_spdy someone??)<br /><br />It may be even sweeter in mobile applications where the content-body size is already very optimized by the developers and latency is really bad. (I assume you&#39;ll get the packet-loss/SYN/etc. questions solved somehow, packet loss can be bad in mobile nets afaik)<br />Are there plans for Android? Did you do your speed comparisons on mobile sites, too? <br /><br />And, not to forget - free ssl for everyone :-) ! <br /><br />Looking forward to see implementations to try out, Nikolaus</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 13, 2009 1:52 PM
+<span class='item-control blog-admin pid-1843680219'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=9007244554693797039' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c3441595729548022543'>
+<a name='c3441595729548022543'></a>
+<p>
+<a href='http://www.blogger.com/profile/10153942071830658748' rel='nofollow'>Roberto</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>@kkll2<br />We&#39;ve thought about SCTP, and we&#39;d love to be using it..<br />.. But ...<br /><br />SCTP isn&#39;t a silver bullet. It provides multiplexing and helps with packet loss, but it doesn&#39;t do prioritization. In order to allow the browser to request things as quickly as it discoveres them, you have to promise that you&#39;ll serve the most important content first (i.e. serve the HTML+CSS+JS before you do the myriad of images, etc!)<br /><br />SCTPs feature set could be enhanced to do this kind of thing, and then you could add a header to HTTP, and that would get you much of the way there.. but you&#39;d still not have the header compression that saves the people on slower links!<br /><br />.. So anyway, yup, SCTP is good. Its just not good enough on its own!</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 13, 2009 2:01 PM
+<span class='item-control blog-admin pid-1665597395'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=3441595729548022543' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c1442213182995938737'>
+<a name='c1442213182995938737'></a>
+<p>
+<a href='http://www.blogger.com/profile/12753487177285025354' rel='nofollow'>taleks</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Hm, I&#39;d like to see robust testing before any praises. I&#39;m concerned about compressed requests from server side point of view in real wild internet environment.<br /><br />What about CPU usage on high-loaded servers? What share of this fifty percents speedup is related to compression, and what to multiplexing of streams? From SPDY tech doc it&#39;s seems that compression gives big impact (&quot;We found a reduction of 45 - 1142 ms in page load time simply due to header compression.&quot; (c) http://sites.google.com/a/chromium.org/dev/spdy/spdy-whitepaper . However total page loading time is 3100 ms (1608 ms at SPDY powered soft) at the same article, so throwing away compression may easily transform &quot;2x faster&quot; buzzwords to less impressive results).<br /><br />Although compression is good for bandwidth and compressed http-reply output is not rare thing today, however, let&#39;s think about amount of requests and it&#39;s sizes. <br /><br />When we talk about small amount of requests, let&#39;s say less than 1000 requests per second I don&#39;t see any bottlnecks, however more requests -&gt; more buffers for compression (memory overhead, memory fragmentation as well) -&gt; more CPU utilization for LZ77 even on small-scale windows (CPU overhead). So, at some point there will be no benefits already for dynamical content (although it&#39;s possible to provide effficient pipeline for statical content, of course). The question is where is this point? I bet it is not such far away. I&#39;ve not seen yet tests of thousands of simultaneous requests to web-sites. I think, compression must be optional and enforced during handshake as option. BTW: as for options, I think &quot;estimated&quot; bandwidth at HELLO control message is bad approach with many side effects.<br /><br />Other thoughts are related to SCTP and SPDY comparisions.<br /><br />Users may gain some benefits in SPDY due three major points: multiplexing, compressing and priorities of streams. From user side it seems like speed up of internet, and every normal user would like to see such improvement.<br /><br />1. Compressing is subject to test, as overloaded server will never make user experience better. The other concern is mobile devices: PC is strong enough to compress everything (just see Snow Leopard file system compression, everyone is happy), but mobile devices are not such good in terms of performance.<br /><br />2. Multiplexing in SCTP is better. SCTP  supports multipoint streams, that may provide better performance for streaming over http and other multimedia related protocols (and multimedia data is going to take biggest part of Internet transmissions next years). SPDY goes only for http based content and makes web-crowling/browsing applications more sophisticated (just addition of streams handling increases complexity of such software), it&#39;s not good from application developer point of view.<br /><br />3. SPDY is better at priorities, however as this protocol is fully between client/server, it&#39;s up to server how good prioritization will be implemented. It also gives additional overhead, due implementation of queueing with prorities and etc on _server_. There is also question, which data must have higher priority. Everyday&#39;s experience says: html, then images, then sounds, then everyting else. But in fact it depends on every site structure, thus site needs to instruct browser that some data is more needed then other. Do you remember any priority attributes in current html standarts (excluding video/audio tags, which understand &quot;priority&quot; in other way and for other purposes)<br /><br />Although SCTP have also bad sides, I think more pushing of technologies based on it is better than standalone approaches to optimzation of web-transfers.<br /><br />Anyway, SPDY is interesting idea, but - IMHO - with too many problems in adoption.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 13, 2009 10:06 PM
+<span class='item-control blog-admin pid-433911732'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=1442213182995938737' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c2541407751281980624'>
+<a name='c2541407751281980624'></a>
+<p>
+<a href='http://www.blogger.com/profile/09941987973421947633' rel='nofollow'>Pinky&#39;s Brain</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Without a standard for self-certified certificates this protocol will be rather painful to use for me as a Firefox user (having to click through 3 windows for each new website with a webmaster who doesn&#39;t want to pay for a cert). If you guys create a RFC for this it would be really nice if it included CERT-RR as an official alternative to CAs.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 14, 2009 12:24 AM
+<span class='item-control blog-admin pid-1500504204'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=2541407751281980624' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c8658341193868895955'>
+<a name='c8658341193868895955'></a>
+<p>
+<a href='http://www.blogger.com/profile/12043238556997225117' rel='nofollow'>Stifu</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>@Joe: you&#39;d be right if the post actually said &quot;50% less time&quot;. But it doesn&#39;t. It says &quot;up to 55% faster&quot;. So your reply was pointless.<br /><br />55% faster does NOT equal x2 faster, as pointed out several times. The only way to justify the &quot;2x faster&quot; thing is to consider that this is Google&#39;s goal, not what they achieved so far.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 14, 2009 4:37 AM
+<span class='item-control blog-admin pid-1564020970'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=8658341193868895955' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c1731069320411420822'>
+<a name='c1731069320411420822'></a>
+<p>
+<a href='http://www.blogger.com/profile/04108019414197678092' rel='nofollow'>Emir Delalic Zeko</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>hahhaha... its really stupid name...<br /><br />whatever, it is nice thing that they work on that</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 14, 2009 6:43 AM
+<span class='item-control blog-admin pid-2069461263'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=1731069320411420822' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c2838684521879270323'>
+<a name='c2838684521879270323'></a>
+<p>
+<a href='http://www.blogger.com/profile/09907298072713406995' rel='nofollow'>samuel</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>could this also have a power saving benefit, sending packets uses power, 40% less packets would see a power use reduction of 40%?</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 14, 2009 9:04 AM
+<span class='item-control blog-admin pid-1374985458'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=2838684521879270323' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c5070885821379405479'>
+<a name='c5070885821379405479'></a>
+<p>
+<a href='http://www.blogger.com/profile/08385515960414967222' rel='nofollow'>Harry</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Nice idea. About time, thanks.<br /><br />Just would like to report from one of the worst trench on the frontline - Indonesia. Here we have lots of mobile users. I think your internal data will also verify this - Indonesia&#39;s mobile internet user is growing very rapidly<br />(I got the info from a friend of mine who got it from some Google guys in S&#39;pore, who&#39;d like to know why Indonesia is showing up on their radar quite prominently)<br /><br />On the mobile, we got the worst possible scenario :<br /><br />(1) Under-powered devices : sure, some are quite powerful. But, MOST are NOT.<br /><br />(2) Packet loss : this is to be expected on wireless devices. Especially when you&#39;re on congested areas<br /><br />(3) High latency<br /><br />(4) Small available bandwidth<br /><br />I&#39;ve used my phone to browse the Internet, and it&#39;s quite a frustrating experience.<br />Sometimes I had to open up my bag and everything just so I can fire up my laptop - just to look up something simple. Would be nice if this can be avoided in the future.<br /><br />An excellent application in this scenario is Gmail Apps for Symbian.<br />Can&#39;t praise it enough. <br />Even on slow &amp; unreliable signal, it will work. Quite speedily too.<br /><br />No idea how it accomplish it, but you may wish to look it up.<br /><br />Anyway, wireless access is going to grow even faster in the future.<br />Your concern about packet loss and others are very much justified.<br /><br />Thanks.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 14, 2009 6:45 PM
+<span class='item-control blog-admin pid-571429396'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=5070885821379405479' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c6901265449636467739'>
+<a name='c6901265449636467739'></a>
+<p>
+<a href='http://www.blogger.com/profile/08385515960414967222' rel='nofollow'>Harry</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Another thing about wireless access - it enable Internet access to proliferate even to remote areas MUCH faster than if we just rely on the good ol&#39; cable.<br /><br />Here in Indonesia we&#39;re witnessing explosive growth on Mobile internet users. <br />Suddenly Internet access is available even on remote areas. <br /><br />Also, the providers are competing to provide the best UNLIMITED internet access packages - for as little as US$ 5 / month !<br /><br />Of course, it may not be the fastest -- but the point is, more people are connected now than ever.<br />Access to the Internet has enabled people to do things they didn&#39;t think possible.<br /><br />An example - we just have a national scandal exposed AND investigated, thanks to public pressure via FACEBOOK  :-)<br />Very, very nice.<br /><br />The Internet gave people voice. <br /><br />It&#39;d be really nice if Google can help support this in any way possible.<br /><br />Thanks.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 14, 2009 6:52 PM
+<span class='item-control blog-admin pid-571429396'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=6901265449636467739' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c6139365015630372856'>
+<a name='c6139365015630372856'></a>
+<p>
+<a href='http://www.blogger.com/profile/10889205762319883360' rel='nofollow'>Kaushik Bhandankar</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Mike, I am still not sure how supporting multiple streams over a single underlying TCP connection will help solve the problem in case of packet loss. Further, how will TCP congestion avoidance work with SPDY request prioritization ? <br /><br />Neverthless, some obvious latency gains are from compressing headers and not transmitting redundant headers.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 14, 2009 7:08 PM
+<span class='item-control blog-admin pid-1249538807'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=6139365015630372856' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c4664404479271620523'>
+<a name='c4664404479271620523'></a>
+<p>
+<a href='http://www.blogger.com/profile/08385515960414967222' rel='nofollow'>Harry</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>sorry this comment is just to enable email notification for me, thanks.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 14, 2009 7:24 PM
+<span class='item-control blog-admin pid-571429396'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=4664404479271620523' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c1489310638099411681'>
+<a name='c1489310638099411681'></a>
+<p>
+<a href='http://www.blogger.com/profile/01789665377894654431' rel='nofollow'>Polin</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Esto es interesante. Google son los mejores, por mi parte estoy ancioso por que esto llegue.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 14, 2009 9:19 PM
+<span class='item-control blog-admin pid-1295878868'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=1489310638099411681' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c5334895500297960511'>
+<a name='c5334895500297960511'></a>
+<p>
+<a href='http://www.blogger.com/profile/05316021603136511258' rel='nofollow'>skaiuoquer</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>@admin (who) said...<br /><br />Finally! -- web standards and a browser developed by the same team. I can&#39;t wait to see SPDY in action and how it positively affects cloud-based services.<br /><br />November 12, 2009 12:39 PM<br /><br />Yeah ! Just like M$ =D<br /><br />...<br /><br />We trust you, Google.<br />Watch it.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 14, 2009 11:22 PM
+<span class='item-control blog-admin pid-1082442112'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=5334895500297960511' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c8151490740338401004'>
+<a name='c8151490740338401004'></a>
+<p>
+<a href='http://www.blogger.com/profile/05863965630004838258' rel='nofollow'>osmano807</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>SSL! NO!<br />It&#39;s make proxy cache difficult a lot!</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 15, 2009 9:24 AM
+<span class='item-control blog-admin pid-1120144151'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=8151490740338401004' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c2060969207640393885'>
+<a name='c2060969207640393885'></a>
+<p>
+<a href='http://www.blogger.com/profile/00565767792718492157' rel='nofollow'>mywit</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Notification problems Google Chrome 4.0.245.0 Beta<br />when change google chrome language</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 16, 2009 1:26 AM
+<span class='item-control blog-admin pid-691611998'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=2060969207640393885' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c7986842485291756758'>
+<a name='c7986842485291756758'></a>
+<p>
+<a href='http://www.blogger.com/profile/11946035118013428716' rel='nofollow'>Vaishnavi</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Wow....Web 3.0 is finally here... love it.....</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 16, 2009 6:12 AM
+<span class='item-control blog-admin pid-200646727'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=7986842485291756758' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c2776050612774284803'>
+<a name='c2776050612774284803'></a>
+<p>
+<a href='http://www.blogger.com/profile/11705774023114133557' rel='nofollow'>Maryam</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Where do I download these files? Thanks!</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 16, 2009 5:58 PM
+<span class='item-control blog-admin pid-2050829217'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=2776050612774284803' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c2569198005132350072'>
+<a name='c2569198005132350072'></a>
+<p>
+<a href='http://www.blogger.com/profile/11705774023114133557' rel='nofollow'>Maryam</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 16, 2009 5:58 PM
+<span class='item-control blog-admin pid-2050829217'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=2569198005132350072' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c3701695386949611498'>
+<a name='c3701695386949611498'></a>
+<p>
+<a href='http://www.blogger.com/profile/13468811705676599388' rel='nofollow'>Arun S</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>totally against net neutrality,now what? dedicated hardware, chrome os, spdy protocol and then google says next president should be....... and we vote?? Google aint that diff from microsoft. Let me better align with linux and other guys where true open source exists...</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 17, 2009 7:25 AM
+<span class='item-control blog-admin pid-1476664202'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=3701695386949611498' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c2068084046827302591'>
+<a name='c2068084046827302591'></a>
+<p>
+<a href='http://www.blogger.com/profile/09256419899799436602' rel='nofollow'>Annie</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>It&#39;s a good news for all of us. Specially for a student like me who rely on web for resources for my <a href="http://www.research-service.com/custom-research-paper.html" rel="nofollow">research papers</a>. I&#39;ll be looking forward for this.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 18, 2009 9:24 AM
+<span class='item-control blog-admin pid-2007909874'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=2068084046827302591' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c3182728419099539250'>
+<a name='c3182728419099539250'></a>
+<p>
+<a href='http://www.blogger.com/profile/01003708499024714910' rel='nofollow'>Michael</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Isn&#39;t this just reinventing the wheel that the IETF has already done in standardising BEEP? Have you looked at RFC 3080 and RFC 3081? It would be interesting to see a benchmark that compared SPDY, BEEP and plain HTTP/TCP.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 19, 2009 2:17 AM
+<span class='item-control blog-admin pid-714567231'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=3182728419099539250' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c1059145415301543396'>
+<a name='c1059145415301543396'></a>
+<p>
+<a href='http://www.blogger.com/profile/10399440205203203938' rel='nofollow'>Brian Pontarelli</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>@Michael<br /><br />If I recall, BEEP is a different layer. SPDY would sit on top of BEEP.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 19, 2009 7:33 AM
+<span class='item-control blog-admin pid-1844472714'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=1059145415301543396' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c6562674369757834386'>
+<a name='c6562674369757834386'></a>
+<p>
+<a href='http://tigerhawkvok.myopenid.com/' rel='nofollow'>Philip Kahn</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Along the lines of &quot;faster&quot;, I was curious if you guys had seen <a href="http://blogs.msdn.com/ie/archive/2009/11/18/an-early-look-at-ie9-for-developers.aspx" rel="nofollow">MS&#39;s IE9 stuff</a>.  Most of it is pitifully behind you guys (go Chrome!) but I think the Direct2D bits could be interesting.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 19, 2009 4:05 PM
+<span class='item-control blog-admin pid-1876674018'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=6562674369757834386' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c2013122044714740206'>
+<a name='c2013122044714740206'></a>
+<p>
+<a href='http://www.blogger.com/profile/03505610316357460454' rel='nofollow'>Prashanth Nuggehalli Srinivas</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Waiting to test! <br /><br />Meanwhile, any comments on this:<br />http://www.cultofmac.com/opinion-why-googles-chrome-os-will-look-hopelessly-antiquated-next-year/21663</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 20, 2009 1:24 AM
+<span class='item-control blog-admin pid-674979506'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=2013122044714740206' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c2002103149721868589'>
+<a name='c2002103149721868589'></a>
+<p>
+<a href='http://www.blogger.com/profile/02332720075346079583' rel='nofollow'>Rayzo</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Not ashamed to the Google Guys have to invent this kind of thing to prevail and get more money? is that the HTTP protocol has lasted so many years by chance? not because it is stable and has more than proven? why not invent something that actually helps people in need instead of thinking all the time in imposing his ideas and concepts rather dismal, in my opinion<br />www.mecacho.com</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 20, 2009 6:49 AM
+<span class='item-control blog-admin pid-711965560'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=2002103149721868589' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c1403351280652453920'>
+<a name='c1403351280652453920'></a>
+<p>
+<a href='http://www.blogger.com/profile/09283005335122713816' rel='nofollow'>Nixtastic</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Instead of breaking the header and data into separate gzips (thus forcing more than necessary decompression), what about pushing header information inside the content-disposition filename field or gzip metadata fields?</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 20, 2009 9:46 PM
+<span class='item-control blog-admin pid-1283751929'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=1403351280652453920' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c1315662285365614987'>
+<a name='c1315662285365614987'></a>
+<p>
+<a href='http://www.blogger.com/profile/16145299863966464626' rel='nofollow'>talika</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>FANTASTIC GOOGLE <br />GO ON</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+November 29, 2009 4:53 AM
+<span class='item-control blog-admin pid-1340476816'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=1315662285365614987' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c3455882830992618074'>
+<a name='c3455882830992618074'></a>
+<p>
+<a href='http://www.blogger.com/profile/13332853437045989781' rel='nofollow'>Md. Nasirul</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Love this blog!1<br /><br />Thanks for interesting articles <br /><br /><a href="http://www.waveletforum.com/" rel="nofollow">Google Wave Forum</a></p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+December 1, 2009 8:43 AM
+<span class='item-control blog-admin pid-1162852654'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=3455882830992618074' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c3689983720183464688'>
+<a name='c3689983720183464688'></a>
+<p>
+<a href='http://www.blogger.com/profile/07548753250358285400' rel='nofollow'>P@kirri</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Well... i&#39;m a student from Ecuador, and im really interested in testing this protocol but i don,t know how to do that....<br /><br />If anybody can help me to test it ... by giving me a how to or telling me how to build the source code in windows or linux i really apreciate it....<br />If someone can help  please contact me at franciscool004@gmail.com<br /><br />P.D.: Keep up te good work because this announcement is really amazing</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+December 3, 2009 12:20 PM
+<span class='item-control blog-admin pid-385894129'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=3689983720183464688' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c2311809995420717617'>
+<a name='c2311809995420717617'></a>
+<p>
+<a href='http://www.blogger.com/profile/01602248161038082454' rel='nofollow'>CyberQat</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<span class='deleted-comment'>This post has been removed by the author.</span>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+December 21, 2009 7:44 AM
+<span class='item-control blog-admin '>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=2311809995420717617' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c5933083470446756691'>
+<a name='c5933083470446756691'></a>
+<p>
+<a href='http://www.blogger.com/profile/01602248161038082454' rel='nofollow'>CyberQat</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Oh boy another hack on a bag on a kludge. Lets restrict ourselves to one port on a machine, two connections at a time maximum, and then multiplex everything through that!<br /><br />This is all like locking the front door and then trying to push the cat out through the  key hole!<br /><br />Maybe Web 10.0 will finally be the internet we had before this dann web stuff started,</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+December 21, 2009 7:46 AM
+<span class='item-control blog-admin pid-1813377290'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=5933083470446756691' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c7259879595404759491'>
+<a name='c7259879595404759491'></a>
+<p>
+<a href='http://www.blogger.com/profile/16533466379620465864' rel='nofollow'>emanprinting</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Really great Article thanks for share this article i like this work and this information is really helpful for me.<br /><br /><a href="http://www.emanprinting.com/" rel="nofollow">Custom Stickers</a></p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+January 25, 2010 4:45 AM
+<span class='item-control blog-admin pid-557281743'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=7259879595404759491' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c1549513870847147247'>
+<a name='c1549513870847147247'></a>
+<p>
+<a href='http://www.blogger.com/profile/16923486715364654349' rel='nofollow'>EHSAN</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Love it,thanks<br /><br /><a href="http://www.allbestmessages.com" rel="nofollow">Valentine Messages</a></p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+January 26, 2010 3:06 AM
+<span class='item-control blog-admin pid-1494893063'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=1549513870847147247' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c7353460454726208151'>
+<a name='c7353460454726208151'></a>
+<p>
+<a href='http://www.blogger.com/profile/10147969568052063572' rel='nofollow'>ap09.com</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>I would like to download.Could you please help me in finding the links?</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+February 3, 2010 8:34 PM
+<span class='item-control blog-admin pid-1816946259'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=7353460454726208151' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c2274887035889353676'>
+<a name='c2274887035889353676'></a>
+<p>
+<a href='http://www.blogger.com/profile/00597939165821106094' rel='nofollow'>mounir</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>. I don&#39;t know what to say except that I have enjoyed reading. Nice blog.I will keep visiting this blog very often<br /><br /><a href="http://www.empiregoldbuyers.com" rel="nofollow">Sell Gold</a></p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+February 18, 2010 5:02 AM
+<span class='item-control blog-admin pid-1782922390'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=2274887035889353676' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c7748614907572274461'>
+<a name='c7748614907572274461'></a>
+<p>
+<a href='http://www.blogger.com/profile/15253713525321157065' rel='nofollow'>mike</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>love to see this discussion! It&#8217;s great to see you all working through the issues and also, it&#8217;s great to see recommendations for testing. In the end, it&#8217;s what your actual users do and prefer hat should be your biggest driver in making these decisions.<br /><br /><br /><a href="http://www.onlineuniversalwork.com" rel="nofollow">get stage from home</a></p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+March 4, 2010 10:43 AM
+<span class='item-control blog-admin pid-955894702'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=7748614907572274461' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c4927521627371599167'>
+<a name='c4927521627371599167'></a>
+<p>
+<a href='http://www.blogger.com/profile/15642485417562602298' rel='nofollow'>inseo</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Oh, this is interesting. But where can I download?<br><br /><a rel="nofollow">Submit link free</a> helps you promote what you want to promote.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+March 8, 2010 10:11 PM
+<span class='item-control blog-admin pid-1543358148'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=4927521627371599167' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c7228207959932831478'>
+<a name='c7228207959932831478'></a>
+<p>
+<a href='http://www.blogger.com/profile/01884907380935093609' rel='nofollow'>riderwear99</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>keep it up.....please hurry up.i cant wait more........</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+May 7, 2010 3:34 AM
+<span class='item-control blog-admin pid-1271720144'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=7228207959932831478' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c7954732857885155151'>
+<a name='c7954732857885155151'></a>
+<p>
+<a href='http://www.blogger.com/profile/03510251637081244466' rel='nofollow'>newhardware</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Love it! Especially the interleaved channels and header compression. Great to see a group just throw their hat in the ring to start knocking out problems like this -- just the kind of proactive approach we need to create a better web!</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+May 26, 2010 2:49 AM
+<span class='item-control blog-admin pid-481314671'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=7954732857885155151' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+<dt class='comment-author ' id='c843960644386669871'>
+<a name='c843960644386669871'></a>
+<p>
+<a href='http://www.blogger.com/profile/12730272338091511535' rel='nofollow'>Mazhar</a>
+said...</p>
+</dt>
+<dd class='comment-body'>
+<p>Someone seems to think that Google is five guys working on one project at the one time.</p>
+</dd>
+<dd class='comment-footer'>
+<p class='comment-timestamp'>
+August 19, 2010 4:24 AM
+<span class='item-control blog-admin pid-1518074104'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=2471378914199150966&postID=843960644386669871' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</p>
+</dd>
+</dl>
+<p class='comment-footer'>
+<a href='https://www.blogger.com/comment.g?blogID=2471378914199150966&postID=8996789345956713410' onclick=''>Post a Comment</a>
+</p>
+<div id='backlinks-container'>
+<div id='Blog1_backlinks-container'>
+</div>
+</div>
+</div>
+<!-- google_ad_section_end -->
+</div>
+<div class='blog-pager' id='blog-pager'><p>
+<a class='blog-pager-newer-link' href='http://blog.chromium.org/2009/11/hello-open-source-developers-would-you.html' id='Blog1_blog-pager-newer-link' title='Newer Post'>Newer Post</a>
+<a class='blog-pager-older-link' href='http://blog.chromium.org/2009/09/introducing-google-chrome-frame.html' id='Blog1_blog-pager-older-link' title='Older Post'>Older Post</a>
+<a class='home-link' href='http://blog.chromium.org/'>Home</a>
+</p>
+</div>
+<div class='clear'></div>
+<div class='post-feeds'>
+<div class='feed-links'>
+Subscribe to:
+<a class='feed-link' href='http://blog.chromium.org/feeds/8996789345956713410/comments/default' target='_blank' type='application/atom+xml'>Post Comments (Atom)</a>
+</div>
+</div>
+</div>
+</div></div>
+</div>
+</div>
+<!-- end content-wrapper -->
+</div>
+<!-- end outer-wrapper -->
+<div id='footer-graphic'>
+<div class='footer section' id='footer'><div class='widget HTML' id='HTML5'>
+<p class='widget-content'>
+  &copy;2008 Google - <a href='http://google.com/intl/en/privacy.html'>Privacy Policy</a> - <a href='http://www.google.com/accounts/TOS?hl=en'>Terms of Service</a>
+</p>
+</div></div>
+</div>
+</div>
+<script language='Javascript' type='text/javascript'>SolutionLoad();</script>
+<script type="text/javascript">
+if (window.jstiming) window.jstiming.load.tick('widgetJsBefore');
+</script><script type="text/javascript" src="http://www.blogger.com/static/v1/widgets/512629240-widgets.js"></script>
+<script type='text/javascript'>
+if (typeof(BLOG_attachCsiOnload) != 'undefined' && BLOG_attachCsiOnload != null) { window['blogger_templates_experiment_id'] = "templatesV1";window['blogger_blog_id'] = '2471378914199150966';BLOG_attachCsiOnload('item_'); }_WidgetManager._Init('http://www.blogger.com/rearrange?blogID=2471378914199150966','http://blog.chromium.org/2009/11/2x-faster-web.html','2471378914199150966');
+_WidgetManager._SetPageActionUrl('http://www.blogger.com/display?blogID=2471378914199150966','lWIZQdORukKPqUB-BwMG4JTBk8I:1293259623502','AOuZoY6y0olULaR1L0p9hNSKViqIa51CQQ:1293259623502');
+_WidgetManager._SetDataContext([{'name': 'blog', 'data': {'title': 'Chromium Blog', 'pageType': 'item', 'url': 'http://blog.chromium.org/2009/11/2x-faster-web.html', 'canonicalUrl': 'http://blog.chromium.org/2009/11/2x-faster-web.html', 'homepageUrl': 'http://blog.chromium.org/', 'enabledCommentProfileImages': true, 'searchLabel': '', 'searchQuery': '', 'pageName': 'A 2x Faster Web', 'pageTitle': 'Chromium Blog: A 2x Faster Web', 'encoding': 'UTF-8', 'locale': 'en', 'isPrivate': false, 'isMobile': false, 'mobileClass': '', 'languageDirection': 'ltr', 'feedLinks': '\74link rel\75\42alternate\42 type\75\42application/atom+xml\42 title\75\42Chromium Blog - Atom\42 href\75\42http://blog.chromium.org/feeds/posts/default\42 /\76\n\74link rel\75\42alternate\42 type\75\42application/rss+xml\42 title\75\42Chromium Blog - RSS\42 href\75\42http://blog.chromium.org/feeds/posts/default?alt\75rss\42 /\76\n\74link rel\75\42service.post\42 type\75\42application/atom+xml\42 title\75\42Chromium Blog - Atom\42 href\75\42http://www.blogger.com/feeds/2471378914199150966/posts/default\42 /\76\n\74link rel\75\42EditURI\42 type\75\42application/rsd+xml\42 title\75\42RSD\42 href\75\42http://www.blogger.com/rsd.g?blogID\0752471378914199150966\42 /\76\n\74link rel\75\42alternate\42 type\75\42application/atom+xml\42 title\75\42Chromium Blog - Atom\42 href\75\42http://blog.chromium.org/feeds/8996789345956713410/comments/default\42 /\76\n', 'meTag': '', 'openIdOpTag': '', 'imageSrcTag': '', 'latencyHeadScript': '\74script type\75\42text/javascript\42\76(function() { var a\75window;function c(b){this.t\75{};this.tick\75function(d,i,e){e\75e?e:(new Date).getTime();this.t[d]\75[e,i]};this.tick(\42start\42,null,b)}var f\75new c;a.jstiming\75{Timer:c,load:f};try{var g\75null;if(a.chrome\46\46a.chrome.csi)g\75Math.floor(a.chrome.csi().pageT);if(g\75\75null)if(a.gtbExternal)g\75a.gtbExternal.pageT();if(g\75\75null)if(a.external)g\75a.external.pageT;if(g)a.jstiming.pt\75g}catch(h){};a.tickAboveFold\75function(b){b\75b;var d\0750;if(b.offsetParent){do d+\75b.offsetTop;while(b\75b.offsetParent)}b\75d;b\74\075750\46\46a.jstiming.load.tick(\42aft\42)};var j\75false;function k(){if(!j){j\75true;a.jstiming.load.tick(\42firstScrollTime\42)}}a.addEventListener?a.addEventListener(\42scroll\42,k,false):a.attachEvent(\42onscroll\42,k);\n })();\74/script\076', 'mobileHeadScript': ''}}]);
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML5', 'footer', null, document.getElementById('HTML5'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML2', 'sidebar', null, document.getElementById('HTML2'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogArchiveView', new _WidgetInfo('BlogArchive1', 'sidebar', null, document.getElementById('BlogArchive1'), {'languageDirection': 'ltr'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML1', 'sidebar', null, document.getElementById('HTML1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML3', 'sidebar', null, document.getElementById('HTML3'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_LinkListView', new _WidgetInfo('LinkList2', 'sidebar', null, document.getElementById('LinkList2'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML7', 'sidebar', null, document.getElementById('HTML7'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_NavbarView', new _WidgetInfo('Navbar1', 'navbar'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML8', 'main', null, document.getElementById('HTML8'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogView', new _WidgetInfo('Blog1', 'main', null, document.getElementById('Blog1'), {'cmtInteractionsEnabled': false, 'commentInteractionIframeUrl': 'http://www.blogger.com/comment-interaction-iframe.g?blogId\0752471378914199150966', 'mobile': false}, 'displayModeFull'));
+</script>
+</body>
+</html>
