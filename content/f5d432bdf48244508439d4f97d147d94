@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+<meta charset="UTF-8" />
+<title>Clojure circuit breaker | Higher-Order</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="stylesheet" type="text/css" media="all" href="http://blog.higher-order.net/wp-content/themes/twentyten/style.css" />
+<link rel="pingback" href="http://blog.higher-order.net/xmlrpc.php" />
+<link rel="alternate" type="application/rss+xml" title="Higher-Order &raquo; Feed" href="http://blog.higher-order.net/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Higher-Order &raquo; Comments Feed" href="http://blog.higher-order.net/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Higher-Order &raquo; Clojure circuit breaker Comments Feed" href="http://blog.higher-order.net/2009/11/23/clojure-circuit-breaker/feed/" />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://blog.higher-order.net/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://blog.higher-order.net/wp-includes/wlwmanifest.xml" /> 
+<link rel='index' title='Higher-Order' href='http://blog.higher-order.net/' />
+<link rel='start' title='blog moved' href='http://blog.higher-order.net/2008/07/21/blog-moved/' />
+<link rel='prev' title='Identity, State and Values' href='http://blog.higher-order.net/2009/10/26/identity-state-and-values/' />
+<link rel='next' title='Review: Ext JS 3.0 Cookbook' href='http://blog.higher-order.net/2009/12/09/review-ext-js-3-0-cookbook/' />
+<meta name="generator" content="WordPress 3.0.1" />
+<link rel='canonical' href='http://blog.higher-order.net/2009/11/23/clojure-circuit-breaker/' />
+<link rel='shortlink' href='http://blog.higher-order.net/?p=398' />
+</head>
+
+<body class="single single-post postid-398">
+<div id="wrapper" class="hfeed">
+	<div id="header">
+		<div id="masthead">
+			<div id="branding" role="banner">
+								<div id="site-title">
+					<span>
+						<a href="http://blog.higher-order.net/" title="Higher-Order" rel="home">Higher-Order</a>
+					</span>
+				</div>
+				<div id="site-description">topics: functional programming, concurrency, web-development, REST, dynamic languages</div>
+
+										
+								</div><!-- #branding -->
+
+			<div id="access" role="navigation">
+			  				<div class="skip-link screen-reader-text"><a href="#content" title="Skip to content">Skip to content</a></div>
+								<div class="menu"><ul><li ><a href="http://blog.higher-order.net/" title="Home">Home</a></li><li class="page_item page-item-37"><a href="http://blog.higher-order.net/about-me/" title="About me">About me</a></li></ul></div>
+			</div><!-- #access -->
+		</div><!-- #masthead -->
+	</div><!-- #header -->
+
+	<div id="main">
+		<div id="container">
+			<div id="content" role="main">
+
+
+				<div id="nav-above" class="navigation">
+					<div class="nav-previous"><a href="http://blog.higher-order.net/2009/10/26/identity-state-and-values/" rel="prev"><span class="meta-nav">&larr;</span> Identity, State and Values</a></div>
+					<div class="nav-next"><a href="http://blog.higher-order.net/2009/12/09/review-ext-js-3-0-cookbook/" rel="next">Review: Ext JS 3.0 Cookbook <span class="meta-nav">&rarr;</span></a></div>
+				</div><!-- #nav-above -->
+
+				<div id="post-398" class="post-398 post type-post hentry category-general">
+					<h1 class="entry-title">Clojure circuit breaker</h1>
+
+					<div class="entry-meta">
+						<span class="meta-prep meta-prep-author">Posted on</span> <a href="http://blog.higher-order.net/2009/11/23/clojure-circuit-breaker/" title="8:22 am" rel="bookmark"><span class="entry-date">November 23, 2009</span></a> <span class="meta-sep">by</span> <span class="author vcard"><a class="url fn n" href="http://blog.higher-order.net/author/admin/" title="View all posts by admin">admin</a></span>					</div><!-- .entry-meta -->
+
+					<div class="entry-content">
+						<p>[Update Jan 1., 2010: A couple of people have been linking and twitting this, so I've made the blog entry match the current Clojure version at github. Code works in the 'new' branch of Clojure: tested with commit 3ae9e8874d43f9fd37e59bb7ea8cce0f85bac101.</p>
+<p>There is support for creating several circuit breakers wrapping given functions].</p>
+<p>As an exercise in Clojure, I&#8217;ve implemented a mostly functional version of Michael Nygaard&#8217;s stability pattern &#8220;Circuit breaker&#8221; (<a title="http://www.pragprog.com/titles/mnee/release-it" href="http://www.pragprog.com/titles/mnee/release-it">http://www.pragprog.com/titles/mnee/release-it</a>).</p>
+<p>The implementation uses the new constructs <a href="http://www.assembla.com/wiki/show/clojure/Datatypes">deftype</a> and <a href="http://www.assembla.com/wiki/show/clojure/Protocols">defprotocol</a> (which are looking really interesting to me!). The implementation maintains a single identity named &#8220;state&#8221; which is an atom holding the current state (open, closed, initial-half-open or pending-half-open).</p>
+<p>More on deftype and defprotocol can be found <a href="http://groups.google.com/group/clojure/tree/browse_frm/thread/a59165f208f594cb/cf144fd0ab4de13f?hl=en&#038;rnum=21&#038;_done=%2Fgroup%2Fclojure%2Fbrowse_frm%2Fthread%2Fa59165f208f594cb%2F8e60316b5894f36b%3Fhl%3Den%26#doc_330c230e8dc857a9">here</a>.</p>
+<p>Here is the code that defines the states and the state transitions (requires JavaScript; otherwise use <a href="http://gist.github.com/267168">this link</a>). Notice how the events &#8216;on-before-call&#8217;, &#8216;on-success&#8217; and &#8216;on-error&#8217; are implemented as a protocol defining state-transition functions. I really like the features Rich is adding to Clojure &#8211; to me it makes modeling so much more natural (with an OO-background), while retaining the benefits of functional programming.</p>
+<p><script src="http://gist.github.com/267168.js?file=circuit+breaker+states.clj"></script></p>
+<p>Notice how this snipplet defines the transition functions, the four states as well as an &#8220;abstract&#8221; implementation of the state transitions. The abs-transitions can be used as default implementations when extending the protocol to the state-types. In Java, this would correspond to an interface (CircuitBreakerTransitions), an abstract super-class implementing the interface, and four immutable classes (the states). However, Clojures deftype and defprotocol does not create a type-hierarchy, and is much more dynamic (you can always define how a given type extends to a protocol &#8211; it is not fixed at type definition time). Here is how I extended my types to the protocol: </p>
+<p><script src="http://gist.github.com/267169.js?file=extending.clj"></script><br />
+(<a href="http://gist.github.com/267169">http://gist.github.com/267169</a>)</p>
+<p>This defines a completely functional transition-system between the four states. I think this reads really well, for example consider the on-error event in the closed state: this checks to see if the states fail-count is equal to the threshold defined in the policy, if so it transitions to the open state, recording the current time <tt>(OpenState p (System/currentTimeMillis))</tt> (preserving the policy); otherwise it transitions to a closed state with a higher fail-count. </p>
+<p>The actual circuit breaker uses these transition functions:</p>
+<p><script src="http://gist.github.com/267172.js?file=logic.clj"></script><br />
+(<a href="http://gist.github.com/267172">http://gist.github.com/267172</a>)</p>
+<p>The state of a circuit breaker is an atom (the only mutable construct in this example). The function wrap takes a function f and returns a &#8220;wrapped&#8221; version of f, which implements the circuit breaker functionality around f. </p>
+<p>Notice how dead-simple this is to test:</p>
+<p><script src="http://gist.github.com/267173.js?file=test+logic.clj"></script><br />
+(<a href="http://gist.github.com/267173">http://gist.github.com/267173</a>)</p>
+<p>Full Source:<br />
+<a href="http://github.com/krukow/clojure-circuit-breaker">http://github.com/krukow/clojure-circuit-breaker</a></p>
+											</div><!-- .entry-content -->
+
+
+					<div class="entry-utility">
+						This entry was posted in <a href="http://blog.higher-order.net/category/general/" title="View all posts in General" rel="category tag">General</a>. Bookmark the <a href="http://blog.higher-order.net/2009/11/23/clojure-circuit-breaker/" title="Permalink to Clojure circuit breaker" rel="bookmark">permalink</a>.											</div><!-- .entry-utility -->
+				</div><!-- #post-## -->
+
+				<div id="nav-below" class="navigation">
+					<div class="nav-previous"><a href="http://blog.higher-order.net/2009/10/26/identity-state-and-values/" rel="prev"><span class="meta-nav">&larr;</span> Identity, State and Values</a></div>
+					<div class="nav-next"><a href="http://blog.higher-order.net/2009/12/09/review-ext-js-3-0-cookbook/" rel="next">Review: Ext JS 3.0 Cookbook <span class="meta-nav">&rarr;</span></a></div>
+				</div><!-- #nav-below -->
+
+				
+			<div id="comments">
+
+
+			<h3 id="comments-title">3 Responses to <em>Clojure circuit breaker</em></h3>
+
+
+			<ol class="commentlist">
+					<li class="post pingback">
+		<p>Pingback: <a href='http://disclojure.org/2009/11/23/today-in-the-intertweets-nov-23rd-ed/' rel='external nofollow' class='url'>disclojure: all things clojure &raquo; Today in the Intertweets (Nov 23rd Ed)</a></p>
+	</li>
+	<li class="post pingback">
+		<p>Pingback: <a href='http://www.ubervu.com/conversations/blog.higher-order.net/2009/11/23/clojure-circuit-breaker/' rel='external nofollow' class='url'>uberVU - social comments</a></p>
+	</li>
+	<li class="post pingback">
+		<p>Pingback: <a href='http://www.duetsch.info/destillat-31-12-2009.html' rel='external nofollow' class='url'>Destillat 31-12-2009 | duetsch.info - Open Source, Wet-, Web-, Software</a></p>
+	</li>
+			</ol>
+
+
+
+								<div id="respond">
+				<h3 id="reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/2009/11/23/clojure-circuit-breaker/#respond" style="display:none;">Cancel reply</a></small></h3>
+									<p class="must-log-in">You must be <a href="http://blog.higher-order.net/wp-login.php?redirect_to=http%3A%2F%2Fblog.higher-order.net%2F2009%2F11%2F23%2Fclojure-circuit-breaker%2F">logged in</a> to post a comment.</p>												</div><!-- #respond -->
+						
+</div><!-- #comments -->
+
+
+			</div><!-- #content -->
+		</div><!-- #container -->
+
+
+		<div id="primary" class="widget-area" role="complementary">
+			<ul class="xoxo">
+
+	
+			<li id="search" class="widget-container widget_search">
+				<form role="search" method="get" id="searchform" action="http://blog.higher-order.net/" >
+	<div><label class="screen-reader-text" for="s">Search for:</label>
+	<input type="text" value="" name="s" id="s" />
+	<input type="submit" id="searchsubmit" value="Search" />
+	</div>
+	</form>			</li>
+
+			<li id="archives" class="widget-container">
+				<h3 class="widget-title">Archives</h3>
+				<ul>
+						<li><a href='http://blog.higher-order.net/2010/10/' title='October 2010'>October 2010</a></li>
+	<li><a href='http://blog.higher-order.net/2010/08/' title='August 2010'>August 2010</a></li>
+	<li><a href='http://blog.higher-order.net/2010/07/' title='July 2010'>July 2010</a></li>
+	<li><a href='http://blog.higher-order.net/2010/06/' title='June 2010'>June 2010</a></li>
+	<li><a href='http://blog.higher-order.net/2010/05/' title='May 2010'>May 2010</a></li>
+	<li><a href='http://blog.higher-order.net/2010/03/' title='March 2010'>March 2010</a></li>
+	<li><a href='http://blog.higher-order.net/2010/01/' title='January 2010'>January 2010</a></li>
+	<li><a href='http://blog.higher-order.net/2009/12/' title='December 2009'>December 2009</a></li>
+	<li><a href='http://blog.higher-order.net/2009/11/' title='November 2009'>November 2009</a></li>
+	<li><a href='http://blog.higher-order.net/2009/10/' title='October 2009'>October 2009</a></li>
+	<li><a href='http://blog.higher-order.net/2009/09/' title='September 2009'>September 2009</a></li>
+	<li><a href='http://blog.higher-order.net/2009/08/' title='August 2009'>August 2009</a></li>
+	<li><a href='http://blog.higher-order.net/2009/07/' title='July 2009'>July 2009</a></li>
+	<li><a href='http://blog.higher-order.net/2009/06/' title='June 2009'>June 2009</a></li>
+	<li><a href='http://blog.higher-order.net/2009/04/' title='April 2009'>April 2009</a></li>
+	<li><a href='http://blog.higher-order.net/2009/02/' title='February 2009'>February 2009</a></li>
+	<li><a href='http://blog.higher-order.net/2008/12/' title='December 2008'>December 2008</a></li>
+	<li><a href='http://blog.higher-order.net/2008/11/' title='November 2008'>November 2008</a></li>
+	<li><a href='http://blog.higher-order.net/2008/10/' title='October 2008'>October 2008</a></li>
+	<li><a href='http://blog.higher-order.net/2008/09/' title='September 2008'>September 2008</a></li>
+	<li><a href='http://blog.higher-order.net/2008/08/' title='August 2008'>August 2008</a></li>
+	<li><a href='http://blog.higher-order.net/2008/07/' title='July 2008'>July 2008</a></li>
+	<li><a href='http://blog.higher-order.net/2008/06/' title='June 2008'>June 2008</a></li>
+	<li><a href='http://blog.higher-order.net/2008/04/' title='April 2008'>April 2008</a></li>
+	<li><a href='http://blog.higher-order.net/2008/03/' title='March 2008'>March 2008</a></li>
+	<li><a href='http://blog.higher-order.net/2008/02/' title='February 2008'>February 2008</a></li>
+				</ul>
+			</li>
+
+			<li id="meta" class="widget-container">
+				<h3 class="widget-title">Meta</h3>
+				<ul>
+					<li><a href="http://blog.higher-order.net/wp-login.php?action=register">Register</a></li>					<li><a href="http://blog.higher-order.net/wp-login.php">Log in</a></li>
+									</ul>
+			</li>
+
+					</ul>
+		</div><!-- #primary .widget-area -->
+
+	</div><!-- #main -->
+
+	<div id="footer" role="contentinfo">
+		<div id="colophon">
+
+
+
+			<div id="site-info">
+				<a href="http://blog.higher-order.net/" title="Higher-Order" rel="home">
+					Higher-Order				</a>
+			</div><!-- #site-info -->
+
+			<div id="site-generator">
+								<a href="http://wordpress.org/"
+						title="Semantic Personal Publishing Platform" rel="generator">
+					Proudly powered by WordPress.				</a>
+			</div><!-- #site-generator -->
+
+		</div><!-- #colophon -->
+	</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
