@@ -1,0 +1,1702 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html dir='ltr'>
+<head>
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+<script type="text/javascript">(function() { var a=window;function c(b){this.t={};this.tick=function(d,i,e){e=e?e:(new Date).getTime();this.t[d]=[e,i]};this.tick("start",null,b)}var f=new c;a.jstiming={Timer:c,load:f};try{var g=null;if(a.chrome&&a.chrome.csi)g=Math.floor(a.chrome.csi().pageT);if(g==null)if(a.gtbExternal)g=a.gtbExternal.pageT();if(g==null)if(a.external)g=a.external.pageT;if(g)a.jstiming.pt=g}catch(h){};a.tickAboveFold=function(b){b=b;var d=0;if(b.offsetParent){do d+=b.offsetTop;while(b=b.offsetParent)}b=d;b<=750&&a.jstiming.load.tick("aft")};var j=false;function k(){if(!j){j=true;a.jstiming.load.tick("firstScrollTime")}}a.addEventListener?a.addEventListener("scroll",k,false):a.attachEvent("onscroll",k);
+ })();</script>
+<meta content='true' name='MSSmartTagsPreventParsing'/>
+<meta content='blogger' name='generator'/>
+<link href='http://www.blogger.com/favicon.ico' rel='icon' type='image/vnd.microsoft.icon'/>
+<link href='http://virtrix.blogspot.com/2007/09/vmware-stopping-virtual-machine-gone.html' rel='canonical'/>
+<link rel="alternate" type="application/atom+xml" title="Virtrix - Virtual Tricks - Atom" href="http://virtrix.blogspot.com/feeds/posts/default" />
+<link rel="alternate" type="application/rss+xml" title="Virtrix - Virtual Tricks - RSS" href="http://virtrix.blogspot.com/feeds/posts/default?alt=rss" />
+<link rel="service.post" type="application/atom+xml" title="Virtrix - Virtual Tricks - Atom" href="http://www.blogger.com/feeds/13618189/posts/default" />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.blogger.com/rsd.g?blogID=13618189" />
+<link rel="alternate" type="application/atom+xml" title="Virtrix - Virtual Tricks - Atom" href="http://virtrix.blogspot.com/feeds/493617111208082605/comments/default" />
+<!--[if IE]> <script> (function() { var html5 = ("abbr,article,aside,audio,canvas,datalist,details," + "figure,footer,header,hgroup,mark,menu,meter,nav,output," + "progress,section,time,video").split(','); for (var i = 0; i < html5.length; i++) { document.createElement(html5[i]); } })(); </script> <![endif]-->
+<title>Virtrix - Virtual Tricks: VMware: Stopping a Virtual Machine gone haywire</title>
+<link type='text/css' rel='stylesheet' href='http://www.blogger.com/static/v1/widgets/1743847221-widget_css_bundle.css' />
+ <link rel="stylesheet" type="text/css" href="http://www.blogger.com/dyn-css/authorization.css?targetBlogID=13618189&zx=1a924ca4-4aac-4f3e-bddf-014a050c30cb"/>
+<style type="text/css">#navbar-iframe { display:block }
+</style>
+
+<style id='page-skin-1' type='text/css'><!--
+/*
+* Blogger Template Style
+* Name:     TicTac (Blueberry)
+* Date:     1 March 2004
+* Updated by: Blogger Team
+*/
+/* Variable definitions
+====================
+<Variable name="textcolor" description="Text Color"
+type="color" default="#333">
+<Variable name="pagetitlecolor" description="Page Header Color"
+type="color" default="#FFF">
+<Variable name="datecolor" description="Date Header Color"
+type="color" default="#999999">
+<Variable name="titlecolor" description="Post Title Color"
+type="color" default="#993333">
+<Variable name="footercolor" description="Post Footer Color"
+type="color" default="#999">
+<Variable name="sidebartextcolor" description="Sidebar Text Color"
+type="color" default="#999">
+<Variable name="sidebarcolor" description="Sidebar Title Color"
+type="color" default="#666">
+<Variable name="linkcolor" description="Link Color"
+type="color" default="#69c">
+<Variable name="visitedlinkcolor" description="Visited Link Color"
+type="color" default="#666699">
+<Variable name="bodyfont" description="Text Font"
+type="font"
+default="normal normal 100% Verdana, sans-serif">
+<Variable name="pagetitlefont" description="Page Header Font"
+type="font" default="normal normal 100% 'Lucida Grande','Trebuchet MS'">
+<Variable name="titlefont" description="Post Title Font"
+type="font" default="normal bold 130% 'Lucida Grande','Trebuchet MS'">
+<Variable name="sidebarheaderfont" description="Sidebar Title Font"
+type="font" default="normal bold 130% 'Lucida Grande','Trebuchet MS'">
+<Variable name="startSide" description="Start side in blog language"
+type="automatic" default="left">
+<Variable name="endSide" description="End side in blog language"
+type="automatic" default="right">
+*/
+/* ---( page defaults )--- */
+body {
+margin: 0;
+padding: 0;
+font-size: small;
+text-align: center;
+color: #333333;
+background: #e0e0e0;
+}
+blockquote {
+margin-top: 0;
+margin-right: 0;
+margin-bottom: 0;
+margin-left: 30px;
+padding-top: 10px;
+padding-right: 0;
+padding-bottom: 0;
+padding-left: 20px;
+font-size: 88%;
+line-height: 1.5em;
+color: #666;
+background: url(http://www.blogblog.com/tictac_blue/quotes.gif) no-repeat top left;
+}
+blockquote p {
+margin-top: 0;
+}
+abbr, acronym {
+cursor: help;
+font-style: normal;
+border-bottom: 1px dotted;
+}
+code {
+color: #996666;
+}
+hr {
+display: none;
+}
+img {
+border: none;
+}
+/* unordered list style */
+ul {
+list-style: none;
+margin-left: 10px;
+padding: 0;
+}
+li {
+list-style: none;
+padding-left: 14px;
+margin-bottom: 3px;
+background: url(http://www.blogblog.com/tictac_blue/tictac_blue.gif) no-repeat left 6px;
+}
+/* links */
+a:link {
+color: #6699cc;
+}
+a:visited {
+color: #666699;
+}
+a:hover {
+color: #5B739C;
+}
+a:active {
+color: #5B739C;
+text-decoration: none;
+}
+/* ---( layout structure )---*/
+#outer-wrapper {
+width: 847px;
+margin: 0px auto 0;
+text-align: left;
+font: normal normal 100% Verdana, sans-serif;
+background: url(http://www.blogblog.com/tictac_blue/tile_left.gif) repeat-y;
+}
+#content-wrapper {
+margin-left: 42px; /* to avoid the border image */
+width: 763px;
+}
+#main {
+float: left;
+width: 460px;
+margin-top: 20px;
+margin-right: 0;
+margin-bottom: 0;
+margin-left: 0;
+padding-top: 0;
+padding-right: 0;
+padding-bottom: 0;
+padding-left: 1em;
+line-height: 1.5em;
+word-wrap: break-word; /* fix for long text breaking sidebar float in IE */
+overflow: hidden;     /* fix for long non-text content breaking IE sidebar float */
+}
+#sidebar {
+float: right;
+width: 259px;
+padding-top: 20px;
+padding-right: 0px;
+padding-bottom: 0;
+padding-left: 0;
+font-size: 85%;
+line-height: 1.4em;
+color: #999999;
+background: url(http://www.blogblog.com/tictac_blue/sidebar_bg.gif) no-repeat left top;
+word-wrap: break-word; /* fix for long text breaking sidebar float in IE */
+overflow: hidden;     /* fix for long non-text content breaking IE sidebar float */
+}
+/* ---( header and site name )--- */
+#header-wrapper {
+margin: 0;
+padding: 0;
+font: normal normal 100% 'Lucida Grande','Trebuchet MS';
+background: #e0e0e0 url(http://www.blogblog.com/tictac_blue/top_div_blue_left.gif) no-repeat left top;
+}
+#header {
+margin: 0;
+padding-top: 25px;
+padding-right: 60px;
+padding-bottom: 35px;
+padding-left: 160px;
+color: #FFFFFF;
+background: url(http://www.blogblog.com/tictac_blue/top_h1.gif) no-repeat bottom left;
+}
+#header h1 {
+font-size: 200%;
+text-shadow: #4F73B6 2px 2px 2px;
+}
+#header h1 a {
+text-decoration: none;
+color: #FFFFFF;
+}
+#header h1 a:hover {
+color: #eee;
+}
+/* ---( main column )--- */
+h2.date-header {
+margin-top: 0;
+padding-left: 14px;
+font-size: 90%;
+color: #999999;
+background: url(http://www.blogblog.com/tictac_blue/date_icon_blue.gif) no-repeat left 50%;
+}
+.post h3 {
+margin-top: 0;
+font: normal bold 130% 'Lucida Grande','Trebuchet MS';
+letter-spacing: -1px;
+color: #993333;
+}
+.post {
+margin-top: 0;
+margin-right: 0;
+margin-bottom: 1.5em;
+margin-left: 0;
+padding-top: 0;
+padding-right: 0;
+padding-bottom: 1.5em;
+padding-left: 14px;
+border-bottom: 1px solid #ddd;
+}
+.post h3 a,
+.post h3 a:visited {
+color: #993333;
+text-decoration: none;
+}
+.post-footer {
+margin: 0;
+padding-top: 0;
+padding-right: 0;
+padding-bottom: 0;
+padding-left: 14px;
+font-size: 88%;
+color: #999999;
+background: url(http://www.blogblog.com/tictac_blue/tictac_grey.gif) no-repeat left 8px;
+}
+.post img, table.tr-caption-container {
+padding: 6px;
+border-top: 1px solid #ddd;
+border-left: 1px solid #ddd;
+border-bottom: 1px solid #c0c0c0;
+border-right: 1px solid #c0c0c0;
+}
+.tr-caption-container img {
+border: none;
+padding: 0;
+}
+.feed-links {
+clear: both;
+line-height: 2.5em;
+}
+#blog-pager-newer-link {
+float: left;
+}
+#blog-pager-older-link {
+float: right;
+}
+#blog-pager {
+text-align: center;
+}
+/* comment styles */
+#comments {
+padding: 10px 10px 0px 10px;
+font-size: 85%;
+line-height: 1.5em;
+color: #666;
+background: #eee url(http://www.blogblog.com/tictac_blue/comments_curve.gif) no-repeat top left;
+}
+#comments h4 {
+margin-top: 20px;
+margin-right: 0;
+margin-bottom: 15px;
+margin-left: 0;
+padding-top: 8px;
+padding-right: 0;
+padding-bottom: 0;
+padding-left: 40px;
+font-family: "Lucida Grande", "Trebuchet MS";
+font-size: 130%;
+color: #666;
+background: url(http://www.blogblog.com/tictac_blue/bubbles.gif) no-repeat 10px 0;
+height: 29px !important; /* for most browsers */
+height /**/:37px; /* for IE5/Win */
+}
+#comments ul {
+margin-left: 0;
+}
+#comments li {
+background: none;
+padding-left: 0;
+}
+.comment-body {
+padding-top: 0;
+padding-right: 10px;
+padding-bottom: 0;
+padding-left: 25px;
+background: url(http://www.blogblog.com/tictac_blue/tictac_blue.gif) no-repeat 10px 5px;
+}
+.comment-body p {
+margin-bottom: 0;
+}
+.comment-author {
+margin-top: 4px;
+margin-right: 0;
+margin-bottom: 0;
+margin-left: 0;
+padding-top: 0;
+padding-right: 10px;
+padding-bottom: 0;
+padding-left: 60px;
+color: #999;
+background: url(http://www.blogblog.com/tictac_blue/comment_arrow_blue.gif) no-repeat 44px 2px;
+}
+.comment-footer {
+border-bottom: 1px solid #ddd;
+padding-bottom: 1em;
+}
+.deleted-comment {
+font-style:italic;
+color:gray;
+}
+/* ---( sidebar )--- */
+.sidebar h2 {
+margin-top: 0;
+margin-right: 0;
+margin-bottom: 0;
+margin-left: 0;
+padding-top: 25px;
+padding-right: 0;
+padding-bottom: 0;
+padding-left: 40px;
+font: normal bold 130% 'Lucida Grande','Trebuchet MS';
+color: #666666;
+height: 32px;
+background: url(http://www.blogblog.com/tictac_blue/sidebar_icon.gif) no-repeat 10px 15px;
+height: 32px !important; /* for most browsers */
+height /**/:57px; /* for IE5/Win */
+}
+.sidebar .widget {
+margin: 0;
+padding-top: 0;
+padding-right: 0;
+padding-bottom: 10px;
+padding-left: 10px;
+border-bottom: 1px solid #ddd;
+}
+.sidebar li {
+background: url(http://www.blogblog.com/tictac_blue/tictac_blue.gif) no-repeat left 5px;
+}
+.profile-textblock {
+clear: both;
+margin-left: 0;
+}
+.profile-img {
+float: left;
+margin-top: 0;
+margin-right: 5px;
+margin-bottom: 5px;
+margin-left: 0;
+border: 1px solid #ddd;
+padding: 4px;
+}
+/* ---( footer )--- */
+.clear { /* to fix IE6 padding-top issue */
+clear: both;
+}
+#footer-wrapper {
+margin: 0;
+padding-top: 0;
+padding-right: 0;
+padding-bottom: 9px;
+padding-left: 0;
+font-size: 85%;
+color: #ddd;
+background: url(http://www.blogblog.com/tictac_blue/bottom_sill.gif) no-repeat bottom left;
+}
+#footer {
+margin: 0;
+padding-top: 20px;
+padding-right: 320px;
+padding-bottom: 20px;
+padding-left: 95px;
+background: url(http://www.blogblog.com/tictac_blue/bottom_sash_left.gif) no-repeat top left;
+}
+/** Page structure tweaks for layout editor wireframe */
+body#layout #outer-wrapper,
+body#layout #main,
+body#layout #sidebar {
+padding-top: 0;
+margin-top: 0;
+}
+body#layout #outer-wrapper,
+body#layout #content-wrapper {
+width: 740px;
+}
+body#layout #sidebar {
+margin-right: 0;
+margin-bottom: 1em;
+}
+body#layout #header,
+body#layout #footer,
+body#layout #main {
+padding: 0;
+}
+body#layout #content-wrapper {
+margin: 0px;
+}
+
+--></style>
+<script type="text/javascript">
+if (window.jstiming) window.jstiming.load.tick('headEnd');
+</script></head>
+<body>
+<div class='navbar section' id='navbar'><div class='widget Navbar' id='Navbar1'><script type="text/javascript">
+    function setAttributeOnload(object, attribute, val) {
+      if(window.addEventListener) {
+        window.addEventListener("load",
+          function(){ object[attribute] = val; }, false);
+      } else {
+        window.attachEvent('onload', function(){ object[attribute] = val; });
+      }
+    }
+  </script>
+<iframe src="http://www.blogger.com/navbar.g?targetBlogID=13618189&amp;blogName=Virtrix+-+Virtual+Tricks&amp;publishMode=PUBLISH_MODE_BLOGSPOT&amp;navbarType=SILVER&amp;layoutType=LAYOUTS&amp;searchRoot=http%3A%2F%2Fvirtrix.blogspot.com%2Fsearch&amp;blogLocale=nl_BE&amp;homepageUrl=http%3A%2F%2Fvirtrix.blogspot.com%2F&amp;targetPostID=493617111208082605" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" height="30px" width="100%" id="navbar-iframe" allowtransparency="true" title="Blogger Navigation and Search"></iframe>
+<div></div></div></div>
+<div id='outer-wrapper'><div id='wrap2'>
+<!-- skip links for text browsers -->
+<span id='skiplinks' style='display:none;'>
+<a href='#main'>skip to main </a> |
+      <a href='#sidebar'>skip to sidebar</a>
+</span>
+<div id='header-wrapper'>
+<div class='header section' id='header'><div class='widget Header' id='Header1'>
+<div id='header-inner'>
+<div class='titlewrapper'>
+<h1 class='title'>
+<a href='http://virtrix.blogspot.com/'>Virtrix - Virtual Tricks</a>
+</h1>
+</div>
+<div class='descriptionwrapper'>
+<p class='description'><span>
+</span></p>
+</div>
+</div>
+</div></div>
+</div>
+<div id='content-wrapper'>
+<div id='crosscol-wrapper' style='text-align:center'>
+<div class='crosscol section' id='crosscol'></div>
+</div>
+<div id='main-wrapper'>
+<div class='main section' id='main'><div class='widget Blog' id='Blog1'>
+<div class='blog-posts hfeed'>
+<!-- google_ad_section_start(name=default) -->
+
+          <div class="date-outer">
+        
+<h2 class='date-header'><span>donderdag, september 20, 2007</span></h2>
+
+          <div class="date-posts">
+        
+<div class='post-outer'>
+<div class='post hentry'>
+<a name='493617111208082605'></a>
+<h3 class='post-title entry-title'>
+VMware: Stopping a Virtual Machine gone haywire
+</h3>
+<div class='post-header'>
+<div class='post-header-line-1'></div>
+</div>
+<div class='post-body entry-content'>
+<p>Sometimes a Virtual Machine <strong>can't be stopped</strong> via the VIClient. The job just hangs. There are a number of options to stop your Virtual Machine from within the Service Console. Keep in mind that these are <u>last resort</u> options!</p> <ul> <li>Stopping the virtual machine by issuing the command <strong>vmware-cmd /vmfs/volumes/&lt;datastorename&gt;/&lt;vmname&gt;/&lt;vmname&gt;.vmx stop</strong>. This must be done on the ESX host where the Virtual Machine&nbsp;is running!</li> <li>If this does not work, one can issue the following command: <strong>vmware-cmd /vmfs/volumes/&lt;datastorename&gt;/&lt;vmname&gt;/&lt;vmname&gt;.vmx stop</strong> <strong>hard.</strong> This will try to kill the Virtual Machine instantly.</li> <li>A final solution is to kill the <strong>PID (process ID)</strong>. Issue the following command: <strong>ps auxfww | grep &lt;vmname&gt; </strong>to locate the correct PID (BTW: this cannot be done via <strong>ESXTOP</strong>). The first number to appear in the output is your PID. The PID can be used to terminate the process by issuing&nbsp;<strong>kill -9 PID. </strong></li></ul>
+<div style='clear: both;'></div>
+</div>
+<div class='post-footer'>
+<div class='post-footer-line post-footer-line-1'><span class='post-comment-link'>
+</span>
+<span class='post-icons'>
+<span class='item-control blog-admin pid-1482951498'>
+<a href='http://www.blogger.com/post-edit.g?blogID=13618189&postID=493617111208082605' title='Bericht bewerken'>
+<img alt='' class='icon-action' height='18' src='http://img2.blogblog.com/img/icon18_edit_allbkg.gif' width='18'/>
+</a>
+</span>
+</span>
+</div>
+<div class='post-footer-line post-footer-line-2'></div>
+<div class='post-footer-line post-footer-line-3'><span class='post-location'>
+</span>
+</div>
+</div>
+</div>
+<div class='comments' id='comments'>
+<a name='comments'></a>
+<h4>
+14
+reacties:
+        
+</h4>
+<div id='Blog1_comments-block-wrapper'>
+<dl class='avatar-comment-indent' id='comments-block'>
+<dt class='comment-author ' id='c3851619076861860646'>
+<a name='c3851619076861860646'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="http://www.blogger.com/profile/08861685948987660300" rel="nofollow" onclick="" class="avatar-hovercard" id="av-0-08861685948987660300"><img src="http://img2.blogblog.com/img/b16-rounded.gif" width="16" height="16" alt="" title="daniel">
+
+</a></span></div>
+<a href='http://www.blogger.com/profile/08861685948987660300' rel='nofollow'>daniel</a>
+zei
+</dt>
+<dd class='comment-body' id='Blog1_cmt-3851619076861860646'>
+<p>
+There is a problem using PS to kill the running VM process, in that it can still leave the VM World running in the background. <BR/>Another way to stop an errant VM is to issue the commands vm-support -x to list the running VMs and their World IDs, then vm-support -X worldid (note the x is case sensitive in both commands). This then prompts the user with a couple of questions, then runs a debug stop of the VM, and creates a set of log files as well that you can forward to VMware tech support for them to check if you so desire
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://virtrix.blogspot.com/2007/09/vmware-stopping-virtual-machine-gone.html?showComment=1190379120000#c3851619076861860646' title='comment permalink'>
+september 21, 2007 2:52 PM
+</a>
+<span class='item-control blog-admin pid-502486149'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=13618189&postID=3851619076861860646' title='Reactie verwijderen'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author ' id='c1771411386579560078'>
+<a name='c1771411386579560078'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="http://www.blogger.com/profile/02530082521343536371" rel="nofollow" onclick="" class="avatar-hovercard" id="av-1-02530082521343536371"><img src="http://img2.blogblog.com/img/b16-rounded.gif" width="16" height="16" alt="" title="Erik">
+
+</a></span></div>
+<a href='http://www.blogger.com/profile/02530082521343536371' rel='nofollow'>Erik</a>
+zei
+</dt>
+<dd class='comment-body' id='Blog1_cmt-1771411386579560078'>
+<p>
+Thanks, this worked for me. I am a happy man now.<BR/>I use VM Ware Server 1.0.3 on Windows  Server 2003 but the same command worked nonetheless.
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://virtrix.blogspot.com/2007/09/vmware-stopping-virtual-machine-gone.html?showComment=1201726440000#c1771411386579560078' title='comment permalink'>
+januari 30, 2008 9:54 PM
+</a>
+<span class='item-control blog-admin pid-186747222'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=13618189&postID=1771411386579560078' title='Reactie verwijderen'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author ' id='c2162532661760301051'>
+<a name='c2162532661760301051'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="http://www.blogger.com/profile/13159890027438234801" rel="nofollow" onclick="" class="avatar-hovercard" id="av-2-13159890027438234801"><img src="http://img2.blogblog.com/img/b16-rounded.gif" width="16" height="16" alt="" title="Vikash Kumar Roy">
+
+</a></span></div>
+<a href='http://www.blogger.com/profile/13159890027438234801' rel='nofollow'>Vikash Kumar Roy</a>
+zei
+</dt>
+<dd class='comment-body' id='Blog1_cmt-2162532661760301051'>
+<p>
+You can also try switch force stop with vmware-cmd and it work. I had simmilar situation long time and I was able to stop it using force stop. <BR/><BR/>Vikash
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://virtrix.blogspot.com/2007/09/vmware-stopping-virtual-machine-gone.html?showComment=1219244400000#c2162532661760301051' title='comment permalink'>
+augustus 20, 2008 5:00 PM
+</a>
+<span class='item-control blog-admin pid-1028722709'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=13618189&postID=2162532661760301051' title='Reactie verwijderen'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author ' id='c3779706362061233814'>
+<a name='c3779706362061233814'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="http://www.blogger.com/profile/09077301272262338671" rel="nofollow" onclick="" class="avatar-hovercard" id="av-3-09077301272262338671"><img src="http://img2.blogblog.com/img/b16-rounded.gif" width="16" height="16" alt="" title="id-dave">
+
+</a></span></div>
+<a href='http://www.blogger.com/profile/09077301272262338671' rel='nofollow'>id-dave</a>
+zei
+</dt>
+<dd class='comment-body' id='Blog1_cmt-3779706362061233814'>
+<span class='deleted-comment'>Dit bericht is verwijderd door de auteur.</span>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://virtrix.blogspot.com/2007/09/vmware-stopping-virtual-machine-gone.html?showComment=1233060780000#c3779706362061233814' title='comment permalink'>
+januari 27, 2009 1:53 PM
+</a>
+<span class='item-control blog-admin '>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=13618189&postID=3779706362061233814' title='Reactie verwijderen'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author ' id='c386174494582548610'>
+<a name='c386174494582548610'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="http://www.blogger.com/profile/09077301272262338671" rel="nofollow" onclick="" class="avatar-hovercard" id="av-4-09077301272262338671"><img src="http://img2.blogblog.com/img/b16-rounded.gif" width="16" height="16" alt="" title="id-dave">
+
+</a></span></div>
+<a href='http://www.blogger.com/profile/09077301272262338671' rel='nofollow'>id-dave</a>
+zei
+</dt>
+<dd class='comment-body' id='Blog1_cmt-386174494582548610'>
+<p>
+The kill -9 process worked perfect for me :) I wish I had tried the vm-support command first though to test it out. Environment I use is ESX 3.5 and Virtual Centre 2.5
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://virtrix.blogspot.com/2007/09/vmware-stopping-virtual-machine-gone.html?showComment=1233060960000#c386174494582548610' title='comment permalink'>
+januari 27, 2009 1:56 PM
+</a>
+<span class='item-control blog-admin pid-332725471'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=13618189&postID=386174494582548610' title='Reactie verwijderen'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author ' id='c224884066643715009'>
+<a name='c224884066643715009'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="http://www.blogger.com/profile/12782347815493061528" rel="nofollow" onclick="" class="avatar-hovercard" id="av-5-12782347815493061528"><img src="http://img2.blogblog.com/img/b16-rounded.gif" width="16" height="16" alt="" title="Ike">
+
+</a></span></div>
+<a href='http://www.blogger.com/profile/12782347815493061528' rel='nofollow'>Ike</a>
+zei
+</dt>
+<dd class='comment-body' id='Blog1_cmt-224884066643715009'>
+<p>
+I started with finding the PID but got unstuck when I ran the command for a second time and got a different PID - I could not risk killing the wrong PID on a production server :) <br />I then tried vm-support -x and '-X ... worked 100%<br /><br />(Same config as id-dave)<br />Thanks all for your feedback!
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://virtrix.blogspot.com/2007/09/vmware-stopping-virtual-machine-gone.html?showComment=1239869640000#c224884066643715009' title='comment permalink'>
+april 16, 2009 10:14 AM
+</a>
+<span class='item-control blog-admin pid-1937876791'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=13618189&postID=224884066643715009' title='Reactie verwijderen'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author ' id='c3898793260308325313'>
+<a name='c3898793260308325313'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="http://www.blogger.com/profile/12988023073201208718" rel="nofollow" onclick="" class="avatar-hovercard" id="av-6-12988023073201208718"><img src="http://img2.blogblog.com/img/b16-rounded.gif" width="16" height="16" alt="" title="miyuki">
+
+</a></span></div>
+<a href='http://www.blogger.com/profile/12988023073201208718' rel='nofollow'>miyuki</a>
+zei
+</dt>
+<dd class='comment-body' id='Blog1_cmt-3898793260308325313'>
+<p>
+quelle <a href="http://www.nike-max-tn.com" rel="nofollow">chaussures puma</a>paire de chaussures pour hommes choisir?!? La réponse est toute simple:<a href="http://www.nike-max-tn.com" rel="nofollow">chaussures nike</a> une paire de baskets en partie vernies. du 17ème au 5ème rang, qui lui offre une place dans un top 5 largement <a href="http://www.nike-max-tn.com" rel="nofollow">tn requin</a>dominé par les sites de vente de produits high-tech. Le site de réservation d&#39;hôtels Bookings.com gagne pour sa part 47 places et atteint le 8ème rang.
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://virtrix.blogspot.com/2007/09/vmware-stopping-virtual-machine-gone.html?showComment=1244171721943#c3898793260308325313' title='comment permalink'>
+juni 05, 2009 5:15 AM
+</a>
+<span class='item-control blog-admin pid-960639004'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=13618189&postID=3898793260308325313' title='Reactie verwijderen'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author ' id='c2404883515096169752'>
+<a name='c2404883515096169752'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="http://www.blogger.com/profile/12988023073201208718" rel="nofollow" onclick="" class="avatar-hovercard" id="av-7-12988023073201208718"><img src="http://img2.blogblog.com/img/b16-rounded.gif" width="16" height="16" alt="" title="miyuki">
+
+</a></span></div>
+<a href='http://www.blogger.com/profile/12988023073201208718' rel='nofollow'>miyuki</a>
+zei
+</dt>
+<dd class='comment-body' id='Blog1_cmt-2404883515096169752'>
+<p>
+There are <a href="http://www.mensclothingstore.us/" rel="nofollow">cheap&#160;columbia&#160;jackets</a> 10 pcs of excellent Ralph Lauren multi-colored stripe big pony <a href="http://www.mensclothingstore.us/" rel="nofollow">spyder&#160;jackets</a>. These products are more soft and comfortable for being made of breathable and durable mesh cotton . <a href="http://www.mensclothingstore.us/" rel="nofollow">lacoste&#160;sweater</a>there are lots of colors and sizes for your choice, just pick up one you like ,it is absolutely value for money.
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://virtrix.blogspot.com/2007/09/vmware-stopping-virtual-machine-gone.html?showComment=1244171928897#c2404883515096169752' title='comment permalink'>
+juni 05, 2009 5:18 AM
+</a>
+<span class='item-control blog-admin pid-960639004'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=13618189&postID=2404883515096169752' title='Reactie verwijderen'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author ' id='c4503285434345465749'>
+<a name='c4503285434345465749'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="http://www.blogger.com/profile/12988023073201208718" rel="nofollow" onclick="" class="avatar-hovercard" id="av-8-12988023073201208718"><img src="http://img2.blogblog.com/img/b16-rounded.gif" width="16" height="16" alt="" title="miyuki">
+
+</a></span></div>
+<a href='http://www.blogger.com/profile/12988023073201208718' rel='nofollow'>miyuki</a>
+zei
+</dt>
+<dd class='comment-body' id='Blog1_cmt-4503285434345465749'>
+<p>
+Lacoste Polo Shirts, <a href="http://www.clothingol.com" rel="nofollow">ralph Lauren polo shirts </a>, Burberry Polo Shirts.wholesale Lacoste polo shirts and <a href="http://www.clothingol.com" rel="nofollow"> polo ralph lauren</a>with great price. clothingol.com offers lot of 10 lacoste polo shirts and lot of 20 <a href="http://www.clothingol.com" rel="nofollow"> cheap polo shirts</a>. clothingol.com offers classic fit polo shirts. polo clothing
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://virtrix.blogspot.com/2007/09/vmware-stopping-virtual-machine-gone.html?showComment=1244171940529#c4503285434345465749' title='comment permalink'>
+juni 05, 2009 5:19 AM
+</a>
+<span class='item-control blog-admin pid-960639004'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=13618189&postID=4503285434345465749' title='Reactie verwijderen'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author ' id='c8094275706780475955'>
+<a name='c8094275706780475955'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="http://www.blogger.com/profile/12988023073201208718" rel="nofollow" onclick="" class="avatar-hovercard" id="av-9-12988023073201208718"><img src="http://img2.blogblog.com/img/b16-rounded.gif" width="16" height="16" alt="" title="miyuki">
+
+</a></span></div>
+<a href='http://www.blogger.com/profile/12988023073201208718' rel='nofollow'>miyuki</a>
+zei
+</dt>
+<dd class='comment-body' id='Blog1_cmt-8094275706780475955'>
+<p>
+Bon March&#168;&#166; <a href="http://www.chaussuresportfr.com" rel="nofollow">chaussures puma</a>Chaussure Sports Shop:<a href="http://www.chaussuresportfr.com" rel="nofollow">baskets puma</a>Chaussure Puma Femme,Chaussure Puma Homme,Chaussure Nike Femme,Chaussure Nike homme,<a href="http://www.chaussuresportfr.com" rel="nofollow">nike shox</a>Chaussure Sport et plus. Livraison Rapide.
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://virtrix.blogspot.com/2007/09/vmware-stopping-virtual-machine-gone.html?showComment=1244171952188#c8094275706780475955' title='comment permalink'>
+juni 05, 2009 5:19 AM
+</a>
+<span class='item-control blog-admin pid-960639004'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=13618189&postID=8094275706780475955' title='Reactie verwijderen'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author ' id='c5955597132972365005'>
+<a name='c5955597132972365005'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="http://www.blogger.com/profile/12988023073201208718" rel="nofollow" onclick="" class="avatar-hovercard" id="av-10-12988023073201208718"><img src="http://img2.blogblog.com/img/b16-rounded.gif" width="16" height="16" alt="" title="miyuki">
+
+</a></span></div>
+<a href='http://www.blogger.com/profile/12988023073201208718' rel='nofollow'>miyuki</a>
+zei
+</dt>
+<dd class='comment-body' id='Blog1_cmt-5955597132972365005'>
+<p>
+Cheap Brand Jeans Shop<a href="http://www.jeancheap.com" rel="nofollow">Men Jeans</a> - True Religion Jeans, <a href="http://www.jeancheap.com" rel="nofollow">Women Jeans</a>GUCCI Jeans, Levi&#39;s Jeans, D&amp;G Jeans, RED MONKEY Jeans, <a href="http://www.jeancheap.com" rel="nofollow">Cheap Jeans</a>Armani Jeans, Diesel Jeans, Ed hardy Jeans, Evisu Jeans, Jack&amp;Jones Jeans...
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://virtrix.blogspot.com/2007/09/vmware-stopping-virtual-machine-gone.html?showComment=1244171965243#c5955597132972365005' title='comment permalink'>
+juni 05, 2009 5:19 AM
+</a>
+<span class='item-control blog-admin pid-960639004'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=13618189&postID=5955597132972365005' title='Reactie verwijderen'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author ' id='c8013661110667367601'>
+<a name='c8013661110667367601'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="http://www.blogger.com/profile/12988023073201208718" rel="nofollow" onclick="" class="avatar-hovercard" id="av-11-12988023073201208718"><img src="http://img2.blogblog.com/img/b16-rounded.gif" width="16" height="16" alt="" title="miyuki">
+
+</a></span></div>
+<a href='http://www.blogger.com/profile/12988023073201208718' rel='nofollow'>miyuki</a>
+zei
+</dt>
+<dd class='comment-body' id='Blog1_cmt-8013661110667367601'>
+<p>
+<a href="http://www.crazypurchase.com" rel="nofollow">China Wholesale</a> <br /><a href="http://www.crazypurchase.com" rel="nofollow">wholesale from china</a> <br /><a href="http://www.crazypurchase.com" rel="nofollow">buy products wholesale</a> <br /><a href="http://www.crazypurchase.com" rel="nofollow">China Wholesalers</a> <br /><a href="http://fsgasfds.blog126.fc2.com/" rel="nofollow">polo shirts</a><br /><a href="http://gfhhh.blog126.fc2.com/" rel="nofollow">chaussure sport </a><br /><a href="http://thediary.org/mvmi" rel="nofollow">w</a><br /><a href="http://thediary.org/clothing" rel="nofollow">e</a><br /><a href="http://www.seri.ousblogging.com/clothingsy/" rel="nofollow">t</a><br /><a href="http://www.seriousblogging.com/shoes21/" rel="nofollow">r</a><br /><a href="http://www.free-blog-site.com/shoes" rel="nofollow">y</a><br /><a href="http://www.thediary.org/pumaoo" rel="nofollow">u</a>
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://virtrix.blogspot.com/2007/09/vmware-stopping-virtual-machine-gone.html?showComment=1244171980685#c8013661110667367601' title='comment permalink'>
+juni 05, 2009 5:19 AM
+</a>
+<span class='item-control blog-admin pid-960639004'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=13618189&postID=8013661110667367601' title='Reactie verwijderen'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author ' id='c8496418846151202977'>
+<a name='c8496418846151202977'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="http://www.blogger.com/profile/14434773481625525610" rel="nofollow" onclick="" class="avatar-hovercard" id="av-12-14434773481625525610"><img src="http://img2.blogblog.com/img/b16-rounded.gif" width="16" height="16" alt="" title="lla">
+
+</a></span></div>
+<a href='http://www.blogger.com/profile/14434773481625525610' rel='nofollow'>lla</a>
+zei
+</dt>
+<dd class='comment-body' id='Blog1_cmt-8496418846151202977'>
+<p>
+<a href="http://www.poloshirtsshop.com" rel="nofollow">Burberry polo shirt</a> the steady, solid, so many young girls also love it. Speaking of people of a <a href="http://www.poloshirtsshop.com" rel="nofollow">ralph lauren polo</a>, think it a sign of nobility elegant waving in the horse club.<a href="http://www.poloshirtsshop.com" rel="nofollow">spyder jacket</a> in the cold in your winter activities can be easily.<a href="http://www.poloshirtsshop.com" rel="nofollow">columbia jacket</a> it is expensive, but here you do not need to consider the price of it. <a href="http://www.poloshirtsshop.com" rel="nofollow">the north face jacket</a> one of my favorite money, I do not know how many in this world of its fans.<br /><a href="http://www.ed-hardy-clothing.us" rel="nofollow">ed hardy clothing </a><br /><a href="http://www.ed-hardy-clothing.us" rel="nofollow"> ed hardy clothes</a><br /><a href="http://www.ed-hardy-clothing.us" rel="nofollow">ed hardy shirts </a><br /><a href="http://www.ed-hardy-clothing.us" rel="nofollow">ed hardy t-shirts </a><br /><a href="http://www.ed-hardy-clothing.us" rel="nofollow">ed hardy sunglasses </a><br /><a href="http://www.ed-hardy-clothing.us" rel="nofollow"> ed hardy mens</a><br /><a href="http://www.ed-hardy-clothing.us" rel="nofollow">ed hardy womens </a>
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://virtrix.blogspot.com/2007/09/vmware-stopping-virtual-machine-gone.html?showComment=1245047881263#c8496418846151202977' title='comment permalink'>
+juni 15, 2009 8:38 AM
+</a>
+<span class='item-control blog-admin pid-922275755'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=13618189&postID=8496418846151202977' title='Reactie verwijderen'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author ' id='c7354178468784799854'>
+<a name='c7354178468784799854'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="http://www.blogger.com/profile/14434773481625525610" rel="nofollow" onclick="" class="avatar-hovercard" id="av-13-14434773481625525610"><img src="http://img2.blogblog.com/img/b16-rounded.gif" width="16" height="16" alt="" title="lla">
+
+</a></span></div>
+<a href='http://www.blogger.com/profile/14434773481625525610' rel='nofollow'>lla</a>
+zei
+</dt>
+<dd class='comment-body' id='Blog1_cmt-7354178468784799854'>
+<p>
+In preparation for the purchase of a <a href="http://www.tennis-rackets.us/" rel="nofollow">tennis racquet</a>before, we must consider your financial ability to bear; On this basis, a further comparison, as far as possible, choose your <a href="http://www.tennis-rackets.us/" rel="nofollow">head tennis racquets</a>. Now a lot of <a href="http://www.tennis-rackets.us/" rel="nofollow">babolat pure drive</a> and more mixed materials, the proportion of mixed-use to control the stiffness of the <a href="http://www.tennis-rackets.us/" rel="nofollow">babolat aeropro drive</a> and the shock-absorbing capacity, the more rigid <a href="http://www.tennis-rackets.us/" rel="nofollow">babolat tennis racket</a>, the swing more powerful force; but the relative resilience of the shock-absorbing capacity and <a href="http://www.tennis-rackets.us/" rel="nofollow">wilson k factor</a> performance of talks on the easier it is for the wrist and elbow injury.<br /><a href="http://www.brandshandbags.com" rel="nofollow">Wholesale Handbags</a><br /><a href="http://www.brandshandbags.com" rel="nofollow">Cheap Handbags</a><br /><a href="http://www.brandshandbags.com" rel="nofollow">Womens Handbags</a><br /><a href="http://www.brandshandbags.com" rel="nofollow">Cheap Purses</a><br /><a href="http://www.brandshandbags.com" rel="nofollow">Designer Handbags</a>
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://virtrix.blogspot.com/2007/09/vmware-stopping-virtual-machine-gone.html?showComment=1245047903696#c7354178468784799854' title='comment permalink'>
+juni 15, 2009 8:38 AM
+</a>
+<span class='item-control blog-admin pid-922275755'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=13618189&postID=7354178468784799854' title='Reactie verwijderen'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+</dl>
+</div>
+<p class='comment-footer'>
+<a href='https://www.blogger.com/comment.g?blogID=13618189&postID=493617111208082605' onclick=''>Een reactie plaatsen</a>
+</p>
+<div id='backlinks-container'>
+<div id='Blog1_backlinks-container'>
+</div>
+</div>
+</div>
+</div>
+<div id="latency-493617111208082605"></div><script type="text/javascript">if (window['tickAboveFold']) {window['tickAboveFold'](document.getElementById("latency-493617111208082605")); } </script>
+
+        </div></div>
+      
+<!-- google_ad_section_end -->
+</div>
+<div class='blog-pager' id='blog-pager'>
+<span id='blog-pager-newer-link'>
+<a class='blog-pager-newer-link' href='http://virtrix.blogspot.com/2007/10/microsoft-windows-server-core-commands.html' id='Blog1_blog-pager-newer-link' title='Nieuwer bericht'>Nieuwer bericht</a>
+</span>
+<span id='blog-pager-older-link'>
+<a class='blog-pager-older-link' href='http://virtrix.blogspot.com/2007/09/vmware-new-ha-features-in-vc-202.html' id='Blog1_blog-pager-older-link' title='Ouder bericht'>Ouder bericht</a>
+</span>
+<a class='home-link' href='http://virtrix.blogspot.com/'>Startpagina</a>
+</div>
+<div class='clear'></div>
+<div class='post-feeds'>
+<div class='feed-links'>
+Abonneren op:
+<a class='feed-link' href='http://virtrix.blogspot.com/feeds/493617111208082605/comments/default' target='_blank' type='application/atom+xml'>Reacties plaatsen (Atom)</a>
+</div>
+</div>
+</div></div>
+</div>
+<div id='sidebar-wrapper'>
+<div class='sidebar section' id='sidebar'><div class='widget Text' id='Text1'>
+<h2 class='title'>Who I am</h2>
+<div class='widget-content'>
+This is the blog of Vincent Vlieghe. I work for a company called <a href="http://www.xylos.com">Xylos</a>. My main interests: VMware, Citrix, Softricity, HP Proliant servers, storage solutions &amp; all things virtual!
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=13618189&widgetType=Text&widgetId=Text1&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("Text1"));' target='configText1' title='Bewerken'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div><div class='widget LinkList' id='LinkList1'>
+<h2>Virtualization</h2>
+<div class='widget-content'>
+<ul>
+<li><a href='http://about-virtualization.com/mambo/'>About-Virtualization</a></li>
+<li><a href='http://blog.baeke.info/'>Baeke's Blog</a></li>
+<li><a href='http://ictfreak.wordpress.com/'>ictfreak.wordpress.com (in dutch)</a></li>
+<li><a href='http://www.p2vd.com/'>p2vd (Ryan Glover)</a></li>
+<li><a href='http://www.rtfm-ed.co.uk/'>RTFM - Mike Laverick</a></li>
+<li><a href='http://www.run-virtual.com/'>Run Virtual</a></li>
+<li><a href='http://blog.scottlowe.org/'>Scott Lowe's blog</a></li>
+<li><a href='http://searchservervirtualization.techtarget.com/'>SearchServerVirtualization</a></li>
+<li><a href='http://timjacobs.blogspot.com/'>Tim Jacobs' blog</a></li>
+<li><a href='http://verbeiren.blogspot.com/'>Toni Verbeirens' blog</a></li>
+<li><a href='http://www.virtual-strategy.com/en/home'>Virtual Strategy Mag</a></li>
+<li><a href='http://www.virtualization.info/'>Virtualization.info</a></li>
+<li><a href='http://www.virtualizationadmin.com/'>VirtualizationAdmin</a></li>
+<li><a href='http://vmblog.com/default.aspx'>VMblog (David Marschall)</a></li>
+<li><a href='http://www.vmguru.com/'>VMguru</a></li>
+<li><a href='http://www.vmware.com/community/index.jspa'>VMTN discussion forums</a></li>
+<li><a href='http://www.vmts.net/'>VMTS (Hot backup script)</a></li>
+<li><a href='http://www.vmug.nl/'>VMUG (Dutch)</a></li>
+</ul>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=13618189&widgetType=LinkList&widgetId=LinkList1&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("LinkList1"));' target='configLinkList1' title='Bewerken'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div><div class='widget LinkList' id='LinkList2'>
+<h2>Citrix /WTS</h2>
+<div class='widget-content'>
+<ul>
+<li><a href='http://www.brianmadden.com/'>Brian Madden's blog</a></li>
+<li><a href='http://citrite.org/blogs/'>Citrite's blogs</a></li>
+<li><a href='http://citrixcommunity.com/'>Citrix Community Blogs</a></li>
+<li><a href='http://www.jaytomlin.com/blog'>Citrix Jay Tomlin's blog</a></li>
+<li><a href='http://www.cug.co.nz/'>CUG New Zealand</a></li>
+<li><a href='http://www.dabcc.com/'>Dabcc</a></li>
+<li><a href='http://www.ervik.as/'>GIDWIM Guide ver 4.0</a></li>
+<li><a href='http://jasonconger.com/'>Jason Conger blog</a></li>
+<li><a href='http://therealshrimp.blogspot.com/'>Jurgen De Greyt's blog</a></li>
+<li><a href='http://blogs.msdn.com/ts'>Microsoft TS Blog</a></li>
+<li><a href='http://www.msterminalservices.org/'>MSterminalServices.org</a></li>
+<li><a href='http://www.printingsupport.com/'>Printing Support</a></li>
+<li><a href='http://www.virtuall.nl/'>Ruben Spruijt's showcase</a></li>
+<li><a href='http://www.sessioncomputing.com/'>Sessioncomputing</a></li>
+<li><a href='http://www.microsoft.com/windowsserver2003/community/centers/terminal/default.mspx'>Terminal Services Community</a></li>
+<li><a href='http://www.thincomputing.net/'>Thincomputing.net</a></li>
+<li><a href='http://www.thomaskoetzing.de/'>Thomas Koetzing</a></li>
+<li><a href='http://ts.veranoest.net/'>Vera Noest</a></li>
+<li><a href='http://sbc.vanbragt.net/mambo/home/'>Wilco's blog</a></li>
+<li><a href='http://www.citrixthings.com/'>Yuri Haak's blog (Qwise)</a></li>
+</ul>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=13618189&widgetType=LinkList&widgetId=LinkList2&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("LinkList2"));' target='configLinkList2' title='Bewerken'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div><div class='widget LinkList' id='LinkList3'>
+<h2>Softricity</h2>
+<div class='widget-content'>
+<ul>
+<li><a href='http://www.sftdownloads.com/'>Free SFT downloads</a></li>
+<li><a href='http://www.softgridguru.com/'>Softgridguru</a></li>
+<li><a href='http://blogs.technet.com/softgrid/'>Softricity blog</a></li>
+<li><a href='http://support.softricity.com/'>Softricity support site</a></li>
+</ul>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=13618189&widgetType=LinkList&widgetId=LinkList3&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("LinkList3"));' target='configLinkList3' title='Bewerken'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div><div class='widget LinkList' id='LinkList6'>
+<h2>Windows related</h2>
+<div class='widget-content'>
+<ul>
+<li><a href='http://www.adminprep.com/'>Adminprep.com</a></li>
+<li><a href='http://andymeers.blogspot.com/'>Andy Meers' blog</a></li>
+<li><a href='http://bink.nu/'>bink.nu</a></li>
+<li><a href='http://www.gpanswers.com/'>GP Answers</a></li>
+<li><a href='http://www.gpoguy.com/'>GPOguy</a></li>
+<li><a href='http://www.petri.co.il/'>http://www.petri.co.il/</a></li>
+<li><a href='http://www.windowsnetworking.com/'>Windows Networking</a></li>
+</ul>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=13618189&widgetType=LinkList&widgetId=LinkList6&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("LinkList6"));' target='configLinkList6' title='Bewerken'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div><div class='widget LinkList' id='LinkList7'>
+<h2>Scripting</h2>
+<div class='widget-content'>
+<ul>
+<li><a href='http://powergui.org/index.jspa'>PowerGUI</a></li>
+<li><a href='http://www.pshell.info/'>Pshell.info</a></li>
+<li><a href='http://www.quest.com/activeroles-server/arms.aspx'>Quest ActiveRoles AD</a></li>
+<li><a href='http://blogs.msdn.com/powershell/'>Windows PowerShell Blog</a></li>
+</ul>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=13618189&widgetType=LinkList&widgetId=LinkList7&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("LinkList7"));' target='configLinkList7' title='Bewerken'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div><div class='widget LinkList' id='LinkList4'>
+<h2>Storage</h2>
+<div class='widget-content'>
+<ul>
+<li><a href='http://www.iscsistorage.com/'>iSCSI storage</a></li>
+<li><a href='http://www.snia.org/home'>SNIA</a></li>
+<li><a href='http://searchstorage.techtarget.com/'>Techtarget</a></li>
+</ul>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=13618189&widgetType=LinkList&widgetId=LinkList4&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("LinkList4"));' target='configLinkList4' title='Bewerken'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div><div class='widget LinkList' id='LinkList5'>
+<h2>Toolbox</h2>
+<div class='widget-content'>
+<ul>
+<li><a href='http://support.citrix.com/kb/category.jspa?categoryID=682'>Citrix Official tools</a></li>
+<li><a href='http://www.dependencywalker.com/'>Dependency Walker</a></li>
+<li><a href='http://portal.loginconsultants.nl/forum/index.php?board=16'>Login Consultant Flexprofile, TCT and more</a></li>
+<li><a href='http://www.virtualconspiracy.com/index.php?page=scrdec/download'>Script Decoder (for VC encoded vbs/wsf files)</a></li>
+<li><a href='http://www.sysinternals.com/'>Sysinternals' supertoys</a></li>
+<li><a href='http://threadmaster.tripod.com/'>Threadmaster</a></li>
+<li><a href='http://www.tmurgent.com/'>Tim Mangan's great toolbox</a></li>
+<li><a href='http://www.microsoft.com/downloads/info.aspx?na=22&p=1&SrcDisplayLang=en&SrcCategoryId=&SrcFamilyId=&u=%2fdownloads%2fdetails.aspx%3fFamilyID%3d1b286e6d-8912-4e18-b570-42470e2f3582%26DisplayLang%3den'>UPHClean must-install tool</a></li>
+<li><a href='http://winscp.net/eng/index.php'>WinSCP Free sFTP client</a></li>
+<li><a href='http://www.wireshark.org/'>Wireshark (Ethereal)</a></li>
+</ul>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=13618189&widgetType=LinkList&widgetId=LinkList5&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("LinkList5"));' target='configLinkList5' title='Bewerken'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div><div class='widget Label' id='Label1'>
+<h2>Labels</h2>
+<div class='widget-content list-label-widget-content'>
+<ul>
+<li>
+<a dir='ltr' href='http://virtrix.blogspot.com/search/label/Vmware'>Vmware</a>
+<span dir='ltr'>(90)</span>
+</li>
+<li>
+<a dir='ltr' href='http://virtrix.blogspot.com/search/label/Citrix'>Citrix</a>
+<span dir='ltr'>(42)</span>
+</li>
+<li>
+<a dir='ltr' href='http://virtrix.blogspot.com/search/label/Virtualization'>Virtualization</a>
+<span dir='ltr'>(26)</span>
+</li>
+<li>
+<a dir='ltr' href='http://virtrix.blogspot.com/search/label/Terminal%20Services'>Terminal Services</a>
+<span dir='ltr'>(24)</span>
+</li>
+<li>
+<a dir='ltr' href='http://virtrix.blogspot.com/search/label/Microsoft'>Microsoft</a>
+<span dir='ltr'>(16)</span>
+</li>
+<li>
+<a dir='ltr' href='http://virtrix.blogspot.com/search/label/Windows'>Windows</a>
+<span dir='ltr'>(15)</span>
+</li>
+<li>
+<a dir='ltr' href='http://virtrix.blogspot.com/search/label/Longhorn'>Longhorn</a>
+<span dir='ltr'>(11)</span>
+</li>
+<li>
+<a dir='ltr' href='http://virtrix.blogspot.com/search/label/Softricity'>Softricity</a>
+<span dir='ltr'>(7)</span>
+</li>
+<li>
+<a dir='ltr' href='http://virtrix.blogspot.com/search/label/HP%20Hardware'>HP Hardware</a>
+<span dir='ltr'>(6)</span>
+</li>
+<li>
+<a dir='ltr' href='http://virtrix.blogspot.com/search/label/Softgrid'>Softgrid</a>
+<span dir='ltr'>(4)</span>
+</li>
+<li>
+<a dir='ltr' href='http://virtrix.blogspot.com/search/label/General'>General</a>
+<span dir='ltr'>(3)</span>
+</li>
+<li>
+<a dir='ltr' href='http://virtrix.blogspot.com/search/label/VDI'>VDI</a>
+<span dir='ltr'>(3)</span>
+</li>
+<li>
+<a dir='ltr' href='http://virtrix.blogspot.com/search/label/Vizioncore'>Vizioncore</a>
+<span dir='ltr'>(3)</span>
+</li>
+<li>
+<a dir='ltr' href='http://virtrix.blogspot.com/search/label/Viridian'>Viridian</a>
+<span dir='ltr'>(2)</span>
+</li>
+<li>
+<a dir='ltr' href='http://virtrix.blogspot.com/search/label/Xen'>Xen</a>
+<span dir='ltr'>(2)</span>
+</li>
+<li>
+<a dir='ltr' href='http://virtrix.blogspot.com/search/label/64bit'>64bit</a>
+<span dir='ltr'>(1)</span>
+</li>
+<li>
+<a dir='ltr' href='http://virtrix.blogspot.com/search/label/BriForum'>BriForum</a>
+<span dir='ltr'>(1)</span>
+</li>
+<li>
+<a dir='ltr' href='http://virtrix.blogspot.com/search/label/SQL%20Server'>SQL Server</a>
+<span dir='ltr'>(1)</span>
+</li>
+<li>
+<a dir='ltr' href='http://virtrix.blogspot.com/search/label/SVS'>SVS</a>
+<span dir='ltr'>(1)</span>
+</li>
+<li>
+<a dir='ltr' href='http://virtrix.blogspot.com/search/label/Server%202008'>Server 2008</a>
+<span dir='ltr'>(1)</span>
+</li>
+<li>
+<a dir='ltr' href='http://virtrix.blogspot.com/search/label/Vista'>Vista</a>
+<span dir='ltr'>(1)</span>
+</li>
+<li>
+<a dir='ltr' href='http://virtrix.blogspot.com/search/label/iSCSI'>iSCSI</a>
+<span dir='ltr'>(1)</span>
+</li>
+<li>
+<a dir='ltr' href='http://virtrix.blogspot.com/search/label/linux'>linux</a>
+<span dir='ltr'>(1)</span>
+</li>
+<li>
+<a dir='ltr' href='http://virtrix.blogspot.com/search/label/powershell'>powershell</a>
+<span dir='ltr'>(1)</span>
+</li>
+</ul>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=13618189&widgetType=Label&widgetId=Label1&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("Label1"));' target='configLabel1' title='Bewerken'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div><div class='widget BlogArchive' id='BlogArchive1'>
+<h2>Blogarchief</h2>
+<div class='widget-content'>
+<div id='ArchiveList'>
+<div id='BlogArchive1_ArchiveList'>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://virtrix.blogspot.com/search?updated-min=2010-01-01T00%3A00%3A00%2B01%3A00&updated-max=2011-01-01T00%3A00%3A00%2B01%3A00&max-results=1'>2010</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://virtrix.blogspot.com/2010_10_01_archive.html'>oktober</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='posts'>
+<li><a href='http://virtrix.blogspot.com/2010/10/truth-is-out-there-bist-blog-is-alive.html'>The truth is out there -bist blog IS ALIVE!</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://virtrix.blogspot.com/search?updated-min=2009-01-01T00%3A00%3A00%2B01%3A00&updated-max=2010-01-01T00%3A00%3A00%2B01%3A00&max-results=8'>2009</a>
+<span class='post-count' dir='ltr'>(8)</span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://virtrix.blogspot.com/2009_06_01_archive.html'>juni</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='posts'>
+<li><a href='http://virtrix.blogspot.com/2009/06/vmware-creating-vcenter-database-fails.html'>VMware: creating vCenter database fails: &#8220;login fa...</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://virtrix.blogspot.com/2009_04_01_archive.html'>april</a>
+<span class='post-count' dir='ltr'>(2)</span>
+<ul class='posts'>
+<li><a href='http://virtrix.blogspot.com/2009/04/vmware-vsphere-health-check-report-v10_24.html'>VMware vSphere Health Check Report v1.0</a></li>
+<li><a href='http://virtrix.blogspot.com/2009/04/esx-vlan-compare-checker-script-for.html'>ESX - VLAN compare / checker script for PowerShell...</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://virtrix.blogspot.com/2009_03_01_archive.html'>maart</a>
+<span class='post-count' dir='ltr'>(2)</span>
+<ul class='posts'>
+<li><a href='http://virtrix.blogspot.com/2009/03/vmmu-and-tps-yellow-bricks.html'>VMMU and TPS @ yellow-bricks</a></li>
+<li><a href='http://virtrix.blogspot.com/2009/03/diskuselunreset-and-diskusedevicereset.html'>Disk.UseLunReset and Disk.UseDeviceReset Advanced ...</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://virtrix.blogspot.com/2009_02_01_archive.html'>februari</a>
+<span class='post-count' dir='ltr'>(3)</span>
+<ul class='posts'>
+<li><a href='http://virtrix.blogspot.com/2009/02/vmworld-roundup-day-2-and-party-time.html'>VMworld roundup &#8211; day 2 (and party time!)</a></li>
+<li><a href='http://virtrix.blogspot.com/2009/02/vmworld-roundup-day-1_24.html'>VMworld roundup &#8211; day 1</a></li>
+<li><a href='http://virtrix.blogspot.com/2009/02/first-day-at-vmworld-europe-2009.html'>First day at VMworld Europe 2009</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate expanded'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy toggle-open'>&#9660;&#160;</span>
+</a>
+<a class='post-count-link' href='http://virtrix.blogspot.com/search?updated-min=2007-01-01T00%3A00%3A00%2B01%3A00&updated-max=2008-01-01T00%3A00%3A00%2B01%3A00&max-results=50'>2007</a>
+<span class='post-count' dir='ltr'>(78)</span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://virtrix.blogspot.com/2007_12_01_archive.html'>december</a>
+<span class='post-count' dir='ltr'>(2)</span>
+<ul class='posts'>
+<li><a href='http://virtrix.blogspot.com/2007/12/vmware-installing-suse-linux-enterprise.html'>VMware: Installing Suse Linux Enterprise 10 on ESX...</a></li>
+<li><a href='http://virtrix.blogspot.com/2007/12/vmware-esx-35-virtualcenter-25-vcb-11.html'>VMware: ESX 3.5 / VirtualCenter 2.5 / VCB 1.1 rele...</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://virtrix.blogspot.com/2007_10_01_archive.html'>oktober</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='posts'>
+<li><a href='http://virtrix.blogspot.com/2007/10/microsoft-windows-server-core-commands.html'>Microsoft: Windows Server Core commands</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate expanded'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy toggle-open'>&#9660;&#160;</span>
+</a>
+<a class='post-count-link' href='http://virtrix.blogspot.com/2007_09_01_archive.html'>september</a>
+<span class='post-count' dir='ltr'>(6)</span>
+<ul class='posts'>
+<li><a href='http://virtrix.blogspot.com/2007/09/vmware-stopping-virtual-machine-gone.html'>VMware: Stopping a Virtual Machine gone haywire</a></li>
+<li><a href='http://virtrix.blogspot.com/2007/09/vmware-new-ha-features-in-vc-202.html'>VMware: New HA features in VC 2.0.2</a></li>
+<li><a href='http://virtrix.blogspot.com/2007/09/vmware-installing-windows-xp-on-esx.html'>VMware: Installing Windows XP on ESX using LSI Log...</a></li>
+<li><a href='http://virtrix.blogspot.com/2007/09/vmware-how-to-get-more-performance.html'>VMware: how to get more performance counters in Vi...</a></li>
+<li><a href='http://virtrix.blogspot.com/2007/09/hp-dl580-g5-released-virtualization.html'>HP: DL580 G5 released - the virtualization monster...</a></li>
+<li><a href='http://virtrix.blogspot.com/2007/09/citrix-presentation-server-with-ardence.html'>Citrix: Presentation Server with Ardence OS Stream...</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://virtrix.blogspot.com/2007_08_01_archive.html'>augustus</a>
+<span class='post-count' dir='ltr'>(7)</span>
+<ul class='posts'>
+<li><a href='http://virtrix.blogspot.com/2007/08/vmware-wtscitrix-on-vmware-esx-3.html'>VMware: WTS/Citrix on VMware ESX 3</a></li>
+<li><a href='http://virtrix.blogspot.com/2007/08/wts-how-to-configure-folder-redirection.html'>WTS: How To Configure Folder Redirection</a></li>
+<li><a href='http://virtrix.blogspot.com/2007/08/microsoft-w2k8-survival-guide.html'>Microsoft: W2K8 &quot;Documentation Survival guide&quot;</a></li>
+<li><a href='http://virtrix.blogspot.com/2007/08/citrix-citrix-to-acquisite.html'>Citrix: Citrix to acquire XenSource</a></li>
+<li><a href='http://virtrix.blogspot.com/2007/08/microsoft-windows-server-2008-component.html'>Microsoft: Windows Server 2008 Component Posters</a></li>
+<li><a href='http://virtrix.blogspot.com/2007/08/vmware-esx-302-and-vcb-103-released.html'>VMware: ESX 3.0.2 and VCB 1.0.3 released</a></li>
+<li><a href='http://virtrix.blogspot.com/2007/08/vizioncore-esxreplicator-21-beta.html'>VizionCore: ESXReplicator 2.1 Beta announced</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://virtrix.blogspot.com/2007_07_01_archive.html'>juli</a>
+<span class='post-count' dir='ltr'>(2)</span>
+<ul class='posts'>
+<li><a href='http://virtrix.blogspot.com/2007/07/vmware-cisco-to-provide-3rd-party.html'>VMware: Cisco to provide 3rd party vSwitches for E...</a></li>
+<li><a href='http://virtrix.blogspot.com/2007/07/microsoft-vista-performance.html'>Microsoft: Vista Performance, Compatibility &amp; reli...</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://virtrix.blogspot.com/2007_06_01_archive.html'>juni</a>
+<span class='post-count' dir='ltr'>(5)</span>
+<ul class='posts'>
+<li><a href='http://virtrix.blogspot.com/2007/06/virtualization-brief-architecture.html'>Virtualization: A brief architecture overview of V...</a></li>
+<li><a href='http://virtrix.blogspot.com/2007/06/vmware-virtualcenter-out-of-sync.html'>VMware: VirtualCenter out of sync</a></li>
+<li><a href='http://virtrix.blogspot.com/2007/06/vmware-dreadful-sticky-snapshot.html'>VMware: The dreadful sticky snapshot</a></li>
+<li><a href='http://virtrix.blogspot.com/2007/06/vmware-vmtspatchmanager-for-patching.html'>VMware: VMTSPatchmanager for patching</a></li>
+<li><a href='http://virtrix.blogspot.com/2007/06/microsoft-terminal-services-session.html'>Microsoft: Terminal Services Session Broker</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://virtrix.blogspot.com/2007_05_01_archive.html'>mei</a>
+<span class='post-count' dir='ltr'>(8)</span>
+<ul class='posts'>
+<li><a href='http://virtrix.blogspot.com/2007/05/wts-using-threadmaster-to-tame-rogue.html'>WTS: Using ThreadMaster to Tame Rogue Applications...</a></li>
+<li><a href='http://virtrix.blogspot.com/2007/05/microsoft-technet-magazine-guide-to.html'>Microsoft: Technet Magazine A guide to deploying W...</a></li>
+<li><a href='http://virtrix.blogspot.com/2007/05/microsoft-its-all-about-virtualization.html'>Microsoft: Its all about Virtualization now...</a></li>
+<li><a href='http://virtrix.blogspot.com/2007/05/vmware-deploying-vm-using-custom.html'>VMware: deploying a VM using a custom sysprep.inf ...</a></li>
+<li><a href='http://virtrix.blogspot.com/2007/05/microsoft-wts-step-by-step-guides-in.html'>Microsoft: WTS Step-By-Step guides in upcoming Win...</a></li>
+<li><a href='http://virtrix.blogspot.com/2007/05/microsoft-requesting-tscals-for-win2k8.html'>Microsoft: Requesting TSCALs for Win2K8</a></li>
+<li><a href='http://virtrix.blogspot.com/2007/05/microsoft-terminal-services-in-windows.html'>Microsoft: Terminal Services in Windows Server 200...</a></li>
+<li><a href='http://virtrix.blogspot.com/2007/05/vmware-may-patches-for-esx-301.html'>VMware: May patches for ESX 3.0.1</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://virtrix.blogspot.com/2007_04_01_archive.html'>april</a>
+<span class='post-count' dir='ltr'>(11)</span>
+<ul class='posts'>
+<li><a href='http://virtrix.blogspot.com/2007/04/microsoft-terminal-services-load.html'>Microsoft: Terminal Services Load Balancing in LH ...</a></li>
+<li><a href='http://virtrix.blogspot.com/2007/04/vmware-tsx-nice-2007-presentations-now.html'>VMware: TSX Nice 2007 presentations now available</a></li>
+<li><a href='http://virtrix.blogspot.com/2007/04/microsoft-longhorn-beta-3-and-upd-print.html'>Microsoft: Longhorn Beta 3 and the UPD &quot;Easy Print...</a></li>
+<li><a href='http://virtrix.blogspot.com/2007/04/vmware-definitive-guide-to-vmware.html'>VMware: definitive guide to ... VMware</a></li>
+<li><a href='http://virtrix.blogspot.com/2007/04/vmware-pam-password-aging-in-esx-301.html'>VMware: PAM Password Aging in ESX 3.0.1</a></li>
+<li><a href='http://virtrix.blogspot.com/2007/04/vmware-vcbmounter-host-unreachable.html'>VMware: VCB(mounter) &quot;Error: Host unreachable&quot;</a></li>
+<li><a href='http://virtrix.blogspot.com/2007/04/vmware-handy-trick-to-rename-virtual.html'>VMware: Handy trick to rename a Virtual Machine</a></li>
+<li><a href='http://virtrix.blogspot.com/2007/04/microsoft-multiple-password-in-longhorn.html'>Microsoft: Multiple Password &quot;Policies&quot; in Longhor...</a></li>
+<li><a href='http://virtrix.blogspot.com/2007/04/vmware-bundled-patch-esx-6431040.html'>VMware: bundled patch ESX-6431040</a></li>
+<li><a href='http://virtrix.blogspot.com/2007/04/vmware-running-virtualcenter-in-vm.html'>VMware: Running VirtualCenter in a VM</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://virtrix.blogspot.com/2007_03_01_archive.html'>maart</a>
+<span class='post-count' dir='ltr'>(17)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://virtrix.blogspot.com/2007_02_01_archive.html'>februari</a>
+<span class='post-count' dir='ltr'>(10)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://virtrix.blogspot.com/2007_01_01_archive.html'>januari</a>
+<span class='post-count' dir='ltr'>(9)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://virtrix.blogspot.com/search?updated-min=2006-01-01T00%3A00%3A00%2B01%3A00&updated-max=2007-01-01T00%3A00%3A00%2B01%3A00&max-results=50'>2006</a>
+<span class='post-count' dir='ltr'>(79)</span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://virtrix.blogspot.com/2006_12_01_archive.html'>december</a>
+<span class='post-count' dir='ltr'>(19)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://virtrix.blogspot.com/2006_11_01_archive.html'>november</a>
+<span class='post-count' dir='ltr'>(15)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://virtrix.blogspot.com/2006_10_01_archive.html'>oktober</a>
+<span class='post-count' dir='ltr'>(6)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://virtrix.blogspot.com/2006_09_01_archive.html'>september</a>
+<span class='post-count' dir='ltr'>(12)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://virtrix.blogspot.com/2006_08_01_archive.html'>augustus</a>
+<span class='post-count' dir='ltr'>(16)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://virtrix.blogspot.com/2006_07_01_archive.html'>juli</a>
+<span class='post-count' dir='ltr'>(11)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://virtrix.blogspot.com/search?updated-min=2005-01-01T00%3A00%3A00%2B01%3A00&updated-max=2006-01-01T00%3A00%3A00%2B01%3A00&max-results=1'>2005</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://virtrix.blogspot.com/2005_08_01_archive.html'>augustus</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=13618189&widgetType=BlogArchive&widgetId=BlogArchive1&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("BlogArchive1"));' target='configBlogArchive1' title='Bewerken'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div><div class='widget HTML' id='HTML1'>
+<div class='widget-content'>
+<!-- Start of StatCounter Code -->
+<script language="javascript" type="text/javascript">
+var sc_project=2120053; 
+var sc_invisible=0; 
+var sc_partition=19; 
+var sc_security="bc134dd4"; 
+</script>
+
+<script language="javascript" src="http://www.statcounter.com/counter/counter.js" type="text/javascript"></script><noscript><a href="http://www.statcounter.com/" target="_blank"><img border="0" alt="free log" src="http://c20.statcounter.com/counter.php?sc_project=2120053&amp;java=0&amp;security=bc134dd4&amp;invisible=0"/></a> </noscript>
+<!-- End of StatCounter Code -->
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=13618189&widgetType=HTML&widgetId=HTML1&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("HTML1"));' target='configHTML1' title='Bewerken'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div><div class='widget HTML' id='HTML2'>
+<h2 class='title'>RSS Feed</h2>
+<div class='widget-content'>
+<p><a href="http://feeds.feedburner.com/Virtrix-VirtualTricks" rel="alternate" type="application/rss+xml"><img alt="" style="vertical-align:middle;border:0" src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png"/></a>&nbsp;<a href="http://feeds.feedburner.com/Virtrix-VirtualTricks" rel="alternate" type="application/rss+xml">Subscribe in a reader</a></p>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=13618189&widgetType=HTML&widgetId=HTML2&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("HTML2"));' target='configHTML2' title='Bewerken'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div></div>
+</div>
+<!-- spacer for skins that want sidebar and main to be the same height-->
+<div class='clear'>&#160;</div>
+</div>
+<!-- end content-wrapper -->
+<div id='footer-wrapper'>
+<div class='footer section' id='footer'></div>
+</div>
+</div></div>
+<!-- end outer-wrapper -->
+<script type="text/javascript">
+if (window.jstiming) window.jstiming.load.tick('widgetJsBefore');
+</script><script type="text/javascript" src="http://www.blogger.com/static/v1/widgets/512629240-widgets.js"></script>
+<script type='text/javascript'>
+if (typeof(BLOG_attachCsiOnload) != 'undefined' && BLOG_attachCsiOnload != null) { window['blogger_templates_experiment_id'] = "templatesV1";window['blogger_blog_id'] = '13618189';BLOG_attachCsiOnload('item_'); }_WidgetManager._Init('http://www.blogger.com/rearrange?blogID=13618189','http://virtrix.blogspot.com/2007/09/vmware-stopping-virtual-machine-gone.html','13618189');
+_WidgetManager._SetPageActionUrl('http://www.blogger.com/display?blogID=13618189','Qgz9lXy8TTEKEvdfXjvDxunuK1s:1293191307765','AOuZoY77pS4T8oOg2iQ6shGWg9jvR9n4yg:1293191307765');
+_WidgetManager._SetDataContext([{'name': 'blog', 'data': {'title': 'Virtrix - Virtual Tricks', 'pageType': 'item', 'url': 'http://virtrix.blogspot.com/2007/09/vmware-stopping-virtual-machine-gone.html', 'canonicalUrl': 'http://virtrix.blogspot.com/2007/09/vmware-stopping-virtual-machine-gone.html', 'homepageUrl': 'http://virtrix.blogspot.com/', 'enabledCommentProfileImages': true, 'searchLabel': '', 'searchQuery': '', 'pageName': 'VMware: Stopping a Virtual Machine gone haywire', 'pageTitle': 'Virtrix - Virtual Tricks: VMware: Stopping a Virtual Machine gone haywire', 'encoding': 'UTF-8', 'locale': 'nl-BE', 'isPrivate': false, 'isMobile': false, 'mobileClass': '', 'languageDirection': 'ltr', 'feedLinks': '\74link rel\75\42alternate\42 type\75\42application/atom+xml\42 title\75\42Virtrix - Virtual Tricks - Atom\42 href\75\42http://virtrix.blogspot.com/feeds/posts/default\42 /\76\n\74link rel\75\42alternate\42 type\75\42application/rss+xml\42 title\75\42Virtrix - Virtual Tricks - RSS\42 href\75\42http://virtrix.blogspot.com/feeds/posts/default?alt\75rss\42 /\76\n\74link rel\75\42service.post\42 type\75\42application/atom+xml\42 title\75\42Virtrix - Virtual Tricks - Atom\42 href\75\42http://www.blogger.com/feeds/13618189/posts/default\42 /\76\n\74link rel\75\42EditURI\42 type\75\42application/rsd+xml\42 title\75\42RSD\42 href\75\42http://www.blogger.com/rsd.g?blogID\07513618189\42 /\76\n\74link rel\75\42alternate\42 type\75\42application/atom+xml\42 title\75\42Virtrix - Virtual Tricks - Atom\42 href\75\42http://virtrix.blogspot.com/feeds/493617111208082605/comments/default\42 /\76\n', 'meTag': '', 'openIdOpTag': '', 'imageSrcTag': '', 'latencyHeadScript': '\74script type\75\42text/javascript\42\76(function() { var a\75window;function c(b){this.t\75{};this.tick\75function(d,i,e){e\75e?e:(new Date).getTime();this.t[d]\75[e,i]};this.tick(\42start\42,null,b)}var f\75new c;a.jstiming\75{Timer:c,load:f};try{var g\75null;if(a.chrome\46\46a.chrome.csi)g\75Math.floor(a.chrome.csi().pageT);if(g\75\75null)if(a.gtbExternal)g\75a.gtbExternal.pageT();if(g\75\75null)if(a.external)g\75a.external.pageT;if(g)a.jstiming.pt\75g}catch(h){};a.tickAboveFold\75function(b){b\75b;var d\0750;if(b.offsetParent){do d+\75b.offsetTop;while(b\75b.offsetParent)}b\75d;b\74\075750\46\46a.jstiming.load.tick(\42aft\42)};var j\75false;function k(){if(!j){j\75true;a.jstiming.load.tick(\42firstScrollTime\42)}}a.addEventListener?a.addEventListener(\42scroll\42,k,false):a.attachEvent(\42onscroll\42,k);\n })();\74/script\076', 'mobileHeadScript': ''}}]);
+_WidgetManager._RegisterWidget('_TextView', new _WidgetInfo('Text1', 'sidebar', null, document.getElementById('Text1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_LinkListView', new _WidgetInfo('LinkList1', 'sidebar', null, document.getElementById('LinkList1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_LinkListView', new _WidgetInfo('LinkList2', 'sidebar', null, document.getElementById('LinkList2'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_LinkListView', new _WidgetInfo('LinkList3', 'sidebar', null, document.getElementById('LinkList3'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_LinkListView', new _WidgetInfo('LinkList6', 'sidebar', null, document.getElementById('LinkList6'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_LinkListView', new _WidgetInfo('LinkList7', 'sidebar', null, document.getElementById('LinkList7'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_LinkListView', new _WidgetInfo('LinkList4', 'sidebar', null, document.getElementById('LinkList4'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_LinkListView', new _WidgetInfo('LinkList5', 'sidebar', null, document.getElementById('LinkList5'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_LabelView', new _WidgetInfo('Label1', 'sidebar', null, document.getElementById('Label1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogArchiveView', new _WidgetInfo('BlogArchive1', 'sidebar', null, document.getElementById('BlogArchive1'), {'languageDirection': 'ltr'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML1', 'sidebar', null, document.getElementById('HTML1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML2', 'sidebar', null, document.getElementById('HTML2'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HeaderView', new _WidgetInfo('Header1', 'header'));
+_WidgetManager._RegisterWidget('_NavbarView', new _WidgetInfo('Navbar1', 'navbar'));
+_WidgetManager._RegisterWidget('_BlogView', new _WidgetInfo('Blog1', 'main', null, document.getElementById('Blog1'), {'cmtInteractionsEnabled': false, 'commentInteractionIframeUrl': 'http://www.blogger.com/comment-interaction-iframe.g?blogId\07513618189', 'mobile': false}, 'displayModeFull'));
+</script>
+</body>
+</html>
