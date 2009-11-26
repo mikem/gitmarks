@@ -1,0 +1,86 @@
+<html><head><link href="http://intensivesystems.net/homepage.css" rel="stylesheet" /></head><body><div class="header"><div class="name-header"><div class="intensive-header">Intensive</div><div class="systems-header">Systems</div><div class="consulting-header">Consulting, Inc</div></div></div><div class="content-body"><div class="main"><h1>Sessions for Compojure</h1><title>Sessions for Compojure</title><h2>The Problem</h2><p>Several months ago, I decided to write a web based application. After loading up Compojure, I started looking for
+                a way to manage web sessions. When I didn't see a readily available solution, I got distracted by something else
+                and put that project aside. I recently decided to write the library to handle web sessions that I wanted then.</p><p>A web application consists of multiple web pages that taken together allow the user to accomplish a task or tasks.
+               Each web page is generated based on what actions the user has taken on previously viewed pages. Essentially, each
+               request for new page is handled in the context of what has happened before. The user carries a mental context in their
+               head and the application server must as well. The problem is that the HTTP protocol is stateless. That is, each request
+               is totally independent of any request that came before or comes after.</p><p>To give the impression to the user that each request is related, the application server must associate a context with
+               each request. There are two ways to do this. Firstly, each time a web page is requested, embed the entire context of the
+               session into it so that the context is returned whenever a request is generated from that page. Alternatively,
+               the application server has to maintain a list of all the contexts of all active sessions and associate each context with
+               a session identifier. When it generates a web page in response to a request, the server must embed the session id into
+               the web page so that any request generated from that page includes the session id. When the server receives such a request,
+               it retrieves the context for that session and handles the request accordingly.</p><p>I chose to implement a web session library based on the second concept. The code to the framework is <a href="http://intensivesystems.net/tutorials/code/web_session.clj">here</a> and a sample web application is <a href="http://intensivesystems.net/tutorials/code/web_app.clj">here</a> .</p><h2>Design Goals</h2><p>I decided on the following requirements:</p><ul><li>Easy syntax: The library had to be easy to learn and use. Small api.</li><li>Hide complexity through composition: Must be able to compose web pages into sequences,
+                          and use sequences of web pages to compose other sequences.</li><li>Hide complexity through abstraction: Must be able to describe the application logic
+                          without worrying about the details of which page follows which, under which conditions, etc.</li><li>Support browser history: Allow the user to use the 'back' button to go back to previous pages
+                          and make different choices with very little effort from the programmer.</li></ul><h2>Handling requests</h2><p>The fundemental operation of a web application is to handle requests from the user. Each request must generate
+               a response, typically a web page, and may optionally make changes to the context of the session. This gives us the
+               basic function signature for functions that handle requests.</p><pre>(web-fn page-1 [context request]
+    ; do something
+    [response new-context])</pre><p>The macro 'web-fn' creates a request handling function and assigns it to a name. In this case, the function would
+               be named 'page-1'. A request handler accepts two parameters; the first is a context value and the second is a 
+               request value. Both the context and the request are hash maps. The request is just a normal Compojure HTTP request
+               map. The context value is initially empty except for a :session-id key and any request handler may add any value to
+               it.  Getting the value of :session-id will return a string that contains a unique identifier for the current session.
+               This value must be embedded in the response in such a way as to be included as a param in the next request. A simple
+               way to do this is to use a hidden field set to the value of :session-id on an HTML form. Or that value may be added
+               as a query parameter to URL's embedded in the response.</p><p>There will be occasions when a request handler only wishes to update the context and leave the generation of the
+               response to a later handler. For those times, simply return a nil value in place of the response in the return vector.
+               Handlers will be called in sequence until one returns a non-nil value for the response.</p><h2>Sequencing</h2><p>The most basic form of composing request handlers is sequentially. This is accomplished with the 'web-seq' function.</p><pre>(def three-pages (web-seq
+                    page-1
+                    page-2
+                    page-3
+                    update-database))</pre><p>In this example, assume that page-1, page-2, page-3 are request handlers, defined with web-fn, that generate an HTML page
+               in response to a request and also update the session context with information from the requests. Also assume that
+               update-database is a request handler that does not generate a response value or updates the context, but does write the
+               information in the context to a database. </p><p>The value of three-pages is also a request handler whose behavior is the result of the other 4 request handlers combined
+               sequentially.  three-pages can be used any place a request handler defined with web-fn can.</p><p>In operation, The first request would be handled by page-1 and the response generated would be sent to the user while any 
+               needed information would be added to the context. Likewise, the next request would be handled by page-2 and the third by
+               page-3. The fourth request, generated by the user from the response from page-3, would be handled by update-database. This
+               handler would retrieve information from the context, write it to the database, update the context accordingly and return
+               a value of [nil updated-context]. Then that same fourth request would be passed along with the updated context to the next
+               handler in line to generate a response. As you can see, three-pages is just a small part of a larger web application, sort
+               of like a sub-routine.</p><h2>Conditionals</h2><p>Sequencing request handlers is moderately useful, but to describe application logic, you need to be able to choose a request handler
+               based on the value of the session context and the current request. This is accomplished using 'web-cond'.</p><pre>(defn large? [context request]
+  (> (:some-param (:params request))
+     100))
+
+(def 2-or-3 (web-cond
+              large? three-pages
+              :else two-pages))</pre><p>(three-pages is as defined above)</p><p>As you can see, web-cond is very similar to clojure's 'cond'. It takes pairs of predicates/handlers. A predicate is simply a normal
+               clojure function that accepts a context and a request and returns true or false. web-cond executes each predicate in order and if
+               a predicate returns true, executes the associated request handler. The keyword :else can be thought of as a predicate that always
+               returns true. If no predicates return true, then the request is handled by whatever request handler follows the web-cond. Also, 2-or-3
+               is a request handler just like three-pages or page-1 and can be composed with any other request handler.</p><h2>Looping</h2><p>The final operation needed to describe application logic is repetition. Two functions are used for this; 'web-while' and 'web-until'.</p><pre>(def page-1 (web-while page-1-invalid?
+                      page-1))
+
+(def page-2 (web-until page-2-valid?
+                      page-2))</pre><p>Both of these functions take a predicate and a request handler. web-while executes the predicate first and then passes the request
+               to the handler as long as the predicate is true. This will be repeated until the predicate returns false, and then the next request
+               handler will be used.</p><p>web-until is similar, except that the request handler is called then the predicate is executed. If the predicate returns false, the
+               next request will be handled by the request handler. If the predicate returns true, the next request will be handled by whatever
+               handler follows the web-until.</p><p>Again, both page-1 and page-2 are request handlers that may be composed with any other request handler.</p><h2>History</h2><p>One problem that plagues web applications is the use of the 'back' button on browsers. Since the way a request is handled depends on
+               the context, if a request from the browser history is resubmitted, it must be handled using the context that existed at the time the 
+               request was originally handled. Keeping track of every request for every session is a daunting prospect. Fortunately, clojure gives us
+               a lot of help by providing data structures that are immutable and that are updated by creating new versions. And since the new versions
+               share structure with the previous versions, efficiency doesn't suffer.</p><p>For the programmer, enabling the browser history to work is as easy as causing a parameter to be included in the requests with a name of
+               :screen-id. This identical to the way the :session-id behaves. Every request should have a unique value for :screen-id. That way, when a
+               request from the browser history is resubmitted, it will contain a :screen-id that will allow the application server to locate the
+               appropriate request handler and context to service that request.</p><h2>Usage</h2><p>Using web-fn to define request handlers and the composition functions to specify the logic, you should be able to write any web application
+               you want. But what do you do with it? There's one final function, 'handle-request' to use. This function is used in a compojure route
+               definition to apply the proper application request handler to the request.</p><pre>(def web-app (web-while (constantly true)
+                            (web-seq main-screen
+                                     (web-cond
+                                       first-task? do-task-1
+                                       other-task? do-task-2))))
+
+(defroutes new-file-routes
+           (ANY "/app-url"
+                (handle-request request web-app)))
+
+(defserver serv-app {:port 8080}
+           "/app-url/*" (servlet new-file-routes))
+
+(start serv-app)</pre><p>handle-request takes two parameters, the request from compojure and web application request handler. It will handle the request
+               and return any response that is generated. Behind the scenes, it keeps track of sessions, request history and what handler to call for
+               the next request.</p></div><div class="sidebar"><div class="topic-link"><a href="http://intensivesystems.net/home.html">Home</a></div><div class="topic-link"><a href="http://intensivesystems.net/what.html">What</a></div><div class="topic-link"><a href="http://intensivesystems.net/why.html">Why</a></div><div class="topic-link"><a href="http://intensivesystems.net/how.html">How</a></div><div class="topic-link"><a href="http://intensivesystems.net/who.html">Who</a></div><div class="topic-link"><a href="http://intensivesystems.net/contact.html">Contact</a></div><div class="topic-link"><a href="http://intensivesystems.net/writings.html">Writings</a></div></div></div></body></html>
