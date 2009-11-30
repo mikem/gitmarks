@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<!--[if IE 6]>
+<html id="ie6" dir="ltr" lang="en">
+<![endif]-->
+<!--[if (gt IE 6) | (!IE)]><!-->
+<html dir="ltr" lang="en">
+<!--<![endif]-->
+<head>
+<meta charset="UTF-8" />
+<title>Building a Clojure Web application with Incanter, Compojure, and Leiningen | Data Sorcery with Clojure</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="stylesheet" type="text/css" media="all" href="http://s1.wp.com/wp-content/themes/pub/coraline/style.css?m=1293032830g" />
+<link rel="pingback" href="http://data-sorcery.org/xmlrpc.php" />
+		<script src='http://wordpress.com/remote-login.php?action=js&amp;host=data-sorcery.org&amp;id=7974443&amp;t=1293264980&amp;back=data-sorcery.org%2F2009%2F11%2F29%2Fincanter-webapp%2F' type="text/javascript"></script>
+		<script type="text/javascript">
+		/* <![CDATA[ */
+			if ( 'function' === typeof WPRemoteLogin ) {
+				document.cookie = "wordpress_test_cookie=test; path=/";
+				if ( document.cookie.match( /(;|^)\s*wordpress_test_cookie\=/ ) ) {
+					WPRemoteLogin();
+				}
+			}
+		/* ]]> */
+		</script>
+		<link rel="alternate" type="application/rss+xml" title="Data Sorcery with Clojure &raquo; Feed" href="http://data-sorcery.org/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Data Sorcery with Clojure &raquo; Comments Feed" href="http://data-sorcery.org/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Data Sorcery with Clojure &raquo; Building a Clojure Web application with Incanter, Compojure, and&nbsp;Leiningen Comments Feed" href="http://data-sorcery.org/2009/11/29/incanter-webapp/feed/" />
+<script type="text/javascript">
+/* <![CDATA[ */
+function addLoadEvent(func){var oldonload=window.onload;if(typeof window.onload!='function'){window.onload=func;}else{window.onload=function(){oldonload();func();}}}
+/* ]]> */
+</script>
+<link rel="stylesheet" href="http://s0.wp.com/wp-content/themes/h4/global.css?m=1291749258g" type="text/css" />
+<script type='text/javascript' src='http://s2.wp.com/wp-includes/js/l10n.js?m=1290133841g&amp;ver=20101110'></script>
+<script type='text/javascript' src='http://s1.wp.com/wp-includes/js/jquery/jquery.js?m=1290133841g&amp;ver=1.4.4'></script>
+<script type='text/javascript' src='http://s0.wp.com/wp-includes/js/comment-reply.js?m=1231878779g&amp;ver=20090102'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://incanter.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://incanter.wordpress.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='index' title='Data Sorcery with Clojure' href='http://data-sorcery.org/' />
+<link rel='prev' title='Building Incanter applications with&nbsp;Leiningen' href='http://data-sorcery.org/2009/11/20/leiningen-clojars/' />
+<link rel='next' title='FlightCaster merges its statistical-learning code into&nbsp;Incanter' href='http://data-sorcery.org/2009/12/03/flightcaster/' />
+<meta name="generator" content="WordPress.com" />
+<link rel='canonical' href='http://data-sorcery.org/2009/11/29/incanter-webapp/' />
+<link rel='shortlink' href='http://wp.me/pxsw3-hT' />
+<link rel="shortcut icon" type="image/x-icon" href="http://0.gravatar.com/blavatar/2b605ccf97d0b901199e458f1daf9592?s=16" sizes="16x16" />
+<link rel="icon" type="image/x-icon" href="http://0.gravatar.com/blavatar/2b605ccf97d0b901199e458f1daf9592?s=16" sizes="16x16" />
+<link rel="apple-touch-icon" href="http://1.gravatar.com/blavatar/d4b5a8433d351a7b2112a1db63d9ffd8?s=158" />
+	<style type="text/css">
+	/* <![CDATA[ */
+				div#likes { margin-top: 15px; }
+		.like-button { border: 1px solid #eee; padding: 2px 6px; font-size: 13px; font-family: arial, tahoma, sans-serif; }
+		#wpl-likebox { clear: left; font-size: 11px; font-family: arial, tahoma, verdana, sans-serif !important; min-height: 30px; margin: 10px 0 !important; padding: 5px 0 10px 0 !important; }
+		#wpl-button { float: left; background: url( /i/buttonbg.png ) top left repeat-x; margin-right: 7px; border: 1px solid #d4d4d4; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; }
+		#wpl-button a { color: #666 !important; line-height: 130% !important; text-decoration: none !important; outline: none; float: left; padding: 3px 6px 2px 24px !important; font-size: 11px !important; background: url( /i/likestar.png ) 6px 49.8% no-repeat; }
+		#wpl-button.liked { background: #feffce; border: 1px solid #f3e389; }
+		#wpl-button.liked a { color: #ba871b !important; }
+		#wpl-likebox #wpl-count { min-height: 25px; line-height: 130% !important; float: left; padding-top: 4px; }
+		#wpl-likebox #wpl-avatars { clear: left; max-height: 98px; overflow: hidden; margin-top: 15px; line-height: 130% !important; }
+		#wpl-likebox #wpl-avatars img { border: none !important; }
+		#wpl-likebox #wpl-mustlogin { line-height: 14px !important; font-size: 11px; clear: left; margin-top: 5px; background: #f0f0f0; padding: 10px; width: 65%; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; }
+		#wpl-likebox #wpl-mustlogin a { color: #888; text-decoration: underline; }
+		#wpl-likebox #wpl-mustlogin p { margin: 5px 0; padding: 0 }
+		#wpl-likebox #wpl-mustlogin input.input { padding: 2px; background: #fff; font-size: 11px; font-family: inherit; border: 1px solid #ccc; -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1) inset; -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1) inset; line-height: 12px; }
+		#wpl-likebox #wpl-mustlogin input#wp-submit { border: 1px solid #ccc; font-size: 11px; background: #fafafa; repeat-x; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; padding: 2px 4px !important; line-height: 12px; }
+		#wpl-likebox #wpl-mustlogin label { position: relative; cursor: text; }
+		#wpl-likebox #wpl-mustlogin label span { position: absolute; top: 0px; left: 5px; padding: 0 !important; }
+		#wpl-likebox #wpl-mustlogin label span { top /*\**/: -10px\9; }
+	/* ]]> */
+	</style>
+	<link rel='openid.server' href='http://incanter.wordpress.com/?openidserver=1' />
+<link rel='openid.delegate' href='http://incanter.wordpress.com/' />
+<link rel="search" type="application/opensearchdescription+xml" href="http://data-sorcery.org/osd.xml" title="Data Sorcery with Clojure" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://wordpress.com/opensearch.xml" title="WordPress.com" />
+<style type="text/css">.recentcomments a{display:inline !important;padding: 0 !important;margin: 0 !important;}</style>
+<meta name="application-name" content="Data Sorcery with Clojure" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-task" content="name=Subscribe;action-uri=http://data-sorcery.org/feed/;icon-uri=http://0.gravatar.com/blavatar/2b605ccf97d0b901199e458f1daf9592?s=16" /><meta name="msapplication-task" content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=http://s2.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=http://s2.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=http://s2.wp.com/i/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="http://data-sorcery.org?custom-css=1&#038;csblog=xsw3&#038;cscache=5&#038;csrev=5" />
+</head>
+
+<body class="single single-post postid-1109 single-format-standard two-column content-sidebar">
+<div id="container" class="hfeed">
+	<div id="header">
+		<div id="masthead" role="banner">
+						<div id="site-title">
+				<span>
+					<a href="http://data-sorcery.org/" title="Data Sorcery with Clojure" rel="home">Data Sorcery with Clojure</a>
+				</span>
+			</div>
+			<div id="site-description"></div>
+		</div><!-- #masthead -->
+
+		<div id="access" role="navigation">
+		  			<div class="skip-link screen-reader-text"><a href="#content" title="Skip to content">Skip to content</a></div>
+						<div class="menu"><ul><li ><a href="http://data-sorcery.org/" title="Home">Home</a></li><li class="page_item page-item-2"><a href="http://data-sorcery.org/about/" title="About">About</a></li><li class="page_item page-item-337"><a href="http://data-sorcery.org/contents/" title="Table of&nbsp;Contents">Table of&nbsp;Contents</a></li><li class="page_item page-item-211"><a href="http://data-sorcery.org/book-recommendations/" title="Book&nbsp;Recommendations">Book&nbsp;Recommendations</a></li></ul></div>
+		</div><!-- #access -->
+
+		<div id="branding">
+						<a href="http://data-sorcery.org/">
+									<img src="http://incanter.files.wordpress.com/2010/01/incanter-ds-blog5.png" width="990" height="180" alt="" />
+							</a>
+					</div><!-- #branding -->
+	</div><!-- #header -->
+
+	<div id="content-box">
+
+		<div id="content-container">
+			<div id="content" role="main">
+
+			
+				<div id="nav-above" class="navigation">
+					<div class="nav-previous"><a href="http://data-sorcery.org/2009/11/20/leiningen-clojars/" rel="prev"><span class="meta-nav">&larr;</span> Building Incanter applications with&nbsp;Leiningen</a></div>
+					<div class="nav-next"><a href="http://data-sorcery.org/2009/12/03/flightcaster/" rel="next">FlightCaster merges its statistical-learning code into&nbsp;Incanter <span class="meta-nav">&rarr;</span></a></div>
+				</div><!-- #nav-above -->
+
+				<div id="post-1109" class="post-1109 post type-post status-publish format-standard hentry category-clojars-org category-clojure category-compojure category-incanter category-leiningen">
+					<h1 class="entry-title">Building a Clojure Web application with Incanter, Compojure, and&nbsp;Leiningen</h1>
+
+					<div class="entry-meta">
+						<span class="meta-prep meta-prep-author">Posted on</span> <a href="http://data-sorcery.org/2009/11/29/incanter-webapp/" title="11:04 pm" rel="bookmark"><span class="entry-date">November 29, 2009</span></a> <span class="byline"><span class="meta-sep">by</span> <span class="author vcard"><a class="url fn n" href="http://data-sorcery.org/author/incanter/" title="View all posts by liebke">liebke</a></span></span><span class="comments-link"><span class="meta-sep">|</span> <a href="http://data-sorcery.org/2009/11/29/incanter-webapp/#comments" title="Comment on Building a Clojure Web application with Incanter, Compojure, and&nbsp;Leiningen">15 Comments</a></span>
+											</div><!-- .entry-meta -->
+
+					<div class="entry-content">
+						<p>This post will demonstrate how to build a simple Clojure Web application, with Compojure, that will use Incanter to generate a sample from a normal distribution with parameters (size, mean, and standard deviation) provided by the user, and then return a PNG image of the histogram of the data.</p>
+<p>This example is simple, but it demonstrates how to dynamically generate an Incanter chart and pass it directly to the Web client as a PNG image.</p>
+<p>For more information on the  <a href="http://github.com/weavejester/compojure">Compojure</a> Web framework, visit its <a href="http://github.com/weavejester/compojure">Github repository</a>, its <a href="http://groups.google.com/group/compojure">Google group</a>, its <a href="http://en.wikibooks.org/wiki/Compojure">WikiBooks site</a>, and this <a href="http://groups.google.com/group/compojure/msg/9b9c01a737242b58">quick tutorial</a>.</p>
+<p>I will use the  <a href="http://github.com/technomancy/leiningen">Leiningen</a> build tool to download dependencies, compile the application, and package it up as jar file. For more information on installing and using Leiningen, see my <a href="http://incanter-blog.org/2009/11/20/leiningen-clojars/">previous post</a>.</p>
+<p>Let&#8217;s start off by creating a project directory, I&#8217;ll call it <code>incanter-webapp</code>, and give it a <code>src</code> subdirectory. Then create the following Leiningen <a href="https://gist.github.com/4ea90cd6a4abff160b94">project.clj</a> file in the project directory.</p>
+<pre class="brush: plain;">(defproject incanter-webapp &quot;0.1.0&quot;
+  :description &quot;A simple Incanter web-app.&quot;
+  :dependencies [[incanter &quot;1.2.1-SNAPSHOT&quot;]
+                 [compojure &quot;0.3.2&quot;]]
+  :main simple_web_app)</pre>
+<p>This project file includes two dependencies, Incanter and Compojure, and indicates that the <code>-main</code> function for the project is in the file <code>simple_web_app.clj</code> in the <code>src</code> subdirectory of the project.</p>
+<p>Next create the file called <a href="https://gist.github.com/01e4022f6fde08fc5f4b">simple_web_app.clj</a> in the <code>src</code> subdirectory.</p>
+<pre class="brush: plain;">(ns simple_web_app
+  (:gen-class)
+  (:use [compojure]
+        [compojure.http response]
+        [incanter core stats charts])
+  (:import (java.io ByteArrayOutputStream
+                    ByteArrayInputStream)))</pre>
+<p>Note that the namespace for this file is <code>simple_web_app</code> with underscores like in the file name and in the :main line of the <code>project.clj</code> file.</p>
+<p>In Compojure, you need to define routes, which in this case associate the function <code>sample-form</code> with &#8220;/&#8221;, and the function <code>gen-samp-hist-png</code> with &#8220;/sample-normal&#8221;.</p>
+<pre class="brush: plain;">(defroutes webservice
+  (GET &quot;/&quot;
+    sample-form)
+  (GET &quot;/sample-normal&quot;
+    (gen-samp-hist-png request
+                       (params :size)
+                       (params :mean)
+                       (params :sd))))</pre>
+<p>The function <code>gen-samp-hist-png</code> takes four arguments, a request object, the sample size, the population mean, and the population standard deviation, and then updates the Compojure response object to include an Incanter histogram of a sample from a normal distribution with the given parameters.</p>
+<p>Now define the <code>gen-samp-hist-png</code> function; start by converting the string-arguments, passed in from the <code>params</code> object, into numbers.</p>
+<pre class="brush: plain;">(defn gen-samp-hist-png
+  [request size-str mean-str sd-str]
+    (let [size (if (nil? size-str)
+                 1000
+                 (Integer/parseInt size-str))
+          m (if (nil? mean-str)
+              0
+              (Double/parseDouble mean-str))
+          s (if (nil? sd-str)
+              1
+              (Double/parseDouble sd-str))</pre>
+<p>Each argument has a default value, 1000 for size, 0 for mean, and 1 for the standard deviation (sd).</p>
+<p>Next generate the sample from the normal distribution using Incanter's <code>sample-normal</code> function with the given size, mean, and standard deviation, and then create a histogram of the resulting data.</p>
+<pre class="brush: plain;">
+          samp (sample-normal size
+                              :mean m
+                              :sd s)
+          chart (histogram
+                  samp
+                  :title &quot;Normal Sample&quot;
+                  :x-label (str &quot;sample-size = &quot; size
+                                &quot;, mean = &quot; m
+                                &quot;, sd = &quot; s))</pre>
+<p>I've used the <code>x-label</code> option of the <code>histogram</code> function to customize the x-axis label so that it includes the given sample size, mean, and standard deviation.</p>
+<p>Next, we need to convert the histogram into a byte array, and feed that into a <code>ByteArrayInputStream</code> that can be passed to Compojure's <code>update-response</code> function, along with a header that sets the Content-Type to "image/png".</p>
+<pre class="brush: plain;">
+        out-stream (ByteArrayOutputStream.)
+        in-stream (do
+                    (save chart out-stream)
+                    (ByteArrayInputStream.
+                      (.toByteArray out-stream)))
+        header {:status 200
+                :headers {&quot;Content-Type&quot; &quot;image/png&quot;}}]
+    (update-response request
+                     header
+                     in-stream)))</pre>
+<p>The above code is the key to sending a dynamically generated chart directly to the client. In addition to a filename, an <code>OutputStream</code> can be passed to Incanter&#8217;s <code>save</code> function; in this case, we use a <code>ByteArrayOutputStream</code>, which is then converted to a byte array that is used to initialize the <code>ByteArrayInputStream</code> that is passed to <code>update-response</code>.</p>
+<p>We can create a Web form for submitting requests to <code>/sample-normal</code>. The following function is a helper function that creates a simple html page skeleton.</p>
+<pre class="brush: plain;">(defn html-doc
+  [title &amp; body]
+  (html
+    (doctype :html4)
+    [:html
+      [:head
+        [:title title]]
+      [:body
+       [:div
+	[:h2
+	 [:a {:href &quot;/&quot;}
+          &quot;Generate a normal sample&quot;]]]
+        body]]))</pre>
+<p>Now define the <code>sample-form</code> function, which will generate a Web form using <code>html-doc</code>.  This function was associated with &#8220;/&#8221; earlier using the <code>defroutes</code> macro.</p>
+<pre class="brush: plain;">(def sample-form
+  (html-doc &quot;sample-normal histogram&quot;
+    (form-to [:get &quot;/sample-normal&quot;]
+      &quot;sample size: &quot; (text-field {:size 4} :size)
+      &quot;mean: &quot; (text-field {:size 4} :mean)
+      &quot;sd: &quot; (text-field {:size 4} :sd)
+      (submit-button &quot;view&quot;))))</pre>
+<p>Now, we need to create a <code>-main</code> function that will be called when the <code>incanter-webapp.jar</code> is executed. This function will call Compojure&#8217;s <code>run-server</code> function, starting the built-in Jetty server on port 8080.</p>
+<pre class="brush: plain;">(defn -main [&amp; args]
+  (run-server {:port 8080}
+    &quot;/*&quot; (servlet webservice)))</pre>
+<p>Now we can use Leiningen to download and install all the necessary dependencies, including Incanter and Compojure, and then build and package the app.</p>
+<pre><code>$ lein deps
+$ lein compile
+$ lein uberjar</code></pre>
+<p>Finally, to start the server, run</p>
+<pre><code>$ java -jar incanter-webapp-standalone.jar </code></pre>
+<p>and visit <code>http://localhost:8080</code> to submit a request, or go directly to the sample-normal app by constructing a URL like the following:</p>
+<pre><code>http://localhost:8080/sample-normal?size=500&amp;mean=100&amp;sd=10</code></pre>
+<p>Which returns a PNG image of a histogram like this:</p>
+<p><img src="http://incanter.org/images/examples/sample-normal.png" alt="" /></p>
+<p>The complete code for this example can be found <a href="https://gist.github.com/01e4022f6fde08fc5f4b">here</a>, and the Leiningen project file can be found <a href="https://gist.github.com/4ea90cd6a4abff160b94">here</a>.</p>
+											</div><!-- .entry-content -->
+
+					<div class="entry-info">
+						This entry was posted in <a href="http://en.wordpress.com/tag/clojars-org/" title="View all posts in clojars.org" rel="category tag">clojars.org</a>, <a href="http://en.wordpress.com/tag/clojure/" title="View all posts in Clojure" rel="category tag">Clojure</a>, <a href="http://en.wordpress.com/tag/compojure/" title="View all posts in compojure" rel="category tag">compojure</a>, <a href="http://en.wordpress.com/tag/incanter/" title="View all posts in Incanter" rel="category tag">Incanter</a>, <a href="http://en.wordpress.com/tag/leiningen/" title="View all posts in Leiningen" rel="category tag">Leiningen</a>. Bookmark the <a href="http://data-sorcery.org/2009/11/29/incanter-webapp/" title="Permalink to Building a Clojure Web application with Incanter, Compojure, and&nbsp;Leiningen" rel="bookmark">permalink</a>.											</div><!-- .entry-info -->
+				</div><!-- #post-## -->
+
+				<div id="nav-below" class="navigation">
+					<div class="nav-previous"><a href="http://data-sorcery.org/2009/11/20/leiningen-clojars/" rel="prev"><span class="meta-nav">&larr;</span> Building Incanter applications with&nbsp;Leiningen</a></div>
+					<div class="nav-next"><a href="http://data-sorcery.org/2009/12/03/flightcaster/" rel="next">FlightCaster merges its statistical-learning code into&nbsp;Incanter <span class="meta-nav">&rarr;</span></a></div>
+				</div><!-- #nav-below -->
+
+				<div id="wpl-likebox"><div id="wpl-button"><a href='http://data-sorcery.org/2009/11/29/incanter-webapp/?like=1&amp;_wpnonce=1c6ce24a74' title='I like this post' class='like needs-login'><span>Like</span></a></div><div id="wpl-count">Be the first to like this post.</div></div>
+<div id="comments">
+	
+	
+			<h3 id="comments-title">15 Responses to <span>Building a Clojure Web application with Incanter, Compojure, and&nbsp;Leiningen</span></h3>
+
+		
+		<ol class="commentlist">
+				<li class="post pingback">
+		<p>Pingback: <a href='http://www.duetsch.info/destillat-kw49-2009.html' rel='external nofollow' class='url'>Destillat KW49-2009 | duetsch.info - GNU/Linux, Open Source, Softwareentwicklung, Selbstmanagement, Vim ...</a></p>
+	</li>
+	<li class="comment even thread-even depth-1" id="li-comment-170">
+		<div id="comment-170">
+		<div class="comment-author vcard">
+			<img alt='' src='http://0.gravatar.com/avatar/6ce5ad7f7df7c5ed4343a4f00819015d?s=48&amp;d=identicon&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn">John</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://data-sorcery.org/2009/11/29/incanter-webapp/#comment-170">
+				December 21, 2009 at 6:46 pm</a>
+					|
+					<a class='comment-reply-link' href='/2009/11/29/incanter-webapp/?replytocom=170#respond' onclick='return addComment.moveForm("comment-170", "170", "respond", "1109")'>Reply</a>								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>Nice example.</p>
+<p>It worked out of the box for me (but if anyone is cutting/pasting the code chunks from this web page, rather than the raw code file, remember to remove &#8216;amp;&#8217; from &#8216;&amp;&#8217; (two occurrances), as well as the third right-bracket &#8216;)&#8217; at end of the line &#8216;(Double/parseDouble sd-str)))&#8217; before compiling).</p>
+<p>Now I just have to learn/understand the code. :-(</p>
+<p>Thanks for posting.</p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	<ul class='children'>
+	<li class="comment byuser comment-author-incanter bypostauthor odd alt depth-2" id="li-comment-171">
+		<div id="comment-171">
+		<div class="comment-author vcard">
+			<img alt='' src='http://0.gravatar.com/avatar/0a0458c58526d153dbc2639eed0d592e?s=48&amp;d=identicon&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn">liebke</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://data-sorcery.org/2009/11/29/incanter-webapp/#comment-171">
+				December 21, 2009 at 7:02 pm</a>
+					|
+					<a class='comment-reply-link' href='/2009/11/29/incanter-webapp/?replytocom=171#respond' onclick='return addComment.moveForm("comment-171", "171", "respond", "1109")'>Reply</a>								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>Hi John,<br />
+Thanks for catching those bugs, I just fixed them.</p>
+<p>To avoid any other weirdness introduced by cutting/pasting html, it&#8217;s probably best to grab the complete code from the link at the end of the post, or from the latest Incanter distribution in the examples/blog/projects/simple_web_app/ directory.</p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	</li>
+</ul>
+</li>
+	<li class="comment even thread-odd thread-alt depth-1" id="li-comment-197">
+		<div id="comment-197">
+		<div class="comment-author vcard">
+			<img alt='' src='http://0.gravatar.com/avatar/2f77d206112701e54baed0e92e3888c5?s=48&amp;d=identicon&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn">James</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://data-sorcery.org/2009/11/29/incanter-webapp/#comment-197">
+				January 2, 2010 at 4:43 am</a>
+					|
+					<a class='comment-reply-link' href='/2009/11/29/incanter-webapp/?replytocom=197#respond' onclick='return addComment.moveForm("comment-197", "197", "respond", "1109")'>Reply</a>								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>Hi,</p>
+<p>Good simple tutorial.<br />
+One more thing that might be useful.<br />
+How would you recommend developing at a REPL with this setup?<br />
+As it stands and code changes require a rebuild and restart of the server.</p>
+<p>thanks,<br />
+James</p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	<ul class='children'>
+	<li class="comment byuser comment-author-incanter bypostauthor odd alt depth-2" id="li-comment-198">
+		<div id="comment-198">
+		<div class="comment-author vcard">
+			<img alt='' src='http://0.gravatar.com/avatar/0a0458c58526d153dbc2639eed0d592e?s=48&amp;d=identicon&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn">liebke</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://data-sorcery.org/2009/11/29/incanter-webapp/#comment-198">
+				January 2, 2010 at 4:46 am</a>
+					|
+					<a class='comment-reply-link' href='/2009/11/29/incanter-webapp/?replytocom=198#respond' onclick='return addComment.moveForm("comment-198", "198", "respond", "1109")'>Reply</a>								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>Hi James,</p>
+<p>Check out Lau Jensen&#8217;s screencast on that very subject: <a href="http://www.bestinclass.dk/index.php/2009/12/dynamic-interactive-webdevelopment/" rel="nofollow">http://www.bestinclass.dk/index.php/2009/12/dynamic-interactive-webdevelopment/</a></p>
+<p>David</p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	<ul class='children'>
+	<li class="comment even depth-3" id="li-comment-201">
+		<div id="comment-201">
+		<div class="comment-author vcard">
+			<img alt='' src='http://0.gravatar.com/avatar/2f77d206112701e54baed0e92e3888c5?s=48&amp;d=identicon&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn">James</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://data-sorcery.org/2009/11/29/incanter-webapp/#comment-201">
+				January 3, 2010 at 12:40 am</a>
+					|
+													</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>Hi David,</p>
+<p>yeah I&#8217;ve seen that video. It&#8217;s a good demo but it&#8217;s not going into the detail of how you would get slime to pick up the clojure version and all the other jars downloaded by lein.</p>
+<p>For command line usage I&#8217;ve put together this variation of the common bash script, might be useful for others&#8230;</p>
+<p><a href="http://gist.github.com/267746" rel="nofollow">http://gist.github.com/267746</a></p>
+<p>If I figure out how to do the same for emacs+slime I&#8217;ll post it here.</p>
+<p>thanks,<br />
+James</p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	</li>
+	<li class="comment byuser comment-author-incanter bypostauthor odd alt depth-3" id="li-comment-202">
+		<div id="comment-202">
+		<div class="comment-author vcard">
+			<img alt='' src='http://0.gravatar.com/avatar/0a0458c58526d153dbc2639eed0d592e?s=48&amp;d=identicon&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn">liebke</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://data-sorcery.org/2009/11/29/incanter-webapp/#comment-202">
+				January 3, 2010 at 1:22 am</a>
+					|
+													</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>Hi James,</p>
+<p>To set up interactive development of this app if you&#8217;re using Leiningen and Swank, just run:<br />
+$ lein deps<br />
+$ lein compile<br />
+$ lein swank</p>
+<p>(I actually had to change my Incanter dependency to [incanter "1.0-SNAPSHOT"], instead of [incanter "1.0-master-SNAPSHOT"] because lein couldn&#8217;t find the later version for some reason.)</p>
+<p>Then from emacs, connect to the Swank server with &#8216;M-x slime-connect&#8217;, then evaluate the example file and start with server from the REPL with:<br />
+(simple-web-app/-main)</p>
+<p>Make sure the app is working correctly by visiting: <a href="http://localhost:8080" rel="nofollow">http://localhost:8080</a></p>
+<p>Now you should be able to make changes to the running app.</p>
+<p>Good luck,<br />
+David</p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	</li>
+	<li class="comment even depth-3" id="li-comment-203">
+		<div id="comment-203">
+		<div class="comment-author vcard">
+			<img alt='' src='http://0.gravatar.com/avatar/2f77d206112701e54baed0e92e3888c5?s=48&amp;d=identicon&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn">James</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://data-sorcery.org/2009/11/29/incanter-webapp/#comment-203">
+				January 3, 2010 at 1:32 am</a>
+					|
+													</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>Thanks David,</p>
+<p>I&#8217;ll give it a whirl.</p>
+<p>James.</p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	</li>
+	<li class="comment odd alt depth-3" id="li-comment-204">
+		<div id="comment-204">
+		<div class="comment-author vcard">
+			<img alt='' src='http://0.gravatar.com/avatar/2f77d206112701e54baed0e92e3888c5?s=48&amp;d=identicon&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn">James</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://data-sorcery.org/2009/11/29/incanter-webapp/#comment-204">
+				January 3, 2010 at 2:24 am</a>
+					|
+													</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>Works perfect.<br />
+Thanks again.</p>
+<p>James</p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	</li>
+	<li class="comment even depth-3" id="li-comment-205">
+		<div id="comment-205">
+		<div class="comment-author vcard">
+			<img alt='' src='http://0.gravatar.com/avatar/2f77d206112701e54baed0e92e3888c5?s=48&amp;d=identicon&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn">James</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://data-sorcery.org/2009/11/29/incanter-webapp/#comment-205">
+				January 3, 2010 at 9:27 am</a>
+					|
+													</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>oops.. i just noticed you already had another post up about this exact thing.  i&#8217;m a little behind on reading the blog :)</p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	</li>
+</ul>
+</li>
+</ul>
+</li>
+	<li class="comment odd alt thread-even depth-1" id="li-comment-799">
+		<div id="comment-799">
+		<div class="comment-author vcard">
+			<img alt='' src='http://0.gravatar.com/avatar/eca709284484604aa626983cfd5c4d61?s=48&amp;d=identicon&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn">Tyler</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://data-sorcery.org/2009/11/29/incanter-webapp/#comment-799">
+				June 25, 2010 at 9:15 am</a>
+					|
+					<a class='comment-reply-link' href='/2009/11/29/incanter-webapp/?replytocom=799#respond' onclick='return addComment.moveForm("comment-799", "799", "respond", "1109")'>Reply</a>								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>This does NOT work with newer versions of Compojure.</p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	<ul class='children'>
+	<li class="comment byuser comment-author-incanter bypostauthor even depth-2" id="li-comment-800">
+		<div id="comment-800">
+		<div class="comment-author vcard">
+			<img alt='' src='http://0.gravatar.com/avatar/0a0458c58526d153dbc2639eed0d592e?s=48&amp;d=identicon&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn">liebke</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://data-sorcery.org/2009/11/29/incanter-webapp/#comment-800">
+				June 25, 2010 at 11:00 am</a>
+					|
+					<a class='comment-reply-link' href='/2009/11/29/incanter-webapp/?replytocom=800#respond' onclick='return addComment.moveForm("comment-800", "800", "respond", "1109")'>Reply</a>								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>That is true, Compjure 0.4 was a complete refacter of the library.</p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	</li>
+</ul>
+</li>
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-823">
+		<div id="comment-823">
+		<div class="comment-author vcard">
+			<img alt='' src='http://0.gravatar.com/avatar/e052ea0753ba42ff907004095640afc4?s=48&amp;d=identicon&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn"><a href='http://BahmanM.com' rel='external nofollow' class='url'>Bahman Movaqar</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://data-sorcery.org/2009/11/29/incanter-webapp/#comment-823">
+				September 12, 2010 at 4:26 pm</a>
+					|
+					<a class='comment-reply-link' href='/2009/11/29/incanter-webapp/?replytocom=823#respond' onclick='return addComment.moveForm("comment-823", "823", "respond", "1109")'>Reply</a>								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>Nice one.<br />
+I was looking for a Compojure kick-start and this article gives me what I need to understand Compojure.</p>
+<p>Thank you,</p>
+<p>&#8211;<br />
+Bahman</p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	</li>
+	<li class="comment even thread-even depth-1" id="li-comment-863">
+		<div id="comment-863">
+		<div class="comment-author vcard">
+			<img alt='' src='http://0.gravatar.com/avatar/e8182d33245bf4dab07001ed2f079ed1?s=48&amp;d=identicon&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn">PauloC</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://data-sorcery.org/2009/11/29/incanter-webapp/#comment-863">
+				November 8, 2010 at 2:39 pm</a>
+					|
+					<a class='comment-reply-link' href='/2009/11/29/incanter-webapp/?replytocom=863#respond' onclick='return addComment.moveForm("comment-863", "863", "respond", "1109")'>Reply</a>								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>Hi,</p>
+<p>I know this post is almost one year old, but would someone help me to run this? I downloaded Incanter and tried to build the corresponding example. &#8220;lein compile&#8221; fails like this:<br />
+&#8220;Compiling simple_web_app<br />
+Exception in thread &#8220;main&#8221; java.io.FileNotFoundException: Could not locate clojure/contrib/seq_utils__init.class or clojure/contrib/seq_utils.clj on classpath:  (control.clj:9)&#8221;</p>
+<p>Any ideas?</p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	</li>
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-869">
+		<div id="comment-869">
+		<div class="comment-author vcard">
+			<img alt='' src='http://0.gravatar.com/avatar/e8182d33245bf4dab07001ed2f079ed1?s=48&amp;d=identicon&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn">PauloC</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://data-sorcery.org/2009/11/29/incanter-webapp/#comment-869">
+				November 11, 2010 at 12:51 pm</a>
+					|
+					<a class='comment-reply-link' href='/2009/11/29/incanter-webapp/?replytocom=869#respond' onclick='return addComment.moveForm("comment-869", "869", "respond", "1109")'>Reply</a>								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>I managed to update the code in this post for use with the present libraries.</p>
+<p>In project.clj, dependencies are as follow:<br />
+<code><br />
+:dependencies [[org.clojure/clojure "1.2.0"]<br />
+                 [org.clojure/clojure-contrib "1.2.0"]<br />
+                 [compojure "0.5.2"]<br />
+                 [ring/ring-jetty-adapter "0.3.1"]<br />
+                 [hiccup "0.3.0"]<br />
+                 [incanter "1.2.3-SNAPSHOT"]]<br />
+</code></p>
+<p>The function that generates the graphic should return the whole header:<br />
+<code><br />
+{:status  200<br />
+     :headers {"Content-Type" "image/png"}<br />
+     :body    in-stream}))<br />
+</code></p>
+<p>Finally, main is changed to:<br />
+<code><br />
+(defn -main [&amp; args]<br />
+	(run-jetty example {:port 8080}))<br />
+</code></p>
+<p>The HTML generation has changed a bit (now it is dome by hiccup). Here is a <a href="https://github.com/ericlavigne/testbuilder/blob/master/src/testbuilder/core.clj" rel="nofollow">good example</a> of the new library usage.</p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	</li>
+		</ol>
+
+		
+	
+									<div id="respond">
+				<h3 id="reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/2009/11/29/incanter-webapp/#respond" style="display:none;">Cancel reply</a></small></h3>
+									<form action="http://data-sorcery.org/wp-comments-post.php" method="post" id="commentform">
+																			<p class="comment-notes">Your email address will not be published. Required fields are marked <span class="required">*</span></p>							<p class="comment-form-author"><label for="author">Name</label> <span class="required">*</span><input id="author" name="author" type="text" value="" size="30" aria-required='true' /></p>
+<p class="comment-form-email"><label for="email">Email</label> <span class="required">*</span><input id="email" name="email" type="text" value="" size="30" aria-required='true' /></p>
+<p class="comment-form-url"><label for="url">Website</label><input id="url" name="url" type="text" value="" size="30" /></p>
+												<p class="comment-form-comment"><label for="comment">Comment</label><textarea id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea></p>						<p class="form-allowed-tags">You may use these <abbr title="HyperText Markup Language">HTML</abbr> tags and attributes:  <code>&lt;a href=&quot;&quot; title=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;acronym title=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote cite=&quot;&quot;&gt; &lt;cite&gt; &lt;code&gt; &lt;pre&gt; &lt;del datetime=&quot;&quot;&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=&quot;&quot;&gt; &lt;strike&gt; &lt;strong&gt; </code></p>						<p class="form-submit">
+							<input name="submit" type="submit" id="submit" value="Post Comment" />
+							<input type='hidden' name='comment_post_ID' value='1109' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+						</p>
+						
+<input type="hidden" name="genseq" value="1293264980" />
+<p><input type="checkbox" name="subscribe" id="subscribe" value="subscribe" style="width: auto;" tabindex="6"/> <label class="subscribe-label" id="subscribe-label" for="subscribe">Notify me of follow-up comments via email.</label></p><p><input type="checkbox" name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto;" tabindex="7"/> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog">Subscribe to this site by email</label></p><input type="hidden" name="sub-type" value="comment-form-text2" /><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="5cd0b22d36" /></p>					</form>
+							</div><!-- #respond -->
+						
+</div><!-- #comments -->
+			
+			</div><!-- #content -->
+		</div><!-- #content-container -->
+
+
+		
+		<div id="primary" class="widget-area" role="complementary">
+			<ul class="xoxo">
+
+			<li id="search-3" class="widget-container widget_search"><h3 class="widget-title">Search</h3><form role="search" method="get" id="searchform" action="http://data-sorcery.org/" >
+	<div><label class="screen-reader-text" for="s">Search for:</label>
+	<input type="text" value="" name="s" id="s" />
+	<input type="submit" id="searchsubmit" value="Search" />
+	</div>
+	</form></li><li id="linkcat-15129357" class="widget-container widget_links"><h3 class="widget-title">Incanter</h3>
+	<ul class='xoxo blogroll'>
+<li><a href="http://liebke.github.com/incanter" title="API documentation">API documentation</a></li>
+<li><a href="http://github.com/liebke/incanter/tree/master" title="Github source repository for Incanter">Github source repository</a></li>
+<li><a href="http://incanter.org/docs/incanter-cheat-sheet.pdf">Incanter Cheat Sheet</a></li>
+<li><a href="http://groups.google.com/group/incanter">Incanter Google Group</a></li>
+<li><a href="http://incanter.org" title="The main website for Incanter">Incanter Website</a></li>
+<li><a href="http://wiki.github.com/liebke/incanter" title="Incanter Wiki">Incanter Wiki</a></li>
+
+	</ul>
+</li>
+<li id="linkcat-5738990" class="widget-container widget_links"><h3 class="widget-title">Clojure</h3>
+	<ul class='xoxo blogroll'>
+<li><a href="http://asymmetrical-view.com/">Asymmetrical View</a></li>
+<li><a href="http://clojure.org/api">Clojure API documentation</a></li>
+<li><a href="http://ociweb.com/mark/clojure/article.html" title="Clojure introduction by R. Mark Volkmann">Clojure – Functional Programming for the JVM</a></li>
+<li><a href="http://www.assembla.com/wiki/show/clojure/Getting_Started">Clojure Getting Started Guide</a></li>
+<li><a href="http://groups.google.com/group/clojure" title="Clojure discussion at Google groups">Clojure Google group</a></li>
+<li><a href="http://clojure.blip.tv/" title="Rich Hickey Clojure talks">Clojure on blip.tv</a></li>
+<li><a href="http://en.wikibooks.org/wiki/Clojure_Programming">Clojure Programming wikibook</a></li>
+<li><a href="http://clojure.org">Clojure website</a></li>
+<li><a href="http://disclojure.org/">Disclojure</a></li>
+<li><a href="http://www.manning.com/fogus/">Joy of Clojure book site</a></li>
+<li><a href="http://en.wikibooks.org/wiki/Learning_Clojure">Learning Clojure wikibook</a></li>
+<li><a href="http://blog.fogus.me/">Michael Fogus&#039; blog</a></li>
+<li><a href="http://ossenabled.com/">Open Source Enabled</a></li>
+<li><a href="http://planet.clojure.in/">Planet Clojure</a></li>
+<li><a href="http://www.amazon.com/gp/product/1934356336?ie=UTF8&amp;tag=statisprograw-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=1934356336">Programming Clojure book</a></li>
+<li><a href="http://s-expressions.com/">S-expressions</a></li>
+
+	</ul>
+</li>
+<li id="linkcat-5849" class="widget-container widget_links"><h3 class="widget-title">Statistics</h3>
+	<ul class='xoxo blogroll'>
+<li><a href="http://www.jstatsoft.org/">Journal of Statistical Software</a></li>
+<li><a href="http://www.r-bloggers.com/">R bloggers</a></li>
+<li><a href="http://www.stat.columbia.edu/~cook/movabletype/mlm/">Statistical Modeling, Causal Inference, and Social Science</a></li>
+<li><a href="http://www.johndcook.com/blog/">The Endeavour</a></li>
+<li><a href="http://www.r-project.org/">The R Project</a></li>
+
+	</ul>
+</li>
+<li id="linkcat-196" class="widget-container widget_links"><h3 class="widget-title">programming</h3>
+	<ul class='xoxo blogroll'>
+<li><a href="http://www.jfree.org/jfreechart/">JFreeChart website</a></li>
+<li><a href="http://sites.google.com/site/piotrwendykier/software/parallelcolt">Parallel Colt website</a></li>
+<li><a href="http://www.r-project.org/">The R Project</a></li>
+
+	</ul>
+</li>
+<li id="linkcat-44111" class="widget-container widget_links"><h3 class="widget-title">visualization</h3>
+	<ul class='xoxo blogroll'>
+<li><a href="http://benfry.com/writing/">Ben Fry&#039;s Blog</a></li>
+<li><a href="http://www.shiffman.net/teaching/nature/">Daniel Shiffman &#8212; Nature of Code</a></li>
+<li><a href="http://www.processing.org/reference/">Processing API</a></li>
+<li><a href="http://processing.org/">Processing Language</a></li>
+
+	</ul>
+</li>
+
+		<li id="recent-comments" class="widget-container widget_recent_comments">			<h3 class="widget-title">Recent Comments</h3>			<ul id="recentcomments"><li class="recentcomments">Paul Hobbs on <a href="http://data-sorcery.org/2010/05/14/infix-math/#comment-883">Infix mathematical notation in&nbsp;Incanter</a></li><li class="recentcomments">Cox Chen on <a href="http://data-sorcery.org/2010/02/05/pdf-charts/#comment-882">Saving Incanter charts as PDF&nbsp;documents</a></li><li class="recentcomments">liebke on <a href="http://data-sorcery.org/2010/02/05/pdf-charts/#comment-877">Saving Incanter charts as PDF&nbsp;documents</a></li><li class="recentcomments">Cox Chen on <a href="http://data-sorcery.org/2010/02/05/pdf-charts/#comment-876">Saving Incanter charts as PDF&nbsp;documents</a></li><li class="recentcomments">PauloC on <a href="http://data-sorcery.org/2009/11/29/incanter-webapp/#comment-869">Building a Clojure Web application with Incanter, Compojure, and&nbsp;Leiningen</a></li></ul>
+		</li><li id="twitter-3" class="widget-container widget_twitter"><h3 class="widget-title"><a href='http://twitter.com/liebke'>@liebke on Twitter</a></h3><ul class='tweets'>
+<li>Excellent write up by @<a href='http://twitter.com/puredanger'>puredanger</a> on parallel programming and fork-join in Clojure: <a href="http://bit.ly/dfiWvw" rel="nofollow">http://bit.ly/dfiWvw</a> <a href="http://twitter.com/liebke/statuses/28705764942" class="timesince">2&nbsp;months&nbsp;ago</a></li>
+<li>Here are the slides from my <a href='http://twitter.com/search?q=%23clojureconj'>#clojureconj</a> talk, &quot;An Illustrated guide to multi-core parallelism in Clojure&quot; <a href="http://bit.ly/9tZ64h" rel="nofollow">http://bit.ly/9tZ64h</a> <a href='http://twitter.com/search?q=%23clojure'>#clojure</a> <a href="http://twitter.com/liebke/statuses/28544491221" class="timesince">2&nbsp;months&nbsp;ago</a></li>
+<li>Awesome! RT @<a href='http://twitter.com/fogus'>fogus</a>: Unifycle: A Unification Library for Clojure --&gt; <a href="http://bit.ly/bE7fKC" rel="nofollow">http://bit.ly/bE7fKC</a> -- official site --&gt; <a href="http://fogus.me/fun/unifycle/" rel="nofollow">http://fogus.me/fun/unifycle/</a> <a href="http://twitter.com/liebke/statuses/25745375361" class="timesince">2&nbsp;months&nbsp;ago</a></li>
+<li>Clojure-conj talks posted: <a href="http://bit.ly/b4IcLN" rel="nofollow">http://bit.ly/b4IcLN</a> <a href='http://twitter.com/search?q=%23clojure'>#clojure</a> <a href='http://twitter.com/search?q=%23clojure'>#clojure</a>-conj <a href="http://twitter.com/liebke/statuses/24765940458" class="timesince">3&nbsp;months&nbsp;ago</a></li>
+<li>Watch <a href="http://first.clojure-conj.org" rel="nofollow">http://first.clojure-conj.org</a> for an updated list of speakers for the first clojure-conj. <a href="http://twitter.com/liebke/statuses/21583583067" class="timesince">4&nbsp;months&nbsp;ago</a></li>
+</ul>
+</li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://data-sorcery.org/2010/10/23/clojureconj/" title="An Illustrated guide to multi-core parallelism in&nbsp;Clojure">An Illustrated guide to multi-core parallelism in&nbsp;Clojure</a></li>
+				<li><a href="http://data-sorcery.org/2010/06/12/incanter-executables/" title="Incanter&nbsp;executables">Incanter&nbsp;executables</a></li>
+				<li><a href="http://data-sorcery.org/2010/05/31/xls-files/" title="Reading and writing Excel (xls) files with&nbsp;Incanter">Reading and writing Excel (xls) files with&nbsp;Incanter</a></li>
+				<li><a href="http://data-sorcery.org/2010/05/14/infix-math/" title="Infix mathematical notation in&nbsp;Incanter">Infix mathematical notation in&nbsp;Incanter</a></li>
+				<li><a href="http://data-sorcery.org/2010/04/14/latex/" title="Adding LaTeX equations to Incanter&nbsp;charts">Adding LaTeX equations to Incanter&nbsp;charts</a></li>
+				<li><a href="http://data-sorcery.org/2010/04/04/new-chart-theme/" title="New default theme and customization features for Incanter&nbsp;charts">New default theme and customization features for Incanter&nbsp;charts</a></li>
+				<li><a href="http://data-sorcery.org/2010/04/01/leiningen/" title="Incanter has migrated to&nbsp;Leiningen">Incanter has migrated to&nbsp;Leiningen</a></li>
+				<li><a href="http://data-sorcery.org/2010/03/26/dynamic-data-tables/" title="Dynamic data tables with&nbsp;Incanter">Dynamic data tables with&nbsp;Incanter</a></li>
+				<li><a href="http://data-sorcery.org/2010/03/25/getting-started-with-incanter-using-labrepl/" title="Getting started with Incanter using&nbsp;labrepl">Getting started with Incanter using&nbsp;labrepl</a></li>
+				<li><a href="http://data-sorcery.org/2010/03/22/dynamic-charts/" title="Dynamic charts with&nbsp;Incanter">Dynamic charts with&nbsp;Incanter</a></li>
+				<li><a href="http://data-sorcery.org/2010/03/04/blog-roundup/" title="Incanter blog post&nbsp;roundup">Incanter blog post&nbsp;roundup</a></li>
+				<li><a href="http://data-sorcery.org/2010/02/22/repo/" title="Incanter code&nbsp;repository">Incanter code&nbsp;repository</a></li>
+				<li><a href="http://data-sorcery.org/2010/02/11/data-sorcery-pt1/" title="Data Sorcery with Clojure &amp; Incanter: Introduction to Datasets &amp;&nbsp;Charts">Data Sorcery with Clojure &amp; Incanter: Introduction to Datasets &amp;&nbsp;Charts</a></li>
+				<li><a href="http://data-sorcery.org/2010/02/10/who-is-incanter/" title="Who is&nbsp;Incanter?">Who is&nbsp;Incanter?</a></li>
+				<li><a href="http://data-sorcery.org/2010/02/06/set-theme/" title="Dark theme for Incanter&nbsp;charts">Dark theme for Incanter&nbsp;charts</a></li>
+				</ul>
+		</li>		<li id="delicious" class="widget-container widget_delicious">			<h3 class="widget-title"><a href='http://del.icio.us/liebke'>Del.icio.us/liebke</a></h3><div id="delicious-box" style="margin:0;padding:0;border:none;"> </div>
+			<script type="text/javascript" src="http://feeds.delicious.com/v1/json/liebke?count=25"></script>
+			<script type="text/javascript">
+			function showImage(img){ return (function(){ img.style.display='inline'; }) }
+			var ul = document.createElement('ul');
+			for (var i=0, post; post = Delicious.posts[i]; i++) {
+				var li = document.createElement('li');
+				var a = document.createElement('a');
+				a.setAttribute('href', post.u);
+				a.appendChild(document.createTextNode(post.d));
+				li.appendChild(a);
+				ul.appendChild(li);
+			}
+			ul.setAttribute('id', 'delicious-list');
+			document.getElementById('delicious-box').appendChild(ul);
+			</script>
+		</li><li id="categories-2" class="widget-container widget_categories"><h3 class="widget-title">Topics</h3>		<ul>
+			<li class="cat-item cat-item-1690939"><a href="http://data-sorcery.org/category/bayesian-inference/" title="View all posts filed under Bayesian inference">Bayesian inference</a> (1)
+</li>
+	<li class="cat-item cat-item-143854"><a href="http://data-sorcery.org/category/benfords-law/" title="View all posts filed under benford&#039;s law">benford&#039;s law</a> (1)
+</li>
+	<li class="cat-item cat-item-70302"><a href="http://data-sorcery.org/category/bootstrapping/" title="View all posts filed under bootstrapping">bootstrapping</a> (1)
+</li>
+	<li class="cat-item cat-item-6978653"><a href="http://data-sorcery.org/category/statistics/chi-square-test/" title="View all posts filed under chi-square test">chi-square test</a> (2)
+</li>
+	<li class="cat-item cat-item-7536117"><a href="http://data-sorcery.org/category/classifiers/" title="View all posts filed under classifiers">classifiers</a> (1)
+</li>
+	<li class="cat-item cat-item-27915322"><a href="http://data-sorcery.org/category/clojars-org/" title="View all posts filed under clojars.org">clojars.org</a> (4)
+</li>
+	<li class="cat-item cat-item-5738990"><a href="http://data-sorcery.org/category/clojure/" title="View all posts filed under Clojure">Clojure</a> (38)
+</li>
+	<li class="cat-item cat-item-44764586"><a href="http://data-sorcery.org/category/clojureconj/" title="View all posts filed under clojureconj">clojureconj</a> (1)
+</li>
+	<li class="cat-item cat-item-15550477"><a href="http://data-sorcery.org/category/compojure/" title="View all posts filed under compojure">compojure</a> (2)
+</li>
+	<li class="cat-item cat-item-4764012"><a href="http://data-sorcery.org/category/conditional-probability/" title="View all posts filed under conditional probability">conditional probability</a> (2)
+</li>
+	<li class="cat-item cat-item-29591327"><a href="http://data-sorcery.org/category/congomongo/" title="View all posts filed under congomongo">congomongo</a> (1)
+</li>
+	<li class="cat-item cat-item-715215"><a href="http://data-sorcery.org/category/correlation/" title="View all posts filed under correlation">correlation</a> (1)
+</li>
+	<li class="cat-item cat-item-22295714"><a href="http://data-sorcery.org/category/dirichlet-distribution/" title="View all posts filed under dirichlet distribution">dirichlet distribution</a> (1)
+</li>
+	<li class="cat-item cat-item-11362"><a href="http://data-sorcery.org/category/emacs/" title="View all posts filed under emacs">emacs</a> (1)
+</li>
+	<li class="cat-item cat-item-25398"><a href="http://data-sorcery.org/category/excel/" title="View all posts filed under Excel">Excel</a> (1)
+</li>
+	<li class="cat-item cat-item-24291518"><a href="http://data-sorcery.org/category/flightcaster/" title="View all posts filed under FlightCaster">FlightCaster</a> (1)
+</li>
+	<li class="cat-item cat-item-21307082"><a href="http://data-sorcery.org/category/optimization/gauss-newton/" title="View all posts filed under gauss-newton">gauss-newton</a> (1)
+</li>
+	<li class="cat-item cat-item-8412892"><a href="http://data-sorcery.org/category/statistics/chi-square-test/goodness-of-fit/" title="View all posts filed under goodness-of-fit">goodness-of-fit</a> (1)
+</li>
+	<li class="cat-item cat-item-15129357"><a href="http://data-sorcery.org/category/incanter/" title="View all posts filed under Incanter">Incanter</a> (43)
+</li>
+	<li class="cat-item cat-item-5462564"><a href="http://data-sorcery.org/category/iran-election/" title="View all posts filed under iran election">iran election</a> (1)
+</li>
+	<li class="cat-item cat-item-1555997"><a href="http://data-sorcery.org/category/jfreechart/" title="View all posts filed under jFreeChart">jFreeChart</a> (6)
+</li>
+	<li class="cat-item cat-item-33375630"><a href="http://data-sorcery.org/category/labrepl/" title="View all posts filed under labrepl">labrepl</a> (2)
+</li>
+	<li class="cat-item cat-item-8800"><a href="http://data-sorcery.org/category/latex/" title="View all posts filed under LaTeX">LaTeX</a> (1)
+</li>
+	<li class="cat-item cat-item-27915319"><a href="http://data-sorcery.org/category/leiningen/" title="View all posts filed under Leiningen">Leiningen</a> (5)
+</li>
+	<li class="cat-item cat-item-26502581"><a href="http://data-sorcery.org/category/linear-discriminate-analysis/" title="View all posts filed under linear-discriminate-analysis">linear-discriminate-analysis</a> (1)
+</li>
+	<li class="cat-item cat-item-40978"><a href="http://data-sorcery.org/category/machine-learning/" title="View all posts filed under machine-learning">machine-learning</a> (1)
+</li>
+	<li class="cat-item cat-item-47862"><a href="http://data-sorcery.org/category/maven/" title="View all posts filed under Maven">Maven</a> (1)
+</li>
+	<li class="cat-item cat-item-21954763"><a href="http://data-sorcery.org/category/mongodb/" title="View all posts filed under mongodb">mongodb</a> (1)
+</li>
+	<li class="cat-item cat-item-65148"><a href="http://data-sorcery.org/category/monte-carlo-simulation/" title="View all posts filed under monte carlo simulation">monte carlo simulation</a> (1)
+</li>
+	<li class="cat-item cat-item-5527238"><a href="http://data-sorcery.org/category/monty-hall/" title="View all posts filed under monty-hall">monty-hall</a> (1)
+</li>
+	<li class="cat-item cat-item-22115586"><a href="http://data-sorcery.org/category/multinomial-distribution/" title="View all posts filed under multinomial distribution">multinomial distribution</a> (1)
+</li>
+	<li class="cat-item cat-item-368691"><a href="http://data-sorcery.org/category/optimization/newton-raphson/" title="View all posts filed under newton-raphson">newton-raphson</a> (1)
+</li>
+	<li class="cat-item cat-item-25"><a href="http://data-sorcery.org/category/open-source/" title="View all posts filed under open source">open source</a> (1)
+</li>
+	<li class="cat-item cat-item-133147"><a href="http://data-sorcery.org/category/optimization/" title="View all posts filed under optimization">optimization</a> (1)
+</li>
+	<li class="cat-item cat-item-29092830"><a href="http://data-sorcery.org/category/paredit/" title="View all posts filed under paredit">paredit</a> (1)
+</li>
+	<li class="cat-item cat-item-209963"><a href="http://data-sorcery.org/category/pca/" title="View all posts filed under pca">pca</a> (1)
+</li>
+	<li class="cat-item cat-item-21124567"><a href="http://data-sorcery.org/category/permutation-tests/" title="View all posts filed under permutation tests">permutation tests</a> (2)
+</li>
+	<li class="cat-item cat-item-51966"><a href="http://data-sorcery.org/category/plotting/" title="View all posts filed under plotting">plotting</a> (7)
+</li>
+	<li class="cat-item cat-item-10451"><a href="http://data-sorcery.org/category/probability/" title="View all posts filed under probability">probability</a> (2)
+</li>
+	<li class="cat-item cat-item-33811"><a href="http://data-sorcery.org/category/processing/" title="View all posts filed under Processing">Processing</a> (1)
+</li>
+	<li class="cat-item cat-item-10189"><a href="http://data-sorcery.org/category/r/" title="View all posts filed under R">R</a> (1)
+</li>
+	<li class="cat-item cat-item-12620"><a href="http://data-sorcery.org/category/randomization/" title="View all posts filed under randomization">randomization</a> (1)
+</li>
+	<li class="cat-item cat-item-151187"><a href="http://data-sorcery.org/category/statistics/regression/" title="View all posts filed under regression">regression</a> (1)
+</li>
+	<li class="cat-item cat-item-2137864"><a href="http://data-sorcery.org/category/resampling/" title="View all posts filed under resampling">resampling</a> (2)
+</li>
+	<li class="cat-item cat-item-31109028"><a href="http://data-sorcery.org/category/rincanter/" title="View all posts filed under Rincanter">Rincanter</a> (1)
+</li>
+	<li class="cat-item cat-item-142601"><a href="http://data-sorcery.org/category/roadmap/" title="View all posts filed under roadmap">roadmap</a> (1)
+</li>
+	<li class="cat-item cat-item-463029"><a href="http://data-sorcery.org/category/slime/" title="View all posts filed under slime">slime</a> (1)
+</li>
+	<li class="cat-item cat-item-12463465"><a href="http://data-sorcery.org/category/statistical-learning/" title="View all posts filed under statistical-learning">statistical-learning</a> (1)
+</li>
+	<li class="cat-item cat-item-5849"><a href="http://data-sorcery.org/category/statistics/" title="View all posts filed under Statistics">Statistics</a> (9)
+</li>
+	<li class="cat-item cat-item-882398"><a href="http://data-sorcery.org/category/swank/" title="View all posts filed under swank">swank</a> (1)
+</li>
+	<li class="cat-item cat-item-37521510"><a href="http://data-sorcery.org/category/swingrepl/" title="View all posts filed under swingrepl">swingrepl</a> (1)
+</li>
+	<li class="cat-item cat-item-5387472"><a href="http://data-sorcery.org/category/t-test/" title="View all posts filed under t test">t test</a> (2)
+</li>
+	<li class="cat-item cat-item-26266"><a href="http://data-sorcery.org/category/t-shirt/" title="View all posts filed under t-shirt">t-shirt</a> (1)
+</li>
+	<li class="cat-item cat-item-44111"><a href="http://data-sorcery.org/category/visualization/" title="View all posts filed under visualization">visualization</a> (5)
+</li>
+	<li class="cat-item cat-item-68058"><a href="http://data-sorcery.org/category/xls/" title="View all posts filed under xls">xls</a> (1)
+</li>
+		</ul>
+</li>			</ul>
+		</div><!-- #primary .widget-area -->
+
+		
+			</div><!-- #content-box -->
+
+	<div id="footer" role="contentinfo">
+		
+
+		<div id="colophon">
+			Theme: <a href="http://theme.wordpress.com/themes/coraline/">Coraline</a> by <a href="http://automattic.com/">Automattic</a> <span class="generator-link"><a href="http://wordpress.com/?ref=footer" rel="generator">Blog at WordPress.com</a>.</span>
+		</div><!-- #colophon -->
+	</div><!-- #footer -->
+
+</div><!-- #container -->
+
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script>	<script type="text/javascript">
+	/* <![CDATA[ */
+		jQuery( function() {
+			
+			jQuery('#wpl-button > a.like').click( function(e) {
+				e.preventDefault();
+				
+				jQuery('#wpl-mustlogin').remove();
+
+				jQuery.post( 'http://incanter.wordpress.com/wp-admin/admin-ajax.php', { 
+					'action': 'wpl_record_stat',
+					'stat_name': 'loggedout_like_click'
+				} );
+
+				var tenMins = new Date();
+				tenMins.setTime( tenMins.getTime() + 600000 );
+				document.cookie = 'wpl_rand=9745bcbdd0; expires=' + tenMins.toGMTString() + '; domain=wordpress.com; path=/;';
+				
+				jQuery('#wpl-count').after( '\
+					<div id="wpl-mustlogin"> \
+						<form action="http://incanter.wordpress.com/wp-login.php" method="post"> \
+							<p>Just one more step to like this post:</p> \
+							<label><span>Username</span> <input type="text" name="log" id="user_login" class="input" value="" size="20" tabindex="80" /></label> \
+							<label><span>Password</span> <input type="password" name="pwd" id="user_pass" class="input" value="" size="20" tabindex="81" /></label> \
+							<input type="submit" name="wp-submit" id="wp-submit" class="button-primary" value="Log In" tabindex="82" /> \
+							<input type="hidden" name="redirect_to" value="http://data-sorcery.org/2009/11/29/incanter-webapp/?like=1" /> \
+							<input type="hidden" name="wpl_rand" value="9745bcbdd0" /> \
+							<p>Not a member yet? <a href="http://wordpress.com/signup/?ref=likebox" id="wpl-signup-link">Sign up with WordPress.com</a></p> \
+						</form> \
+					</div> \
+				');
+				
+				jQuery('#wpl-mustlogin').hide().slideDown('fast');
+			} );
+			
+			jQuery('#wpl-mustlogin input.input').live( 'focus', function() {
+				jQuery(this).prev().hide();
+			}).live( 'blur', function() {
+				if ( jQuery(this).val() == '' )
+					jQuery(this).prev().show();
+			});
+			
+			jQuery('#wpl-mustlogin input#wp-submit').live( 'click', function(e) {
+				e.preventDefault();
+				
+				jQuery.post( 'http://incanter.wordpress.com/wp-admin/admin-ajax.php', { 
+					'action': 'wpl_record_stat',
+					'stat_name': 'loggedout_login_submit'
+				}, function() {
+					jQuery('#wpl-mustlogin form').submit();
+				} );
+			});			
+			
+			jQuery('#wpl-mustlogin a#wpl-signup-link').live( 'click', function(e) {
+				e.preventDefault();
+				
+				var link = jQuery(this).attr('href');
+				
+				jQuery.post( 'http://incanter.wordpress.com/wp-admin/admin-ajax.php', { 
+					'action': 'wpl_record_stat',
+					'stat_name': 'loggedout_signup_click'
+				}, function() {
+					location.href = link;
+				} );
+			});					
+			
+		});
+	/* ]]> */
+	</script>
+<script type="text/javascript">_qoptions={qacct:'p-18-mFEk4J448M',labels:'language.en,type.wpcom'};</script>
+<script type="text/javascript" src="http://edge.quantserve.com/quant.js"></script>
+<noscript><p><img class="robots-nocontent" src="http://pixel.quantserve.com/pixel/p-18-mFEk4J448M.gif?labels=language.en%2Ctype.wpcom" style="display:none" height="1" width="1" alt="" /></p></noscript>
+<script type='text/javascript' src='http://s.gravatar.com/js/gprofiles.js?n&#038;ver=MU'></script>
+	<script type="text/javascript">	
+	// <![CDATA[
+	WPGroHo = {
+		data: {},
+		renderers: {},
+		syncProfileData: function( hash, id ) {
+			if ( !WPGroHo.data[hash] ) {
+				WPGroHo.data[hash] = {};
+				a = jQuery( 'div.grofile-hash-map-' + hash + ' span' ).each( function() {
+					WPGroHo.data[hash][this.className] = jQuery( this ).text();
+				} );
+			}
+
+			WPGroHo.appendProfileData( WPGroHo.data[hash], hash, id );
+		},
+		appendProfileData: function( data, hash, id ) {
+			for ( var key in data ) {
+				if ( jQuery.isFunction( WPGroHo.renderers[key] ) ) {
+					return WPGroHo.renderers[key]( data[key], hash, id, key );
+				}
+
+				jQuery( '#' + id ).find( 'h4' ).after( jQuery( '<p class="grav-extra ' + key + '" />' ).html( data[key] ) );
+			}
+		}
+	};
+	jQuery(document).ready(function($){
+		Gravatar.profile_cb = function( h, d ) {
+			WPGroHo.syncProfileData( h, d );
+		};
+		Gravatar.attach_profiles();
+	});
+	// ]]>
+	</script>
+	<div style="display:none">
+	<div class="grofile-hash-map-6ce5ad7f7df7c5ed4343a4f00819015d">
+	</div>
+	<div class="grofile-hash-map-0a0458c58526d153dbc2639eed0d592e">
+	</div>
+	<div class="grofile-hash-map-2f77d206112701e54baed0e92e3888c5">
+	</div>
+	<div class="grofile-hash-map-eca709284484604aa626983cfd5c4d61">
+	</div>
+	<div class="grofile-hash-map-effda6fa06bae5a17742078a8c59cb6e">
+	</div>
+	<div class="grofile-hash-map-e8182d33245bf4dab07001ed2f079ed1">
+	</div>
+	</div>
+<script type="text/javascript" src="http://b.scorecardresearch.com/beacon.js"></script><script type="text/javascript">try{COMSCORE.beacon({c1:2,c2:7518284});}catch(e){}</script><noscript><p class="robots-nocontent"><img src="http://b.scorecardresearch.com/p?cj=1c1=2&#038;c2=7518284" alt="" style="display:none" width="1" height="1" /></p></noscript><script type='text/javascript' src='http://s0.wp.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter/scripts/shCore.js?m=1258143671g&#038;ver=2.1.364b'></script>
+<script type='text/javascript' src='http://s0.wp.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter/scripts/shBrushPlain.js?m=1258143671g&#038;ver=2.1.364b'></script>
+<script type='text/javascript'>
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var themecssurl = "http://s0.wp.com/wp-content/plugins/syntaxhighlighter-wpcom/shThemeDefault.css?m=1267535107g&amp;ver=2.1.364b";
+		if ( themecss.setAttribute ) {
+				themecss.setAttribute( "rel", "stylesheet" );
+				themecss.setAttribute( "type", "text/css" );
+				themecss.setAttribute( "href", themecssurl );
+		} else {
+				themecss.rel = "stylesheet";
+				themecss.href = themecssurl;
+		}
+		document.getElementsByTagName("head")[0].appendChild(themecss);
+	})();
+	SyntaxHighlighter.config.clipboardSwf = 'http://s1.wp.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter/scripts/clipboard.swf?m=1253219630g';
+	SyntaxHighlighter.config.strings.expandSource = 'show source';
+	SyntaxHighlighter.config.strings.viewSource = 'view source';
+	SyntaxHighlighter.config.strings.copyToClipboard = 'copy to clipboard';
+	SyntaxHighlighter.config.strings.copyToClipboardConfirmation = 'The code is in your clipboard now';
+	SyntaxHighlighter.config.strings.print = 'print';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t configured for html-script option: ';
+	SyntaxHighlighter.all();
+</script>
+<script src="http://s.stats.wordpress.com/w.js?19" type="text/javascript"></script>
+<script type="text/javascript">
+st_go({'blog':'7974443','v':'wpcom','user_id':'0','post':'1109','subd':'incanter'});
+ex_go({'crypt':'RDZ8LFkxbXFDLktoNzN4ZXpzQTY0K0d8UWNkPTRYJmVXc2JiMjJ8YnNwL0ZmRD03WlQvaldNLWdHU25UN1hTUWc2PytUVTJEWjhBQ2RTVEIleDJqNHZaP2FSaWcyY29XX2ZzRjNiZCtqTWY2WEdBdVRZLVBZMzhwdHRzWUh6RmoxTW01YmZSaHFTRFA5MEt3fjJOfCV4OTFtP0ZIeFlqMEIwNzh1JkdTNUlseFtkVWU4VjYzWlR1QlcyRSV0V1ZfS3xkdSUwaU1ZNncrOFo5RUxOVXdXMlZpLXhUL25LOFtmcmRoP21Wd0xSeEE='});
+addLoadEvent(function(){linktracker_init('7974443',1109);});
+	</script>
+</body>
+</html>
