@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+  <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta name="keywords" content="uzbl, browser, open source"/>
+	<meta name="description" content="Uzbl is a lightweight webkit browser following the UNIX philosophy - to do one thing and do it well."/>
+	<meta name="author" content="Michael Walker"/>
+	<meta name="robots" content="FOLLOW,INDEX"/>
+   
+	<title>Uzbl - web interface tools which adhere to the unix philosophy.</title>
+
+	<link rel="stylesheet" href="/style.css" type="text/css" />
+    <link rel="alternate" type="application/atom+xml" title="Uzbl News" href="/atom.xml" />
+	<link rel="shortcut icon" type="image/png" href="/favicon.png" />
+	<base href="http://www.uzbl.org/"/>
+  </head>
+
+  <body>
+    <div id="page">
+      <div id="header">
+        <img src="img/uzbl-logo.png" alt="Uzbl"/>
+        <p>Uzbl - web interface tools which adhere to the unix philosophy.</p>
+      </div>
+      
+<div id="navigation">
+   <ul>
+     <li><a href="bugs/">Bugs</a></li>
+<li><a href="wiki/">Wiki</a></li>
+<li><a href="contribute.php">Contribute</a></li>
+<li><a href="community.php">Community</a></li>
+<li><a href="get.php">Get</a></li>
+<li><a href="readme.php">Readme</a></li>
+<li><a href="faq.php">FAQ</a></li>
+<li id="selected"><a href="/">Home</a></li>
+   </ul>
+</div>
+
+<div id="right">
+  <div id="commits">
+    <h2>Recent Commits</h2>
+    <ul>
+      <li>update keis' line in AUTHORS <span class='branch'>experimental</span></li>
+<li>WHITE/BLACKLIST_COOKIE regexp ma... <span class='branch'>experimental</span></li>
+<li>fix warnings when building uzbl-... <span class='branch'>experimental</span></li>
+<li>remove cookie_handler from the e... <span class='branch'>experimental</span></li>
+<li>add WHITELIST_COOKIE event to RE... <span class='branch'>experimental</span></li>
+<li>add cookie whitelisting, documen... <span class='branch'>experimental</span></li>
+<li>put session cookies in file <span class='branch'>experimental</span></li>
+<li><hr /></li>
+<li>Merge commit '081c95' <span class='branch'>master</span></li>
+<li>positional arguments still exist... <span class='branch'>master</span></li>
+<li>dmenu 4.1 and 4.2 have different... <span class='branch'>master</span></li>
+<li>Merge remote branch 'jspricke/ma... <span class='branch'>master</span></li>
+<li>uzbl-tabbed shouldn't freak out ... <span class='branch'>master</span></li>
+<li>Merge commit 'e293bf' into exper... <span class='branch'>master</span></li>
+<li>update docs/COMMUNITY <span class='branch'>master</span></li>
+      <li><a href="/commits.php">More&hellip;</a></li>
+    </ul>
+  </div>
+  
+  <div id="branches">
+    <h2>Branches</h2>
+    <ul>
+      <li>Official
+        <ol>
+          <li><a href="http://github.com/Dieterbe/uzbl/tree/master">master</a></li>
+          <li><a href="http://github.com/Dieterbe/uzbl/tree/experimental">experimental</a></li>
+      </ol></li>
+      <li>Community
+        <ol>
+          <li><a href="http://github.com/Dieterbe/uzbl/network">many repos @ github</a></li>
+          <li><a href="http://www.google.com/search?q=google+uzbl+git+-github">some repos not @ github</a></li>
+          <li><a href="http://github.com/search?q=uzbl">github search</a></li>
+      </ol></li>
+    </ul>
+  </div>
+</div>
+
+<div id="left">
+  <div id="about">
+    <h2>The uzbl web interface tools</h2>
+    <p>Uzbl follows the UNIX philosophy - &quot;Write programs that do one thing and do it well. Write programs to work together. Write programs to handle text streams, because that is a universal interface.&quot;
+    Uzbl comes in different flavors:</p>
+    <ul>
+      <li>uzbl-core: main component meant for integration with other tools and scripts
+        <ul>
+          <li>Uses WebkitGtk+ for rendering, network interaction (libsoup).  Css, javascript, plugin support etc come for free</li>
+          <li>Provides interfaces to get data in (commands/configuration) and out (events): stdin/stdout/fifo/unix sockets</li>
+          <li>You see a webkit view and (optionally) a statusbar which gets popuplated externally</li>
+          <li>No built-in means for url changing, loading/saving of bookmarks, saving history, keybinds, downloads, ...</li>
+          <li>Extra functionality: many sample scripts come with it, on <a href="http://www.uzbl.org/wiki/scripts">uzbl wiki</a> or write them yourself</li>
+          <li>Entire configuration/state can be changed at runtime</li>
+          <li>Uzbl keeps it simple, and puts <strong>you</strong> in charge.</li>
+        </ul>
+      </li>
+      <li>uzbl-browser: a complete browser experience based on uzbl-core
+        <ul>
+          <li>Uses a set of scripts (mostly python) that will fit most people, so things work out of the box.  Yet plenty of room for customisation</li>
+          <li>Brings everything you expect: url changing, history, downloads, form filling, link navigation, cookies, event management etc.  However: one page per instance</li>
+          <li>Advanced, customizable keyboard interface with support for modes, modkeys, multichars, variables (keywords) etc. (eg you can tweak the interface to be vim-like, emacs-like or any-other-program-like)</li>
+          <li>Adequate default configuration</li>
+          <li>Focus on plaintext storage for your data and configs in simple, parseable formats and adherence to the xdg basedir spec</li>
+          <li>Visually, similar to uzbl-core except that the statusbar contains useful things.  One window per webpage</li>
+        </ul>
+      </li>
+      <li>uzbl-tabbed: wraps around uzbl-browser and multiplexes it
+        <ul>
+          <li>Spawns one window containing multiple tabs, each tab containing a full embedded uzbl-browser</li>
+          <li>Ideal as a quick and simple solution to manage multiple uzbl-browser instances without getting lost</li>
+        </ul>
+      </li>
+    </ul>
+    <p>Uzbl is under heavy development and should be considered alpha.  See the <a href="/get.php">Get uzbl</a> page</p>
+  </div>
+  
+  <div id="news">
+    <h2>Latest News</h2>
+    <div class="newsitem">
+                <h3><a href="/news.php?id=31" title="2010.11.25: Beware, I Live! (Now faster, more stable and more capable)">2010.11.25: Beware, I Live! (Now faster, more stable and more capable)</a></h3>
+                <span class="date">2010-11-25</span>
+                <p><p>Hey folks! Things have been quiet here for a while, but uzbl is still steadily
+improving. In the last 3 months we have:</p>
+
+<ul>
+  <li>fixed a bug that caused uzbl-tabbed to hog CPU time after closing a tab
+  <li>introduced a C cookie daemon that uses a much faster algorithm than
+      uzbl-cookie-daemon
+  <li>fixed a crash when opening an image in a new window
+  <li>fixed several memory leaks
+  <li>added <code>SCROLL_VERT</code> and <code>SCROLL_HORIZ</code> events, which
+      allow us to display the scroll percentage in the status bar again
+  <li>added the <code>show_inspector</code> command to show the Web Inspector
+  <li>added the <code>enable_pagecache</code> variable to enable the <a href="http://webkit.org/blog/427/webkit-page-cache-i-the-basics/">Webkit Page Cache</a>
+  <li>added some new default keybindings
+  <li>refactored the default shell scripts to share code
+  <li>and fixed and tidied lots of other little things
+</ul>
+
+<p>Thanks to Ben Boeckel, Michael Raskin, Daiki Ueno, Lars-Dominik Braun and
+Paweł Zuzelski for these patches, and for keeping development active! (Thanks
+also to those whose patches still need to be merged, I'll be getting to those
+too.)</p>
+
+<p>There's still a lot that all of us can do to help make uzbl better, and a lot of
+cool things that uzbl can do for us. I'm looking forward to seeing what people
+come up with!</p>
+
+<ul>
+  <li><a href="https://github.com/Dieterbe/uzbl/tree/2010.11.25">2010.11.25 tree</a>
+  <li><a href="https://github.com/Dieterbe/uzbl/tarball/2010.11.25">2010.11.25 tgz</a>
+</ul>
+
+<p>Brendan</p>
+</p>
+              </div><div class="newsitem">
+                <h3><a href="/news.php?id=30" title="New maintainer">New maintainer</a></h3>
+                <span class="date">2010-11-21</span>
+                <p><p>Hi,
+as of today Brendan Taylor (aka 'bct') will be the new uzbl maintainer / project leader.</p>
+
+<p>Uzbl started about a year and a half ago as an experiment, an attempt to make web browsing more bearable for hackers.
+We didn't always make the right choices, but at the very least it has been an interesting journey.
+I think we've done innovative things.  Uzbl (and browsers in general) still have a way to go, but at least the browsing experience is now tolerable.
+Partly because of our work on uzbl, partly because of some other cool browser projects that have appeared since.</p>
+
+<p>Personally I've lost of interest in devoting much of my spare time on Uzbl. 
+I have other projects going on (open source stuff, and real life projects), and
+I want to be more a user, less a coder.</p>
+
+<p>There are various foss projects where progress goes slowly - releases taking easily a year or more - but that's not how I want it to be for Uzbl.
+Uzbl has clearly an active user/contributor base and it's sad to see to the pile of pending patches / pull requests just getting bigger and bigger.
+In the spirit of "release early, release often" I think the project also needs somebody who can at least keep up with, and preferrably, drive the progress.
+There's still so much innovation which can be done, and now I feel I'm holding it back.</p>
+
+<p>Brendan has been a long time contributor, he seems to know what he's doing, and he has some things he wants to tackle,
+so I'll think he's the right person for the job.
+He'll share his plans with you guys shortly.</p>
+
+<p>Practically, to keep things simple, the repositories stay the same.
+That is:
+<ul>
+<li><a href="http://github.com/Dieterbe/uzbl">http://github.com/Dieterbe/uzbl</a></li>
+<li><a href="http://github.com/Dieterbe/uzbl-website">http://github.com/Dieterbe/uzbl-website</a></li>
+</ul>
+Brendan will be the guy deciding what goes in and what doesn't.
+He'll be the one deciding over your pull requests and patches (but again: community feedback is always welcome!)
+He'll also be the one defining the direction of the project, and he's in charge of the website/wiki/bugtracker/...
+(although we of course all pitch in where we can, right ;-)</p>
+
+<p>So, welcome Brendan!</p>
+
+<p>Dieter</p>
+</p>
+              </div><ul id="newslinks"><li><a href="http://www.uzbl.org/archives.php">Archives</a></li></ul>          
+  </div>
+</div>
+
+    </div>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-4514522-11");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+  </body>
+</html>
