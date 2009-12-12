@@ -1,0 +1,1134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>Managing the Java classpath (UNIX and Mac OS X)</title>
+<meta http-equiv="PICS-Label" content='(PICS-1.1 "http://www.icra.org/ratingsv02.html" l gen true r (cz 1 lz 1 nz 1 oz 1 vz 1) "http://www.rsac.org/ratingsv01.html" l gen true r (n 0 s 0 v 0 l 0) "http://www.classify.org/safesurf/" l gen true r (SS~~000 1))'/>
+<link rel="schema.DC" href="http://purl.org/DC/elements/1.0/"/>
+<link rel="SHORTCUT ICON" href="http://www.ibm.com/favicon.ico"/>
+<meta name="Owner" content="developerWorks Content/Raleigh/IBM"/>
+<meta name="DC.Language" scheme="rfc1766" content="en"/>
+<meta name="IBM.Country" content="ZZ"/>
+<meta name="Security" content="Public"/>
+<meta name="IBM.SpecialPurpose" content="SP001"/>
+<meta name="IBM.PageAttributes" content="sid=1003"/>
+<meta name="Source" content="v16 Template Generator"/>
+<meta name="Robots" content="index,follow"/>
+<meta name="Abstract" content="The classpath is one of the most complex and infuriating parts of the Java platform, but mastering it is essential to becoming a professional Java programmer. In this article, Elliotte Rusty Harold lays out the intricacies of the classpath and sourcepath and shows you how to master them on UNIX and Mac OS X. If you're using Windows, see the companion article."/>
+<meta name="Description" content="The classpath is one of the most complex and infuriating parts of the Java platform, but mastering it is essential to becoming a professional Java programmer. In this article, Elliotte Rusty Harold lays out the intricacies of the classpath and sourcepath and shows you how to master them on UNIX and Mac OS X. If you're using Windows, see the companion article."/>
+<meta name="Keywords" content="Java, classpath, sourcepath, UNIX, Mac OS X, Linux, management, organization, organizing, managing, package, directory, structure, compilation, compiling, run time, runtime, filesystem, file system, IDEs, automation, Ant, Maven, builds, Elliotte Rusty Harold, tttjca"/>
+<meta name="DC.Date" scheme="iso8601" content="2006-12-12"/>
+<meta name="DC.Type" scheme="IBM_ContentClassTaxonomy" content="CT316"/>
+<meta name="DC.Subject" scheme="IBM_SubjectTaxonomy" content="TT300"/>
+<meta scheme="IBM_WTMCategory" name="IBM.WTMCategory" content="SOFDCJVAZZ" />
+<meta name="DC.Rights" content="© Copyright IBM Corporation 2006"/>
+<meta name="IBM.Effective" scheme="W3CDTF" content="2006-12-12"/>
+<meta name="title" content="Managing the Java classpath (UNIX and Mac OS X)"/>
+
+<!-- HEADER_SCRIPTS_AND_CSS_INCLUDE -->
+<link href="//dw1.s81c.com/common/v16/css/all.css" media="all" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/common/v16/css/screen.css" media="screen,projection" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/common/v16/css/screen-uas.css" media="screen,projection" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/common/v16/css/zz/en/screen-fonts.css" media="screen,projection" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/common/v16/css/handheld.css" media="handheld" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/common/v16/css/print.css" media="print" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/common/v16/css/overlay.css" media="screen,projection" rel="stylesheet" title="www" type="text/css"/>
+
+<!-- dW-specific CSS -->
+<link href="//dw1.s81c.com/developerworks/css/dw-screen.css" media="screen,projection" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/developerworks/css/dw-screen-comments-ratings-signin.css" media="screen,projection" rel="stylesheet" title="www" type="text/css"/>
+<link href="//dw1.s81c.com/developerworks/js/jquery/cluetip98/jquery.cluetip.css" media="screen,projection" rel="stylesheet"  title="www" type="text/css" />
+
+<script src="//dw1.s81c.com/common/js/ibmcommon.js" type="text/javascript">//</script>
+<script src="//dw1.s81c.com/common/js/dynamicnav.js" type="text/javascript">//</script>
+
+<!-- dW functional JS -->
+<script language="JavaScript" src="//dw1.s81c.com/developerworks/js/urltactic.js" type="text/javascript"></script>
+<!-- Rating_START -->
+<script language="JavaScript" src="//dw1.s81c.com/developerworks/js/artrating/showrating.js" type="text/javascript"></script>
+<style type="text/css">
+.metavalue {
+  display: none;
+}
+</style>
+<!-- Rating_END --><!-- RESERVED_HEADER_INCLUDE -->
+<script language="javascript" src="//dw1.s81c.com/developerworks/js/ajax1.js" type="text/javascript"></script>
+<script language="javascript" src="//dw1.s81c.com/developerworks/js/search_counter-maverick.js" type="text/javascript"></script>
+<script language="javascript" src="//dw1.s81c.com/developerworks/js/request_referer_capture-maverick.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+ <!--
+ setDefaultQuery('');
+ //-->
+</script>
+<script language="JavaScript" type="text/javascript">
+ <!--
+ function openNewWindow(url,tar,arg){window.open(url,tar,arg);}
+ //-->
+</script>
+<!-- Include file support -->
+<script language="JavaScript" type="text/javascript">
+(function($) {
+	jQuery.extend({
+		getInc: function(u,d){
+			if(u==null)return;
+			jQuery.ajax({
+	    		type: "GET",
+			url: u,
+			dataType: "text",
+	        	success: function(t) {
+				jQuery(d).html(t);
+				ibmCommon.initShowHide(jQuery(d).children()[0]);			
+			},
+			async: true
+			});
+		}
+	});
+})(jQuery);
+</script>
+</head>
+
+<body id="ibm-com">
+<div id="ibm-top" class="ibm-landing-page">
+
+<!-- MASTHEAD_BEGIN -->
+<div class="ibm-access"><a href="#ibm-content">Skip to main content</a></div>
+<div id="ibm-masthead">
+<div id="ibm-logo"><a href="http://www.ibm.com/"><img height="50" src="//dw1.s81c.com/i/v16/t/ibm-logo.gif" width="110" alt="IBM®" /></a></div>
+<ul id="ibm-geo"><li id="ibm-country" class="ibm-first">Country/region</li><li id="ibm-change-country">[ <a href="http://www.ibm.com/developerworks/country/">select</a> ]</li></ul>
+  <form id="ibm-search-form" action="//www.ibm.com/developerworks/search/searchResults.jsp" method="get" name="form1"><input type="hidden" name="searchType" value="1"/><input type="hidden" name="searchSite" value="dW"/><p>
+<span id="ibm-search-scope">
+<label for="sn"><img src="//dw1.s81c.com/i/c.gif" width="1" height="1" alt="Search in:"/></label>
+<select name="searchScope" id="sn">
+<option value="dW" selected="selected">All of dW</option>
+<option value="dW">-----------------</option>
+<option value="aixunix">&nbsp;AIX and UNIX</option>
+<option value="db2">&nbsp;Information Mgmt</option>
+<option value="lotus">&nbsp;Lotus</option>
+<option value="rdd">&nbsp;Rational</option>
+<option value="tivoli">&nbsp;Tivoli</option>  
+<option value="WSDD">&nbsp;WebSphere</option>
+<option value="dW">-----------------</option> 
+<option value="javaZ">&nbsp;Java technology</option> 
+<option value="linuxZ">&nbsp;Linux</option> 
+<option value="opensrcZ">&nbsp;Open source</option>
+<option value="webservZ">&nbsp;SOA/Web services</option>
+<option value="webarchZ">&nbsp;Web development</option>  
+<option value="xmlZ">&nbsp;XML</option>
+<option value="dW">-----------------</option>
+<option value="forums">&nbsp;dW forums</option> 
+<option value="dW">-----------------</option>
+<option value="aI">University</option>
+<option value="dW">-----------------</option>
+<option value="aW">alphaWorks</option>
+<option value="dW">-----------------</option>
+<option value="all">All of IBM</option>
+</select>
+</span>
+
+<label for="q"><img alt="Search for:" height="1" width="1" src="//dw1.s81c.com/i/c.gif" /></label><input type="text" name="query" maxlength="100" id="q"/><input type="submit" id="ibm-search" class="ibm-btn-search" name="Search" value="Search" /></p></form>
+<div id="ibm-site-name">
+<!-- IBM site name container -->
+</div>
+<div id="ibm-universal-nav">
+<ul><li id="ibm-unav-home" class="ibm-first"><a href="http://www.ibm.com/">Home</a></li><li id="ibm-unav-solutions"><a href="http://www.ibm.com/solutions/">Solutions</a></li><li id="ibm-unav-services"><a href="http://www.ibm.com/technologyservices/">Services</a></li><li id="ibm-unav-products"><a href="http://www.ibm.com/products/">Products</a></li><li id="ibm-unav-support"><a href="http://www.ibm.com/support/">Support &amp; downloads</a></li><li id="ibm-unav-myibm"><a href="http://www.ibm.com/account/">My IBM</a></li></ul>
+</div>
+</div>
+<!-- MASTHEAD_END -->
+
+<div id="ibm-pcon">
+
+<!-- CONTENT_BEGIN -->
+<div id="ibm-content">
+
+<!-- Navigation_Trail_BEGIN -->
+<!-- &nbsp; -->
+      <div id="ibm-content-head"><ul id="ibm-navigation-trail"><li class="ibm-first"><a href="http://www.ibm.com/developerworks/">developerWorks</a></li><li><a href="http://www.ibm.com/developerworks/java/">Java technology</a></li><li><a href="http://www.ibm.com/developerworks/views/java/library.jsp">Technical library</a></li></ul></div>
+<!-- Navigation_Trail_END -->
+
+<!-- dW_Summary Area_START -->
+<div id="dw-summary-article">
+
+<div class="dw-content-head">
+<h1>Managing the Java classpath (UNIX and Mac OS X)</h1><p><em>Tips for managing the classpath on UNIX and Mac OS X</em></p>
+</div>
+
+<div class="ibm-container-body ibm-two-column">
+
+<div class="ibm-column ibm-first">
+<div class="author"><a class="dwauthor" rel="#authortip1" href="#author1">Elliotte Rusty Harold</a> (<a href="mailto:elharo@metalab.unc.edu?subject=Managing the Java classpath (UNIX and Mac OS X)&amp;cc=jaloi@us.ibm.com">elharo@metalab.unc.edu</a>), Adjunct Professor, Polytechnic University</div><div id="authortip1" class="dwauthor-onload-state ibm-no-print"><div class="position"><img src="http://www-128.ibm.com/developerworks/i/p-eharold.jpg" width="64" height="80" alt="Photo of Elliotte Rusty Harold" /></div>Elliotte Rusty Harold is originally from New Orleans, to which he
+returns periodically in search of a decent bowl of gumbo. However, he
+resides in the Prospect Heights neighborhood of Brooklyn with his wife
+Beth and cats Charm (named after the quark) and Marjorie (named after
+his mother-in-law). He's an adjunct professor of computer science at
+Polytechnic University, where he teaches Java and object-oriented
+programming. His <a href="http://www.cafeaulait.org/">Cafe au Lait</a>
+Web site has become one of the most popular independent Java sites on
+the Internet, and his spin-off site, <a href="http://www.cafeconleche.org/">Cafe con Leche</a>, has become one
+of the most popular XML sites. His most recent book is <a href="http://www.cafeaulait.org/books/javaio2/">Java I/O, 2nd  
+edition</a>.
+He's currently working on the <a href="http://www.xom.nu/">XOM</a> API for processing XML, the <a href="http://jaxen.codehaus.org/">Jaxen</a> XPath engine, and the <a href="http://jester.sourceforge.net/ ">Jester</a> test coverage tool.</div>
+<p></p>
+<p><b>Summary:</b>&nbsp; The classpath is one of the most complex and infuriating parts of the Java&#8482; platform, but mastering it is essential to becoming a professional Java programmer. In this article, Elliotte Rusty Harold lays out the intricacies of the classpath and sourcepath and shows
+you how to master them on UNIX and Mac OS X. If you're using Windows, see the <a href="http://www.ibm.com/developerworks/java/library/j-classpath-windows/">companion article</a>.</p>
+
+<div id="dw-tag-content" class="ibm-no-print"></div><div id="dw-moretags-access" class="ibm-access"></div>
+<p class="ibm-no-print"><div id="dw-tag-this" class="ibm-no-print"><a class="ibm-external-link" onclick="jQuery.launchTagThisWindow(); return false;" href="#">Tag this!</a></div><div id="interestShow" class="ibm-no-print"></div></p>
+</div>
+
+<div class="ibm-column ibm-second">
+<p class="leading"><b>Date:</b>&nbsp; 12 Dec  2006
+<br /><b>Level: </b>&nbsp;Introductory
+
+<br /><b>Also available in:&nbsp;</b>
+&nbsp;<a href="http://www.ibm.com/developerworks/cn/java/j-classpath-unix/">Chinese</a>
+&nbsp;<a href="http://www.ibm.com/developerworks/kr/library/j-classpath-unix/">Korean</a> 
+&nbsp;<a href="http://www.ibm.com/developerworks/ru/library/j-classpath-unix/">Russian</a> 
+
+
+
+
+<br />
+<br /><b>Activity:</b>&nbsp; 65348 views
+<br /><b>Comments:</b> &nbsp; <span id="nCmts"><img alt="" src="//dw1.s81c.com/developerworks/i/circle-preloader.gif" height="12" width="50" /><img alt="" src="//dw1.s81c.com/i/c.gif" height="14" width="1" /></span>
+<!-- Rating_Area_Begin -->
+<div id="art-rating-summary"></div>
+<!-- Rating_Area_End -->
+</p>
+</div>
+
+</div>
+</div>
+<!-- dW_Summary_Area_END -->
+
+<!-- CONTENT_BODY -->
+<div id="ibm-content-body">
+
+<!-- MAIN_COLUMN_BEGIN -->
+<div id="ibm-content-main">
+
+<!-- Related_Searches_Area -->
+<!-- Related_Searches_Area_Begin -->
+<script type="text/javascript" language="javascript">
+	     capture_referrer();
+</script>
+
+<div id="dw-related-searches-article" style="display:none">
+<div class="ibm-container ibm-alternate-two">
+<div class="ibm-container-body">
+
+<!--  START : HTML FOR ARTICLE SEARCH -->
+  <div id="article_results" style="display:block"></div>
+<!--  END : HTML FOR ARTICLE SEARCH -->
+
+</div>
+</div>
+</div>
+<!-- Related_Searches_Area_End -->
+<!-- MAIN_COLUMN_CONTAINER_BEGIN -->
+<div class="ibm-container">
+
+<!-- MAIN_COLUMN_CONTENT_BEGIN -->
+<p>The classpath is the connection between the Java runtime and the filesystem. It defines where the interpreter looks for .class files to load.
+The basic idea is that the filesystem hierarchy mirrors the Java package
+hierarchy, and the classpath specifies which directories in the filesystem
+serve as roots for the Java package hierarchy. </p>
+
+<p> Unfortunately, file systems are complex and very platform dependent, and they
+don't perfectly match Java packages. Consequently, the classpath has
+been a thorn in the side of both new users and experienced Java programmers
+for years.  It isn't the pretty part of the Java platform. It is the
+annoying glitch that keeps you working well past 5 p.m., trying to debug a small problem that stubbornly refuses solution. </p>
+
+<p> A good IDE like Eclipse can shield you from some of the difficulties of
+managing the classpath, but only somewhat, and only as long as nothing goes
+wrong (and something always goes wrong). Consequently, it is essential that
+every Java programmer fully understand the classpath.  Only with in-depth understanding can you hope to debug the thorny problems that  arise
+from the classpath. </p>
+
+<p>In this article, I lay out everything you need to know about the Java
+classpath (and the associated sourcepath) on UNIX, Linux, and Mac OS X.  In
+the <a href="http://www.ibm.com/developerworks/java/library/j-classpath-windows/">companion article</a>, I demonstrate similar techniques for Windows.
+Following the procedures outlined here will serve as a guide along the way,
+and should cure most classpath problems. </p>
+
+<p><a name="N10078"><span class="atitle">Package structure</span></a></p>
+<p>Mastering the classpath begins with the source code. Every class
+belongs in a package, and this package <i>must</i> follow the standard
+naming conventions. To briefly review: A package name begins with a
+two-level reversed domain name such as <code>com.example</code> or <code>edu.poly</code>.
+This is followed by at least one more word that describes the contents of
+the package. For example, because I own the domain name elharo.com, if I were
+to write a <code>Fraction</code> class, I might  place it in
+one of the following packages: </p>
+
+<ul>
+    <li><code>com.elharo.math</code></li>
+    <li><code>com.elharo.numbers</code></li>
+    <li><code>com.elharo.math.algebra.fields</code></li>
+</ul>
+
+
+<p> After the reversed domain name, use only single-word subpackage names.
+Do not abbreviate, and do spell all words correctly. Use a spell checker if you
+need to. A large percentage of classpath-related problems are caused by using one word in the source code and a slightly different spelling or abbreviation
+of that word in the filesystem. The only sensible choice is to always use
+correctly spelled, unabbreviated names.</p>
+
+<p>The entire package name should be lowercase, even for proper names and
+acronyms that are normally capitalized. The package name should be
+composed exclusively of ASCII characters. While the compiler accepts package names written in Hebrew,
+Cyrillic, Greek, and other scripts, many file systems don't. As you'll
+see shortly, these package names will have to serve double duty as
+directory names. Consequently, package (and class) names
+should be limited to ASCII. (While Java package and class names are Unicode, many file systems are not yet Unicode-savvy. Simply copying a file to a system with a different default encoding can keep the compiler and interpreter from finding the right classes.) </p>
+
+<div class="ibm-container ibm-alt-header dw-container-sidebar"><a name="sidebar1"></a><h2>Throwaway code</h2><div class="ibm-container-body">
+
+<p>If you're just writing a single class to test your intuition about an
+API and you will throw it away immediately after running it once, then you
+don't have to put it in a package. However, any class that will be used more
+than once should be in a package. </p>
+</div></div>
+
+<p>Do not skimp on your package name! It will only lead to disaster in the
+long run. If you need a domain name, buy one. If the names are too long, buy
+a shorter one. (I once bought xom.nu so my package prefix was only six
+characters long.) Do not place your classes in the default package (the
+package you get if you don't include a package statement in the class).  If
+package access prevents objects from communicating, add more public methods
+to the classes. Every class you use more than once must be in a package.
+</p>
+
+<p><a name="N100B6"><span class="atitle">Directory structure</span></a></p>
+<p>The next step is to organize your source files to match the package
+structure. Create a clean, empty directory somewhere. For the purposes of this
+article, I'll name it <i>project</i>. Inside this directory, create two more
+directories: bin and src. (Some people prefer to name these build and
+source, respectively.) </p>
+
+<p>Next, inside the src directory, make a hierarchy that mirrors your
+package hierarchy. For example, given a class named <code>com.elharo.math.Fraction</code>, I would place a com directory
+in the src directory. Then I would create an elharo directory inside the com
+directory. Then I would put a math directory inside the elharo directory.
+Finally, I would put Fraction.java inside this math directory, as shown in Figure 1: </p>
+
+
+<br /><a name="fig1"><b>Figure 1. Directory structure follows the package structure</b></a><br />
+<img alt="Directory structure follows the package structure" border="0" height="329" hspace="5" src="Fraction.jpg" vspace="5" width="447"/><br />
+
+<p>You can do this with one <code>mkdir -p</code> command:</p>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">$ mkdir -p com/elharo/math</pre></td></tr></table><br />
+
+
+<p>Very important: Never put anything other than source code in your src
+directory. Usually the only files you put there are .java files. On
+occasion, you may place .html files (for Javadoc) or other types of source
+code in this directory.  However, you never want to put .class files or
+other compiled, generated artifacts in this hierarchy. Doing so is a recipe
+for disaster. Sadly, the javac compiler will do exactly that unless you're
+careful. In the next section, I'll show you how to fix that. </p>
+
+<div class="ibm-alternate-rule"><hr/></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="N100E9"><span class="atitle">Compiling</span></a></p>
+<p>Compiling Java code is tricky because you need to keep track of several
+related but different things: </p>
+
+<ul>
+<li>The target file you're compiling.</li>
+
+<li>The directory where the compiler looks for .java files that the target file imports.</li>
+
+<li>The directory where the compiler looks for .class files the target file imports.</li>
+
+<li>The directory where the compiler puts the compiled output.</li>
+</ul>
+
+<p>By default, the javac compiler thinks all of these are the current working directory, which is almost never what you want. Consequently, you need to explicitly specify each of these elements when you compile. </p>
+
+<p><a name="N10103"><span class="smalltitle">The file to compile</span></a></p>
+<p>The first thing you specify is the .java file you're going to compile.
+This is given as a path to that file from the current working directory. For
+example, suppose you are in the project directory shown in <a href="#fig1">Figure 1</a>. This
+directory contains an src directory. The src directory contains a com
+directory, which contains the example directory, which contains the
+Fraction.java file. The following command line compiles it: </p>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">$ javac src/com/elharo/math/Fraction.java</pre></td></tr></table><br />
+
+<p> If the path is incorrect, you'll get an error message like this one: </p>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">error: cannot read: src/com/example/mtah/Fraction.java
+</pre></td></tr></table><br />
+
+<p>If you see this error message, check each piece of the path to make sure it's spelled correctly. Then check that the file really is where it's supposed to be by doing an <code>ls</code> like the one shown here:</p>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">$ ls src/com/example/math
+ls: src/com/example/math: No such file or directory
+</pre></td></tr></table><br />
+
+<p>This problem usually indicates a mistyped path, but it can also mean that you're not in the directory you think you're in. In this example, you'd check to see that the current working directory is the project directory. The <code>pwd</code> command is helpful here. For example, the following tells me that I'm actually in the project/src instead of the project directory: </p>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">$ pwd
+/Users/elharo/documents/articles/classpath/project/src</pre></td></tr></table><br />
+
+<p>I need to <code>cd ..</code> before compiling.</p>
+
+
+<p><a name="N10137"><span class="smalltitle">Where the output goes</span></a></p>
+<p>Assuming there are no syntax errors, javac places the compiled .class
+file in the same directory where the .java file is. You do not want this.
+Mixing .class and .java files  makes it very hard to clean up the compiled
+files without accidentally deleting .java files you want to keep. This makes
+clean builds problematic and tends to result in versioning problems. It also
+makes it hard to jar up just the compiled .class files when distributing a
+binary. Therefore, you need to tell the compiler to put the compiled output
+in a completely different directory. The <code>-d</code>
+switch specifies the output directory (usually called bin, build, or
+classes): </p>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">$ javac -d bin src/com/elharo/math/Fraction.java
+</pre></td></tr></table><br />
+
+<p>Now the output is as shown in Figure 2. Notice that javac has created
+the complete com/elharo/math hierarchy of directories. You do not need to do
+it manually.</p>
+
+
+<br /><a name="N1014C"><b>Figure 2. Parallel source and compiled hierarchies</b></a><br />
+<img alt="Parallel source and compiled hierarchies" border="0" height="329" hspace="5" src="CompiledFraction.jpg" vspace="5" width="447"/><br />
+
+
+<p><a name="N1015D"><span class="smalltitle">The sourcepath</span></a></p>
+<p>The directory where Java looks for source files is called the
+<i>sourcepath</i>. In the scheme outlined here, this is the src directory.
+It is the directory that contains the <i>hierarchy</i> of source files,
+organized into their own directories. It is <i>not</i> the com directory
+or the src/com/elharo/math directory. </p>
+
+<p> Most projects use more than one class and more than one package. These
+are connected by import statements and fully package-qualified class names.
+For example, suppose you now create a new <code>MainFrame</code> class in the
+<code>com.elharo.gui</code> package, as shown in Listing 1: </p>
+
+<br /><a name="N1017D"><b>Listing 1. A class in one package can import a class in another</b></a><br /><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">
+
+package com.elharo.gui;
+
+import com.elharo.math.*;
+
+public class MainFrame {
+
+  public static void main(String[] args) {
+    Fraction f = new Fraction();
+    // ...
+  }
+
+}</pre></td></tr></table><br />
+
+<p> This class uses the <code>com.elharo.math.Fraction</code> class in a different package from the <code>MainFrame</code> class. The source setup is now as shown in Figure 3. (I have deleted the compiled output from the previous step. I can always compile it again.) </p>
+
+
+<br /><a name="N10191"><b>Figure 3. Source structure for several packages</b></a><br />
+<img alt="Source structure for several packages" border="0" height="329" hspace="5" src="MainFrameSource.jpg" vspace="5" width="447"/><br />
+
+<p>Now let's see what happens when I try to compile MainFrame.java like I did before:</p>
+
+<br /><a name="N101A9"><b>Listing 2. Compiling MainFrame.java</b></a><br /><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">
+
+$ javac -d bin src/com/elharo/gui/MainFrame.java
+src/com/elharo/gui/MainFrame.java:3: package com.elharo.math does not exist
+import com.elharo.math.*;
+^
+src/com/elharo/gui/MainFrame.java:7: cannot find symbol
+symbol  : class Fraction
+location: class com.elharo.gui.MainFrame
+  private Fraction f = new Fraction();
+          ^
+src/com/elharo/gui/MainFrame.java:7: cannot find symbol
+symbol  : class Fraction
+location: class com.elharo.gui.MainFrame
+  private Fraction f = new Fraction();
+                           ^
+3 errors
+</pre></td></tr></table><br />
+
+<p>The errors in Listing 2 happened because although javac knew where to find MainFrame.java, it didn't know where to find Fraction.java. (You'd think it
+would be smart enough to notice the matching package hierarchies, but it's
+not.) To clue it in, I have to specify the <i>sourcepath</i>. This
+specifies the directories where the compiler looks for the hierarchy of
+source files. In Listing 2, that's src. So I use the <code>-sourcepath</code> option, like so: </p>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">$ javac -d bin -sourcepath src src/com/elharo/gui/MainFrame.java
+</pre></td></tr></table><br />
+
+<p> Now the program compiles without error and produces the output shown in
+Figure 4. Notice that javac also  compiled the file Fraction.java,
+referenced by the file I was compiling. </p>
+
+
+<br /><a name="N101C3"><b>Figure 4. Multiclass output</b></a><br />
+<img alt="Multiclass output" border="0" height="329" hspace="5" src="multipackagecompile.jpg" vspace="5" width="447"/><br />
+
+<p><a name="N101D4"><span class="smalltitle">Compiling multiple directories in the sourcepath</span></a></p>
+<p>You can actually have more than one directory in your sourcepath,
+separated by colons, though this  is usually not necessary. For example, if I
+want to include both the local src directory and the directory
+/Users/elharo/Projects/XOM/src where I keep the source code for another
+project, I can compile like this: </p>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">$ javac -d bin -sourcepath src:/Users/elharo/Projects/XOM/src
+  src/com/elharo/gui/MainFrame.java
+</pre></td></tr></table><br />
+
+
+<p>This command does not compile every file found in either of those hierarchies. It only compiles the files referenced directly or indirectly by the single .java file I explicitly ask to be compiled. </p>
+
+<p> Much more commonly, you'll have a single source directory for .java
+files, but multiple directories for classes or JAR archives where
+precompiled third party libraries are placed. This is the role of the
+classpath. </p>
+
+<p><a name="N101E6"><span class="smalltitle">Setting the classpath</span></a></p>
+<p>In medium-to-large projects, recompiling every file every time can be time-consuming. You can ease this burden by separately compiling and storing
+independent parts of the same project in different classes or bin
+directories. These directories are added to the classpath. </p>
+
+<p>There are several ways to add a class to the classpath. The <code>-classpath</code> command-line switch is the only one you
+should use, however. For example, suppose I want to import  files from
+another project that I've previously compiled into the  directory 
+/Users/elharo/classes. Then I would add <code>-classpath
+/Users/elharo/classes</code> to the command line like so: </p>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">
+$ javac -d bin -sourcepath src -classpath /Users/elharo/classes
+  src/com/elharo/gui/MainFrame.java
+</pre></td></tr></table><br />
+
+<p> Now suppose I need to add two directories,
+/Users/elharo/project1/classes and /Users/elharo/project2/classes. Then I
+would include them both separated by a colon, like this: </p>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">$ javac -d bin -sourcepath src
+  -classpath /Users/elharo/project1/classes:/Users/elharo/project2/classes
+  src/com/elharo/gui/MainFrame.java
+</pre></td></tr></table><br />
+
+
+<div class="ibm-container ibm-alt-header dw-container-sidebar"><a name="sidebar2"></a><h2>Top-level directories</h2><div class="ibm-container-body">
+
+Notice that the directories I reference here are all top-level directories that contain a hierarchy like com/elharo/foo/bar or nu/xom/util. Directories whose names match package names (com, elharo, math, etc.) are never included directly in the sourcepath  or classpath.
+</div></div>
+
+<p> Of course, you can use various forms of relative paths if you
+prefer. For instance, if project1 and project2 are siblings of the current
+working directory (that is, they have the same parent directory), then I
+could reference them like this: </p>
+
+<table width="50%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">$ javac -d bin -sourcepath src
+  -classpath ../project1/classes:../project2/classes
+  src/com/elharo/gui/MainFrame.java
+</pre></td></tr></table><br />
+
+<p>So far, I've assumed the program is complete onto itself and does not use
+any separately compiled third-party libraries. If it does, you'll need to add
+them to the classpath too. Libraries are usually distributed as JAR files
+such as junit.jar or icu4j.jar. In this case, it is the JAR file itself that
+you add to the classpath, not the directory that contains it. (In essence,
+the JAR file acts as a directory that contains compiled .class files.) For
+example, the following command adds three things to the classpath: the directory
+/Users/elharo/classes, the file icu4j.jar in the current working directory,
+and the file junit.jar in /Users/elharo/lib: </p>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">$ javac -d bin -sourcepath src
+  -classpath /Users/elharo/classes:icu4j.jar:/Users/elharo/lib/junit.jar
+  src/com/elharo/gui/MainFrame.java
+</pre></td></tr></table><br />
+
+<p> JAR files are only used for .class files and the classpath, not for
+.java files and the sourcepath. </p>
+
+<div class="ibm-alternate-rule"><hr/></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="N1021F"><span class="atitle">Running the program</span></a></p>
+<p>You have now successfully compiled your program, and are ready to run
+it. This is similar to but simpler than compiling. When running a program,
+you only need to specify two things: </p>
+
+
+<ul>
+    <li>The classpath.</li>
+    <li>The fully package qualified name of the class that contains your <code>main()</code> method.</li>
+</ul>
+
+<p> You do not need to specify the sourcepath. </p>
+
+<p>Usually the classpath is the same classpath you used to compile the
+program, with the addition of the directory where the compiled output was
+placed. For example, if the compile command was this: </p>
+
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">$ javac -d bin -sourcepath src
+  -classpath /Users/elharo/classes:/Users/elharo/lib/junit.jar
+  src/com/elharo/gui/MainFrame.java
+</pre></td></tr></table><br />
+
+<p> and the <code>main()</code> method was in the class <code>com.elharo.gui.MainFrame</code>,
+then you would run the program like this: </p>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">$ java
+   -classpath bin:/Users/elharo/classes:/Users/elharo/lib/junit.jar
+    com.elharo.gui.MainFrame
+</pre></td></tr></table><br />
+
+<p> Take careful note that the last item on the command line is a <i>class
+name</i>. It is not a file name. It does not end in .java or .class. This
+class must be found somewhere on the classpath. </p>
+
+<div class="ibm-alternate-rule"><hr/></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="N10253"><span class="atitle">Other places classes reside</span></a></p>
+<p> I strongly recommend that you always explicitly specify the classpath
+when you compile and when you run. There are other places you can put files
+so that they are added to the classpath and found by both the javac compiler
+and the java interpreter. These options save only a little amount of typing, and they do so at the expense of a large amount of  debugging when -- not if -- you accidentally place an old version of a class in the classpath.</p>
+
+<p>In this section, I'll show you some of the places you might expect to
+find classes hiding, that unexpectedly pop into your classpath and cause problems. This is especially likely to happen on machines you don't control, such as a server. </p>
+
+<p><a name="N1025E"><span class="smalltitle">The current working directory</span></a></p>
+<p> The compiler uses the current working directory (.) as the default 
+classpath. However, as soon as you set the classpath in some other 
+way--e.g. with <code>-classpath</code> or the <code>CLASSPATH</code> environment variable--this is no longer 
+automatic. You have to add the current working directory to the 
+classpath just like any other directory. In either case,  it's too easy 
+to forget what is or isn't in the same directory as you are. Thus, try 
+to avoid putting any classes or hierarchies into your project or home 
+directory. Instead, always keep things neatly separated into src 
+directories for .java files and bin directories for .class files.</p>
+
+<p><a name="N1026E"><span class="smalltitle">CLASSPATH</span></a></p>
+<p> After a while, you may get tired of manually adding the bin directories
+and JAR archives to the classpath. You may then discover the <code>CLASSPATH</code>
+environment variable. You can add directories and JAR archives just once to
+the <code>CLASSPATH</code> environment variable. Then you don't have to type their paths
+every time you run javac or java. </p>
+
+<p>Resist this temptation. It will cause problems when you load the wrong
+class or the wrong version of a class. Any time you save typing now will be
+taken back from you a hundred times over in debugging problems caused by
+accidentally loading the wrong classes. There are better ways to automate
+classpaths and avoid typing. </p>
+
+<p><a name="N10281"><span class="smalltitle">jre/lib/ext</span></a></p>
+<p> JAR archives placed in your jre/lib/ext directory are added to the
+classpath of all applications run with that virtual machine. While this
+seems convenient, it is also a long-term mistake akin to
+adding directories to the <code>CLASSPATH</code> environment variable. Sooner or later
+(probably sooner), you'll load the wrong version of a class from a place you
+aren't even thinking about and waste hours debugging. </p>
+
+<p> This problem is especially serious when deploying server-side
+applications. Be very careful that the server you're deploying to doesn't
+have any extra JARs in its jre/lib/ext directory. Problems caused by the
+wrong version of a JAR archive in the classpath  can be extremely hard to
+debug if you don't recognize the symptoms or know just what to look for. To
+avoid these problems, some frameworks have even gone so far as to write
+their own class loaders that bypass Java code's usual class loading mechanisms.
+</p>
+
+<p><a name="N10290"><span class="smalltitle">jre/lib/endorsed</span></a></p>
+<p>JAR files in the  jre/lib/endorsed directory are also added to the
+classpath of all applications run with that virtual machine. The difference
+is that these files are actually added to the <i>bootclasspath</i> rather than the usual classpath and can replace the standard classes shipped with the JDK.
+This approach is especially useful for upgrading the XML parser and fixing bugs in
+the VM. </p>
+
+<p>Once again, though, while this technique seems convenient, it is also a long-term
+mistake for the same reason. If you need to replace JDK classes, use the
+<code>-Xbootclasspath/p</code> option at runtime to avoid accidentally loading the wrong version of a class: </p>
+
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="code-outline"><pre class="displaycode">$ java -classpath /Users/elharo/classes
+       -Xbootclasspath/p:xercesImpl.jar com.elharo.gui.MainFrame
+</pre></td></tr></table><br />
+
+
+<div class="ibm-alternate-rule"><hr/></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="N102A6"><span class="atitle">Automating classpath management</span></a></p>
+<p>You should learn to use a hammer before you pick up a nail gun. Likewise,
+you should become comfortable managing classes manually before you try to
+use more powerful tools. However, there are tools designed to alleviate the
+pain of dealing with the sourcepath and classpath. Mostly they do this by
+organizing files for you along the lines I've laid out in this article. </p>
+
+<p><a name="N102AE"><span class="smalltitle">IDEs</span></a></p>
+<p> Most integrated development environments such as Eclipse and NetBeans
+automate and assist with some aspects of classpath management. For instance, when you change a package name, Eclipse offers to move the corresponding .java file to match, as shown in Figure 5: </p>
+
+<br /><a name="N102B7"><b>Figure 5. Quick fix for the classpath in Eclipse</b></a><br /><img alt="Move 'Element.java' to package 'nu.fox'" border="0" height="198" hspace="5" src="quickfix.jpg" vspace="5" width="572"/>
+<br />
+
+<p>Keep in mind, however, that these IDEs still sit on top of a filesystem that must be set up properly, especially if you need to integrate with other
+tools and other IDEs. The main contribution 
+of these tools is that GUI dialogs, tree views, and tabs replace 
+command-line switches; but the basic file structure is the same.</p>
+
+<p><a name="N102CB"><span class="smalltitle">Ant</span></a></p>
+<p>Ant is the de facto standard tool for automating the build
+process. Unlike putting directories in jre/lib/ext or the <code>CLASSPATH</code>
+environment variable, Ant really does let you create one-step build
+processes. You still need to set up the classpath in your Ant build.xml
+file and manually put the source files in the right directories, but at least you don't need to keep respecifying it every time you
+compile. </p>
+
+<p><a name="N102D7"><span class="smalltitle">Maven</span></a></p>
+<p> Maven goes even further than Ant in organizing and automating the build
+process and associated classpath issues. Maven provides a reasonable default
+setup that enables you to build simple projects with just a few lines of
+code, as long as you put the source files where Maven expects to find them.
+You still have to coordinate the filesystem hierarchy and the package hierarchy.
+Maven is especially good at managing dependencies on third-party
+libraries, though it's not as easily customizable as Ant. 
+</p>
+
+<div class="ibm-alternate-rule"><hr/></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="N102DF"><span class="atitle">In conclusion</span></a></p>
+<p> As troublesome as the classpath is, you can tame it with a few simple rules. In particular:</p>
+
+<ul>
+
+<li>Place every class in a package.</li>
+
+<li>Rigorously follow package and class naming and capitalization conventions.</li>
+
+<li>Make sure your package hierarchy matches the directory hierarchy.</li>
+
+<li>Always use the <code>-d</code> option to javac.</li>
+
+<li>Never put anything in jre/lib/ext.</li>
+
+<li>Never put anything in jre/lib/endorsed.</li>
+
+<li>Never put .java files in the same directory as .class files. </li>
+
+<li>Never put any .java or .class files in the current working directory.</li>
+
+</ul>
+
+
+
+
+<p>One final tip: A lot of time-killing problems with the classpath revolve
+around simple errors like misspelling a directory name or compiling from the
+wrong directory. If you just can't figure out what's going wrong, ask a
+friend or colleague to look at your problem. Often I find I'm too close to
+the problem to see a bug in my setup that's immediately obvious to anyone
+else. A second pair of eyes is a very effective debugging technique. </p>
+
+<p> The classpath is certainly not easy, but there is a method to its
+madness and it is manageable. A bit of care and some attention paid to
+naming conventions, command-line arguments, and directory structures should
+enable you to compile and run programs with a minimum of fuss. </p>
+
+<!-- CMA ID: 182546 --> <!-- Site ID: 1 --><!--XSLT stylesheet used to transform this file: dw-document-html-6.0.xsl-->
+<br />
+<p><a name="resources"><span class="atitle">Resources</span></a></p><p><b>Learn</b></p><ul><li>"<a href="http://www.ibm.com/developerworks/java/library/j-classpath-windows/">Managing the Java classpath on Windows</a>" (Elliotte Harold, developerWorks, December 2006): The companion article to this one describes how to set up the classpath and sourcepath on Windows.<br /><br /></li><li>"<a href="http://www.ibm.com/developerworks/db2/library/techarticle/dm-0408anderson2/">IBM Cloudscape: Understanding the Java classpath</a>" (Jean Anderson and Susan Cline, developerWorks, September 2004):  Explains how to set up the Java classpath for Cloudscape and Derby.<br /><br /></li><li>"<a href="http://www.ibm.com/developerworks/websphere/library/bestpractices/classpath_structures.html">Best Practice: Classpath structure for WebSphere Application Server</a>" (WebSphere Best Practices team, developerWorks, August 2001): Recommendations for managing the classpath on
+WebSphere Application Server.<br /><br /></li><li>
+<a href="http://www.ibm.com/developerworks/views/java/library.jsp">developerWorks technical library for Java</a>: Find a wide range of technical articles and tips, tutorials, standards, and IBM Redbooks related to the Java platform.<br /><br /></li></ul><p><b>Get products and technologies</b></p><ul><li>
+<a href="http://ant.apache.org">Download Ant</a>: Now a top-level project at Apache.<br /><br /></li><li>
+<a href="http://maven.apache.org/">Download Maven</a>: The Apache build manager for Java projects.<br /><br /></li></ul><p><b>Discuss</b></p><ul><li>
+<a href="http://www.ibm.com/developerworks/forums/dw_forum.jsp?forum=188&amp;cat=11">Participate in developerWorks discussion forums</a>.<br /><br /></li><li><a href="http://www.ibm.com/developerworks/blogs/">developerWorks
+blogs</a>: Get involved in the developerWorks community.<br /><br /></li></ul>
+<p><a name="author"><span class="atitle">About the author</span></a></p><div class="ibm-container ibm-portrait-module ibm-alternate-two"><div class="ibm-container-body"><img src="http://www-128.ibm.com/developerworks/i/p-eharold.jpg" width="64" height="80" alt="Photo of Elliotte Rusty Harold" /><p><a name="author1"></a>Elliotte Rusty Harold is originally from New Orleans, to which he
+returns periodically in search of a decent bowl of gumbo. However, he
+resides in the Prospect Heights neighborhood of Brooklyn with his wife
+Beth and cats Charm (named after the quark) and Marjorie (named after
+his mother-in-law). He's an adjunct professor of computer science at
+Polytechnic University, where he teaches Java and object-oriented
+programming. His <a href="http://www.cafeaulait.org/">Cafe au Lait</a>
+Web site has become one of the most popular independent Java sites on
+the Internet, and his spin-off site, <a href="http://www.cafeconleche.org/">Cafe con Leche</a>, has become one
+of the most popular XML sites. His most recent book is <a href="http://www.cafeaulait.org/books/javaio2/">Java I/O, 2nd  
+edition</a>.
+He's currently working on the <a href="http://www.xom.nu/">XOM</a> API for processing XML, the <a href="http://jaxen.codehaus.org/">Jaxen</a> XPath engine, and the <a href="http://jester.sourceforge.net/ ">Jester</a> test coverage tool.</p></div></div>
+<!-- MAIN_COLUMN_CONTENT_END -->
+
+<!-- OVERLAYS_START -->
+<!-- Report_Abuse_Start -->
+<div class="ibm-common-overlay ibm-no-print" id="reportabuseoverlay">
+   <div class="ibm-head"><p><a class="ibm-common-overlay-close" href="#">Close [x]</a></p></div>
+   <div class="ibm-body">
+      <div class="ibm-main">
+         <a class="ibm-access" name="reportabuseoverlay">Report abuse help</a>   
+         <div class="ibm-title"><h1>Report abuse</h1></div>
+         <div class="ibm-container ibm-alternate">
+            <p><strong>Thank you.</strong>  This entry has been flagged for moderator attention.</p>
+            <div class="ibm-overlay-rule"><hr /></div>
+            <div class="ibm-buttons-row">
+               <input type="button" onclick="ibmCommon.Overlays.hide('reportabuseoverlay');return false;" class="ibm-btn-cancel-sec dw-btn-cancel-sec" name="ibm-cancel" value="Close" />
+            </div>
+         </div>
+      </div> 
+   </div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Report_Abuse_Error_Start -->
+<div class="ibm-common-overlay ibm-no-print" id="reportabuseoverlayerror">
+   <div class="ibm-head"><p><a class="ibm-common-overlay-close" href="#">Close [x]</a></p></div>
+   <div class="ibm-body">
+      <div class="ibm-main">
+         <a class="ibm-access" name="reportabuseoverlayerror">Report abuse help</a>   
+         <div class="ibm-title"><h1>Report abuse</h1></div>
+         <div class="ibm-container ibm-alternate">
+            <p class="ibm-ind-error"><strong>Report abuse submission failed.  Please try again later.</strong></p>
+            <div class="ibm-overlay-rule"><hr /></div>
+            <div class="ibm-buttons-row">
+               <input type="button" onclick="ibmCommon.Overlays.hide('reportabuseoverlayerror');return false;" class="ibm-btn-cancel-sec dw-btn-cancel-sec" name="ibm-cancel" value="Close" />
+            </div>
+         </div>
+      </div> 
+   </div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Sign in OVERLAY STARTS HERE --> 
+<div id="fdiv"></div>
+<div class="ibm-common-overlay" id="signin_overlay">
+<div class="ibm-head">
+<p><a class="ibm-common-overlay-close" href="#" onclick="clearForm();">Close [x]</a></p>
+</div>
+<div class="ibm-body">
+<div class="ibm-main">
+<div class="ibm-title ibm-subtitle">
+<h1>developerWorks: Sign in</h1>
+<div id="ibm-overlay-error-signin" class="no-display"></div>
+</div>
+
+<div class="ibm-container ibm-alternate ibm-buttons-last">
+<div class="ibm-container-body">
+<p class="ibm-overlay-intro">If you do not have an IBM ID and password, <a href="#" onclick="(function () {window.location='/developerworks/dwwi/DWAuthRouter?m=reg&amp;d='+encodeURIComponent(location.href);})();">register here</a>.</p>
+<form class="ibm-column-form" id="sFormId" action="" method="post" name="sForm" onsubmit="return false;">
+<p><label for="ibmid">IBM ID:</label><span><input name="ibm-id" id="ibmid" size="25" value="" class="required" type="text" onkeypress="handleEP(event,this.form);" /><br /><a class="ibm-forward-link" href="/developerworks/dwwi/jsp/WSHelp.jsp?lang=en_US">Forgot your IBM ID?</a></span>   
+</p> 
+<p><label for="password">Password:</label><span><input name="password" id="password" size="25" value="" class="required" type="password" onkeypress="handleEP(event,this.form);" /><br /><a class="ibm-forward-link" href="#" onclick="(function () {window.location='https://www.ibm.com/account/profile?page=forgot&amp;lang=en_US&amp;appname=ibm&amp;required=null&amp;d='+encodeURIComponent(getAuthUrl())+'%3Fm%3Dloginpage%26lang%3Den_US%26d%3D'+encodeURIComponent(location.href);})();">Forgot your password?</a><br /><a class="ibm-forward-link" href="#" onclick="(function () {window.location='https://www.ibm.com/account/profile?page=chpw&amp;lang=en_US&amp;appname=ibm&amp;required=null&amp;d='+encodeURIComponent(location.href);})();">Change your password?</a></span></p> 
+<p class="no-bottom-padding"> 
+   <label for="AfterSignIn">After sign in:</label> 
+   <span>
+
+      <select name="SignInAction" id="AfterSignIn">
+          <option value="">Stay on the current page</option>
+          <option value="/developerworks/mydeveloperworks/profiles/html/myProfileView.do">Go to My developerWorks profile</option>
+          <option value="/developerworks/mydeveloperworks/homepage/">Go to My developerWorks homepage</option>
+      </select>
+   </span>
+</p>
+<div class="ibm-overlay-rule"><hr /></div>
+<p>By clicking <strong>Submit</strong>, you agree to the developerWorks <a href="/developerworks/mydeveloperworks/terms?lang=en">terms of use</a>.</p>
+<div class="ibm-buttons-row">
+   <p><input class="ibm-btn-arrow-pri" name="ibm-submit" value="Submit" onclick="signin();return false;" type="button" /><span class="ibm-sep">&nbsp;</span>
+<input value="Cancel" type="button" name="ibm-cancel" class="ibm-btn-cancel-sec" onclick="clearForm();ibmCommon.Overlays.hide('signin_overlay');return false;"/></p>
+</div>
+</form>
+<div class="ibm-overlay-rule"><hr /></div>
+<p>The first time you sign into developerWorks, a My developerWorks profile is created for you. This profile includes the first name, last name, and display name contained in the profile you created when you registered with My developerWorks. Selected information in your My developerWorks profile is displayed to the public, but you may edit the information at any time. Your first name, last name (unless you choose to hide them), and display name will accompany the content that you post. </p>
+<div class="dw-overlay-legal"><p>All information submitted is secure.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Sign in OVERLAY ENDS HERE --> 
+ 
+
+<!-- Display name OVERLAY STARTS HERE --> 
+<div class="ibm-common-overlay" id="displayname_overlay">
+<div class="ibm-head">
+<p><a class="ibm-common-overlay-close" href="#" onclick="clearForm();">Close [x]</a></p>
+</div>
+<div class="ibm-body">
+<div class="ibm-main">
+<div class="ibm-title ibm-subtitle">
+<h1>Choose your display name</h1>
+<div id="ibm-overlay-error-dname" class="no-display"></div>
+</div>
+<div class="ibm-container ibm-alternate ibm-buttons-last">
+<div class="ibm-container-body">
+<p class="ibm-overlay-intro">The first time you sign in to developerWorks a profile is created for you, so you need to choose a display name.  Your display name accompanies the content you post on developerWorks.</p>
+
+<form id="dFormId" method="post" action="" name="dForm" onsubmit="return false;" class="ibm-column-form">
+<p><label for="displayname">Display name:</label><span><input name="displayname" id="displayname" size="25" value="" type="text" onkeypress="handleEP(event,this.form);" /></span><span class="ibm-form-note">(Must be between 3 &ndash; 31 characters.)</span>
+</p>
+<p><strong>Note:</strong>  Please choose a display name between 3-31 characters. Your display name must be unique in the developerWorks community and should not be your email for privacy reasons.</p>
+<div class="ibm-overlay-rule"><hr />
+</div>
+<p>By clicking Submit, you agree to the developerWorks <a href="/developerworks/mydeveloperworks/terms?lang=en">terms of use</a>.</p>
+<div class="ibm-buttons-row">
+   <p><input class="ibm-btn-arrow-pri" name="ibm-submit" value="Submit" onclick="signin();return false;" type="button" /><span class="ibm-sep">&nbsp;</span>
+<input value="Cancel" type="button" name="ibm-cancel" class="ibm-btn-cancel-sec" onclick="clearForm();ibmCommon.Overlays.hide('displayname_overlay');return false;" /></p>
+</div>
+</form>
+<div class="ibm-overlay-rule"><hr /></div>
+<div class="dw-overlay-legal"><p>All information submitted is secure.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Display name OVERLAY ENDS HERE -->
+<!-- OVERLAYS_END -->
+
+<!-- RATINGS START -->
+<p class="ibm-no-print"><span class="atitle"><a name="iratings">Rate this article</a></span></p>
+<input id="art-rating" name="ratinga" type="hidden" value="0"/><div id="art-rating-module"></div>
+<script language="JavaScript" type="text/javascript">
+// <![CDATA[
+   // widget div id and article id as args
+   window.artRating.init('art-rating-module','art-rating-summary');
+// ]]>
+</script>
+<!-- RATINGS END -->
+
+<!-- INLINE_COMMENTS_START -->
+<p class="ibm-no-print"><span class="atitle"><a name="icomments">Comments</a></span></p>
+<script language="JavaScript" src="//dw1.s81c.com/developerworks/js/showcomments.js" type="text/javascript">//</script>
+<div id="threadShow"></div>
+<script language="JavaScript" type="text/javascript">
+// <![CDATA[
+ jQuery('threadShow').showComments('95%',5,'nCmts','icomments');
+// ]]>
+</script>
+<!-- INLINE_COMMENTS_END -->
+
+<p class="ibm-ind-link ibm-back-to-top"><a class="ibm-anchor-up-link" href="#ibm-pcon">Back to top</a></p>
+<p><a href="http://www.ibm.com/developerworks/ibm/trademarks/">Trademarks</a> &nbsp;|&nbsp; <a href="https://www.ibm.com/developerworks/mydeveloperworks/terms/">My developerWorks terms and conditions</a></p>
+
+<!-- Overlays -->
+<!-- Zone/Leaf_Interest_Overlay_Start -->
+<div class="ibm-common-overlay ibm-no-print" id="dwmyinterestadd">
+<div class="ibm-head"><p><a class="ibm-common-overlay-close" href="#close">Close [x]</a></p></div>
+<div class="ibm-body">
+<div class="ibm-main">
+<a class="ibm-access" name="dwmyinterestaddhelp">Help: Update or add to My dW interests</a>   
+<div class="ibm-title"><h1>What's this?</h1></div>
+<div class="ibm-container ibm-alternate">
+<p>This little timesaver lets you update your My developerWorks profile with just one click!  The general subject of this content (AIX and UNIX, Information Management, Lotus, Rational, Tivoli, WebSphere, Java, Linux, Open source, SOA and Web services, Web development, or XML) will be added to the interests section of your profile, if it's not there already.  You only need to be logged in to My developerWorks.</p>
+<p>And what's the point of adding your interests to your profile?  That's how you find other users with the same interests as yours, and see what they're reading and contributing to the community.  Your interests also help us recommend relevant developerWorks content to you.</p>
+<p><a href="https://www.ibm.com/developerworks/mydeveloperworks/profiles/home.do?lang=en">View your My developerWorks profile</a></p>
+<p class="ibm-access"><a href="#interestShow">Return from help</a></p>
+</div> 
+</div>
+</div>
+<div class="ibm-footer"></div>
+</div>
+
+<div class="ibm-common-overlay ibm-no-print" id="dwmyinterestremove">
+<div class="ibm-head"><p><a class="ibm-common-overlay-close" href="#close">Close [x]</a></p></div>
+<div class="ibm-body">
+<div class="ibm-main">
+<a class="ibm-access" name="dwmyinterestremovehelp">Help: Remove from My dW interests</a> 
+<div class="ibm-title"><h1>What's this?</h1></div>
+<div class="ibm-container ibm-alternate">
+<p>Removing this interest does not alter your profile, but rather removes this piece of content from a list of all content for which you've indicated interest.  In a future enhancement to My developerWorks, you'll be able to see a record of that content.</p>
+<p><a href="https://www.ibm.com/developerworks/mydeveloperworks/profiles/home.do?lang=en">View your My developerWorks profile</a></p>
+<p class="ibm-access"><a href="#interestShow">Return from help</a></p>
+</div> 
+</div>
+</div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Zone/Leaf_Interest_Overlay_End --></div>
+<!-- MAIN_COLUMN_CONTAINER_END -->
+
+<!-- Rating_Meta_BEGIN -->
+<!--Rating_Meta_BEGIN--><div class="metavalue">static.content.url=http://www.ibm.com/developerworks/js/artrating/</div><div class="metavalue">SITE_ID=1</div><div class="metavalue">Zone=Java technology</div><div class="metavalue">ArticleID=182546</div><div class="metavalue">ArticleTitle=Managing the Java classpath (UNIX and Mac OS X)</div><div class="metavalue">publish-date=12122006</div><div class="metavalue">author1-email=elharo@metalab.unc.edu</div><div class="metavalue">author1-email-cc=jaloi@us.ibm.com</div><script language="javascript" type="text/javascript">document.write('<div class="metavalue">url='+location.href.replace('<', '%3C')+'</div>');</script><!--Rating_Meta_END-->
+<!-- Rating_Meta_END -->
+
+</div>
+<!-- MAIN_COLUMN_END-->
+
+<!-- RIGHT_COLUMN_BEGIN -->
+<div id="ibm-content-sidebar">
+<div id="ibm-social-tools-sidebar" class="ibm-share-this"></div>
+
+<!-- RIGHT_COLUMN_CONTENT_BEGIN --> 
+<div class="ibm-container"><h2>Table of contents</h2><div class="ibm-container-body"><img alt="" height="1" width="1" src="//www.ibm.com/i/c.gif"/><ul class="ibm-bullet-list"><li><a class="ibm-feature-link" href="#N10078">Package structure</a></li><li><a class="ibm-feature-link" href="#N100B6">Directory structure</a></li><li><a class="ibm-feature-link" href="#N100E9">Compiling</a></li><li><a class="ibm-feature-link" href="#N1021F">Running the program</a></li><li><a class="ibm-feature-link" href="#N10253">Other places classes reside</a></li><li><a class="ibm-feature-link" href="#N102A6">Automating classpath management</a></li><li><a class="ibm-feature-link" href="#N102DF">In conclusion</a></li><li><a class="ibm-feature-link" href="#resources">Resources</a></li><li><a class="ibm-feature-link" href="#author">About the author</a></li><li><a class="ibm-feature-link" href="#icomments">Comments</a></li></ul></div></div>
+<!--XSLT stylesheet used to transform this content: s-nextsteps.xsl--><div class="ibm-container"><h2>Next steps from IBM</h2><div class="ibm-container-body"><img width="188" height="58" border="0" alt="" src="//www.ibm.com/developerworks/i/spot-nextsteps.jpg"/><p>Spring, JRuby, and Ajax development is easier with WebSphere Application Server - a smart Java 5
+   and J2EE Web services-based application server.</p><div class="ibm-rule"><hr/></div><ul class="ibm-bullet-list"><li><a href="http://www.ibm.com/developerworks/downloads/ws/wasce/index.html" class="ibm-feature-link">Try: The no-charge WebSphere Application Server Community Edition is a pre-integrated, lightweight Java 5
+    application server built on Apache Tomcat and other best-of-breed open source software such as OpenEJB, Apache Axis,
+    and Apache Derby.</a></li><li><a href="http://www.ibm.com/developerworks/websphere/library/techarticles/0810_asplund/0810_asplund.html" class="ibm-feature-link">Article: The article leverage the Spring Framework and the WebSphere Application Server to improve your J2EE project
+      productivity.</a></li><li><a href="http://www.ibm.com/developerworks/edu/x-dw-x-jrorajax.html" class="ibm-feature-link">Tutorial: See how the free WebSphere Application Server and XML can improve the efficiency of your JRuby on Rails and
+      Ajax development.</a></li><li><a href="http://www.ibm.com/software/dre/h2b/buildh2bpage.wss?synkey=G394201N28809H35" class="ibm-feature-link">Buy: WebSphere Application Server - Express</a></li></ul></div></div>
+<!--XSLT stylesheet used to transform this content: s-community.xsl--><div class="ibm-container"><h2>My developerWorks community</h2><div class="ibm-container-body"><p>Interact, share, and communicate with developers worldwide.</p><div class="ibm-rule"><hr/></div><ul class="ibm-bullet-list"><li><a href="https://www.ibm.com/developerworks/mydeveloperworks/homepage/web/getuserpref?ca=dma-" class="ibm-feature-link">My Home</a></li><li><a href="https://www.ibm.com/developerworks/mydeveloperworks/profiles/home.do?lang=en&amp;ca=dma-" class="ibm-feature-link">Profiles</a></li><li><a href="https://www.ibm.com/developerworks/mydeveloperworks/groups/service/html/allcommunities?ca=dma-" class="ibm-feature-link">Groups</a></li><li><a href="https://www.ibm.com/developerworks/mydeveloperworks/blogs/?ca=dma-" class="ibm-feature-link">Blogs</a></li><li><a href="https://www.ibm.com/developerworks/mydeveloperworks/bookmarks/?ca=dma-" class="ibm-feature-link">Bookmarks</a></li><li><a href="https://www.ibm.com/developerworks/mydeveloperworks/activities/service/html/mainpage?ca=dma-" class="ibm-feature-link">Activities</a></li><li><a href="http://www.ibm.com/developerworks/mydeveloperworks/files?ca=dma-" class="ibm-feature-link">Files</a></li><li><a href="http://www.ibm.com/developerworks/mydeveloperworks/wikis?ca=dma-" class="ibm-feature-link">Wikis</a></li><li><a href="http://www.ibm.com/developerworks/forums/?ca=dma-" class="ibm-feature-link">Forums</a></li><li><a href="http://www.ibm.com/developerworks/podcast/?ca=dma-" class="ibm-feature-link">Podcasts</a></li></ul><div class="ibm-rule"><hr/></div><p class="ibm-ind-link"><a href="https://www.ibm.com/developerworks/mydeveloperworks/?ca=dma-" class="ibm-forward-link">My developerWorks overview</a></p></div></div>
+<!-- Tagging_Start -->
+<div id="dw-tag-cloud-container" class="ibm-container dw-hidetag"><h2>Tags</h2>
+<div id="dw-tag-help"><a class="dwauthor" rel="#tagtip" id="dwtagtip"><img alt="Help" height="16" width="16" align="top" src="//dw1.s81c.com/developerworks/i/help_icon.gif"/></a></div>
+<div id="tagtip" class="dwauthor-onload-state ibm-no-print">Use the <strong>search field</strong> to find all types of content in My developerWorks with that tag.<p>Use the <strong>slider bar</strong> to see more or fewer tags.</p><p>For articles in technology zones (such as Java technology, Linux, Open source, XML), <strong>Popular tags</strong> shows the top tags 
+for <em>all technology zones</em>.  For articles in product zones (such as Info Mgmt, Rational, WebSphere), <strong>Popular tags</strong> shows the top tags for <em>just that product zone</em>.</p><p>For articles in technology zones (such as Java technology, Linux, Open source, XML), <strong>My tags</strong> shows your tags for <em>all technology zones</em>.  For articles in product zones (such as Info Mgmt, Rational, WebSphere), <strong>My tags</strong> shows your tags for <em>just that product zone</em>.</p></div>
+<div class="ibm-access">Use the search field to find all types of content in My developerWorks with that tag.  <em>Popular tags</em> shows the top tags for this particular content zone (for example, Java technology, Linux, WebSphere).  <em>My tags</em> shows your tags for this particular content zone (for example, Java technology, Linux, WebSphere).</div>
+<div class="ibm-container-body">
+<div class="dw-tag-search"><form action="//www.ibm.com/developerworks/mydeveloperworks/bookmarks/html?lang=en" method="get" id="actualtagform" onsubmit="popupform(this, 'join')">
+<p><label for="tagfield"><strong>Search all tags</strong></label><input id="tagfield" name="tag" type="text" maxlength="20" size="17" />&nbsp;<input src="//dw1.s81c.com/i/v16/buttons/short-btn.gif" type="image" class="ibm-btn-view" alt="submit search" title="submit search" value="Search" /></p></form></div>
+<div class="ibm-rule"><hr/></div>
+<div id="dw-tag-select">
+<div id="dw-tag-select-popular"><p><strong>Popular article tags</strong>&nbsp;|&nbsp;<br /><a id="a-my" href="javascript:;">My article tags</a><a href="#dw-tag-access" class="ibm-access">Skip to tags list</a></p></div>
+<div id="dw-tag-select-my" class="dw-hidetag"><p><a id="a-popular" href="javascript:;">Popular article tags</a>&nbsp;|&nbsp;<br /><strong>My article tags</strong></p><a href="#dw-tag-access" class="ibm-access">Skip to tags list</a></div>
+<div id="dw-tag-cloud"></div>  
+</div>   
+</div>
+</div>
+<!-- Tagging_End -->
+<!-- Dig_Deeper -->
+<div class="ibm-container"><h2>Dig deeper into Java on developerWorks</h2><div class="ibm-container-body"><ul class="ibm-link-list"><li class="ibm-first"><a href="http://www.ibm.com/developerworks/java/" class="ibm-forward-link">Overview</a></li><li><a href="http://www.ibm.com/developerworks/java/newto/" class="ibm-forward-link">New to Java programming</a></li><li><a href="http://www.ibm.com/developerworks/views/java/downloads.jsp" class="ibm-forward-link">Downloads and products</a></li><li><a href="http://www.ibm.com/developerworks/views/java/projects.jsp" class="ibm-forward-link">Open source projects</a></li><li><a href="http://www.ibm.com/developerworks/views/java/standards.jsp" class="ibm-forward-link">Standards</a></li><li><a href="http://www.ibm.com/developerworks/views/java/library.jsp" class="ibm-forward-link">Technical library (articles, tutorials, and more)</a></li><li><a href="http://www.ibm.com/developerworks/java/training/" class="ibm-forward-link">Training</a></li><li><a href="http://www.ibm.com/developerworks/forums/dw_jforums.jsp" class="ibm-forward-link">Forums</a></li><li><a href="http://www.ibm.com/developerworks/views/java/events.jsp" class="ibm-forward-link">Events</a></li><li><a href="http://www.ibm.com/developerworks/newsletter/" class="ibm-forward-link">Newsletter</a></li></ul></div></div>
+<!-- High_Visibility_Offer -->
+<!--XSLT stylesheet used to transform this content: s-highvisibilityoffer.xsl--><div class="ibm-container"><h2>Stay ahead of the latest cloud trends</h2><div class="ibm-container-body"><img width="188" height="70" border="0" alt="Stay ahead of the latest cloud trends" src="//www.ibm.com/developerworks/i/hivis-w-cloudzone.jpg"/><p class="ibm-ind-link"><a href="https://www.ibm.com/developerworks/cloud/index.html?ca=dti-cloudzone" class="ibm-forward-link">Cloud Computing resources from developerWorks</a></p></div></div>
+<!-- Special_Offers -->
+<div class="ibm-container"><h2>Special offers</h2><div class="ibm-container-body"><p class="dw-special-offers"><a href="https://www-304.ibm.com/partnerworld/wps/servlet/ContentHandler/2011_beacon_awards_developerworks.html?ca=dti-dwbeacon"><img src="//www.ibm.com/developerworks/i/tile_v16_beacon2010.gif" width="158" height="50" border="0" alt="Partner Award Most Innovative use of dW" /></a></p><p class="dw-special-offers"><a href="http://www.ibm.com/developerworks/downloads/?ca=dti-rdownload#rational"><img src="//www.ibm.com/developerworks/i/tile_v16_r-download.gif" width="158" height="50" border="0" alt="Download and evaluate Rational software" /></a></p><p class="dw-special-offers"><a href="http://www.ibm.com/developerworks/views/linux/libraryview.jsp?type_by=Tutorials&amp;ca=dti-linuxtutorial"><img src="//www.ibm.com/developerworks/i/tile_v16_learnfast-l.gif" width="158" height="50" border="0" alt="Learn fast with free IBM Linux tutorials" /></a></p><div class="ibm-rule"><hr/></div><p class="ibm-ind-link"><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/downloads/?ca=dti-tilemoreoffers">Trial software offers</a></p></div></div>
+<!-- RIGHT_COLUMN_CONTENT_END -->
+
+</div>
+<!-- RIGHT_COLUMN_END -->
+
+<!-- CONTENT_BODY_END -->
+</div>
+
+</div>
+<!-- CONTENT_END -->
+
+ <!-- END_IBM-PCON -->
+</div>
+
+<!-- FOOTER_BEGIN -->
+<div id="ibm-page-tools">
+<!-- IBM page tools container -->
+</div>
+<div id="ibm-footer">
+<ul>
+<li class="ibm-first"><a href="http://www.ibm.com/ibm/">About IBM</a></li>
+<li><a href="http://www.ibm.com/privacy/">Privacy</a></li>
+<li><a href="http://www.ibm.com/contact/">Contact</a></li>
+<li><a href="http://www.ibm.com/legal/">Terms of use</a></li>
+</ul>
+</div>
+<!-- FOOTER_END -->
+
+ <!-- END_IBM-TOP -->
+</div>
+ 
+ <!-- SCRIPTS_INCLUDE_BEGIN -->
+<!-- JQuery start -->
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/jquery/cluetip98/jquery.dimensions-1.2.js"></script>
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/jquery/cluetip98/jquery.hoverIntent.minified.js"></script>
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/jquery/cluetip98/jquery.cluetip.js"></script>
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/jquery/tagging/ui.core-1.7.1.js"></script>
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/jquery/tagging/ui.slider-1.7.1.js"></script>
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/jquery/tagging/dwjquerytags.js"></script>
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/si/flash-detect.js"></script>
+<script type="text/javascript" language="JavaScript" src="//dw1.s81c.com/developerworks/js/si/dwsi.js"></script>
+<script type="text/javascript" language="JavaScript">
+	jQuery.noConflict();     
+	// Put all your code in your document ready area
+	jQuery(document).ready(function(jQuery) {
+	// Do jQuery stuff using jQuery 
+	jQuery('a.dwauthor').cluetip({
+		local: true,
+		showTitle: false,
+		positionBy: 'bottomTop',
+		sticky: true,	
+		mouseOutClose: true,
+		closeText: '<img src="//dw1.s81c.com/developerworks/js/jquery/cluetip98/i/x.gif" alt="Close" />',
+		arrows: false,
+		dropShadow: true,
+		cluetipClass: 'dwbasic'
+		});
+
+		//tagging
+		login="false";
+		userid="";
+		whichTags = "init";
+		pCont = "";
+		mCont = "";
+		signInMCont = "";
+		accessCont = "";
+		pValue = 0;
+		mValue = 0;
+
+		rBHash = null;
+		rBHash = new Object();
+		rBHash['viperLang'] = 'en';
+		rBHash['urlLang'] = 'en';
+		rBHash['tagThisWinTitle'] = 'Tagit';
+		rBHash['pTags1'] = 'Popular tags';
+		rBHash['pTags2'] = 'End of Popular tags';
+		rBHash['mTags1'] = 'My tags';
+		rBHash['mTags2'] = 'End of My tags';
+		rBHash['alt1'] = 'Loading Content';
+		rBHash['noATags'] = 'No active tags';
+		rBHash['signIn1'] = 'Please ';
+		rBHash['signIn2'] = 'sign in';
+		rBHash['signIn3'] = ' to access';
+		rBHash['signIn4'] = 'My Tags';
+		rBHash['signIn5'] = 'To access My Tags, please ';
+		rBHash['signIn6'] = 'sign in';
+		rBHash['signIn7'] = 'Read Popular tags';
+
+		zoneHash = new Object();
+		zoneHash['aix'] = 'AIX and UNIX zone';
+		zoneHash['data'] = 'Information Management zone';
+		zoneHash['lotus'] = 'Lotus zone';
+		zoneHash['rational'] = 'Rational zone';
+		zoneHash['tivoli'] = 'Tivoli zone';
+		zoneHash['websphere'] = 'WebSphere zone';
+		zoneHash['architecture'] = 'Technical library';
+		zoneHash['autonomic'] = 'Technical library';
+		zoneHash['java'] = 'Technical library';
+		zoneHash['cloud'] = 'Technical library';
+		zoneHash['industry'] = 'Technical library';
+		zoneHash['library'] = 'Technical library';
+		zoneHash['linux'] = 'Technical library';
+		zoneHash['opensource'] = 'Technical library';
+		zoneHash['power'] = 'Technical library';
+		zoneHash['webservices'] = 'Technical library';
+		zoneHash['web'] = 'Technical library';
+		zoneHash['xml'] = 'Technical library';
+		zoneHash['wireless'] = 'Technical library';
+		jQuery.checkRB();
+		jQuery.getPopularTags("/developerworks/dwtags/dwjquerytabtags?lang=" + rBHash['viperLang'] + "&base=" + jQuery.getNormalizedZoneUrl(location.href));
+		jQuery.getUserTags();
+		if(jQuery.isTutorial(location.href) == "true") {
+			jQuery.getTagsForContent("/developerworks/tagging/UseCaseServlet?lang=" + rBHash['viperLang'] + "&format=maverick&cType=tutorials&use_case=geturltags&action=gettags&url=" + jQuery.normalizeUrl(location.href));
+		}
+		else {
+			jQuery.getTagsForContent("/developerworks/tagging/UseCaseServlet?lang=" + rBHash['viperLang'] + "&format=maverick&cType=articles&use_case=geturltags&action=gettags&url=" + jQuery.normalizeUrl(location.href));
+
+		}
+		
+		// si
+		initSI();
+	});
+ </script>
+ <!-- JQuery end -->
+ <!-- Overlay js -->
+<script language="JavaScript" src="//dw1.s81c.com/common/js/overlay.js" type="text/javascript"></script>
+<!-- My dW Interest article -->
+<script language="JavaScript" src="//dw1.s81c.com/developerworks/js/showinterest.js" type="text/javascript">//</script>
+<script language="JavaScript" type="text/javascript">
+        // <![CDATA[
+			var contentId = '';
+			var contentAreas = '';
+			var caArr = [];
+			contentId = '182546';
+			contentAreas = 'java';
+			if(contentAreas != ''){caArr = contentAreas.split(',');}
+			var loginLink = 'https://www.ibm.com/developerworks/dwwi/DWAuthRouter?m=loginpage&d=' + encodeURIComponent(window.location);jQuery('interestShow').showInterest(contentId,'dw-article',{'int_tops':[16,279],'int_prods':[], 'int_prod_fam':[],'int_cont_area':caArr},
+'<div id="dw-interest-anon"><a id="intAnonBtn" class="ibm-external-link" href="">Update My dW interests</a> (<a class="dw-interest" href="' + loginLink + '">Log in</a> | <a class="dw-interest" href="#overlay" onclick="ibmCommon.Overlays.show(\'dwmyinterestadd\', this);return false;">What\'s this?</a>) <a class="ibm-access" href="#dwmyinterestaddhelp">Skip to help for Update My dW interests</a></div>',
+'<div id="dw-interest-add"><a id="intSelectBtn" class="ibm-external-link" href="">Add to My dW interests</a> (<a class="dw-interest" href="#overlay" onclick="ibmCommon.Overlays.show(\'dwmyinterestadd\', this);return false;">What\'s this?</a>) <a class="ibm-access" href="#dwmyinterestaddhelp">Skip to help for Add to My dW interests</a></div>',
+'<div id="dw-interest-remove">Added to My dW interests (<a class="dw-interest" href="https://www.ibm.com/developerworks/mydeveloperworks/profiles/html/myProfileView.do?lang=en">Edit</a>)</div>'
+);
+// ]]>
+</script><!-- BEGIN: Use this section to set page specific variables for the Unica Page Tag -->
+<script language="JavaScript">var NTPT_PGEXTRA="ibmSkillLevel=1&ibmAdoptPhase=-&ibmRole=-";</script>
+<!--END --><!-- SCRIPTS_INCLUDE_END -->
+
+<div id="ibm-metrics">
+<script src="//dw1.s81c.com/common/stats/stats.js" type="text/javascript">//</script>
+</div>
+
+</body>
+</html>
