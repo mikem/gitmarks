@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Best In Class: ClojureQL - Where are we (going) ?</title>
+    <script class="header" src="/scripts/jquery.tools.min.js"></script><script class="header" src="/scripts/menu.js"></script><script class="header" src="/scripts/post.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/main.css" /><link rel="stylesheet" type="text/css" href="/css/blog.css" /><link rel="stylesheet" type="text/css" href="/css/comment-form.css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="alternate" type="application/atom+xml" href="http://feeds.feedburner.com/bestinclass-the-blog" title="Best In Class - Software Innovator" />
+  </head>
+
+  <body>
+    <div id="banner"></div>
+    <div class="separator"></div>
+    <div id="pages">
+      <a href="/index.html"><img src="/images/forside-lnk.png" /></a><a href="/services.html"><img src="/images/services-lnk.png" /></a><a href="/produkter.html"><img src="/images/produkter-lnk.png" /></a><a href="/blog.html"><img src="/images/blog-lnk.png" /></a><a href="/kontakt.html"><img src="/images/kontakt-lnk.png" /></a>
+    </div>
+
+    
+  <div id="postheader"></div>
+  <div id="post">
+    <h1 id="title">ClojureQL - Where are we (going) ?</h1>
+    <div id="pubdate">2009-12-10 23:30:04</div>
+    <img id="thumb" src="http://www.bestinclass.dk/wp-content/uploads/avatars/clojureql.png" />
+  <p><br class="spacer_" /></p>
+<p>ClojureQL is now coming dangerously close to version 1.0. Despite its young age, its already been adopted several interesting places, among others in the Danish Health Care industry. Before we ship version 1.0, I want to walk through some of the features and design decisions as well as encourage comments, criticisms and patches.</p>
+<p style="text-align: right;"><span style="color: #c0c0c0;">(logo: SQL in parenthesis)</span></p>
+<p><!--more--></p>
+<p><br class="spacer_" /></p>
+<p><br class="spacer_" /></p>
+<h1>Why ClojureQL?</h1>
+<p>Why do we need another DSL is a good question, to which there is a good answer. If you look through a PHP project for instance, how much of the code is actually PHP? 85%? 65% perhaps? It varies from project to project of course, but its not a big number if 100% is to be our goal and the reason is, PHP has no one-size-fits-all abstraction over the common SQL commands.</p>
+<p>Thats a big deal, because at a bare minimum the quality assurance team backing a PHP project has to support 2 languages in detail and although SQL can look simple on the cover don't let that fool you, there are many pitfalls. Then add shell-script for the OS integration and Ruby perhaps for some multithreading tasks and suddenly PHP becomes no more than glue.</p>
+<p>ClojureQL enables the Clojurian to stay within his Clojure-domain even when interfacing with his SQL database, greatly simplifying the code-base. Its simpler partly because now you only have Clojure code and not Clojure + SQL, but also because SQL doesn't really exist. If I ask you to write out an SQL statement which creates a table with a single column containing an auto incrementing int, what would you do ?</p>
+<p>If you were targeting a MySQL database, you could write</p>
+<pre class="sh_sql" name="code">CREATE TABLE table1 (id int NOT NULL AUTO_INCREMENT, PRIMARY KEY ('col'));
+</pre>
+<p>But then half-way through the project, the Customer wants to target PostgreSQL instead, so you have to write</p>
+<pre class="sh_sql" name="code">CREATE TABLE table1 (id int PRIMARY KEY DEFAULT nextval('serial'));
+</pre>
+<p>Or what if one service has to run against Oracle instead, or Derby, or Sqlite ? For all of the servers there are various smaller or larger differences. Some use double quotes ", others single. Sometimes its the entire construction of the statement which needs to be altered. Whatever the issue great or small, it means that you have to review your code and modify it accordingly.</p>
+<pre class="sh_clojure" name="code">(create-table table1 [id int]
+    :non-nulls id, :primary-key id, :auto-inc id)
+</pre>
+<p>The code above is simple, flexible and will run on <strong>all supported backends</strong>. For version 1.0 we want to support 3 backends: MySql, Postgresql and Derby, but its not a complex matter to extend CQL to more than these. By having a modular backend, we've pretty much guaranteed that you can keep your team working in the same domain throughout your databasing needs, which is a big win. If the customer for whatever reason needs to change target or incorporate an entirely new target, you don't need to rewrite your code, ClojureQL will handle that:</p>
+<p><br class="spacer_" /></p>
+<p style="text-align: center;"><img class="aligncenter size-full wp-image-606" style="border: 0;" title="cqlstructure" src="http://www.bestinclass.dk/wp-content/uploads/2009/12/cqlstructure.png" alt="cqlstructure" width="460" height="373" /></p>
+<p>Code stays in the same domain, and the liquid concept of 'SQL code' becomes concrete: Lisp.</p>
+<p><strong>Any change in the target destination rarely warrants change in the user-code!</strong></p>
+<p><br class="spacer_" /></p>
+<h1>Our approach</h1>
+<p>Currently we have a nice and uniform frontend, which is what the developers will be working with on a daily basis. Its here you'll find all your SQL-like functions: query (SELECT), insert-into, update, create-table, group-by, etc.  The front-end only has 1 job and thats to categorize your input in a format which the backend understands (call it AST).</p>
+<p>Lets say I want to pick out the user Frank from my accounts table:</p>
+<pre class="sh_clojure" name="code">&gt;&gt; (query accounts [username passwords] (= username "frank"))
+{:columns [username passwords], :tables [accounts],
+ :predicates [= username "?"],  :column-aliases {},
+ :table-aliases {}, :env ["frank"]}
+</pre>
+<p>As you can see, this doesn't actually do any work. All the information is seperated into keys in a hash-map for later compilation by the backend. In order to compile the statement you need an open connection to a database, because only through that can we determine exactly what the final SQL Statement should look like. You can test it like so</p>
+<pre class="sh_clojure" name="code">&gt;&gt; (with-connection [c (make-connection-info "mysql" "//localhost/cql" "cql" "cql")]
+			 (compile-sql
+			  (query accounts [username passwords] (= username "frank")) c))
+"SELECT username,passwords FROM accounts WHERE (username = ?)"
+</pre>
+<p>That opens and closes a connection in order to compile the statement. ClojureQL always uses parameterized SQL Statements, meaning that variables appear as question marks in the text and are passed as parameters to the actual execution call. If you examine the AST output from Query, you'll see the parameters lined up sequentially in the :env field, in this case just "frank".</p>
+<p>Query is pretty flexible accepting symbols like *, custom predicates, column aliases etc etc. Since everything is rolled in macros you have to explicitly tell CQL what you want evaluated:</p>
+<pre class="sh_clojure" name="code">(let [frank  "john"]
+ (with-connection [c (make-connection-info "mysql" "//localhost/cql" "cql" "cql")]
+   (prn (compile-sql (query accounts [username passwords] (= username frank)) c))
+   (prn (compile-sql (query accounts [username passwords] (= username ~frank)) c))))
+"SELECT username,passwords FROM accounts WHERE (username = frank)"  ; finds frank
+"SELECT username,passwords FROM accounts WHERE (username = ?)"  ; finds john
+</pre>
+<p>All the macros call drivers, so everything is evaluated at run-time instead of compile-time. Oh and by the way: Pulling out and watching a compiled statement is more verbose than just running the code:</p>
+<pre class="sh_clojure" name="code">&gt;&gt; (run :mysql (query accounts * (= status "unpaid")))
+{:id 22 :name "John the Debtor" :balance -225.25}
+...
+</pre>
+<p>Since all of our statements initially are just AST representations, the way to modify their core behavior with functions such as Group-By or Order-By is to pass the AST around to these functions</p>
+<pre class="sh_clojure" name="code">(let [select-statement (query accounts *)]
+			 (with-connection [c (make-connection-info "mysql" "//localhost/cql" "cql" "cql")]
+			   (compile-sql (group-by select-statement username) c)))
+"SELECT * FROM accounts GROUP BY username"
+</pre>
+<p>That hopefully quickly becomes second nature to you. I've considered rearranging the argument order, to make it easier to read but nothing is decided and I'm open to suggestions.</p>
+<p>In broad-strokes we have implemented the following sql-statement-types in the frontend</p>
+<p style="padding-left: 30px;"><strong>query<br />
+ join<br />
+ ordered-query<br />
+ grouped-query<br />
+ having-query<br />
+ distinct-query<br />
+ union<br />
+ intersect<br />
+ difference<br />
+ let-query<br />
+ update<br />
+ delete<br />
+ create-table<br />
+ create-view<br />
+ drop-table<br />
+ drop-view<br />
+ <em>alter-table</em><br />
+ batch-statement<br />
+ raw-statement</strong></p>
+<p>If you're already comfortable with SQL you should recognize most of those. I'll explain the exceptions:</p>
+<p><strong>Let Query: </strong>LetQuery is a way of binding a local to the result of a query, very similar to Clojure's 'let'.</p>
+<pre class="sh_clojure" name="code">(let-query [password   (query accounts [username password] (= username "frank"))]
+    (println "Your password is: " password))
+</pre>
+<p><strong>Batch Statement:</strong> Batch statements are (as you may have guessed) a cluster of statements which will execute sequentially with a single call to run. Initially we used a batch of create-table + alter-table to be db-agnostic in regards to table-creation, but we later sacrificed this approach by implementing backend modules.</p>
+<p><strong>Raw Statement</strong>: A Raw Statement is what you use, when you've read all the documentation and frontend.clj, without finding a function that does exactly what you need. It'ins a brute and I hope you won't use it:</p>
+<pre class="sh_clojure" name="code">(raw "SELECT * FROM accounts USING SQL_NINJAv9x(0x333);")
+</pre>
+<p>If you end up using Raw for something which isn't specific to your setup, please drop an email so I can schedule it for assimilation.</p>
+<p>And finally, I put alter-table in italics because its not done yet, but  it will be for 1.0. No two SQL implementations even remotely agree on how to use alter and yet I want to expose it to you in a uniform way, so thats a challenge - Input is encouraged.</p>
+<p><br class="spacer_" /></p>
+<h1>It's easy to get started!</h1>
+<p>Documentation is...under way, but generally we try to put all significant functions into the the demos, so that you can see them in action. To get started with something like Derby takes no effort, so I'll show MySql instead:</p>
+<p>From your shell:</p>
+<pre style="background: #f0f0eb none repeat scroll 0% 0%; width: 100%; font-family: verdana; margin-left: 10px;">$ mysql -u root -p
+
+ Enter password: *********
+
+ <em>Welcome to the MySQL monitor.  Commands end with ; or \g.</em>
+
+<strong>mysql&gt;</strong> CREATE DATABASE cql;
+
+ <em>Query OK, 1 row affected (0,00 sec)</em>
+
+<strong>mysql&gt;</strong> GRANT ALL PRIVILEGES ON cql.* TO "cql"@"localhost" IDENTIFIED BY 'cql';
+
+ <em>Query OK, 0 rows affected (0,29 sec)</em>
+</pre>
+<p><br class="spacer_" /></p>
+<p>Now we have a database called cql, a user called cql and his password is cql. Then fire up your Clojure REPL</p>
+<pre style="color: #bebebe; background-color: #262626; font-size: 8pt;"><span style="color: #afeeee; font-weight: bold;">user&gt; </span><span style="font-weight: bold;">(<span style="color: #ccffff;">use</span> <span style="color: #00ff00;">:<span style="color: #ccffcc;">reload</span></span> 'clojureql.demos.mysql)</span>
+nil
+<span style="color: #afeeee; font-weight: bold;">user&gt; </span><span style="font-weight: bold;">(<span style="color: #ccffff;">load-file</span> ".../clojureql/src/clojureql/demos/mysql.clj")</span>
+nil
+<span style="color: #afeeee; font-weight: bold;">user&gt; </span><span style="font-weight: bold;">(clojureql.demos.mysql/-main)</span>
+<span style="color: #87cefa;">SELECT StoreName FROM StoreInformation
+{:storename "Los Angeles"}
+....
+</span></pre>
+<p>The demos all do the same thing, so first you might want to read through demos/mysql.clj to see how we load the driver, intialize the namespace and so on. MySql is special because it shows off a global persistent connection, which means it stays open for as long as your program runs or until you close it. The other demos open/close connections on every call, depending on your project you will prefer one of the two.</p>
+<p>Once the driver is loaded and the connection-string defined, <strong>nothing seperates the demos</strong> for Derby, Mysql or Postgres and so they all load demos/common.clj. Once you've read and understood everything that goes on there, you'll have a good grasp on how to handle most situations with ClojureQL.</p>
+<p><br class="spacer_" /></p>
+<h1>Building the thing</h1>
+<p>For Version 1.0 I want ClojureQL running on a quality build-system and have spent the past couple of days researching what that might be. Currently we are interfacing directly with Ant &amp; Ivy using some complicated XML configurations. This setup goes against every principle I have because of its inflexibility, lack of elegance and complexity.</p>
+<p>The 2 systems which I found most interesting, were Gradle and <a href="http://technomancy.us/131" target="_blank">Leiningen</a>. I get the impression that Leiningen is widely adopted in the Clojure Community already and rightfully so. It's a DSL which lets you configure your build <strong>using Clojure code </strong>and its easy to pick up and build with. On the down-side its very fresh off the press so I would have great reservations using it in a complex scenario of several projects and in case you need some Ruby, Python, whatever code Leiningen can not support you. So I opted for Gradle.</p>
+<p><strong>Current users: </strong>Please notice that during the move we removed 'dk.bestinclass' from the namespace declarations.</p>
+<h2>Why is Gradle so groovy?</h2>
+<p>Gradle is Groovy because it lets you write build-scripts in Groovy, but supports a multitude of languages. Its been around for a while and is now coming into maturity. It gracefully lets you handle multiple projects, projects written in multiple languages, dependencies, distribution, etc. Best of all, my co-pilot on ClojureQL Mr. Meikel Brandmeyer has written a plugin for Gradle called <a href="http://kotka.de/blog/clojure/Clojuresque_1.1.0_released.html" target="_blank">Clojuresque</a>. Clojuresque enables Gradle to read Clojure-code well enough to identify namespaces etc, letting us AOT compile the project neatly into a Jar which is what we need. He's also added support for distributing Jars to the newly started <a href="http://www.clojars.org">Clojars</a> site (Leiningen does this too). I don't have much to say about the Groovy build-scripts except they beat XML, and if you don't know Groovy is much like Java without much of the boilerplate.</p>
+<p>To avoid any confusion, I'll quickly run you through how to install Gradle + Clojuresque. If you don't need this at the moment, feel free to bookmark the page and skip past it.</p>
+<p>First pick a directory where you want to setup. Grab the latest Gradle which depends on nothing, it comes with a small Groovy installation:</p>
+<p><strong>wget http://dist.codehaus.org/gradle/gradle-0.8-all.zip<br />
+ unzip gradle-0.8-all.zip &amp;&amp; rm gradle-0.8-all.zip </strong></p>
+<p>Gradle really only needs your PATH variable to point to its /bin directory, but build-scripts sometimes ask for GRADLE_HOME, so set them up</p>
+<p><strong> export PATH=$PATH:/PATH/TO/gradle-0.8/bin<br />
+ export GRADLE_HOME=/PATH/TO/gradle-0.8 </strong></p>
+<p>Then with Gradle set up, you need to get Clojuresque and compile it</p>
+<p><strong>wget http://bitbucket.org/kotarak/clojuresque/get/v1.1.0.zip<br />
+ unzip v1.1.0.zip &amp;&amp; rm v1.1.0.zip<br />
+ cd clojuresque<br />
+ gradle build</strong></p>
+<p>-- Massive output, BUILD SUCCESSFUL, jar in: build/libs/clojuresque-1.1.0.jar</p>
+<p>clojuresque-1.1.0.jar is all Gradle needs in order to understand your Clojure projects. If all you need Clojuresque for is building ClojureQL then don't bother fetching it, Gradle will handle that automatically once you build ClojureQL.</p>
+<p><br class="spacer_" /></p>
+<h1>In closing</h1>
+<p>Now you've seen a little bit of ClojureQL and I hope it has caught your interest. We're dedicated to making this as stable, elegant and featureful as possible in order to get you talented Lispniks to stop writing SQL - That said, contributions (even if its just ideas) are most welcome. These are the facts you should know</p>
+<p>ClojureQL is....</p>
+<ul>
+<li>version 0.9.7, meaning 1.0 is right around the corner</li>
+<li>hosted on <a href="http://gitorious.org/clojureql/" target="_blank">Gitorious</a>, <em>git clone git://gitorious.org/clojureql/clojureql.git</em></li>
+<li>tracked on <a href="http://clojureql.lighthouseapp.com/projects/34981-clojureql/overview" target="_blank">LighthouseApp</a></li>
+<li>built with Gradle+<a href="http://kotka.de/blog/clojure/Clojuresque_1.1.0_released.html" target="_blank">Clojuresque</a></li>
+<li>spearheaded by Lau B. Jensen &amp; <a href="http://twitter.com/kotarak" target="_blank">Meikel Brandmeyer</a></li>
+</ul>
+<p><br class="spacer_" /></p>
+
+</div>
+  <div id="postfooter"></div>
+
+  <div id="toggle">
+    <a id="addcomment" href="/cmt/url=/index.clj/2009/12/clojureql-where-are-we-going.html" rel="#overlay" style="text-decoration:none">
+      <img class="tipped" src="/images/add-comment.png" title="Share your thoughts - Add a comment!" />
+    </a>
+    <a href="#" id="showdiscussion">
+      <img class="tipped" src="/images/comments.png" title="View the discussion" />
+    </a>
+  </div>
+
+  <div id="debateheader"></div>
+  <div id="debate">
+    <div class="comment">
+      <div class="author">stand</div>
+      <div class="date">2009-12-11 21:50:51</div>
+      <div class="message"><pre>Thanks for the excellent writeup, Lau. I'm pretty excited about this project and am following closely! It's a bit ironic that we need to do things like this given that SQL was originally supposed to be a universal database communication language.
+
+One thing you don't mention which I think is an advantage of this approach is that since your queries get built at the language level instead of at the string concatenation level it makes it easier to guard against sql injection attacks.
+
+For that reason, I think it might make sense to have some sort of boolean that you can set that disallows (or warns about?) the use of raw though I'm not sure that would really make any difference. It certainly behooves you to be careful about what you allow raw to do when writing code.</pre></div>
+    </div><div class="comment">
+      <div class="author">Aaron Erickson</div>
+      <div class="date">2009-12-12 03:39:50</div>
+      <div class="message"><pre>Congrats - you invented Linq to SQL!
+
+More seriously, nice accomplishment.  I love the idea - especially one not controlled by a specific vendor.</pre></div>
+    </div><div class="comment">
+      <div class="author">Lau</div>
+      <div class="date">2009-12-12 12:38:25</div>
+      <div class="message"><pre>@stand: Thanks :)
+
+It might be worth considering some type of security module, but as you mention keeping the construction of statements at the language level as well as parameterizing everything does keep you pretty safe.
+
+@Aaron: Thanks.</pre></div>
+    </div><div class="comment">
+      <div class="author">Meikel</div>
+      <div class="date">2009-12-14 10:35:57</div>
+      <div class="message"><pre>@Aaron: This project is based a paper about SchemeQL published on October 2002.</pre></div>
+    </div>
+  
+  <div class="comment">
+    <div class="author">Tim Clark</div>
+    <div class="date">2010-07-28 08:45:40</div>
+    <div class="message"><pre>(justAroundTheCorner? "ClojureQL" "1.0")
+com.clojureQL&gt; ???</pre></div>
+  </div>
+</div>
+
+  <div class="apple_overlay" id="overlay">
+	<!-- the external content is loaded inside this tag -->
+	<div class="contentWrap"></div>
+  </div>
+  <div id="debatefooter"></div>
+
+
+    <div class="separator"></div>
+
+    <div id="footer">
+      <div id="footer-wrap">
+	<div id="contact">
+	  <strong>Kontakt Oplysninger</strong>
+	  <br />
+	  Best In Class v/Lau B. Jensen
+	  <br />
+	  CVR 32209459
+	  <br />
+	  Telefon 427 00 422
+	  <br />
+	  Email  <a href="mailto:kontakt@bestinclass.dk">kontakt@bestinclass.dk</a>
+	</div>
+	<div>
+	  <strong>Services</strong>
+	  <br />
+	  <a href="/services.html">Webdesign</a>
+	  <br />
+	  <a href="/services.html#2">Applikations Udvikling</a>
+	  <br />
+	  <a href="/services.html#3">Konsulent ydelser</a>
+	</div>
+	<div>
+	  <strong>Produkter</strong>
+	  <br />
+	  <a href="/produkter.html">Klippekort</a>
+	  <br />
+	  <a href="/produkter.html#2">Smart Move</a>
+	</div>
+    </div>
+  </div></body>
+
+
+</html>
