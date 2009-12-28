@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Widefinder 2 with Clojure</title>
+    <link rel="stylesheet" href="../../../css/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="../../../css/screen.css" type="text/css" />
+    <link href="../../../atom.xml" rel="alternate" title="Alex Osborne's log" type="application/atom+xml" />
+ </head>
+ <body>
+   <div id="content">
+     <em>From the log of <a href="http://meshy.org/">Alex Osborne</a> 2009-12-13.</em>
+     <h1 id='widefinder_2_with_clojure'>Widefinder 2 with Clojure</h1>
+
+<p>Like many <a href='http://clojure.org/'>Clojurists</a>, I&#8217;ve been pretty avidly following Tim Bray&#8217;s <a href='http://www.tbray.org/ongoing/When/200x/2009/09/27/Concur-dot-next'>experiences</a>. Recently Tim has been been trying to <a href='http://www.tbray.org/ongoing/When/200x/2009/12/08/WF-Tuning-Clojure'>implement</a> the <a href='http://wikis.sun.com/display/WideFinder/The+Benchmark'>Widefinder 2</a> benchmark and had apparently been struggling to get it to perform well. This was of course an irresistible challenge and I had to have a go at it myself.</p>
+
+<p>I cooked up my own version which seemed to run pretty well on the only box I had handy to try it on (a quad-core Xeon) and then Tim kindly gave me access to the <a href='http://wikis.sun.com/display/WideFinder/Infrastructure'>WF2 test machine</a> a Sun T2000 with 32 hardware threads. Unsurprisingly it performed abysmally and was barely loading the server. However the help of <a href='http://dishevelled.net/'>Mark Triggs</a>&#8212;who babysits Java apps for a living so is pretty handy with Solaris&#8217; instrumentation and profiling tools&#8212;led to a couple tweaks to how I was doing IO and we got it running pretty well. How well? Better than Java and Scala. I hope that whets your appetite.</p>
+
+<p><strong>Update:</strong> <em><a href='http://www.tbray.org/ongoing/When/200x/2009/12/15/Osborne-WF2-Clojure'>Tim&#8217;s early reactions</a>. And just to be clear I mean &#8220;faster&#8221; than the Scala and Java versions listed <a href='http://wikis.sun.com/display/WideFinder/Results'>here</a>. Clojure is written in Java so you can of course achieve the same (or possibly better) performance by doing exactly the same thing I did using another JVM language. This is more just an exploration of Clojure&#8217;s potential for performance, on a common real-world problem, than any serious attempt at competition.</em></p>
+
+<h2 id='the_benchmark'>The benchmark</h2>
+
+<p>The problem is a simple log parsing exercise. Given an Apache log from Tim&#8217;s website, generate a nice report of top ten most requested pages, referrers, client addresses and bytes served. Should be easy huh? The catch is the log file is 45 GB and Tim wants the report done by the time he gets back from refilling his coffee mug.</p>
+
+<p>You can split the problem into three parts: parsing the log lines, tallying the various counts and outputting the report. It&#8217;s critical to parallelize the parsing and tallying. A fairly common approach to doing this is the shared-nothing or map-reduce method. We give each thread its own set of counters, have each process a different portion of the data and then merge all the counters together at the end. By doing this you don&#8217;t have to worry about locking or inter-thread communication. This works fine in virtually any programming language, but its a pretty boring way of doing things.</p>
+
+<p>One of the main goals of Clojure is making local shared state concurrency safe, fast and easy, so I decided to go for a shared set of counters. At this point you&#8217;re probably thinking something along the lines of &#8220;argh&#8230; that&#8217;ll mean locks which are slow and easy to mess up&#8221;, but as we&#8217;ll see later Clojure has something better in store for us.</p>
+
+<h2 id='parsing'>Parsing</h2>
+
+<p>My initial naive method of reading the log file was just to use <code>read-lines</code> grouped into chunks with <code>partition</code> and passing each chunk to a different thread. This worked fine on my quad-core but having only one of T2000&#8217;s many weak processors doing the read severely limited throughput. The solution of course is to have each thread do its own IO. I wanted to do this in the simplest way possible, however we can&#8217;t just split the file into evenly sized chunks as we&#8217;d end up splitting in the middle of a line. That&#8217;s where <code>chunk-file</code> comes in.</p>
+<div class='highlight'><pre><span class='p'>(</span><span class='k'>defn </span><span class='nv'>chunk-file</span>
+  <span class='s'>&quot;Partitions a file into n line-aligned chunks.  Returns a list of start and</span>
+<span class='s'>  end byte offset pairs.&quot;</span>
+  <span class='p'>[</span><span class='nv'>filename</span> <span class='nv'>n</span><span class='p'>]</span>
+  <span class='p'>(</span><span class='nb'>with-open </span><span class='p'>[</span><span class='nv'>file</span> <span class='p'>(</span><span class='nf'>RandomAccessFile</span><span class='o'>.</span> <span class='nv'>filename</span> <span class='s'>&quot;r&quot;</span><span class='p'>)]</span>
+    <span class='p'>(</span><span class='k'>let </span><span class='p'>[</span><span class='nv'>offsets</span> <span class='p'>(</span><span class='k'>for </span><span class='p'>[</span><span class='nv'>offset</span> <span class='p'>(</span><span class='nb'>range </span><span class='mi'>0</span> <span class='p'>(</span><span class='o'>.</span><span class='nv'>length</span> <span class='nv'>file</span><span class='p'>)</span> <span class='p'>(</span><span class='nb'>/ </span><span class='p'>(</span><span class='o'>.</span><span class='nv'>length</span> <span class='nv'>file</span><span class='p'>)</span> <span class='nv'>n</span><span class='p'>))]</span>
+                    <span class='p'>(</span><span class='nf'>do</span> <span class='p'>(</span><span class='nb'>when-not </span><span class='p'>(</span><span class='nb'>zero? </span><span class='nv'>offset</span><span class='p'>)</span>
+                          <span class='p'>(</span><span class='o'>.</span><span class='nv'>seek</span> <span class='nv'>file</span> <span class='nv'>offset</span><span class='p'>)</span>
+                          <span class='p'>(</span><span class='nf'>while</span> <span class='p'>(</span><span class='nb'>not= </span><span class='p'>(</span><span class='o'>.</span><span class='nv'>read</span> <span class='nv'>file</span><span class='p'>)</span> <span class='p'>(</span><span class='nb'>int </span><span class='sc'>\newline</span><span class='p'>))))</span>
+                        <span class='p'>(</span><span class='o'>.</span><span class='nv'>getFilePointer</span> <span class='nv'>file</span><span class='p'>)))</span>
+          <span class='nv'>offsets</span> <span class='p'>(</span><span class='nb'>concat </span><span class='nv'>offsets</span> <span class='p'>[(</span><span class='o'>.</span><span class='nv'>length</span> <span class='nv'>file</span><span class='p'>)])]</span>
+      <span class='p'>(</span><span class='nb'>doall </span><span class='p'>(</span><span class='nf'>partition</span> <span class='mi'>2</span> <span class='p'>(</span><span class='nb'>interleave </span><span class='nv'>offsets</span> <span class='p'>(</span><span class='nb'>rest </span><span class='nv'>offsets</span><span class='p'>)))))))</span>
+</pre>
+</div>
+<p>We first open the file for random read access and then use range to create a list of n evenly spaced positions into the file. We then seek to each of these in turn and roll forward until we encounter a line-break to ensure our offsets don&#8217;t occur in the middle of lines. Next tack the length of the file on the end as the last offset. Thus we finish up with a list looking something like <code>(0 267 312 876)</code>. We then <code>interleave</code> it with itself minus the first element which gives us <code>(0 267 267 312 312 876)</code> and then <code>partition</code> by 2 to yield the desired start and end pairs <code>((0 267) (267 312) (312 876))</code>. <em>[Update: Matti points out in the comments that doing <code>(partition 2 1 offsets)</code> achieves the same thing without <code>interleave</code>.]</em> The <code>doall</code> is necessary to realize the list before we close the file, as by default it&#8217;s lazily evaluated.</p>
+
+<p>Right, now that we know what we&#8217;re reading how do we actually do it? The easiest way to read lines from a file is to well, use <code>read-lines</code>, but unfortunately we need to limit to our chunk. This calls for a new function, <code>read-lines-range</code>.</p>
+<div class='highlight'><pre><span class='p'>(</span><span class='k'>defn </span><span class='nv'>read-lines-range</span> <span class='p'>[</span><span class='nv'>file</span> <span class='nv'>start-byte</span> <span class='nv'>end-byte</span><span class='p'>]</span>
+  <span class='s'>&quot;Returns a lazy sequence of lines from file between start-byte and end-byte.&quot;</span>
+  <span class='p'>(</span><span class='k'>let </span><span class='p'>[</span><span class='nv'>reader</span> <span class='p'>(</span><span class='nb'>-&gt; </span><span class='p'>(</span><span class='nb'>doto </span><span class='p'>(</span><span class='nf'>FileInputStream</span><span class='o'>.</span> <span class='nv'>file</span><span class='p'>)</span>
+                     <span class='p'>(</span><span class='o'>.</span><span class='nv'>skip</span> <span class='nv'>start-byte</span><span class='p'>))</span>
+                   <span class='p'>(</span><span class='nf'>BufferedInputStream</span><span class='o'>.</span> <span class='mi'>131072</span><span class='p'>)</span>
+                   <span class='p'>(</span><span class='nf'>InputStreamReader</span><span class='o'>.</span> <span class='s'>&quot;US-ASCII&quot;</span><span class='p'>)</span>
+                   <span class='p'>(</span><span class='nf'>BufferedReader</span><span class='o'>.</span><span class='p'>))]</span>
+    <span class='p'>(</span><span class='nf'>letfn</span> <span class='p'>[(</span><span class='nf'>gobble-lines</span> <span class='p'>[</span><span class='nv'>remaining</span><span class='p'>]</span>
+              <span class='p'>(</span><span class='nf'>lazy-seq</span>
+               <span class='p'>(</span><span class='nb'>if-let </span><span class='p'>[</span><span class='nv'>line</span> <span class='p'>(</span><span class='nb'>and </span><span class='p'>(</span><span class='nb'>pos? </span><span class='nv'>remaining</span><span class='p'>)</span> <span class='p'>(</span><span class='o'>.</span><span class='nv'>readLine</span> <span class='nv'>reader</span><span class='p'>))]</span>
+                 <span class='p'>(</span><span class='nb'>cons </span><span class='nv'>line</span> <span class='p'>(</span><span class='nf'>gobble-lines</span> <span class='p'>(</span><span class='nb'>- </span><span class='nv'>remaining</span> <span class='p'>(</span><span class='o'>.</span><span class='nv'>length</span> <span class='nv'>line</span><span class='p'>))))</span>
+                 <span class='p'>(</span><span class='o'>.</span><span class='nv'>close</span> <span class='nv'>reader</span><span class='p'>))))]</span>
+      <span class='p'>(</span><span class='nf'>gobble-lines</span> <span class='p'>(</span><span class='nb'>- </span><span class='nv'>end-byte</span> <span class='nv'>start-byte</span><span class='p'>)))))</span>
+</pre>
+</div>
+<p>So the first thing we do is open our file. Normally in Clojure you&#8217;d just use the <code>reader</code> function from <code>clojure.contrib.duck-streams</code> to skip all the Java boilerplate but in this case I want to specify some additional options. The <code>-&gt;</code> and <code>doto</code> macros save us from having to name each intermediate step and from the unreadable nesting you&#8217;d get if you tried to do the same thing in a typical curly-brace language.</p>
+<div class='highlight'><pre><span class='n'>BufferedReader</span> <span class='n'>reader</span> <span class='o'>=</span> <span class='k'>new</span> <span class='n'>BufferedReader</span><span class='o'>(</span><span class='k'>new</span> <span class='n'>InputStreamReader</span><span class='o'>(</span><span class='k'>new</span> <span class='n'>BufferedInputStream</span><span class='o'>(</span>
+                          <span class='k'>new</span> <span class='nf'>FileInputStream</span><span class='o'>(</span><span class='n'>filename</span><span class='o'>).</span><span class='na'>skip</span><span class='o'>(</span><span class='n'>startByte</span><span class='o'>),</span> <span class='mi'>131072</span><span class='o'>),</span> <span class='s'>&quot;US-ASCII&quot;</span><span class='o'>));</span>
+</pre>
+</div>
+<p>Oops, <code>FileInputStream.skip()</code> returns a <code>long</code>, so that doesn&#8217;t even work. Now who was complaining about Lisp syntax (looking (like (this)))?</p>
+
+<p>We use a <code>BufferedInputStream</code> with a 128k buffer to increase the number of bytes we&#8217;re reading from the disk at a time. The reason we can&#8217;t just give the <code>BufferedReader</code> a large buffer is that <code>InputStreamReader</code> reads in 8192 byte blocks so we really need that buffer at the byte level. You can see if there&#8217;s excessive small reads happening on Solaris with <code>sar -c 2 10</code>. You can also use <code>truss -p $pid</code> on the process to look at them individually (the Linux equivalent is <code>strace</code>). Finally we set the encoding to US ASCII which saves us a little CPU time as we skip UTF-decoding.</p>
+
+<p>The next couple of lines might look a bit unfamiliar to Clojure beginners so lets break them down.</p>
+<div class='highlight'><pre><span class='p'>(</span><span class='nf'>letfn</span> <span class='p'>[(</span><span class='nf'>gobble-lines</span> <span class='p'>[</span><span class='nv'>remaining</span><span class='p'>]</span>
+          <span class='o'>...</span><span class='p'>)]</span>
+  <span class='p'>(</span><span class='nf'>gobble-lines</span> <span class='p'>(</span><span class='nb'>- </span><span class='nv'>end-byte</span> <span class='nv'>start-byte</span><span class='p'>)))</span>
+</pre>
+</div>
+<p>What&#8217;s this <code>letfn</code> thing? Has some sick and twisted person created a crossbreed of <code>let</code> and <code>defn</code>? Yes, that&#8217;s it exactly. <code>letfn</code> lets you define a named local function. Our function takes the number of bytes left to read, so we initially call it with all of them. Now onto the body of the local function.</p>
+<div class='highlight'><pre><span class='p'>(</span><span class='nf'>lazy-seq</span>
+ <span class='p'>(</span><span class='nb'>if-let </span><span class='p'>[</span><span class='nv'>line</span> <span class='p'>(</span><span class='nb'>and </span><span class='p'>(</span><span class='nb'>pos? </span><span class='nv'>remaining</span><span class='p'>)</span>
+                    <span class='p'>(</span><span class='o'>.</span><span class='nv'>readLine</span> <span class='nv'>reader</span><span class='p'>))]</span>
+   <span class='p'>(</span><span class='nb'>cons </span><span class='nv'>line</span>
+         <span class='p'>(</span><span class='nf'>gobble-lines</span> <span class='p'>(</span><span class='nb'>- </span><span class='nv'>remaining</span> <span class='p'>(</span><span class='o'>.</span><span class='nv'>length</span> <span class='nv'>line</span><span class='p'>))))</span>
+   <span class='p'>(</span><span class='o'>.</span><span class='nv'>close</span> <span class='nv'>reader</span><span class='p'>)))</span>
+</pre>
+</div>
+<p>So if there&#8217;s some bytes remaining in our chunk we take a line from the reader. We then cons it on the front of the list of the rest of the lines. If there&#8217;s no more remaining bytes or we&#8217;ve reached the end of the file and <code>.readLine</code> returns nil we simply close the reader.</p>
+
+<p>But hang on, isn&#8217;t this going to slurp the entire 45 GB file into memory in one go? Nope. See that <code>lazy-seq</code> macro wrapping the body? What it does is delays evaluating the code until you actually access that part of the list. Neat huh?</p>
+
+<p>The careful reader will at this point be violently waving their arms trying to get my attention. &#8220;You&#8217;re calling <code>.length</code> on a string and assuming that equals the number of bytes! Localization! Character encodings!! Gnnyyyghh!!&#8221; Normally you&#8217;d be quite right, but remember I&#8217;m decoding as ASCII so this is a safe assumption to make. It also saves the expense of re-encoding the string. The more we can avoid touching every character in the file the better as doing so is our inner loop.</p>
+<div class='highlight'><pre><span class='p'>(</span><span class='k'>defn </span><span class='o'>#</span><span class='nv'>^</span><span class='s'>&quot;[Ljava.lang.String;&quot;</span> <span class='nv'>dumbest-split</span>
+  <span class='p'>[</span><span class='o'>#</span><span class='nv'>^String</span> <span class='nv'>s</span> <span class='nv'>c</span> <span class='o'>#</span><span class='nv'>^</span><span class='s'>&quot;[Ljava.lang.String;&quot;</span> <span class='nv'>tokens</span><span class='p'>]</span>
+  <span class='p'>(</span><span class='k'>let </span><span class='p'>[</span><span class='nv'>len</span> <span class='p'>(</span><span class='nb'>dec </span><span class='p'>(</span><span class='nb'>int </span><span class='p'>(</span><span class='nb'>alength </span><span class='nv'>tokens</span><span class='p'>)))]</span>
+   <span class='p'>(</span><span class='nb'>loop </span><span class='p'>[</span><span class='nv'>start</span> <span class='p'>(</span><span class='nb'>int </span><span class='mi'>0</span><span class='p'>)</span>
+          <span class='nv'>i</span> <span class='p'>(</span><span class='nb'>int </span><span class='mi'>0</span><span class='p'>)]</span>
+     <span class='p'>(</span><span class='k'>let </span><span class='p'>[</span><span class='nv'>idx</span> <span class='p'>(</span><span class='nb'>int </span><span class='p'>(</span><span class='o'>.</span><span class='nv'>indexOf</span> <span class='nv'>s</span> <span class='p'>(</span><span class='nb'>int </span><span class='nv'>c</span><span class='p'>)</span> <span class='p'>(</span><span class='nb'>int </span><span class='nv'>start</span><span class='p'>)))]</span>
+       <span class='p'>(</span><span class='k'>if </span><span class='p'>(</span><span class='nb'>or </span><span class='p'>(</span><span class='nb'>neg? </span><span class='nv'>idx</span><span class='p'>)</span> <span class='p'>(</span><span class='nb'>&gt;= </span><span class='nv'>i</span> <span class='nv'>len</span><span class='p'>))</span>
+         <span class='p'>(</span><span class='nf'>do</span> <span class='p'>(</span><span class='nb'>aset </span><span class='nv'>tokens</span> <span class='nv'>i</span> <span class='p'>(</span><span class='o'>.</span><span class='nv'>substring</span> <span class='nv'>s</span> <span class='nv'>start</span><span class='p'>))</span>
+             <span class='nv'>tokens</span><span class='p'>)</span>
+         <span class='p'>(</span><span class='nf'>do</span> <span class='p'>(</span><span class='nb'>aset </span><span class='nv'>tokens</span> <span class='nv'>i</span> <span class='p'>(</span><span class='o'>.</span><span class='nv'>substring</span> <span class='nv'>s</span> <span class='nv'>start</span> <span class='nv'>idx</span><span class='p'>))</span>
+             <span class='p'>(</span><span class='nf'>recur</span> <span class='p'>(</span><span class='nb'>inc </span><span class='nv'>idx</span><span class='p'>)</span> <span class='p'>(</span><span class='nb'>inc </span><span class='nv'>i</span><span class='p'>))))))))</span>
+</pre>
+</div>
+<p>Ewww! What&#8217;s that hideous mess? While profiling we discovered just using <code>String.split</code> to break our log lines into columns was a major bottleneck. You can see this in Tim Bray&#8217;s profiler output as well:</p>
+
+<pre><code>     Compiled + native   Method
+ 57.1%   148  +     0    java.util.regex.Matcher.search
+ 17.0%     1  +    43    java.util.regex.Pattern.split
+  8.1%     0  +    21    clojure.lang.APersistentVector$Seq.reduce
+  5.8%     3  +    12    java.util.regex.Pattern.matcher</code></pre>
+
+<p><code>String.split</code> splits a string on a regular expression which is where those costly <code>search</code> and <code>split</code> calls are coming from. Obviously this needs improvement, so Mark and I had a bit of a competition to speed that function up as much as possible in a micro-benchmark. He first wrote a dumb-split, I then wrote dumber one and then he won with the final dumbest-split shown above.</p>
+
+<pre><code>String.split   1852.914773 msecs
+dumb-split     1136.352235 msecs
+dumber-split    691.229164 msecs
+dumbest-split   418.799226 msecs</code></pre>
+
+<p>This function is a good example of Clojure letting you get down and dirty and switch to imperative style to optimize that innermost loop. <em>Never</em> write code like this unless it&#8217;s showing up in your profiling. Measure, don&#8217;t guess and don&#8217;t prematurely optimize or you&#8217;ll end up with horribly unreadable code.</p>
+
+<p>Of note are the type hints <code>#^String</code> and <code>#^&quot;[Ljava.lang.String;&quot;</code>. The latter means an array of Strings &#8212; I have no idea why the JVM uses this crappy syntax for arrays, but it does. Java programmers will be recognize it as the annoying output you get if you try to print an array. You might also notice the various <code>int</code> calls all over the place. These are used both as type-hints and to tell the Clojure compiler to use unboxed integers where possible.</p>
+
+<p>Now onto the actual meat of the parser.</p>
+<div class='highlight'><pre><span class='p'>(</span><span class='k'>defn </span><span class='nv'>parse-lines</span> <span class='p'>[</span><span class='nv'>lines</span><span class='p'>]</span>
+  <span class='p'>(</span><span class='k'>let </span><span class='p'>[</span><span class='nv'>ary</span> <span class='p'>(</span><span class='nb'>make-array </span><span class='nv'>String</span> <span class='mi'>12</span><span class='p'>)]</span>
+   <span class='p'>(</span><span class='k'>for </span><span class='p'>[</span><span class='o'>#</span><span class='nv'>^String</span> <span class='nv'>line</span> <span class='nv'>lines</span>
+         <span class='nv'>:let</span> <span class='p'>[</span><span class='nv'>fields</span> <span class='p'>(</span><span class='nf'>dumbest-split</span> <span class='nv'>line</span> <span class='sc'>\space</span> <span class='nv'>ary</span><span class='p'>)</span>
+               <span class='nv'>status</span> <span class='p'>(</span><span class='nb'>aget </span><span class='nv'>fields</span> <span class='mi'>8</span><span class='p'>)</span>
+               <span class='nv'>bytes</span> <span class='p'>(</span><span class='nb'>aget </span><span class='nv'>fields</span> <span class='mi'>9</span><span class='p'>)</span>
+               <span class='o'>#</span><span class='nv'>^String</span> <span class='nv'>ref</span> <span class='p'>(</span><span class='nb'>aget </span><span class='nv'>fields</span> <span class='mi'>10</span><span class='p'>)]</span>
+         <span class='nv'>:when</span> <span class='p'>(</span><span class='nb'>= </span><span class='p'>(</span><span class='nb'>aget </span><span class='nv'>fields</span> <span class='mi'>5</span><span class='p'>)</span> <span class='s'>&quot;\&quot;GET&quot;</span><span class='p'>)</span>
+         <span class='nv'>:when</span> <span class='p'>(</span><span class='o'>#</span><span class='p'>{</span><span class='s'>&quot;200&quot;</span> <span class='s'>&quot;304&quot;</span> <span class='s'>&quot;404&quot;</span><span class='p'>}</span> <span class='nv'>status</span><span class='p'>)]</span>
+     <span class='p'>{</span><span class='nv'>:client</span> <span class='p'>(</span><span class='nb'>aget </span><span class='nv'>fields</span> <span class='mi'>0</span><span class='p'>)</span>
+      <span class='nv'>:url</span> <span class='p'>(</span><span class='nb'>aget </span><span class='nv'>fields</span> <span class='mi'>6</span><span class='p'>)</span>
+      <span class='nv'>:status</span> <span class='nv'>status</span>
+      <span class='nv'>:bytes</span> <span class='p'>(</span><span class='k'>if </span><span class='p'>(</span><span class='nb'>= </span><span class='nv'>bytes</span> <span class='s'>&quot;-&quot;</span><span class='p'>)</span> <span class='mi'>0</span> <span class='p'>(</span><span class='nf'>Long/parseLong</span> <span class='nv'>bytes</span><span class='p'>))</span>
+      <span class='nv'>:ref</span> <span class='p'>(</span><span class='o'>.</span><span class='nv'>substring</span> <span class='nv'>ref</span> <span class='mi'>1</span> <span class='p'>(</span><span class='nb'>dec </span><span class='p'>(</span><span class='nb'>count </span><span class='nv'>ref</span><span class='p'>)))})))</span>
+</pre>
+</div>
+<p>The <code>parse-lines</code> function takes a lazy sequence of lines, pulls out the fields we care about and returns a lazy sequence of maps. We allocate the array for the line splitting up front, which is probably overkill but we were getting really good performance improvements by optimizing the line splitting so we thought we&#8217;d do that as well. The <code>for</code> macro makes quick work of the various conditions saving us from an ugly <code>map</code> and <code>filter</code> nest.</p>
+
+<p>Now you&#8217;re probably thinking &#8220;Wait, what? They went to all that effort using arrays and a dumb string splitting function and then go and stick the results in a hash-map? Isn&#8217;t that going to slow things down again?&#8221; No actually it&#8217;s not, and this is why you need to measure, not assume. For small maps (usually less than 8 entries) Clojure actually uses an array-map instead of a hash-map so no hashing or expensive lookups have to happen. Keywords are also interned so equality comparison of them is just a pointer comparison. This means that in practice small maps are lightning fast and you don&#8217;t need to sacrifice your readability by using an array or vector instead.</p>
+
+<h2 id='tallying'>Tallying</h2>
+
+<p><em>Phew!</em> 60 or so lines in and we&#8217;re halfway through the program. Fortunately all the boring parsing stuff and ugly low-level optimization is out of the way. Now for the concurrency fun. Let&#8217;s start off with the main function.</p>
+<div class='highlight'><pre><span class='p'>(</span><span class='k'>def </span><span class='nv'>tallies</span> <span class='p'>[[</span><span class='nv'>:url-hits</span>  <span class='s'>&quot;URIs by hit&quot;</span><span class='p'>]</span>
+              <span class='p'>[</span><span class='nv'>:url-bytes</span> <span class='s'>&quot;URIs by bytes&quot;</span> <span class='nv'>:megabytes</span><span class='p'>]</span>
+              <span class='p'>[</span><span class='nv'>:s404s</span>     <span class='s'>&quot;404s&quot;</span><span class='p'>]</span>
+              <span class='p'>[</span><span class='nv'>:clients</span>   <span class='s'>&quot;client addresses&quot;</span><span class='p'>]</span>
+              <span class='p'>[</span><span class='nv'>:refs</span>      <span class='s'>&quot;referrers&quot;</span><span class='p'>]])</span>
+
+<span class='p'>(</span><span class='k'>def </span><span class='nv'>chunks</span> <span class='mi'>1000</span><span class='p'>)</span>
+
+<span class='p'>(</span><span class='k'>defn </span><span class='nv'>wf-atoms</span> <span class='p'>[</span><span class='nv'>file</span><span class='p'>]</span>
+  <span class='p'>(</span><span class='k'>let </span><span class='p'>[</span><span class='nv'>state</span> <span class='p'>(</span><span class='nb'>zipmap </span><span class='p'>(</span><span class='nb'>map </span><span class='nv'>first</span> <span class='nv'>tallies</span><span class='p'>)</span> <span class='p'>(</span><span class='nf'>repeatedly</span> <span class='o'>#</span><span class='p'>(</span><span class='nv'>atom</span> <span class='p'>{})))]</span>
+    <span class='p'>(</span><span class='nf'>dorun</span>
+     <span class='p'>(</span><span class='nf'>pmap</span> <span class='p'>(</span><span class='k'>fn </span><span class='p'>[[</span><span class='nv'>idx</span> <span class='p'>[</span><span class='nv'>start</span> <span class='nv'>end</span><span class='p'>]]]</span>
+             <span class='p'>(</span><span class='nb'>println </span><span class='p'>(</span><span class='nb'>str </span><span class='s'>&quot;Chunk &quot;</span> <span class='nv'>idx</span> <span class='s'>&quot;/&quot;</span> <span class='nv'>chunks</span> <span class='s'>&quot; (&quot;</span> <span class='nv'>start</span> <span class='s'>&quot; -&gt; &quot;</span> <span class='nv'>end</span> <span class='s'>&quot;)&quot;</span><span class='p'>))</span>
+             <span class='p'>(</span><span class='nf'>-&gt;&gt;</span> <span class='p'>(</span><span class='nf'>read-lines-range</span> <span class='nv'>file</span> <span class='nv'>start</span> <span class='nv'>end</span><span class='p'>)</span>
+                  <span class='p'>(</span><span class='nf'>parse-lines</span><span class='p'>)</span>
+                  <span class='p'>(</span><span class='nf'>tally!</span> <span class='nv'>state</span><span class='p'>)))</span>
+           <span class='p'>(</span><span class='nf'>indexed</span> <span class='p'>(</span><span class='nf'>chunk-file</span> <span class='nv'>file</span> <span class='nv'>chunks</span><span class='p'>))))</span>
+    <span class='p'>(</span><span class='nb'>time </span><span class='p'>(</span><span class='nf'>report</span> <span class='nv'>tallies</span> <span class='nv'>state</span><span class='p'>))</span>
+    <span class='p'>(</span><span class='nf'>shutdown-agents</span><span class='p'>)))</span>
+</pre>
+</div>
+<p>First we define some data: a vector of the various tallies and their reporting options and the number of chunks we&#8217;re going to break the file into. I just picked 1000 as it is large enough that we start a new chunk every few seconds so we get reasonably frequent status updates. It also means things are little more fine grained than the number threads, which means that if one thread is taking a little longer than the others for some reason when they finish the others can take over some its work.</p>
+
+<p>Now the actual code. First thing we do is create an atom containing an empty map for each tally. <code>zipmap</code> takes a list of keys and a list of values and &#8220;zips&#8221; them together to create a hash-map. For the keys we give it the first column in <code>tallies</code> (<code>:url-hits,</code> <code>:url-bytes</code> and so on), and for the values we give in an infinite sequence of empty maps wrapped in atoms. <code>zipmap</code> will stop when either list runs out of elements. This means <code>state</code> ends up containing:</p>
+<div class='highlight'><pre><span class='p'>{</span><span class='nv'>:url-hits</span>  <span class='p'>(</span><span class='nf'>atom</span> <span class='p'>{})</span>
+ <span class='nv'>:url-bytes</span> <span class='p'>(</span><span class='nf'>atom</span> <span class='p'>{})</span>
+ <span class='nv'>:s404s</span>     <span class='p'>(</span><span class='nf'>atom</span> <span class='p'>{})</span>
+ <span class='nv'>:clients</span>   <span class='p'>(</span><span class='nf'>atom</span> <span class='p'>{})</span>
+ <span class='nv'>:refs</span>      <span class='p'>(</span><span class='nf'>atom</span> <span class='p'>{})}</span>
+</pre>
+</div>
+<p>For those of you unfamiliar with it, Clojure&#8217;s collections are all immutable. That means the only way to &#8220;add&#8221; something to them is to make a new collection with the extra item added. Clojure uses a lot of tricks under the hood to make this efficient, which we won&#8217;t get into today. But since our collections are immutable we need so way to be able change them across threads. This is where atoms come in.</p>
+
+<p>Atoms are simply an atomic reference. To change them you use the <code>swap!</code> which takes an atom and function. <code>swap!</code> gets the current value of the atom, passes it to the function and replaces the contents of the atom with the return value of the function. To increment a counter inside an atom you simply do <code>(swap! some-atom inc)</code>. To add an entry to a map you do <code>(swap!
+some-atom assoc :key :value)</code>. If somebody else changed the atom in the meantime (while your function was running) the atom will detect it and retry. Thus atoms let us update Clojure&#8217;s collections from multiple threads without locking or even really having to think about thread-safety. Nice, huh?</p>
+<div class='highlight'><pre>     <span class='p'>(</span><span class='nf'>pmap</span> <span class='p'>(</span><span class='k'>fn </span><span class='p'>[[</span><span class='nv'>idx</span> <span class='p'>[</span><span class='nv'>start</span> <span class='nv'>end</span><span class='p'>]]]</span>
+             <span class='p'>(</span><span class='nb'>println </span><span class='p'>(</span><span class='nb'>str </span><span class='s'>&quot;Chunk &quot;</span> <span class='nv'>idx</span> <span class='s'>&quot;/&quot;</span> <span class='nv'>chunks</span> <span class='s'>&quot; (&quot;</span> <span class='nv'>start</span> <span class='s'>&quot; -&gt; &quot;</span> <span class='nv'>end</span> <span class='s'>&quot;)&quot;</span><span class='p'>))</span>
+             <span class='p'>(</span><span class='nf'>-&gt;&gt;</span> <span class='p'>(</span><span class='nf'>read-lines-range</span> <span class='nv'>file</span> <span class='nv'>start</span> <span class='nv'>end</span><span class='p'>)</span>
+                  <span class='p'>(</span><span class='nf'>parse-lines</span><span class='p'>)</span>
+                  <span class='p'>(</span><span class='nf'>tally!</span> <span class='nv'>state</span><span class='p'>)))</span>
+           <span class='p'>(</span><span class='nf'>indexed</span> <span class='p'>(</span><span class='nf'>chunk-file</span> <span class='nv'>file</span> <span class='nv'>chunks</span><span class='p'>)))</span>
+</pre>
+</div>
+<p>Okay, so we take the list of byte offset ranges from <code>chunk-file</code> and use <code>indexed</code> to number each chunk. We then map over the chunks. For each chunk we first print out a status message. The reason I&#8217;m using <code>str</code> to concatenate the strings is to prevent them from getting mixed up together in the output as the prints happen in different threads. Then we use the nesting-reducing <code>-&gt;&gt;</code> macro to read the lines, parse them and send them off to a <code>tally!</code> function. Cool.</p>
+
+<p>But hold up, didn&#8217;t I say something about multiple threads? Yes and if you look carefully you&#8217;ll see I&#8217;m using <code>pmap</code> instead of <code>map</code>, and no that&#8217;s not a typo. <code>pmap</code> is the parallel version of <code>map</code>, it farms the work out to a pool of worker threads. So yes, parallelizing your Clojure code can really be as simple as adding a single <code>p</code> character!</p>
+
+<p>Right, we&#8217;ve seen <code>chunk-file</code>, <code>read-lines-range</code> and <code>parse-lines</code> already so let&#8217;s check out <code>tally!</code>.</p>
+<div class='highlight'><pre><span class='p'>(</span><span class='k'>def </span><span class='nv'>article-re</span> <span class='o'>#</span><span class='s'>&quot;^/ongoing/When/\d\d\dx/\d\d\d\d/\d\d/\d\d/[^ .]+$&quot;</span><span class='p'>)</span>
+
+<span class='p'>(</span><span class='k'>defn </span><span class='nv'>tally!</span> <span class='p'>[{</span><span class='nv'>:keys</span> <span class='p'>[</span><span class='nv'>url-hits</span> <span class='nv'>url-bytes</span> <span class='nv'>clients</span> <span class='nv'>refs</span> <span class='nv'>s404s</span><span class='p'>]}</span> <span class='nv'>records</span><span class='p'>]</span>
+  <span class='p'>(</span><span class='nb'>doseq </span><span class='p'>[{</span><span class='nv'>:keys</span> <span class='p'>[</span><span class='nv'>url</span> <span class='nv'>bytes</span> <span class='nv'>client</span> <span class='nv'>status</span> <span class='o'>#</span><span class='nv'>^String</span> <span class='nv'>ref</span><span class='p'>]}</span> <span class='nv'>records</span><span class='p'>]</span>
+    <span class='p'>(</span><span class='k'>if </span><span class='p'>(</span><span class='nb'>= </span><span class='nv'>status</span> <span class='s'>&quot;404&quot;</span><span class='p'>)</span>
+      <span class='p'>(</span><span class='nf'>bump!</span> <span class='nv'>s404s</span> <span class='nv'>url</span> <span class='mi'>1</span><span class='p'>)</span>
+      <span class='p'>(</span><span class='nf'>do</span> <span class='p'>(</span><span class='nf'>bump!</span> <span class='nv'>url-bytes</span> <span class='nv'>url</span> <span class='nv'>bytes</span><span class='p'>)</span>
+          <span class='p'>(</span><span class='nb'>when </span><span class='p'>(</span><span class='nb'>re-matches </span><span class='nv'>article-re</span> <span class='nv'>url</span><span class='p'>)</span>
+            <span class='p'>(</span><span class='nf'>bump!</span> <span class='nv'>url-hits</span> <span class='nv'>url</span> <span class='mi'>1</span><span class='p'>)</span>
+            <span class='p'>(</span><span class='nf'>bump!</span> <span class='nv'>clients</span> <span class='nv'>client</span> <span class='mi'>1</span><span class='p'>)</span>
+            <span class='p'>(</span><span class='nb'>when-not </span><span class='p'>(</span><span class='nb'>or </span><span class='p'>(</span><span class='nb'>= </span><span class='nv'>ref</span> <span class='s'>&quot;-&quot;</span><span class='p'>)</span>
+                          <span class='p'>(</span><span class='o'>.</span><span class='nv'>startsWith</span> <span class='nv'>ref</span> <span class='s'>&quot;http://www.tbray.org/ongoing/&quot;</span><span class='p'>))</span>
+              <span class='p'>(</span><span class='nf'>bump!</span> <span class='nv'>refs</span> <span class='nv'>ref</span> <span class='mi'>1</span><span class='p'>)))))))</span>
+</pre>
+</div>
+<p>First there&#8217;s our article matching regular-expression and then we enter the function and&#8212;Woah! There&#8217;s a map in the argument list! There&#8217;s another one in the <code>doseq</code>. What&#8217;s this <code>:keys</code> business?</p>
+
+<p>So you probably know that Clojure has a destructuring <code>let</code> which means you can write something like:</p>
+<div class='highlight'><pre><span class='p'>(</span><span class='k'>let </span><span class='p'>[[</span><span class='nv'>x</span> <span class='nv'>y</span> <span class='nv'>z</span><span class='p'>]</span> <span class='p'>[</span><span class='mi'>1</span> <span class='mi'>2</span> <span class='mi'>3</span><span class='p'>]]</span>
+  <span class='nv'>x</span><span class='p'>)</span>
+<span class='c1'>;; =&gt; 1</span>
+</pre>
+</div>
+<p>But what you may not know is that you can destructure maps as well.</p>
+<div class='highlight'><pre><span class='p'>(</span><span class='k'>let </span><span class='p'>[{</span><span class='nv'>x</span> <span class='nv'>:x,</span> <span class='nv'>y</span> <span class='nv'>:y</span><span class='p'>}</span> <span class='p'>{</span><span class='nv'>:x</span> <span class='mi'>1</span><span class='o'>,</span> <span class='nv'>:y</span> <span class='mi'>2</span><span class='o'>,</span> <span class='nv'>:z</span> <span class='mi'>3</span><span class='p'>}]</span>
+  <span class='nv'>y</span><span class='p'>)</span>
+<span class='c1'>;; =&gt; 2</span>
+</pre>
+</div>
+<p>Handy. But if you use this a lot you&#8217;ll soon get fed up with having to write the binding <code>x</code> and the keyword <code>:x</code> over and over. Wouldn&#8217;t it be great if Clojure would just put the map entries for a particular keyword into a local of the same name? That&#8217;s exactly what <code>:keys</code> does!</p>
+<div class='highlight'><pre><span class='p'>(</span><span class='k'>let </span><span class='p'>[{</span><span class='nv'>:keys</span> <span class='p'>[</span><span class='nv'>x</span> <span class='nv'>y</span><span class='p'>]}</span> <span class='p'>{</span><span class='nv'>:x</span> <span class='mi'>1</span><span class='o'>,</span> <span class='nv'>:y</span> <span class='mi'>2</span><span class='o'>,</span> <span class='nv'>:z</span> <span class='mi'>3</span><span class='p'>}]</span>
+  <span class='nv'>y</span><span class='p'>)</span>
+<span class='c1'>;; =&gt; 2</span>
+</pre>
+</div>
+<p>So our that map in the argument list is just destructuring the <code>state</code> map into local bindings and the one in the <code>doseq</code> is destructuring the record. This saves us from having to write <code>(:url-hits state)</code> and <code>(:url record)</code> all over the place.</p>
+
+<p>Right, so continuing we check the various conditions and bump some counters. Hang on, didn&#8217;t I say we&#8217;d be using <code>swap!</code> with the atoms? Let&#8217;s take a look at the <a href='http://java.sun.com/developer/technicalArticles/Programming/HPROF.html'>hprof</a> profiler output of the version that uses <code>swap!</code> directly.</p>
+
+<pre><code>rank   self  accum   count  trace method
+   1 10.83% 10.83%    3180 300487 java.util.regex.Matcher.&lt;init&gt;
+   2  8.92% 19.75%    2620 300482 wf$parse_lines__38$iter__40__44$fn__45.invoke
+   3  7.14% 26.89%    2095 300531 clojure.lang.Atom.swap
+   4  5.72% 32.61%    1678 300777 java.lang.String.length
+   5  4.41% 37.02%    1295 300572 clojure.lang.Util.hash
+   6  4.07% 41.09%    1195 300684 clojure.lang.Util.hash
+   7  3.83% 44.92%    1125 300562 clojure.lang.Atom.swap
+   8  3.69% 48.61%    1084 300627 wf$parse_lines__38$iter__40__44$fn__45.invoke
+   9  3.65% 52.26%    1072 300446 java.io.FileInputStream.readBytes</code></pre>
+
+<p>Not bad, but there&#8217;s a bit of contention over the atoms causing <code>swap!</code> to show up and we&#8217;re also seeing a lot of hashing going on. What does the trace for those hash calls tell us?</p>
+
+<pre><code>TRACE 300572:
+    clojure.lang.Util.hash(Util.java:55)
+    clojure.lang.PersistentHashMap.assoc(PersistentHashMap.java:125)
+    clojure.lang.PersistentHashMap.assoc(PersistentHashMap.java:28)
+    clojure.lang.RT.assoc(RT.java:666)
+    clojure.core$assoc__4268.invoke(core.clj:146)
+    wf$update__57.invoke(wf2.clj:55)
+    clojure.lang.Atom.swap(Atom.java:65)
+
+TRACE 300684:
+    clojure.lang.Util.hash(Util.java:55)
+    clojure.lang.PersistentHashMap.valAt(PersistentHashMap.java:135)
+    clojure.lang.RT.get(RT.java:642)
+    clojure.core$get__4722.invoke(core.clj:981)
+    wf$update__57.invoke(wf2.clj:55)
+    clojure.lang.Atom.swap(Atom.java:65)</code></pre>
+
+<p>Hmm&#8230; so the retries from the atom contention are causing too many <code>get</code> and <code>assoc</code> calls on the hash-maps. How can we improve on this? Easy, if atoms are slowing you down you just need more of them! If we wrap each of the numbers in the values of the map in an atom then we can increment multiple entries simultaneously without causing retries. The only time we need to <code>swap!</code> on the outer atom is when we add a new entry.</p>
+
+<p>In fact we can even do better than this as we don&#8217;t need the full functionality of an atom. Java provides a very nice <a href='http://java.sun.com/javase/6/docs/api/java/util/concurrent/atomic/AtomicLong.html'>AtomicLong</a> class which has methods for atomically adding and incrementing, which is exactly what we need. So let&#8217;s take a look at <code>bump!</code>.</p>
+<div class='highlight'><pre><span class='p'>(</span><span class='k'>defn </span><span class='nv'>bump!</span> <span class='p'>[</span><span class='nv'>map-atom</span> <span class='o'>#</span><span class='nv'>^String</span> <span class='nv'>key</span> <span class='o'>#</span><span class='nv'>^Long</span> <span class='nv'>delta</span><span class='p'>]</span>  
+  <span class='p'>(</span><span class='nb'>if-let </span><span class='p'>[</span><span class='o'>#</span><span class='nv'>^AtomicLong</span> <span class='nv'>counter</span> <span class='p'>(</span><span class='nb'>get </span><span class='nv'>@map-atom</span> <span class='nv'>key</span><span class='p'>)]</span>
+    <span class='p'>(</span><span class='o'>.</span><span class='nv'>addAndGet</span> <span class='nv'>counter</span> <span class='nv'>delta</span><span class='p'>)</span>
+    <span class='p'>(</span><span class='nf'>swap!</span> <span class='nv'>map-atom</span> <span class='o'>#</span><span class='p'>(</span><span class='nv'>assoc</span> <span class='nv'>%</span> <span class='p'>(</span><span class='nf'>String</span><span class='o'>.</span> <span class='nv'>key</span><span class='p'>)</span>
+                            <span class='p'>(</span><span class='nb'>if-let </span><span class='p'>[</span><span class='o'>#</span><span class='nv'>^AtomicLong</span> <span class='nv'>counter</span> <span class='p'>(</span><span class='nb'>get </span><span class='nv'>%</span> <span class='nv'>key</span><span class='p'>)]</span>
+                              <span class='p'>(</span><span class='nf'>AtomicLong</span><span class='o'>.</span> <span class='p'>(</span><span class='nb'>+ </span><span class='p'>(</span><span class='o'>.</span><span class='nv'>get</span> <span class='nv'>counter</span><span class='p'>)</span> <span class='nv'>delta</span><span class='p'>))</span>
+                              <span class='p'>(</span><span class='nf'>AtomicLong</span><span class='o'>.</span> <span class='nv'>delta</span><span class='p'>))))))</span>
+</pre>
+</div>
+<p>The function takes an atom of the map for this particular counter, a key and an integer of how much we want to change it by. First we check if the map already contains our key. If it does, we simply increment the counter by the appropriate amount. If it doesn&#8217;t then we&#8217;ll need to add a new entry to the map.</p>
+
+<p>There&#8217;s a couple important points about the anonymous function we&#8217;re passing to <code>swap!</code>. Notice how we check again whether there&#8217;s an entry in the map for this key? The reason we do that is two threads might try to add the same entry at the same time. The atom will cause one of them to retry but if it blindly goes ahead and overwrites the existing entry then we&#8217;re going to lose the existing count. Not good. This may seem subtle but there&#8217;s a simple rule of thumb which will ensure you always get the correct result: when using an atom your update function should depend solely on the current value passed to it, not any previously accessed version from surrounding code.</p>
+
+<p>Another thing to note is that even if we find there&#8217;s an AtomicLong already there, we add its value to <code>delta</code> and replace it with a new AtomicLong. Why do we do this? Simple&#8212;an atom&#8217;s update function must always be a <em>pure function</em>, it can&#8217;t have any side effects. Incrementing the existing AtomicLong is a side-effect, creating a new one is not. If the atom retried several times and we kept adding to the counter we&#8217;d end up with a larger number than expected. We&#8217;d need to do the same thing if we were using a nested atom instead of an atomic long.</p>
+
+<p>The final point to note is that when we create the map entry we create a copy of the key using the String copy constructor. This is not strictly necessary but it helps reduce our memory usage. Okay, I know, I know, you think I&#8217;m nuts. How can <em>copying</em> something <em>reduce</em> memory usage?! What you may not know about Java&#8217;s strings is that when you take a substring of one, nothing actually gets copied&#8212;the new string shares character data with the original string. This is normally a good thing as it can make your code much faster. However, it has the unfortunate side-effect that if you create a large string, take a substring of part of it and you then release any references you have to the original hoping it&#8217;ll be garbage collected, you&#8217;ll be in for a surprise. Since the substring internally holds a reference to the large string&#8217;s data it can&#8217;t be garbage collected! Thus by explicitly copying the key we only hold onto the part we need, the url, not the whole line from the input file.</p>
+
+<h2 id='reporting'>Reporting</h2>
+
+<p>Finally the reporting part. First a couple of utility functions.</p>
+<div class='highlight'><pre><span class='p'>(</span><span class='k'>defn </span><span class='nv'>truncate</span> <span class='p'>[</span><span class='nv'>s</span> <span class='nv'>n</span><span class='p'>]</span>
+  <span class='p'>(</span><span class='k'>if </span><span class='p'>(</span><span class='nb'>&gt; </span><span class='p'>(</span><span class='nb'>count </span><span class='nv'>s</span><span class='p'>)</span> <span class='nv'>n</span><span class='p'>)</span>
+    <span class='p'>(</span><span class='nb'>str </span><span class='p'>(</span><span class='o'>.</span><span class='nv'>substring</span> <span class='nv'>s</span> <span class='mi'>0</span> <span class='nv'>n</span><span class='p'>)</span> <span class='s'>&quot;...&quot;</span><span class='p'>)</span>
+    <span class='nv'>s</span><span class='p'>))</span>
+
+<span class='p'>(</span><span class='k'>defn </span><span class='nv'>sort-by-vals-desc</span> <span class='p'>[</span><span class='nv'>m</span><span class='p'>]</span>
+  <span class='p'>(</span><span class='nb'>sort-by </span><span class='o'>#</span><span class='p'>(</span><span class='nv'>-</span> <span class='p'>(</span><span class='nb'>val </span><span class='nv'>%</span><span class='p'>))</span> <span class='nv'>m</span><span class='p'>))</span>
+</pre>
+</div>
+<p><code>truncate</code> takes a string and a number and shortens the string with ellipsis if it&#8217;s too long. <code>short-by-vals-desc</code> sorts the entries of a map by its values in descending order, simply by negating them. This could have been done in-line but I thought the intent was clearer with it named.</p>
+<div class='highlight'><pre><span class='p'>(</span><span class='k'>defn </span><span class='nv'>print-top</span> <span class='p'>[</span><span class='nv'>sorted-results</span> <span class='nv'>label</span> <span class='nv'>&amp;</span> <span class='p'>[</span><span class='nv'>megabytes?</span><span class='p'>]]</span>
+  <span class='p'>(</span><span class='nb'>println </span><span class='s'>&quot;Top&quot;</span> <span class='nv'>label</span><span class='p'>)</span>
+  <span class='p'>(</span><span class='k'>let </span><span class='p'>[</span><span class='nv'>fmt</span> <span class='p'>(</span><span class='k'>if </span><span class='nv'>megabytes?</span> <span class='s'>&quot; %9.1fM: %s&quot;</span> <span class='s'>&quot; %10d: %s&quot;</span><span class='p'>)]</span>
+    <span class='p'>(</span><span class='nb'>doseq </span><span class='p'>[[</span><span class='nv'>k</span> <span class='nv'>v</span><span class='p'>]</span> <span class='nv'>sorted-results</span><span class='p'>]</span>
+      <span class='p'>(</span><span class='k'>let </span><span class='p'>[</span><span class='nv'>v</span> <span class='p'>(</span><span class='k'>if </span><span class='nv'>megabytes?</span> <span class='p'>(</span><span class='nb'>/ </span><span class='nv'>v</span> <span class='mf'>1024.0</span> <span class='mf'>1024.0</span><span class='p'>)</span> <span class='p'>(</span><span class='nb'>long </span><span class='nv'>v</span><span class='p'>))]</span>
+        <span class='p'>(</span><span class='nb'>println </span><span class='p'>(</span><span class='nf'>format</span> <span class='nv'>fmt</span> <span class='nv'>v</span> <span class='p'>(</span><span class='nf'>truncate</span> <span class='nv'>k</span> <span class='mi'>60</span><span class='p'>))))))</span>
+  <span class='p'>(</span><span class='nf'>println</span><span class='p'>))</span>
+</pre>
+</div>
+<p><code>print-top</code> takes our sorted results and a label for them and an optional argument specifying that the numbers should be printed in megabytes. This is basically exactly the same as the Ruby version, we loop over the results and use <code>format</code> to print the numbers so they line up into columns and are easy to read.</p>
+<div class='highlight'><pre><span class='p'>(</span><span class='k'>defn </span><span class='nv'>report</span> <span class='p'>[</span><span class='nv'>tallies</span> <span class='nv'>state</span><span class='p'>]</span>
+  <span class='p'>(</span><span class='nf'>-&gt;&gt;</span> <span class='nv'>state</span>
+       <span class='p'>(</span><span class='nb'>map </span><span class='p'>(</span><span class='k'>fn </span><span class='p'>[</span><span class='nv'>tally</span> <span class='nv'>rows</span><span class='p'>]</span> <span class='p'>(</span><span class='nb'>str </span><span class='p'>(</span><span class='nb'>count </span><span class='nv'>@rows</span><span class='p'>)</span> <span class='s'>&quot; &quot;</span> <span class='p'>(</span><span class='nb'>name </span><span class='nv'>tally</span><span class='p'>))))</span>
+       <span class='p'>(</span><span class='nb'>join </span><span class='s'>&quot;, &quot;</span><span class='p'>)</span>
+       <span class='p'>(</span><span class='nf'>println</span><span class='p'>))</span>
+  <span class='p'>(</span><span class='nf'>println</span><span class='p'>)</span>
+  <span class='p'>(</span><span class='nf'>-&gt;&gt;</span> <span class='nv'>tallies</span>
+       <span class='p'>(</span><span class='nf'>pmap</span> <span class='p'>(</span><span class='k'>fn </span><span class='p'>[[</span><span class='nv'>tally</span> <span class='nv'>&amp;</span> <span class='nv'>options</span><span class='p'>]]</span> 
+               <span class='p'>(</span><span class='nb'>cons </span><span class='p'>(</span><span class='nb'>take </span><span class='mi'>10</span> <span class='p'>(</span><span class='nf'>sort-by-vals-desc</span> <span class='nv'>@</span><span class='p'>(</span><span class='nf'>state</span> <span class='nv'>tally</span><span class='p'>)))</span>
+                     <span class='nv'>options</span><span class='p'>)))</span>
+       <span class='p'>(</span><span class='nb'>map </span><span class='o'>#</span><span class='p'>(</span><span class='nv'>apply</span> <span class='nv'>print-top</span> <span class='nv'>%</span><span class='p'>))</span>
+       <span class='p'>(</span><span class='nf'>dorun</span><span class='p'>)))</span>
+</pre>
+</div>
+<p>Finally the main reporting function. At this point I was pretty eager to test out how fast my implementation was so I didn&#8217;t spend much time thinking about it. The function takes our list of tallies and their labels and the current state of their values. Perhaps I should have stored these in the same list. Oh well. This might be good point to remind you what <code>tallies</code> and <code>state</code> look like.</p>
+<div class='highlight'><pre><span class='c1'>;; tallies</span>
+<span class='p'>[[</span><span class='nv'>:url-hits</span>  <span class='s'>&quot;URIs by hit&quot;</span><span class='p'>]</span>
+ <span class='p'>[</span><span class='nv'>:url-bytes</span> <span class='s'>&quot;URIs by bytes&quot;</span> <span class='nv'>:megabytes</span><span class='p'>]</span>
+ <span class='p'>[</span><span class='nv'>:s404s</span>     <span class='s'>&quot;404s&quot;</span><span class='p'>]</span>
+ <span class='p'>[</span><span class='nv'>:clients</span>   <span class='s'>&quot;client addresses&quot;</span><span class='p'>]</span>
+ <span class='p'>[</span><span class='nv'>:refs</span>      <span class='s'>&quot;referrers&quot;</span><span class='p'>]]</span>
+
+<span class='c1'>;; state</span>
+<span class='p'>{</span><span class='nv'>:url-hits</span>  <span class='p'>(</span><span class='nf'>atom</span> <span class='p'>{})</span>
+ <span class='nv'>:url-bytes</span> <span class='p'>(</span><span class='nf'>atom</span> <span class='p'>{})</span>
+ <span class='nv'>:s404s</span>     <span class='p'>(</span><span class='nf'>atom</span> <span class='p'>{})</span>
+ <span class='nv'>:clients</span>   <span class='p'>(</span><span class='nf'>atom</span> <span class='p'>{})</span>
+ <span class='nv'>:refs</span>      <span class='p'>(</span><span class='nf'>atom</span> <span class='p'>{})}</span>
+</pre>
+</div>
+<p>First we print out a summary of the total number of rows in each tally map. This is pretty boring, we take the state, map over it producing strings that look like &#8220;73 url-hits&#8221;, join them together separated by commas. What&#8217;s that <code>@</code> doing there? Our tallies are stored in atoms so we need to deref them to access them.</p>
+
+<p>Next we need to print the top ten entries in each of our tallies. We map over them again. Note argument list of the map function? <code>[[tally &amp; options]]</code> means we expect a single argument which is a list and we want to grab the first thing in the list and call it <code>tally</code> and the rest of the list we call <code>options</code>. We lookup <code>tally</code> in <code>state</code> and then sort the results and <code>cons</code> the top 10 on the front of <code>options</code>. At this stage <code>options</code> just consists of the tally&#8217;s label and the optional <code>:megabyte</code> format option, but since we&#8217;re just treating it as an opaque list this will be one less place we need to change in the code if we decide to add more options later.</p>
+
+<p>Finally we map over the tallies again printing them out, using <code>dorun</code> to force evaluation. Hang on, why don&#8217;t I just put the call to <code>print-top10</code> in the first map or change the whole thing into a <code>doseq</code>? If you were paying attention you&#8217;ll have noticed that our friend <code>pmap</code> sneaked in again. Sorting the results could takes a while (particularly for the clients and referrers tallies) so we use <code>pmap</code> to do them in parallel. We don&#8217;t want to print them in parallel however, as the output would get all jumbled up together!</p>
+
+<h2 id='firing_her_up'>Firing her up</h2>
+
+<p>So that&#8217;s it! We&#8217;re done. How did we fare? We weigh in at 110 lines of code, which is not bad. That&#8217;s little heavier than the Ruby version. Most of the extra weight comes from the functions we had to define to make reading fast. Java&#8217;s IO library always feels more of hassle than it should be and has some <a href='http://bugs.sun.com/view_bug.do?bug_id=4724038'>fundamental limitations</a>, but it is very portable, has some excellent security features and generally deals well with character encoding. You can&#8217;t be perfect.</p>
+
+<p>Now I know you&#8217;re dying to hear how it ran so let&#8217;s type the giant launch command of destiny and set it running on the big data.</p>
+<div class='highlight'><pre><span class='nv'>$ </span><span class='nb'>time </span>java -d64 -Xms4g -Xmx4g -verbose:gc -XX:+PrintGCDetails <span class='se'>\</span>
+  -XX:+UseParallelGC -XX:+UseParallelOldGC -cp <span class='s1'>&#39;jars/*&#39;</span> <span class='se'>\</span>
+  clojure.main -i wf2.clj -e <span class='s1'>&#39;(wf/wf-atoms &quot;O.all&quot;)&#39;</span>
+</pre>
+</div>
+<p>We give it a 4 GB heap, turn on printing of GC details so we can see what&#8217;s happening with the GC in case we gave it too little or too much memory and turn on the parallel old gen collector. We&#8217;re hoping to avoid too many old gen collections but let&#8217;s turn it on just to be safe.</p>
+
+<pre><code>Chunk 475/1000 (21505830576 -&gt; 21551105967)
+Chunk 476/1000 (21551105967 -&gt; 21596381394)
+[GC [PSYoungGen: 1376800K-&gt;14816K(1382464K)] 3221973K-&gt;1870654K(4180032K),
+0.0874210 secs] [Times: user=0.58 sys=0.27, real=0.09 secs]  
+[GC [PSYoungGen: 1379424K-&gt;10848K(1382720K)] 3235262K-&gt;1879374K(4180288K),
+0.0806451 secs] [Times: user=0.57 sys=0.25, real=0.08 secs]  
+[GC [PSYoungGen: 1375456K-&gt;11072K(1383104K)] 3243982K-&gt;1888694K(4180672K),
+0.0684203 secs] [Times: user=0.57 sys=0.22, real=0.07 secs]  </code></pre>
+
+<p>Halfway through and things are looking pretty sweet. We&#8217;re cruising along processing those chunks and the GC is working hard but happy.</p>
+
+<p>But a little later&#8230; what&#8217;s this? Full GC? 20 seconds! Egads!</p>
+
+<pre><code>[Full GC [PSYoungGen: 216928K-&gt;0K(946176K)] [ParOldGen:
+2413842K-&gt;1197654K(2797568K)] 2630770K-&gt;1197654K(3743744K) [PSPermGen:
+11459K-&gt;11459K(28672K)], 20.1389928 secs] [Times: user=68.32 sys=17.38,
+real=20.14 secs]  
+[GC [PSYoungGen: 479232K-&gt;264960K(933888K)] 1676886K-&gt;1462614K(3731456K),
+0.1677730 secs] [Times: user=5.02 sys=0.05, real=0.17 secs]  
+Chunk 744/1000 (33684922076 -&gt; 33730197430)
+Chunk 745/1000 (33730197430 -&gt; 33775472944)
+[GC [PSYoungGen: 677760K-&gt;420096K(931392K)] 2836391K-&gt;2578727K(3728960K),
+0.2414262 secs] [Times: user=7.41 sys=0.04, real=0.24 secs]  
+[GC [PSYoungGen: 887040K-&gt;212928K(933888K)] 3045671K-&gt;2795799K(3731456K),
+0.3684760 secs] [Times: user=11.23 sys=0.05, real=0.37 secs]  
+[Full GC [PSYoungGen: 212928K-&gt;0K(933888K)] [ParOldGen:
+2582871K-&gt;1230342K(2797568K)] 2795799K-&gt;1230342K(3731456K) [PSPermGen:
+11459K-&gt;11459K(24576K)], 2.7819309 secs] [Times: user=35.11 sys=7.00,
+real=2.78 secs]  </code></pre>
+
+<p>After that the GC settles down a little but the times are still high. Oh well, what&#8217;s the final time?</p>
+
+<pre><code>real    13m16.610s
+user    258m0.907s
+sys     28m33.799s</code></pre>
+
+<p>Wow! Not bad. That puts us ahead of the <a href='http://blog.waldin.net/2008/06/diminishing-returns.html'>Scala version</a> and just behind the <a href='http://yuri.baulsupp.com/2008/06/widefinder-ii.html'>Java version</a>. Surely we can do better though.</p>
+
+<h2 id='revisiting_reporting'>Revisiting reporting</h2>
+
+<p>The first time through I skimped on the reporting stage a bit, it was taking over minute just to calculate the top 10s (even though we parallelized it a little). I was too eager to get things running and so got lazy and just sorted the whole maps. The reference Ruby version actually does something a little cleverer:</p>
+<div class='highlight'><pre><span class='k'>class</span> <span class='nc'>Hash</span>
+  <span class='k'>def</span> <span class='nf'>top</span><span class='p'>(</span><span class='n'>howmany</span><span class='p'>)</span>
+    <span class='n'>count</span> <span class='o'>=</span> <span class='mi'>0</span>
+    <span class='n'>keys</span> <span class='o'>=</span> <span class='o'>[]</span>
+    <span class='n'>min</span> <span class='o'>=</span> <span class='mi'>0</span>
+    <span class='nb'>self</span><span class='o'>.</span><span class='n'>each</span> <span class='k'>do</span> <span class='o'>|</span><span class='n'>key</span><span class='p'>,</span> <span class='n'>val</span><span class='o'>|</span>
+      <span class='k'>if</span> <span class='n'>val</span> <span class='o'>&gt;</span> <span class='n'>min</span>
+        <span class='n'>keys</span> <span class='o'>&lt;&lt;</span> <span class='n'>key</span>
+        <span class='n'>keys</span><span class='o'>.</span><span class='n'>sort!</span> <span class='k'>do</span> <span class='o'>|</span><span class='n'>k1</span><span class='p'>,</span> <span class='n'>k2</span><span class='o'>|</span>
+          <span class='n'>diff</span> <span class='o'>=</span> <span class='nb'>self</span><span class='o'>[</span><span class='n'>k2</span><span class='o'>]</span> <span class='o'>-</span> <span class='nb'>self</span><span class='o'>[</span><span class='n'>k1</span><span class='o'>]</span>
+          <span class='p'>(</span><span class='n'>diff</span> <span class='o'>!=</span> <span class='mi'>0</span><span class='p'>)</span> <span class='p'>?</span> <span class='n'>diff</span> <span class='p'>:</span> <span class='n'>k1</span> <span class='o'>&lt;=&gt;</span> <span class='n'>k2</span>
+        <span class='k'>end</span>
+        <span class='n'>keys</span><span class='o'>.</span><span class='n'>pop</span> <span class='k'>if</span> <span class='n'>keys</span><span class='o'>.</span><span class='n'>length</span> <span class='o'>&gt;</span> <span class='n'>howmany</span>
+        <span class='n'>min</span> <span class='o'>=</span> <span class='nb'>self</span><span class='o'>[</span><span class='n'>keys</span><span class='o'>[-</span><span class='mi'>1</span><span class='o'>]]</span>
+      <span class='k'>end</span>
+    <span class='k'>end</span>
+    <span class='n'>keys</span>
+  <span class='k'>end</span>
+<span class='k'>end</span>
+</pre>
+</div>
+<p>This is a simple <a href='http://en.wikipedia.org/wiki/Selection_algorithm'>selection algorithm</a>. It does one pass over the data and keeps a list of the greatest 10 elements its found so far. Much quicker than simply sorting it. I had a poke around in Contrib and the Java standard library hoping to find a builtin implementation but came up short. The closest was <a href='http://richhickey.github.com/clojure-contrib/greatest-least-api.html'>greatest-least</a> but it only finds all the <em>equally</em> greatest or least values not the top <em>n</em>. Oh well, I could go lookup a really good performing one but since we only want 10 values we may as well follow the Ruby version&#8217;s lead and keep things simple.</p>
+<div class='highlight'><pre><span class='p'>(</span><span class='k'>defn </span><span class='nv'>take-greatest-vals</span> <span class='p'>[</span><span class='nv'>n</span> <span class='nv'>m</span><span class='p'>]</span>
+  <span class='p'>(</span><span class='nb'>when-let </span><span class='p'>[</span><span class='nv'>entries</span> <span class='p'>(</span><span class='nb'>seq </span><span class='nv'>m</span><span class='p'>)]</span>
+    <span class='p'>(</span><span class='nb'>reduce </span><span class='p'>(</span><span class='k'>fn </span><span class='p'>[</span><span class='nv'>best</span> <span class='nv'>x</span><span class='p'>]</span>
+              <span class='p'>(</span><span class='k'>if </span><span class='p'>(</span><span class='nb'>&gt;= </span><span class='p'>(</span><span class='nb'>val </span><span class='nv'>x</span><span class='p'>)</span> <span class='p'>(</span><span class='nb'>val </span><span class='p'>(</span><span class='nb'>last </span><span class='nv'>best</span><span class='p'>)))</span>
+                <span class='p'>(</span><span class='nf'>vec</span> <span class='p'>(</span><span class='nb'>take </span><span class='nv'>n</span> <span class='p'>(</span><span class='nf'>sort-by-vals-desc</span> <span class='p'>(</span><span class='nb'>conj </span><span class='nv'>best</span> <span class='nv'>x</span><span class='p'>))))</span>
+                <span class='nv'>best</span><span class='p'>))</span>
+           <span class='p'>[(</span><span class='nb'>first </span><span class='nv'>entries</span><span class='p'>)]</span> <span class='p'>(</span><span class='nb'>rest </span><span class='nv'>entries</span><span class='p'>))))</span>
+</pre>
+</div>
+<p>Hey look everybody, it&#8217;s our friend <code>reduce</code>. First we convert the map to a seq and cover the corner-case of the map being empty. Our reduction function takes the best <code>n</code> entries so far (starting with just the first entry) and the next entry <code>x</code> of our map <code>m</code>. We check whether the value of <code>x</code> is greater or equal to the last element of <code>best</code> and if so conjoin it onto <code>best</code>. We then sort <code>best</code> and <code>take</code> a new best <code>n</code> and put it into a vector so accessing the last element is fast. In the case where <code>x</code> is too wimpy to join our elite <code>best</code> list we simply skip it. Stupid and boring but probably good enough.</p>
+
+<h2 id='second_lap'>Second lap</h2>
+
+<p>A little fiddling with the buffer sizes, pumping the BufferedInputStream up to 1mb and reducing the chunk size to 32mb and we&#8217;re ready to try again. The GC seems happier this time, although I didn&#8217;t try to do anything to satisfy it. Perhaps the increased buffer size helped.</p>
+
+<pre><code>real    10m8.196s
+user    260m17.137s
+sys     7m9.457s</code></pre>
+
+<p>Vroooom! We just left Java in the dust and crept past the single-threaded C version.</p>
+
+<h2 id='pushing_it_to_the_limit'>Pushing it to the limit</h2>
+
+<p>While working on this writeup I got a bit distracted and started fiddling with the buffer sizes some more and then noticed that a number of the threads in the pool were occasionally showed up as waiting. A handy feature of the JVM is you can send it a <code>QUIT</code> signal at any time using <code>kill -QUIT $pid</code> or just pressing Ctrl+\ and it&#8217;ll print out a stack trace for each thread and some memory information.</p>
+
+<pre><code>&quot;pool-2-thread-35&quot; prio=3 tid=0x00000001026dac00 nid=0x4d waiting on condition [0xfffffffe59cfe000..0xfffffffe59cff740]
+   java.lang.Thread.State: TIMED_WAITING (parking)
+        at sun.misc.Unsafe.park(Native Method)
+        - parking to wait for  &lt;0xfffffffe754005b8&gt; (a java.util.concurrent.SynchronousQueue$TransferStack)
+        at java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:198)
+        at java.util.concurrent.SynchronousQueue$TransferStack.awaitFulfill(SynchronousQueue.java:424)
+        at java.util.concurrent.SynchronousQueue$TransferStack.transfer(SynchronousQueue.java:323)
+        at java.util.concurrent.SynchronousQueue.poll(SynchronousQueue.java:874)
+        at java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:945)
+        at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:907)
+        at java.lang.Thread.run(Thread.java:619)</code></pre>
+
+<p>You could also see this in the output of <code>prstat -mvL</code>, they were spending 15-20% of their time asleep. Lazy slobs.</p>
+
+<pre><code>  PID USERNAME USR SYS TRP TFL DFL LCK SLP LAT VCX ICX SCL SIG PROCESS/LWPID 
+  ...
+26161 ato       77 1.8 0.0 0.0 0.0 4.1  15 2.3  35  53  6K   1 java/71
+26161 ato       76 1.7 0.1 0.0 0.0  17 4.0 0.5  27 116  6K   1 java/69
+26161 ato       75 1.9 0.0 0.0 0.0 5.4  16 1.5  24  53  6K   1 java/67
+26161 ato       75 1.6 0.0 0.0 0.0 5.4  16 1.9  33  94  6K   0 java/43
+26161 ato       75 1.6 0.1 0.0 0.0 5.4  16 2.0  40 115  6K   1 java/50
+26161 ato       74 1.9 0.0 0.0 0.0  12  10 2.8  22  34  6K   0 java/74
+26161 ato       74 1.8 0.0 0.0 0.0  20 4.7 0.1  12  59  6K   1 java/70
+26161 ato       73 1.7 0.0 0.0 0.0 4.8  19 1.8  19  96  6K   1 java/56
+26161 ato       72 1.6 0.0 0.0 0.0 4.0  20 1.7  19 108  6K   0 java/65</code></pre>
+
+<p>I was pretty baffled as to why this was happening until Mark pointed out the documentation for <code>pmap</code>.</p>
+
+<blockquote>
+<p>Like map, except f is applied in parallel. Semi-lazy in that the parallel computation stays ahead of the consumption, <strong>but doesn&#8217;t realize the entire result unless required</strong>. Only useful for computationally intensive functions where the time of f dominates the coordination overhead.</p>
+</blockquote>
+
+<p>Ah ha! So <code>pmap</code> tries not to get too far ahead. Normally you want this behavior as you don&#8217;t want to fill up your memory with the result list, but we&#8217;re returning nothing. So while <code>pmap</code> is quick and easy, perhaps its not the best tool here, let&#8217;s try replacing it with a bunch of threads sitting on a <code>LinkedBlockingQueue</code> which is filled by the result of <code>chunk-file</code>.</p>
+
+<pre><code>real    8m4.663s
+user    197m36.624s
+sys     8m2.930s</code></pre>
+
+<p>Woah.</p>
+
+<h2 id='final_thoughts'>Final thoughts</h2>
+
+<p>Clojure can be very, very fast and its concurrency model definitely does help. It&#8217;s not a silver bullet but it does make shared-state concurrency probably as easy and safe as it can be without affecting performance. Deadlocks are impossible and since everything is immutable by default, thread-safety is much less of concern. You still have to think about thread-safety just as you still have to think about memory with garbage collection, but in makes it significantly easier to get right.</p>
+
+<p>Building on top of the JVM instead of reinventing the wheel is definitely a benefit but it does have some drawbacks too. You can see that most of the real effort that went into writing this was working around performance limitations of Java&#8217;s IO library. I tried other things like NIO as well, but it was slower and made the code much complex. We can&#8217;t compete with a lower-level language like C or C++ on this sort of data crunching as C code can do a number of nice tricks that the JVM keeps us from in the name of portability. On the other hand the Clojure version is much less code and runs anywhere Java does. Hopefully as Clojure matures someone who really knows how to use Java&#8217;s IO library well will come along and write a high-performance line-oriented IO library for exactly this sort of processing.</p>
+
+<p>It&#8217;s often said that Clojure is an opinionated language. Clojure takes a stand between the opposing camps of mutable object-oriented and immutable functional programming and says, &#8220;Oi! You&#8217;ve each got some things right, but you&#8217;ve both also got problems. Here&#8217;s what you should do instead&#8230;&#8221; It combines the two not in an indecisive &#8220;multi-paradigm&#8221; way of trying to take every single feature from both but instead very selectively picks and chooses and mixes things up in its own unique way. It&#8217;s easy to dismiss Clojure by saying there&#8217;s nothing completely new in it, but doing so misses the forest for the trees. Clojure&#8217;s strength lies in its simplicity and cohesiveness of vision, not in any single feature. It&#8217;s still early days yet, Clojure has not even had its second release and there are still a few warts showing but its already got a prime place in my toolbox.</p>
+
+<h2 id='the_code'>The code</h2>
+
+<p>The code for the version I walked you through is <a href='../../../code/wf2-good.clj'>wf2-good.clj</a> and the version with those last few tweaks which I haven&#8217;t cleaned up yet is <a href='../../../code/wf2-faster.clj'>wf2-faster.clj</a>. Please note that I&#8217;ve only been using Clojure on and off for a couple of months. I&#8217;m probably still considered a newbie, so don&#8217;t assume this is a shining example of how Clojure should be written.</p>
+     <h2>Comments</h2>
+     <script type="text/javascript">
+       var disqus_title = "Widefinder 2 with Clojure";
+     </script>
+     <div id="disqus_thread"></div><script type="text/javascript" src="http://disqus.com/forums/meshy/embed.js"></script><noscript><a href="http://disqus.com/forums/meshy/?url=ref">View the discussion thread.</a></noscript>
+   <script type="text/javascript">
+//<![CDATA[
+(function() {
+	var links = document.getElementsByTagName('a');
+	var query = '?';
+	for(var i = 0; i < links.length; i++) {
+	if(links[i].href.indexOf('#disqus_thread') >= 0) {
+		query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+	}
+	}
+	document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/meshy/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+   </script>
+   </div>
+ </body>
+</html>
