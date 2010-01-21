@@ -1,0 +1,146 @@
+
+<HTML>
+<META  name="description"
+content="Latin-English Dictionary">
+<META  name="keywords" content="Latin, English, dictionary, lexicon">
+<HEAD>
+<TITLE>Latin-English Dictionary</TITLE>
+<SCRIPT LANGUAGE="JavaScript">
+
+
+<!-- Beginning of JavaScript Applet -------------------
+
+/* Copyright (C)1996 Web Integration Systems, Inc. DBA Websys, Inc.
+   All Rights Reserved.
+   This applet can be re-used or modified, if credit is given in 
+   the source code.
+
+   We will not be held responsible for any unwanted effects due to the 
+   usage of this applet or any derivative.  No warrantees for usability 
+   for any specific application are given or implied.
+
+   Chris Skinner, January 30th, 1996.
+*/
+
+function scrollit_r2l(seed)
+{
+        var m1  = "** Many thanks to those who have written us words of encouragement.      ";
+        var m2  = "We appreciate comments, suggestions and bug reports, ";
+        var m3  = "but kindly no translation request! **";
+        var m4  = "   ";
+
+        var msg=m1+m2+m3+m4;
+        var out = " ";
+        var c   = 1;
+
+        if (seed > 100) {
+                seed--;
+                var cmd="scrollit_r2l(" + seed + ")";
+                timerTwo=window.setTimeout(cmd,100);
+        }
+        else if (seed <= 100 && seed > 0) {
+                for (c=0 ; c < seed ; c++) {
+                        out+=" ";
+                }
+                out+=msg;
+                seed--;
+                var cmd="scrollit_r2l(" + seed + ")";
+                    window.status=out;
+                timerTwo=window.setTimeout(cmd,100);
+        }
+        else if (seed <= 0) {
+                if (-seed < msg.length) {
+                        out+=msg.substring(-seed,msg.length);
+                        seed--;
+                        var cmd="scrollit_r2l(" + seed + ")";
+                        window.status=out;
+                        timerTwo=window.setTimeout(cmd,100);
+                }
+                else {
+                        window.status=" ";
+                        timerTwo=window.setTimeout("scrollit_r2l(100)",75);
+                }
+        }
+}
+// -- End of JavaScript code -------------- -->
+
+</SCRIPT>
+
+</HEAD>
+<FRAMESET ROWS="72,*">
+<FRAME frameborder="yes" SRC=banner.html SCROLLING="no" MARGINHEIGHT="0"
+NAME="mainFrame">
+<FRAMESET COLS="32%,68%">
+   <FRAME frameborder="" SRC=search-f.html  NAME="f1">
+   <FRAME frameborder="no" SRC=open.html NAME="f2">
+</FRAMESET>
+</FRAMESET>
+
+
+<NOFRAME>
+
+<BODY BGCOLOR="#a0d0e0">
+<table border=1 cellpadding=10>
+<tr><td align=center width=80><img src="/Img/culogo1.gif"></td> 
+<!-- td valign=middle align=center><font size=+3><b>Latin - English Dictionary</b></font></td>
+<td rowspan=3><img src="/Img/ioms2.gif"></td>
+</tr>
+<tr><td colspan=2><img src="/Img/info.gif" hspace=5><font size=-1>While Greek Dictionaries from the <a href="http://www.arts.cuhk.edu.hk/Ref.html#grk-lat">Liddel & Scott series</a> are already online, a reasonably good Latin dictionary is still wanting for the internet community. The present dictionary is in fact just an imprivisation basing on a word-list originally from <a href=mailto:lhnelson@ukanaix.cc.ukans.edu>Lynn H. Nelson</a> of the University of Kansas. You might want to take a look at Lynn's <a href="/Lexis/Latin/preamble">preamble</a> to the word-list, and his <a href="/Lexis/Latin/consent.htm">written consent</a> to our using it.  Besides the Latin word-list, Lynn has also compiled a <a href="http://kufacts.cc.ukans.edu/ftp/pub/history/Europe/Medieval/aids/latgramm.aid">reference guide to Latin grammar.</a> </font></td></tr>
+<tr><td colspan=2><A HREF="http://webcrawler.com/select/"><img src="/Img/WCSelect.gif" border=0 alt="WebCrawler Select" align=right width=62 height=30></A><font size=-1 color=#125476>This page has been deemed an outstanding Web site by the <font color=red>WebCrawler Select <font color=#126476>Editorial Team.</font></td></tr>
+</table>
+<hr>
+
+<!---- RESERVED ---->
+
+<FORM ACTION="/cgi-bin/aglimpse-latin/04">
+
+<img src="/Img/mglass2.gif" hspace=9 border=0 align=top>Enter search argument!  <INPUT NAME="query">
+<INPUT TYPE="submit" VALUE="Submit">
+<INPUT TYPE="reset" VALUE="Reset">
+<br>
+<P>
+<dd><a href="/boolean.html">Boolean help</a>
+<INPUT NAME="case" TYPE="checkbox" CHECKED>Case insensitive
+<INPUT NAME="whole" TYPE="checkbox"CHECKED>Match substring
+<P>
+<dd>No. of misspellings allowed:
+<SELECT NAME="errors">
+<OPTION>0
+<OPTION>1
+<OPTION>2
+<OPTION>3
+<OPTION>4
+<OPTION>5
+<OPTION>6
+<OPTION>7
+<OPTION>8
+<OPTION>Best match
+</SELECT>
+</FORM>
+<HR>
+
+<!---- RESERVED ---->
+<img src="/Img/note.gif"><font size=-1>This indexing/search system is prepared by <a href="mailto:twkwan@cuhk.edu.hk">Tze-wan Kwan</a> and <a href="mailto:cflau@cuhk.edu.hk">Chong-fuk Lau</a> of the <i>CUHK</i> with <a HREF="http://glimpse.cs.arizona.edu:1994/index.html">Glimpse 3.0</A>. The system is still under construction! Comments and opinions are welcome!
+<br>Page set up on: October 21, 1995. Last updated on February 14, 1998
+<p>
+No. of visits since January 13, 1997:
+<img hspace=5 src="/cgi-bin/Count.cgi?df=latin-dict.dat&dd=B&ft=0" align=absmiddle>
+</font>
+<P>
+<center>
+<APPLET CODE="TickerTape" CODEBASE="http://www.netobjective.com/java/classes" HEIGHT=20 WIDTH=600>
+<PARAM NAME="TEXT" VALUE="** Many thanks to those who have written us words of encouragement. We appreciate comments, suggestions and bug reports, but kindly no translation request! **"> 
+<PARAM NAME="FONT" VALUE="BOLD">
+<PARAM NAME="FONTSIZE" VALUE=15>
+<PARAM NAME="STYLE" VALUE="BOLD">
+<PARAM NAME="FGCOLOR" VALUE="yellow">
+<PARAM NAME="BGCOLOR" VALUE=black>
+<PARAM NAME="SHADOWCOLOR" VALUE="red">
+<PARAM NAME="DELAY" VALUE=100>
+<font><marquee width=60% bgcolor=blue>**  **</marquee></font></APPLET>
+</center>
+<p>
+<a href="/index.html"><IMG SRC="/Img/rih-toc.gif" border=0 align=middle hspace=3>back to RIH home</a><a href="#top"><img src="/Img/top.gif" border=0 hspace=8>Top of this page</a>
+</BODY>
+</NOFRAME>
+</HTML>
