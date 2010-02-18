@@ -1,0 +1,1221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html dir='ltr' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<link href='http://syntaxhighlighting.development.freiheit.com/styles/shCore.css' rel='stylesheet' type='text/css'/>
+<link href='http://syntaxhighlighting.development.freiheit.com/styles/shThemeDefault.css' rel='stylesheet' type='text/css'/>
+<script src='http://syntaxhighlighting.development.freiheit.com/scripts/shCore.js' type='text/javascript'></script>
+<script src='http://syntaxhighlighting.development.freiheit.com/scripts/shBrushJava.js' type='text/javascript'></script>
+<script src='http://syntaxhighlighting.development.freiheit.com/scripts/shBrushXml.js' type='text/javascript'></script>
+<script type='text/javascript'>
+
+SyntaxHighlighter.brushes.Clojure = function()
+{
+  // Contributed by Travis Whitton
+
+  var funcs = ':arglists :doc :file :line :macro :name :ns :private :tag ' + 
+              ':test new alias alter and apply assert class cond conj count ' +
+              'def defmacro defn defstruct deref do doall dorun doseq dosync ' +
+              'eval filter finally find first fn gen-class gensym if '  +
+              'import inc keys let list loop map ns or print println quote ' +
+              'rand recur reduce ref repeat require rest send seq set sort ' +
+              'str struct sync take test throw trampoline try type use var ' +
+              'vec when while';
+
+  this.regexList = [
+          { regex: new RegExp(';[^\]]+$', 'gm'), css: 'comments' },
+          { regex: SyntaxHighlighter.regexLib.multiLineDoubleQuotedString, css: 'string' },
+          { regex: /\[|\]/g, css: 'keyword' },
+          { regex: /'[a-z][A-Za-z0-9_\-]*/g, css: 'color1' }, // symbols
+          { regex: /:[a-z][A-Za-z0-9_\-]*/g, css: 'color2' }, // keywords
+          { regex: new RegExp(this.getKeywords(funcs), 'gmi'), css: 'functions' }
+      ];
+
+  this.forHtmlScript(SyntaxHighlighter.regexLib.aspScriptTags);
+}
+
+SyntaxHighlighter.brushes.Clojure.prototype     = new SyntaxHighlighter.Highlighter(); 
+SyntaxHighlighter.brushes.Clojure.aliases       = ['clojure', 'Clojure', 'clj'];
+
+</script>
+<script language='javascript'>
+  SyntaxHighlighter.config.bloggerMode = true;
+  SyntaxHighlighter.config.clipboardSwf = 'http://syntaxhighlighting.development.freiheit.com/scripts/clipboard.swf';
+  SyntaxHighlighter.all();
+</script>
+<head>
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+<script type="text/javascript">(function() { var a=window;function c(b){this.t={};this.tick=function(d,i,e){e=e?e:(new Date).getTime();this.t[d]=[e,i]};this.tick("start",null,b)}var f=new c;a.jstiming={Timer:c,load:f};try{var g=null;if(a.chrome&&a.chrome.csi)g=Math.floor(a.chrome.csi().pageT);if(g==null)if(a.gtbExternal)g=a.gtbExternal.pageT();if(g==null)if(a.external)g=a.external.pageT;if(g)a.jstiming.pt=g}catch(h){};a.tickAboveFold=function(b){b=b;var d=0;if(b.offsetParent){do d+=b.offsetTop;while(b=b.offsetParent)}b=d;b<=750&&a.jstiming.load.tick("aft")};var j=false;function k(){if(!j){j=true;a.jstiming.load.tick("firstScrollTime")}}a.addEventListener?a.addEventListener("scroll",k,false):a.attachEvent("onscroll",k);
+ })();</script>
+<meta content='true' name='MSSmartTagsPreventParsing'/>
+<meta content='blogger' name='generator'/>
+<link href='http://www.blogger.com/favicon.ico' rel='icon' type='image/vnd.microsoft.icon'/>
+<link href='http://www.hackers-with-attitude.com/2010/02/how-clojure-pet-project-turned-into.html' rel='canonical'/>
+<link rel="alternate" type="application/atom+xml" title="hackers-with-attitude - Atom" href="http://www.hackers-with-attitude.com/feeds/posts/default" />
+<link rel="alternate" type="application/rss+xml" title="hackers-with-attitude - RSS" href="http://www.hackers-with-attitude.com/feeds/posts/default?alt=rss" />
+<link rel="service.post" type="application/atom+xml" title="hackers-with-attitude - Atom" href="http://www.blogger.com/feeds/2804048809956568254/posts/default" />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.blogger.com/rsd.g?blogID=2804048809956568254" />
+<link rel="alternate" type="application/atom+xml" title="hackers-with-attitude - Atom" href="http://www.hackers-with-attitude.com/feeds/4346041279107756055/comments/default" />
+<!--[if IE]> <script> (function() { var html5 = ("abbr,article,aside,audio,canvas,datalist,details," + "figure,footer,header,hgroup,mark,menu,meter,nav,output," + "progress,section,time,video").split(','); for (var i = 0; i < html5.length; i++) { document.createElement(html5[i]); } })(); </script> <![endif]-->
+<title>hackers-with-attitude: How a Clojure pet project turned into a full-blown cloud-computing web-app</title>
+<link type='text/css' rel='stylesheet' href='http://www.blogger.com/static/v1/widgets/1743847221-widget_css_bundle.css' />
+ <link rel="stylesheet" type="text/css" href="http://www.blogger.com/dyn-css/authorization.css?targetBlogID=2804048809956568254&zx=af251a22-1912-49b4-a518-c0b0b6caa27a"/>
+<style type="text/css">#navbar-iframe { display:block }
+</style>
+
+<style id='page-skin-1' type='text/css'><!--
+/*
+-----------------------------------------------
+Blogger Template Style
+Name:     Rounders
+Designer: Douglas Bowman
+URL:      www.stopdesign.com
+Date:     27 Feb 2004
+Updated by: Blogger Team
+----------------------------------------------- */
+/* Variable definitions
+====================
+<Variable name="mainBgColor" description="Main Background Color"
+type="color" default="#fff">
+<Variable name="mainTextColor" description="Text Color" type="color"
+default="#333">
+<Variable name="postTitleColor" description="Post Title Color" type="color"
+default="#333">
+<Variable name="dateHeaderColor" description="Date Header Color"
+type="color" default="#357">
+<Variable name="borderColor" description="Post Border Color" type="color"
+default="#bbb">
+<Variable name="mainLinkColor" description="Link Color" type="color"
+default="#258">
+<Variable name="mainVisitedLinkColor" description="Visited Link Color"
+type="color" default="#666">
+<Variable name="titleBgColor" description="Page Header Background Color"
+type="color" default="#456">
+<Variable name="titleTextColor" description="Blog Title Color"
+type="color" default="#fff">
+<Variable name="topSidebarHeaderColor"
+description="Top Sidebar Title Color"
+type="color" default="#234">
+<Variable name="topSidebarBgColor"
+description="Top Sidebar Background Color"
+type="color" default="#cdc">
+<Variable name="topSidebarTextColor" description="Top Sidebar Text Color"
+type="color" default="#345">
+<Variable name="topSidebarLinkColor" description="Top Sidebar Link Color"
+type="color" default="#258">
+<Variable name="topSidebarVisitedLinkColor"
+description="Top Sidebar Visited Link Color"
+type="color" default="#258">
+<Variable name="bodyFont" description="Text Font" type="font"
+default="normal normal 100% 'Trebuchet MS',Verdana,Arial,Sans-serif">
+<Variable name="pageTitleFont" description="Blog Title Font" type="font"
+default="normal bold 200% 'Trebuchet MS',Verdana,Arial,Sans-serif">
+<Variable name="descriptionFont" description="Blog Description Font" type="font"
+default="normal normal 100% 'Trebuchet MS',Verdana,Arial,Sans-serif">
+<Variable name="headerFont" description="Sidebar Title Font" type="font"
+default="normal bold 100% 'Trebuchet MS',Verdana,Arial,Sans-serif">
+<Variable name="postTitleFont" description="Post Title Font" type="font"
+default="normal bold 135% 'Trebuchet MS',Verdana,Arial,Sans-serif">
+<Variable name="startSide" description="Start side in blog language"
+type="automatic" default="left">
+<Variable name="endSide" description="End side in blog language"
+type="automatic" default="right">
+*/
+body {
+background:#fff;
+margin:0;
+text-align:center;
+line-height: 1.5em;
+font:x-small Trebuchet MS, Verdana, Arial, Sans-serif;
+color:#333333;
+font-size/* */:/**/small;
+font-size: /**/small;
+}
+/* Page Structure
+----------------------------------------------- */
+/* The images which help create rounded corners depend on the
+following widths and measurements. If you want to change
+these measurements, the images will also need to change.
+*/
+#outer-wrapper {
+width:740px;
+margin:0 auto;
+text-align:left;
+font: normal normal 100% Arial, sans-serif;
+}
+#main-wrap1 {
+width:500px;
+float:left;
+margin:15px 0 0;
+padding:0 0 10px;
+color:#333333;
+font-size:97%;
+line-height:1.5em;
+word-wrap: break-word; /* fix for long text breaking sidebar float in IE */
+overflow: hidden;     /* fix for long non-text content breaking IE sidebar float */
+}
+#main-wrap2 {
+float:left;
+width:100%;
+padding:10px 0 0;
+}
+#main {
+padding:0;
+width:500px;
+}
+#sidebar-wrap {
+width:240px;
+float:right;
+margin:15px 0 0;
+font-size:97%;
+line-height:1.5em;
+word-wrap: break-word; /* fix for long text breaking sidebar float in IE */
+overflow: hidden;     /* fix for long non-text content breaking IE sidebar float */
+}
+.main .widget {
+margin-top: 4px;
+width: 468px;
+padding: 0 13px;
+}
+.main .Blog {
+margin: 0;
+padding: 0;
+width: 484px;
+}
+/* Links
+----------------------------------------------- */
+a:link {
+color: #97a824;
+}
+a:visited {
+color: #9C5FB5;
+}
+a:hover {
+color: #0CC6DE;
+}
+a img {
+border-width:0;
+}
+/* Blog Header
+----------------------------------------------- */
+#header-wrapper {
+margin-top:22px;
+margin-right:0;
+margin-bottom:0;
+margin-left:0;
+padding-top:8px;
+padding-right:0;
+padding-bottom:0;
+padding-left:0;
+color:#ffffff;
+}
+#header {
+padding:0 15px 8px;
+}
+#header h1 {
+margin:0;
+padding:10px 30px 5px;
+line-height:1.2em;
+font: normal bold 200% Arial, sans-serif;
+}
+#header a,
+#header a:visited {
+text-decoration:none;
+color: #ffffff;
+}
+#header .description {
+margin:0;
+padding:5px 30px 10px;
+line-height:1.5em;
+font: normal normal 100% Arial, sans-serif;
+}
+/* Posts
+----------------------------------------------- */
+h2.date-header {
+margin-top:0;
+margin-right:28px;
+margin-bottom:0;
+margin-left:30px;
+font-size:85%;
+line-height:2em;
+text-transform:uppercase;
+letter-spacing:.2em;
+color:#9C5FB5;
+}
+.post {
+margin:.3em 0 25px;
+padding:0;
+border:1px dotted #ffffff;
+border-width:1px 0;
+}
+.post h3 {
+margin:0;
+line-height:1.5em;
+display:block;
+border:1px dotted #ffffff;
+border-width:0 1px 1px;
+padding-top:2px;
+padding-right:5px;
+padding-bottom:2px;
+padding-left:29px;
+color: #0099cc;
+font: normal bold 135% Arial, sans-serif;
+}
+.post h3 a, .post h3 a:visited {
+text-decoration:none;
+color: #0099cc;
+}
+a.title-link:hover {
+background-color: #ffffff;
+color: #333333;
+}
+.post-body {
+border:1px dotted #ffffff;
+border-width:0 1px 1px;
+border-bottom-color:#ffffff;
+padding-top:10px;
+padding-right:5px;
+padding-bottom:1px;
+padding-left:29px;
+}
+html>body .post-body {
+border-bottom-width:0;
+}
+.post-body {
+margin:0 0 .75em;
+}
+.post-body blockquote {
+line-height:1.3em;
+}
+.post-footer {
+background: none;
+margin:0;
+padding-top:2px;
+padding-right:5px;
+padding-bottom:2px;
+padding-left:29px;
+border:1px dotted #ffffff;
+border-width:1px;
+font-size:100%;
+line-height:1.5em;
+color: #55601C;
+}
+/*
+The first line of the post footer might only have floated text, so we need to give it a height.
+The height comes from the post-footer line-height
+*/
+.post-footer-line-1 {
+min-height:1.5em;
+_height:1.5em;
+}
+.post-footer-line-3 {
+min-height:1.5em;
+border-bottom:1px solid #55601C;
+_height:1.5em;
+}
+.post-footer p {
+margin: 0;
+}
+html>body .post-footer {
+border-bottom-color:transparent;
+}
+.uncustomized-post-template .post-footer {
+text-align: right;
+}
+.uncustomized-post-template .post-author,
+.uncustomized-post-template .post-timestamp {
+display: block;
+float: left;
+text-align:left;
+margin-right: 4px;
+}
+.post-footer a {
+color: #258;
+}
+.post-footer a:hover {
+color: #0CC6DE;
+}
+a.comment-link {
+/* IE5.0/Win doesn't apply padding to inline elements,
+so we hide these two declarations from it */
+padding-left:5px;
+}
+html>body a.comment-link {
+/* Respecified, for IE5/Mac's benefit */
+padding-left:14px;
+}
+.post img {
+margin-top:0;
+margin-right:0;
+margin-bottom:5px;
+margin-left:0;
+padding:4px;
+border:1px solid #ffffff;
+}
+blockquote {
+margin:.75em 0;
+border:1px dotted #ffffff;
+border-width:1px 0;
+padding:5px 15px;
+color: #9C5FB5;
+}
+.post blockquote p {
+margin:.5em 0;
+}
+#blog-pager-newer-link {
+float: left;
+margin-left: 13px;
+}
+#blog-pager-older-link {
+float: right;
+margin-right: 13px;
+}
+#blog-pager {
+text-align: center;
+}
+.feed-links {
+clear: both;
+line-height: 2.5em;
+margin-left: 13px;
+}
+/* Comments
+----------------------------------------------- */
+#comments {
+margin:-25px 13px 0;
+border:1px dotted #ffffff;
+border-width:0 1px 1px;
+padding-top:20px;
+padding-right:0;
+padding-bottom:15px;
+padding-left:0;
+}
+#comments h4 {
+margin:0 0 10px;
+padding-top:0;
+padding-right:5px;
+padding-bottom:2px;
+padding-left:29px;
+border-bottom:1px dotted #ffffff;
+font-size:120%;
+line-height:1.4em;
+color:#0099cc;
+}
+#comments-block {
+margin-top:0;
+margin-right:15px;
+margin-bottom:0;
+margin-left:9px;
+}
+.comment-author {
+margin:.5em 0;
+padding-top:0;
+padding-right:0;
+padding-bottom:0;
+padding-left:20px;
+font-weight:bold;
+}
+.comment-body {
+margin:0 0 1.25em;
+padding-top:0;
+padding-right:0;
+padding-bottom:0;
+padding-left:20px;
+}
+.comment-body p {
+margin:0 0 .5em;
+}
+.comment-footer {
+margin:0 0 .5em;
+padding-top:0;
+padding-right:0;
+padding-bottom:.75em;
+padding-left:20px;
+}
+.comment-footer a:link {
+color: #333;
+}
+.deleted-comment {
+font-style:italic;
+color:gray;
+}
+.comment-form {
+padding-left:20px;
+padding-right:5px;
+}
+#comments .comment-form h4 {
+padding-left:0px;
+}
+/* Profile
+----------------------------------------------- */
+.profile-img {
+float: left;
+margin-top: 5px;
+margin-right: 5px;
+margin-bottom: 5px;
+margin-left: 0;
+border: 4px solid #55601C;
+}
+.profile-datablock {
+margin-top:0;
+margin-right:15px;
+margin-bottom:.5em;
+margin-left:0;
+padding-top:8px;
+}
+.profile-link {
+padding-left:15px;
+font-weight:bold;
+}
+.profile-textblock {
+clear: both;
+margin: 0;
+}
+.sidebar .clear, .main .widget .clear {
+clear: both;
+}
+#sidebartop-wrap {
+margin:0px 0px 15px;
+padding:0px 0px 10px;
+color:#55601C;
+}
+#sidebartop-wrap2 {
+padding: 10px 0 0;
+margin:0;
+border-width:0;
+}
+#sidebartop h2 {
+line-height:1.5em;
+color:#55601C;
+border-bottom: 1px solid #55601C;
+margin-bottom: 0.5em;
+font: normal bold 100% Arial, sans-serif;
+}
+#sidebartop a {
+color: #97a824;
+}
+#sidebartop a:hover {
+color: #97a824;
+}
+#sidebartop a:visited {
+color: #97a824;
+}
+/* Sidebar Boxes
+----------------------------------------------- */
+.sidebar .widget {
+margin:.5em 13px 1.25em;
+padding:0 0px;
+}
+.widget-content {
+margin-top: 0.5em;
+}
+#sidebarbottom-wrap1 {
+margin:0 0 15px;
+padding:10px 0 0;
+color: #333333;
+}
+#sidebarbottom-wrap2 {
+padding:0 0 8px;
+}
+.sidebar h2 {
+margin:0;
+padding:0 0 .2em;
+line-height:1.5em;
+font:normal bold 100% Arial, sans-serif;
+}
+.sidebar ul {
+list-style:none;
+margin:0 0 1.25em;
+padding:0;
+}
+.sidebar ul li {
+margin:0;
+padding-top:0;
+padding-right:0;
+padding-bottom:3px;
+padding-left:16px;
+margin-bottom:3px;
+border-bottom:1px dotted #ffffff;
+line-height:1.4em;
+}
+.sidebar p {
+margin:0 0 .6em;
+}
+#sidebar h2 {
+color: #0099cc;
+border-bottom: 1px dotted #0099cc;
+}
+/* Footer
+----------------------------------------------- */
+#footer-wrap1 {
+clear:both;
+margin:0 0 10px;
+padding:15px 0 0;
+}
+#footer-wrap2 {
+color:#000000;
+}
+#footer {
+padding:8px 15px;
+}
+#footer hr {display:none;}
+#footer p {margin:0;}
+#footer a {color:#97a824;}
+#footer .widget-content {
+margin:0;
+}
+/** Page structure tweaks for layout editor wireframe */
+body#layout #main-wrap1,
+body#layout #sidebar-wrap,
+body#layout #header-wrapper {
+margin-top: 0;
+}
+body#layout #header, body#layout #header-wrapper,
+body#layout #outer-wrapper {
+margin-left:0,
+margin-right: 0;
+padding: 0;
+}
+body#layout #outer-wrapper {
+width: 730px;
+}
+a.timestamp-link {
+color: #9C5FB5;
+}
+.post-labels a {
+color: #97A824;
+}
+body#layout #footer-wrap1 {
+padding-top: 0;
+}
+
+--></style>
+<script type="text/javascript">
+if (window.jstiming) window.jstiming.load.tick('headEnd');
+</script></head>
+<body>
+<div class='navbar section' id='navbar'><div class='widget Navbar' id='Navbar1'><script type="text/javascript">
+    function setAttributeOnload(object, attribute, val) {
+      if(window.addEventListener) {
+        window.addEventListener("load",
+          function(){ object[attribute] = val; }, false);
+      } else {
+        window.attachEvent('onload', function(){ object[attribute] = val; });
+      }
+    }
+  </script>
+<iframe src="http://www.blogger.com/navbar.g?targetBlogID=2804048809956568254&amp;blogName=hackers-with-attitude&amp;publishMode=PUBLISH_MODE_HOSTED&amp;navbarType=SILVER&amp;layoutType=LAYOUTS&amp;searchRoot=http%3A%2F%2Fwww.hackers-with-attitude.com%2Fsearch&amp;blogLocale=de&amp;homepageUrl=http%3A%2F%2Fwww.hackers-with-attitude.com%2F&amp;targetPostID=4346041279107756055" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" height="30px" width="100%" id="navbar-iframe" allowtransparency="true" title="Blogger Navigation and Search"></iframe>
+<div></div></div></div>
+<div id='outer-wrapper'>
+<div id='header-wrapper'>
+<div class='header section' id='header'><div class='widget Header' id='Header1'>
+<div id='header-inner'>
+<a href='http://www.hackers-with-attitude.com/' style='display: block'>
+<img alt='hackers-with-attitude' height='100px; ' id='Header1_headerimg' src='http://2.bp.blogspot.com/_tNcfHiC9GKE/Sl88skvWn5I/AAAAAAAAAAo/NURr9M0lCN4/S1600-R/hwaHeader.png' style='display: block' width='710px; '/>
+</a>
+</div>
+</div></div>
+</div>
+<div id='crosscol-wrapper' style='text-align:center'>
+<div class='crosscol section' id='crosscol'></div>
+</div>
+<div id='main-wrap1'><div id='main-wrap2'>
+<div class='main section' id='main'><div class='widget Blog' id='Blog1'>
+<div class='blog-posts hfeed'>
+<!-- google_ad_section_start(name=default) -->
+
+          <div class="date-outer">
+        
+<h2 class='date-header'><span>Mittwoch, 17. Februar 2010</span></h2>
+
+          <div class="date-posts">
+        
+<div class='post-outer'>
+<div class='post hentry'>
+<a name='4346041279107756055'></a>
+<h3 class='post-title entry-title'>
+<a href='http://www.hackers-with-attitude.com/2010/02/how-clojure-pet-project-turned-into.html'>How a Clojure pet project turned into a full-blown cloud-computing web-app</a>
+</h3>
+<div class='post-header-line-1'></div>
+<div class='post-body entry-content'>
+I just made the slides of my Clojure talk available on Slideshare. The meeting took place at the newthinking store in Berlin and it was sponsored by Franz Lisp. Thank you! And "Thank you" to Hans Hübner for organizing this event! <br />
+<div id="__ss_3207276" style="text-align: left; width: 425px;"><a href="http://www.slideshare.net/smartrevolution/how-a-clojure-pet-project-turned-into-a-fullblown-cloudcomputing-webapp" style="display: block; font-family: Helvetica,Arial,Sans-serif; font-size-adjust: none; font-size: 14px; font-stretch: normal; font-style: normal; font-variant: normal; font-weight: normal; line-height: normal; margin: 12px 0pt 3px; text-decoration: underline;" title="How a Clojure pet project turned into a full-blown cloud-computing web-app">How a Clojure pet project turned into a full-blown cloud-computing web-app</a><object height="355" style="margin: 0px;" width="425"><param name="movie" value="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=thedeadlineinberlin-100217073008-phpapp02&stripped_title=how-a-clojure-pet-project-turned-into-a-fullblown-cloudcomputing-webapp" /><param name="allowFullScreen" value="true"/><param name="allowScriptAccess" value="always"/><embed src="http://static.slidesharecdn.com/swf/ssplayer2.swf?doc=thedeadlineinberlin-100217073008-phpapp02&stripped_title=how-a-clojure-pet-project-turned-into-a-fullblown-cloudcomputing-webapp" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="355"></embed></object><br />
+<div style="font-family: tahoma,arial; font-size: 11px; height: 26px; padding-top: 2px;">View more <a href="http://www.slideshare.net/" style="text-decoration: underline;">presentations</a> from <a href="http://www.slideshare.net/smartrevolution" style="text-decoration: underline;">smartrevolution</a>.</div></div>Next "Berlin Lispers Meetup" will be cool, too.  Speakers are Luke Gorrie and Edi Weitz. <a href="http://berlin%20lispers%20meetup,%20march%202nd.%202010/">http://netzhansa.blogspot.com/2010/02/berlin-lispers-meetup-tuesday-march-2.html </a>
+<div style='clear: both;'></div>
+</div>
+<div class='post-footer'>
+<div class='post-footer-line post-footer-line-1'><span class='post-author vcard'>
+Eingestellt von
+<span class='fn'>Stefan Richter</span>
+</span>
+<span class='post-timestamp'>
+am
+<a class='timestamp-link' href='http://www.hackers-with-attitude.com/2010/02/how-clojure-pet-project-turned-into.html' rel='bookmark' title='permanent link'><abbr class='published' title='2010-02-17T18:45:00+01:00'>17.2.10</abbr></a>
+</span>
+<span class='post-comment-link'>
+</span>
+<span class='post-icons'>
+<span class='item-control blog-admin pid-24967359'>
+<a href='http://www.blogger.com/post-edit.g?blogID=2804048809956568254&postID=4346041279107756055' title='Post bearbeiten'>
+<img alt='' class='icon-action' height='18' src='http://img2.blogblog.com/img/icon18_edit_allbkg.gif' width='18'/>
+</a>
+</span>
+</span>
+</div>
+<div class='post-footer-line post-footer-line-2'><span class='post-labels'>
+</span>
+</div>
+<div class='post-footer-line post-footer-line-3'></div>
+</div>
+</div>
+<div class='comments' id='comments'>
+<a name='comments'></a>
+<div id='backlinks-container'>
+<div id='Blog1_backlinks-container'>
+<a name='links'></a><h4>
+</h4>
+<p class='comment-footer'>
+<a class='comment-link' href='' id='Blog1_backlinks-create-link' target='_blank'>
+</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="latency-4346041279107756055"></div><script type="text/javascript">if (window['tickAboveFold']) {window['tickAboveFold'](document.getElementById("latency-4346041279107756055")); } </script>
+
+        </div></div>
+      
+<!-- google_ad_section_end -->
+</div>
+<div class='blog-pager' id='blog-pager'>
+<span id='blog-pager-newer-link'>
+<a class='blog-pager-newer-link' href='http://www.hackers-with-attitude.com/2010/03/ada-lovelace-day-2010.html' id='Blog1_blog-pager-newer-link' title='Neuerer Post'>Neuerer Post</a>
+</span>
+<span id='blog-pager-older-link'>
+<a class='blog-pager-older-link' href='http://www.hackers-with-attitude.com/2009/12/weihnachtszocken-at-freiheitcom-2009.html' id='Blog1_blog-pager-older-link' title='Älterer Post'>Älterer Post</a>
+</span>
+<a class='home-link' href='http://www.hackers-with-attitude.com/'>Startseite</a>
+</div>
+<div class='clear'></div>
+<div class='post-feeds'>
+</div>
+</div></div>
+</div></div>
+<div id='sidebar-wrap'>
+<div id='sidebartop-wrap'><div id='sidebartop-wrap2'>
+<div class='sidebar section' id='sidebartop'><div class='widget HTML' id='HTML2'>
+<h2 class='title'>more about freiheit.com</h2>
+<div class='widget-content'>
+visit our homepage for more information about freiheit.com <br/>
+<br/>
+<ul>
+<li style="padding-left: 0;" class="archivedate collapsed">
+<span class="zippy">
+&#9658;
+</span>
+<a href="http://www.freiheit.com" target="_blank">freiheit.com technologies gmbh</a>
+</li>
+</ul>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=2804048809956568254&widgetType=HTML&widgetId=HTML2&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("HTML2"));' target='configHTML2' title='Bearbeiten'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div><div class='widget Text' id='Text1'>
+<div class='widget-content'>
+<div class="clifreihe1"> <blockquote><h3>"We can only see a short distance ahead, but we can see plenty there that needs to be done." </h3></blockquote></div> <div style="" class="clifreihe2">                                                                            - Alan Turing </div>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=2804048809956568254&widgetType=Text&widgetId=Text1&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("Text1"));' target='configText1' title='Bearbeiten'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div><div class='widget HTML' id='HTML3'>
+<h2 class='title'>Twitter</h2>
+<div class='widget-content'>
+<script src="http://widgets.twimg.com/j/2/widget.js"></script>
+<script>
+new TWTR.Widget({
+  version: 2,
+  type: 'profile',
+  rpp: 4,
+  interval: 6000,
+  width: 'auto',
+  height: 300,
+  theme: {
+    shell: {
+      background: '#ffffff',
+      color: '#0099cc'
+    },
+    tweets: {
+      background: '#ffffff',
+      color: '#333333',
+      links: '#96a824'
+    }
+  },
+  features: {
+    scrollbar: false,
+    loop: false,
+    live: true,
+    hashtags: true,
+    timestamp: true,
+    avatars: false,
+    behavior: 'all'
+  }
+}).render().setUser('smartrevolution').start();
+</script>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=2804048809956568254&widgetType=HTML&widgetId=HTML3&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("HTML3"));' target='configHTML3' title='Bearbeiten'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div><div class='widget BlogArchive' id='BlogArchive1'>
+<h2>Blog-Archiv</h2>
+<div class='widget-content'>
+<div id='ArchiveList'>
+<div id='BlogArchive1_ArchiveList'>
+<ul class='hierarchy'>
+<li class='archivedate expanded'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy toggle-open'>&#9660;&#160;</span>
+</a>
+<a class='post-count-link' href='http://www.hackers-with-attitude.com/search?updated-min=2010-01-01T00%3A00%3A00%2B01%3A00&updated-max=2011-01-01T00%3A00%3A00%2B01%3A00&max-results=7'>2010</a>
+<span class='post-count' dir='ltr'>(7)</span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://www.hackers-with-attitude.com/2010_11_01_archive.html'>November</a>
+<span class='post-count' dir='ltr'>(2)</span>
+<ul class='posts'>
+<li><a href='http://www.hackers-with-attitude.com/2010/11/stefan-hackfwd-build-03-event-in.html'>HackFwd Build 03 Event, Mallorca</a></li>
+<li><a href='http://www.hackers-with-attitude.com/2010/11/talk-of-our-cto-google-developer-day.html'>Google Developer Day 2010, Munich</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://www.hackers-with-attitude.com/2010_10_01_archive.html'>Oktober</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='posts'>
+<li><a href='http://www.hackers-with-attitude.com/2010/10/using-clojure-nosql-databases-and.html'>Using Clojure, NoSQL Databases and Functional-Styl...</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://www.hackers-with-attitude.com/2010_05_01_archive.html'>Mai</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='posts'>
+<li><a href='http://www.hackers-with-attitude.com/2010/05/dsl-to-access-google-app-engine.html'>A DSL to access the Google App Engine datastore fr...</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://www.hackers-with-attitude.com/2010_04_01_archive.html'>April</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='posts'>
+<li><a href='http://www.hackers-with-attitude.com/2010/04/clojure-google-app-engine-setup-update.html'>Clojure &amp; Google App Engine Setup - Update</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://www.hackers-with-attitude.com/2010_03_01_archive.html'>März</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='posts'>
+<li><a href='http://www.hackers-with-attitude.com/2010/03/ada-lovelace-day-2010.html'>Ada Lovelace Day 2010</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate expanded'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy toggle-open'>&#9660;&#160;</span>
+</a>
+<a class='post-count-link' href='http://www.hackers-with-attitude.com/2010_02_01_archive.html'>Februar</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='posts'>
+<li><a href='http://www.hackers-with-attitude.com/2010/02/how-clojure-pet-project-turned-into.html'>How a Clojure pet project turned into a full-blown...</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://www.hackers-with-attitude.com/search?updated-min=2009-01-01T00%3A00%3A00%2B01%3A00&updated-max=2010-01-01T00%3A00%3A00%2B01%3A00&max-results=4'>2009</a>
+<span class='post-count' dir='ltr'>(4)</span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://www.hackers-with-attitude.com/2009_12_01_archive.html'>Dezember</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='posts'>
+<li><a href='http://www.hackers-with-attitude.com/2009/12/weihnachtszocken-at-freiheitcom-2009.html'>Weihnachtszocken at freiheit.com 2009</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://www.hackers-with-attitude.com/2009_11_01_archive.html'>November</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='posts'>
+<li><a href='http://www.hackers-with-attitude.com/2009/11/facebooks-changing-face-over-time.html'>Facebook&#39;s changing face over time</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://www.hackers-with-attitude.com/2009_09_01_archive.html'>September</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='posts'>
+<li><a href='http://www.hackers-with-attitude.com/2009/09/our-corporate-website-runs-on-clojure.html'>Our corporate WebSite runs on Clojure and Google A...</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://www.hackers-with-attitude.com/2009_08_01_archive.html'>August</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='posts'>
+<li><a href='http://www.hackers-with-attitude.com/2009/08/intertactive-programming-with-clojure.html'>Interactive Programming with Clojure, Compojure, G...</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://www.hackers-with-attitude.com/search?updated-min=2008-01-01T00%3A00%3A00%2B01%3A00&updated-max=2009-01-01T00%3A00%3A00%2B01%3A00&max-results=4'>2008</a>
+<span class='post-count' dir='ltr'>(4)</span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://www.hackers-with-attitude.com/2008_05_01_archive.html'>Mai</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='posts'>
+<li><a href='http://www.hackers-with-attitude.com/2008/05/photos-eclm-2008-in-amsterdam.html'>Photos: ECLM 2008 in Amsterdam</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://www.hackers-with-attitude.com/2008_01_01_archive.html'>Januar</a>
+<span class='post-count' dir='ltr'>(3)</span>
+<ul class='posts'>
+<li><a href='http://www.hackers-with-attitude.com/2008/01/european-common-lisp-meeting-2008-april.html'>European Common Lisp Meeting 2008, April 20, Amste...</a></li>
+<li><a href='http://www.hackers-with-attitude.com/2008/01/software-project-estimation-and.html'>Software project estimation and planning: Just a c...</a></li>
+<li><a href='http://www.hackers-with-attitude.com/2008/01/software-estimation-considered-harmful.html'>Software estimation considered harmful?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://www.hackers-with-attitude.com/search?updated-min=2007-01-01T00%3A00%3A00%2B01%3A00&updated-max=2008-01-01T00%3A00%3A00%2B01%3A00&max-results=6'>2007</a>
+<span class='post-count' dir='ltr'>(6)</span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://www.hackers-with-attitude.com/2007_09_01_archive.html'>September</a>
+<span class='post-count' dir='ltr'>(4)</span>
+<ul class='posts'>
+<li><a href='http://www.hackers-with-attitude.com/2007/09/yahoo-retro-style-advertisement-on.html'>Yahoo! retro-style advertisement on Sunset Blvd.</a></li>
+<li><a href='http://www.hackers-with-attitude.com/2007/09/nice-bookstore-booksoup-la.html'>Nice Bookstore: Booksoup, L.A.</a></li>
+<li><a href='http://www.hackers-with-attitude.com/2007/09/singularity-summit-2007-when-will.html'>Singularity Summit 2007: When will the machines ex...</a></li>
+<li><a href='http://www.hackers-with-attitude.com/2007/09/relaunching-hackers-with-attitudecom.html'>Relaunching Hackers-with-Attitude.com</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://www.hackers-with-attitude.com/2007_07_01_archive.html'>Juli</a>
+<span class='post-count' dir='ltr'>(2)</span>
+<ul class='posts'>
+<li><a href='http://www.hackers-with-attitude.com/2007/07/impressum.html'>Impressum</a></li>
+<li><a href='http://www.hackers-with-attitude.com/2007/07/kontakt.html'>Kontakt</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=2804048809956568254&widgetType=BlogArchive&widgetId=BlogArchive1&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("BlogArchive1"));' target='configBlogArchive1' title='Bearbeiten'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div><div class='widget Label' id='Label1'>
+<h2>Tags</h2>
+<div class='widget-content list-label-widget-content'>
+<ul>
+<li>
+<a dir='ltr' href='http://www.hackers-with-attitude.com/search/label/ada%20freiheit.com%20women'>ada freiheit.com women</a>
+<span dir='ltr'>(1)</span>
+</li>
+<li>
+<a dir='ltr' href='http://www.hackers-with-attitude.com/search/label/amsterdam'>amsterdam</a>
+<span dir='ltr'>(1)</span>
+</li>
+<li>
+<a dir='ltr' href='http://www.hackers-with-attitude.com/search/label/App%20Engine'>App Engine</a>
+<span dir='ltr'>(3)</span>
+</li>
+<li>
+<a dir='ltr' href='http://www.hackers-with-attitude.com/search/label/artificial%20intelligence'>artificial intelligence</a>
+<span dir='ltr'>(1)</span>
+</li>
+<li>
+<a dir='ltr' href='http://www.hackers-with-attitude.com/search/label/booksoup'>booksoup</a>
+<span dir='ltr'>(1)</span>
+</li>
+<li>
+<a dir='ltr' href='http://www.hackers-with-attitude.com/search/label/Clojure'>Clojure</a>
+<span dir='ltr'>(4)</span>
+</li>
+<li>
+<a dir='ltr' href='http://www.hackers-with-attitude.com/search/label/Cloud%20Computing'>Cloud Computing</a>
+<span dir='ltr'>(1)</span>
+</li>
+<li>
+<a dir='ltr' href='http://www.hackers-with-attitude.com/search/label/Common%20Lisp'>Common Lisp</a>
+<span dir='ltr'>(2)</span>
+</li>
+<li>
+<a dir='ltr' href='http://www.hackers-with-attitude.com/search/label/conferences'>conferences</a>
+<span dir='ltr'>(3)</span>
+</li>
+<li>
+<a dir='ltr' href='http://www.hackers-with-attitude.com/search/label/culture'>culture</a>
+<span dir='ltr'>(5)</span>
+</li>
+<li>
+<a dir='ltr' href='http://www.hackers-with-attitude.com/search/label/eclm'>eclm</a>
+<span dir='ltr'>(1)</span>
+</li>
+<li>
+<a dir='ltr' href='http://www.hackers-with-attitude.com/search/label/flickr'>flickr</a>
+<span dir='ltr'>(1)</span>
+</li>
+<li>
+<a dir='ltr' href='http://www.hackers-with-attitude.com/search/label/fotos'>fotos</a>
+<span dir='ltr'>(1)</span>
+</li>
+<li>
+<a dir='ltr' href='http://www.hackers-with-attitude.com/search/label/freenigma'>freenigma</a>
+<span dir='ltr'>(1)</span>
+</li>
+<li>
+<a dir='ltr' href='http://www.hackers-with-attitude.com/search/label/fun'>fun</a>
+<span dir='ltr'>(1)</span>
+</li>
+<li>
+<a dir='ltr' href='http://www.hackers-with-attitude.com/search/label/Lisp'>Lisp</a>
+<span dir='ltr'>(2)</span>
+</li>
+<li>
+<a dir='ltr' href='http://www.hackers-with-attitude.com/search/label/noam%20chomsky'>noam chomsky</a>
+<span dir='ltr'>(1)</span>
+</li>
+<li>
+<a dir='ltr' href='http://www.hackers-with-attitude.com/search/label/photos'>photos</a>
+<span dir='ltr'>(1)</span>
+</li>
+<li>
+<a dir='ltr' href='http://www.hackers-with-attitude.com/search/label/singularity'>singularity</a>
+<span dir='ltr'>(1)</span>
+</li>
+<li>
+<a dir='ltr' href='http://www.hackers-with-attitude.com/search/label/software%20engineering'>software engineering</a>
+<span dir='ltr'>(2)</span>
+</li>
+</ul>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=2804048809956568254&widgetType=Label&widgetId=Label1&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("Label1"));' target='configLabel1' title='Bearbeiten'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div></div>
+</div></div>
+<div id='sidebarbottom-wrap1'><div id='sidebarbottom-wrap2'>
+<div class='sidebar section' id='sidebar'></div>
+</div></div>
+</div>
+<div id='footer-wrap1'><div id='footer-wrap2'>
+<div class='footer section' id='footer'><div class='widget HTML' id='HTML1'>
+<div class='widget-content'>
+<a href="http://hackers-with-attitude.blogspot.com/2007/07/kontakt.html">Contact</a>&nbsp;&#124;&nbsp;<a href="http://hackers-with-attitude.blogspot.com/2007/07/impressum.html">Impressum</a>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=2804048809956568254&widgetType=HTML&widgetId=HTML1&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("HTML1"));' target='configHTML1' title='Bearbeiten'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div></div>
+</div></div>
+</div>
+<script type='text/javascript'>
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type='text/javascript'>
+try {
+var pageTracker = _gat._getTracker("UA-433486-3");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<script type="text/javascript">
+if (window.jstiming) window.jstiming.load.tick('widgetJsBefore');
+</script><script type="text/javascript" src="http://www.blogger.com/static/v1/widgets/512629240-widgets.js"></script>
+<script type='text/javascript'>
+if (typeof(BLOG_attachCsiOnload) != 'undefined' && BLOG_attachCsiOnload != null) { window['blogger_templates_experiment_id'] = "templatesV1";window['blogger_blog_id'] = '2804048809956568254';BLOG_attachCsiOnload('item_'); }_WidgetManager._Init('http://www.blogger.com/rearrange?blogID=2804048809956568254','http://www.hackers-with-attitude.com/2010/02/how-clojure-pet-project-turned-into.html','2804048809956568254');
+_WidgetManager._SetPageActionUrl('http://www.blogger.com/display?blogID=2804048809956568254','FYSlvyxGVWuErsqvlpkYfs2MSm4:1292790130379','AOuZoY55shrFpEmkjdE8yQa-e3UssF-OLA:1292790130379');
+_WidgetManager._SetDataContext([{'name': 'blog', 'data': {'title': 'hackers-with-attitude', 'pageType': 'item', 'url': 'http://www.hackers-with-attitude.com/2010/02/how-clojure-pet-project-turned-into.html', 'canonicalUrl': 'http://www.hackers-with-attitude.com/2010/02/how-clojure-pet-project-turned-into.html', 'homepageUrl': 'http://www.hackers-with-attitude.com/', 'enabledCommentProfileImages': true, 'searchLabel': '', 'searchQuery': '', 'pageName': 'How a Clojure pet project turned into a full-blown cloud-computing web-app', 'pageTitle': 'hackers-with-attitude: How a Clojure pet project turned into a full-blown cloud-computing web-app', 'encoding': 'UTF-8', 'locale': 'de', 'isPrivate': false, 'isMobile': false, 'mobileClass': '', 'languageDirection': 'ltr', 'feedLinks': '\74link rel\75\42alternate\42 type\75\42application/atom+xml\42 title\75\42hackers-with-attitude - Atom\42 href\75\42http://www.hackers-with-attitude.com/feeds/posts/default\42 /\76\n\74link rel\75\42alternate\42 type\75\42application/rss+xml\42 title\75\42hackers-with-attitude - RSS\42 href\75\42http://www.hackers-with-attitude.com/feeds/posts/default?alt\75rss\42 /\76\n\74link rel\75\42service.post\42 type\75\42application/atom+xml\42 title\75\42hackers-with-attitude - Atom\42 href\75\42http://www.blogger.com/feeds/2804048809956568254/posts/default\42 /\76\n\74link rel\75\42EditURI\42 type\75\42application/rsd+xml\42 title\75\42RSD\42 href\75\42http://www.blogger.com/rsd.g?blogID\0752804048809956568254\42 /\76\n\74link rel\75\42alternate\42 type\75\42application/atom+xml\42 title\75\42hackers-with-attitude - Atom\42 href\75\42http://www.hackers-with-attitude.com/feeds/4346041279107756055/comments/default\42 /\76\n', 'meTag': '', 'openIdOpTag': '', 'imageSrcTag': '', 'latencyHeadScript': '\74script type\75\42text/javascript\42\76(function() { var a\75window;function c(b){this.t\75{};this.tick\75function(d,i,e){e\75e?e:(new Date).getTime();this.t[d]\75[e,i]};this.tick(\42start\42,null,b)}var f\75new c;a.jstiming\75{Timer:c,load:f};try{var g\75null;if(a.chrome\46\46a.chrome.csi)g\75Math.floor(a.chrome.csi().pageT);if(g\75\75null)if(a.gtbExternal)g\75a.gtbExternal.pageT();if(g\75\75null)if(a.external)g\75a.external.pageT;if(g)a.jstiming.pt\75g}catch(h){};a.tickAboveFold\75function(b){b\75b;var d\0750;if(b.offsetParent){do d+\75b.offsetTop;while(b\75b.offsetParent)}b\75d;b\74\075750\46\46a.jstiming.load.tick(\42aft\42)};var j\75false;function k(){if(!j){j\75true;a.jstiming.load.tick(\42firstScrollTime\42)}}a.addEventListener?a.addEventListener(\42scroll\42,k,false):a.attachEvent(\42onscroll\42,k);\n })();\74/script\076', 'mobileHeadScript': ''}}]);
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML1', 'footer', null, document.getElementById('HTML1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML2', 'sidebartop', null, document.getElementById('HTML2'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_TextView', new _WidgetInfo('Text1', 'sidebartop', null, document.getElementById('Text1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML3', 'sidebartop', null, document.getElementById('HTML3'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogArchiveView', new _WidgetInfo('BlogArchive1', 'sidebartop', null, document.getElementById('BlogArchive1'), {'languageDirection': 'ltr'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_LabelView', new _WidgetInfo('Label1', 'sidebartop', null, document.getElementById('Label1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HeaderView', new _WidgetInfo('Header1', 'header'));
+_WidgetManager._RegisterWidget('_NavbarView', new _WidgetInfo('Navbar1', 'navbar'));
+_WidgetManager._RegisterWidget('_BlogView', new _WidgetInfo('Blog1', 'main', null, document.getElementById('Blog1'), {'cmtInteractionsEnabled': false, 'commentInteractionIframeUrl': 'http://www.blogger.com/comment-interaction-iframe.g?blogId\0752804048809956568254', 'showBacklinks': true, 'postId': '4346041279107756055', 'mobile': false}, 'displayModeFull'));
+</script>
+</body>
+</html>
