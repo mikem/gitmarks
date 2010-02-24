@@ -1,0 +1,1020 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html dir='ltr'>
+<head>
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+<script type="text/javascript">(function() { var a=window;function c(b){this.t={};this.tick=function(d,i,e){e=e?e:(new Date).getTime();this.t[d]=[e,i]};this.tick("start",null,b)}var f=new c;a.jstiming={Timer:c,load:f};try{var g=null;if(a.chrome&&a.chrome.csi)g=Math.floor(a.chrome.csi().pageT);if(g==null)if(a.gtbExternal)g=a.gtbExternal.pageT();if(g==null)if(a.external)g=a.external.pageT;if(g)a.jstiming.pt=g}catch(h){};a.tickAboveFold=function(b){b=b;var d=0;if(b.offsetParent){do d+=b.offsetTop;while(b=b.offsetParent)}b=d;b<=750&&a.jstiming.load.tick("aft")};var j=false;function k(){if(!j){j=true;a.jstiming.load.tick("firstScrollTime")}}a.addEventListener?a.addEventListener("scroll",k,false):a.attachEvent("onscroll",k);
+ })();</script>
+<meta content='true' name='MSSmartTagsPreventParsing'/>
+<meta content='blogger' name='generator'/>
+<link href='http://www.blogger.com/favicon.ico' rel='icon' type='image/vnd.microsoft.icon'/>
+<link href='http://blog.fandle.com/2010/02/using-s-expressions-instead-of-xml.html' rel='canonical'/>
+<link rel="alternate" type="application/atom+xml" title="Fandle Technology Blog - Atom" href="http://blog.fandle.com/feeds/posts/default" />
+<link rel="alternate" type="application/rss+xml" title="Fandle Technology Blog - RSS" href="http://blog.fandle.com/feeds/posts/default?alt=rss" />
+<link rel="service.post" type="application/atom+xml" title="Fandle Technology Blog - Atom" href="http://www.blogger.com/feeds/8740230010187295725/posts/default" />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.blogger.com/rsd.g?blogID=8740230010187295725" />
+<link rel="alternate" type="application/atom+xml" title="Fandle Technology Blog - Atom" href="http://blog.fandle.com/feeds/2834719810460685631/comments/default" />
+<!--[if IE]> <script> (function() { var html5 = ("abbr,article,aside,audio,canvas,datalist,details," + "figure,footer,header,hgroup,mark,menu,meter,nav,output," + "progress,section,time,video").split(','); for (var i = 0; i < html5.length; i++) { document.createElement(html5[i]); } })(); </script> <![endif]-->
+<title>Fandle Technology Blog: Using s-expressions instead of XML</title>
+<link type='text/css' rel='stylesheet' href='http://www.blogger.com/static/v1/widgets/1743847221-widget_css_bundle.css' />
+ <link rel="stylesheet" type="text/css" href="http://www.blogger.com/dyn-css/authorization.css?targetBlogID=8740230010187295725&zx=09cf4cb2-718d-499f-a8bb-c3622306d66b"/>
+<style type="text/css">#navbar-iframe { display:block }
+</style>
+
+<style id='page-skin-1' type='text/css'><!--
+/*
+-----------------------------------------------
+Blogger Template Style
+Name:     Son of Moto (Mean Green Blogging Machine variation)
+Date:     23 Feb 2004
+Updated by: Blogger Team
+----------------------------------------------- */
+/* Variable definitions
+====================
+<Variable name="mainBgColor" description="Main Background Color"
+type="color" default="#ffffff">
+<Variable name="mainTextColor" description="Text Color"
+type="color" default="#555544">
+<Variable name="pageHeaderColor" description="Blog Title Color"
+type="color" default="#ffffee">
+<Variable name="blogDescriptionColor" description="Blog Description Color"
+type="color" default="#ffffee">
+<Variable name="linkColor" description="Link Color"
+type="color" default="#669922">
+<Variable name="hoverLinkColor" description="Link Hover Color"
+type="color" default="#88bb22">
+<Variable name="dateHeaderColor" description="Date Header Color"
+type="color" default="#555544">
+<Variable name="sidebarHeaderColor" description="Sidebar Title Color"
+type="color" default="#555544">
+<Variable name="sidebarTextColor" description="Sidebar Text Color"
+type="color" default="#555544">
+<Variable name="bodyFont" description="Text Font" type="font"
+default="normal normal 100% tahoma, 'Trebuchet MS', lucida, helvetica, sans-serif">
+<Variable name="startSide" description="Start side in blog language"
+type="automatic" default="left">
+<Variable name="endSide" description="End side in blog language"
+type="automatic" default="right">
+*/
+/* Primary layout */
+body {
+margin: 0;
+padding: 0;
+border: 0;
+text-align: center;
+color: #555544;
+background: #692 url(http://www.blogblog.com/moto_son/outerwrap.gif) top center repeat-y;
+font-size: small;
+}
+img {
+border: 0;
+display: block;
+}
+.clear {
+clear: both;
+}
+/* Wrapper */
+#outer-wrapper {
+margin: 0 auto;
+border: 0;
+width: 692px;
+text-align: left;
+background: #ffffff url(http://www.blogblog.com/moto_son/innerwrap.gif) top right repeat-y;
+font: normal normal 100% tahoma, 'Trebuchet MS', lucida, helvetica, sans-serif;
+}
+/* Header */
+#header-wrapper	{
+background: #8b2 url(http://www.blogblog.com/moto_son/headbotborder.gif) bottom left repeat-x;
+margin: 0 auto;
+padding-top: 0;
+padding-right: 0;
+padding-bottom: 15px;
+padding-left: 0;
+border: 0;
+}
+#header h1 {
+text-align: left;
+font-size: 200%;
+color: #ffffee;
+margin: 0;
+padding-top: 15px;
+padding-right: 20px;
+padding-bottom: 0;
+padding-left: 20px;
+background-image: url(http://www.blogblog.com/moto_son/topper.gif);
+background-repeat: repeat-x;
+background-position: top left;
+}
+h1 a, h1 a:link, h1 a:visited {
+color: #ffffee;
+}
+#header .description {
+font-size: 110%;
+text-align: left;
+padding-top: 3px;
+padding-right: 20px;
+padding-bottom: 10px;
+padding-left: 23px;
+margin: 0;
+line-height:140%;
+color: #ffffee;
+}
+/* Inner layout */
+#content-wrapper {
+padding: 0 16px;
+}
+#main {
+width: 400px;
+float: left;
+word-wrap: break-word; /* fix for long text breaking sidebar float in IE */
+overflow: hidden;     /* fix for long non-text content breaking IE sidebar float */
+}
+#sidebar {
+width: 226px;
+float: right;
+color: #555544;
+word-wrap: break-word; /* fix for long text breaking sidebar float in IE */
+overflow: hidden;     /* fix for long non-text content breaking IE sidebar float */
+}
+/* Bottom layout */
+#footer	{
+clear: left;
+margin: 0;
+padding: 0 20px;
+border: 0;
+text-align: left;
+border-top: 1px solid #f9f9f9;
+}
+#footer .widget	{
+text-align: left;
+margin: 0;
+padding: 10px 0;
+background-color: transparent;
+}
+/* Default links 	*/
+a:link, a:visited {
+font-weight: bold;
+text-decoration: none;
+color: #669922;
+background: transparent;
+}
+a:hover {
+font-weight: bold;
+text-decoration: underline;
+color: #88bb22;
+background: transparent;
+}
+a:active {
+font-weight : bold;
+text-decoration : none;
+color: #88bb22;
+background: transparent;
+}
+/* Typography */
+.main p, .sidebar p, .post-body {
+line-height: 140%;
+margin-top: 5px;
+margin-bottom: 1em;
+}
+.post-body blockquote {
+line-height:1.3em;
+}
+h2, h3, h4, h5	{
+margin: 0;
+padding: 0;
+}
+h2 {
+font-size: 130%;
+}
+h2.date-header {
+color: #555544;
+}
+.post h3 {
+margin-top: 5px;
+font-size: 120%;
+}
+.post-footer {
+font-style: italic;
+}
+.sidebar h2 {
+color: #555544;
+}
+.sidebar .widget {
+margin-top: 12px;
+margin-right: 0;
+margin-bottom: 13px;
+margin-left: 0;
+padding: 0;
+}
+.main .widget {
+margin-top: 12px;
+margin-right: 0;
+margin-bottom: 0;
+margin-left: 0;
+}
+li  {
+line-height: 160%;
+}
+.sidebar ul {
+margin-left: 0;
+margin-top: 0;
+padding-left: 0;
+}
+.sidebar ul li {
+list-style: disc url(http://www.blogblog.com/moto_son/diamond.gif) inside;
+vertical-align: top;
+padding: 0;
+margin: 0;
+}
+.widget-content {
+margin-top: 0.5em;
+}
+/* Profile
+----------------------------------------------- */
+.profile-datablock {
+margin-top: 3px;
+margin-right: 0;
+margin-bottom: 5px;
+margin-left: 0;
+line-height: 140%;
+}
+.profile-textblock {
+margin-left: 0;
+}
+.profile-img {
+float: left;
+margin-top: 0;
+margin-right: 5px;
+margin-bottom: 5px;
+margin-left: 0;
+border:4px solid #8b2;
+}
+#comments  {
+border: 0;
+border-top: 1px dashed #eed;
+margin-top: 10px;
+margin-right: 0;
+margin-bottom: 0;
+margin-left: 0;
+padding: 0;
+}
+#comments h4	{
+margin-top: 10px;
+font-weight: normal;
+font-style: italic;
+text-transform: uppercase;
+letter-spacing: 1px;
+}
+#comments dl dt 	{
+font-weight: bold;
+font-style: italic;
+margin-top: 35px;
+padding-top: 1px;
+padding-right: 0;
+padding-bottom: 0;
+padding-left: 18px;
+background: transparent url(http://www.blogblog.com/moto_son/commentbug.gif) top left no-repeat;
+}
+#comments dl dd	{
+padding: 0;
+margin: 0;
+}
+.deleted-comment {
+font-style:italic;
+color:gray;
+}
+.feed-links {
+clear: both;
+line-height: 2.5em;
+}
+#blog-pager-newer-link {
+float: left;
+}
+#blog-pager-older-link {
+float: right;
+}
+#blog-pager {
+text-align: center;
+}
+/** Page structure tweaks for layout editor wireframe */
+body#layout #outer-wrapper {
+padding-top: 0;
+}
+body#layout #header,
+body#layout #content-wrapper,
+body#layout #footer {
+padding: 0;
+}
+
+--></style>
+<script type="text/javascript">
+if (window.jstiming) window.jstiming.load.tick('headEnd');
+</script></head>
+<body>
+<div class='navbar section' id='navbar'><div class='widget Navbar' id='Navbar1'><script type="text/javascript">
+    function setAttributeOnload(object, attribute, val) {
+      if(window.addEventListener) {
+        window.addEventListener("load",
+          function(){ object[attribute] = val; }, false);
+      } else {
+        window.attachEvent('onload', function(){ object[attribute] = val; });
+      }
+    }
+  </script>
+<iframe src="http://www.blogger.com/navbar.g?targetBlogID=8740230010187295725&amp;blogName=Fandle+Technology+Blog&amp;publishMode=PUBLISH_MODE_HOSTED&amp;navbarType=BLUE&amp;layoutType=LAYOUTS&amp;searchRoot=http%3A%2F%2Fblog.fandle.com%2Fsearch&amp;blogLocale=en&amp;homepageUrl=http%3A%2F%2Fblog.fandle.com%2F&amp;targetPostID=2834719810460685631" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" height="30px" width="100%" id="navbar-iframe" allowtransparency="true" title="Blogger Navigation and Search"></iframe>
+<div></div></div></div>
+<div id='outer-wrapper'><div id='wrap2'>
+<!-- skip links for text browsers -->
+<span id='skiplinks' style='display:none;'>
+<a href='#main'>skip to main </a> |
+      <a href='#sidebar'>skip to sidebar</a>
+</span>
+<div id='header-wrapper'>
+<div class='header section' id='header'><div class='widget Header' id='Header1'>
+<div id='header-inner'>
+<div class='titlewrapper'>
+<h1 class='title'>
+<a href='http://blog.fandle.com/'>Fandle Technology Blog</a>
+</h1>
+</div>
+<div class='descriptionwrapper'>
+<p class='description'><span>Adventures in building a web site to make hearing live performances of your favorite bands as easy as 3.141592...</span></p>
+</div>
+</div>
+</div></div>
+</div>
+<div id='content-wrapper'>
+<div id='crosscol-wrapper' style='text-align:center'>
+<div class='crosscol section' id='crosscol'></div>
+</div>
+<div id='main-wrapper'>
+<div class='main section' id='main'><div class='widget Blog' id='Blog1'>
+<div class='blog-posts hfeed'>
+<!-- google_ad_section_start(name=default) -->
+
+          <div class="date-outer">
+        
+<h2 class='date-header'><span>Tuesday, February 23, 2010</span></h2>
+
+          <div class="date-posts">
+        
+<div class='post-outer'>
+<div class='post hentry uncustomized-post-template'>
+<a name='2834719810460685631'></a>
+<h3 class='post-title entry-title'>
+Using s-expressions instead of XML
+</h3>
+<div class='post-header'>
+<div class='post-header-line-1'></div>
+</div>
+<div class='post-body entry-content'>
+Last time I needed to manipulate a large XML document I
+remembered Paul Graham's comment in 
+<a href="http://www.paulgraham.com/diff.html">What Made Lisp Different</a>
+that programs communicating with s-expressions is an idea recently reinvented as XML.
+I began to wonder if I could just use s-expressions instead of having to
+deal with XML.
+
+<p>
+<b>Step 0</b>: Define an s-expression representation for XML.
+
+<pre> (tagname (@ attr "value" attr2 "value2")
+   (tagname2)
+   (tagname3 "data"))
+</pre>
+If the attributes are optional, then that
+requires an extra token (@) to distinguish
+between attributes and the first nested tag.
+</p><p>
+If the attributes are not optional, then that
+requires an extra token (nil) when there are
+no attributes specified.
+</p><p>
+Most XML documents I've used have more tags
+without attributes, so I opted for
+using @.  
+</p><p>
+Since @ can't be a tag name, if the first thing in the
+list (after the tag name) is a list whose car is @ then
+it is the XML attributes for that tag.
+I dubbed this representation SML (S-expression Meta Language).
+
+</p><p>
+<b>UPDATE:</b> I came up with a 
+<a href="http://blog.fandle.com/2010/02/simplified-s-expression-xml-sml.html">simpler representation</a>.
+</p><p>
+<b>Step 1</b>: convert XML to s-expressions.  
+<br/>
+This seems like
+a job for Perl.  It's great at manipulating data formats.
+So I wrote 
+<a href="http://github.com/nex3/arc/blob/master/extras/xml2sexp.pl">xml2sexp.pl</a>
+which works great.
+</p><p>
+But it seems like a hack because there
+might be some XML syntax that it doesn't handle.  XSLT
+was designed for transforming XML so it's
+a good choice for this also.  So of course, I did some
+Googling and found this 
+<a href="http://www.koders.com/noncode/fid76B669503E38A693C94ED645574280F47BFC0203.aspx">xml2sexp.xsl</a>, but it's not complete.  It can't even convert itself.
+So I decided to write my own.  Yikes! Now I'm back to writing
+XML, which I was trying to avoid!  I can't think of a programming
+language that is more unpleasant than XML.  But it was a chance
+to learn XSLT, so I wrote
+<a href="http://github.com/nex3/arc/blob/master/extras/xml2sexp.xsl">xml2sexp.xsl</a> too.
+
+</p><p>
+<b>Step 2</b>: Convert SML back to XML.
+<br/>
+Now I'm in the Lisp world, so I can use my Lisp of choice,
+which happens to be 
+<a href="http://arclanguage.org/">Arc</a> at the moment.  So I wrote an Arc library,
+<a href="http://github.com/nex3/arc/blob/master/lib/sml.arc">sml.arc</a>,
+to convert SML back to XML.  There's also a function to pretty-print
+the SML, since the SML created by the conversion from XML is
+pretty ugly SML.
+</p><p>
+Adios, XML! I'll never need to deal with you again.  I can
+just use SML whenever I need to work with XML files.
+<div style='clear: both;'></div>
+</div>
+<div class='post-footer'>
+<div class='post-footer-line post-footer-line-1'>
+<span class='post-author vcard'>
+Posted by
+<span class='fn'>Jeffrey "JD" Brennan</span>
+</span>
+<span class='post-timestamp'>
+at
+<a class='timestamp-link' href='http://blog.fandle.com/2010/02/using-s-expressions-instead-of-xml.html' rel='bookmark' title='permanent link'><abbr class='published' title='2010-02-23T17:57:00-08:00'>5:57 PM</abbr></a>
+</span>
+<span class='reaction-buttons'>
+</span>
+<span class='dummy-feature'>
+</span>
+<span class='star-ratings'>
+</span>
+<span class='post-comment-link'>
+</span>
+<span class='post-backlinks post-comment-link'>
+</span>
+<span class='post-icons'>
+<span class='item-control blog-admin pid-1986715384'>
+<a href='http://www.blogger.com/post-edit.g?blogID=8740230010187295725&postID=2834719810460685631' title='Edit Post'>
+<img alt='' class='icon-action' height='18' src='http://img2.blogblog.com/img/icon18_edit_allbkg.gif' width='18'/>
+</a>
+</span>
+</span>
+<div class='post-share-buttons'>
+</div>
+</div>
+<div class='post-footer-line post-footer-line-2'>
+<span class='post-labels'>
+</span>
+</div>
+<div class='post-footer-line post-footer-line-3'>
+<span class='post-location'>
+</span>
+</div>
+</div>
+</div>
+<div class='comments' id='comments'>
+<a name='comments'></a>
+<h4>
+6
+comments:
+        
+</h4>
+<div id='Blog1_comments-block-wrapper'>
+<dl class='avatar-comment-indent' id='comments-block'>
+<dt class='comment-author ' id='c6649165704800867154'>
+<a name='c6649165704800867154'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="http://www.blogger.com/profile/13928723372104657874" rel="nofollow" onclick="" class="avatar-hovercard" id="av-0-13928723372104657874"><img src="http://img2.blogblog.com/img/b16-rounded.gif" width="16" height="16" alt="" title="Bruce Lewis">
+
+</a></span></div>
+<a href='http://www.blogger.com/profile/13928723372104657874' rel='nofollow'>Bruce Lewis</a>
+said...
+</dt>
+<dd class='comment-body' id='Blog1_cmt-6649165704800867154'>
+<p>
+You may want to look at http://en.wikipedia.org/wiki/SXML
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://blog.fandle.com/2010/02/using-s-expressions-instead-of-xml.html?showComment=1266982316793#c6649165704800867154' title='comment permalink'>
+February 23, 2010 7:31 PM
+</a>
+<span class='item-control blog-admin pid-1600867735'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=8740230010187295725&postID=6649165704800867154' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author ' id='c2311972106849036083'>
+<a name='c2311972106849036083'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="http://www.blogger.com/profile/03627406827230797356" rel="nofollow" onclick="" class="avatar-hovercard" id="av-1-03627406827230797356"><img src="http://img2.blogblog.com/img/b16-rounded.gif" width="16" height="16" alt="" title="dasickis">
+
+</a></span></div>
+<a href='http://www.blogger.com/profile/03627406827230797356' rel='nofollow'>dasickis</a>
+said...
+</dt>
+<dd class='comment-body' id='Blog1_cmt-2311972106849036083'>
+<p>
+http://docs.plt-scheme.org/xml/index.html
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://blog.fandle.com/2010/02/using-s-expressions-instead-of-xml.html?showComment=1268276786449#c2311972106849036083' title='comment permalink'>
+March 10, 2010 7:06 PM
+</a>
+<span class='item-control blog-admin pid-1420252726'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=8740230010187295725&postID=2311972106849036083' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author ' id='c6752659960033833302'>
+<a name='c6752659960033833302'></a>
+<div class="avatar-image-container vcard"><span dir="ltr"><a href="http://www.blogger.com/profile/08915488520584130428" rel="nofollow" onclick="" class="avatar-hovercard" id="av-2-08915488520584130428"><img src="http://img1.blogblog.com/img/blank.gif" width="35" height="35" alt="" class="delayLoad" style="display: none;" longdesc="http://2.bp.blogspot.com/_GJnXdhud2dU/S65-a_2K5QI/AAAAAAAAABE/INtjahIoKQA/S45/scandal3.jpg" title="Leroy Scandal">
+
+<noscript><img src="http://2.bp.blogspot.com/_GJnXdhud2dU/S65-a_2K5QI/AAAAAAAAABE/INtjahIoKQA/S45/scandal3.jpg" width="35" height="35" class="photo" alt=""></noscript></a></span></div>
+<a href='http://www.blogger.com/profile/08915488520584130428' rel='nofollow'>Leroy Scandal</a>
+said...
+</dt>
+<dd class='comment-body' id='Blog1_cmt-6752659960033833302'>
+<p>
+Thank you.<br />Seriously, <br />thank you. <br /><br />This is just what I needed to see.
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://blog.fandle.com/2010/02/using-s-expressions-instead-of-xml.html?showComment=1277550976561#c6752659960033833302' title='comment permalink'>
+June 26, 2010 4:16 AM
+</a>
+<span class='item-control blog-admin pid-1934505778'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=8740230010187295725&postID=6752659960033833302' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author ' id='c2821546034227126651'>
+<a name='c2821546034227126651'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="http://www.blogger.com/profile/07361333357063335064" rel="nofollow" onclick="" class="avatar-hovercard" id="av-3-07361333357063335064"><img src="http://img2.blogblog.com/img/b16-rounded.gif" width="16" height="16" alt="" title="jamil0458">
+
+</a></span></div>
+<a href='http://www.blogger.com/profile/07361333357063335064' rel='nofollow'>jamil0458</a>
+said...
+</dt>
+<dd class='comment-body' id='Blog1_cmt-2821546034227126651'>
+<p>
+I prefer XML over s-expression tbh, although great info.<br />I did find a good book/site for brushing up on your xml for those that don&#39;t like working with it too well!<br /><a href="http://www.lanw.com/books/xml4dum/default.htm" rel="nofollow"> XMl For Dummies Homepage!</a> and<br /><a href="http://www.lanw.com/books/xml4dum.htm" rel="nofollow">XML Dummies</a><br /><br />not saying that only dummies should use it, lol!
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://blog.fandle.com/2010/02/using-s-expressions-instead-of-xml.html?showComment=1280087061065#c2821546034227126651' title='comment permalink'>
+July 25, 2010 12:44 PM
+</a>
+<span class='item-control blog-admin pid-1276798468'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=8740230010187295725&postID=2821546034227126651' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author ' id='c7137929507058486015'>
+<a name='c7137929507058486015'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="http://www.blogger.com/profile/04956571505376574014" rel="nofollow" onclick="" class="avatar-hovercard" id="av-4-04956571505376574014"><img src="http://img2.blogblog.com/img/b16-rounded.gif" width="16" height="16" alt="" title="hong_hai_long">
+
+</a></span></div>
+<a href='http://www.blogger.com/profile/04956571505376574014' rel='nofollow'>hong_hai_long</a>
+said...
+</dt>
+<dd class='comment-body' id='Blog1_cmt-7137929507058486015'>
+<p>
+Thanks for a sweet article,very informative.. we will sure be back for more.It is wonderful right here. good research. I&#39;ve been searched this kind of information for quite a while. thanks<br /><a href="http://www.windows7key.us.com/" rel="nofollow">windows 7 key</a>
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://blog.fandle.com/2010/02/using-s-expressions-instead-of-xml.html?showComment=1290149099887#c7137929507058486015' title='comment permalink'>
+November 18, 2010 10:44 PM
+</a>
+<span class='item-control blog-admin pid-872402907'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=8740230010187295725&postID=7137929507058486015' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author ' id='c3616224097430160839'>
+<a name='c3616224097430160839'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="http://www.blogger.com/profile/01922952247318781978" rel="nofollow" onclick="" class="avatar-hovercard" id="av-5-01922952247318781978"><img src="http://img2.blogblog.com/img/b16-rounded.gif" width="16" height="16" alt="" title="seo melbourne">
+
+</a></span></div>
+<a href='http://www.blogger.com/profile/01922952247318781978' rel='nofollow'>seo melbourne</a>
+said...
+</dt>
+<dd class='comment-body' id='Blog1_cmt-3616224097430160839'>
+<p>
+Brilliant posting you have done great job, it&#8217;s so great helpful for me. And  I am looking forward of this post thank you. <br /><a href="http://www.googleseoservices.com.au/" rel="nofollow">search engine marketing melbourne</a>
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://blog.fandle.com/2010/02/using-s-expressions-instead-of-xml.html?showComment=1290595076326#c3616224097430160839' title='comment permalink'>
+November 24, 2010 2:37 AM
+</a>
+<span class='item-control blog-admin pid-2019895152'>
+<a class='comment-delete' href='http://www.blogger.com/delete-comment.g?blogID=8740230010187295725&postID=3616224097430160839' title='Delete Comment'>
+<img src='//www.blogger.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+</dl>
+</div>
+<p class='comment-footer'>
+<div class='comment-form'>
+<a name='comment-form'></a>
+<h4 id='comment-post-message'>Post a Comment</h4>
+<p>
+</p>
+<a href='http://www.blogger.com/comment-iframe.g?blogID=8740230010187295725&postID=2834719810460685631' id='comment-editor-src'></a>
+<iframe allowtransparency='true' class='blogger-iframe-colorize blogger-comment-from-post' frameborder='0' height='410' id='comment-editor' name='comment-editor' src='' width='100%'></iframe>
+<script type="text/javascript">
+        if (!window.google || !google.friendconnect) {
+          document.write('<script type="text/javascript"' +
+              'src="http://www.google.com/friendconnect/script/friendconnect.js">' +
+              '</scr' + 'ipt>');
+        }
+      </script>
+<script type="text/javascript">
+      if (!window.registeredBloggerCallbacks) {
+        window.registeredBloggerCallbacks = true;
+
+        
+
+        
+        gadgets.rpc.register('requestReload', function() {
+          document.location.reload();
+        });
+
+        
+        gadgets.rpc.register('requestSignOut', function(siteId) {
+          
+          google.friendconnect.container.openSocialSiteId = siteId;
+          google.friendconnect.requestSignOut();
+        });
+      }
+    </script>
+<script type="text/javascript">
+    
+    function registerGetBlogUrls() {
+      gadgets.rpc.register('getBlogUrls', function() {
+        var holder = {};
+        
+          
+            
+            
+              holder.currentPost = "http://www.blogger.com/feeds/8740230010187295725/posts/default/2834719810460685631";
+            
+            
+            
+              holder.currentComments = "http://www.blogger.com/feeds/8740230010187295725/2834719810460685631/comments/default";
+            
+            holder.currentPostUrl = "";
+            holder.currentPostId = 2834719810460685631
+          
+          
+          
+            holder.postFeed = "http://www.blogger.com/feeds/8740230010187295725/posts/default";
+          
+          
+          
+            holder.commentFeed = "http://www.blogger.com/feeds/8740230010187295725/comments/default";
+          
+          holder.currentBlogUrl = "http://blog.fandle.com/";
+          holder.currentBlogId = "8740230010187295725";
+        
+        return holder;
+      });
+    }
+  </script>
+<script type="text/javascript">
+  if (!window.registeredCommonBloggerCallbacks) {
+    window.registeredCommonBloggerCallbacks = true;
+
+    gadgets.rpc.register('resize_iframe', function(height) {
+      var el = document.getElementById(this['f']);
+      if (el) {
+        el.style.height = height + 'px';
+      }
+    });
+
+    
+    gadgets.rpc.register('set_pref', function() {});
+
+    registerGetBlogUrls();
+  }
+  </script>
+<script type="text/javascript" src="http://www.blogger.com/static/v1/jsbin/528630121-comment_from_post_iframe.js"></script>
+<script type='text/javascript'>
+      BLOG_CMT_createIframe('http://www.blogger.com/rpc_relay.html', '03300935774626916735');
+    </script>
+</div>
+</p>
+<div id='backlinks-container'>
+<div id='Blog1_backlinks-container'>
+</div>
+</div>
+</div>
+</div>
+<div id="latency-2834719810460685631"></div><script type="text/javascript">if (window['tickAboveFold']) {window['tickAboveFold'](document.getElementById("latency-2834719810460685631")); } </script>
+
+        </div></div>
+      
+<!-- google_ad_section_end -->
+</div>
+<div class='blog-pager' id='blog-pager'>
+<span id='blog-pager-newer-link'>
+<a class='blog-pager-newer-link' href='http://blog.fandle.com/2010/02/simplified-s-expression-xml-sml.html' id='Blog1_blog-pager-newer-link' title='Newer Post'>Newer Post</a>
+</span>
+<span id='blog-pager-older-link'>
+<a class='blog-pager-older-link' href='http://blog.fandle.com/2010/02/arc-jarc-or-anything-as-scripting.html' id='Blog1_blog-pager-older-link' title='Older Post'>Older Post</a>
+</span>
+<a class='home-link' href='http://blog.fandle.com/'>Home</a>
+</div>
+<div class='clear'></div>
+<div class='post-feeds'>
+<div class='feed-links'>
+Subscribe to:
+<a class='feed-link' href='http://blog.fandle.com/feeds/2834719810460685631/comments/default' target='_blank' type='application/atom+xml'>Post Comments (Atom)</a>
+</div>
+</div>
+</div></div>
+</div>
+<div id='sidebar-wrapper'>
+<div class='sidebar section' id='sidebar'><div class='widget Followers' id='Followers1'>
+<h2 class='title'>Followers</h2>
+<div class='widget-content'>
+<div id='Followers1-wrapper'>
+<div style='margin-right:2px;'>
+<script type="text/javascript">
+        if (!window.google || !google.friendconnect) {
+          document.write('<script type="text/javascript"' +
+              'src="http://www.google.com/friendconnect/script/friendconnect.js">' +
+              '</scr' + 'ipt>');
+        }
+      </script>
+<script type="text/javascript">
+      if (!window.registeredBloggerCallbacks) {
+        window.registeredBloggerCallbacks = true;
+
+        
+
+        
+        gadgets.rpc.register('requestReload', function() {
+          document.location.reload();
+        });
+
+        
+        gadgets.rpc.register('requestSignOut', function(siteId) {
+          
+          google.friendconnect.container.openSocialSiteId = siteId;
+          google.friendconnect.requestSignOut();
+        });
+      }
+    </script>
+<script type="text/javascript">
+    
+    function registerGetBlogUrls() {
+      gadgets.rpc.register('getBlogUrls', function() {
+        var holder = {};
+        
+          
+            
+            
+              holder.currentPost = "http://www.blogger.com/feeds/8740230010187295725/posts/default/2834719810460685631";
+            
+            
+            
+              holder.currentComments = "http://www.blogger.com/feeds/8740230010187295725/2834719810460685631/comments/default";
+            
+            holder.currentPostUrl = "";
+            holder.currentPostId = 2834719810460685631
+          
+          
+          
+            holder.postFeed = "http://www.blogger.com/feeds/8740230010187295725/posts/default";
+          
+          
+          
+            holder.commentFeed = "http://www.blogger.com/feeds/8740230010187295725/comments/default";
+          
+          holder.currentBlogUrl = "http://blog.fandle.com/";
+          holder.currentBlogId = "8740230010187295725";
+        
+        return holder;
+      });
+    }
+  </script>
+<script type="text/javascript">
+  if (!window.registeredCommonBloggerCallbacks) {
+    window.registeredCommonBloggerCallbacks = true;
+
+    gadgets.rpc.register('resize_iframe', function(height) {
+      var el = document.getElementById(this['f']);
+      if (el) {
+        el.style.height = height + 'px';
+      }
+    });
+
+    
+    gadgets.rpc.register('set_pref', function() {});
+
+    registerGetBlogUrls();
+  }
+  </script>
+<div id="div-qjwoz7fks525" style="width: 100%; "></div>
+<script type="text/javascript">
+    var skin = {};
+    skin['FACE_SIZE'] = '32';
+    skin['HEIGHT'] = "260";
+    skin['TITLE'] = "Followers";
+    skin['BORDER_COLOR'] = "transparent";
+    skin['ENDCAP_BG_COLOR'] = "transparent";
+    skin['ENDCAP_TEXT_COLOR'] = "#555544";
+    skin['ENDCAP_LINK_COLOR'] = "#000000";
+    skin['ALTERNATE_BG_COLOR'] = "transparent";
+    
+    skin['CONTENT_BG_COLOR'] = "transparent";
+    skin['CONTENT_LINK_COLOR'] = "#000000";
+    skin['CONTENT_TEXT_COLOR'] = "#555544";
+    skin['CONTENT_SECONDARY_LINK_COLOR'] = "#FFFFFF";
+    skin['CONTENT_SECONDARY_TEXT_COLOR'] = "#000000";
+    skin['CONTENT_HEADLINE_COLOR'] = "#000000";
+    skin['FONT_FACE'] = "normal normal 100% tahoma, \x27Trebuchet MS\x27, lucida, helvetica, sans-serif";
+    google.friendconnect.container.setParentUrl("/");
+    google.friendconnect.container["renderMembersGadget"](
+    {id: "div-qjwoz7fks525",
+     height: 260,
+     
+     
+     
+     site: "03300935774626916735",
+      
+     locale: 'en' },
+     skin);
+  </script>
+</div>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=8740230010187295725&widgetType=Followers&widgetId=Followers1&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("Followers1"));' target='configFollowers1' title='Edit'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div><div class='widget BlogArchive' id='BlogArchive1'>
+<h2>Blog Archive</h2>
+<div class='widget-content'>
+<div id='ArchiveList'>
+<div id='BlogArchive1_ArchiveList'>
+<ul class='hierarchy'>
+<li class='archivedate expanded'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy toggle-open'>&#9660;&#160;</span>
+</a>
+<a class='post-count-link' href='http://blog.fandle.com/search?updated-min=2010-01-01T00%3A00%3A00-08%3A00&updated-max=2011-01-01T00%3A00%3A00-08%3A00&max-results=9'>2010</a>
+<span class='post-count' dir='ltr'>(9)</span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://blog.fandle.com/2010_08_01_archive.html'>August</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='posts'>
+<li><a href='http://blog.fandle.com/2010/08/should-consensus-affect-supreme-court.html'>Should consensus affect the Supreme Court?</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://blog.fandle.com/2010_05_01_archive.html'>May</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='posts'>
+<li><a href='http://blog.fandle.com/2010/05/jaclyn-jarc-compiler.html'>Jaclyn: The Jarc Compiler</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+          &#9658;&#160;
+        
+</span>
+</a>
+<a class='post-count-link' href='http://blog.fandle.com/2010_03_01_archive.html'>March</a>
+<span class='post-count' dir='ltr'>(2)</span>
+<ul class='posts'>
+<li><a href='http://blog.fandle.com/2010/03/using-jarc-with-app-engine.html'>Using Jarc with App Engine</a></li>
+<li><a href='http://blog.fandle.com/2010/03/java-access-syntax-from-jarc-less-dots.html'>Java access syntax from Jarc - less dots, more fil...</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate expanded'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy toggle-open'>&#9660;&#160;</span>
+</a>
+<a class='post-count-link' href='http://blog.fandle.com/2010_02_01_archive.html'>February</a>
+<span class='post-count' dir='ltr'>(5)</span>
+<ul class='posts'>
+<li><a href='http://blog.fandle.com/2010/02/simplified-s-expression-xml-sml.html'>Simplified s-expression XML (SML)</a></li>
+<li><a href='http://blog.fandle.com/2010/02/using-s-expressions-instead-of-xml.html'>Using s-expressions instead of XML</a></li>
+<li><a href='http://blog.fandle.com/2010/02/arc-jarc-or-anything-as-scripting.html'>Arc (Jarc) or anything as a scripting language</a></li>
+<li><a href='http://blog.fandle.com/2010/02/working-for-myself-is-pain-back.html'>Working for myself is a pain in the back</a></li>
+<li><a href='http://blog.fandle.com/2010/02/working-for-equity-day-1.html'>Working for Equity</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=8740230010187295725&widgetType=BlogArchive&widgetId=BlogArchive1&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("BlogArchive1"));' target='configBlogArchive1' title='Edit'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div><div class='widget Profile' id='Profile1'>
+<h2>About Me</h2>
+<div class='widget-content'>
+<dl class='profile-datablock'>
+<dt class='profile-data'>Jeffrey "JD" Brennan</dt>
+</dl>
+<a class='profile-link' href='http://www.blogger.com/profile/13330772018679977636'>View my complete profile</a>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='http://www.blogger.com/rearrange?blogID=8740230010187295725&widgetType=Profile&widgetId=Profile1&action=editWidget' onclick='return _WidgetManager._PopupConfig(document.getElementById("Profile1"));' target='configProfile1' title='Edit'>
+<img alt='' height='18' src='http://img1.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div></div>
+</div>
+<!-- spacer for skins that want sidebar and main to be the same height-->
+<div class='clear'>&#160;</div>
+</div>
+<!-- end content-wrapper -->
+<div id='footer-wrapper'>
+<div class='footer section' id='footer'></div>
+</div>
+</div></div>
+<!-- end outer-wrapper -->
+<script type="text/javascript">
+if (window.jstiming) window.jstiming.load.tick('widgetJsBefore');
+</script><script type="text/javascript" src="http://www.blogger.com/static/v1/widgets/512629240-widgets.js"></script>
+<script type='text/javascript'>
+if (typeof(BLOG_attachCsiOnload) != 'undefined' && BLOG_attachCsiOnload != null) { window['blogger_templates_experiment_id'] = "templatesV1";window['blogger_blog_id'] = '8740230010187295725';BLOG_attachCsiOnload('item_'); }_WidgetManager._Init('http://www.blogger.com/rearrange?blogID=8740230010187295725','http://blog.fandle.com/2010/02/using-s-expressions-instead-of-xml.html','8740230010187295725');
+_WidgetManager._SetPageActionUrl('http://www.blogger.com/display?blogID=8740230010187295725','VFIAnreIJ39qHP7Kpnw6Q5KpD2A:1293264890897','AOuZoY5NT0ZDxBKSuT3fU-lghAerKMKFAw:1293264890897');
+_WidgetManager._SetDataContext([{'name': 'blog', 'data': {'title': 'Fandle Technology Blog', 'pageType': 'item', 'url': 'http://blog.fandle.com/2010/02/using-s-expressions-instead-of-xml.html', 'canonicalUrl': 'http://blog.fandle.com/2010/02/using-s-expressions-instead-of-xml.html', 'homepageUrl': 'http://blog.fandle.com/', 'enabledCommentProfileImages': true, 'searchLabel': '', 'searchQuery': '', 'pageName': 'Using s-expressions instead of XML', 'pageTitle': 'Fandle Technology Blog: Using s-expressions instead of XML', 'encoding': 'UTF-8', 'locale': 'en', 'isPrivate': false, 'isMobile': false, 'mobileClass': '', 'languageDirection': 'ltr', 'feedLinks': '\74link rel\75\42alternate\42 type\75\42application/atom+xml\42 title\75\42Fandle Technology Blog - Atom\42 href\75\42http://blog.fandle.com/feeds/posts/default\42 /\76\n\74link rel\75\42alternate\42 type\75\42application/rss+xml\42 title\75\42Fandle Technology Blog - RSS\42 href\75\42http://blog.fandle.com/feeds/posts/default?alt\75rss\42 /\76\n\74link rel\75\42service.post\42 type\75\42application/atom+xml\42 title\75\42Fandle Technology Blog - Atom\42 href\75\42http://www.blogger.com/feeds/8740230010187295725/posts/default\42 /\76\n\74link rel\75\42EditURI\42 type\75\42application/rsd+xml\42 title\75\42RSD\42 href\75\42http://www.blogger.com/rsd.g?blogID\758740230010187295725\42 /\76\n\74link rel\75\42alternate\42 type\75\42application/atom+xml\42 title\75\42Fandle Technology Blog - Atom\42 href\75\42http://blog.fandle.com/feeds/2834719810460685631/comments/default\42 /\76\n', 'meTag': '', 'openIdOpTag': '', 'imageSrcTag': '', 'latencyHeadScript': '\74script type\75\42text/javascript\42\76(function() { var a\75window;function c(b){this.t\75{};this.tick\75function(d,i,e){e\75e?e:(new Date).getTime();this.t[d]\75[e,i]};this.tick(\42start\42,null,b)}var f\75new c;a.jstiming\75{Timer:c,load:f};try{var g\75null;if(a.chrome\46\46a.chrome.csi)g\75Math.floor(a.chrome.csi().pageT);if(g\75\75null)if(a.gtbExternal)g\75a.gtbExternal.pageT();if(g\75\75null)if(a.external)g\75a.external.pageT;if(g)a.jstiming.pt\75g}catch(h){};a.tickAboveFold\75function(b){b\75b;var d\0750;if(b.offsetParent){do d+\75b.offsetTop;while(b\75b.offsetParent)}b\75d;b\74\075750\46\46a.jstiming.load.tick(\42aft\42)};var j\75false;function k(){if(!j){j\75true;a.jstiming.load.tick(\42firstScrollTime\42)}}a.addEventListener?a.addEventListener(\42scroll\42,k,false):a.attachEvent(\42onscroll\42,k);\n })();\74/script\076', 'mobileHeadScript': ''}}]);
+_WidgetManager._RegisterWidget('_FollowersView', new _WidgetInfo('Followers1', 'sidebar', null, document.getElementById('Followers1'), {'title': 'Followers', 'codeSnippet': '\74script type\75\42text/javascript\42\76\n        if (!window.google || !google.friendconnect) {\n          document.write(\47\74script type\75\42text/javascript\42\47 +\n              \47src\75\42http://www.google.com/friendconnect/script/friendconnect.js\42\76\47 +\n              \47\74/scr\47 + \47ipt\76\47);\n        }\n      \74/script\76\n\74script type\75\42text/javascript\42\76\n      if (!window.registeredBloggerCallbacks) {\n        window.registeredBloggerCallbacks \75 true;\n\n        \n\n        \n        gadgets.rpc.register(\47requestReload\47, function() {\n          document.location.reload();\n        });\n\n        \n        gadgets.rpc.register(\47requestSignOut\47, function(siteId) {\n          \n          google.friendconnect.container.openSocialSiteId \75 siteId;\n          google.friendconnect.requestSignOut();\n        });\n      }\n    \74/script\76\n\74script type\75\42text/javascript\42\76\n    \n    function registerGetBlogUrls() {\n      gadgets.rpc.register(\47getBlogUrls\47, function() {\n        var holder \75 {};\n        \n          \n            \n            \n              holder.currentPost \75 \42http://www.blogger.com/feeds/8740230010187295725/posts/default/2834719810460685631\42;\n            \n            \n            \n              holder.currentComments \75 \42http://www.blogger.com/feeds/8740230010187295725/2834719810460685631/comments/default\42;\n            \n            holder.currentPostUrl \75 \42\42;\n            holder.currentPostId \75 2834719810460685631\n          \n          \n          \n            holder.postFeed \75 \42http://www.blogger.com/feeds/8740230010187295725/posts/default\42;\n          \n          \n          \n            holder.commentFeed \75 \42http://www.blogger.com/feeds/8740230010187295725/comments/default\42;\n          \n          holder.currentBlogUrl \75 \42http://blog.fandle.com/\42;\n          holder.currentBlogId \75 \428740230010187295725\42;\n        \n        return holder;\n      });\n    }\n  \74/script\76\n\74script type\75\42text/javascript\42\76\n  if (!window.registeredCommonBloggerCallbacks) {\n    window.registeredCommonBloggerCallbacks \75 true;\n\n    gadgets.rpc.register(\47resize_iframe\47, function(height) {\n      var el \75 document.getElementById(this[\47f\47]);\n      if (el) {\n        el.style.height \75 height + \47px\47;\n      }\n    });\n\n    \n    gadgets.rpc.register(\47set_pref\47, function() {});\n\n    registerGetBlogUrls();\n  }\n  \74/script\76\n\74div id\75\42div-pwgicn66ray2\42 style\75\42width: 100%; \42\76\74/div\76\n\74script type\75\42text/javascript\42\76\n    var skin \75 {};\n    skin[\47FACE_SIZE\47] \75 \04732\47;\n    skin[\47HEIGHT\47] \75 \042260\42;\n    skin[\47TITLE\47] \75 \42Followers\42;\n    skin[\47BORDER_COLOR\47] \75 \42transparent\42;\n    skin[\47ENDCAP_BG_COLOR\47] \75 \42transparent\42;\n    skin[\47ENDCAP_TEXT_COLOR\47] \75 \42#555544\42;\n    skin[\47ENDCAP_LINK_COLOR\47] \75 \42#000000\42;\n    skin[\47ALTERNATE_BG_COLOR\47] \75 \42transparent\42;\n    \n    skin[\47CONTENT_BG_COLOR\47] \75 \42transparent\42;\n    skin[\47CONTENT_LINK_COLOR\47] \75 \42#000000\42;\n    skin[\47CONTENT_TEXT_COLOR\47] \75 \42#555544\42;\n    skin[\47CONTENT_SECONDARY_LINK_COLOR\47] \75 \42#FFFFFF\42;\n    skin[\47CONTENT_SECONDARY_TEXT_COLOR\47] \75 \42#000000\42;\n    skin[\47CONTENT_HEADLINE_COLOR\47] \75 \42#000000\42;\n    skin[\47FONT_FACE\47] \75 \42normal normal 100% tahoma, \\x27Trebuchet MS\\x27, lucida, helvetica, sans-serif\42;\n    google.friendconnect.container.setParentUrl(\42/\42);\n    google.friendconnect.container[\42renderMembersGadget\42](\n    {id: \42div-pwgicn66ray2\42,\n     height: 260,\n     \n     \n     \n     site: \04203300935774626916735\42,\n      \n     locale: \47en\47 },\n     skin);\n  \74/script\076'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogArchiveView', new _WidgetInfo('BlogArchive1', 'sidebar', null, document.getElementById('BlogArchive1'), {'languageDirection': 'ltr'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_ProfileView', new _WidgetInfo('Profile1', 'sidebar', null, document.getElementById('Profile1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HeaderView', new _WidgetInfo('Header1', 'header'));
+_WidgetManager._RegisterWidget('_NavbarView', new _WidgetInfo('Navbar1', 'navbar'));
+_WidgetManager._RegisterWidget('_BlogView', new _WidgetInfo('Blog1', 'main', null, document.getElementById('Blog1'), {'cmtInteractionsEnabled': false, 'commentInteractionIframeUrl': 'http://www.blogger.com/comment-interaction-iframe.g?blogId\758740230010187295725', 'mobile': false}, 'displayModeFull'));
+</script>
+</body>
+</html>
