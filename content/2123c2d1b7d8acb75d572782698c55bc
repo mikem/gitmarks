@@ -1,0 +1,499 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" id="sixapart-standard">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Movable Type 4.31-en" />
+<link rel="stylesheet" href="http://blog.knuthaugen.no/styles.css" type="text/css" />
+<link type="text/css" rel="stylesheet" href="/mt/mt-static/sh.css"/>
+<link rel="start" href="http://blog.knuthaugen.no/" title="Home" />
+<link rel="alternate" type="application/atom+xml" title="Recent Entries" href="http://feeds.feedburner.com/AllAboutTheCode" />
+<link rel="alternate" type="application/atom+xml" title="Recent Comments" href="http://feeds.feedburner.com/AllAboutTheCodeComments" />
+<script type="text/javascript" src="http://blog.knuthaugen.no/mt.js"></script>
+<!--
+<rdf:RDF xmlns="http://web.resource.org/cc/"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<Work rdf:about="http://blog.knuthaugen.no/2010/02/employee-view-of-agile-interviews.html">
+<dc:title>The Employee View of Agile Interviews</dc:title>
+<dc:description>I found two interesting blog posts via Twitter, http://blog.thirstybear.co.uk/2010/02/don-just-interview-new-developers_03.html and http://www.davenicolette.net/agile/index.blog/1947137/the-new-interview/ both covering a new and perhaps more agile (hey! buzzword!) way of doing interviews. The key point is to audition the candidate rather than to just ask questions. Doing actual pair programming and seeing how people how actually work to solve a concrete programming tasks is much more valuable...</dc:description>
+<dc:creator>Knut Haugen</dc:creator>
+<dc:date>2010-02-07T23:43:23+01:00</dc:date>
+<license rdf:resource="http://creativecommons.org/licenses/by-nc-sa/3.0/no/" />
+</Work>
+<License rdf:about="http://creativecommons.org/licenses/by-nc-sa/3.0/no/">
+</License>
+</rdf:RDF>
+-->
+
+
+
+    
+    <link rel="prev bookmark" href="http://blog.knuthaugen.no/2010/01/learning-ruby-with-ruby-koans.html" title="Learning Ruby With Ruby Koans" />
+    <link rel="next bookmark" href="http://blog.knuthaugen.no/2010/03/a-brief-history-of-nosql.html" title="A Brief History of NoSQL" />
+    <!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/"
+         xmlns:dc="http://purl.org/dc/elements/1.1/">
+<rdf:Description
+    rdf:about="http://blog.knuthaugen.no/2010/02/employee-view-of-agile-interviews.html"
+    trackback:ping="http://blog.knuthaugen.no/mt/mt-tb.cgi/24"
+    dc:title="The Employee View of Agile Interviews"
+    dc:identifier="http://blog.knuthaugen.no/2010/02/employee-view-of-agile-interviews.html"
+    dc:subject=""
+    dc:description="I found two interesting blog posts via Twitter, http://blog.thirstybear.co.uk/2010/02/don-just-interview-new-developers_03.html and http://www.davenicolette.net/agile/index.blog/1947137/the-new-interview/ both covering a new and perhaps more agile (hey! buzzword!) way of doing interviews. The key point is to audition the candidate rather than to just ask questions. Doing actual pair programming and seeing how people how actually work to solve a concrete programming tasks is much more valuable..."
+    dc:creator="Knut Haugen"
+    dc:date="2010-02-07T23:43:23+01:00" />
+</rdf:RDF>
+-->
+
+    
+    <title>The Employee View of Agile Interviews - All About the Code</title>
+</head>
+<body id="mt-blog" class="mt-entry-archive layout-wt">
+    <div id="container">
+        <div id="container-inner">
+
+
+            <div id="header">
+    <div id="header-inner">
+        <div id="header-content">
+
+
+            <div id="header-name"><a href="http://blog.knuthaugen.no/" accesskey="1">All About the Code</a></div>
+            <div id="header-description">Knut Haugen on software development in general and code in particular</div>
+
+        </div>
+    </div>
+</div>
+
+
+
+            <div id="content">
+                <div id="content-inner">
+
+
+                    <div id="alpha">
+                        <div id="alpha-inner">
+
+
+                            <div id="entry-26" class="entry-asset asset hentry">
+                                <div class="asset-header">
+                                    <h1 id="page-title" class="asset-name entry-title">The Employee View of Agile Interviews</h1>
+                                    <div class="asset-meta">
+                                        <span class="byline">
+
+                                            By <span class="vcard author">Knut Haugen</span> on <abbr class="published" title="2010-02-07T23:43:23+01:00">February  7, 2010 11:43 PM</abbr>
+
+                                        </span>
+
+                                        <span class="separator">|</span> <a href="http://blog.knuthaugen.no/2010/02/employee-view-of-agile-interviews.html#comments">5 Comments</a>
+
+
+                                        <span class="separator">|</span> <a href="http://blog.knuthaugen.no/2010/02/employee-view-of-agile-interviews.html#trackbacks">No TrackBacks</a>
+
+                                    </div>
+                                </div>
+                                <div class="asset-content entry-content">
+
+                                    <div class="asset-body">
+                                        <p>I found two interesting blog posts via Twitter, <a href="http://blog.thirstybear.co.uk/2010/02/don-just-interview-new-developers_03.html"> http://blog.thirstybear.co.uk/2010/02/don-just-interview-new-developers_03.html</a> and <a href="http://www.davenicolette.net/agile/index.blog/1947137/the-new-interview/">http://www.davenicolette.net/agile/index.blog/1947137/the-new-interview/</a> both covering a new and perhaps more agile (hey! buzzword!) way of doing interviews. The key point is to <em>audition</em> the candidate rather than to just ask questions. Doing actual pair programming and seeing how people how <em>actually</em> work to solve a concrete programming tasks is much more valuable than to give them a random task, ask if they remember some obscure part of a spec everybody looks up anyway or not least, see what certifications they have. Would you like to work for a company that put more faith in your certifications than your current abilities? </p>
+
+<p>Both posts cover this from the viewpoint of the potential employer but I can see just as much value for the employee. When interviewing for a new job you rarely get an accurate view of how the company really is through the interview. The reality really dawns on you a couple of months into the job. My (somewhat limited) experience with interviews is that they are very rarely used to dig deep enough, both from the standpoint of the employer and the employee. But we should! Hiring the wrong people is expensive for the company and choosing to work for the wrong company is just waste of time for an employee. Or worse.</p>
+
+<h3>The Questions to Ask</h3>
+
+<p>If I where to look for a new job I would milk the interview for all it's worth and use it to see what kind of company I'm dealing with. </p>
+
+<ul>
+<li>If they're not doing pair programming in the interview, will they do it in real life?</li>
+<li>How serious are they about their agility?</li>
+<li>Do they check what I remember or do they make an effort to find out how I work?</li>
+<li>Are they interested in the buzzwords I know or the process I use to develop software and solve problems?</li>
+<li>Are they interested in finding out about the real me?</li>
+<li>If at all possible: pair program with the people I'm going to be working with</li>
+</ul>
+
+<p>I would perhaps even go as far as asking them <em>why</em> they're are hiring they way they are, regardless of how, and use the answer to decipher their way of thinking about people and the craft of software development. I mean: would you choose to work for a company which isn't really interested in finding out the <em>real you</em> but rather just hire the résumé you? </p>
+
+<p>Some other questions I would consider asking to find out more about the company:</p>
+
+<ul>
+<li>What kind of computer hardware and software are developers using (this can seem like useless geek obsessions, but it tells me something about how they value the productivity of their developers. Best answer: you get to choose :-))</li>
+<li>How does the company (top to bottom) ensure continuous improvement?</li>
+<li>How does the company measure the productivity of their developers? (trick question). </li>
+<li>How far up the management chain does the agile principles really go? Think Toyota Production System-like environment. </li>
+<li>For a consulting firm: how much/often do you spend time inside the mother ship opposed to on-site at clients?</li>
+</ul>
+
+<h3>The Time it Takes</h3>
+
+<p>Doing interviews in this fashion takes time and I have heard stories (at Hashrocket I think) of week long pair programming sessions with the entire team and one "no" from one team member is all it takes to turn down the candidate. This probably works better in the US with their system of two weeks notice, but not so well in Norway with (normally) three months mutual notice. But for sure: one hour of questions doesn't tell you enough. Practice trumps talking, talking trumps résumés - to paraphrase the kanban saying. </p>
+
+                                    </div>
+
+
+                                </div>
+                                <div class="asset-footer">
+
+    
+
+
+                                    <div class="entry-tags">
+                                        <h4>Tags<span class="delimiter">:</span></h4>
+                                        <ul>
+                                            <li><a href="javascript:void(0)" onclick="location.href='http://blog.knuthaugen.no/mt/mt-search.cgi?blog_id=1&amp;tag=agile&amp;limit=20';return false;" rel="tag">agile</a><span class="delimiter">,</span></li> <li><a href="javascript:void(0)" onclick="location.href='http://blog.knuthaugen.no/mt/mt-search.cgi?blog_id=1&amp;tag=interview&amp;limit=20';return false;" rel="tag">interview</a></li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                    <div id="trackbacks" class="trackbacks">
+    <h2 class="trackbacks-header">No TrackBacks</h2>
+
+    
+    
+    <div class="trackbacks-info">
+        <p>TrackBack URL: http://blog.knuthaugen.no/mt/mt-tb.cgi/24</p>
+    </div>
+    
+
+
+    
+    
+</div>
+
+
+                    <div id="comments" class="comments">
+
+
+    
+    
+        
+    <h2 class="comments-header">5 Comments</h2>
+    
+    <div id="comments-content" class="comments-content" style="clear: left;">
+        
+        <div id="comment-14" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://jonas.follesoe.no" href="http://jonas.follesoe.no" rel="nofollow">Jonas Follesø</a></span>
+
+                    | <a href="http://blog.knuthaugen.no/2010/02/employee-view-of-agile-interviews.html#comment-14"><abbr class="published" title="2010-02-08T12:13:39+01:00">February  8, 2010 12:13 PM</abbr></a>
+
+                    | <a title="Reply" href="javascript:void(0);" onclick="mtReplyCommentOnClick(14, 'Jonas Follesø')">Reply</a>
+
+                </span>
+            </div>
+        </div>
+        <div class="comment-content">
+            <p>Great article! </p>
+
+<p>Been thinking about the hiring process, and how easy companies (and employees) take on it. I really like the audition idea, and it's strange that we don't do that more often. My girl friend is a designer, and in her profession it's perfectly normal with home work and assignments before you get the job.</p>
+
+<p>A couple days doing real pair-programming on a project should be a minimum. The company should even pay the candidate for the work even if he doesn't get the job.</p>
+
+<p>However, I think the real problem your article points out is the way many companies view developers as "human resources" with few individual differences. Someone we can just hire by the numbers as long as they got certification X and degree Y.</p>
+        </div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-15" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://blog.knuthaugen.no/" href="http://blog.knuthaugen.no/" rel="nofollow">Knut Haugen</a></span>
+
+                    | <a href="http://blog.knuthaugen.no/2010/02/employee-view-of-agile-interviews.html#comment-15"><abbr class="published" title="2010-02-08T19:52:09+01:00">February  8, 2010  7:52 PM</abbr></a>
+
+                    | <a title="Reply" href="javascript:void(0);" onclick="mtReplyCommentOnClick(15, 'Knut Haugen')">Reply</a>
+
+                </span>
+            </div>
+        </div>
+        <div class="comment-content">
+            <p>Thanks for commenting, Jonas</p>
+
+<p>The more I think about it, I think agile developers that are serious about their craft should demand pair programming with at least part of the team during the hiring process. It's a bold move to demand such a thing for sure but it can be a good smoke test of the company's agile ways too. If they facilitate it on the spot and see the value, it's a good thing. If they say: "that's not the way we do things around here" that says something of their capability and will to change.  </p>
+        </div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-16" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://blog.knuthaugen.no/" href="http://blog.knuthaugen.no/" rel="nofollow">Knut Haugen</a></span>
+
+                    | <a href="http://blog.knuthaugen.no/2010/02/employee-view-of-agile-interviews.html#comment-16"><abbr class="published" title="2010-02-22T09:55:06+01:00">February 22, 2010  9:55 AM</abbr></a>
+
+                    | <a title="Reply" href="javascript:void(0);" onclick="mtReplyCommentOnClick(16, 'Knut Haugen')">Reply</a>
+
+                </span>
+            </div>
+        </div>
+        <div class="comment-content">
+            <p>Through Kevlin Henney's twitter stream I found <a href="http://www.artima.com/wbc/interprog.html" rel="nofollow"><a href="http://www.artima.com/wbc/interprog.html" rel="nofollow">http://www.artima.com/wbc/interprog.html</a></a> which is very good list of things to consider when interviewing people for technical jobs. </p>
+        </div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-17" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Philip Schwarz</span>
+
+                    | <a href="http://blog.knuthaugen.no/2010/02/employee-view-of-agile-interviews.html#comment-17"><abbr class="published" title="2010-02-23T00:15:15+01:00">February 23, 2010 12:15 AM</abbr></a>
+
+                    | <a title="Reply" href="javascript:void(0);" onclick="mtReplyCommentOnClick(17, 'Philip Schwarz')">Reply</a>
+
+                </span>
+            </div>
+        </div>
+        <div class="comment-content">
+            <p>Have you seen <a href="http://venky-spot.blogspot.com/2010/02/thoughtworks-interview-process.html" rel="nofollow">http://venky-spot.blogspot.com/2010/02/thoughtworks-interview-process.html</a></p>
+        </div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-18" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://blog.knuthaugen.no/" href="http://blog.knuthaugen.no/" rel="nofollow">Knut Haugen</a></span>
+
+                    | <a href="http://blog.knuthaugen.no/2010/02/employee-view-of-agile-interviews.html#comment-18"><abbr class="published" title="2010-02-23T09:59:25+01:00">February 23, 2010  9:59 AM</abbr></a>
+
+                    | <a title="Reply" href="javascript:void(0);" onclick="mtReplyCommentOnClick(18, 'Knut Haugen')">Reply</a>
+
+                </span>
+            </div>
+        </div>
+        <div class="comment-content">
+            <p>Thanks Philip</p>
+
+<p>That is great insight into the thoughtworks hiring process and I'm guessing one of the more thorough ones in the industry. But as I pointed out in the original post: this speaks volumes about the company and its values. And if you survive this scrutiny you have a pretty good sense of the level of your new co-workers :-)</p>
+        </div>
+    </div>
+</div>
+        
+    </div>
+        
+    
+    
+
+    
+    
+    <div class="comments-open" id="comments-open">
+        <h2 class="comments-open-header">Leave a comment</h2>
+        <div class="comments-open-content">
+
+        
+            <div id="comment-greeting"></div>
+
+            <form method="post" action="http://blog.knuthaugen.no/mt/mt-comments.cgi" name="comments_form" id="comments-form" onsubmit="return mtCommentOnSubmit(this)">
+                <input type="hidden" name="static" value="1" />
+                <input type="hidden" name="entry_id" value="26" />
+                <input type="hidden" name="__lang" value="en" />
+                <input type="hidden" name="parent_id" value="" id="comment-parent-id" />
+                <input type="hidden" name="armor" value="1" />
+                <input type="hidden" name="preview" value="" />
+                <input type="hidden" name="sid" value="" />
+                <div id="comments-open-data">
+                    <div id="comment-form-name">
+                        <label for="comment-author">Name</label>
+                        <input id="comment-author" name="author" size="30" value="" onfocus="mtCommentFormOnFocus()" />
+                    </div>
+                    <div id="comment-form-email">
+                        <label for="comment-email">Email Address</label>
+                        <input id="comment-email" name="email" size="30" value="" onfocus="mtCommentFormOnFocus()" />
+                    </div>
+                    <div id="comment-form-url">
+                        <label for="comment-url">URL</label>
+                        <input id="comment-url" name="url" size="30" value="" onfocus="mtCommentFormOnFocus()" />
+                    </div>
+                    <div id="comment-form-remember-me">
+                        <input type="checkbox" id="comment-bake-cookie" name="bakecookie" onclick="mtRememberMeOnClick(this)" value="1" accesskey="r" />
+                        <label for="comment-bake-cookie">Remember personal info?</label>
+                    </div>
+                </div>
+                <div id="comment-form-reply" style="display:none">
+                    <input type="checkbox" id="comment-reply" name="comment_reply" value="" onclick="mtSetCommentParentID()" />
+                    <label for="comment-reply" id="comment-reply-label"></label>
+                </div>
+                <div id="comments-open-text">
+                    <label for="comment-text">Comments
+                    (You may use HTML tags for style)</label>
+                    <textarea id="comment-text" name="text" rows="15" cols="50" onfocus="mtCommentFormOnFocus()"></textarea>
+                </div>
+                <div id="comments-open-captcha"></div>
+                <div id="comments-open-footer">
+                    <input type="submit" accesskey="v" name="preview_button" id="comment-preview" value="Preview" onclick="this.form.preview.value='1';" />
+                    <input type="submit" accesskey="s" name="post" id="comment-submit" value="Submit" />
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+    <script type="text/javascript">
+    <!--
+    mtAttachEvent("load", mtEntryOnLoad);
+    mtAttachEvent("unload", mtEntryOnUnload);
+    //-->
+    </script>
+    
+
+
+</div>
+
+
+
+
+                        </div>
+                    </div>
+
+
+                    <div id="beta">
+    <div id="beta-inner">
+
+
+    
+    <div class="widget-search widget">
+    <h3 class="widget-header">search</h3>
+    <div class="widget-content">
+        <form method="get" action="http://blog.knuthaugen.no/mt/mt-search.cgi">
+            <input type="text" size="17" id="search" class="ti" name="search" value="" />
+
+            <input type="hidden" name="IncludeBlogs" value="1" />
+
+            <input type="hidden" name="limit" value="20" />
+            <input type="submit" accesskey="4" value="go" />
+        </form>
+    </div>
+</div>
+
+<div class="widget-syndication widget">
+    <div class="widget-content">
+<center><a href="http://feeds.feedburner.com/AllAboutTheCode"><img src="http://blog.knuthaugen.no/mt/mt-static/images/rss.jpg" alt="Subscribe to feed" width="60" height="59" /></a></center> 
+        <ul>
+            <li><a href="http://feeds.feedburner.com/AllAboutTheCode">Subscribe to entries feed</a></li>
+           <li><a href="http://feeds.feedburner.com/AllAboutTheCodeComments">Subscribe to comments feed</a></li>
+
+        </ul>
+    </div>
+</div>
+<div class="widget-pages widget">
+    <h3 class="widget-header">mini bio</h3>
+    <div class="widget-content">
+Knut Haugen [Knu:t Hæugen], Norwegian software developer with a penchant for dynamic 
+languages and anything to with developer testing. Agile methodology geek with bias on Lean and Kanban.
+
+<em>Some pointers to other stuff by me</em>
+<ul>
+<li><a href="http://twitter.com/knuthaug">twitter.com/knuthaug</a></li>
+<li><a href="http://github.com/knuthaug">github.com/knuthaug</a></li>
+<li><a href="http://no.linkedin.com/in/knuthaugen">linkedin.com/in/knuthaugen</a></li>
+<li><a href="http://www.flickr.com/photos/megafon/">flickr.com/photos/megafon/</a></li>
+</ul>
+</div>
+</div>
+<div class="widget-pages widget">
+    <h3 class="widget-header">pages</h3>
+    <div class="widget-content">
+        <ul>
+    
+            <li class="page page-2"><a href="http://blog.knuthaugen.no/about-me.html">About the Author</a></li>
+    
+            <li class="page page-3"><a href="http://blog.knuthaugen.no/my-book-list.html">My book list</a></li>
+    
+    
+        </ul>
+    </div>
+</div>
+
+<div class="widget-about-this-page widget">
+    <h3 class="widget-header">
+
+        meta
+
+
+    </h3>
+    <div class="widget-content">
+
+
+        <p class="first">This page contains a single entry by Knut Haugen published on <em>February  7, 2010 11:43 PM</em>.</p>
+    
+        <p><a href="http://blog.knuthaugen.no/2010/01/learning-ruby-with-ruby-koans.html">Learning Ruby With Ruby Koans</a> was the previous entry in this blog.</p>
+    
+    
+        <p><a href="http://blog.knuthaugen.no/2010/03/a-brief-history-of-nosql.html">A Brief History of NoSQL</a> is the next entry in this blog.</p>
+    
+
+
+
+
+
+        <p>Find recent content on the <a href="http://blog.knuthaugen.no/">main index</a> or look in the <a href="http://blog.knuthaugen.no/archives.html">archives</a> to find all content.</p>
+
+    </div>
+</div>
+
+
+
+    </div>
+</div>
+
+
+
+
+
+
+                </div>
+            </div>
+
+
+            <div id="footer">
+        <div id="footer-content">
+            <div class="widget-powered widget">
+                <div class="widget-content">The juice under the hood is a big tube of <a href="http://www.movabletype.com/">Movable Type 4</a> and all more or less creative and original content is copyright Knut Haugen under a <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/no/">Creative Commons License</a>.
+                </div>
+            </div>
+        </div>
+</div>
+<script language="javascript" src="/mt/mt-static/sh.js"></script>
+<script language="javascript">SyntaxHighlighter.all();</script>
+
+
+
+        </div>
+    </div>
+</body>
+</html>
