@@ -1,0 +1,808 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head><link rel="stylesheet" href="http://www.simple-talk.com/App_Themes/main.css" type="text/css" />
+    <script language="javascript">
+        function siteSearch(e, strUrl, strSearchParam, strSearchControl)
+        {
+        	if (e.keyCode == 13)
+	        {
+	            // force a mouseover
+	            btnSearchOver();
+	            
+                // let the click event do the work
+	            return(doSiteSearch(strUrl, strSearchParam, strSearchControl));
+            }
+            else
+            {
+                // allow further processing
+                return(true);
+            } 
+        }
+        var m_over = false;
+        function btnSearchOver() { m_over = true; }
+        function btnSearchOut() { m_over = false; }
+        function doSiteSearch(strUrl, strSearchParam, strSearchControl)
+        {
+        	if (m_over == true)
+	        {
+                // get the text and strip any spaces
+                var strText = document.getElementById(strSearchControl).value;
+                while (strText.substring(0,1) == ' ') strText = strText.substring(1,strText.length);
+                while (strText.substring(strText.length-1,strText.length) == ' ') strText = strText.substring(0,strText.length-1);
+      
+                // add the parameters
+                strUrl = strUrl + "?" + strSearchParam + "=" + encodeString(strText);
+             
+                // now navigate
+                document.location.href = strUrl;
+            }
+                            
+            // stop further processing
+            return(false);
+        }        
+        function encodeString(plaintext)
+        {
+            var encodedtext = "";
+            for (var i=0; i<plaintext.length; i++)
+            {
+                if (plaintext.charAt(i) == " ")
+                    encodedtext += "+";
+                else
+                    encodedtext += plaintext.charAt(i);
+            }
+            return(escape(encodedtext));
+        }
+    </script>
+<link href="http://www.simple-talk.com/App_Themes/opinion/opinion.css" type="text/css" rel="stylesheet" /><meta description="With Clojure soon to be ported to the .NET framework, as ClojureCLR, we felt that the time had come to see what the fuss was all about amongst the Java Geeks. We sent Richard Morris to find out from the creator of Clojure, Rich Hickey." /><meta keywords="geek of the week, richard morris, rich hickey, clojure" /><title>
+	Rich Hickey: Geek of the Week
+</title></head>
+<body>
+<form name="aspnetForm" method="post" action="http://www.simple-talk.com/content/article.aspx?article=960" id="aspnetForm">
+<div>
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKMTM5MTEzNTA1OWQYBAUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFgwFD2N0bDAwJGJ0blNlYXJjaAUcY3RsMDAkTWFpbkNvbnRlbnQkcmFkUmF0aW5nMQUcY3RsMDAkTWFpbkNvbnRlbnQkcmFkUmF0aW5nMQUcY3RsMDAkTWFpbkNvbnRlbnQkcmFkUmF0aW5nMgUcY3RsMDAkTWFpbkNvbnRlbnQkcmFkUmF0aW5nMgUcY3RsMDAkTWFpbkNvbnRlbnQkcmFkUmF0aW5nMwUcY3RsMDAkTWFpbkNvbnRlbnQkcmFkUmF0aW5nMwUcY3RsMDAkTWFpbkNvbnRlbnQkcmFkUmF0aW5nNAUcY3RsMDAkTWFpbkNvbnRlbnQkcmFkUmF0aW5nNAUcY3RsMDAkTWFpbkNvbnRlbnQkcmFkUmF0aW5nNQUcY3RsMDAkTWFpbkNvbnRlbnQkcmFkUmF0aW5nNQUgY3RsMDAkTWFpbkNvbnRlbnQkYnRuUmF0ZUFydGljbGUFBl9fUGFnZQ8UKwADZAXrAVdpdGggQ2xvanVyZSBzb29uIHRvIGJlIHBvcnRlZCB0byB0aGUgLk5FVCBmcmFtZXdvcmssIGFzIENsb2p1cmVDTFIsIHdlIGZlbHQgdGhhdCB0aGUgdGltZSBoYWQgY29tZSB0byBzZWUgd2hhdCB0aGUgZnVzcyB3YXMgYWxsIGFib3V0IGFtb25nc3QgdGhlIEphdmEgR2Vla3MuIFdlIHNlbnQgUmljaGFyZCBNb3JyaXMgdG8gZmluZCBvdXQgZnJvbSB0aGUgY3JlYXRvciBvZiBDbG9qdXJlLCBSaWNoIEhpY2tleS4FNmdlZWsgb2YgdGhlIHdlZWssIHJpY2hhcmQgbW9ycmlzLCByaWNoIGhpY2tleSwgY2xvanVyZWQFHGN0bDAwJE1haW5Db250ZW50JEZvcnVtVmlldzEPFCsAAmQC2LEDZAURY3RsMDAkTmF2aWdhdGlvbjEPFCsAAmQy8wQAAQAAAP////8BAAAAAAAAAAwCAAAAPldlYlNpdGUsIFZlcnNpb249MS4zLjAuNSwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1udWxsBAEAAAB4U3lzdGVtLkNvbGxlY3Rpb25zLkdlbmVyaWMuTGlzdGAxW1tTaW1wbGVUYWxrLk1lbnVJdGVtLCBXZWJTaXRlLCBWZXJzaW9uPTEuMy4wLjUsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbF1dAwAAAAZfaXRlbXMFX3NpemUIX3ZlcnNpb24EAAAVU2ltcGxlVGFsay5NZW51SXRlbVtdAgAAAAgICQMAAAADAAAAAwAAAAcDAAAAAAEAAAAEAAAABBNTaW1wbGVUYWxrLk1lbnVJdGVtAgAAAAkEAAAACQUAAAAJBgAAAAoFBAAAABNTaW1wbGVUYWxrLk1lbnVJdGVtBAAAAAxtX0NoaWxkQ291bnQKbV9TZWxlY3RlZAdtX1RpdGxlBW1fVXJsAAABAQgBAgAAAAAAAAAABgcAAAAMT3BpbmlvbiBIb21lBggAAAAjaHR0cDovL3d3dy5zaW1wbGUtdGFsay5jb20vb3Bpbmlvbi8BBQAAAAQAAAAAAAAAAAYJAAAAEEdlZWsgb2YgdGhlIFdlZWsGCgAAADRodHRwOi8vd3d3LnNpbXBsZS10YWxrLmNvbS9vcGluaW9uL2dlZWstb2YtdGhlLXdlZWsvAQYAAAAEAAAAAAAAAAAGCwAAAB1SaWNoIEhpY2tleTogR2VlayBvZiB0aGUgV2VlawYMAAAAAAtk" />
+</div>
+
+
+<script src="/ScriptResource.axd?d=SQMpTj2TXzy_OEnB0rmS2tlvXQ3lSbo3DyYoswqILPsZTHBXa4a3ZOgJwQXHMl_fhmhrxVu1JTqRGiVgYuqgqE4_ydwQHB7heogVG1hWP4li4oy6vkNn7nihYaPKJMoBXQVjXprmCSfQxNokhFEZXQS2TvY1&amp;t=ffffffffff5a8c8a" type="text/javascript"></script>
+    
+    <script language="javascript" type="text/javascript">
+        function EndRequestHandler()
+        {
+            if (theForm._initialAction == undefined)
+                theForm._initialAction = theForm.action;
+            else
+                theForm.action = theForm._initialAction;
+        }
+        if( typeof(Sys) != "undefined" )
+        {
+            EndRequestHandler();
+            Sys.WebForms.PageRequestManager.getInstance().add_endRequest(EndRequestHandler);
+        }
+    </script>
+    <div class="site">
+        <div class="page">
+            <div class="header">
+                <div class="search">
+					<div class="redgate"><a href="http://www.red-gate.com/?utm_source=simpletalk&utm_medium=textad&utm_campaign=homepage"><img src="/images/interface/aservicefromredgate.gif" width="133" height="16" alt="A service from Red Gate" /></a></div>
+					<div class="searchform"><table align="right"><tr><td><input name="ctl00$txtSearch" type="text" id="ctl00_txtSearch" class="txtSearch" onkeydown="return(siteSearch(event,'http://www.simple-talk.com/search/default.aspx','search','ctl00_txtSearch'));" /></td><td><input type="image" name="ctl00$btnSearch" id="ctl00_btnSearch" class="btnSearch" onmouseover="btnSearchOver();" onmouseout="btnSearchOut();" src="http://www.simple-talk.com/images/interface/btn_search_56x19.gif" onclick="return(doSiteSearch('http://www.simple-talk.com/search/default.aspx','search','ctl00_txtSearch'));WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$btnSearch&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" style="border-width:0px;" /></td></tr></table></div>
+				</div>
+                <div class="logo"><a id="ctl00_lnkGotoHome" href="http://www.simple-talk.com/default.aspx"><img src="http://www.simple-talk.com/images/interface/1px.gif" width="250" height="55" /></a></div>
+            </div>
+            
+
+<div class="mainnav">
+    <div class="primarynav">
+        <a id="ctl00_Navigation1_lnkGotoHome" href="http://www.simple-talk.com/default.aspx">Home</a>
+        <a id="ctl00_Navigation1_lnkGotoSql" href="http://www.simple-talk.com/sql/">SQL</a>
+        <a id="ctl00_Navigation1_lnkGotoNet" href="http://www.simple-talk.com/dotnet/">.NET</a>
+        <a id="ctl00_Navigation1_lnkGotoExchange" href="http://www.simple-talk.com/sysadmin/">SysAdmin</a>
+        <a id="ctl00_Navigation1_lnkGotoOpinion" class="on" href="http://www.simple-talk.com/opinion/">Opinion</a>
+        <a id="ctl00_Navigation1_lnkGotoBlogs" href="http://www.simple-talk.com/community/blogs/">Blogs</a>
+        <a id="ctl00_Navigation1_lnkGotoForums" href="http://www.simple-talk.com/community/forums/">Forums</a>
+        <a id="ctl00_Navigation1_lnkGotoBooks" href="http://www.simple-talk.com/books/">Books</a>
+    </div>
+     <div class="membernav">
+        
+        <span id="ctl00_Navigation1_panAnonymous"><a id="ctl00_Navigation1_lnkLogin" href="http://www.simple-talk.com/community/login.aspx?ReturnUrl=%2fopinion%2fgeek-of-the-week%2frich-hickey-geek-of-the-week%2f">Sign in</a>
+            &nbsp;|&nbsp;<a id="ctl00_Navigation1_lnkJoin" href="http://www.simple-talk.com/community/user/CreateUser.aspx?ReturnUrl=%2fopinion%2fgeek-of-the-week%2frich-hickey-geek-of-the-week%2f">Join</a></span>
+        &nbsp;|&nbsp;<a id="ctl00_Navigation1_lnkHelp" href="http://www.simple-talk.com/community/languages/en-US/docs/faq.aspx">Help</a>
+        
+    </div>
+</div>
+<div class="subnav">
+    
+            <a id="ctl00_Navigation1_repSubMenu_ctl00_lnkItem" href="http://www.simple-talk.com/opinion/">Opinion Home</a>
+        &nbsp;&gt;&nbsp;
+            <a id="ctl00_Navigation1_repSubMenu_ctl02_lnkItem" href="http://www.simple-talk.com/opinion/geek-of-the-week/">Geek of the Week</a>
+        &nbsp;&gt;&nbsp;
+            <span>Rich Hickey: Geek of the Week</span>
+        
+</div>
+            <div class="maincontent">
+                
+  <div class="article">
+  
+    <div id="ctl00_MainContent_panSummary" class="summarybox">
+	
+	  <div class="header"></div>
+	  <div class="middle">
+		<div class="summaryboxcontent">
+          Av rating: <img id="ctl00_MainContent_imgRating1" src="http://www.simple-talk.com/images/interface/icon_opinion_5star_70x13.gif" style="height:13px;width:70px;border-width:0px;" /><br />
+		  Total votes: 63<br />
+		  Total comments: 1
+        </div>
+	    <div class="summaryboxlines"><img id="ctl00_MainContent_imgLines" src="http://www.simple-talk.com/images/interface/summary_opinion_lines_176x3.gif" style="height:3px;width:176px;border-width:0px;" /></div>
+	    <div class="summaryboxcontent2">
+          
+		  <img id="ctl00_MainContent_imgEmail" src="http://www.simple-talk.com/images/interface/icon_opinion_email_13x11.gif" style="height:11px;width:14px;border-width:0px;" />&nbsp;<a id="ctl00_MainContent_lnkEmail" href="http://www.simple-talk.com/content/email.aspx?article=960">send to a friend</a><br />
+		  <img id="ctl00_MainContent_imgPrint" src="http://www.simple-talk.com/images/interface/icon_opinion_print_13x11.gif" style="height:11px;width:14px;border-width:0px;" />&nbsp;<a id="ctl00_MainContent_lnkPrint" href="http://www.simple-talk.com/content/print.aspx?article=960" target="_blank">printer friendly version</a><br />
+	    </div>
+	  </div>
+	  <div class="footer"></div>
+	
+</div>
+
+    <br /><br />
+    <img id="ctl00_MainContent_imgAuthor" class="authorpicture" align="left" src="http://www.simple-talk.com/iwritefor/publishers/52.gif" alt="Richard Morris" style="border-width:0px;" />
+    <div class="articletitle">Rich Hickey: Geek of the Week</div>
+    <div class="date">02 March 2010</div>
+    <div class="author">by <a id="ctl00_MainContent_lnkAuthor" href="http://www.simple-talk.com/author/richard-morris/">Richard Morris</a></div>
+
+    <div class="clear"></div>
+
+	
+<STYLE type=text/css>#pretty {
+	
+}
+#pretty .codeblue {
+	COLOR: blue
+}
+#pretty .codebrown {
+	COLOR: brown
+}
+#pretty .codedarkred {
+	COLOR: darkred
+}
+#pretty .codegray {
+	COLOR: gray
+}
+#pretty .codegreen {
+	COLOR: green
+}
+#pretty .codemagenta {
+	COLOR: magenta
+}
+#pretty .codered {
+	COLOR: red
+}
+#pretty .indented {
+	MARGIN-LEFT: 80px
+}
+#pretty .listing {
+	BORDER-RIGHT: #cacaca 1px solid; PADDING-RIGHT: 3px; BORDER-TOP: #cacaca 1px solid; PADDING-LEFT: 3px; FONT-WEIGHT: normal; FONT-SIZE: 11px; PADDING-BOTTOM: 10px; MARGIN-LEFT: 20px; BORDER-LEFT: #cacaca 1px solid; PADDING-TOP: 10px; BORDER-BOTTOM: #cacaca 1px solid; FONT-FAMILY: "Courier New", Courier, monospace; BACKGROUND-COLOR: #f9f9f9; TEXT-ALIGN: left
+}
+#pretty .monospaced {
+	
+}
+#pretty .pullout {
+	BORDER-RIGHT: #706573 1px solid; PADDING-RIGHT: 10px; BORDER-TOP: #786d7d 1px solid; PADDING-LEFT: 10px; FLOAT: right; PADDING-BOTTOM: 10px; MARGIN-LEFT: 10px; BORDER-LEFT: #766b7b 1px solid; WIDTH: 350px; MARGIN-RIGHT: 0px; PADDING-TOP: 10px; BORDER-BOTTOM: blue 1px solid; BACKGROUND-COLOR: #fbfbfd; TEXT-ALIGN: left
+}
+#pretty .pullout P {
+	MARGIN-LEFT: 0px
+}
+#pretty .tablecontents {
+	FONT-WEIGHT: bold; FONT-SIZE: 13px
+}
+#pretty BLOCKQUOTE {
+	FONT-SIZE: 12px; MARGIN-LEFT: 50px; MARGIN-RIGHT: 50px; FONT-STYLE: italic; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-ALIGN: justify
+}
+#pretty BLOCKQUOTE DIV.listing {
+	BORDER-RIGHT: 0px; PADDING-RIGHT: 3px; BORDER-TOP: 0px; PADDING-LEFT: 3px; FONT-WEIGHT: normal; FONT-SIZE: 11px; PADDING-BOTTOM: 10px; MARGIN-LEFT: 20px; BORDER-LEFT: 0px; PADDING-TOP: 10px; BORDER-BOTTOM: 0px; FONT-FAMILY: "Courier New", Courier, monospace; BACKGROUND-COLOR: white; TEXT-ALIGN: left
+}
+#pretty DD {
+	MARGIN-TOP: 10px; MARGIN-LEFT: 170px
+}
+#pretty DIV.code {
+	BORDER-RIGHT: silver 1px solid; PADDING-RIGHT: 10px; BORDER-TOP: silver 1px solid; PADDING-LEFT: 10px; FONT-SIZE: 12px; PADDING-BOTTOM: 10px; MARGIN-LEFT: 0px; BORDER-LEFT: silver 1px solid; PADDING-TOP: 10px; BORDER-BOTTOM: silver 1px solid; FONT-FAMILY: "Courier New", Courier, monospace; BACKGROUND-COLOR: whitesmoke; TEXT-ALIGN: left
+}
+#pretty DIV.illustration {
+	MARGIN-BOTTOM: 20px
+}
+#pretty DIV.indent {
+	MARGIN-LEFT: 20px
+}
+#pretty PRE.inline {
+	MARGIN-LEFT: 20px
+}
+#pretty DIV.listing P {
+	PADDING-RIGHT: 0px; MARGIN-TOP: 0px; PADDING-LEFT: 0px; FONT-SIZE: 11px; MARGIN-BOTTOM: 0px; PADDING-BOTTOM: 0px; MARGIN-LEFT: 0px; PADDING-TOP: 0px; FONT-FAMILY: "Courier New", Courier, monospace; TEXT-ALIGN: left
+}
+#pretty DIV.note {
+	BORDER-RIGHT: medium none; PADDING-RIGHT: 0in; BORDER-TOP: medium none; PADDING-LEFT: 6pt; PADDING-BOTTOM: 0in; MARGIN-LEFT: 28.35pt; BORDER-LEFT: gray 2.25pt solid; MARGIN-RIGHT: 0in; PADDING-TOP: 0in; BORDER-BOTTOM: medium none
+}
+#pretty DIV.note P.note {
+	MARGIN-LEFT: 0in
+}
+#pretty DL {
+	FONT-SIZE: 12px; MARGIN-LEFT: 20px; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-ALIGN: justify
+}
+#pretty P {
+	FONT-SIZE: 12px; MARGIN-LEFT: 20px; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-ALIGN: justify
+}
+#pretty DT {
+	CLEAR: both; MARGIN-TOP: 10px; FONT-WEIGHT: bold; FLOAT: left; WIDTH: 150px
+}
+#pretty FIELDSET {
+	BORDER-RIGHT: #cacaca 1px solid; PADDING-RIGHT: 10px; BORDER-TOP: #cacaca 1px solid; PADDING-LEFT: 10px; FONT-WEIGHT: normal; FONT-SIZE: 12px; PADDING-BOTTOM: 10px; MARGIN-LEFT: 20px; BORDER-LEFT: #cacaca 1px solid; PADDING-TOP: 10px; BORDER-BOTTOM: #cacaca 1px solid; FONT-FAMILY: "Courier New", Courier, monospace; BACKGROUND-COLOR: #f2f2f2; TEXT-ALIGN: left
+}
+#pretty H1 {
+	FONT-SIZE: 145%; MARGIN-LEFT: 0px; FONT-FAMILY: "Times New Roman", Times, serif
+}
+#pretty H2 {
+	FONT-SIZE: 130%; MARGIN-LEFT: 20px; FONT-FAMILY: "Times New Roman", Times, serif
+}
+#pretty H3 {
+	FONT-SIZE: 115%; MARGIN-LEFT: 40px; FONT-FAMILY: "Times New Roman", Times, serif
+}
+#pretty H4 {
+	MARGIN-LEFT: 40px; FONT-FAMILY: "Times New Roman", Times, serif
+}
+#pretty HR {
+	BORDER-TOP: #d2d2d2 1px dotted; BORDER-BOTTOM: thin
+}
+#pretty LEGEND {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 10px; FONT-SIZE: 14px; PADDING-BOTTOM: 10px; MARGIN-LEFT: 20px; PADDING-TOP: 10px; FONT-FAMILY: "Times New Roman", Times, serif; TEXT-ALIGN: left
+}
+#pretty LI {
+	MARGIN-TOP: 0px; FONT-SIZE: 12px; MARGIN-BOTTOM: 3px; MARGIN-LEFT: 20px; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-ALIGN: justify
+}
+#pretty P.caption {
+	MARGIN-TOP: 0px; FONT-WEIGHT: bold; FONT-SIZE: 11px; MARGIN-LEFT: 20px; TEXT-ALIGN: left
+}
+#pretty P.illustration {
+	MARGIN-BOTTOM: 0px; MARGIN-LEFT: 0px; TEXT-ALIGN: center
+}
+#pretty P.note {
+	BORDER-RIGHT: silver 1px solid; PADDING-RIGHT: 10px; BORDER-TOP: silver 1px solid; PADDING-LEFT: 10px; PADDING-BOTTOM: 10px; MARGIN-LEFT: 80px; BORDER-LEFT: silver 1px solid; PADDING-TOP: 10px; BORDER-BOTTOM: silver 1px solid; TEXT-ALIGN: left
+}
+#pretty P.quote {
+	BORDER-RIGHT: medium none; PADDING-RIGHT: 0px; BORDER-TOP: silver 2px solid; FONT-WEIGHT: bold; FONT-SIZE: 17px; FLOAT: right; PADDING-BOTTOM: 15px; MARGIN-LEFT: 10px; LINE-HEIGHT: 15px; MARGIN-RIGHT: 10px; PADDING-TOP: 10px; BORDER-BOTTOM: silver 1px solid; TEXT-ALIGN: left
+}
+#pretty P.start:first-letter {
+	FONT-SIZE: 280%; FLOAT: left; LINE-HEIGHT: 100%
+}
+#pretty PRE {
+	BORDER-RIGHT: silver 1px solid; PADDING-RIGHT: 10px; BORDER-TOP: silver 1px solid; PADDING-LEFT: 10px; PADDING-BOTTOM: 10px; MARGIN-LEFT: 0px; BORDER-LEFT: silver 1px solid; PADDING-TOP: 10px; BORDER-BOTTOM: silver 1px solid; BACKGROUND-COLOR: whitesmoke; TEXT-ALIGN: left
+}
+#pretty SPAN.codeblack {
+	COLOR: black
+}
+#pretty SPAN.mono {
+	FONT-WEIGHT: bold; FONT-FAMILY: "Courier New", Courier, monospace
+}
+#pretty TABLE {
+	BORDER-RIGHT: #cacaca 1px solid; BORDER-TOP: #cacaca 1px solid; MARGIN-LEFT: 20px; BORDER-LEFT: #cacaca 1px solid; BORDER-BOTTOM: #cacaca 1px solid
+}
+#pretty TABLE LI {
+	FONT-SIZE: 11px; MARGIN-LEFT: 5px; TEXT-ALIGN: left
+}
+#pretty TABLE OL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN-LEFT: 15px; PADDING-TOP: 0px
+}
+#pretty TABLE P {
+	FONT-SIZE: 11px; MARGIN: 0px 5px
+}
+#pretty TABLE TD {
+	FONT-SIZE: 11px
+}
+#pretty TABLE UL {
+	MARGIN-LEFT: 10px
+}
+#pretty UL {
+	MARGIN-TOP: 0px
+}
+.CodeInText {
+	FONT-WEIGHT: bold; FONT-FAMILY: courier new, courier, monospaced
+}
+.ImportantWords {
+	FONT-WEIGHT: bold
+}
+.ScreenText {
+	FONT-FAMILY: Century Gothic, Tahoma, Lucida Sans, sans-serif
+}
+PRE {
+	BACKGROUND-COLOR: #d6d6d6
+}
+.CodeInText {
+	FONT-WEIGHT: bold; FONT-FAMILY: courier new, courier, monospaced
+}
+.ImportantWords {
+	FONT-WEIGHT: bold
+}
+.ScreenText {
+	FONT-FAMILY: Century Gothic, Tahoma, Lucida Sans, sans-serif
+}
+PRE {
+	BACKGROUND-COLOR: #d6d6d6
+}
+.CodeInText {
+	FONT-WEIGHT: bold; FONT-FAMILY: courier new, courier, monospaced
+}
+.ImportantWords {
+	FONT-WEIGHT: bold
+}
+.ScreenText {
+	FONT-FAMILY: Century Gothic, Tahoma, Lucida Sans, sans-serif
+}
+PRE {
+	BACKGROUND-COLOR: #d6d6d6
+}
+.CodeInText {
+	FONT-WEIGHT: bold; FONT-FAMILY: courier new, courier, monospaced
+}
+.ImportantWords {
+	FONT-WEIGHT: bold
+}
+.ScreenText {
+	FONT-FAMILY: Century Gothic, Tahoma, Lucida Sans, sans-serif
+}
+PRE {
+	BACKGROUND-COLOR: #d6d6d6
+}
+.CodeInText {
+	FONT-WEIGHT: bold; FONT-FAMILY: courier new, courier, monospaced
+}
+.ImportantWords {
+	FONT-WEIGHT: bold
+}
+.ScreenText {
+	FONT-FAMILY: Century Gothic, Tahoma, Lucida Sans, sans-serif
+}
+PRE {
+	BACKGROUND-COLOR: #d6d6d6
+}
+.CodeInText {
+	FONT-WEIGHT: bold; FONT-FAMILY: courier new, courier, monospaced
+}
+.ImportantWords {
+	FONT-WEIGHT: bold
+}
+.ScreenText {
+	FONT-FAMILY: Century Gothic, Tahoma, Lucida Sans, sans-serif
+}
+PRE {
+	BACKGROUND-COLOR: #d6d6d6
+}
+.CodeInText {
+	FONT-WEIGHT: bold; FONT-FAMILY: courier new, courier, monospaced
+}
+.ImportantWords {
+	FONT-WEIGHT: bold
+}
+.ScreenText {
+	FONT-FAMILY: Century Gothic, Tahoma, Lucida Sans, sans-serif
+}
+PRE {
+	BACKGROUND-COLOR: #d6d6d6
+}
+.CodeInText {
+	FONT-WEIGHT: bold; FONT-FAMILY: courier new, courier, monospaced
+}
+.ImportantWords {
+	FONT-WEIGHT: bold
+}
+.ScreenText {
+	FONT-FAMILY: Century Gothic, Tahoma, Lucida Sans, sans-serif
+}
+PRE {
+	BACKGROUND-COLOR: #d6d6d6
+}
+.CodeInText {
+	FONT-WEIGHT: bold; FONT-FAMILY: courier new, courier, monospaced
+}
+.ImportantWords {
+	FONT-WEIGHT: bold
+}
+.ScreenText {
+	FONT-FAMILY: Century Gothic, Tahoma, Lucida Sans, sans-serif
+}
+PRE {
+	BACKGROUND-COLOR: #d6d6d6
+}
+.CodeInText {
+	FONT-WEIGHT: bold; FONT-FAMILY: courier new, courier, monospaced
+}
+.ImportantWords {
+	FONT-WEIGHT: bold
+}
+.ScreenText {
+	FONT-FAMILY: Century Gothic, Tahoma, Lucida Sans, sans-serif
+}
+PRE {
+	BACKGROUND-COLOR: #d6d6d6
+}
+</STYLE>
+
+<DIV id=pretty>
+<P class=note>With Clojure soon to be ported to the .NET framework, as ClojureCLR, we felt that the time had come to see what the fuss was all about amongst the Java Geeks. We sent Richard Morris to find out from the creator of Clojure, Rich Hickey.</P>
+<P class=start>According to the combined wisdom of the online pundits, Rich Hickey, the creator of Clojure, is set to become one of the most influential figures in technology within the next few years. </P>
+<P class=quote>"I think programmers have become<BR>inured to incidental complexity...<BR>when they encounter complexity,<BR>they consider it a challenge to overcome,<BR>rather than an obstacle to remove. <BR>Overcoming complexity isn't work, it's waste."</P>
+<P>Could he really become as well known as John McCarthy who created the Stanford Artificial Intelligence Project in 1964? Even before then, John had already made several towering contributions to the world of computing, including the LISP language, which became the standard for the AI researcher forty years ago. </P>
+<P>The connection of course is that Clojure, (a pun on the closure programming construct) is an off-shoot or more correctly a dialect, of McCarthy’s creation. In Hickey’s case, it was a language designed for anyone wanting to write robust programs that are simple and fast. </P><IMG style="FLOAT: left; MARGIN-LEFT: 20px; MARGIN-RIGHT: 20px" height=348 src="http://www.simple-talk.com/iwritefor/articlefiles/960-RichHickey.jpg" width=266 border=0> 
+<P>So what was he trying to solve?</P>
+<P>'We suffer from so much incidental complexity in traditional OO languages, both syntactic and semantic, that I don't think we even realise it anymore. I wanted to make 'doing the right thing' not a matter of convention and discipline, but the default. I wanted a solid concurrency story and great interoperability with existing Java libraries,' says Hickey.</P>
+<P>He originally targeted both the Java Virtual Machine and the Common Language&nbsp; Runtime (CLR) but eventually decided &nbsp;he wanted to do twice as much, rather than everything &nbsp;twice, so &nbsp;chose the JVM because of the much larger open source ecosystem surrounding it. It has proved to be a good choice.</P>
+<P>One of the biggest challenges in developing Clojure Rich adds was getting the persistent data structures right, with sufficient performance such that Clojure could be a viable alternative to Java and C#. Without that, the project&nbsp; would have stalled.</P>
+<P>Hickey remains an independent software designer, consultant and application architect with over two decades &nbsp;of experience in all areas of software development and has worked on scheduling systems, broadcast automation, audio analysis and fingerprinting, database design, yield management, exit poll systems, and machine listening, in a variety of languages. He lives in New York City.</P>
+<DL>
+<HR style="COLOR: silver; HEIGHT: 1px">
+
+<DT>RM: 
+<DD>Rich, plenty of people must have been tired of programming in C++/Java/C# as you did but simply put up with it. What was the trigger to develop Clojure? Was it a matter of waking up in the middle of the night and realising what the problem was? </DD>
+<DT>RH: 
+<DD>One watershed moment for me was when I designed and implemented a new system from scratch in Common Lisp, which was a new language for me at the time, only to have the client require it be rewritten in C++, with which I was quite proficient. The port to C++ took three times as long as the original work, was much more code, and wasn't significantly faster. I knew then that I wanted to work in a Lisp, but realized that it had to be client-compatible. I worked on bridging Common Lisp and Java, while doing functional-style programming for clients in C#, for a couple of years, then bit the bullet and wrote Clojure. </DD>
+<DT>RM: 
+<DD>Why do you think those C++/Java and C# in particular don’t have enough built in technical or social wherewithal to grow easily and these somewhat painful growth processes? </DD>
+<DT>RH: 
+<DD>There's always a trade-off between change and stability, and I'm not sure that mainstream languages should evolve too rapidly. C# has been handling evolution pretty well. Java has been very slow. On the other hand, the stability and conservatism of Java is precisely what has engendered the huge ecosystem around it, so you really can't fault it. </DD>
+<DT>RM: 
+<DD>Lisps are traditionally extremely extensible so what prompted you to start with a clean slate? </DD>
+<DT>RH: 
+<DD>Even Lisps are built on some primitive things, and those primitive data structures in traditional Lisps are mutable. I wanted the core data structures of Clojure to be immutable. In addition, I wanted the core algorithms to be based upon abstractions rather than concrete data structures as in traditional Lisps. These are things that can't be retrofitted in a compatible way. </DD>
+<DT>RM: 
+<DD>With multi-core CPUs becoming more common and a resurgence of hyper threading, dealing with concurrent tasks is now more important. How does Clojure deal with this? </DD>
+<DT>RH: 
+<DD>First and foremost, Clojure makes it easy and idiomatic to program with immutable values, and the core library functions are pure. Immutable values and pure functions are relatively free of concurrency issues. Second, when state is required, Clojure supports a consistent model that separates state, identity and value, while supplying a variety of concurrency semantics. </DD>
+<DT>RM: 
+<DD>What can you tell me about the support for parallelism and the upcoming Java Fork Join framework? </DD>
+<DT>RH: 
+<DD>While concurrency focuses on coordinating multiple tasks, parallelism focuses on dividing up a single task to leverage these multi-cores to get the result faster. I didn't build any low-level infrastructure for parallelism into Clojure since the Java concurrency experts were already doing that in the form of the Fork Join framework, a sophisticated thread pool and work-stealing system for parallel computation. As that framework is stabilising and moving towards inclusion in Java 7 (and usable with Java 6), I've started implementing parallel algorithms, like mapping a function across a vector by breaking it into subtasks, using Fork Join. Clojure's data structures are well suited for this decomposition, so I expect to see a rich set of parallel functions on the existing data structures – for example , you won't have to use special 'parallel' data structures. </DD>
+<DT>RM: 
+<DD>How much does a choice of language really matter? Are there good reasons to choose one language over another or does it all come down to taste? </DD>
+<DT>RH: 
+<DD>I think it matters quite a bit. A good language is opinionated, and strives to make a particular style of programming easy and idiomatic. It only seems a matter of taste when you are comparing languages that are more similar than they are different, like Java/C# or Python/Ruby. Try something really different like Clojure, Haskell, or Erlang and the fact that it matters becomes readily apparent. </DD>
+<DT>RM: 
+<DD>What languages have you used seriously? </DD>
+<DT>RH: 
+<DD>C, C++, Java, C#, Common Lisp, Clojure </DD>
+<DT>RM: 
+<DD>Do you think languages are getting better? Is it easier to write software now because of the advances we’ve made? </DD>
+<DT>RH: 
+<DD>As you've noted, existing languages change slowly, if at all. Are we getting better languages? Many of the hot 'new' languages like Haskell and Erlang are in fact pretty old. Clojure builds on Lisp, which is really old. What is new is the willingness to utilize these languages in mainstream (or, at least, internet) production environments. And that is a great thing, as we have largely maxed out the expressive capabilities of the C++/Java/C# languages, as evidenced by the prominence of XML and IDEs. The procedural/mutable execution model of those languages may also be on a collision course with multicore. </DD>
+<DT>RM: 
+<DD>And what are the problems that are making it more difficult? </DD>
+<DT>RH: 
+<DD>There will always be social and organizational resistance to change, and there should be, as that mitigates risk. More insidious are attempts to commoditize programming or programmers, which will leave us with mediocre technology, in a world where technical agility becomes more business-critical every day. Another hurdle for truly new or different languages is their (in)ability to deal with legacy systems and code. Without a good story there, it is quite difficult to get any adoption. </DD>
+<DT>RM: 
+<DD>There’s a school of thought that says that the only way to manage complexity is to keep things, including programming languages simple. Does Clojure manage that? </DD>
+<DT>RH: 
+<DD>Complexity certainly is a prime concern of mine, and I think Clojure does pretty well. At its core, Clojure is quite simple. And Clojure focuses on reducing both apparent and incidental complexity, the latter being complexity arising not from the problem domain but the solution domain - our languages and tools. I think programmers have become inured to incidental complexity, in particular by confusing familiar or concise with simple. And when they encounter complexity, they consider it a challenge to overcome, rather than an obstacle to remove. Overcoming complexity isn't work, it's waste. </DD>
+<DT>RM: 
+<DD>Are there features that can make programmers more productive? You’ve designed a language so you obviously have an opinion about this. </DD>
+<DT>RH: 
+<DD>Yes! Productivity comes from being able to focus. Interactive development environments (REPLs etc) help you focus, by letting you &nbsp;try things immediately. At the language level, expressivity helps you focus, by moving your code as close as possible to the problem statement. At the language and library level, minimizing incidental complexity helps you focus on domain complexities only. And finally, being able to reuse existing code in the non-application-specific parts of your program facilitates focusing your efforts on the problem at hand. </DD>
+<DT>RM: 
+<DD>Do you think that given the constraints Bjarne Stroustroup set himself with C++, which was to make an object oriented language that would be fully backwards compatible with C was a fatal flaw because it’s a set of difficulties that can’t be overcome? After all C has a corrupt type system. </DD>
+<DT>RH: 
+<DD>I think C++ largely succeeded in its objectives, and still has appropriate application domains today, albeit fewer than in the past. The one expressed objective in which it has had less success, in my opinion, is as a library language. The lack of standard automatic memory management is a significant obstacle to independently developed, interoperable libraries. </DD></DL></DIV>
+
+    <br /><br />This article has been viewed 15897 times.
+  </div>
+
+  
+<div class="authorpanel">
+    <a id="ctl00_MainContent_Author1_lnkImage" title="Richard Morris" href="http://www.simple-talk.com/author/richard-morris/"><img id="ctl00_MainContent_Author1_imgAuthor" class="authorpicture" src="http://www.simple-talk.com/iwritefor/publishers/52.gif" alt="Richard Morris" align="left" style="border-width:0px;" /></a>
+    <p><strong>Author profile:</strong> <a id="ctl00_MainContent_Author1_lnkName" href="http://www.simple-talk.com/author/richard-morris/">Richard Morris</a></p>
+    <p>Richard Morris is a journalist, author and public relations/public affairs consultant.
+He has written for a number of UK and US newspapers and magazines and has offered strategic advice to numerous tech companies including Digital Island, Sony and several ISPs. He now specialises in social enterprise and is, among other things, a member of the Big Issue Invest advisory board. Big Issue Invest is the leading provider to high-performing social enterprises & has a strong brand name based on its parent company The Big Issue, described by McKinsey & Co as the most well known and trusted social brand in the UK. 
+
+</p>
+    <p><a id="ctl00_MainContent_Author1_lnkSearch" href="http://www.simple-talk.com/author/richard-morris/">Search for other articles by Richard Morris</a></p>
+    <div class="clear"></div>
+</div>
+
+  <div id="ctl00_MainContent_panVoting" class="rating">
+	
+    <strong>Rate this article:</strong> &nbsp;&nbsp;Avg rating: <img id="ctl00_MainContent_imgRating2" src="http://www.simple-talk.com/images/interface/icon_opinion_5star_70x13.gif" style="height:13px;width:70px;border-width:0px;" /> from a total of 63 votes.<br /><br />
+    <div id="ctl00_MainContent_panToRate">
+		
+        <table border="0" class="rating">
+          <tr>
+	        <td><input id="ctl00_MainContent_radRating1" type="radio" name="ctl00$MainContent$radRating" value="radRating1" /><br />Poor</td>
+	        <td><input id="ctl00_MainContent_radRating2" type="radio" name="ctl00$MainContent$radRating" value="radRating2" /><br />OK</td>
+	        <td><input id="ctl00_MainContent_radRating3" type="radio" name="ctl00$MainContent$radRating" value="radRating3" /><br />Good</td>
+	        <td><input id="ctl00_MainContent_radRating4" type="radio" name="ctl00$MainContent$radRating" value="radRating4" /><br />Great</td>
+	        <td><input id="ctl00_MainContent_radRating5" type="radio" name="ctl00$MainContent$radRating" value="radRating5" /><br />Must read</td>
+		    <td>
+		        <input type="image" name="ctl00$MainContent$btnRateArticle" id="ctl00_MainContent_btnRateArticle" title="Rate article" src="http://www.simple-talk.com/images/interface/btn_submit.gif" style="height:19px;width:56px;border-width:0px;" />
+		    </td>
+	      </tr>
+        </table>
+    
+	</div>
+    
+    
+  
+</div>
+  
+  <div id="ctl00_MainContent_panComments" class="comments">
+	
+    <a name="forum">&nbsp;</a>
+    <div class="haveyoursayheader">
+      <div class="title">Have Your Say</div>
+        Do you have an opinion on this article? Then <a href="#commentform" class="commentlink"><u>add your comment below</u></a>:
+      </div>
+      <div class="forumview">
+        <div id="ctl00_MainContent_ForumView1_panPostingNotAllowed" style="width:100%;">
+	
+    You must be logged in to post to this forum<br /><br /><a id="ctl00_MainContent_ForumView1_lnkLogin" href="http://www.simple-talk.com/community/login.aspx?ReturnUrl=%2fopinion%2fgeek-of-the-week%2frich-hickey-geek-of-the-week%2f">Click here to log in</a>.
+
+</div>
+
+
+        <br /><hr />
+    
+	<table border="0" cellpadding="0" cellspacing="4" class="commenttable" width="500">
+          <tr><td class="commenttitle">Subject: </td><td><b><span id="ctl00_MainContent_ForumView1_repPosts_ctl01_lblSubject">Clojure as a language</span></b></td></tr>
+          <tr><td class="commenttitle">Posted by: </td><td><i><span id="ctl00_MainContent_ForumView1_repPosts_ctl01_lblAuthor">itsnotvalid</span></i> (<span>not signed in</span>)</td></tr>
+          <tr><td class="commenttitle">Posted on: </td><td><i><span id="ctl00_MainContent_ForumView1_repPosts_ctl01_lblDate">Saturday, March 06, 2010 at 8:36 AM</span></i></td></tr>
+          <tr><td class="commenttitle" valign="top">Message: </td><td><span id="ctl00_MainContent_ForumView1_repPosts_ctl01_lblMessage">I tried Clojure a bit and find that this one is really a good language.<BR><BR>Keep up the good work, Hickey!!</span></td></tr>
+	</table>
+    
+        <hr />
+    
+
+
+
+        <a name="commentform">&nbsp;</a>
+      </div>
+  
+</div>
+
+            </div> 
+            <div class="rightcolumn">
+                
+    
+
+<div class="sidenav">
+    <div class="header"></div>
+    <div class="middle">
+        
+    	        <div class="navitem">
+    	            <img id="ctl00_RightColumn_Categories1_repCategories_ctl00_imgArrow" src="http://www.simple-talk.com/images/interface/icon_arrow_white_5x9.gif" style="height:9px;width:5px;border-width:0px;" />&nbsp;&nbsp;<a id="ctl00_RightColumn_Categories1_repCategories_ctl00_lnkCategory" href="http://www.simple-talk.com/opinion/">Opinion Home</a> 
+    	        </div>
+            
+                <img id="ctl00_RightColumn_Categories1_repCategories_ctl01_imgSpacer" src="http://www.simple-talk.com/images/interface/sidenav_opinion_lines_320x3.jpg" style="height:3px;width:320px;border-width:0px;" /><br />
+            
+    	        <div class="navitem">
+    	            <img id="ctl00_RightColumn_Categories1_repCategories_ctl02_imgArrow" src="http://www.simple-talk.com/images/interface/icon_arrow_white_5x9.gif" style="height:9px;width:5px;border-width:0px;" />&nbsp;&nbsp;<a id="ctl00_RightColumn_Categories1_repCategories_ctl02_lnkCategory" href="http://www.simple-talk.com/opinion/opinion-pieces/">Opinion Pieces</a> <span id="ctl00_RightColumn_Categories1_repCategories_ctl02_spaCount" class="articlecount">(195 articles)</span>
+    	        </div>
+            
+                <img id="ctl00_RightColumn_Categories1_repCategories_ctl03_imgSpacer" src="http://www.simple-talk.com/images/interface/sidenav_opinion_lines_320x3.jpg" style="height:3px;width:320px;border-width:0px;" /><br />
+            
+    	        <div class="navitem">
+    	            <img id="ctl00_RightColumn_Categories1_repCategories_ctl04_imgArrow" src="http://www.simple-talk.com/images/interface/icon_arrow_white_5x9.gif" style="height:9px;width:5px;border-width:0px;" />&nbsp;&nbsp;<a id="ctl00_RightColumn_Categories1_repCategories_ctl04_lnkCategory" href="http://www.simple-talk.com/opinion/geek-of-the-week/">Geek of the Week</a> <span id="ctl00_RightColumn_Categories1_repCategories_ctl04_spaCount" class="articlecount">(81 articles)</span>
+    	        </div>
+            
+                <img id="ctl00_RightColumn_Categories1_repCategories_ctl05_imgSpacer" src="http://www.simple-talk.com/images/interface/sidenav_opinion_lines_320x3.jpg" style="height:3px;width:320px;border-width:0px;" /><br />
+            
+    	        <div class="navitem">
+    	            <img id="ctl00_RightColumn_Categories1_repCategories_ctl06_imgArrow" src="http://www.simple-talk.com/images/interface/icon_arrow_white_5x9.gif" style="height:9px;width:5px;border-width:0px;" />&nbsp;&nbsp;<a id="ctl00_RightColumn_Categories1_repCategories_ctl06_lnkCategory" href="http://www.simple-talk.com/content/columnist.aspx?columnist=2">Tony Davis - Editor</a> <span id="ctl00_RightColumn_Categories1_repCategories_ctl06_spaCount" class="articlecount">(5 articles)</span>
+    	        </div>
+            
+                <img id="ctl00_RightColumn_Categories1_repCategories_ctl07_imgSpacer" src="http://www.simple-talk.com/images/interface/sidenav_opinion_lines_320x3.jpg" style="height:3px;width:320px;border-width:0px;" /><br />
+            
+    	        <div class="navitem">
+    	            <img id="ctl00_RightColumn_Categories1_repCategories_ctl08_imgArrow" src="http://www.simple-talk.com/images/interface/icon_arrow_white_5x9.gif" style="height:9px;width:5px;border-width:0px;" />&nbsp;&nbsp;<a id="ctl00_RightColumn_Categories1_repCategories_ctl08_lnkCategory" href="http://www.simple-talk.com/content/columnist.aspx?columnist=3">Phil Factor</a> <span id="ctl00_RightColumn_Categories1_repCategories_ctl08_spaCount" class="articlecount">(58 articles)</span>
+    	        </div>
+            
+                <img id="ctl00_RightColumn_Categories1_repCategories_ctl09_imgSpacer" src="http://www.simple-talk.com/images/interface/sidenav_opinion_lines_320x3.jpg" style="height:3px;width:320px;border-width:0px;" /><br />
+            
+    	        <div class="navitem">
+    	            <img id="ctl00_RightColumn_Categories1_repCategories_ctl10_imgArrow" src="http://www.simple-talk.com/images/interface/icon_arrow_white_5x9.gif" style="height:9px;width:5px;border-width:0px;" />&nbsp;&nbsp;<a id="ctl00_RightColumn_Categories1_repCategories_ctl10_lnkCategory" href="http://www.simple-talk.com/content/columnist.aspx?columnist=8">Damon Armstrong</a> <span id="ctl00_RightColumn_Categories1_repCategories_ctl10_spaCount" class="articlecount">(10 articles)</span>
+    	        </div>
+            
+                <img id="ctl00_RightColumn_Categories1_repCategories_ctl11_imgSpacer" src="http://www.simple-talk.com/images/interface/sidenav_opinion_lines_320x3.jpg" style="height:3px;width:320px;border-width:0px;" /><br />
+            
+    	        <div class="navitem">
+    	            <img id="ctl00_RightColumn_Categories1_repCategories_ctl12_imgArrow" src="http://www.simple-talk.com/images/interface/icon_arrow_white_5x9.gif" style="height:9px;width:5px;border-width:0px;" />&nbsp;&nbsp;<a id="ctl00_RightColumn_Categories1_repCategories_ctl12_lnkCategory" href="http://www.simple-talk.com/content/columnist.aspx?columnist=10">Douglas Reilly</a> <span id="ctl00_RightColumn_Categories1_repCategories_ctl12_spaCount" class="articlecount">(40 articles)</span>
+    	        </div>
+            
+                <img id="ctl00_RightColumn_Categories1_repCategories_ctl13_imgSpacer" src="http://www.simple-talk.com/images/interface/sidenav_opinion_lines_320x3.jpg" style="height:3px;width:320px;border-width:0px;" /><br />
+            
+    	        <div class="navitem">
+    	            <img id="ctl00_RightColumn_Categories1_repCategories_ctl14_imgArrow" src="http://www.simple-talk.com/images/interface/icon_arrow_white_5x9.gif" style="height:9px;width:5px;border-width:0px;" />&nbsp;&nbsp;<a id="ctl00_RightColumn_Categories1_repCategories_ctl14_lnkCategory" href="http://www.simple-talk.com/content/columnist.aspx?columnist=44">Adrian Furnham</a> <span id="ctl00_RightColumn_Categories1_repCategories_ctl14_spaCount" class="articlecount">(1 articles)</span>
+    	        </div>
+            
+                <img id="ctl00_RightColumn_Categories1_repCategories_ctl15_imgSpacer" src="http://www.simple-talk.com/images/interface/sidenav_opinion_lines_320x3.jpg" style="height:3px;width:320px;border-width:0px;" /><br />
+            
+    	        <div class="navitem">
+    	            <img id="ctl00_RightColumn_Categories1_repCategories_ctl16_imgArrow" src="http://www.simple-talk.com/images/interface/icon_arrow_white_5x9.gif" style="height:9px;width:5px;border-width:0px;" />&nbsp;&nbsp;<a id="ctl00_RightColumn_Categories1_repCategories_ctl16_lnkCategory" href="http://www.simple-talk.com/content/columnist.aspx?columnist=48">Claire Brooking</a> <span id="ctl00_RightColumn_Categories1_repCategories_ctl16_spaCount" class="articlecount">(1 articles)</span>
+    	        </div>
+            
+                <img id="ctl00_RightColumn_Categories1_repCategories_ctl17_imgSpacer" src="http://www.simple-talk.com/images/interface/sidenav_opinion_lines_320x3.jpg" style="height:3px;width:320px;border-width:0px;" /><br />
+            
+    	        <div class="navitem">
+    	            <img id="ctl00_RightColumn_Categories1_repCategories_ctl18_imgArrow" src="http://www.simple-talk.com/images/interface/icon_arrow_white_5x9.gif" style="height:9px;width:5px;border-width:0px;" />&nbsp;&nbsp;<a id="ctl00_RightColumn_Categories1_repCategories_ctl18_lnkCategory" href="http://www.simple-talk.com/content/columnist.aspx?columnist=52">Richard Morris</a> <span id="ctl00_RightColumn_Categories1_repCategories_ctl18_spaCount" class="articlecount">(85 articles)</span>
+    	        </div>
+            
+                <img id="ctl00_RightColumn_Categories1_repCategories_ctl19_imgSpacer" src="http://www.simple-talk.com/images/interface/sidenav_opinion_lines_320x3.jpg" style="height:3px;width:320px;border-width:0px;" /><br />
+            
+    	        <div class="navitem">
+    	            <img id="ctl00_RightColumn_Categories1_repCategories_ctl20_imgArrow" src="http://www.simple-talk.com/images/interface/icon_arrow_white_5x9.gif" style="height:9px;width:5px;border-width:0px;" />&nbsp;&nbsp;<a id="ctl00_RightColumn_Categories1_repCategories_ctl20_lnkCategory" href="http://www.simple-talk.com/content/columnist.aspx?columnist=53">Tim Gorman</a> <span id="ctl00_RightColumn_Categories1_repCategories_ctl20_spaCount" class="articlecount">(1 articles)</span>
+    	        </div>
+            
+                <img id="ctl00_RightColumn_Categories1_repCategories_ctl21_imgSpacer" src="http://www.simple-talk.com/images/interface/sidenav_opinion_lines_320x3.jpg" style="height:3px;width:320px;border-width:0px;" /><br />
+            
+    	        <div class="navitem">
+    	            <img id="ctl00_RightColumn_Categories1_repCategories_ctl22_imgArrow" src="http://www.simple-talk.com/images/interface/icon_arrow_white_5x9.gif" style="height:9px;width:5px;border-width:0px;" />&nbsp;&nbsp;<a id="ctl00_RightColumn_Categories1_repCategories_ctl22_lnkCategory" href="http://www.simple-talk.com/content/columnist.aspx?columnist=56">Jesse Liberty</a> <span id="ctl00_RightColumn_Categories1_repCategories_ctl22_spaCount" class="articlecount">(5 articles)</span>
+    	        </div>
+            
+                <img id="ctl00_RightColumn_Categories1_repCategories_ctl23_imgSpacer" src="http://www.simple-talk.com/images/interface/sidenav_opinion_lines_320x3.jpg" style="height:3px;width:320px;border-width:0px;" /><br />
+            
+    	        <div class="navitem">
+    	            <img id="ctl00_RightColumn_Categories1_repCategories_ctl24_imgArrow" src="http://www.simple-talk.com/images/interface/icon_arrow_white_5x9.gif" style="height:9px;width:5px;border-width:0px;" />&nbsp;&nbsp;<a id="ctl00_RightColumn_Categories1_repCategories_ctl24_lnkCategory" href="http://www.simple-talk.com/content/columnist.aspx?columnist=57">Sarah Blow</a> <span id="ctl00_RightColumn_Categories1_repCategories_ctl24_spaCount" class="articlecount">(1 articles)</span>
+    	        </div>
+            
+                <img id="ctl00_RightColumn_Categories1_repCategories_ctl25_imgSpacer" src="http://www.simple-talk.com/images/interface/sidenav_opinion_lines_320x3.jpg" style="height:3px;width:320px;border-width:0px;" /><br />
+            
+    	        <div class="navitem">
+    	            <img id="ctl00_RightColumn_Categories1_repCategories_ctl26_imgArrow" src="http://www.simple-talk.com/images/interface/icon_arrow_white_5x9.gif" style="height:9px;width:5px;border-width:0px;" />&nbsp;&nbsp;<a id="ctl00_RightColumn_Categories1_repCategories_ctl26_lnkCategory" href="http://www.simple-talk.com/content/columnist.aspx?columnist=67">Anna Larjomaa</a> <span id="ctl00_RightColumn_Categories1_repCategories_ctl26_spaCount" class="articlecount">(1 articles)</span>
+    	        </div>
+            
+                <img id="ctl00_RightColumn_Categories1_repCategories_ctl27_imgSpacer" src="http://www.simple-talk.com/images/interface/sidenav_opinion_lines_320x3.jpg" style="height:3px;width:320px;border-width:0px;" /><br />
+            
+    	        <div class="navitem">
+    	            <img id="ctl00_RightColumn_Categories1_repCategories_ctl28_imgArrow" src="http://www.simple-talk.com/images/interface/icon_arrow_white_5x9.gif" style="height:9px;width:5px;border-width:0px;" />&nbsp;&nbsp;<a id="ctl00_RightColumn_Categories1_repCategories_ctl28_lnkCategory" href="http://www.simple-talk.com/content/columnist.aspx?columnist=70">Gaidar Magdanurov</a> <span id="ctl00_RightColumn_Categories1_repCategories_ctl28_spaCount" class="articlecount">(2 articles)</span>
+    	        </div>
+            
+                <img id="ctl00_RightColumn_Categories1_repCategories_ctl29_imgSpacer" src="http://www.simple-talk.com/images/interface/sidenav_opinion_lines_320x3.jpg" style="height:3px;width:320px;border-width:0px;" /><br />
+            
+    	        <div class="navitem">
+    	            <img id="ctl00_RightColumn_Categories1_repCategories_ctl30_imgArrow" src="http://www.simple-talk.com/images/interface/icon_arrow_white_5x9.gif" style="height:9px;width:5px;border-width:0px;" />&nbsp;&nbsp;<a id="ctl00_RightColumn_Categories1_repCategories_ctl30_lnkCategory" href="http://www.simple-talk.com/content/columnist.aspx?columnist=79">Regular Columnists</a> <span id="ctl00_RightColumn_Categories1_repCategories_ctl30_spaCount" class="articlecount">(1 articles)</span>
+    	        </div>
+            
+                <img id="ctl00_RightColumn_Categories1_repCategories_ctl31_imgSpacer" src="http://www.simple-talk.com/images/interface/sidenav_opinion_lines_320x3.jpg" style="height:3px;width:320px;border-width:0px;" /><br />
+            
+    	        <div class="navitem">
+    	            <img id="ctl00_RightColumn_Categories1_repCategories_ctl32_imgArrow" src="http://www.simple-talk.com/images/interface/icon_arrow_white_5x9.gif" style="height:9px;width:5px;border-width:0px;" />&nbsp;&nbsp;<a id="ctl00_RightColumn_Categories1_repCategories_ctl32_lnkCategory" href="http://www.simple-talk.com/content/columnist.aspx?columnist=100">Ben Hall</a> <span id="ctl00_RightColumn_Categories1_repCategories_ctl32_spaCount" class="articlecount">(5 articles)</span>
+    	        </div>
+            
+                <img id="ctl00_RightColumn_Categories1_repCategories_ctl33_imgSpacer" src="http://www.simple-talk.com/images/interface/sidenav_opinion_lines_320x3.jpg" style="height:3px;width:320px;border-width:0px;" /><br />
+            
+    	        <div class="navitem">
+    	            <img id="ctl00_RightColumn_Categories1_repCategories_ctl34_imgArrow" src="http://www.simple-talk.com/images/interface/icon_arrow_white_5x9.gif" style="height:9px;width:5px;border-width:0px;" />&nbsp;&nbsp;<a id="ctl00_RightColumn_Categories1_repCategories_ctl34_lnkCategory" href="http://www.simple-talk.com/content/columnist.aspx?columnist=143">Larry Gonick</a> <span id="ctl00_RightColumn_Categories1_repCategories_ctl34_spaCount" class="articlecount">(79 articles)</span>
+    	        </div>
+            
+                <img id="ctl00_RightColumn_Categories1_repCategories_ctl35_imgSpacer" src="http://www.simple-talk.com/images/interface/sidenav_opinion_lines_320x3.jpg" style="height:3px;width:320px;border-width:0px;" /><br />
+            
+    	        <div class="navitem">
+    	            <img id="ctl00_RightColumn_Categories1_repCategories_ctl36_imgArrow" src="http://www.simple-talk.com/images/interface/icon_arrow_white_5x9.gif" style="height:9px;width:5px;border-width:0px;" />&nbsp;&nbsp;<a id="ctl00_RightColumn_Categories1_repCategories_ctl36_lnkCategory" href="http://www.simple-talk.com/content/columnist.aspx?columnist=207">Simon Holness</a> 
+    	        </div>
+            
+                <img id="ctl00_RightColumn_Categories1_repCategories_ctl37_imgSpacer" src="http://www.simple-talk.com/images/interface/sidenav_opinion_lines_320x3.jpg" style="height:3px;width:320px;border-width:0px;" /><br />
+            
+    	        <div class="navitem">
+    	            <img id="ctl00_RightColumn_Categories1_repCategories_ctl38_imgArrow" src="http://www.simple-talk.com/images/interface/icon_arrow_white_5x9.gif" style="height:9px;width:5px;border-width:0px;" />&nbsp;&nbsp;<a id="ctl00_RightColumn_Categories1_repCategories_ctl38_lnkCategory" href="http://www.simple-talk.com/content/columnist.aspx?columnist=225">Michael Williamson</a> 
+    	        </div>
+            
+                <img id="ctl00_RightColumn_Categories1_repCategories_ctl39_imgSpacer" src="http://www.simple-talk.com/images/interface/sidenav_opinion_lines_320x3.jpg" style="height:3px;width:320px;border-width:0px;" /><br />
+            
+    	        <div class="navitem">
+    	            <img id="ctl00_RightColumn_Categories1_repCategories_ctl40_imgArrow" src="http://www.simple-talk.com/images/interface/icon_arrow_white_5x9.gif" style="height:9px;width:5px;border-width:0px;" />&nbsp;&nbsp;<a id="ctl00_RightColumn_Categories1_repCategories_ctl40_lnkCategory" href="http://www.simple-talk.com/community/blogs/">Blogs Home</a> 
+    	        </div>
+            
+    </div>
+    <div class="footer"></div>  
+</div>
+    <div class="sidepanels">
+        
+        
+        
+        
+              
+        
+        
+        
+        
+<div class="widget" id="topratedarticles">
+    <div class="header"><a id="ctl00_RightColumn_ArticlesRated1_lnkHeader"><img src="http://www.simple-talk.com/images/interface/1px.gif" width="300" height="30" alt="" title="Phil Factor - the wilder shores of transact sql" /></a></div>
+    <div class="middle">
+        <div class="widgetcontent">
+            
+                    <strong><a id="ctl00_RightColumn_ArticlesRated1_repArticles_ctl00_lnkArticle1" href="http://www.simple-talk.com/opinion/opinion-pieces/raw-materials-teamwork/">Raw Materials: Teamwork</a></strong><br />
+                    <img src="http://www.simple-talk.com/images/interface/w_icon_article_9x11.jpg" alt="" width="9" height="11" />&nbsp;Derek suffers from fragmentation.&nbsp;<a id="ctl00_RightColumn_ArticlesRated1_repArticles_ctl00_lnkArticle2" href="http://www.simple-talk.com/opinion/opinion-pieces/raw-materials-teamwork/">Read more...</a><br /><br />
+                
+                    <strong><a id="ctl00_RightColumn_ArticlesRated1_repArticles_ctl01_lnkArticle1" href="http://www.simple-talk.com/opinion/opinion-pieces/raw-materials-the-eyes-of-derek/">Raw Materials: The Eyes of Derek</a></strong><br />
+                    <img src="http://www.simple-talk.com/images/interface/w_icon_article_9x11.jpg" alt="" width="9" height="11" />&nbsp;Keeping Developers in the Proper Frame of Mind.&nbsp;<a id="ctl00_RightColumn_ArticlesRated1_repArticles_ctl01_lnkArticle2" href="http://www.simple-talk.com/opinion/opinion-pieces/raw-materials-the-eyes-of-derek/">Read more...</a><br /><br />
+                
+                    <strong><a id="ctl00_RightColumn_ArticlesRated1_repArticles_ctl02_lnkArticle1" href="http://www.simple-talk.com/opinion/opinion-pieces/raw-materials-summer-on-the-lake/">Raw Materials: Summer on the Lake</a></strong><br />
+                    <img src="http://www.simple-talk.com/images/interface/w_icon_article_9x11.jpg" alt="" width="9" height="11" />&nbsp;Derek gets away from it all.&nbsp;<a id="ctl00_RightColumn_ArticlesRated1_repArticles_ctl02_lnkArticle2" href="http://www.simple-talk.com/opinion/opinion-pieces/raw-materials-summer-on-the-lake/">Read more...</a><br /><br />
+                
+                    <strong><a id="ctl00_RightColumn_ArticlesRated1_repArticles_ctl03_lnkArticle1" href="http://www.simple-talk.com/opinion/opinion-pieces/raw-materials-wake-up-call/">Raw Materials: Wake-up Call</a></strong><br />
+                    <img src="http://www.simple-talk.com/images/interface/w_icon_article_9x11.jpg" alt="" width="9" height="11" />&nbsp;A robot's reaction may be a little different from yours or mine.&nbsp;<a id="ctl00_RightColumn_ArticlesRated1_repArticles_ctl03_lnkArticle2" href="http://www.simple-talk.com/opinion/opinion-pieces/raw-materials-wake-up-call/">Read more...</a><br /><br />
+                
+                    <strong><a id="ctl00_RightColumn_ArticlesRated1_repArticles_ctl04_lnkArticle1" href="http://www.simple-talk.com/opinion/opinion-pieces/raw-materials-beyond-global/">Raw Materials: Beyond Global</a></strong><br />
+                    <img src="http://www.simple-talk.com/images/interface/w_icon_article_9x11.jpg" alt="" width="9" height="11" />&nbsp;There's more than one way to be green.&nbsp;<a id="ctl00_RightColumn_ArticlesRated1_repArticles_ctl04_lnkArticle2" href="http://www.simple-talk.com/opinion/opinion-pieces/raw-materials-beyond-global/">Read more...</a><br /><br />
+                
+        </div>
+    </div>
+    <div class="footer"></div>
+</div>
+        
+
+<div class="widget" id="mostviewedarticles">
+    <div class="header"><a id="ctl00_RightColumn_ArticlesViewed1_lnkHeader"><img src="http://www.simple-talk.com/images/interface/1px.gif" width="300" height="30" alt="" title="Phil Factor - the wilder shores of transact sql" /></a></div>
+    <div class="middle">
+        <div class="widgetcontent">
+            
+                    <strong><a id="ctl00_RightColumn_ArticlesViewed1_repArticles_ctl00_lnkArticle1" href="http://www.simple-talk.com/opinion/geek-of-the-week/linus-torvalds,-geek-of-the-week/">Linus Torvalds, Geek of the Week</a></strong><br />
+                    <img src="http://www.simple-talk.com/images/interface/w_icon_article_9x11.jpg" alt="" width="9" height="11" />&nbsp;Linus Torvalds is remarkable, not only for being the technical genius who wrote Linux, but for then...&nbsp;<a id="ctl00_RightColumn_ArticlesViewed1_repArticles_ctl00_lnkArticle2" href="http://www.simple-talk.com/opinion/geek-of-the-week/linus-torvalds,-geek-of-the-week/">Read more...</a><br /><br />
+                
+                    <strong><a id="ctl00_RightColumn_ArticlesViewed1_repArticles_ctl01_lnkArticle1" href="http://www.simple-talk.com/opinion/opinion-pieces/driving-up-software-quality---the-role-of-the-tester/">Driving up software quality - the role of the tester</a></strong><br />
+                    <img src="http://www.simple-talk.com/images/interface/w_icon_article_9x11.jpg" alt="" width="9" height="11" />&nbsp;Have you ever wondered what a software tester does? Helen Joyce, test engineer at Red Gate software...&nbsp;<a id="ctl00_RightColumn_ArticlesViewed1_repArticles_ctl01_lnkArticle2" href="http://www.simple-talk.com/opinion/opinion-pieces/driving-up-software-quality---the-role-of-the-tester/">Read more...</a><br /><br />
+                
+                    <strong><a id="ctl00_RightColumn_ArticlesViewed1_repArticles_ctl02_lnkArticle1" href="http://www.simple-talk.com/opinion/opinion-pieces/coming-out-as-a-cancer-survivor---a-guide-for-software-developers/">Coming Out as a Cancer Survivor - A Guide for Software Developers</a></strong><br />
+                    <img src="http://www.simple-talk.com/images/interface/w_icon_article_9x11.jpg" alt="" width="9" height="11" />&nbsp;A personal perspective on the responsibilities of a cancer-surviving software developer&nbsp;<a id="ctl00_RightColumn_ArticlesViewed1_repArticles_ctl02_lnkArticle2" href="http://www.simple-talk.com/opinion/opinion-pieces/coming-out-as-a-cancer-survivor---a-guide-for-software-developers/">Read more...</a><br /><br />
+                
+                    <strong><a id="ctl00_RightColumn_ArticlesViewed1_repArticles_ctl03_lnkArticle1" href="http://www.simple-talk.com/opinion/opinion-pieces/bad-carma/">Bad CaRMa</a></strong><br />
+                    <img src="http://www.simple-talk.com/images/interface/w_icon_article_9x11.jpg" alt="" width="9" height="11" />&nbsp;From hope and euphoria, to desperation, firings and the ultimate demise of a company. Tim Gorman charts...&nbsp;<a id="ctl00_RightColumn_ArticlesViewed1_repArticles_ctl03_lnkArticle2" href="http://www.simple-talk.com/opinion/opinion-pieces/bad-carma/">Read more...</a><br /><br />
+                
+                    <strong><a id="ctl00_RightColumn_ArticlesViewed1_repArticles_ctl04_lnkArticle1" href="http://www.simple-talk.com/opinion/opinion-pieces/the-computer-that-swore/">The Computer that Swore</a></strong><br />
+                    <img src="http://www.simple-talk.com/images/interface/w_icon_article_9x11.jpg" alt="" width="9" height="11" />&nbsp;Database Developers occasionally get crazy ideas into their heads. Phil Factor should know; He...&nbsp;<a id="ctl00_RightColumn_ArticlesViewed1_repArticles_ctl04_lnkArticle2" href="http://www.simple-talk.com/opinion/opinion-pieces/the-computer-that-swore/">Read more...</a><br /><br />
+                
+        </div>
+    </div>
+    <div class="footer"></div>
+</div>
+        
+      <div class="widget" id="WhyJoin">
+        <div class="header"><a id="ctl00_RightColumn_WhyJoin1_LoginView1_lnkJoin1" href="http://www.simple-talk.com/community/user/CreateUser.aspx?ReturnUrl=%2fopinion%2fgeek-of-the-week%2frich-hickey-geek-of-the-week%2f"><img src="http://www.simple-talk.com/images/interface/1px.gif" width="315" height="50" alt="" title="Join Simple Talk" /></a></div>
+        <div class="middle">
+          <div class="widgetcontent">
+		<a id="ctl00_RightColumn_WhyJoin1_LoginView1_lnkJoin2" href="http://www.simple-talk.com/community/user/CreateUser.aspx?ReturnUrl=%2fopinion%2fgeek-of-the-week%2frich-hickey-geek-of-the-week%2f"><img src="http://www.simple-talk.com/images/interface/icon_newsletter_54x43.jpg" alt="" width="54" height="43" class="paper" align="left" title="Join Simple Talk" /></a>
+		Over 150,000 Microsoft professionals subscribe to the Simple-Talk technical journal. Join today, it's fast, simple, free and secure.<br /><br />
+		    <div class="joinbutton"><a id="ctl00_RightColumn_WhyJoin1_LoginView1_lnkJoin3" href="http://www.simple-talk.com/community/user/CreateUser.aspx?ReturnUrl=%2fopinion%2fgeek-of-the-week%2frich-hickey-geek-of-the-week%2f"><img src="http://www.simple-talk.com/images/interface/btn_join_117x19.jpg" alt="Join Simple Talk" width="117" height="19" /></a></div>
+          </div>
+        </div>
+        <div class="footer"></div>
+      </div>
+    
+    </div>
+
+                <div class="clear"></div><br />
+            </div>
+            <div class="clear"></div><br />
+            <div class="pagefooter">
+                <div class="pagefooternavright">
+                    <a id="ctl00_lnkGotoPrivacy" href="http://www.simple-talk.com/privacy-policy.aspx">Privacy policy</a> |
+                    <a id="ctl00_lnkGotoTerms" href="http://www.simple-talk.com/terms-and-conditions.aspx">Terms and conditions</a> |
+                    <a href="http://www.red-gate.com/" target="_blank">&copy;2005-2010 Red Gate Software</a>
+                </div>
+                <div class="pagefooternavleft">
+                    <a id="ctl00_lnkGotoAbout" href="http://www.simple-talk.com/about.aspx">About</a> |
+                    <a id="ctl00_lnkGotoSitemap" href="http://www.simple-talk.com/site-map.aspx">Site map</a> |
+                    <a id="ctl00_lnkGotoAuthor" href="http://www.simple-talk.com/become-an-author.aspx">Become an author</a> |
+                    <a id="ctl00_lnkGotoArchive" href="http://www.simple-talk.com/newsletter-archive/">Newsletters</a> |
+                    <a id="ctl00_lnkGotoContact" href="http://www.simple-talk.com/contact-us.aspx">Contact us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<script type="text/javascript">
+//<![CDATA[
+Sys.Application.initialize();
+//]]>
+</script>
+</form>
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
+<script type="text/javascript">
+_uacct = "UA-90206-4";
+urchinTracker();
+</script>
+</body>
+</html>
