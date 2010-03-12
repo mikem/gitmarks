@@ -1,0 +1,4223 @@
+<html>
+
+<body>
+
+<h3>The most complete list of -XX options for Java 6 JVM</h3>
+
+<ul>
+
+<li><a href="#product">product</a> flags are always settable / visible
+
+<li><a href="#develop">develop</a> flags are settable / visible only during development and are constant in the PRODUCT version
+
+<li><a href="#notproduct">notproduct</a> flags are settable / visible only during development and are not declared in the PRODUCT version
+
+<!--
+// A flag must be declared with one of the following types:
+// bool, intx, uintx, ccstr.
+// The type "ccstr" is an alias for "const char*" and is used
+// only in this file, because the macrology requires single-token type names.
+-->
+
+<!--
+#define RUNTIME_FLAGS(develop, develop_pd, product, product_pd, diagnostic, notproduct, manageable, product_rw) \
+-->
+
+<li><a href="#diagnostic">diagnostic</a> options not meant for VM tuning or for product modes.
+  They are to be used for VM quality assurance or field diagnosis
+  of VM bugs.  They are hidden so that users will not be encouraged to
+  try them as if they were VM ordinary execution options.  However, they
+  are available in the product version of the VM.  Under instruction
+  from support engineers, VM customers can turn them on to collect
+  diagnostic information about VM problems.  To use a VM diagnostic
+  option, you must first specify +UnlockDiagnosticVMOptions.
+  (This master switch also affects the behavior of -Xprintflags.)
+
+<li><a href="#manageable">manageable</a> flags are writeable external product flags. 
+  They are dynamically writeable through the JDK management interface 
+  (com.sun.management.HotSpotDiagnosticMXBean API) and also through JConsole. 
+  These flags are external exported interface (see CCC).  The list of 
+  manageable flags can be queried programmatically through the management
+  interface.
+
+<!--
+//    A flag can be made as "manageable" only if 
+//    - the flag is defined in a CCC as an external exported interface.
+//    - the VM implementation supports dynamic setting of the flag.
+//      This implies that the VM must *always* query the flag variable
+//      and not reuse state related to the flag state at any given time.
+//    - you want the flag to be queried programmatically by the customers.
+-->
+
+<li><a href="#product_rw">product_rw</a> flags are writeable internal product flags.
+  They are like "manageable" flags but for internal/private use.
+  The list of product_rw flags are internal/private flags which
+  may be changed/removed in a future release.  It can be set 
+  through the management interface to get/set value
+  when the name of flag is supplied.
+
+<!--
+//    A flag can be made as "product_rw" only if 
+//    - the VM implementation supports dynamic setting of the flag.
+//      This implies that the VM must *always* query the flag variable
+//      and not reuse state related to the flag state at any given time.
+// Note that when there is a need to support develop flags to be writeable,
+// it can be done in the same way as product_rw.
+-->
+
+<li><a href="#product_pd">product_pd</a> 
+
+<li><a href="#develop_pd">develop_pd</a> 
+
+</ul>
+
+<table border="1" cellpadding="3" cellspacing="0">
+<tr>
+<th>Name
+<th>Description
+<th>Default
+<th>Type
+
+<tr bgcolor="#e0e0e0">
+<td colspan="4"><a name="product">product
+<tr valign="top">
+<td><a name="UseMembar"><a href="#UseMembar">UseMembar</a>
+<td>(Unstable) Issues membars on thread state transitions
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintCommandLineFlags"><a href="#PrintCommandLineFlags">PrintCommandLineFlags</a>
+<td>Prints flags that appeared on the command line
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="JavaMonitorsInStackTrace"><a href="#JavaMonitorsInStackTrace">JavaMonitorsInStackTrace</a>
+<td>Print info. about Java monitor locks when the stacks are dumped
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="LargePageSizeInBytes"><a href="#LargePageSizeInBytes">LargePageSizeInBytes</a>
+<td>Large page size (0 to let VM choose the page size
+<td>0
+<td>uintx
+<tr valign="top">
+<td><a name="LargePageHeapSizeThreshold"><a href="#LargePageHeapSizeThreshold">LargePageHeapSizeThreshold</a>
+<td>Use large pages if max heap is at least this big
+<td>128*M
+<td>uintx
+<tr valign="top">
+<td><a name="ForceTimeHighResolution"><a href="#ForceTimeHighResolution">ForceTimeHighResolution</a>
+<td>Using high time resolution(For Win32 only)
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintVMQWaitTime"><a href="#PrintVMQWaitTime">PrintVMQWaitTime</a>
+<td>Prints out the waiting time in VM operation queue
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintJNIResolving"><a href="#PrintJNIResolving">PrintJNIResolving</a>
+<td>Used to implement -v:jni
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="UseInlineCaches"><a href="#UseInlineCaches">UseInlineCaches</a>
+<td>Use Inline Caches for virtual calls 
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="UseCompilerSafepoints"><a href="#UseCompilerSafepoints">UseCompilerSafepoints</a>
+<td>Stop at safepoints in compiled code
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="UseSplitVerifier"><a href="#UseSplitVerifier">UseSplitVerifier</a>
+<td>use split verifier with StackMapTable attributes
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="FailOverToOldVerifier"><a href="#FailOverToOldVerifier">FailOverToOldVerifier</a>
+<td>fail over to old verifier when split verifier fails
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="SuspendRetryCount"><a href="#SuspendRetryCount">SuspendRetryCount</a>
+<td>Maximum retry count for an external suspend request
+<td>50
+<td>intx
+<tr valign="top">
+<td><a name="SuspendRetryDelay"><a href="#SuspendRetryDelay">SuspendRetryDelay</a>
+<td>Milliseconds to delay per retry (* current_retry_count)
+<td>5
+<td>intx
+<tr valign="top">
+<td><a name="UseSuspendResumeThreadLists"><a href="#UseSuspendResumeThreadLists">UseSuspendResumeThreadLists</a>
+<td>Enable SuspendThreadList and ResumeThreadList
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="MaxFDLimit"><a href="#MaxFDLimit">MaxFDLimit</a>
+<td>Bump the number of file descriptors to max in solaris.
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="BytecodeVerificationRemote"><a href="#BytecodeVerificationRemote">BytecodeVerificationRemote</a>
+<td>Enables the Java bytecode verifier for remote classes
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="BytecodeVerificationLocal"><a href="#BytecodeVerificationLocal">BytecodeVerificationLocal</a>
+<td>Enables the Java bytecode verifier for local classes
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintGCApplicationConcurrentTime"><a href="#PrintGCApplicationConcurrentTime">PrintGCApplicationConcurrentTime</a>
+<td>Print the time the application has been running
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintGCApplicationStoppedTime"><a href="#PrintGCApplicationStoppedTime">PrintGCApplicationStoppedTime</a>
+<td>Print the time the application has been stopped
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="ShowMessageBoxOnError"><a href="#ShowMessageBoxOnError">ShowMessageBoxOnError</a>
+<td>Keep process alive on VM fatal error
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="SuppressFatalErrorMessage"><a href="#SuppressFatalErrorMessage">SuppressFatalErrorMessage</a>
+<td>Do NO Fatal Error report [Avoid deadlock]
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="OnError"><a href="#OnError">OnError</a>
+<td>Run user-defined commands on fatal error; see VMError.cpp for examples
+<td>""
+<td>ccstr
+<tr valign="top">
+<td><a name="OnOutOfMemoryError"><a href="#OnOutOfMemoryError">OnOutOfMemoryError</a>
+<td>Run user-defined commands on first java.lang.OutOfMemoryError
+<td>""
+<td>ccstr
+<tr valign="top">
+<td><a name="PrintCompilation"><a href="#PrintCompilation">PrintCompilation</a>
+<td>Print compilations
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="StackTraceInThrowable"><a href="#StackTraceInThrowable">StackTraceInThrowable</a>
+<td>Collect backtrace in throwable when exception happens
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="OmitStackTraceInFastThrow"><a href="#OmitStackTraceInFastThrow">OmitStackTraceInFastThrow</a>
+<td>Omit backtraces for some 'hot' exceptions in optimized code
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="ProfilerPrintByteCodeStatistics"><a href="#ProfilerPrintByteCodeStatistics">ProfilerPrintByteCodeStatistics</a>
+<td>Prints byte code statictics when dumping profiler output
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="ProfilerRecordPC"><a href="#ProfilerRecordPC">ProfilerRecordPC</a>
+<td>Collects tick for each 16 byte interval of compiled code
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="ProfileVM"><a href="#ProfileVM">ProfileVM</a>
+<td>Profiles ticks that fall within VM (either in the VM Thread or VM code called through stubs)
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="ProfileIntervals"><a href="#ProfileIntervals">ProfileIntervals</a>
+<td>Prints profiles for each interval (see ProfileIntervalsTicks)
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="RegisterFinalizersAtInit"><a href="#RegisterFinalizersAtInit">RegisterFinalizersAtInit</a>
+<td>Register finalizable objects at end of Object.<init> or after allocation.
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="ClassUnloading"><a href="#ClassUnloading">ClassUnloading</a>
+<td>Do unloading of classes
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="ConvertYieldToSleep"><a href="#ConvertYieldToSleep">ConvertYieldToSleep</a>
+<td>Converts yield to a sleep of MinSleepInterval to simulate Win32 behavior (SOLARIS only)
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="UseBoundThreads"><a href="#UseBoundThreads">UseBoundThreads</a>
+<td>Bind user level threads to kernel threads (for SOLARIS only)
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="UseLWPSynchronization"><a href="#UseLWPSynchronization">UseLWPSynchronization</a>
+<td>Use LWP-based instead of libthread-based synchronization (SPARC only)
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="SyncKnobs"><a href="#SyncKnobs">SyncKnobs</a>
+<td>(Unstable) Various monitor synchronization tunables
+<td>""
+<td>ccstr
+<tr valign="top">
+<td><a name="EmitSync"><a href="#EmitSync">EmitSync</a>
+<td>(Unsafe,Unstable) Controls emission of inline sync fast-path code
+<td>0
+<td>intx
+<tr valign="top">
+<td><a name="AlwaysInflate"><a href="#AlwaysInflate">AlwaysInflate</a>
+<td>(Unstable) Force inflation
+<td>0
+<td>intx
+<tr valign="top">
+<td><a name="Atomics"><a href="#Atomics">Atomics</a>
+<td>(Unsafe,Unstable) Diagnostic - Controls emission of atomics
+<td>0
+<td>intx
+<tr valign="top">
+<td><a name="EmitLFence"><a href="#EmitLFence">EmitLFence</a>
+<td>(Unsafe,Unstable) Experimental
+<td>0
+<td>intx
+<tr valign="top">
+<td><a name="AppendRatio"><a href="#AppendRatio">AppendRatio</a>
+<td>(Unstable) Monitor queue fairness" ) product(intx, SyncFlags, 0,(Unsafe,Unstable) Experimental Sync flags" ) product(intx, SyncVerbose, 0,(Unstable)" ) product(intx, ClearFPUAtPark, 0,(Unsafe,Unstable)" ) product(intx, hashCode, 0, (Unstable) select hashCode generation algorithm" ) product(intx, WorkAroundNPTLTimedWaitHang, 1, (Unstable, Linux-specific)" avoid NPTL-FUTEX hang pthread_cond_timedwait" ) product(bool, FilterSpuriousWakeups , true, Prevent spurious or premature wakeups from object.wait" (Solaris only)
+<td>11
+<td>intx
+<tr valign="top">
+<td><a name="AdjustConcurrency"><a href="#AdjustConcurrency">AdjustConcurrency</a>
+<td>call thr_setconcurrency at thread create time to avoid LWP starvation on MP systems (For Solaris Only)
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="ReduceSignalUsage"><a href="#ReduceSignalUsage">ReduceSignalUsage</a>
+<td>Reduce the use of OS signals in Java and/or the VM
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="AllowUserSignalHandlers"><a href="#AllowUserSignalHandlers">AllowUserSignalHandlers</a>
+<td>Do not complain if the application installs signal handlers (Solaris & Linux only)
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="UseSignalChaining"><a href="#UseSignalChaining">UseSignalChaining</a>
+<td>Use signal-chaining to invoke signal handlers installed by the application (Solaris & Linux only)
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="UseAltSigs"><a href="#UseAltSigs">UseAltSigs</a>
+<td>Use alternate signals instead of SIGUSR1 & SIGUSR2 for VM internal signals. (Solaris only)
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="UseSpinning"><a href="#UseSpinning">UseSpinning</a>
+<td>Use spinning in monitor inflation and before entry
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PreSpinYield"><a href="#PreSpinYield">PreSpinYield</a>
+<td>Yield before inner spinning loop
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PostSpinYield"><a href="#PostSpinYield">PostSpinYield</a>
+<td>Yield after inner spinning loop
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="AllowJNIEnvProxy"><a href="#AllowJNIEnvProxy">AllowJNIEnvProxy</a>
+<td>Allow JNIEnv proxies for jdbx
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="JNIDetachReleasesMonitors"><a href="#JNIDetachReleasesMonitors">JNIDetachReleasesMonitors</a>
+<td>JNI DetachCurrentThread releases monitors owned by thread
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="RestoreMXCSROnJNICalls"><a href="#RestoreMXCSROnJNICalls">RestoreMXCSROnJNICalls</a>
+<td>Restore MXCSR when returning from JNI calls
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CheckJNICalls"><a href="#CheckJNICalls">CheckJNICalls</a>
+<td>Verify all arguments to JNI calls
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="UseFastJNIAccessors"><a href="#UseFastJNIAccessors">UseFastJNIAccessors</a>
+<td>Use optimized versions of Get<Primitive>Field
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="EagerXrunInit"><a href="#EagerXrunInit">EagerXrunInit</a>
+<td>Eagerly initialize -Xrun libraries; allows startup profiling, but not all -Xrun libraries may support the state of the VM at this time
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PreserveAllAnnotations"><a href="#PreserveAllAnnotations">PreserveAllAnnotations</a>
+<td>Preserve RuntimeInvisibleAnnotations as well as RuntimeVisibleAnnotations
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="LazyBootClassLoader"><a href="#LazyBootClassLoader">LazyBootClassLoader</a>
+<td>Enable/disable lazy opening of boot class path entries
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="UseBiasedLocking"><a href="#UseBiasedLocking">UseBiasedLocking</a>
+<td>Enable biased locking in JVM
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="BiasedLockingStartupDelay"><a href="#BiasedLockingStartupDelay">BiasedLockingStartupDelay</a>
+<td>Number of milliseconds to wait before enabling biased locking
+<td>4000
+<td>intx
+<tr valign="top">
+<td><a name="BiasedLockingBulkRebiasThreshold"><a href="#BiasedLockingBulkRebiasThreshold">BiasedLockingBulkRebiasThreshold</a>
+<td>Threshold of number of revocations per type to try to rebias all objects in the heap of that type
+<td>20
+<td>intx
+<tr valign="top">
+<td><a name="BiasedLockingBulkRevokeThreshold"><a href="#BiasedLockingBulkRevokeThreshold">BiasedLockingBulkRevokeThreshold</a>
+<td>Threshold of number of revocations per type to permanently revoke biases of all objects in the heap of that type
+<td>40
+<td>intx
+<tr valign="top">
+<td><a name="BiasedLockingDecayTime"><a href="#BiasedLockingDecayTime">BiasedLockingDecayTime</a>
+<td>Decay time (in milliseconds) to re-enable bulk rebiasing of a type after previous bulk rebias
+<td>25000
+<td>intx
+<tr valign="top">
+<td><a name="TraceJVMTI"><a href="#TraceJVMTI">TraceJVMTI</a>
+<td>Trace flags for JVMTI functions and events
+<td>""
+<td>ccstr
+<tr valign="top">
+<td><a name="StressLdcRewrite"><a href="#StressLdcRewrite">StressLdcRewrite</a>
+<td>Force ldc -> ldc_w rewrite during RedefineClasses
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceRedefineClasses"><a href="#TraceRedefineClasses">TraceRedefineClasses</a>
+<td>Trace level for JVMTI RedefineClasses
+<td>0
+<td>intx
+<tr valign="top">
+<td><a name="VerifyMergedCPBytecodes"><a href="#VerifyMergedCPBytecodes">VerifyMergedCPBytecodes</a>
+<td>Verify bytecodes after RedefineClasses constant pool merging
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="HPILibPath"><a href="#HPILibPath">HPILibPath</a>
+<td>Specify alternate path to HPI library
+<td>""
+<td>ccstr
+<tr valign="top">
+<td><a name="TraceClassResolution"><a href="#TraceClassResolution">TraceClassResolution</a>
+<td>Trace all constant pool resolutions (for debugging)
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceBiasedLocking"><a href="#TraceBiasedLocking">TraceBiasedLocking</a>
+<td>Trace biased locking in JVM
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceMonitorInflation"><a href="#TraceMonitorInflation">TraceMonitorInflation</a>
+<td>Trace monitor inflation in JVM
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="Use486InstrsOnly"><a href="#Use486InstrsOnly">Use486InstrsOnly</a>
+<td>Use 80486 Compliant instruction subset
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="UseSerialGC"><a href="#UseSerialGC">UseSerialGC</a>
+<td>Tells whether the VM should use serial garbage collector
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="UseParallelGC"><a href="#UseParallelGC">UseParallelGC</a>
+<td>Use the Parallel Scavenge garbage collector
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="UseParallelOldGC"><a href="#UseParallelOldGC">UseParallelOldGC</a>
+<td>Use the Parallel Old garbage collector
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="UseParallelOldGCCompacting"><a href="#UseParallelOldGCCompacting">UseParallelOldGCCompacting</a>
+<td>In the Parallel Old garbage collector use parallel compaction
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="UseParallelDensePrefixUpdate"><a href="#UseParallelDensePrefixUpdate">UseParallelDensePrefixUpdate</a>
+<td>In the Parallel Old garbage collector use parallel dense" prefix update
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="HeapMaximumCompactionInterval"><a href="#HeapMaximumCompactionInterval">HeapMaximumCompactionInterval</a>
+<td>How often should we maximally compact the heap (not allowing any dead space)
+<td>20
+<td>uintx
+<tr valign="top">
+<td><a name="HeapFirstMaximumCompactionCount"><a href="#HeapFirstMaximumCompactionCount">HeapFirstMaximumCompactionCount</a>
+<td>The collection count for the first maximum compaction
+<td>3
+<td>uintx
+<tr valign="top">
+<td><a name="UseMaximumCompactionOnSystemGC"><a href="#UseMaximumCompactionOnSystemGC">UseMaximumCompactionOnSystemGC</a>
+<td>In the Parallel Old garbage collector maximum compaction for a system GC
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="ParallelOldDeadWoodLimiterMean"><a href="#ParallelOldDeadWoodLimiterMean">ParallelOldDeadWoodLimiterMean</a>
+<td>The mean used by the par compact dead wood" limiter (a number between 0-100).
+<td>50
+<td>uintx
+<tr valign="top">
+<td><a name="ParallelOldDeadWoodLimiterStdDev"><a href="#ParallelOldDeadWoodLimiterStdDev">ParallelOldDeadWoodLimiterStdDev</a>
+<td>The standard deviation used by the par compact dead wood" limiter (a number between 0-100).
+<td>80
+<td>uintx
+<tr valign="top">
+<td><a name="UseParallelOldGCDensePrefix"><a href="#UseParallelOldGCDensePrefix">UseParallelOldGCDensePrefix</a>
+<td>Use a dense prefix with the Parallel Old garbage collector
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="ParallelGCThreads"><a href="#ParallelGCThreads">ParallelGCThreads</a>
+<td>Number of parallel threads parallel gc will use
+<td>0
+<td>uintx
+<tr valign="top">
+<td><a name="ParallelCMSThreads"><a href="#ParallelCMSThreads">ParallelCMSThreads</a>
+<td>Max number of threads CMS will use for concurrent work
+<td>0
+<td>uintx
+<tr valign="top">
+<td><a name="YoungPLABSize"><a href="#YoungPLABSize">YoungPLABSize</a>
+<td>Size of young gen promotion labs (in HeapWords)
+<td>4096
+<td>uintx
+<tr valign="top">
+<td><a name="OldPLABSize"><a href="#OldPLABSize">OldPLABSize</a>
+<td>Size of old gen promotion labs (in HeapWords)
+<td>1024
+<td>uintx
+<tr valign="top">
+<td><a name="GCTaskTimeStampEntries"><a href="#GCTaskTimeStampEntries">GCTaskTimeStampEntries</a>
+<td>Number of time stamp entries per gc worker thread
+<td>200
+<td>uintx
+<tr valign="top">
+<td><a name="AlwaysTenure"><a href="#AlwaysTenure">AlwaysTenure</a>
+<td>Always tenure objects in eden. (ParallelGC only)
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="NeverTenure"><a href="#NeverTenure">NeverTenure</a>
+<td>Never tenure objects in eden, May tenure on overflow" (ParallelGC only)
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="ScavengeBeforeFullGC"><a href="#ScavengeBeforeFullGC">ScavengeBeforeFullGC</a>
+<td>Scavenge youngest generation before each full GC," used with UseParallelGC
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="UseConcMarkSweepGC"><a href="#UseConcMarkSweepGC">UseConcMarkSweepGC</a>
+<td>Use Concurrent Mark-Sweep GC in the old generation
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="ExplicitGCInvokesConcurrent"><a href="#ExplicitGCInvokesConcurrent">ExplicitGCInvokesConcurrent</a>
+<td>A System.gc() request invokes a concurrent collection;" (effective only when UseConcMarkSweepGC)
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="UseCMSBestFit"><a href="#UseCMSBestFit">UseCMSBestFit</a>
+<td>Use CMS best fit allocation strategy
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="UseCMSCollectionPassing"><a href="#UseCMSCollectionPassing">UseCMSCollectionPassing</a>
+<td>Use passing of collection from background to foreground
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="UseParNewGC"><a href="#UseParNewGC">UseParNewGC</a>
+<td>Use parallel threads in the new generation.
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="ParallelGCVerbose"><a href="#ParallelGCVerbose">ParallelGCVerbose</a>
+<td>Verbose output for parallel GC.
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="ParallelGCBufferWastePct"><a href="#ParallelGCBufferWastePct">ParallelGCBufferWastePct</a>
+<td>wasted fraction of parallel allocation buffer.
+<td>10
+<td>intx
+<tr valign="top">
+<td><a name="ParallelGCRetainPLAB"><a href="#ParallelGCRetainPLAB">ParallelGCRetainPLAB</a>
+<td>Retain parallel allocation buffers across scavenges.
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="TargetPLABWastePct"><a href="#TargetPLABWastePct">TargetPLABWastePct</a>
+<td>target wasted space in last buffer as pct of overall allocation
+<td>10
+<td>intx
+<tr valign="top">
+<td><a name="PLABWeight"><a href="#PLABWeight">PLABWeight</a>
+<td>Percentage (0-100) used to weight the current sample when" computing exponentially decaying average for ResizePLAB.
+<td>75
+<td>uintx
+<tr valign="top">
+<td><a name="ResizePLAB"><a href="#ResizePLAB">ResizePLAB</a>
+<td>Dynamically resize (survivor space) promotion labs
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="PrintPLAB"><a href="#PrintPLAB">PrintPLAB</a>
+<td>Print (survivor space) promotion labs sizing decisions
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="ParGCArrayScanChunk"><a href="#ParGCArrayScanChunk">ParGCArrayScanChunk</a>
+<td>Scan a subset and push remainder, if array is bigger than this
+<td>50
+<td>intx
+<tr valign="top">
+<td><a name="ParGCDesiredObjsFromOverflowList"><a href="#ParGCDesiredObjsFromOverflowList">ParGCDesiredObjsFromOverflowList</a>
+<td>The desired number of objects to claim from the overflow list
+<td>20
+<td>intx
+<tr valign="top">
+<td><a name="CMSParPromoteBlocksToClaim"><a href="#CMSParPromoteBlocksToClaim">CMSParPromoteBlocksToClaim</a>
+<td>Number of blocks to attempt to claim when refilling CMS LAB for parallel GC.
+<td>50
+<td>uintx
+<tr valign="top">
+<td><a name="AlwaysPreTouch"><a href="#AlwaysPreTouch">AlwaysPreTouch</a>
+<td>It forces all freshly committed pages to be pre-touched.
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CMSUseOldDefaults"><a href="#CMSUseOldDefaults">CMSUseOldDefaults</a>
+<td>A flag temporarily introduced to allow reverting to some older" default settings; older as of 6.0 
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CMSYoungGenPerWorker"><a href="#CMSYoungGenPerWorker">CMSYoungGenPerWorker</a>
+<td>The amount of young gen chosen by default per GC worker thread available 
+<td>16*M
+<td>intx
+<tr valign="top">
+<td><a name="CMSIncrementalMode"><a href="#CMSIncrementalMode">CMSIncrementalMode</a>
+<td>Whether CMS GC should operate in \"incremental\" mode
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CMSIncrementalDutyCycle"><a href="#CMSIncrementalDutyCycle">CMSIncrementalDutyCycle</a>
+<td>CMS incremental mode duty cycle (a percentage, 0-100). If" CMSIncrementalPacing is enabled, then this is just the initial" value
+<td>10
+<td>uintx
+<tr valign="top">
+<td><a name="CMSIncrementalPacing"><a href="#CMSIncrementalPacing">CMSIncrementalPacing</a>
+<td>Whether the CMS incremental mode duty cycle should be automatically adjusted
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="CMSIncrementalDutyCycleMin"><a href="#CMSIncrementalDutyCycleMin">CMSIncrementalDutyCycleMin</a>
+<td>Lower bound on the duty cycle when CMSIncrementalPacing is" enabled (a percentage, 0-100).
+<td>0
+<td>uintx
+<tr valign="top">
+<td><a name="CMSIncrementalSafetyFactor"><a href="#CMSIncrementalSafetyFactor">CMSIncrementalSafetyFactor</a>
+<td>Percentage (0-100) used to add conservatism when computing the" duty cycle.
+<td>10
+<td>uintx
+<tr valign="top">
+<td><a name="CMSIncrementalOffset"><a href="#CMSIncrementalOffset">CMSIncrementalOffset</a>
+<td>Percentage (0-100) by which the CMS incremental mode duty cycle" is shifted to the right within the period between young GCs
+<td>0
+<td>uintx
+<tr valign="top">
+<td><a name="CMSExpAvgFactor"><a href="#CMSExpAvgFactor">CMSExpAvgFactor</a>
+<td>Percentage (0-100) used to weight the current sample when" computing exponential averages for CMS statistics.
+<td>25
+<td>uintx
+<tr valign="top">
+<td><a name="CMS_FLSWeight"><a href="#CMS_FLSWeight">CMS_FLSWeight</a>
+<td>Percentage (0-100) used to weight the current sample when" computing exponentially decating averages for CMS FLS statistics.
+<td>50
+<td>uintx
+<tr valign="top">
+<td><a name="CMS_FLSPadding"><a href="#CMS_FLSPadding">CMS_FLSPadding</a>
+<td>The multiple of deviation from mean to use for buffering" against volatility in free list demand.
+<td>2
+<td>uintx
+<tr valign="top">
+<td><a name="FLSCoalescePolicy"><a href="#FLSCoalescePolicy">FLSCoalescePolicy</a>
+<td>CMS: Aggression level for coalescing, increasing from 0 to 4
+<td>2
+<td>uintx
+<tr valign="top">
+<td><a name="CMS_SweepWeight"><a href="#CMS_SweepWeight">CMS_SweepWeight</a>
+<td>Percentage (0-100) used to weight the current sample when" computing exponentially decaying average for inter-sweep duration.
+<td>50
+<td>uintx
+<tr valign="top">
+<td><a name="CMS_SweepPadding"><a href="#CMS_SweepPadding">CMS_SweepPadding</a>
+<td>The multiple of deviation from mean to use for buffering" against volatility in inter-sweep duration.
+<td>2
+<td>uintx
+<tr valign="top">
+<td><a name="CMS_SweepTimerThresholdMillis"><a href="#CMS_SweepTimerThresholdMillis">CMS_SweepTimerThresholdMillis</a>
+<td>Skip block flux-rate sampling for an epoch unless inter-sweep duration exceeds this threhold in milliseconds
+<td>10
+<td>uintx
+<tr valign="top">
+<td><a name="CMSClassUnloadingEnabled"><a href="#CMSClassUnloadingEnabled">CMSClassUnloadingEnabled</a>
+<td>Whether class unloading enabled when using CMS GC
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CMSCompactWhenClearAllSoftRefs"><a href="#CMSCompactWhenClearAllSoftRefs">CMSCompactWhenClearAllSoftRefs</a>
+<td>Compact when asked to collect CMS gen with clear_all_soft_refs
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="UseCMSCompactAtFullCollection"><a href="#UseCMSCompactAtFullCollection">UseCMSCompactAtFullCollection</a>
+<td>Use mark sweep compact at full collections
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="CMSFullGCsBeforeCompaction"><a href="#CMSFullGCsBeforeCompaction">CMSFullGCsBeforeCompaction</a>
+<td>Number of CMS full collection done before compaction if > 0
+<td>0
+<td>uintx
+<tr valign="top">
+<td><a name="CMSIndexedFreeListReplenish"><a href="#CMSIndexedFreeListReplenish">CMSIndexedFreeListReplenish</a>
+<td>Replenish and indexed free list with this number of chunks
+<td>4
+<td>uintx
+<tr valign="top">
+<td><a name="CMSLoopWarn"><a href="#CMSLoopWarn">CMSLoopWarn</a>
+<td>Warn in case of excessive CMS looping
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CMSMarkStackSize"><a href="#CMSMarkStackSize">CMSMarkStackSize</a>
+<td>Size of CMS marking stack
+<td>32*K
+<td>uintx
+<tr valign="top">
+<td><a name="CMSMarkStackSizeMax"><a href="#CMSMarkStackSizeMax">CMSMarkStackSizeMax</a>
+<td>Max size of CMS marking stack
+<td>4*M
+<td>uintx
+<tr valign="top">
+<td><a name="CMSMaxAbortablePrecleanLoops"><a href="#CMSMaxAbortablePrecleanLoops">CMSMaxAbortablePrecleanLoops</a>
+<td>(Temporary, subject to experimentation)" Maximum number of abortable preclean iterations, if > 0
+<td>0
+<td>uintx
+<tr valign="top">
+<td><a name="CMSMaxAbortablePrecleanTime"><a href="#CMSMaxAbortablePrecleanTime">CMSMaxAbortablePrecleanTime</a>
+<td>(Temporary, subject to experimentation)" Maximum time in abortable preclean in ms
+<td>5000
+<td>intx
+<tr valign="top">
+<td><a name="CMSAbortablePrecleanMinWorkPerIteration"><a href="#CMSAbortablePrecleanMinWorkPerIteration">CMSAbortablePrecleanMinWorkPerIteration</a>
+<td>(Temporary, subject to experimentation)" Nominal minimum work per abortable preclean iteration
+<td>100
+<td>uintx
+<tr valign="top">
+<td><a name="CMSAbortablePrecleanWaitMillis"><a href="#CMSAbortablePrecleanWaitMillis">CMSAbortablePrecleanWaitMillis</a>
+<td>(Temporary, subject to experimentation)" Time that we sleep between iterations when not given" enough work per iteration
+<td>100
+<td>intx
+<tr valign="top">
+<td><a name="CMSRescanMultiple"><a href="#CMSRescanMultiple">CMSRescanMultiple</a>
+<td>Size (in cards) of CMS parallel rescan task
+<td>32
+<td>uintx
+<tr valign="top">
+<td><a name="CMSConcMarkMultiple"><a href="#CMSConcMarkMultiple">CMSConcMarkMultiple</a>
+<td>Size (in cards) of CMS concurrent MT marking task
+<td>32
+<td>uintx
+<tr valign="top">
+<td><a name="CMSRevisitStackSize"><a href="#CMSRevisitStackSize">CMSRevisitStackSize</a>
+<td>Size of CMS KlassKlass revisit stack
+<td>1*M
+<td>uintx
+<tr valign="top">
+<td><a name="CMSAbortSemantics"><a href="#CMSAbortSemantics">CMSAbortSemantics</a>
+<td>Whether abort-on-overflow semantics is implemented
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CMSParallelRemarkEnabled"><a href="#CMSParallelRemarkEnabled">CMSParallelRemarkEnabled</a>
+<td>Whether parallel remark enabled (only if ParNewGC)
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="CMSParallelSurvivorRemarkEnabled"><a href="#CMSParallelSurvivorRemarkEnabled">CMSParallelSurvivorRemarkEnabled</a>
+<td>Whether parallel remark of survivor space" enabled (effective only if CMSParallelRemarkEnabled)
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="CMSPLABRecordAlways"><a href="#CMSPLABRecordAlways">CMSPLABRecordAlways</a>
+<td>Whether to always record survivor space PLAB bdries" (effective only if CMSParallelSurvivorRemarkEnabled)
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="CMSConcurrentMTEnabled"><a href="#CMSConcurrentMTEnabled">CMSConcurrentMTEnabled</a>
+<td>Whether multi-threaded concurrent work enabled (if ParNewGC)
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="CMSPermGenPrecleaningEnabled"><a href="#CMSPermGenPrecleaningEnabled">CMSPermGenPrecleaningEnabled</a>
+<td>Whether concurrent precleaning enabled in perm gen" (effective only when CMSPrecleaningEnabled is true)
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="CMSPermGenSweepingEnabled"><a href="#CMSPermGenSweepingEnabled">CMSPermGenSweepingEnabled</a>
+<td>Whether sweeping of perm gen is enabled
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CMSPrecleaningEnabled"><a href="#CMSPrecleaningEnabled">CMSPrecleaningEnabled</a>
+<td>Whether concurrent precleaning enabled
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="CMSPrecleanIter"><a href="#CMSPrecleanIter">CMSPrecleanIter</a>
+<td>Maximum number of precleaning iteration passes
+<td>3
+<td>uintx
+<tr valign="top">
+<td><a name="CMSPrecleanNumerator"><a href="#CMSPrecleanNumerator">CMSPrecleanNumerator</a>
+<td>CMSPrecleanNumerator:CMSPrecleanDenominator yields convergence" ratio
+<td>2
+<td>uintx
+<tr valign="top">
+<td><a name="CMSPrecleanDenominator"><a href="#CMSPrecleanDenominator">CMSPrecleanDenominator</a>
+<td>CMSPrecleanNumerator:CMSPrecleanDenominator yields convergence" ratio
+<td>3
+<td>uintx
+<tr valign="top">
+<td><a name="CMSPrecleanRefLists1"><a href="#CMSPrecleanRefLists1">CMSPrecleanRefLists1</a>
+<td>Preclean ref lists during (initial) preclean phase
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="CMSPrecleanRefLists2"><a href="#CMSPrecleanRefLists2">CMSPrecleanRefLists2</a>
+<td>Preclean ref lists during abortable preclean phase
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CMSPrecleanSurvivors1"><a href="#CMSPrecleanSurvivors1">CMSPrecleanSurvivors1</a>
+<td>Preclean survivors during (initial) preclean phase
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CMSPrecleanSurvivors2"><a href="#CMSPrecleanSurvivors2">CMSPrecleanSurvivors2</a>
+<td>Preclean survivors during abortable preclean phase
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="CMSPrecleanThreshold"><a href="#CMSPrecleanThreshold">CMSPrecleanThreshold</a>
+<td>Don't re-iterate if #dirty cards less than this
+<td>1000
+<td>uintx
+<tr valign="top">
+<td><a name="CMSCleanOnEnter"><a href="#CMSCleanOnEnter">CMSCleanOnEnter</a>
+<td>Clean-on-enter optimization for reducing number of dirty cards
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="CMSRemarkVerifyVariant"><a href="#CMSRemarkVerifyVariant">CMSRemarkVerifyVariant</a>
+<td>Choose variant (1,2) of verification following remark
+<td>1
+<td>uintx
+<tr valign="top">
+<td><a name="CMSScheduleRemarkEdenSizeThreshold"><a href="#CMSScheduleRemarkEdenSizeThreshold">CMSScheduleRemarkEdenSizeThreshold</a>
+<td>If Eden used is below this value, don't try to schedule remark
+<td>2*M
+<td>uintx
+<tr valign="top">
+<td><a name="CMSScheduleRemarkEdenPenetration"><a href="#CMSScheduleRemarkEdenPenetration">CMSScheduleRemarkEdenPenetration</a>
+<td>The Eden occupancy % at which to try and schedule remark pause
+<td>50
+<td>uintx
+<tr valign="top">
+<td><a name="CMSScheduleRemarkSamplingRatio"><a href="#CMSScheduleRemarkSamplingRatio">CMSScheduleRemarkSamplingRatio</a>
+<td>Start sampling Eden top at least before yg occupancy reaches" 1/<ratio> of the size at which we plan to schedule remark
+<td>5
+<td>uintx
+<tr valign="top">
+<td><a name="CMSSamplingGrain"><a href="#CMSSamplingGrain">CMSSamplingGrain</a>
+<td>The minimum distance between eden samples for CMS (see above)
+<td>16*K
+<td>uintx
+<tr valign="top">
+<td><a name="CMSScavengeBeforeRemark"><a href="#CMSScavengeBeforeRemark">CMSScavengeBeforeRemark</a>
+<td>Attempt scavenge before the CMS remark step
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CMSWorkQueueDrainThreshold"><a href="#CMSWorkQueueDrainThreshold">CMSWorkQueueDrainThreshold</a>
+<td>Don't drain below this size per parallel worker/thief
+<td>10
+<td>uintx
+<tr valign="top">
+<td><a name="CMSWaitDuration"><a href="#CMSWaitDuration">CMSWaitDuration</a>
+<td>Time in milliseconds that CMS thread waits for young GC
+<td>2000
+<td>intx
+<tr valign="top">
+<td><a name="CMSYield"><a href="#CMSYield">CMSYield</a>
+<td>Yield between steps of concurrent mark & sweep
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="CMSBitMapYieldQuantum"><a href="#CMSBitMapYieldQuantum">CMSBitMapYieldQuantum</a>
+<td>Bitmap operations should process at most this many bits" between yields
+<td>10*M
+<td>uintx
+<tr valign="top">
+<td><a name="BlockOffsetArrayUseUnallocatedBlock"><a href="#BlockOffsetArrayUseUnallocatedBlock">BlockOffsetArrayUseUnallocatedBlock</a>
+<td>Maintain _unallocated_block in BlockOffsetArray" (currently applicable only to CMS collector)
+<td>trueInDebug
+<td>bool
+<tr valign="top">
+<td><a name="RefDiscoveryPolicy"><a href="#RefDiscoveryPolicy">RefDiscoveryPolicy</a>
+<td>Whether reference-based(0) or referent-based(1)
+<td>0
+<td>intx
+<tr valign="top">
+<td><a name="ParallelRefProcEnabled"><a href="#ParallelRefProcEnabled">ParallelRefProcEnabled</a>
+<td>Enable parallel reference processing whenever possible
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CMSTriggerRatio"><a href="#CMSTriggerRatio">CMSTriggerRatio</a>
+<td>Percentage of MinHeapFreeRatio in CMS generation that is allocated before a CMS collection cycle commences
+<td>80
+<td>intx
+<tr valign="top">
+<td><a name="CMSBootstrapOccupancy"><a href="#CMSBootstrapOccupancy">CMSBootstrapOccupancy</a>
+<td>Percentage CMS generation occupancy at which to initiate CMS collection for bootstrapping collection stats
+<td>50
+<td>intx
+<tr valign="top">
+<td><a name="CMSInitiatingOccupancyFraction"><a href="#CMSInitiatingOccupancyFraction">CMSInitiatingOccupancyFraction</a>
+<td>Percentage CMS generation occupancy to start a CMS collection cycle (A negative value means that CMSTirggerRatio is used)
+<td>-1
+<td>intx
+<tr valign="top">
+<td><a name="UseCMSInitiatingOccupancyOnly"><a href="#UseCMSInitiatingOccupancyOnly">UseCMSInitiatingOccupancyOnly</a>
+<td>Only use occupancy as a crierion for starting a CMS collection
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="HandlePromotionFailure"><a href="#HandlePromotionFailure">HandlePromotionFailure</a>
+<td>The youngest generation collection does not require" a guarantee of full promotion of all live objects.
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="PreserveMarkStackSize"><a href="#PreserveMarkStackSize">PreserveMarkStackSize</a>
+<td>Size for stack used in promotion failure handling
+<td>40
+<td>uintx
+<tr valign="top">
+<td><a name="ZeroTLAB"><a href="#ZeroTLAB">ZeroTLAB</a>
+<td>Zero out the newly created TLAB
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintTLAB"><a href="#PrintTLAB">PrintTLAB</a>
+<td>Print various TLAB related information
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TLABStats"><a href="#TLABStats">TLABStats</a>
+<td>Print various TLAB related information
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="AlwaysActAsServerClassMachine"><a href="#AlwaysActAsServerClassMachine">AlwaysActAsServerClassMachine</a>
+<td>Always act like a server-class machine
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="DefaultMaxRAM"><a href="#DefaultMaxRAM">DefaultMaxRAM</a>
+<td>Maximum real memory size for setting server class heap size
+<td>G
+<td>uintx
+<tr valign="top">
+<td><a name="DefaultMaxRAMFraction"><a href="#DefaultMaxRAMFraction">DefaultMaxRAMFraction</a>
+<td>Fraction (1/n) of real memory used for server class max heap
+<td>4
+<td>uintx
+<tr valign="top">
+<td><a name="DefaultInitialRAMFraction"><a href="#DefaultInitialRAMFraction">DefaultInitialRAMFraction</a>
+<td>Fraction (1/n) of real memory used for server class initial heap
+<td>64
+<td>uintx
+<tr valign="top">
+<td><a name="UseAutoGCSelectPolicy"><a href="#UseAutoGCSelectPolicy">UseAutoGCSelectPolicy</a>
+<td>Use automatic collection selection policy
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="AutoGCSelectPauseMillis"><a href="#AutoGCSelectPauseMillis">AutoGCSelectPauseMillis</a>
+<td>Automatic GC selection pause threshhold in ms
+<td>5000
+<td>uintx
+<tr valign="top">
+<td><a name="UseAdaptiveSizePolicy"><a href="#UseAdaptiveSizePolicy">UseAdaptiveSizePolicy</a>
+<td>Use adaptive generation sizing policies
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="UsePSAdaptiveSurvivorSizePolicy"><a href="#UsePSAdaptiveSurvivorSizePolicy">UsePSAdaptiveSurvivorSizePolicy</a>
+<td>Use adaptive survivor sizing policies
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="UseAdaptiveGenerationSizePolicyAtMinorCollection"><a href="#UseAdaptiveGenerationSizePolicyAtMinorCollection">UseAdaptiveGenerationSizePolicyAtMinorCollection</a>
+<td>Use adaptive young-old sizing policies at minor collections
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="UseAdaptiveGenerationSizePolicyAtMajorCollection"><a href="#UseAdaptiveGenerationSizePolicyAtMajorCollection">UseAdaptiveGenerationSizePolicyAtMajorCollection</a>
+<td>Use adaptive young-old sizing policies at major collections
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="UseAdaptiveSizePolicyWithSystemGC"><a href="#UseAdaptiveSizePolicyWithSystemGC">UseAdaptiveSizePolicyWithSystemGC</a>
+<td>Use statistics from System.GC for adaptive size policy
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="UseAdaptiveGCBoundary"><a href="#UseAdaptiveGCBoundary">UseAdaptiveGCBoundary</a>
+<td>Allow young-old boundary to move
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="AdaptiveSizeThroughPutPolicy"><a href="#AdaptiveSizeThroughPutPolicy">AdaptiveSizeThroughPutPolicy</a>
+<td>Policy for changeing generation size for throughput goals
+<td>0
+<td>uintx
+<tr valign="top">
+<td><a name="AdaptiveSizePausePolicy"><a href="#AdaptiveSizePausePolicy">AdaptiveSizePausePolicy</a>
+<td>Policy for changing generation size for pause goals
+<td>0
+<td>uintx
+<tr valign="top">
+<td><a name="AdaptiveSizePolicyInitializingSteps"><a href="#AdaptiveSizePolicyInitializingSteps">AdaptiveSizePolicyInitializingSteps</a>
+<td>Number of steps where heuristics is used before data is used
+<td>20
+<td>uintx
+<tr valign="top">
+<td><a name="AdaptiveSizePolicyOutputInterval"><a href="#AdaptiveSizePolicyOutputInterval">AdaptiveSizePolicyOutputInterval</a>
+<td>Collecton interval for printing information, zero => never
+<td>0
+<td>uintx
+<tr valign="top">
+<td><a name="UseAdaptiveSizePolicyFootprintGoal"><a href="#UseAdaptiveSizePolicyFootprintGoal">UseAdaptiveSizePolicyFootprintGoal</a>
+<td>Use adaptive minimum footprint as a goal
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="AdaptiveSizePolicyWeight"><a href="#AdaptiveSizePolicyWeight">AdaptiveSizePolicyWeight</a>
+<td>Weight given to exponential resizing, between 0 and 100
+<td>10
+<td>uintx
+<tr valign="top">
+<td><a name="AdaptiveTimeWeight"><a href="#AdaptiveTimeWeight">AdaptiveTimeWeight</a>
+<td>Weight given to time in adaptive policy, between 0 and 100
+<td>25
+<td>uintx
+<tr valign="top">
+<td><a name="PausePadding"><a href="#PausePadding">PausePadding</a>
+<td>How much buffer to keep for pause time
+<td>1
+<td>uintx
+<tr valign="top">
+<td><a name="PromotedPadding"><a href="#PromotedPadding">PromotedPadding</a>
+<td>How much buffer to keep for promotion failure
+<td>3
+<td>uintx
+<tr valign="top">
+<td><a name="SurvivorPadding"><a href="#SurvivorPadding">SurvivorPadding</a>
+<td>How much buffer to keep for survivor overflow
+<td>3
+<td>uintx
+<tr valign="top">
+<td><a name="AdaptivePermSizeWeight"><a href="#AdaptivePermSizeWeight">AdaptivePermSizeWeight</a>
+<td>Weight for perm gen exponential resizing, between 0 and 100
+<td>20
+<td>uintx
+<tr valign="top">
+<td><a name="PermGenPadding"><a href="#PermGenPadding">PermGenPadding</a>
+<td>How much buffer to keep for perm gen sizing
+<td>3
+<td>uintx
+<tr valign="top">
+<td><a name="ThresholdTolerance"><a href="#ThresholdTolerance">ThresholdTolerance</a>
+<td>Allowed collection cost difference between generations
+<td>10
+<td>uintx
+<tr valign="top">
+<td><a name="AdaptiveSizePolicyCollectionCostMargin"><a href="#AdaptiveSizePolicyCollectionCostMargin">AdaptiveSizePolicyCollectionCostMargin</a>
+<td>If collection costs are within margin, reduce both by full delta
+<td>50
+<td>uintx
+<tr valign="top">
+<td><a name="YoungGenerationSizeIncrement"><a href="#YoungGenerationSizeIncrement">YoungGenerationSizeIncrement</a>
+<td>Adaptive size percentage change in young generation
+<td>20
+<td>uintx
+<tr valign="top">
+<td><a name="YoungGenerationSizeSupplement"><a href="#YoungGenerationSizeSupplement">YoungGenerationSizeSupplement</a>
+<td>Supplement to YoungedGenerationSizeIncrement used at startup
+<td>80
+<td>uintx
+<tr valign="top">
+<td><a name="YoungGenerationSizeSupplementDecay"><a href="#YoungGenerationSizeSupplementDecay">YoungGenerationSizeSupplementDecay</a>
+<td>Decay factor to YoungedGenerationSizeSupplement
+<td>8
+<td>uintx
+<tr valign="top">
+<td><a name="TenuredGenerationSizeIncrement"><a href="#TenuredGenerationSizeIncrement">TenuredGenerationSizeIncrement</a>
+<td>Adaptive size percentage change in tenured generation
+<td>20
+<td>uintx
+<tr valign="top">
+<td><a name="TenuredGenerationSizeSupplement"><a href="#TenuredGenerationSizeSupplement">TenuredGenerationSizeSupplement</a>
+<td>Supplement to TenuredGenerationSizeIncrement used at startup
+<td>80
+<td>uintx
+<tr valign="top">
+<td><a name="TenuredGenerationSizeSupplementDecay"><a href="#TenuredGenerationSizeSupplementDecay">TenuredGenerationSizeSupplementDecay</a>
+<td>Decay factor to TenuredGenerationSizeIncrement
+<td>2
+<td>uintx
+<tr valign="top">
+<td><a name="MaxGCPauseMillis"><a href="#MaxGCPauseMillis">MaxGCPauseMillis</a>
+<td>Adaptive size policy maximum GC pause time goal in msec
+<td>max_uintx
+<td>uintx
+<tr valign="top">
+<td><a name="MaxGCMinorPauseMillis"><a href="#MaxGCMinorPauseMillis">MaxGCMinorPauseMillis</a>
+<td>Adaptive size policy maximum GC minor pause time goal in msec
+<td>max_uintx
+<td>uintx
+<tr valign="top">
+<td><a name="GCTimeRatio"><a href="#GCTimeRatio">GCTimeRatio</a>
+<td>Adaptive size policy application time to GC time ratio
+<td>99
+<td>uintx
+<tr valign="top">
+<td><a name="AdaptiveSizeDecrementScaleFactor"><a href="#AdaptiveSizeDecrementScaleFactor">AdaptiveSizeDecrementScaleFactor</a>
+<td>Adaptive size scale down factor for shrinking
+<td>4
+<td>uintx
+<tr valign="top">
+<td><a name="UseAdaptiveSizeDecayMajorGCCost"><a href="#UseAdaptiveSizeDecayMajorGCCost">UseAdaptiveSizeDecayMajorGCCost</a>
+<td>Adaptive size decays the major cost for long major intervals
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="AdaptiveSizeMajorGCDecayTimeScale"><a href="#AdaptiveSizeMajorGCDecayTimeScale">AdaptiveSizeMajorGCDecayTimeScale</a>
+<td>Time scale over which major costs decay
+<td>10
+<td>uintx
+<tr valign="top">
+<td><a name="MinSurvivorRatio"><a href="#MinSurvivorRatio">MinSurvivorRatio</a>
+<td>Minimum ratio of young generation/survivor space size
+<td>3
+<td>uintx
+<tr valign="top">
+<td><a name="InitialSurvivorRatio"><a href="#InitialSurvivorRatio">InitialSurvivorRatio</a>
+<td>Initial ratio of eden/survivor space size
+<td>8
+<td>uintx
+<tr valign="top">
+<td><a name="BaseFootPrintEstimate"><a href="#BaseFootPrintEstimate">BaseFootPrintEstimate</a>
+<td>Estimate of footprint other than Java Heap
+<td>256*M
+<td>uintx
+<tr valign="top">
+<td><a name="UseGCOverheadLimit"><a href="#UseGCOverheadLimit">UseGCOverheadLimit</a>
+<td>Use policy to limit of proportion of time spent in GC before an OutOfMemory error is thrown
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="GCTimeLimit"><a href="#GCTimeLimit">GCTimeLimit</a>
+<td>Limit of proportion of time spent in GC before an OutOfMemory" error is thrown (used with GCHeapFreeLimit)
+<td>98
+<td>uintx
+<tr valign="top">
+<td><a name="GCHeapFreeLimit"><a href="#GCHeapFreeLimit">GCHeapFreeLimit</a>
+<td>Minimum percentage of free space after a full GC before an OutOfMemoryError is thrown (used with GCTimeLimit)
+<td>2
+<td>uintx
+<tr valign="top">
+<td><a name="PrintAdaptiveSizePolicy"><a href="#PrintAdaptiveSizePolicy">PrintAdaptiveSizePolicy</a>
+<td>Print information about AdaptiveSizePolicy
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="DisableExplicitGC"><a href="#DisableExplicitGC">DisableExplicitGC</a>
+<td>Tells whether calling System.gc() does a full GC
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CollectGen0First"><a href="#CollectGen0First">CollectGen0First</a>
+<td>Collect youngest generation before each full GC
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="BindGCTaskThreadsToCPUs"><a href="#BindGCTaskThreadsToCPUs">BindGCTaskThreadsToCPUs</a>
+<td>Bind GCTaskThreads to CPUs if possible
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="UseGCTaskAffinity"><a href="#UseGCTaskAffinity">UseGCTaskAffinity</a>
+<td>Use worker affinity when asking for GCTasks
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="ProcessDistributionStride"><a href="#ProcessDistributionStride">ProcessDistributionStride</a>
+<td>Stride through processors when distributing processes
+<td>4
+<td>uintx
+<tr valign="top">
+<td><a name="CMSCoordinatorYieldSleepCount"><a href="#CMSCoordinatorYieldSleepCount">CMSCoordinatorYieldSleepCount</a>
+<td>number of times the coordinator GC thread will sleep while yielding before giving up and resuming GC
+<td>10
+<td>uintx
+<tr valign="top">
+<td><a name="CMSYieldSleepCount"><a href="#CMSYieldSleepCount">CMSYieldSleepCount</a>
+<td>number of times a GC thread (minus the coordinator) will sleep while yielding before giving up and resuming GC
+<td>0
+<td>uintx
+<tr valign="top">
+<td><a name="PrintGCTaskTimeStamps"><a href="#PrintGCTaskTimeStamps">PrintGCTaskTimeStamps</a>
+<td>Print timestamps for individual gc worker thread tasks
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceClassLoadingPreorder"><a href="#TraceClassLoadingPreorder">TraceClassLoadingPreorder</a>
+<td>Trace all classes loaded in order referenced (not loaded)
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceGen0Time"><a href="#TraceGen0Time">TraceGen0Time</a>
+<td>Trace accumulated time for Gen 0 collection
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceGen1Time"><a href="#TraceGen1Time">TraceGen1Time</a>
+<td>Trace accumulated time for Gen 1 collection
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintTenuringDistribution"><a href="#PrintTenuringDistribution">PrintTenuringDistribution</a>
+<td>Print tenuring age information
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintHeapAtSIGBREAK"><a href="#PrintHeapAtSIGBREAK">PrintHeapAtSIGBREAK</a>
+<td>Print heap layout in response to SIGBREAK
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="TraceParallelOldGCTasks"><a href="#TraceParallelOldGCTasks">TraceParallelOldGCTasks</a>
+<td>Trace multithreaded GC activity
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintParallelOldGCPhaseTimes"><a href="#PrintParallelOldGCPhaseTimes">PrintParallelOldGCPhaseTimes</a>
+<td>Print the time taken by each parallel old gc phase." PrintGCDetails must also be enabled.
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CITime"><a href="#CITime">CITime</a>
+<td>collect timing information for compilation
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="Inline"><a href="#Inline">Inline</a>
+<td>enable inlining
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="ClipInlining"><a href="#ClipInlining">ClipInlining</a>
+<td>clip inlining if aggregate method exceeds DesiredMethodLimit
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="UseTypeProfile"><a href="#UseTypeProfile">UseTypeProfile</a>
+<td>Check interpreter profile for historically monomorphic calls
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="TypeProfileMinimumRatio"><a href="#TypeProfileMinimumRatio">TypeProfileMinimumRatio</a>
+<td>Minimum ratio of profiled majority type to all minority types
+<td>9
+<td>intx
+<tr valign="top">
+<td><a name="Tier1UpdateMethodData"><a href="#Tier1UpdateMethodData">Tier1UpdateMethodData</a>
+<td>Update methodDataOops in Tier1-generated code
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintVMOptions"><a href="#PrintVMOptions">PrintVMOptions</a>
+<td>print VM flag settings
+<td>trueInDebug
+<td>bool
+<tr valign="top">
+<td><a name="ErrorFile"><a href="#ErrorFile">ErrorFile</a>
+<td>If an error occurs, save the error data to this file [default: ./hs_err_pid%p.log] (%p replaced with pid)
+<td>""
+<td>ccstr
+<tr valign="top">
+<td><a name="DisplayVMOutputToStderr"><a href="#DisplayVMOutputToStderr">DisplayVMOutputToStderr</a>
+<td>If DisplayVMOutput is true, display all VM output to stderr
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="DisplayVMOutputToStdout"><a href="#DisplayVMOutputToStdout">DisplayVMOutputToStdout</a>
+<td>If DisplayVMOutput is true, display all VM output to stdout
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="UseHeavyMonitors"><a href="#UseHeavyMonitors">UseHeavyMonitors</a>
+<td>use heavyweight instead of lightweight Java monitors
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="RangeCheckElimination"><a href="#RangeCheckElimination">RangeCheckElimination</a>
+<td>Split loop iterations to eliminate range checks
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="SplitIfBlocks"><a href="#SplitIfBlocks">SplitIfBlocks</a>
+<td>Clone compares and control flow through merge points to fold some branches
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="AggressiveOpts"><a href="#AggressiveOpts">AggressiveOpts</a>
+<td>Enable aggressive optimizations - see arguments.cpp
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintInterpreter"><a href="#PrintInterpreter">PrintInterpreter</a>
+<td>Prints the generated interpreter code
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="UseInterpreter"><a href="#UseInterpreter">UseInterpreter</a>
+<td>Use interpreter for non-compiled methods
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="UseNiagaraInstrs"><a href="#UseNiagaraInstrs">UseNiagaraInstrs</a>
+<td>Use Niagara-efficient instruction subset
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="UseLoopCounter"><a href="#UseLoopCounter">UseLoopCounter</a>
+<td>Increment invocation counter on backward branch
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="UseFastEmptyMethods"><a href="#UseFastEmptyMethods">UseFastEmptyMethods</a>
+<td>Use fast method entry code for empty methods
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="UseFastAccessorMethods"><a href="#UseFastAccessorMethods">UseFastAccessorMethods</a>
+<td>Use fast method entry code for accessor methods
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="EnableJVMPIInstructionStartEvent"><a href="#EnableJVMPIInstructionStartEvent">EnableJVMPIInstructionStartEvent</a>
+<td>Enable JVMPI_EVENT_INSTRUCTION_START events - slows down interpretation
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="JVMPICheckGCCompatibility"><a href="#JVMPICheckGCCompatibility">JVMPICheckGCCompatibility</a>
+<td>If JVMPI is used, make sure that we are using a JVMPI-compatible garbage collector 
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="ProfileMaturityPercentage"><a href="#ProfileMaturityPercentage">ProfileMaturityPercentage</a>
+<td>number of method invocations/branches (expressed as % of CompileThreshold) before using the method's profile
+<td>20
+<td>intx
+<tr valign="top">
+<td><a name="UseCompiler"><a href="#UseCompiler">UseCompiler</a>
+<td>use compilation
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="UseCounterDecay"><a href="#UseCounterDecay">UseCounterDecay</a>
+<td>adjust recompilation counters
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="AlwaysCompileLoopMethods"><a href="#AlwaysCompileLoopMethods">AlwaysCompileLoopMethods</a>
+<td>when using recompilation, never interpret methods containing loops
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="DontCompileHugeMethods"><a href="#DontCompileHugeMethods">DontCompileHugeMethods</a>
+<td>don't compile methods > HugeMethodLimit
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="EstimateArgEscape"><a href="#EstimateArgEscape">EstimateArgEscape</a>
+<td>Analyze bytecodes to estimate escape state of arguments
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="BCEATraceLevel"><a href="#BCEATraceLevel">BCEATraceLevel</a>
+<td>How much tracing to do of bytecode escape analysis estimates
+<td>0
+<td>intx
+<tr valign="top">
+<td><a name="MaxBCEAEstimateLevel"><a href="#MaxBCEAEstimateLevel">MaxBCEAEstimateLevel</a>
+<td>Maximum number of nested calls that are analyzed by BC EA.
+<td>5
+<td>intx
+<tr valign="top">
+<td><a name="MaxBCEAEstimateSize"><a href="#MaxBCEAEstimateSize">MaxBCEAEstimateSize</a>
+<td>Maximum bytecode size of a method to be analyzed by BC EA.
+<td>150
+<td>intx
+<tr valign="top">
+<td><a name="SelfDestructTimer"><a href="#SelfDestructTimer">SelfDestructTimer</a>
+<td>Will cause VM to terminate after a given time (in minutes) (0 means off)
+<td>0
+<td>intx
+<tr valign="top">
+<td><a name="MaxJavaStackTraceDepth"><a href="#MaxJavaStackTraceDepth">MaxJavaStackTraceDepth</a>
+<td>Max. no. of lines in the stack trace for Java exceptions (0 means all)
+<td>1024
+<td>intx
+<tr valign="top">
+<td><a name="NmethodSweepFraction"><a href="#NmethodSweepFraction">NmethodSweepFraction</a>
+<td>Number of invocations of sweeper to cover all nmethods
+<td>4
+<td>intx
+<tr valign="top">
+<td><a name="MaxInlineSize"><a href="#MaxInlineSize">MaxInlineSize</a>
+<td>maximum bytecode size of a method to be inlined
+<td>35
+<td>intx
+<tr valign="top">
+<td><a name="ProfileIntervalsTicks"><a href="#ProfileIntervalsTicks">ProfileIntervalsTicks</a>
+<td># of ticks between printing of interval profile (+ProfileIntervals)
+<td>100
+<td>intx
+<tr valign="top">
+<td><a name="EventLogLength"><a href="#EventLogLength">EventLogLength</a>
+<td>maximum nof events in event log
+<td>2000
+<td>intx
+<tr valign="top">
+<td><a name="PerMethodRecompilationCutoff"><a href="#PerMethodRecompilationCutoff">PerMethodRecompilationCutoff</a>
+<td>After recompiling N times, stay in the interpreter (-1=>'Inf')
+<td>400
+<td>intx
+<tr valign="top">
+<td><a name="PerBytecodeRecompilationCutoff"><a href="#PerBytecodeRecompilationCutoff">PerBytecodeRecompilationCutoff</a>
+<td>Per-BCI limit on repeated recompilation (-1=>'Inf')
+<td>100
+<td>intx
+<tr valign="top">
+<td><a name="PerMethodTrapLimit"><a href="#PerMethodTrapLimit">PerMethodTrapLimit</a>
+<td>Limit on traps (of one kind) in a method (includes inlines)
+<td>100
+<td>intx
+<tr valign="top">
+<td><a name="PerBytecodeTrapLimit"><a href="#PerBytecodeTrapLimit">PerBytecodeTrapLimit</a>
+<td>Limit on traps (of one kind) at a particular BCI
+<td>4
+<td>intx
+<tr valign="top">
+<td><a name="AliasLevel"><a href="#AliasLevel">AliasLevel</a>
+<td>0 for no aliasing, 1 for oop/field/static/array split, 2 for best
+<td>2
+<td>intx
+<tr valign="top">
+<td><a name="ReadSpinIterations"><a href="#ReadSpinIterations">ReadSpinIterations</a>
+<td>Number of read attempts before a yield (spin inner loop)
+<td>100
+<td>intx
+<tr valign="top">
+<td><a name="PreBlockSpin"><a href="#PreBlockSpin">PreBlockSpin</a>
+<td>Number of times to spin in an inflated lock before going to an OS lock
+<td>10
+<td>intx
+<tr valign="top">
+<td><a name="MaxHeapSize"><a href="#MaxHeapSize">MaxHeapSize</a>
+<td>Default maximum size for object heap (in bytes)
+<td>ScaleForWordSize(64*M)
+<td>uintx
+<tr valign="top">
+<td><a name="MaxNewSize"><a href="#MaxNewSize">MaxNewSize</a>
+<td>Maximum size of new generation (in bytes)
+<td>max_uintx
+<td>uintx
+<tr valign="top">
+<td><a name="PretenureSizeThreshold"><a href="#PretenureSizeThreshold">PretenureSizeThreshold</a>
+<td>Max size in bytes of objects allocated in DefNew generation
+<td>0
+<td>uintx
+<tr valign="top">
+<td><a name="MinTLABSize"><a href="#MinTLABSize">MinTLABSize</a>
+<td>Minimum allowed TLAB size (in bytes)
+<td>2*K
+<td>uintx
+<tr valign="top">
+<td><a name="TLABAllocationWeight"><a href="#TLABAllocationWeight">TLABAllocationWeight</a>
+<td>Allocation averaging weight
+<td>35
+<td>uintx
+<tr valign="top">
+<td><a name="TLABWasteTargetPercent"><a href="#TLABWasteTargetPercent">TLABWasteTargetPercent</a>
+<td>Percentage of Eden that can be wasted
+<td>1
+<td>uintx
+<tr valign="top">
+<td><a name="TLABRefillWasteFraction"><a href="#TLABRefillWasteFraction">TLABRefillWasteFraction</a>
+<td>Max TLAB waste at a refill (internal fragmentation)
+<td>64
+<td>uintx
+<tr valign="top">
+<td><a name="TLABWasteIncrement"><a href="#TLABWasteIncrement">TLABWasteIncrement</a>
+<td>Increment allowed waste at slow allocation
+<td>4
+<td>uintx
+<tr valign="top">
+<td><a name="MaxLiveObjectEvacuationRatio"><a href="#MaxLiveObjectEvacuationRatio">MaxLiveObjectEvacuationRatio</a>
+<td>Max percent of eden objects that will be live at scavenge
+<td>100
+<td>uintx
+<tr valign="top">
+<td><a name="OldSize"><a href="#OldSize">OldSize</a>
+<td>Default size of tenured generation (in bytes)
+<td>ScaleForWordSize(4096*K)
+<td>uintx
+<tr valign="top">
+<td><a name="MinHeapFreeRatio"><a href="#MinHeapFreeRatio">MinHeapFreeRatio</a>
+<td>Min percentage of heap free after GC to avoid expansion
+<td>40
+<td>uintx
+<tr valign="top">
+<td><a name="MaxHeapFreeRatio"><a href="#MaxHeapFreeRatio">MaxHeapFreeRatio</a>
+<td>Max percentage of heap free after GC to avoid shrinking
+<td>70
+<td>uintx
+<tr valign="top">
+<td><a name="SoftRefLRUPolicyMSPerMB"><a href="#SoftRefLRUPolicyMSPerMB">SoftRefLRUPolicyMSPerMB</a>
+<td>Number of milliseconds per MB of free space in the heap
+<td>1000
+<td>intx
+<tr valign="top">
+<td><a name="MinHeapDeltaBytes"><a href="#MinHeapDeltaBytes">MinHeapDeltaBytes</a>
+<td>Min change in heap space due to GC (in bytes)
+<td>ScaleForWordSize(128*K)
+<td>uintx
+<tr valign="top">
+<td><a name="MinPermHeapExpansion"><a href="#MinPermHeapExpansion">MinPermHeapExpansion</a>
+<td>Min expansion of permanent heap (in bytes)
+<td>ScaleForWordSize(256*K)
+<td>uintx
+<tr valign="top">
+<td><a name="MaxPermHeapExpansion"><a href="#MaxPermHeapExpansion">MaxPermHeapExpansion</a>
+<td>Max expansion of permanent heap without full GC (in bytes)
+<td>ScaleForWordSize(4*M)
+<td>uintx
+<tr valign="top">
+<td><a name="QueuedAllocationWarningCount"><a href="#QueuedAllocationWarningCount">QueuedAllocationWarningCount</a>
+<td>Number of times an allocation that queues behind a GC will retry before printing a warning
+<td>0
+<td>intx
+<tr valign="top">
+<td><a name="MaxTenuringThreshold"><a href="#MaxTenuringThreshold">MaxTenuringThreshold</a>
+<td>Maximum value for tenuring threshold
+<td>15
+<td>intx
+<tr valign="top">
+<td><a name="InitialTenuringThreshold"><a href="#InitialTenuringThreshold">InitialTenuringThreshold</a>
+<td>Initial value for tenuring threshold
+<td>7
+<td>intx
+<tr valign="top">
+<td><a name="TargetSurvivorRatio"><a href="#TargetSurvivorRatio">TargetSurvivorRatio</a>
+<td>Desired percentage of survivor space used after scavenge
+<td>50
+<td>intx
+<tr valign="top">
+<td><a name="MarkSweepDeadRatio"><a href="#MarkSweepDeadRatio">MarkSweepDeadRatio</a>
+<td>Percentage (0-100) of the old gen allowed as dead wood." Serial mark sweep treats this as both the min and max value." CMS uses this value only if it falls back to mark sweep." Par compact uses a variable scale based on the density of the" generation and treats this as the max value when the heap is" either completely full or completely empty. Par compact also" has a smaller default value; see arguments.cpp.
+<td>5
+<td>intx
+<tr valign="top">
+<td><a name="PermMarkSweepDeadRatio"><a href="#PermMarkSweepDeadRatio">PermMarkSweepDeadRatio</a>
+<td>Percentage (0-100) of the perm gen allowed as dead wood." See MarkSweepDeadRatio for collector-specific comments.
+<td>20
+<td>intx
+<tr valign="top">
+<td><a name="MarkSweepAlwaysCompactCount"><a href="#MarkSweepAlwaysCompactCount">MarkSweepAlwaysCompactCount</a>
+<td>How often should we fully compact the heap (ignoring the dead space parameters)
+<td>4
+<td>intx
+<tr valign="top">
+<td><a name="PrintCMSStatistics"><a href="#PrintCMSStatistics">PrintCMSStatistics</a>
+<td>Statistics for CMS
+<td>0
+<td>intx
+<tr valign="top">
+<td><a name="PrintCMSInitiationStatistics"><a href="#PrintCMSInitiationStatistics">PrintCMSInitiationStatistics</a>
+<td>Statistics for initiating a CMS collection
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintFLSStatistics"><a href="#PrintFLSStatistics">PrintFLSStatistics</a>
+<td>Statistics for CMS' FreeListSpace
+<td>0
+<td>intx
+<tr valign="top">
+<td><a name="PrintFLSCensus"><a href="#PrintFLSCensus">PrintFLSCensus</a>
+<td>Census for CMS' FreeListSpace
+<td>0
+<td>intx
+<tr valign="top">
+<td><a name="DeferThrSuspendLoopCount"><a href="#DeferThrSuspendLoopCount">DeferThrSuspendLoopCount</a>
+<td>(Unstable) Number of times to iterate in safepoint loop before blocking VM threads 
+<td>4000
+<td>intx
+<tr valign="top">
+<td><a name="DeferPollingPageLoopCount"><a href="#DeferPollingPageLoopCount">DeferPollingPageLoopCount</a>
+<td>(Unsafe,Unstable) Number of iterations in safepoint loop before changing safepoint polling page to RO 
+<td>-1
+<td>intx
+<tr valign="top">
+<td><a name="SafepointSpinBeforeYield"><a href="#SafepointSpinBeforeYield">SafepointSpinBeforeYield</a>
+<td>(Unstable)
+<td>2000
+<td>intx
+<tr valign="top">
+<td><a name="UseDepthFirstScavengeOrder"><a href="#UseDepthFirstScavengeOrder">UseDepthFirstScavengeOrder</a>
+<td>true: the scavenge order will be depth-first, false: the scavenge order will be breadth-first
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="GCDrainStackTargetSize"><a href="#GCDrainStackTargetSize">GCDrainStackTargetSize</a>
+<td>how many entries we'll try to leave on the stack during parallel GC
+<td>64
+<td>uintx
+<tr valign="top">
+<td><a name="ThreadSafetyMargin"><a href="#ThreadSafetyMargin">ThreadSafetyMargin</a>
+<td>Thread safety margin is used on fixed-stack LinuxThreads (on Linux/x86 only) to prevent heap-stack collision. Set to 0 to disable this feature
+<td>50*M
+<td>uintx
+<tr valign="top">
+<td><a name="CodeCacheMinimumFreeSpace"><a href="#CodeCacheMinimumFreeSpace">CodeCacheMinimumFreeSpace</a>
+<td>When less than X space left, we stop compiling.
+<td>500*K
+<td>uintx
+<tr valign="top">
+<td><a name="CompileOnly"><a href="#CompileOnly">CompileOnly</a>
+<td>List of methods (pkg/class.name) to restrict compilation to
+<td>""
+<td>ccstr
+<tr valign="top">
+<td><a name="CompileCommandFile"><a href="#CompileCommandFile">CompileCommandFile</a>
+<td>Read compiler commands from this file [.hotspot_compiler]
+<td>""
+<td>ccstr
+<tr valign="top">
+<td><a name="CompileCommand"><a href="#CompileCommand">CompileCommand</a>
+<td>Prepend to .hotspot_compiler; e.g. log,java/lang/String.<init>
+<td>""
+<td>ccstr
+<tr valign="top">
+<td><a name="CICompilerCountPerCPU"><a href="#CICompilerCountPerCPU">CICompilerCountPerCPU</a>
+<td>1 compiler thread for log(N CPUs)
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="UseThreadPriorities"><a href="#UseThreadPriorities">UseThreadPriorities</a>
+<td>Use native thread priorities
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="ThreadPriorityPolicy"><a href="#ThreadPriorityPolicy">ThreadPriorityPolicy</a>
+<td>0 : Normal. VM chooses priorities that are appropriate for normal applications. On Solaris NORM_PRIORITY and above are mapped to normal native priority. Java priorities below NORM_PRIORITY" map to lower native priority values. On Windows applications" are allowed to use higher native priorities. However, with ThreadPriorityPolicy=0, VM will not use the highest possible" native priority, THREAD_PRIORITY_TIME_CRITICAL, as it may interfere with system threads. On Linux thread priorities are ignored because the OS does not support static priority in SCHED_OTHER scheduling class which is the only choice for" non-root, non-realtime applications. 1 : Aggressive. Java thread priorities map over to the entire range of native thread priorities. Higher Java thread priorities map to higher native thread priorities. This policy should be used with care, as sometimes it can cause performance degradation in the application and/or the entire system. On Linux this policy requires root privilege.
+<td>0
+<td>intx
+<tr valign="top">
+<td><a name="ThreadPriorityVerbose"><a href="#ThreadPriorityVerbose">ThreadPriorityVerbose</a>
+<td>print priority changes
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="DefaultThreadPriority"><a href="#DefaultThreadPriority">DefaultThreadPriority</a>
+<td>what native priority threads run at if not specified elsewhere (-1 means no change)
+<td>-1
+<td>intx
+<tr valign="top">
+<td><a name="CompilerThreadPriority"><a href="#CompilerThreadPriority">CompilerThreadPriority</a>
+<td>what priority should compiler threads run at (-1 means no change)
+<td>-1
+<td>intx
+<tr valign="top">
+<td><a name="VMThreadPriority"><a href="#VMThreadPriority">VMThreadPriority</a>
+<td>what priority should VM threads run at (-1 means no change)
+<td>-1
+<td>intx
+<tr valign="top">
+<td><a name="CompilerThreadHintNoPreempt"><a href="#CompilerThreadHintNoPreempt">CompilerThreadHintNoPreempt</a>
+<td>(Solaris only) Give compiler threads an extra quanta
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="VMThreadHintNoPreempt"><a href="#VMThreadHintNoPreempt">VMThreadHintNoPreempt</a>
+<td>(Solaris only) Give VM thread an extra quanta
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="JavaPriority1_To_OSPriority"><a href="#JavaPriority1_To_OSPriority">JavaPriority1_To_OSPriority</a>
+<td>Map Java priorities to OS priorities
+<td>-1
+<td>intx
+<tr valign="top">
+<td><a name="JavaPriority2_To_OSPriority"><a href="#JavaPriority2_To_OSPriority">JavaPriority2_To_OSPriority</a>
+<td>Map Java priorities to OS priorities
+<td>-1
+<td>intx
+<tr valign="top">
+<td><a name="JavaPriority3_To_OSPriority"><a href="#JavaPriority3_To_OSPriority">JavaPriority3_To_OSPriority</a>
+<td>Map Java priorities to OS priorities
+<td>-1
+<td>intx
+<tr valign="top">
+<td><a name="JavaPriority4_To_OSPriority"><a href="#JavaPriority4_To_OSPriority">JavaPriority4_To_OSPriority</a>
+<td>Map Java priorities to OS priorities
+<td>-1
+<td>intx
+<tr valign="top">
+<td><a name="JavaPriority5_To_OSPriority"><a href="#JavaPriority5_To_OSPriority">JavaPriority5_To_OSPriority</a>
+<td>Map Java priorities to OS priorities
+<td>-1
+<td>intx
+<tr valign="top">
+<td><a name="JavaPriority6_To_OSPriority"><a href="#JavaPriority6_To_OSPriority">JavaPriority6_To_OSPriority</a>
+<td>Map Java priorities to OS priorities
+<td>-1
+<td>intx
+<tr valign="top">
+<td><a name="JavaPriority7_To_OSPriority"><a href="#JavaPriority7_To_OSPriority">JavaPriority7_To_OSPriority</a>
+<td>Map Java priorities to OS priorities
+<td>-1
+<td>intx
+<tr valign="top">
+<td><a name="JavaPriority8_To_OSPriority"><a href="#JavaPriority8_To_OSPriority">JavaPriority8_To_OSPriority</a>
+<td>Map Java priorities to OS priorities
+<td>-1
+<td>intx
+<tr valign="top">
+<td><a name="JavaPriority9_To_OSPriority"><a href="#JavaPriority9_To_OSPriority">JavaPriority9_To_OSPriority</a>
+<td>Map Java priorities to OS priorities
+<td>-1
+<td>intx
+<tr valign="top">
+<td><a name="JavaPriority10_To_OSPriority,-1"><a href="#JavaPriority10_To_OSPriority,-1">JavaPriority10_To_OSPriority,-1</a>
+<td>Map Java priorities to OS priorities
+<td>
+<td>intx
+<tr valign="top">
+<td><a name="StarvationMonitorInterval"><a href="#StarvationMonitorInterval">StarvationMonitorInterval</a>
+<td>Pause between each check in ms
+<td>200
+<td>intx
+<tr valign="top">
+<td><a name="Tier1BytecodeLimit"><a href="#Tier1BytecodeLimit">Tier1BytecodeLimit</a>
+<td>Must have at least this many bytecodes before tier1" invocation counters are used
+<td>10
+<td>intx
+<tr valign="top">
+<td><a name="StressTieredRuntime"><a href="#StressTieredRuntime">StressTieredRuntime</a>
+<td>Alternate client and server compiler on compile requests
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="InterpreterProfilePercentage"><a href="#InterpreterProfilePercentage">InterpreterProfilePercentage</a>
+<td>number of method invocations/branches (expressed as % of CompileThreshold) before profiling in the interpreter
+<td>33
+<td>intx
+<tr valign="top">
+<td><a name="MaxDirectMemorySize"><a href="#MaxDirectMemorySize">MaxDirectMemorySize</a>
+<td>Maximum total size of NIO direct-buffer allocations
+<td>-1
+<td>intx
+<tr valign="top">
+<td><a name="UseUnsupportedDeprecatedJVMPI"><a href="#UseUnsupportedDeprecatedJVMPI">UseUnsupportedDeprecatedJVMPI</a>
+<td>Flag to temporarily re-enable the, soon to be removed, experimental interface JVMPI.
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="UsePerfData"><a href="#UsePerfData">UsePerfData</a>
+<td>Flag to disable jvmstat instrumentation for performance testing" and problem isolation purposes.
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="PerfDataSaveToFile"><a href="#PerfDataSaveToFile">PerfDataSaveToFile</a>
+<td>Save PerfData memory to hsperfdata_<pid> file on exit
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PerfDataSamplingInterval"><a href="#PerfDataSamplingInterval">PerfDataSamplingInterval</a>
+<td>Data sampling interval in milliseconds
+<td>50 /*ms*/
+<td>intx
+<tr valign="top">
+<td><a name="PerfDisableSharedMem"><a href="#PerfDisableSharedMem">PerfDisableSharedMem</a>
+<td>Store performance data in standard memory
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PerfDataMemorySize"><a href="#PerfDataMemorySize">PerfDataMemorySize</a>
+<td>Size of performance data memory region. Will be rounded up to a multiple of the native os page size.
+<td>32*K
+<td>intx
+<tr valign="top">
+<td><a name="PerfMaxStringConstLength"><a href="#PerfMaxStringConstLength">PerfMaxStringConstLength</a>
+<td>Maximum PerfStringConstant string length before truncation
+<td>1024
+<td>intx
+<tr valign="top">
+<td><a name="PerfAllowAtExitRegistration"><a href="#PerfAllowAtExitRegistration">PerfAllowAtExitRegistration</a>
+<td>Allow registration of atexit() methods
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PerfBypassFileSystemCheck"><a href="#PerfBypassFileSystemCheck">PerfBypassFileSystemCheck</a>
+<td>Bypass Win32 file system criteria checks (Windows Only)
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="UnguardOnExecutionViolation"><a href="#UnguardOnExecutionViolation">UnguardOnExecutionViolation</a>
+<td>Unguard page and retry on no-execute fault (Win32 only)" 0=off, 1=conservative, 2=aggressive
+<td>0
+<td>intx
+<tr valign="top">
+<td><a name="ManagementServer"><a href="#ManagementServer">ManagementServer</a>
+<td>Create JMX Management Server
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="DisableAttachMechanism"><a href="#DisableAttachMechanism">DisableAttachMechanism</a>
+<td>Disable mechanism that allows tools to attach to this VM
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="StartAttachListener"><a href="#StartAttachListener">StartAttachListener</a>
+<td>Always start Attach Listener at VM startup
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="UseSharedSpaces"><a href="#UseSharedSpaces">UseSharedSpaces</a>
+<td>Use shared spaces in the permanent generation
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="RequireSharedSpaces"><a href="#RequireSharedSpaces">RequireSharedSpaces</a>
+<td>Require shared spaces in the permanent generation
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="ForceSharedSpaces"><a href="#ForceSharedSpaces">ForceSharedSpaces</a>
+<td>Require shared spaces in the permanent generation
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="DumpSharedSpaces"><a href="#DumpSharedSpaces">DumpSharedSpaces</a>
+<td>Special mode: JVM reads a class list, loads classes, builds shared spaces, and dumps the shared spaces to a file to be used in future JVM runs.
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintSharedSpaces"><a href="#PrintSharedSpaces">PrintSharedSpaces</a>
+<td>Print usage of shared spaces
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="SharedDummyBlockSize"><a href="#SharedDummyBlockSize">SharedDummyBlockSize</a>
+<td>Size of dummy block used to shift heap addresses (in bytes)
+<td>512*M
+<td>uintx
+<tr valign="top">
+<td><a name="SharedReadWriteSize"><a href="#SharedReadWriteSize">SharedReadWriteSize</a>
+<td>Size of read-write space in permanent generation (in bytes)
+<td>12*M
+<td>uintx
+<tr valign="top">
+<td><a name="SharedReadOnlySize"><a href="#SharedReadOnlySize">SharedReadOnlySize</a>
+<td>Size of read-only space in permanent generation (in bytes)
+<td>8*M
+<td>uintx
+<tr valign="top">
+<td><a name="SharedMiscDataSize"><a href="#SharedMiscDataSize">SharedMiscDataSize</a>
+<td>Size of the shared data area adjacent to the heap (in bytes)
+<td>4*M
+<td>uintx
+<tr valign="top">
+<td><a name="SharedMiscCodeSize"><a href="#SharedMiscCodeSize">SharedMiscCodeSize</a>
+<td>Size of the shared code area adjacent to the heap (in bytes)
+<td>4*M
+<td>uintx
+<tr valign="top">
+<td><a name="TaggedStackInterpreter"><a href="#TaggedStackInterpreter">TaggedStackInterpreter</a>
+<td>Insert tags in interpreter execution stack for oopmap generaion
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="ExtendedDTraceProbes"><a href="#ExtendedDTraceProbes">ExtendedDTraceProbes</a>
+<td>Enable performance-impacting dtrace probes
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="DTraceMethodProbes"><a href="#DTraceMethodProbes">DTraceMethodProbes</a>
+<td>Enable dtrace probes for method-entry and method-exit
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="DTraceAllocProbes"><a href="#DTraceAllocProbes">DTraceAllocProbes</a>
+<td>Enable dtrace probes for object allocation
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="DTraceMonitorProbes"><a href="#DTraceMonitorProbes">DTraceMonitorProbes</a>
+<td>Enable dtrace probes for monitor events
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="RelaxAccessControlCheck"><a href="#RelaxAccessControlCheck">RelaxAccessControlCheck</a>
+<td>Relax the access control checks in the verifier
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="UseVMInterruptibleIO"><a href="#UseVMInterruptibleIO">UseVMInterruptibleIO</a>
+<td>(Unstable, Solaris-specific) Thread interrupt before or with EINTR for I/O operations results in OS_INTRPT
+<td>true
+<td>bool
+
+<tr bgcolor="#e0e0e0">
+<td colspan="4"><a name="manageable">manageable
+<tr valign="top">
+<td><a name="HeapDumpOnOutOfMemoryError"><a href="#HeapDumpOnOutOfMemoryError">HeapDumpOnOutOfMemoryError</a>
+<td>Dump heap to file when java.lang.OutOfMemoryError is thrown
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="HeapDumpPath"><a href="#HeapDumpPath">HeapDumpPath</a>
+<td>When HeapDumpOnOutOfMemoryError is on, the path (filename or" directory) of the dump file (defaults to java_pid<pid>.hprof" in the working directory)
+<td>""
+<td>ccstr
+<tr valign="top">
+<td><a name="PrintGC"><a href="#PrintGC">PrintGC</a>
+<td>Print message at garbage collect
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintGCDetails"><a href="#PrintGCDetails">PrintGCDetails</a>
+<td>Print more details at garbage collect
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintGCTimeStamps"><a href="#PrintGCTimeStamps">PrintGCTimeStamps</a>
+<td>Print timestamps at garbage collect
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintClassHistogram"><a href="#PrintClassHistogram">PrintClassHistogram</a>
+<td>Print a histogram of class instances
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintConcurrentLocks"><a href="#PrintConcurrentLocks">PrintConcurrentLocks</a>
+<td>Print java.util.concurrent locks in thread dump
+<td>false
+<td>bool
+
+<tr bgcolor="#e0e0e0">
+<td colspan="4"><a name="product_rw">product_rw
+<tr valign="top">
+<td><a name="TraceClassLoading"><a href="#TraceClassLoading">TraceClassLoading</a>
+<td>Trace all classes loaded
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceClassUnloading"><a href="#TraceClassUnloading">TraceClassUnloading</a>
+<td>Trace unloading of classes
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceLoaderConstraints"><a href="#TraceLoaderConstraints">TraceLoaderConstraints</a>
+<td>Trace loader constraints
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintHeapAtGC"><a href="#PrintHeapAtGC">PrintHeapAtGC</a>
+<td>Print heap layout before and after each GC
+<td>false
+<td>bool
+
+<tr bgcolor="#e0e0e0">
+<td colspan="4"><a name="develop">develop
+<tr valign="top">
+<td><a name="TraceItables"><a href="#TraceItables">TraceItables</a>
+<td>Trace initialization and use of itables
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TracePcPatching"><a href="#TracePcPatching">TracePcPatching</a>
+<td>Trace usage of frame::patch_pc
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceJumps"><a href="#TraceJumps">TraceJumps</a>
+<td>Trace assembly jumps in thread ring buffer
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceRelocator"><a href="#TraceRelocator">TraceRelocator</a>
+<td>Trace the bytecode relocator
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceLongCompiles"><a href="#TraceLongCompiles">TraceLongCompiles</a>
+<td>Print out every time compilation is longer than a given threashold
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="SafepointALot"><a href="#SafepointALot">SafepointALot</a>
+<td>Generates a lot of safepoints. Works with GuaranteedSafepointInterval
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="BailoutToInterpreterForThrows"><a href="#BailoutToInterpreterForThrows">BailoutToInterpreterForThrows</a>
+<td>Compiled methods which throws/catches exceptions will be deopt and intp.
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="NoYieldsInMicrolock"><a href="#NoYieldsInMicrolock">NoYieldsInMicrolock</a>
+<td>Disable yields in microlock
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceOopMapGeneration"><a href="#TraceOopMapGeneration">TraceOopMapGeneration</a>
+<td>Shows oopmap generation
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="MethodFlushing"><a href="#MethodFlushing">MethodFlushing</a>
+<td>Reclamation of zombie and not-entrant methods
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="VerifyStack"><a href="#VerifyStack">VerifyStack</a>
+<td>Verify stack of each thread when it is entering a runtime call
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceDerivedPointers"><a href="#TraceDerivedPointers">TraceDerivedPointers</a>
+<td>Trace traversal of derived pointers on stack
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="InlineArrayCopy"><a href="#InlineArrayCopy">InlineArrayCopy</a>
+<td>inline arraycopy native that is known to be part of base library DLL
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="InlineObjectHash"><a href="#InlineObjectHash">InlineObjectHash</a>
+<td>inline Object::hashCode() native that is known to be part of base library DLL
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="InlineNatives"><a href="#InlineNatives">InlineNatives</a>
+<td>inline natives that are known to be part of base library DLL
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="InlineMathNatives"><a href="#InlineMathNatives">InlineMathNatives</a>
+<td>inline SinD, CosD, etc.
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="InlineClassNatives"><a href="#InlineClassNatives">InlineClassNatives</a>
+<td>inline Class.isInstance, etc
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="InlineAtomicLong"><a href="#InlineAtomicLong">InlineAtomicLong</a>
+<td>inline sun.misc.AtomicLong
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="InlineThreadNatives"><a href="#InlineThreadNatives">InlineThreadNatives</a>
+<td>inline Thread.currentThread, etc
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="InlineReflectionGetCallerClass"><a href="#InlineReflectionGetCallerClass">InlineReflectionGetCallerClass</a>
+<td>inline sun.reflect.Reflection.getCallerClass(), known to be part of base library DLL
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="InlineUnsafeOps"><a href="#InlineUnsafeOps">InlineUnsafeOps</a>
+<td>inline memory ops (native methods) from sun.misc.Unsafe
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="ConvertCmpD2CmpF"><a href="#ConvertCmpD2CmpF">ConvertCmpD2CmpF</a>
+<td>Convert cmpD to cmpF when one input is constant in float range
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="ConvertFloat2IntClipping"><a href="#ConvertFloat2IntClipping">ConvertFloat2IntClipping</a>
+<td>Convert float2int clipping idiom to integer clipping
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="SpecialStringCompareTo"><a href="#SpecialStringCompareTo">SpecialStringCompareTo</a>
+<td>special version of string compareTo
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="SpecialStringIndexOf"><a href="#SpecialStringIndexOf">SpecialStringIndexOf</a>
+<td>special version of string indexOf
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="TraceCallFixup"><a href="#TraceCallFixup">TraceCallFixup</a>
+<td>traces all call fixups
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="DeoptimizeALot"><a href="#DeoptimizeALot">DeoptimizeALot</a>
+<td>deoptimize at every exit from the runtime system
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="DeoptimizeOnlyAt"><a href="#DeoptimizeOnlyAt">DeoptimizeOnlyAt</a>
+<td>a comma separated list of bcis to deoptimize at
+<td>""
+<td>ccstr
+<tr valign="top">
+<td><a name="Debugging"><a href="#Debugging">Debugging</a>
+<td>set when executing debug methods in debug.ccp (to prevent triggering assertions)
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceHandleAllocation"><a href="#TraceHandleAllocation">TraceHandleAllocation</a>
+<td>Prints out warnings when suspicious many handles are allocated
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="ShowSafepointMsgs"><a href="#ShowSafepointMsgs">ShowSafepointMsgs</a>
+<td>Show msg. about safepoint synch.
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="SafepointTimeout"><a href="#SafepointTimeout">SafepointTimeout</a>
+<td>Time out and warn or fail after SafepointTimeoutDelay milliseconds if failed to reach safepoint
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="DieOnSafepointTimeout"><a href="#DieOnSafepointTimeout">DieOnSafepointTimeout</a>
+<td>Die upon failure to reach safepoint (see SafepointTimeout)
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="ForceFloatExceptions"><a href="#ForceFloatExceptions">ForceFloatExceptions</a>
+<td>Force exceptions on FP stack under/overflow
+<td>trueInDebug
+<td>bool
+<tr valign="top">
+<td><a name="SoftMatchFailure"><a href="#SoftMatchFailure">SoftMatchFailure</a>
+<td>If the DFA fails to match a node, print a message and bail out
+<td>trueInProduct
+<td>bool
+<tr valign="top">
+<td><a name="VerifyStackAtCalls"><a href="#VerifyStackAtCalls">VerifyStackAtCalls</a>
+<td>Verify that the stack pointer is unchanged after calls
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceJavaAssertions"><a href="#TraceJavaAssertions">TraceJavaAssertions</a>
+<td>Trace java language assertions
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="ZapDeadCompiledLocals"><a href="#ZapDeadCompiledLocals">ZapDeadCompiledLocals</a>
+<td>Zap dead locals in compiler frames
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="UseMallocOnly"><a href="#UseMallocOnly">UseMallocOnly</a>
+<td>use only malloc/free for allocation (no resource area/arena)
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintMalloc"><a href="#PrintMalloc">PrintMalloc</a>
+<td>print all malloc/free calls
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="ZapResourceArea"><a href="#ZapResourceArea">ZapResourceArea</a>
+<td>Zap freed resource/arena space with 0xABABABAB
+<td>trueInDebug
+<td>bool
+<tr valign="top">
+<td><a name="ZapJNIHandleArea"><a href="#ZapJNIHandleArea">ZapJNIHandleArea</a>
+<td>Zap freed JNI handle space with 0xFEFEFEFE
+<td>trueInDebug
+<td>bool
+<tr valign="top">
+<td><a name="ZapUnusedHeapArea"><a href="#ZapUnusedHeapArea">ZapUnusedHeapArea</a>
+<td>Zap unused heap space with 0xBAADBABE
+<td>trueInDebug
+<td>bool
+<tr valign="top">
+<td><a name="PrintVMMessages"><a href="#PrintVMMessages">PrintVMMessages</a>
+<td>Print vm messages on console
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="Verbose"><a href="#Verbose">Verbose</a>
+<td>Prints additional debugging information from other modes
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintMiscellaneous"><a href="#PrintMiscellaneous">PrintMiscellaneous</a>
+<td>Prints uncategorized debugging information (requires +Verbose)
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="WizardMode"><a href="#WizardMode">WizardMode</a>
+<td>Prints much more debugging information
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="SegmentedHeapDumpThreshold"><a href="#SegmentedHeapDumpThreshold">SegmentedHeapDumpThreshold</a>
+<td>Generate a segmented heap dump (JAVA PROFILE 1.0.2 format) when the heap usage is larger than this
+<td>2*G
+<td>uintx
+<tr valign="top">
+<td><a name="HeapDumpSegmentSize"><a href="#HeapDumpSegmentSize">HeapDumpSegmentSize</a>
+<td>Approximate segment size when generating a segmented heap dump
+<td>1*G
+<td>uintx
+<tr valign="top">
+<td><a name="BreakAtWarning"><a href="#BreakAtWarning">BreakAtWarning</a>
+<td>Execute breakpoint upon encountering VM warning
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceVMOperation"><a href="#TraceVMOperation">TraceVMOperation</a>
+<td>Trace vm operations
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="UseFakeTimers"><a href="#UseFakeTimers">UseFakeTimers</a>
+<td>Tells whether the VM should use system time or a fake timer
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintAssembly"><a href="#PrintAssembly">PrintAssembly</a>
+<td>Print assembly code
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintNMethods"><a href="#PrintNMethods">PrintNMethods</a>
+<td>Print assembly code for nmethods when generated
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintNativeNMethods"><a href="#PrintNativeNMethods">PrintNativeNMethods</a>
+<td>Print assembly code for native nmethods when generated
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintDebugInfo"><a href="#PrintDebugInfo">PrintDebugInfo</a>
+<td>Print debug information for all nmethods when generated
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintRelocations"><a href="#PrintRelocations">PrintRelocations</a>
+<td>Print relocation information for all nmethods when generated
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintDependencies"><a href="#PrintDependencies">PrintDependencies</a>
+<td>Print dependency information for all nmethods when generated
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintExceptionHandlers"><a href="#PrintExceptionHandlers">PrintExceptionHandlers</a>
+<td>Print exception handler tables for all nmethods when generated
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="InterceptOSException"><a href="#InterceptOSException">InterceptOSException</a>
+<td>Starts debugger when an implicit OS (e.g., NULL) exception happens
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintCodeCache2"><a href="#PrintCodeCache2">PrintCodeCache2</a>
+<td>Print detailed info on the compiled_code cache when exiting
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintStubCode"><a href="#PrintStubCode">PrintStubCode</a>
+<td>Print generated stub code
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintJVMWarnings"><a href="#PrintJVMWarnings">PrintJVMWarnings</a>
+<td>Prints warnings for unimplemented JVM functions
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="InitializeJavaLangSystem"><a href="#InitializeJavaLangSystem">InitializeJavaLangSystem</a>
+<td>Initialize java.lang.System - turn off for individual method debugging
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="InitializeJavaLangString"><a href="#InitializeJavaLangString">InitializeJavaLangString</a>
+<td>Initialize java.lang.String - turn off for individual method debugging
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="InitializeJavaLangExceptionsErrors"><a href="#InitializeJavaLangExceptionsErrors">InitializeJavaLangExceptionsErrors</a>
+<td>Initialize various error and exception classes - turn off for individual method debugging
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="RegisterReferences"><a href="#RegisterReferences">RegisterReferences</a>
+<td>Tells whether the VM should register soft/weak/final/phantom references
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="IgnoreRewrites"><a href="#IgnoreRewrites">IgnoreRewrites</a>
+<td>Supress rewrites of bytecodes in the oopmap generator. This is unsafe!
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintCodeCacheExtension"><a href="#PrintCodeCacheExtension">PrintCodeCacheExtension</a>
+<td>Print extension of code cache
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="UsePrivilegedStack"><a href="#UsePrivilegedStack">UsePrivilegedStack</a>
+<td>Enable the security JVM functions
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="IEEEPrecision"><a href="#IEEEPrecision">IEEEPrecision</a>
+<td>Enables IEEE precision (for INTEL only)
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="ProtectionDomainVerification"><a href="#ProtectionDomainVerification">ProtectionDomainVerification</a>
+<td>Verifies protection domain before resolution in system dictionary
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="DisableStartThread"><a href="#DisableStartThread">DisableStartThread</a>
+<td>Disable starting of additional Java threads (for debugging only)
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="MemProfiling"><a href="#MemProfiling">MemProfiling</a>
+<td>Write memory usage profiling to log file
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="UseDetachedThreads"><a href="#UseDetachedThreads">UseDetachedThreads</a>
+<td>Use detached threads that are recycled upon termination (for SOLARIS only)
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="UsePthreads"><a href="#UsePthreads">UsePthreads</a>
+<td>Use pthread-based instead of libthread-based synchronization (SPARC only)
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="UpdateHotSpotCompilerFileOnError"><a href="#UpdateHotSpotCompilerFileOnError">UpdateHotSpotCompilerFileOnError</a>
+<td>Should the system attempt to update the compiler file when an error occurs?
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="LoadLineNumberTables"><a href="#LoadLineNumberTables">LoadLineNumberTables</a>
+<td>Tells whether the class file parser loads line number tables
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="LoadLocalVariableTables"><a href="#LoadLocalVariableTables">LoadLocalVariableTables</a>
+<td>Tells whether the class file parser loads local variable tables
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="LoadLocalVariableTypeTables"><a href="#LoadLocalVariableTypeTables">LoadLocalVariableTypeTables</a>
+<td>Tells whether the class file parser loads local variable type tables
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="PreallocatedOutOfMemoryErrorCount"><a href="#PreallocatedOutOfMemoryErrorCount">PreallocatedOutOfMemoryErrorCount</a>
+<td>Number of OutOfMemoryErrors preallocated with backtrace
+<td>4
+<td>uintx
+<tr valign="top">
+<td><a name="PrintBiasedLockingStatistics"><a href="#PrintBiasedLockingStatistics">PrintBiasedLockingStatistics</a>
+<td>Print statistics of biased locking in JVM
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceJVMPI"><a href="#TraceJVMPI">TraceJVMPI</a>
+<td>Trace JVMPI
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceJNICalls"><a href="#TraceJNICalls">TraceJNICalls</a>
+<td>Trace JNI calls
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceJNIHandleAllocation"><a href="#TraceJNIHandleAllocation">TraceJNIHandleAllocation</a>
+<td>Trace allocation/deallocation of JNI handle blocks
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceThreadEvents"><a href="#TraceThreadEvents">TraceThreadEvents</a>
+<td>Trace all thread events
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceBytecodes"><a href="#TraceBytecodes">TraceBytecodes</a>
+<td>Trace bytecode execution
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceClassInitialization"><a href="#TraceClassInitialization">TraceClassInitialization</a>
+<td>Trace class initialization
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceExceptions"><a href="#TraceExceptions">TraceExceptions</a>
+<td>Trace exceptions
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceICs"><a href="#TraceICs">TraceICs</a>
+<td>Trace inline cache changes
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceInlineCacheClearing"><a href="#TraceInlineCacheClearing">TraceInlineCacheClearing</a>
+<td>Trace clearing of inline caches in nmethods
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceDependencies"><a href="#TraceDependencies">TraceDependencies</a>
+<td>Trace dependencies
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="VerifyDependencies"><a href="#VerifyDependencies">VerifyDependencies</a>
+<td>Exercise and verify the compilation dependency mechanism
+<td>trueInDebug
+<td>bool
+<tr valign="top">
+<td><a name="TraceNewOopMapGeneration"><a href="#TraceNewOopMapGeneration">TraceNewOopMapGeneration</a>
+<td>Trace OopMapGeneration
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceNewOopMapGenerationDetailed"><a href="#TraceNewOopMapGenerationDetailed">TraceNewOopMapGenerationDetailed</a>
+<td>Trace OopMapGeneration: print detailed cell states
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TimeOopMap"><a href="#TimeOopMap">TimeOopMap</a>
+<td>Time calls to GenerateOopMap::compute_map() in sum
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TimeOopMap2"><a href="#TimeOopMap2">TimeOopMap2</a>
+<td>Time calls to GenerateOopMap::compute_map() individually
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceMonitorMismatch"><a href="#TraceMonitorMismatch">TraceMonitorMismatch</a>
+<td>Trace monitor matching failures during OopMapGeneration
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceOopMapRewrites"><a href="#TraceOopMapRewrites">TraceOopMapRewrites</a>
+<td>Trace rewritting of method oops during oop map generation
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceSafepoint"><a href="#TraceSafepoint">TraceSafepoint</a>
+<td>Trace safepoint operations
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceICBuffer"><a href="#TraceICBuffer">TraceICBuffer</a>
+<td>Trace usage of IC buffer
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceCompiledIC"><a href="#TraceCompiledIC">TraceCompiledIC</a>
+<td>Trace changes of compiled IC
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceStartupTime"><a href="#TraceStartupTime">TraceStartupTime</a>
+<td>Trace setup time
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceHPI"><a href="#TraceHPI">TraceHPI</a>
+<td>Trace Host Porting Interface (HPI)
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceProtectionDomainVerification"><a href="#TraceProtectionDomainVerification">TraceProtectionDomainVerification</a>
+<td>Trace protection domain verifcation
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceClearedExceptions"><a href="#TraceClearedExceptions">TraceClearedExceptions</a>
+<td>Prints when an exception is forcibly cleared
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="UseParallelOldGCChunkPointerCalc"><a href="#UseParallelOldGCChunkPointerCalc">UseParallelOldGCChunkPointerCalc</a>
+<td>In the Parallel Old garbage collector use chucks to calculate" new object locations
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="VerifyParallelOldWithMarkSweep"><a href="#VerifyParallelOldWithMarkSweep">VerifyParallelOldWithMarkSweep</a>
+<td>Use the MarkSweep code to verify phases of Parallel Old
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="VerifyParallelOldWithMarkSweepInterval"><a href="#VerifyParallelOldWithMarkSweepInterval">VerifyParallelOldWithMarkSweepInterval</a>
+<td>Interval at which the MarkSweep code is used to verify phases of Parallel Old
+<td>1
+<td>uintx
+<tr valign="top">
+<td><a name="ParallelOldMTUnsafeMarkBitMap"><a href="#ParallelOldMTUnsafeMarkBitMap">ParallelOldMTUnsafeMarkBitMap</a>
+<td>Use the Parallel Old MT unsafe in marking the bitmap
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="ParallelOldMTUnsafeUpdateLiveData"><a href="#ParallelOldMTUnsafeUpdateLiveData">ParallelOldMTUnsafeUpdateLiveData</a>
+<td>Use the Parallel Old MT unsafe in update of live size
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceChunkTasksQueuing"><a href="#TraceChunkTasksQueuing">TraceChunkTasksQueuing</a>
+<td>Trace the queuing of the chunk tasks
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="ScavengeWithObjectsInToSpace"><a href="#ScavengeWithObjectsInToSpace">ScavengeWithObjectsInToSpace</a>
+<td>Allow scavenges to occur when to_space contains objects.
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="UseCMSAdaptiveFreeLists"><a href="#UseCMSAdaptiveFreeLists">UseCMSAdaptiveFreeLists</a>
+<td>Use Adaptive Free Lists in the CMS generation
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="UseAsyncConcMarkSweepGC"><a href="#UseAsyncConcMarkSweepGC">UseAsyncConcMarkSweepGC</a>
+<td>Use Asynchronous Concurrent Mark-Sweep GC in the old generation
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="RotateCMSCollectionTypes"><a href="#RotateCMSCollectionTypes">RotateCMSCollectionTypes</a>
+<td>Rotate the CMS collections among concurrent and STW
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CMSTraceIncrementalMode"><a href="#CMSTraceIncrementalMode">CMSTraceIncrementalMode</a>
+<td>Trace CMS incremental mode
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CMSTraceIncrementalPacing"><a href="#CMSTraceIncrementalPacing">CMSTraceIncrementalPacing</a>
+<td>Trace CMS incremental mode pacing computation
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CMSTraceThreadState"><a href="#CMSTraceThreadState">CMSTraceThreadState</a>
+<td>Trace the CMS thread state (enable the trace_state() method)
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CMSDictionaryChoice"><a href="#CMSDictionaryChoice">CMSDictionaryChoice</a>
+<td>Use BinaryTreeDictionary as default in the CMS generation
+<td>0
+<td>intx
+<tr valign="top">
+<td><a name="CMSOverflowEarlyRestoration"><a href="#CMSOverflowEarlyRestoration">CMSOverflowEarlyRestoration</a>
+<td>Whether preserved marks should be restored early
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CMSTraceSweeper"><a href="#CMSTraceSweeper">CMSTraceSweeper</a>
+<td>Trace some actions of the CMS sweeper
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="FLSVerifyDictionary"><a href="#FLSVerifyDictionary">FLSVerifyDictionary</a>
+<td>Do lots of (expensive) FLS dictionary verification
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="VerifyBlockOffsetArray"><a href="#VerifyBlockOffsetArray">VerifyBlockOffsetArray</a>
+<td>Do (expensive!) block offset array verification
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceCMSState"><a href="#TraceCMSState">TraceCMSState</a>
+<td>Trace the state of the CMS collection
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CMSTestInFreeList"><a href="#CMSTestInFreeList">CMSTestInFreeList</a>
+<td>Check if the coalesced range is already in the free lists as claimed.
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CMSIgnoreResurrection"><a href="#CMSIgnoreResurrection">CMSIgnoreResurrection</a>
+<td>Ignore object resurrection during the verification.
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="FullGCALot"><a href="#FullGCALot">FullGCALot</a>
+<td>Force full gc at every Nth exit from the runtime system (N=FullGCALotInterval)
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PromotionFailureALotCount"><a href="#PromotionFailureALotCount">PromotionFailureALotCount</a>
+<td>Number of promotion failures occurring at ParGCAllocBuffer" refill attempts (ParNew) or promotion attempts (other young collectors) 
+<td>1000
+<td>uintx
+<tr valign="top">
+<td><a name="PromotionFailureALotInterval"><a href="#PromotionFailureALotInterval">PromotionFailureALotInterval</a>
+<td>Total collections between promotion failures alot
+<td>5
+<td>uintx
+<tr valign="top">
+<td><a name="WorkStealingSleepMillis"><a href="#WorkStealingSleepMillis">WorkStealingSleepMillis</a>
+<td>Sleep time when sleep is used for yields
+<td>1
+<td>intx
+<tr valign="top">
+<td><a name="WorkStealingYieldsBeforeSleep"><a href="#WorkStealingYieldsBeforeSleep">WorkStealingYieldsBeforeSleep</a>
+<td>Number of yields before a sleep is done during workstealing
+<td>1000
+<td>uintx
+<tr valign="top">
+<td><a name="TraceAdaptiveGCBoundary"><a href="#TraceAdaptiveGCBoundary">TraceAdaptiveGCBoundary</a>
+<td>Trace young-old boundary moves
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PSAdaptiveSizePolicyResizeVirtualSpaceAlot"><a href="#PSAdaptiveSizePolicyResizeVirtualSpaceAlot">PSAdaptiveSizePolicyResizeVirtualSpaceAlot</a>
+<td>Resize the virtual spaces of the young or old generations
+<td>-1
+<td>intx
+<tr valign="top">
+<td><a name="PSAdjustTenuredGenForMinorPause"><a href="#PSAdjustTenuredGenForMinorPause">PSAdjustTenuredGenForMinorPause</a>
+<td>Adjust tenured generation to achive a minor pause goal
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PSAdjustYoungGenForMajorPause"><a href="#PSAdjustYoungGenForMajorPause">PSAdjustYoungGenForMajorPause</a>
+<td>Adjust young generation to achive a major pause goal
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="AdaptiveSizePolicyReadyThreshold"><a href="#AdaptiveSizePolicyReadyThreshold">AdaptiveSizePolicyReadyThreshold</a>
+<td>Number of collections before the adaptive sizing is started
+<td>5
+<td>uintx
+<tr valign="top">
+<td><a name="AdaptiveSizePolicyGCTimeLimitThreshold"><a href="#AdaptiveSizePolicyGCTimeLimitThreshold">AdaptiveSizePolicyGCTimeLimitThreshold</a>
+<td>Number of consecutive collections before gc time limit fires
+<td>5
+<td>uintx
+<tr valign="top">
+<td><a name="UsePrefetchQueue"><a href="#UsePrefetchQueue">UsePrefetchQueue</a>
+<td>Use the prefetch queue during PS promotion
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="ConcGCYieldTimeout"><a href="#ConcGCYieldTimeout">ConcGCYieldTimeout</a>
+<td>If non-zero, assert that GC threads yield within this # of ms.
+<td>0
+<td>intx
+<tr valign="top">
+<td><a name="TraceReferenceGC"><a href="#TraceReferenceGC">TraceReferenceGC</a>
+<td>Trace handling of soft/weak/final/phantom references
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceFinalizerRegistration"><a href="#TraceFinalizerRegistration">TraceFinalizerRegistration</a>
+<td>Trace registration of final references
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceWorkGang"><a href="#TraceWorkGang">TraceWorkGang</a>
+<td>Trace activities of work gangs
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceBlockOffsetTable"><a href="#TraceBlockOffsetTable">TraceBlockOffsetTable</a>
+<td>Print BlockOffsetTable maps
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceCardTableModRefBS"><a href="#TraceCardTableModRefBS">TraceCardTableModRefBS</a>
+<td>Print CardTableModRefBS maps
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceGCTaskManager"><a href="#TraceGCTaskManager">TraceGCTaskManager</a>
+<td>Trace actions of the GC task manager
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceGCTaskQueue"><a href="#TraceGCTaskQueue">TraceGCTaskQueue</a>
+<td>Trace actions of the GC task queues
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceGCTaskThread"><a href="#TraceGCTaskThread">TraceGCTaskThread</a>
+<td>Trace actions of the GC task threads
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceParallelOldGCMarkingPhase"><a href="#TraceParallelOldGCMarkingPhase">TraceParallelOldGCMarkingPhase</a>
+<td>Trace parallel old gc marking phase
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceParallelOldGCSummaryPhase"><a href="#TraceParallelOldGCSummaryPhase">TraceParallelOldGCSummaryPhase</a>
+<td>Trace parallel old gc summary phase
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceParallelOldGCCompactionPhase"><a href="#TraceParallelOldGCCompactionPhase">TraceParallelOldGCCompactionPhase</a>
+<td>Trace parallel old gc compaction phase
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceParallelOldGCDensePrefix"><a href="#TraceParallelOldGCDensePrefix">TraceParallelOldGCDensePrefix</a>
+<td>Trace parallel old gc dense prefix computation
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="IgnoreLibthreadGPFault"><a href="#IgnoreLibthreadGPFault">IgnoreLibthreadGPFault</a>
+<td>Suppress workaround for libthread GP fault
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CIPrintCompilerName"><a href="#CIPrintCompilerName">CIPrintCompilerName</a>
+<td>when CIPrint is active, print the name of the active compiler
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CIPrintCompileQueue"><a href="#CIPrintCompileQueue">CIPrintCompileQueue</a>
+<td>display the contents of the compile queue whenever a compilation is enqueued
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CIPrintRequests"><a href="#CIPrintRequests">CIPrintRequests</a>
+<td>display every request for compilation
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CITimeEach"><a href="#CITimeEach">CITimeEach</a>
+<td>display timing information after each successful compilation
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CICountOSR"><a href="#CICountOSR">CICountOSR</a>
+<td>use a separate counter when assigning ids to osr compilations
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="CICompileNatives"><a href="#CICompileNatives">CICompileNatives</a>
+<td>compile native methods if supported by the compiler
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="CIPrintMethodCodes"><a href="#CIPrintMethodCodes">CIPrintMethodCodes</a>
+<td>print method bytecodes of the compiled code
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CIPrintTypeFlow"><a href="#CIPrintTypeFlow">CIPrintTypeFlow</a>
+<td>print the results of ciTypeFlow analysis
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CITraceTypeFlow"><a href="#CITraceTypeFlow">CITraceTypeFlow</a>
+<td>detailed per-bytecode tracing of ciTypeFlow analysis
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CICloneLoopTestLimit"><a href="#CICloneLoopTestLimit">CICloneLoopTestLimit</a>
+<td>size limit for blocks heuristically cloned in ciTypeFlow
+<td>100
+<td>intx
+<tr valign="top">
+<td><a name="UseStackBanging"><a href="#UseStackBanging">UseStackBanging</a>
+<td>use stack banging for stack overflow checks (required for proper StackOverflow handling; disable only to measure cost of stackbanging)
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="Use24BitFPMode"><a href="#Use24BitFPMode">Use24BitFPMode</a>
+<td>Set 24-bit FPU mode on a per-compile basis 
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="Use24BitFP"><a href="#Use24BitFP">Use24BitFP</a>
+<td>use FP instructions that produce 24-bit precise results
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="UseStrictFP"><a href="#UseStrictFP">UseStrictFP</a>
+<td>use strict fp if modifier strictfp is set
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="GenerateSynchronizationCode"><a href="#GenerateSynchronizationCode">GenerateSynchronizationCode</a>
+<td>generate locking/unlocking code for synchronized methods and monitors
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="GenerateCompilerNullChecks"><a href="#GenerateCompilerNullChecks">GenerateCompilerNullChecks</a>
+<td>Generate explicit null checks for loads/stores/calls
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="GenerateRangeChecks"><a href="#GenerateRangeChecks">GenerateRangeChecks</a>
+<td>Generate range checks for array accesses
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="PrintSafepointStatistics"><a href="#PrintSafepointStatistics">PrintSafepointStatistics</a>
+<td>print statistics about safepoint synchronization
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="InlineAccessors"><a href="#InlineAccessors">InlineAccessors</a>
+<td>inline accessor methods (get/set)
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="UseCHA"><a href="#UseCHA">UseCHA</a>
+<td>enable CHA
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="PrintInlining"><a href="#PrintInlining">PrintInlining</a>
+<td>prints inlining optimizations
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="EagerInitialization"><a href="#EagerInitialization">EagerInitialization</a>
+<td>Eagerly initialize classes if possible
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceMethodReplacement"><a href="#TraceMethodReplacement">TraceMethodReplacement</a>
+<td>Print when methods are replaced do to recompilation
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintMethodFlushing"><a href="#PrintMethodFlushing">PrintMethodFlushing</a>
+<td>print the nmethods being flushed
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="UseRelocIndex"><a href="#UseRelocIndex">UseRelocIndex</a>
+<td>use an index to speed random access to relocations
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="StressCodeBuffers"><a href="#StressCodeBuffers">StressCodeBuffers</a>
+<td>Exercise code buffer expansion and other rare state changes
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="DebugVtables"><a href="#DebugVtables">DebugVtables</a>
+<td>add debugging code to vtable dispatch
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintVtables"><a href="#PrintVtables">PrintVtables</a>
+<td>print vtables when printing klass
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceCreateZombies"><a href="#TraceCreateZombies">TraceCreateZombies</a>
+<td>trace creation of zombie nmethods
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="MonomorphicArrayCheck"><a href="#MonomorphicArrayCheck">MonomorphicArrayCheck</a>
+<td>Uncommon-trap array store checks that require full type check
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="DelayCompilationDuringStartup"><a href="#DelayCompilationDuringStartup">DelayCompilationDuringStartup</a>
+<td>Delay invoking the compiler until main application class is loaded
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="CompileTheWorld"><a href="#CompileTheWorld">CompileTheWorld</a>
+<td>Compile all methods in all classes in bootstrap class path (stress test)
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CompileTheWorldPreloadClasses"><a href="#CompileTheWorldPreloadClasses">CompileTheWorldPreloadClasses</a>
+<td>Preload all classes used by a class before start loading
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="TraceIterativeGVN"><a href="#TraceIterativeGVN">TraceIterativeGVN</a>
+<td>Print progress during Iterative Global Value Numbering
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="FillDelaySlots"><a href="#FillDelaySlots">FillDelaySlots</a>
+<td>Fill delay slots (on SPARC only)
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="VerifyIterativeGVN"><a href="#VerifyIterativeGVN">VerifyIterativeGVN</a>
+<td>Verify Def-Use modifications during sparse Iterative Global Value Numbering
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TimeLivenessAnalysis"><a href="#TimeLivenessAnalysis">TimeLivenessAnalysis</a>
+<td>Time computation of bytecode liveness analysis
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceLivenessGen"><a href="#TraceLivenessGen">TraceLivenessGen</a>
+<td>Trace the generation of liveness analysis information
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintDominators"><a href="#PrintDominators">PrintDominators</a>
+<td>Print out dominator trees for GVN
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="UseLoopSafepoints"><a href="#UseLoopSafepoints">UseLoopSafepoints</a>
+<td>Generate Safepoint nodes in every loop
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="DeutschShiffmanExceptions"><a href="#DeutschShiffmanExceptions">DeutschShiffmanExceptions</a>
+<td>Fast check to find exception handler for precisely typed exceptions
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="FastAllocateSizeLimit"><a href="#FastAllocateSizeLimit">FastAllocateSizeLimit</a>
+<td>Inline allocations larger than this in doublewords must go slow
+<td>100000
+<td>intx
+<tr valign="top">
+<td><a name="UseVTune"><a href="#UseVTune">UseVTune</a>
+<td>enable support for Intel's VTune profiler
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CountCompiledCalls"><a href="#CountCompiledCalls">CountCompiledCalls</a>
+<td>counts method invocations
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CountJNICalls"><a href="#CountJNICalls">CountJNICalls</a>
+<td>counts jni method invocations
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="ClearInterpreterLocals"><a href="#ClearInterpreterLocals">ClearInterpreterLocals</a>
+<td>Always clear local variables of interpreter activations upon entry
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="UseFastSignatureHandlers"><a href="#UseFastSignatureHandlers">UseFastSignatureHandlers</a>
+<td>Use fast signature handlers for native calls
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="UseV8InstrsOnly"><a href="#UseV8InstrsOnly">UseV8InstrsOnly</a>
+<td>Use SPARC-V8 Compliant instruction subset
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="UseCASForSwap"><a href="#UseCASForSwap">UseCASForSwap</a>
+<td>Do not use swap instructions, but only CAS (in a loop) on SPARC
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PoisonOSREntry"><a href="#PoisonOSREntry">PoisonOSREntry</a>
+<td>Detect abnormal calls to OSR code
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="CountBytecodes"><a href="#CountBytecodes">CountBytecodes</a>
+<td>Count number of bytecodes executed
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintBytecodeHistogram"><a href="#PrintBytecodeHistogram">PrintBytecodeHistogram</a>
+<td>Print histogram of the executed bytecodes
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintBytecodePairHistogram"><a href="#PrintBytecodePairHistogram">PrintBytecodePairHistogram</a>
+<td>Print histogram of the executed bytecode pairs
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintSignatureHandlers"><a href="#PrintSignatureHandlers">PrintSignatureHandlers</a>
+<td>Print code generated for native method signature handlers
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="VerifyOops"><a href="#VerifyOops">VerifyOops</a>
+<td>Do plausibility checks for oops
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CheckUnhandledOops"><a href="#CheckUnhandledOops">CheckUnhandledOops</a>
+<td>Check for unhandled oops in VM code
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="VerifyJNIFields"><a href="#VerifyJNIFields">VerifyJNIFields</a>
+<td>Verify jfieldIDs for instance fields
+<td>trueInDebug
+<td>bool
+<tr valign="top">
+<td><a name="VerifyFPU"><a href="#VerifyFPU">VerifyFPU</a>
+<td>Verify FPU state (check for NaN's, etc.)
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="VerifyThread"><a href="#VerifyThread">VerifyThread</a>
+<td>Watch the thread register for corruption (SPARC only)
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="VerifyActivationFrameSize"><a href="#VerifyActivationFrameSize">VerifyActivationFrameSize</a>
+<td>Verify that activation frame didn't become smaller than its minimal size
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceFrequencyInlining"><a href="#TraceFrequencyInlining">TraceFrequencyInlining</a>
+<td>Trace frequency based inlining
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintMethodData"><a href="#PrintMethodData">PrintMethodData</a>
+<td>Print the results of +ProfileInterpreter at end of run
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="VerifyDataPointer"><a href="#VerifyDataPointer">VerifyDataPointer</a>
+<td>Verify the method data pointer during interpreter profiling
+<td>trueInDebug
+<td>bool
+<tr valign="top">
+<td><a name="TraceCompilationPolicy"><a href="#TraceCompilationPolicy">TraceCompilationPolicy</a>
+<td>Trace compilation policy
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TimeCompilationPolicy"><a href="#TimeCompilationPolicy">TimeCompilationPolicy</a>
+<td>Time the compilation policy
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CounterHalfLifeTime"><a href="#CounterHalfLifeTime">CounterHalfLifeTime</a>
+<td>half-life time of invocation counters (in secs)
+<td>30
+<td>intx
+<tr valign="top">
+<td><a name="CounterDecayMinIntervalLength"><a href="#CounterDecayMinIntervalLength">CounterDecayMinIntervalLength</a>
+<td>Min. ms. between invocation of CounterDecay
+<td>500
+<td>intx
+<tr valign="top">
+<td><a name="TraceDeoptimization"><a href="#TraceDeoptimization">TraceDeoptimization</a>
+<td>Trace deoptimization
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="DebugDeoptimization"><a href="#DebugDeoptimization">DebugDeoptimization</a>
+<td>Tracing various information while debugging deoptimization
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="GuaranteedSafepointInterval"><a href="#GuaranteedSafepointInterval">GuaranteedSafepointInterval</a>
+<td>Guarantee a safepoint (at least) every so many milliseconds (0 means none)
+<td>1000
+<td>intx
+<tr valign="top">
+<td><a name="SafepointTimeoutDelay"><a href="#SafepointTimeoutDelay">SafepointTimeoutDelay</a>
+<td>Delay in milliseconds for option SafepointTimeout
+<td>10000
+<td>intx
+<tr valign="top">
+<td><a name="MallocCatchPtr"><a href="#MallocCatchPtr">MallocCatchPtr</a>
+<td>Hit breakpoint when mallocing/freeing this pointer
+<td>-1
+<td>intx
+<tr valign="top">
+<td><a name="TotalHandleAllocationLimit"><a href="#TotalHandleAllocationLimit">TotalHandleAllocationLimit</a>
+<td>Threshold for total handle allocation when +TraceHandleAllocation is used
+<td>1024
+<td>uintx
+<tr valign="top">
+<td><a name="StackPrintLimit"><a href="#StackPrintLimit">StackPrintLimit</a>
+<td>number of stack frames to print in VM-level stack dump
+<td>100
+<td>intx
+<tr valign="top">
+<td><a name="MaxInlineLevel"><a href="#MaxInlineLevel">MaxInlineLevel</a>
+<td>maximum number of nested calls that are inlined
+<td>9
+<td>intx
+<tr valign="top">
+<td><a name="MaxRecursiveInlineLevel"><a href="#MaxRecursiveInlineLevel">MaxRecursiveInlineLevel</a>
+<td>maximum number of nested recursive calls that are inlined
+<td>1
+<td>intx
+<tr valign="top">
+<td><a name="InlineSmallCode"><a href="#InlineSmallCode">InlineSmallCode</a>
+<td>Only inline already compiled methods if their code size is less than this
+<td>1000
+<td>intx
+<tr valign="top">
+<td><a name="MaxTrivialSize"><a href="#MaxTrivialSize">MaxTrivialSize</a>
+<td>maximum bytecode size of a trivial method to be inlined
+<td>6
+<td>intx
+<tr valign="top">
+<td><a name="MinInliningThreshold"><a href="#MinInliningThreshold">MinInliningThreshold</a>
+<td>min. invocation count a method needs to have to be inlined
+<td>250
+<td>intx
+<tr valign="top">
+<td><a name="AlignEntryCode"><a href="#AlignEntryCode">AlignEntryCode</a>
+<td>aligns entry code to specified value (in bytes)
+<td>4
+<td>intx
+<tr valign="top">
+<td><a name="MethodHistogramCutoff"><a href="#MethodHistogramCutoff">MethodHistogramCutoff</a>
+<td>cutoff value for method invoc. histogram (+CountCalls)
+<td>100
+<td>intx
+<tr valign="top">
+<td><a name="ProfilerNumberOfInterpretedMethods"><a href="#ProfilerNumberOfInterpretedMethods">ProfilerNumberOfInterpretedMethods</a>
+<td># of interpreted methods to show in profile
+<td>25
+<td>intx
+<tr valign="top">
+<td><a name="ProfilerNumberOfCompiledMethods"><a href="#ProfilerNumberOfCompiledMethods">ProfilerNumberOfCompiledMethods</a>
+<td># of compiled methods to show in profile
+<td>25
+<td>intx
+<tr valign="top">
+<td><a name="ProfilerNumberOfStubMethods"><a href="#ProfilerNumberOfStubMethods">ProfilerNumberOfStubMethods</a>
+<td># of stub methods to show in profile
+<td>25
+<td>intx
+<tr valign="top">
+<td><a name="ProfilerNumberOfRuntimeStubNodes"><a href="#ProfilerNumberOfRuntimeStubNodes">ProfilerNumberOfRuntimeStubNodes</a>
+<td># of runtime stub nodes to show in profile
+<td>25
+<td>intx
+<tr valign="top">
+<td><a name="DontYieldALotInterval"><a href="#DontYieldALotInterval">DontYieldALotInterval</a>
+<td>Interval between which yields will be dropped (milliseconds)
+<td>10
+<td>intx
+<tr valign="top">
+<td><a name="MinSleepInterval"><a href="#MinSleepInterval">MinSleepInterval</a>
+<td>Minimum sleep() interval (milliseconds) when ConvertSleepToYield is off (used for SOLARIS)
+<td>1
+<td>intx
+<tr valign="top">
+<td><a name="ProfilerPCTickThreshold"><a href="#ProfilerPCTickThreshold">ProfilerPCTickThreshold</a>
+<td>Number of ticks in a PC buckets to be a hotspot
+<td>15
+<td>intx
+<tr valign="top">
+<td><a name="StressNonEntrant"><a href="#StressNonEntrant">StressNonEntrant</a>
+<td>Mark nmethods non-entrant at registration
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TypeProfileWidth"><a href="#TypeProfileWidth">TypeProfileWidth</a>
+<td>number of receiver types to record in call profile
+<td>2
+<td>intx
+<tr valign="top">
+<td><a name="BciProfileWidth"><a href="#BciProfileWidth">BciProfileWidth</a>
+<td>number of return bci's to record in ret profile
+<td>2
+<td>intx
+<tr valign="top">
+<td><a name="FreqCountInvocations"><a href="#FreqCountInvocations">FreqCountInvocations</a>
+<td>Scaling factor for branch frequencies (deprecated)
+<td>1
+<td>intx
+<tr valign="top">
+<td><a name="InlineFrequencyRatio"><a href="#InlineFrequencyRatio">InlineFrequencyRatio</a>
+<td>Ratio of call site execution to caller method invocation
+<td>20
+<td>intx
+<tr valign="top">
+<td><a name="InlineThrowCount"><a href="#InlineThrowCount">InlineThrowCount</a>
+<td>Force inlining of interpreted methods that throw this often
+<td>50
+<td>intx
+<tr valign="top">
+<td><a name="InlineThrowMaxSize"><a href="#InlineThrowMaxSize">InlineThrowMaxSize</a>
+<td>Force inlining of throwing methods smaller than this
+<td>200
+<td>intx
+<tr valign="top">
+<td><a name="VerifyAliases"><a href="#VerifyAliases">VerifyAliases</a>
+<td>perform extra checks on the results of alias analysis
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="ProfilerNodeSize"><a href="#ProfilerNodeSize">ProfilerNodeSize</a>
+<td>Size in K to allocate for the Profile Nodes of each thread
+<td>1024
+<td>intx
+<tr valign="top">
+<td><a name="V8AtomicOperationUnderLockSpinCount"><a href="#V8AtomicOperationUnderLockSpinCount">V8AtomicOperationUnderLockSpinCount</a>
+<td>Number of times to spin wait on a v8 atomic operation lock
+<td>50
+<td>intx
+<tr valign="top">
+<td><a name="ExitAfterGCNum"><a href="#ExitAfterGCNum">ExitAfterGCNum</a>
+<td>If non-zero, exit after this GC.
+<td>0
+<td>uintx
+<tr valign="top">
+<td><a name="GCExpandToAllocateDelayMillis"><a href="#GCExpandToAllocateDelayMillis">GCExpandToAllocateDelayMillis</a>
+<td>Delay in ms between expansion and allocation
+<td>0
+<td>uintx
+<tr valign="top">
+<td><a name="CodeCacheSegmentSize"><a href="#CodeCacheSegmentSize">CodeCacheSegmentSize</a>
+<td>Code cache segment size (in bytes) - smallest unit of allocation
+<td>64
+<td>uintx
+<tr valign="top">
+<td><a name="BinarySwitchThreshold"><a href="#BinarySwitchThreshold">BinarySwitchThreshold</a>
+<td>Minimal number of lookupswitch entries for rewriting to binary switch
+<td>5
+<td>intx
+<tr valign="top">
+<td><a name="StopInterpreterAt"><a href="#StopInterpreterAt">StopInterpreterAt</a>
+<td>Stops interpreter execution at specified bytecode number
+<td>0
+<td>intx
+<tr valign="top">
+<td><a name="TraceBytecodesAt"><a href="#TraceBytecodesAt">TraceBytecodesAt</a>
+<td>Traces bytecodes starting with specified bytecode number
+<td>0
+<td>intx
+<tr valign="top">
+<td><a name="CIStart"><a href="#CIStart">CIStart</a>
+<td>the id of the first compilation to permit
+<td>0
+<td>intx
+<tr valign="top">
+<td><a name="CIStop"><a href="#CIStop">CIStop</a>
+<td>the id of the last compilation to permit
+<td>-1
+<td>intx
+<tr valign="top">
+<td><a name="CIStartOSR"><a href="#CIStartOSR">CIStartOSR</a>
+<td>the id of the first osr compilation to permit (CICountOSR must be on)
+<td>0
+<td>intx
+<tr valign="top">
+<td><a name="CIStopOSR"><a href="#CIStopOSR">CIStopOSR</a>
+<td>the id of the last osr compilation to permit (CICountOSR must be on)
+<td>-1
+<td>intx
+<tr valign="top">
+<td><a name="CIBreakAtOSR"><a href="#CIBreakAtOSR">CIBreakAtOSR</a>
+<td>id of osr compilation to break at
+<td>-1
+<td>intx
+<tr valign="top">
+<td><a name="CIBreakAt"><a href="#CIBreakAt">CIBreakAt</a>
+<td>id of compilation to break at
+<td>-1
+<td>intx
+<tr valign="top">
+<td><a name="CIFireOOMAt"><a href="#CIFireOOMAt">CIFireOOMAt</a>
+<td>Fire OutOfMemoryErrors throughout CI for testing the compiler (non-negative value throws OOM after this many CI accesses in each compile)
+<td>-1
+<td>intx
+<tr valign="top">
+<td><a name="CIFireOOMAtDelay"><a href="#CIFireOOMAtDelay">CIFireOOMAtDelay</a>
+<td>Wait for this many CI accesses to occur in all compiles before beginning to throw OutOfMemoryErrors in each compile
+<td>-1
+<td>intx
+<tr valign="top">
+<td><a name="NewCodeParameter"><a href="#NewCodeParameter">NewCodeParameter</a>
+<td>Testing Only: Create a dedicated integer parameter before putback
+<td>0
+<td>intx
+<tr valign="top">
+<td><a name="MinOopMapAllocation"><a href="#MinOopMapAllocation">MinOopMapAllocation</a>
+<td>Minimum number of OopMap entries in an OopMapSet
+<td>8
+<td>intx
+<tr valign="top">
+<td><a name="LongCompileThreshold"><a href="#LongCompileThreshold">LongCompileThreshold</a>
+<td>Used with +TraceLongCompiles
+<td>50
+<td>intx
+<tr valign="top">
+<td><a name="MaxRecompilationSearchLength"><a href="#MaxRecompilationSearchLength">MaxRecompilationSearchLength</a>
+<td>max. # frames to inspect searching for recompilee
+<td>10
+<td>intx
+<tr valign="top">
+<td><a name="MaxInterpretedSearchLength"><a href="#MaxInterpretedSearchLength">MaxInterpretedSearchLength</a>
+<td>max. # interp. frames to skip when searching for recompilee
+<td>3
+<td>intx
+<tr valign="top">
+<td><a name="DesiredMethodLimit"><a href="#DesiredMethodLimit">DesiredMethodLimit</a>
+<td>desired max. method size (in bytecodes) after inlining
+<td>8000
+<td>intx
+<tr valign="top">
+<td><a name="HugeMethodLimit"><a href="#HugeMethodLimit">HugeMethodLimit</a>
+<td>don't compile methods larger than this if +DontCompileHugeMethods
+<td>8000
+<td>intx
+<tr valign="top">
+<td><a name="UseNewReflection"><a href="#UseNewReflection">UseNewReflection</a>
+<td>Temporary flag for transition to reflection based on dynamic bytecode generation in 1.4; can no longer be turned off in 1.4 JDK, and is unneeded in 1.3 JDK, but marks most places VM changes were needed
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="VerifyReflectionBytecodes"><a href="#VerifyReflectionBytecodes">VerifyReflectionBytecodes</a>
+<td>Force verification of 1.4 reflection bytecodes. Does not work in situations like that described in 4486457 or for constructors generated for serialization, so can not be enabled in product.
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="FastSuperclassLimit"><a href="#FastSuperclassLimit">FastSuperclassLimit</a>
+<td>Depth of hardwired instanceof accelerator array
+<td>8
+<td>intx
+<tr valign="top">
+<td><a name="PerfTraceDataCreation"><a href="#PerfTraceDataCreation">PerfTraceDataCreation</a>
+<td>Trace creation of Performance Data Entries
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PerfTraceMemOps"><a href="#PerfTraceMemOps">PerfTraceMemOps</a>
+<td>Trace PerfMemory create/attach/detach calls
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="SharedOptimizeColdStartPolicy"><a href="#SharedOptimizeColdStartPolicy">SharedOptimizeColdStartPolicy</a>
+<td>Reordering policy for SharedOptimizeColdStart 0=favor classload-time locality, 1=balanced, 2=favor runtime locality
+<td>2
+<td>intx
+
+<tr bgcolor="#e0e0e0">
+<td colspan="4"><a name="product_pd">product_pd
+<tr valign="top">
+<td><a name="UseLargePages"><a href="#UseLargePages">UseLargePages</a>
+<td>Use large page memory
+<td>
+<td>bool
+<tr valign="top">
+<td><a name="UseSSE"><a href="#UseSSE">UseSSE</a>
+<td>0=fpu stack,1=SSE for floats,2=SSE/SSE2 for all (x86/amd only
+<td>
+<td>intx
+<tr valign="top">
+<td><a name="BackgroundCompilation"><a href="#BackgroundCompilation">BackgroundCompilation</a>
+<td>A thread requesting compilation is not blocked during compilation
+<td>
+<td>bool
+<tr valign="top">
+<td><a name="UseVectoredExceptions"><a href="#UseVectoredExceptions">UseVectoredExceptions</a>
+<td>Temp Flag - Use Vectored Exceptions rather than SEH (Windows Only)
+<td>
+<td>bool
+<tr valign="top">
+<td><a name="DontYieldALot"><a href="#DontYieldALot">DontYieldALot</a>
+<td>Throw away obvious excess yield calls (for SOLARIS only)
+<td>
+<td>bool
+<tr valign="top">
+<td><a name="ConvertSleepToYield"><a href="#ConvertSleepToYield">ConvertSleepToYield</a>
+<td>Converts sleep(0) to thread yield (may be off for SOLARIS to improve GUI)
+<td>
+<td>bool
+<tr valign="top">
+<td><a name="UseTLAB"><a href="#UseTLAB">UseTLAB</a>
+<td>Use thread-local object allocation
+<td>
+<td>bool
+<tr valign="top">
+<td><a name="ResizeTLAB"><a href="#ResizeTLAB">ResizeTLAB</a>
+<td>Dynamically resize tlab size for threads
+<td>
+<td>bool
+<tr valign="top">
+<td><a name="NeverActAsServerClassMachine"><a href="#NeverActAsServerClassMachine">NeverActAsServerClassMachine</a>
+<td>Never act like a server-class machine
+<td>
+<td>bool
+<tr valign="top">
+<td><a name="PrefetchCopyIntervalInBytes"><a href="#PrefetchCopyIntervalInBytes">PrefetchCopyIntervalInBytes</a>
+<td>How far ahead to prefetch destination area (<= 0 means off)
+<td>
+<td>intx
+<tr valign="top">
+<td><a name="PrefetchScanIntervalInBytes"><a href="#PrefetchScanIntervalInBytes">PrefetchScanIntervalInBytes</a>
+<td>How far ahead to prefetch scan area (<= 0 means off)
+<td>
+<td>intx
+<tr valign="top">
+<td><a name="PrefetchFieldsAhead"><a href="#PrefetchFieldsAhead">PrefetchFieldsAhead</a>
+<td>How many fields ahead to prefetch in oop scan (<= 0 means off)
+<td>
+<td>intx
+<tr valign="top">
+<td><a name="CompilationPolicyChoice"><a href="#CompilationPolicyChoice">CompilationPolicyChoice</a>
+<td>which compilation policy
+<td>
+<td>intx
+<tr valign="top">
+<td><a name="RewriteBytecodes"><a href="#RewriteBytecodes">RewriteBytecodes</a>
+<td>Allow rewriting of bytecodes (bytecodes are not immutable)
+<td>
+<td>bool
+<tr valign="top">
+<td><a name="RewriteFrequentPairs"><a href="#RewriteFrequentPairs">RewriteFrequentPairs</a>
+<td>Rewrite frequently used bytecode pairs into a single bytecode
+<td>
+<td>bool
+<tr valign="top">
+<td><a name="UseOnStackReplacement"><a href="#UseOnStackReplacement">UseOnStackReplacement</a>
+<td>Use on stack replacement, calls runtime if invoc. counter overflows in loop
+<td>
+<td>bool
+<tr valign="top">
+<td><a name="PreferInterpreterNativeStubs"><a href="#PreferInterpreterNativeStubs">PreferInterpreterNativeStubs</a>
+<td>Use always interpreter stubs for native methods invoked via interpreter
+<td>
+<td>bool
+<tr valign="top">
+<td><a name=" AllocatePrefetchStyle"><a href="# AllocatePrefetchStyle"> AllocatePrefetchStyle</a>
+<td>0=no prefetch, 1=dead load, 2=prefetch instruction
+<td>
+<td>intx
+<tr valign="top">
+<td><a name=" AllocatePrefetchDistance"><a href="# AllocatePrefetchDistance"> AllocatePrefetchDistance</a>
+<td>Distance to prefetch ahead of allocation pointer
+<td>
+<td>intx
+<tr valign="top">
+<td><a name="FreqInlineSize"><a href="#FreqInlineSize">FreqInlineSize</a>
+<td>maximum bytecode size of a frequent method to be inlined
+<td>
+<td>intx
+<tr valign="top">
+<td><a name="PreInflateSpin"><a href="#PreInflateSpin">PreInflateSpin</a>
+<td>Number of times to spin wait before inflation
+<td>
+<td>intx
+<tr valign="top">
+<td><a name="NewSize"><a href="#NewSize">NewSize</a>
+<td>Default size of new generation (in bytes)
+<td>
+<td>uintx
+<tr valign="top">
+<td><a name="TLABSize"><a href="#TLABSize">TLABSize</a>
+<td>Default (or starting) size of TLAB (in bytes)
+<td>
+<td>uintx
+<tr valign="top">
+<td><a name="SurvivorRatio"><a href="#SurvivorRatio">SurvivorRatio</a>
+<td>Ratio of eden/survivor space size
+<td>
+<td>intx
+<tr valign="top">
+<td><a name="NewRatio"><a href="#NewRatio">NewRatio</a>
+<td>Ratio of new/old generation sizes
+<td>
+<td>intx
+<tr valign="top">
+<td><a name="NewSizeThreadIncrease"><a href="#NewSizeThreadIncrease">NewSizeThreadIncrease</a>
+<td>Additional size added to desired new generation size per non-daemon thread (in bytes)
+<td>
+<td>uintx
+<tr valign="top">
+<td><a name="PermSize"><a href="#PermSize">PermSize</a>
+<td>Default size of permanent generation (in bytes)
+<td>
+<td>uintx
+<tr valign="top">
+<td><a name="MaxPermSize"><a href="#MaxPermSize">MaxPermSize</a>
+<td>Maximum size of permanent generation (in bytes)
+<td>
+<td>uintx
+<tr valign="top">
+<td><a name="StackYellowPages"><a href="#StackYellowPages">StackYellowPages</a>
+<td>Number of yellow zone (recoverable overflows) pages
+<td>
+<td>intx
+<tr valign="top">
+<td><a name="StackRedPages"><a href="#StackRedPages">StackRedPages</a>
+<td>Number of red zone (unrecoverable overflows) pages
+<td>
+<td>intx
+<tr valign="top">
+<td><a name="StackShadowPages"><a href="#StackShadowPages">StackShadowPages</a>
+<td>Number of shadow zone (for overflow checking) pages" this should exceed the depth of the VM and native call stack
+<td>
+<td>intx
+<tr valign="top">
+<td><a name="ThreadStackSize"><a href="#ThreadStackSize">ThreadStackSize</a>
+<td>Thread Stack Size (in Kbytes)
+<td>
+<td>intx
+<tr valign="top">
+<td><a name="VMThreadStackSize"><a href="#VMThreadStackSize">VMThreadStackSize</a>
+<td>Non-Java Thread Stack Size (in Kbytes)
+<td>
+<td>intx
+<tr valign="top">
+<td><a name="CompilerThreadStackSize"><a href="#CompilerThreadStackSize">CompilerThreadStackSize</a>
+<td>Compiler Thread Stack Size (in Kbytes)
+<td>
+<td>intx
+<tr valign="top">
+<td><a name="InitialCodeCacheSize"><a href="#InitialCodeCacheSize">InitialCodeCacheSize</a>
+<td>Initial code cache size (in bytes)
+<td>
+<td>uintx
+<tr valign="top">
+<td><a name="ReservedCodeCacheSize"><a href="#ReservedCodeCacheSize">ReservedCodeCacheSize</a>
+<td>Reserved code cache size (in bytes) - maximum code cache size
+<td>
+<td>uintx
+<tr valign="top">
+<td><a name="CodeCacheExpansionSize"><a href="#CodeCacheExpansionSize">CodeCacheExpansionSize</a>
+<td>Code cache expansion size (in bytes)
+<td>
+<td>uintx
+<tr valign="top">
+<td><a name="CompileThreshold"><a href="#CompileThreshold">CompileThreshold</a>
+<td>number of method invocations/branches before (re-)compiling
+<td>
+<td>intx
+<tr valign="top">
+<td><a name="Tier2CompileThreshold"><a href="#Tier2CompileThreshold">Tier2CompileThreshold</a>
+<td>threshold at which a tier 2 compilation is invoked
+<td>
+<td>intx
+<tr valign="top">
+<td><a name="Tier2BackEdgeThreshold"><a href="#Tier2BackEdgeThreshold">Tier2BackEdgeThreshold</a>
+<td>Back edge threshold at which a tier 2 compilation is invoked
+<td>
+<td>intx
+<tr valign="top">
+<td><a name="TieredCompilation"><a href="#TieredCompilation">TieredCompilation</a>
+<td>Enable two-tier compilation
+<td>
+<td>bool
+<tr valign="top">
+<td><a name="OnStackReplacePercentage"><a href="#OnStackReplacePercentage">OnStackReplacePercentage</a>
+<td>number of method invocations/branches (expressed as % of CompileThreshold) before (re-)compiling OSR code
+<td>
+<td>intx
+
+<tr bgcolor="#e0e0e0">
+<td colspan="4"><a name="develop_pd">develop_pd
+<tr valign="top">
+<td><a name="ShareVtableStubs"><a href="#ShareVtableStubs">ShareVtableStubs</a>
+<td>Share vtable stubs (smaller code but worse branch prediction
+<td>
+<td>bool
+<tr valign="top">
+<td><a name="CICompileOSR"><a href="#CICompileOSR">CICompileOSR</a>
+<td>compile on stack replacement methods if supported by the compiler
+<td>
+<td>bool
+<tr valign="top">
+<td><a name="ImplicitNullChecks"><a href="#ImplicitNullChecks">ImplicitNullChecks</a>
+<td>generate code for implicit null checks
+<td>
+<td>bool
+<tr valign="top">
+<td><a name="UncommonNullCast"><a href="#UncommonNullCast">UncommonNullCast</a>
+<td>Uncommon-trap NULLs passed to check cast
+<td>
+<td>bool
+<tr valign="top">
+<td><a name="InlineIntrinsics"><a href="#InlineIntrinsics">InlineIntrinsics</a>
+<td>Inline intrinsics that can be statically resolved
+<td>
+<td>bool
+<tr valign="top">
+<td><a name="ProfileInterpreter"><a href="#ProfileInterpreter">ProfileInterpreter</a>
+<td>Profile at the bytecode level during interpretation
+<td>
+<td>bool
+<tr valign="top">
+<td><a name="ProfileTraps"><a href="#ProfileTraps">ProfileTraps</a>
+<td>Profile deoptimization traps at the bytecode level
+<td>
+<td>bool
+<tr valign="top">
+<td><a name="InlineFrequencyCount"><a href="#InlineFrequencyCount">InlineFrequencyCount</a>
+<td>Count of call site execution necessary to trigger frequent inlining
+<td>
+<td>intx
+<tr valign="top">
+<td><a name="JVMInvokeMethodSlack"><a href="#JVMInvokeMethodSlack">JVMInvokeMethodSlack</a>
+<td>Stack space (bytes) required for JVM_InvokeMethod to complete
+<td>
+<td>uintx
+<tr valign="top">
+<td><a name="CodeEntryAlignment"><a href="#CodeEntryAlignment">CodeEntryAlignment</a>
+<td>Code entry alignment for generated code (in bytes)
+<td>
+<td>intx
+<tr valign="top">
+<td><a name="CodeCacheMinBlockLength"><a href="#CodeCacheMinBlockLength">CodeCacheMinBlockLength</a>
+<td>Minimum number of segments in a code cache block.
+<td>
+<td>uintx
+
+<tr bgcolor="#e0e0e0">
+<td colspan="4"><a name="notproduct">notproduct
+<tr valign="top">
+<td><a name="StressDerivedPointers"><a href="#StressDerivedPointers">StressDerivedPointers</a>
+<td>Force scavenge when a derived pointers is detected on stack after rtm call
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceCodeBlobStacks"><a href="#TraceCodeBlobStacks">TraceCodeBlobStacks</a>
+<td>Trace stack-walk of codeblobs
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintRewrites"><a href="#PrintRewrites">PrintRewrites</a>
+<td>Print methods that are being rewritten
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="DeoptimizeRandom"><a href="#DeoptimizeRandom">DeoptimizeRandom</a>
+<td>deoptimize random frames on random exit from the runtime system
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="ZombieALot"><a href="#ZombieALot">ZombieALot</a>
+<td>creates zombies (non-entrant) at exit from the runt. system
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="WalkStackALot"><a href="#WalkStackALot">WalkStackALot</a>
+<td>trace stack (no print) at every exit from the runtime system
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="StrictSafepointChecks"><a href="#StrictSafepointChecks">StrictSafepointChecks</a>
+<td>Enable strict checks that safepoints cannot happen for threads that used No_Safepoint_Verifier
+<td>trueInDebug
+<td>bool
+<tr valign="top">
+<td><a name="VerifyLastFrame"><a href="#VerifyLastFrame">VerifyLastFrame</a>
+<td>Verify oops on last frame on entry to VM
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="LogEvents"><a href="#LogEvents">LogEvents</a>
+<td>Enable Event log
+<td>trueInDebug
+<td>bool
+<tr valign="top">
+<td><a name="CheckAssertionStatusDirectives"><a href="#CheckAssertionStatusDirectives">CheckAssertionStatusDirectives</a>
+<td>temporary - see javaClasses.cpp
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintMallocFree"><a href="#PrintMallocFree">PrintMallocFree</a>
+<td>Trace calls to C heap malloc/free allocation
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintOopAddress"><a href="#PrintOopAddress">PrintOopAddress</a>
+<td>Always print the location of the oop
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="VerifyCodeCacheOften"><a href="#VerifyCodeCacheOften">VerifyCodeCacheOften</a>
+<td>Verify compiled-code cache often
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="ZapDeadLocalsOld"><a href="#ZapDeadLocalsOld">ZapDeadLocalsOld</a>
+<td>Zap dead locals (old version, zaps all frames when entering the VM
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CheckOopishValues"><a href="#CheckOopishValues">CheckOopishValues</a>
+<td>Warn if value contains oop ( requires ZapDeadLocals)
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="ZapVMHandleArea"><a href="#ZapVMHandleArea">ZapVMHandleArea</a>
+<td>Zap freed VM handle space with 0xBCBCBCBC
+<td>trueInDebug
+<td>bool
+<tr valign="top">
+<td><a name="PrintCompilation2"><a href="#PrintCompilation2">PrintCompilation2</a>
+<td>Print additional statistics per compilation
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintAdapterHandlers"><a href="#PrintAdapterHandlers">PrintAdapterHandlers</a>
+<td>Print code generated for i2c/c2i adapters
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintCodeCache"><a href="#PrintCodeCache">PrintCodeCache</a>
+<td>Print the compiled_code cache when exiting
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="ProfilerCheckIntervals"><a href="#ProfilerCheckIntervals">ProfilerCheckIntervals</a>
+<td>Collect and print info on spacing of profiler ticks
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="WarnOnStalledSpinLock"><a href="#WarnOnStalledSpinLock">WarnOnStalledSpinLock</a>
+<td>Prints warnings for stalled SpinLocks
+<td>0
+<td>uintx
+<tr valign="top">
+<td><a name="PrintSystemDictionaryAtExit"><a href="#PrintSystemDictionaryAtExit">PrintSystemDictionaryAtExit</a>
+<td>Prints the system dictionary at exit
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="ValidateMarkSweep"><a href="#ValidateMarkSweep">ValidateMarkSweep</a>
+<td>Do extra validation during MarkSweep collection
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="RecordMarkSweepCompaction"><a href="#RecordMarkSweepCompaction">RecordMarkSweepCompaction</a>
+<td>Enable GC-to-GC recording and querying of compaction during MarkSweep
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceRuntimeCalls"><a href="#TraceRuntimeCalls">TraceRuntimeCalls</a>
+<td>Trace run-time calls
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceJVMCalls"><a href="#TraceJVMCalls">TraceJVMCalls</a>
+<td>Trace JVM calls
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceInvocationCounterOverflow"><a href="#TraceInvocationCounterOverflow">TraceInvocationCounterOverflow</a>
+<td>Trace method invocation counter overflow
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceZapDeadLocals"><a href="#TraceZapDeadLocals">TraceZapDeadLocals</a>
+<td>Trace zapping dead locals
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CMSMarkStackOverflowALot"><a href="#CMSMarkStackOverflowALot">CMSMarkStackOverflowALot</a>
+<td>Whether we should simulate frequent marking stack / work queue" overflow
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CMSMarkStackOverflowInterval"><a href="#CMSMarkStackOverflowInterval">CMSMarkStackOverflowInterval</a>
+<td>A per-thread `interval' counter that determines how frequently" we simulate overflow; a smaller number increases frequency
+<td>1000
+<td>intx
+<tr valign="top">
+<td><a name="CMSVerifyReturnedBytes"><a href="#CMSVerifyReturnedBytes">CMSVerifyReturnedBytes</a>
+<td>Check that all the garbage collected was returned to the free lists.
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="ScavengeALot"><a href="#ScavengeALot">ScavengeALot</a>
+<td>Force scavenge at every Nth exit from the runtime system (N=ScavengeALotInterval)
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="GCALotAtAllSafepoints"><a href="#GCALotAtAllSafepoints">GCALotAtAllSafepoints</a>
+<td>Enforce ScavengeALot/GCALot at all potential safepoints
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PromotionFailureALot"><a href="#PromotionFailureALot">PromotionFailureALot</a>
+<td>Use promotion failure handling on every youngest generation collection
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CheckMemoryInitialization"><a href="#CheckMemoryInitialization">CheckMemoryInitialization</a>
+<td>Checks memory initialization
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceMarkSweep"><a href="#TraceMarkSweep">TraceMarkSweep</a>
+<td>Trace mark sweep
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintReferenceGC"><a href="#PrintReferenceGC">PrintReferenceGC</a>
+<td>Print times spent handling reference objects during GC (enabled only when PrintGCDetails)
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceScavenge"><a href="#TraceScavenge">TraceScavenge</a>
+<td>Trace scavenge
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TimeCompiler"><a href="#TimeCompiler">TimeCompiler</a>
+<td>time the compiler
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TimeCompiler2"><a href="#TimeCompiler2">TimeCompiler2</a>
+<td>detailed time the compiler (requires +TimeCompiler)
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="LogMultipleMutexLocking"><a href="#LogMultipleMutexLocking">LogMultipleMutexLocking</a>
+<td>log locking and unlocking of mutexes (only if multiple locks are held)
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintSymbolTableSizeHistogram"><a href="#PrintSymbolTableSizeHistogram">PrintSymbolTableSizeHistogram</a>
+<td>print histogram of the symbol table
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="ExitVMOnVerifyError"><a href="#ExitVMOnVerifyError">ExitVMOnVerifyError</a>
+<td>standard exit from VM if bytecode verify error (only in debug mode)
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="AbortVMOnException"><a href="#AbortVMOnException">AbortVMOnException</a>
+<td>Call fatal if this exception is thrown. Example: java -XX:AbortVMOnException=java.lang.NullPointerException Foo
+<td>""
+<td>ccstr
+<tr valign="top">
+<td><a name="PrintVtableStats"><a href="#PrintVtableStats">PrintVtableStats</a>
+<td>print vtables stats at end of run
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="IgnoreLockingAssertions"><a href="#IgnoreLockingAssertions">IgnoreLockingAssertions</a>
+<td>disable locking assertions (for speed)
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="VerifyLoopOptimizations"><a href="#VerifyLoopOptimizations">VerifyLoopOptimizations</a>
+<td>verify major loop optimizations
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CompileTheWorldIgnoreInitErrors"><a href="#CompileTheWorldIgnoreInitErrors">CompileTheWorldIgnoreInitErrors</a>
+<td>Compile all methods although class initializer failed
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TracePhaseCCP"><a href="#TracePhaseCCP">TracePhaseCCP</a>
+<td>Print progress during Conditional Constant Propagation
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceLivenessQuery"><a href="#TraceLivenessQuery">TraceLivenessQuery</a>
+<td>Trace queries of liveness analysis information
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CollectIndexSetStatistics"><a href="#CollectIndexSetStatistics">CollectIndexSetStatistics</a>
+<td>Collect information about IndexSets
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceCISCSpill"><a href="#TraceCISCSpill">TraceCISCSpill</a>
+<td>Trace allocators use of cisc spillable instructions
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceSpilling"><a href="#TraceSpilling">TraceSpilling</a>
+<td>Trace spilling
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CountVMLocks"><a href="#CountVMLocks">CountVMLocks</a>
+<td>counts VM internal lock attempts and contention
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CountRuntimeCalls"><a href="#CountRuntimeCalls">CountRuntimeCalls</a>
+<td>counts VM runtime calls
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CountJVMCalls"><a href="#CountJVMCalls">CountJVMCalls</a>
+<td>counts jvm method invocations
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CountRemovableExceptions"><a href="#CountRemovableExceptions">CountRemovableExceptions</a>
+<td>count exceptions that could be replaced by branches due to inlining
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="ICMissHistogram"><a href="#ICMissHistogram">ICMissHistogram</a>
+<td>produce histogram of IC misses
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintClassStatistics"><a href="#PrintClassStatistics">PrintClassStatistics</a>
+<td>prints class statistics at end of run
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PrintMethodStatistics"><a href="#PrintMethodStatistics">PrintMethodStatistics</a>
+<td>prints method statistics at end of run
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceOnStackReplacement"><a href="#TraceOnStackReplacement">TraceOnStackReplacement</a>
+<td>Trace on stack replacement
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="VerifyJNIEnvThread"><a href="#VerifyJNIEnvThread">VerifyJNIEnvThread</a>
+<td>Verify JNIEnv.thread == Thread::current() when entering VM from JNI
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="TraceTypeProfile"><a href="#TraceTypeProfile">TraceTypeProfile</a>
+<td>Trace type profile
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="MemProfilingInterval"><a href="#MemProfilingInterval">MemProfilingInterval</a>
+<td>Time between each invocation of the MemProfiler
+<td>500
+<td>intx
+<tr valign="top">
+<td><a name="AssertRepeat"><a href="#AssertRepeat">AssertRepeat</a>
+<td>number of times to evaluate expression in assert (to estimate overhead); only works with -DUSE_REPEATED_ASSERTS
+<td>1
+<td>intx
+<tr valign="top">
+<td><a name="SuppressErrorAt"><a href="#SuppressErrorAt">SuppressErrorAt</a>
+<td>List of assertions (file:line) to muzzle
+<td>""
+<td>ccstr
+<tr valign="top">
+<td><a name="HandleAllocationLimit"><a href="#HandleAllocationLimit">HandleAllocationLimit</a>
+<td>Threshold for HandleMark allocation when +TraceHandleAllocation is used
+<td>1024
+<td>uintx
+<tr valign="top">
+<td><a name="MaxElementPrintSize"><a href="#MaxElementPrintSize">MaxElementPrintSize</a>
+<td>maximum number of elements to print
+<td>256
+<td>intx
+<tr valign="top">
+<td><a name="MaxSubklassPrintSize"><a href="#MaxSubklassPrintSize">MaxSubklassPrintSize</a>
+<td>maximum number of subklasses to print when printing klass
+<td>4
+<td>intx
+<tr valign="top">
+<td><a name="ScavengeALotInterval"><a href="#ScavengeALotInterval">ScavengeALotInterval</a>
+<td>Interval between which scavenge will occur with +ScavengeALot
+<td>1
+<td>intx
+<tr valign="top">
+<td><a name="FullGCALotInterval"><a href="#FullGCALotInterval">FullGCALotInterval</a>
+<td>Interval between which full gc will occur with +FullGCALot
+<td>1
+<td>intx
+<tr valign="top">
+<td><a name="FullGCALotStart"><a href="#FullGCALotStart">FullGCALotStart</a>
+<td>For which invocation to start FullGCAlot
+<td>0
+<td>intx
+<tr valign="top">
+<td><a name="FullGCALotDummies"><a href="#FullGCALotDummies">FullGCALotDummies</a>
+<td>Dummy object allocated with +FullGCALot, forcing all objects to move
+<td>32*K
+<td>intx
+<tr valign="top">
+<td><a name="DeoptimizeALotInterval"><a href="#DeoptimizeALotInterval">DeoptimizeALotInterval</a>
+<td>Number of exits until DeoptimizeALot kicks in
+<td>5
+<td>intx
+<tr valign="top">
+<td><a name="ZombieALotInterval"><a href="#ZombieALotInterval">ZombieALotInterval</a>
+<td>Number of exits until ZombieALot kicks in
+<td>5
+<td>intx
+<tr valign="top">
+<td><a name="ExitOnFullCodeCache"><a href="#ExitOnFullCodeCache">ExitOnFullCodeCache</a>
+<td>Exit the VM if we fill the code cache.
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CompileTheWorldStartAt"><a href="#CompileTheWorldStartAt">CompileTheWorldStartAt</a>
+<td>First class to consider when using +CompileTheWorld
+<td>1
+<td>intx
+<tr valign="top">
+<td><a name="CompileTheWorldStopAt"><a href="#CompileTheWorldStopAt">CompileTheWorldStopAt</a>
+<td>Last class to consider when using +CompileTheWorld
+<td>max_jint
+<td>intx
+
+<tr bgcolor="#e0e0e0">
+<td colspan="4"><a name="diagnostic">diagnostic
+<tr valign="top">
+<td><a name="UnlockDiagnosticVMOptions"><a href="#UnlockDiagnosticVMOptions">UnlockDiagnosticVMOptions</a>
+<td>Enable processing of flags relating to field diagnostics
+<td>trueInDebug
+<td>bool
+<tr valign="top">
+<td><a name="LogCompilation"><a href="#LogCompilation">LogCompilation</a>
+<td>Log compilation activity in detail to hotspot.log or LogFile
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="UnsyncloadClass"><a href="#UnsyncloadClass">UnsyncloadClass</a>
+<td>Unstable: VM calls loadClass unsynchronized. Custom classloader must call VM synchronized for findClass & defineClass
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="FLSVerifyAllHeapReferences"><a href="#FLSVerifyAllHeapReferences">FLSVerifyAllHeapReferences</a>
+<td>Verify that all refs across the FLS boundary are to valid objects
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="FLSVerifyLists"><a href="#FLSVerifyLists">FLSVerifyLists</a>
+<td>Do lots of (expensive) FreeListSpace verification
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="FLSVerifyIndexTable"><a href="#FLSVerifyIndexTable">FLSVerifyIndexTable</a>
+<td>Do lots of (expensive) FLS index table verification
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="VerifyBeforeExit"><a href="#VerifyBeforeExit">VerifyBeforeExit</a>
+<td>Verify system before exiting
+<td>trueInDebug
+<td>bool
+<tr valign="top">
+<td><a name="VerifyBeforeGC"><a href="#VerifyBeforeGC">VerifyBeforeGC</a>
+<td>Verify memory system before GC
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="VerifyAfterGC"><a href="#VerifyAfterGC">VerifyAfterGC</a>
+<td>Verify memory system after GC
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="VerifyDuringGC"><a href="#VerifyDuringGC">VerifyDuringGC</a>
+<td>Verify memory system during GC (between phases)
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="VerifyRememberedSets"><a href="#VerifyRememberedSets">VerifyRememberedSets</a>
+<td>Verify GC remembered sets
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="VerifyObjectStartArray"><a href="#VerifyObjectStartArray">VerifyObjectStartArray</a>
+<td>Verify GC object start array if verify before/after
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="BindCMSThreadToCPU"><a href="#BindCMSThreadToCPU">BindCMSThreadToCPU</a>
+<td>Bind CMS Thread to CPU if possible
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="CPUForCMSThread"><a href="#CPUForCMSThread">CPUForCMSThread</a>
+<td>When BindCMSThreadToCPU is true, the CPU to bind CMS thread to
+<td>0
+<td>uintx
+<tr valign="top">
+<td><a name="TraceJVMTIObjectTagging"><a href="#TraceJVMTIObjectTagging">TraceJVMTIObjectTagging</a>
+<td>Trace JVMTI object tagging calls
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="VerifyBeforeIteration"><a href="#VerifyBeforeIteration">VerifyBeforeIteration</a>
+<td>Verify memory system before JVMTI iteration
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="DebugNonSafepoints"><a href="#DebugNonSafepoints">DebugNonSafepoints</a>
+<td>Generate extra debugging info for non-safepoints in nmethods
+<td>trueInDebug
+<td>bool
+<tr valign="top">
+<td><a name="SerializeVMOutput"><a href="#SerializeVMOutput">SerializeVMOutput</a>
+<td>Use a mutex to serialize output to tty and hotspot.log
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="DisplayVMOutput"><a href="#DisplayVMOutput">DisplayVMOutput</a>
+<td>Display all VM output on the tty, independently of LogVMOutput
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="LogVMOutput"><a href="#LogVMOutput">LogVMOutput</a>
+<td>Save VM output to hotspot.log, or to LogFile
+<td>trueInDebug
+<td>bool
+<tr valign="top">
+<td><a name="LogFile"><a href="#LogFile">LogFile</a>
+<td>If LogVMOutput is on, save VM output to this file [hotspot.log]
+<td>""
+<td>ccstr
+<tr valign="top">
+<td><a name="MallocVerifyInterval"><a href="#MallocVerifyInterval">MallocVerifyInterval</a>
+<td>if non-zero, verify C heap after every N calls to malloc/realloc/free
+<td>0
+<td>intx
+<tr valign="top">
+<td><a name="MallocVerifyStart"><a href="#MallocVerifyStart">MallocVerifyStart</a>
+<td>if non-zero, start verifying C heap after Nth call to malloc/realloc/free
+<td>0
+<td>intx
+<tr valign="top">
+<td><a name="VerifyGCStartAt"><a href="#VerifyGCStartAt">VerifyGCStartAt</a>
+<td>GC invoke count where +VerifyBefore/AfterGC kicks in
+<td>0
+<td>uintx
+<tr valign="top">
+<td><a name="VerifyGCLevel"><a href="#VerifyGCLevel">VerifyGCLevel</a>
+<td>Generation level at which to start +VerifyBefore/AfterGC
+<td>0
+<td>intx
+<tr valign="top">
+<td><a name="UseNewCode"><a href="#UseNewCode">UseNewCode</a>
+<td>Testing Only: Use the new version while testing
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="UseNewCode2"><a href="#UseNewCode2">UseNewCode2</a>
+<td>Testing Only: Use the new version while testing
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="UseNewCode3"><a href="#UseNewCode3">UseNewCode3</a>
+<td>Testing Only: Use the new version while testing
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="SharedOptimizeColdStart"><a href="#SharedOptimizeColdStart">SharedOptimizeColdStart</a>
+<td>At dump time, order shared objects to achieve better cold startup time.
+<td>true
+<td>bool
+<tr valign="top">
+<td><a name="SharedSkipVerify"><a href="#SharedSkipVerify">SharedSkipVerify</a>
+<td>Skip assert() and verify() which page-in unwanted shared objects. 
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PauseAtStartup"><a href="#PauseAtStartup">PauseAtStartup</a>
+<td>Causes the VM to pause at startup time and wait for the pause file to be removed (default: ./vm.paused.<pid>)
+<td>false
+<td>bool
+<tr valign="top">
+<td><a name="PauseAtStartupFile"><a href="#PauseAtStartupFile">PauseAtStartupFile</a>
+<td>The file to create and for whose removal to await when pausing at startup. (default: ./vm.paused.<pid>)
+<td>""
+<td>ccstr
+</table>
+
+
+</body>
+</html>
