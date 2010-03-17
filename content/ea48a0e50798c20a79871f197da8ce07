@@ -1,0 +1,922 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>	
+		<!--chartbeat code-->
+		<script type="text/javascript">var _sf_startpt=(new Date()).getTime()</script>
+		
+		<!--global stylesheet-->
+		<link rel="stylesheet" type="text/css" href="http://a.blip.tv/skin/mercury/global.css?v=oldgaryz" media="screen" />
+		
+		<!--common stylesheet-->
+		<link rel="stylesheet" type="text/css" href="http://a.blip.tv/skin/mercury/common.css?v=moldygaryz" media="screen" />
+
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>
+			
+				Ryan Dahl: Node.js - JSConf.eu - blip.tv
+			 
+			</title>
+
+		
+			<!-- Facebook share tags -->
+			
+
+			
+				
+					<meta name="description" content="Video file posted to blip.tv by jsconfeu." />
+				
+
+					<meta name="title" content="Ryan Dahl: Node.js - JSConf.eu - blip.tv | JSConf.eu"/>
+
+				
+                			<meta name="video_type" content="application/x-shockwave-flash" />
+	  			
+                          		<meta name="video_width" content="640" />
+                          		<meta name="video_height" content="360" />
+
+				
+                        		<link rel="image_src" href="http://a.images.blip.tv/Jsconfeu-RyanDahlNodejs958-562.jpg" />
+                        		<link rel="videothumbnail" href="http://a.images.blip.tv/Jsconfeu-RyanDahlNodejs958-562.jpg" />
+				
+				
+				
+					
+						<link rel="video_src" href="http://blip.tv/play/hq0KgbKUTgM" />
+					
+				
+
+				
+			<!-- End Facebook share tags -->
+		
+			
+		
+		<meta http-equiv="keywords" name="keywords" content="video,javascript,node" />
+		
+				
+		<meta name="x-debug-action" content="file_view" />
+		
+		<meta name="robots" content="all" />
+
+		<!--format_inc_header-->
+		
+
+
+
+
+<script>
+        var Pokkari = {
+        
+        	AttachEvent: function(foo, bar, action) {
+        		$(document).ready(action);
+        	}
+        
+        };
+        
+		var Class = {
+			create: function() {
+				return function() {
+					this.initialize.apply(this, arguments);
+				}
+			}
+		}
+</script>
+
+<script type="text/javascript" src="http://a.blip.tv/scripts/jquery-latest.js?v=oldgaryz"></script>
+<script type="text/javascript" src="http://a.blip.tv/scripts/jquery-ui.min.js?v=oldgaryz"></script>
+<script type="text/javascript" src="http://a.blip.tv/scripts/pokkariCaptcha.js?v=oldgaryz"></script>
+<script type="text/javascript" src="http://a.blip.tv/scripts/url.js?v=oldgaryz"></script>
+<script type="text/javascript" src="http://a.blip.tv/scripts/pokkariPlayer.js?v=NOTENOUGHNEWFORTHENEWYEAR"></script>
+<script type="text/javascript" src="http://a.blip.tv/scripts/uuid.js?v=oldgaryz"></script>
+
+
+
+
+
+
+
+<script type="text/javascript" src="http://a.blip.tv/scripts/BLIP.js?v=oldgaryz"></script>
+<script type="text/javascript" src="http://a.blip.tv/scripts/BLIP/Object.js?v=oldgaryz"></script>
+<script type="text/javascript" src="http://a.blip.tv/scripts/BLIP/Delegate.js?v=oldgaryz"></script>
+<script type="text/javascript" src="http://a.blip.tv/scripts/BLIP/Control.js?v=oldgaryz"></script>
+<script type="text/javascript" src="http://a.blip.tv/scripts/BLIP/Controls/Navigation.js?v=oldgaryz"></script>
+<script type="text/javascript" src="http://a.blip.tv/scripts/BLIP/Controls/FastUserMenu.js?v=oldgaryz"></script>
+
+
+<script type="text/javascript" src="http://a.blip.tv/scripts/BLIP/Dashboard.js?v=garyisold"></script>
+
+
+<script>
+	var navigation = new BLIP.Controls.Navigation();
+</script>
+
+			
+			
+			
+			
+
+
+			
+<link rel="alternate" type="application/rss+xml" title="blip.tv RSS" href="http://blip.tv/rss" />
+
+
+		<!--/format_inc_header-->		
+		
+		<link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="blip.tv" />
+		
+			
+				<link rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/" />
+			
+		
+		
+
+	</head>
+	<body>
+<!-- include: templ/blipnew/format.pthml -->
+		<div id="Header">
+			<!-- User stuff -->
+			
+				<div id="HeaderUsername">
+					Hi there, <a href="/users/create/">Sign up!</a> <span id="Divider">|</span> <a href="/users/login/?return_url=/%3Ffile_type%3Dflv%3Bsort%3Ddate%3Bdate%3D%3Bid%3D2899135%3Bs%3Dfile%3Brole%3DBlip%2520SD%252C%2520Blip%2520HD%2520720">Login</a>
+				</div>
+			
+			<!-- /User stuff -->			
+			<div class="Clear"></div>
+			<div id="HeaderNavWrapper">
+				<a href="http://blip.tv"><img src="http://a.blip.tv/skin/mercury/images/logo.gif?v=oldgaryz" id="Logo" alt="blip.tv" /></a>					
+				<div id="HeaderNavMenuWrapper">
+					<div class="HeaderNavMenu" onMouseOver="navigation.show(this)" onMouseOut="navigation.hide(this)">					<div class="MajorLink"><a href="http://blip.tv/popular">Browse</a></div>
+					<ul>
+					  
+						<li><a href="http://blip.tv/recent">Recent Episodes</a></li>
+						<li><a href="http://blip.tv/popular">Popular Episodes</a></li>
+						<li class="LastItem"><a href="http://blip.tv/random">Random Episodes</a></li>
+					</ul>
+				</div>
+					<div class="HeaderNavMenu" onMouseOver="navigation.show(this)" onMouseOut="navigation.hide(this)">
+	 				<div class="MajorLink"><a href="http://blip.tv/dashboard">Dashboard</a></div>
+					<ul>
+						<li><a href="http://blip.tv/dashboard">Overview</a></li>
+						<li><a href="http://blip.tv/dashboard/episodes">Episodes</a></li>
+						<li><a href="http://blip.tv/dashboard/players">Players</a></li>
+						<li><a href="http://blip.tv/dashboard/distribution">Distribution</a></li>
+						<li><a href="http://blip.tv/dashboard/ads">Advertising</a></li>
+						<li class="LastItem"><a href="http://blip.tv/dashboard/stats">Statistics</a></li>
+					</ul>
+				</div>
+					<div class="HeaderNavMenu" onMouseOver="navigation.show(this)" onMouseOut="navigation.hide(this)">
+					<div class="MajorLink"><a href="http://blip.tv/dashboard/upload">Upload</a></div>
+					<ul>
+						<li><a href="http://blip.tv/dashboard/upload">Web upload</a></li>
+						<li><a href="http://blip.tv/tools/">Desktop upload client</a></li>
+						<li class="LastItem"><a href="http://blip.tv/dashboard/ftp/">FTP upload</a></li>
+					</ul>
+				</div>
+					<div class="HeaderNavMenu" onMouseOver="navigation.show(this)" onMouseOut="navigation.hide(this)">
+					<div class="MajorLink"><a href="http://support.blip.tv/">Help</a></div>
+					<ul>
+						<li><a href="http://support.blip.tv/">Overview</a></li>
+						<li><a href="http://support.blip.tv/forums">Troubleshooting</a></li>
+						<li><a href="http://blip.tv/faq">FAQ</a></li>
+						<li><a href="http://support.blip.tv/forums">Knowledge Base</a></li>
+						<li class="LastItem"><a href="http://support.blip.tv/">Contact support</a></li>
+					</ul>
+				</div>
+					<div class="Clear"></div>
+				</div>
+				<div class="Clear"></div>
+			</div>
+			<div id="HeaderSearch">
+				<form method="get" action="/search">
+					<div id="SearchQuery">
+						<input type="text" name="q">
+					</div>
+					<div id="SearchQuerySubmit">
+						<input type="submit" value="Search blip.tv">
+					</div>
+				</form>
+				<div class="Clear"></div>
+			</div>
+			<div class="Clear"></div>
+		</div>
+
+		<div class="Clear"></div>
+
+	<div id="Wrapper">
+		<div class="Clear"></div>
+
+		<!-- Sides & Tables anteater -->
+
+		
+			<table cellpadding="0" cellspacing="0" border="0" id="main_table">
+
+					
+					<td id="body" valign="top">
+					<!-- main -->
+						</td></tr></table>
+
+  
+	     
+    <div class="masthed" id="post_masthed_2918890">
+       <!-- include: templ/blipnew/posts_inc_masthed.pthml -->
+
+
+
+
+
+
+
+     </div>
+	
+	
+	<link rel="image_src" href="http://a.images.blip.tv/Jsconfeu-RyanDahlNodejs958-562.jpg" />
+    <script src="http://a.blip.tv/scripts/DoSomething.js?v=oldgaryz"></script>
+    <script src="http://a.blip.tv/scripts/FeaturedContent.js?v=oldgaryz"></script>
+    <script src="http://a.blip.tv/scripts/EpisodeFlipper.js?v=oldgaryz"></script>
+    <script src="http://a.blip.tv/scripts/AttributeTable.js?v=oldgaryz"></script>
+    <script src="http://a.blip.tv/scripts/DoSomethingActions.js?v=oldgaryz"></script>
+    <script src="http://a.blip.tv/scripts/TextCompact.js?v=oldgaryz"></script>
+    <script src="http://a.blip.tv/scripts/pokkariComments.js?v=oldgaryz"></script>
+    <script src="http://a.blip.tv/scripts/bookmarks-episode.js?v=oldgaryz"></script>
+	<script type="text/javascript" src="http://a.blip.tv/scripts/BLIP/Controls/StandAloneExpandingMultiSelect.js?v=oldgaryz"></script>
+	<script type="text/javascript" src="http://m2.fwmrm.net/g/lib/1.1/js/fwjslib.js?version=1.1"></script>
+
+	<script type="text/javascript" src="http://a.blip.tv/scripts/BLIP/Controls/Shenanigans.js?v=garyisold"></script>
+	<script>
+		(function() { new BLIP.Controls.Shenanigans({ showUsersId:"486878" }); }());
+	
+				
+	function toggleReport(itemType, itemId){
+		$('#ReportMeBabyWrapper').toggle();
+		$("#ReportMeBabyContents").load('/'+ itemType + '/report_form/' + itemId + '/?no_wrap=1', function() {
+			$("#reportButton").click(function() {
+				if($("#report_form_2918890 :selected").attr("id") != "reason_null") {
+				var serializedData = $("#report_form_2918890").serialize();
+				$.post("/posts/report_inappropriate?skin=xmlhttprequest", serializedData, function(response) {
+						$("#ReportError").hide();
+						$('#ReportMeBabyWrapper').hide();
+				}, "text");	
+				} else {
+					shakeReport();
+					$("#ReportError").show();
+				}
+			});
+
+
+			$("#reportClose").click(function() {
+				$('#ReportMeBabyWrapper').hide();
+			});
+			
+		});
+	}
+
+    function modifyReportMeSizes() {
+	    document.getElementById("ReportMeBabyContents").style.height = "320px";
+	    document.getElementById("ReportMeBaby").style.height = "340px";
+	    document.getElementById("ReportMeBabyBG").style.height = "360px";    
+	}
+
+	function shakeReport() {
+		$("#ReportMeBaby").animate({marginLeft:'+=5'},50);
+		$("#ReportMeBaby").animate({marginLeft:'-=10'},50);
+		$("#ReportMeBaby").animate({marginLeft:'+=10'},50);
+		$("#ReportMeBaby").animate({marginLeft:'-=10'},50);
+		$("#ReportMeBaby").animate({marginLeft:'+=10'},50);
+		$("#ReportMeBaby").animate({marginLeft:'-=5'},50);
+	}
+
+	function getFlashMovie(movieName) {
+		var isIE = navigator.appName.indexOf("Microsoft") != -1;
+		return (isIE) ? window[movieName] : document[movieName];
+	}
+
+	function getUpdate(type, arg1, arg2) {
+		switch(type) {
+			case "item":
+				var item = player.getPlayer().getCurrentItem();
+				checkInfo(item);
+			break;
+		}
+	}
+
+	function checkInfo(item)
+	{
+		if(item.posts_id != 2918890) {
+			$("#BackTo").show();
+		}
+	}
+	
+	function goBack() {
+		PokkariPlayerOptions.useDocumentWrite = false;
+		player.render();
+		$("#BackTo").hide();
+	}
+	</script>
+	<!--[if lte IE 6]>
+	<style>
+   /*<![CDATA[*/ 	
+	#ReportMeBaby {
+		position:absolute;
+		top: 600px;
+	}
+
+	#ReportMeBabyBG {
+		position:absolute;
+		top: 600px;
+		background: #777;
+	}
+
+   /*]]>*/
+   	</style>
+	<![endif]-->
+
+	<!-- Digg Thumbnail Hack -->
+	<!--
+		<img src='http://blip.tv/uploadedFiles/'>
+	-->
+
+	<div id="PageContainer">
+		<div id="BackTo"><a href="javascript:void(0);" onClick="goBack();"><img src="http://a.blip.tv/skin/mercury/images/backto.gif?v=oldgaryz" id="BackToButton"></a></div><div id="EpisodeTitle">Ryan Dahl: Node.js</div>
+		<div class="Clear"></div>
+		<div id="ContentPanel">
+			<div class="Clear"></div>
+				<div id="video_player" class="embed" style="height:100%">
+	<script type="text/javascript">
+		PokkariPlayerOptions.useShowPlayer = true;
+		PokkariPlayerOptions.useDocumentWrite = true;
+		PokkariPlayerOptions.maxWidth = 624;
+		PokkariPlayerOptions.maxHeight = 351;
+		PokkariPlayerOptions.forceAspectWidth = true; // Forces pokkariPlayer to always keep width for aspect resize
+		PokkariPlayerOptions.showPlayerOptions = { 
+			allowm4v: false,
+			smallPlayerMode: false,
+			playerUrl: 'http://a.blip.tv/scripts/flash/stratos.swf',
+			staggeredLoad:'true',showinfo:'false',
+			enableHtml5Player: true
+		};		
+
+		var player = PokkariPlayer.GetInstanceByMimeType("video/x-flv,video/flv","Web");
+
+		if (player instanceof PokkariQuicktimePlayer) {
+			// Quicktime player will hold up the whole document if a video not marked for streaming is loaded.
+			PokkariPlayerOptions.useDocumentWrite = false;
+		}
+
+		player.setPrimaryMediaUrl("http://blip.tv/file/get/Jsconfeu-RyanDahlNodejs728.flv?referrer=blip.tv&source=1&use_direct=1&use_documents=1");
+		player.setPermalinkUrl("http://blip.tv/file/view/2899135?referrer=blip.tv&source=1");
+		player.setSiteUrl("http://blip.tv");
+		player.setAdvertisingType();
+		player.setPostsId(2918890);
+		player.setUsersId(486878);
+		player.setUsersLogin("jsconfeu");
+		player.setPostsTitle("Ryan Dahl: Node.js");
+		player.setContentRating("TV-UN");
+		player.setDescription("");
+		player.setTopics("javascript, node");
+		player.setPlayerTarget(document.getElementById('video_player'));
+		player.setUsersFeedUrl("http://jsconfeu.blip.tv/rss");
+		player.setAutoPlay(true);
+		// By setting the size rediculously large, we'll trick PokkariPlayer in resizing with aspect.
+		player.setWidth(500000);
+		player.setHeight(281000);
+
+		player.setGuid("AFED892A-DAAD-11DE-8126-EEEDEB3678F0");
+		player.setThumbnail("http://a.images.blip.tv/Jsconfeu-RyanDahlNodejs958-562.jpg");
+		player.setAvailableMimeTypes(['video/quicktime', 'video/x-flv']);
+
+		
+		if (player instanceof PokkariQuicktimePlayer) {
+			Pokkari.AttachEvent(window,"load",function() { player.render(); });
+		}
+		else {
+			player.render();
+		}
+	</script>
+</div>
+
+
+
+
+<!--
+			
+-->
+				<div id="EpisodeDescription">
+				<div class="Clear"></div>
+				
+				<div id="ContentRating">
+					<img src="/skin/mercury/images/contentratings/TV-UN.gif">
+				</div>
+				
+					<div style='float:left; margin: 8px 10px 5px 5px;'><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://a.blip.tv/images/cc/by-nc-sa.png" /></a><span style="display:none">This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-NonCommercial-ShareAlike 3.0</a></span></div>
+				
+				<script>if (typeof(player) != 'undefined' && player instanceof PokkariQuicktimePlayer) {
+					document.write("<div style='float:left; margin: 8px 10px 5px 5px;'><a href='http://www.apple.com/quicktime/download/'><img src='http://a.blip.tv/images/quicktime.gif?v=oldgaryz' width='88' height='31' border='0' /></a></div>");
+				}</script>
+				
+			</div>
+			<div class="Clear"></div>
+			<div id="EP_and_Format_Bar">
+				
+				Play episode as :
+					<select id="SelectFormat" size="1" onchange="if(this.value) { window.location.href = this.value; }">
+						<option>Select a format</option>
+						
+								<option value="/file/2899135?filename=Jsconfeu-RyanDahlNodejs958.mov">Source &mdash; Quicktime (.mov)</option>
+						
+								<option value="/file/2899135?filename=Jsconfeu-RyanDahlNodejs728.flv">Web &mdash; Flash Video (.flv)</option>
+						
+					</select>
+
+<div id='EnableHtml5' class='Html5Preferences' style='display:none'>
+	<a href="/html5/?return_url=%2F%3Ffile_type%3Dflv%3Bsort%3Ddate%3Bdate%3D%3Bid%3D2899135%3Bs%3Dfile%3Brole%3DBlip%2520SD%252C%2520Blip%2520HD%2520720">Play in HTML<sub>5</sub></a>
+</div>
+
+<div id='DisableHtml5' class='Html5Preferences' style='display:none'>
+	<a href="/html5/?return_url=%2F%3Ffile_type%3Dflv%3Bsort%3Ddate%3Bdate%3D%3Bid%3D2899135%3Bs%3Dfile%3Brole%3DBlip%2520SD%252C%2520Blip%2520HD%2520720">Play in Flash</a>
+</div>
+
+<script>
+	if (player.isHtml5Player) {
+		document.getElementById('DisableHtml5').style.display = "block";
+	}
+	else if (player.couldPlayHtml5) {
+		document.getElementById('EnableHtml5').style.display = "block";
+	}
+</script>
+
+
+			</div>
+			<div>
+				<div id="CommentsTitle"><a href="http://blip.tv/comments/?attached_to=post2918890&skin=rss"><img src="http://a.blip.tv/skin/mercury/images/comment_rss.gif?v=oldgaryz" align="right"></a></div>
+			</div>
+			<div id="Comments">
+
+			<!-- BEGIN Diqus Integration -->
+
+			<div id="disqus_thread"></div>
+
+			
+			
+			<script type="text/javascript">
+    		var disqus_shortname = 'bliptv'; // required: replace example with your forum shortname
+			</script>
+			
+
+			<script type="text/javascript">
+    	// The following are highly recommended additional parameters. Remove the slashes in front to use.
+    	// var disqus_identifier = 'unique_dynamic_id_1234';
+    	// var disqus_url = 'http://example.com/permalink-to-page.html';
+
+			var disqus_identifier = '2918890';
+
+    	/* * * DON'T EDIT BELOW THIS LINE * * */
+    	(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    	})();
+			</script>
+			<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+				<!--<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>-->
+			</div>
+
+			<!-- END Diqus Integration -->
+
+			<div class="Clear"></div>
+			<div id="QuickLinks">
+				<div id="QL_Links">
+					<span id="QL_Title">Quick Links</span>
+					<a href="http://jsconfeu.blip.tv/rss" title="Get this show's rss feed with enclosures"><img src="http://a.blip.tv/skin/mercury/images/ql_rss.gif?v=oldgaryz">RSS Feed</a>
+					<a href="http://www.channels.com/autosubscribe?feed_url=http://jsconfeu.blip.tv/rss" title="Subscribe on channels.com"><img src="http://a.blip.tv/skin/mercury/images/ql_rss.gif?v=oldgaryz">channels.com</a>
+					
+					<a href="itpc://jsconfeu.blip.tv/rss/itunes/" title="Subscribe to this show in iTunes"><img src="http://a.blip.tv/skin/mercury/images/ql_itunes.gif?v=oldgaryz">iTunes Feed</a>
+					
+					<a href="http://blip.tv/file/get/Jsconfeu-RyanDahlNodejs728.flv"><img src="http://a.blip.tv/skin/mercury/images/ql_file.gif?v=oldgaryz">Download</a>				
+					<a href="javascript: void(0);" onClick="toggleReport('file','2899135');"><img src="http://a.blip.tv/skin/mercury/images/report.gif?v=oldgaryz">Tattle</a>
+				</div>
+			</div>
+			<div class="Clear"></div>
+		</div>
+		<div id="MetaPanel">
+			<div id="ReportMeBabyWrapper"><div id="ReportMeBabyBG"></div><div id="ReportMeBaby"><div id="ReportMeBabyContents"></div></div></div>
+			<div id="ShowInfo">
+				<div id="ShowIcon">
+					<a href="http://jsconfeu.blip.tv/" title="Go to show page">
+						<img src="http://a.blip.tv/skin/mercury/images/user_icon.gif?v=oldgaryz" width="55" height="55"/>
+					</a>
+				</div>
+				<div id="ShowTitleWrapper"><div id="ShowTitle"><a href="http://jsconfeu.blip.tv/">JSConf.eu</a></div></div>
+				<div class="Clear"></div>
+				<div id="ShowInfoLinks">
+
+					<a href="http://jsconfeu.blip.tv/">Visit show page &rsaquo;</a>
+					<a href="http://jsconfeu.blip.tv/posts?view=archive&nsfw=dc">All episodes &rsaquo;</a>
+				</div>
+				<div class="Clear"></div>				
+			</div>
+			<div class="Clear"></div>
+
+			<div class="MetaPanelSectionTitle" id="EpisodeListTitle"></div>
+			<div class="Clear"></div>
+			<div id="EpisodeFlipperWrapper">
+				<div id="EpisodeTopBumper">You've reached the newest episode.</div>
+				<div id="EpisodeItemHolderWrapper">
+					<div id="EpisodeFlipperLoading"><img src="http://a.blip.tv/skin/mercury/images/spinner.gif?v=oldgaryz"></div>
+					<div id="EpisodeItemHolder">
+					</div>
+				</div>
+				<div id="EpisodeBottomBumper">You've reached the oldest episode.</div>
+				<div class="Clear"></div>
+			</div>
+
+			<div id="EpisodeFlipperButtons">			
+				<a href="javascript:EpisodeFlipper.older();" id="ep_flip_next"><img src="http://a.blip.tv/skin/mercury/images/ep_next.gif?v=oldgaryz" id="ep_next"></a>
+				<a href="javascript:EpisodeFlipper.newer();" id="ep_flip_prev"><img src="http://a.blip.tv/skin/mercury/images/ep_prev.gif?v=oldgaryz" id="ep_prev"></a>
+				<div class="Clear"></div>
+			</div>
+			<div class="Clear"></div>
+
+			<div id="DS_MenuHolder">
+				<div class="Clear"></div>
+			</div>
+			<div id="DS_MenuHolderTrailer"></div>
+			<div id="Something">
+				<div id="SomethingTop"></div>
+				<div class="Clear"></div>
+				<div id="SomethingContentsWrapper">
+					<div id="SomethingError"></div>
+					<div id="SomethingContents"><img src="http://a.blip.tv/skin/mercury/images/spinner.gif?v=oldgaryz"></div>
+					<div id="SomethingClose"><a href="javascript:EpisodePageWriter.closeSomething();"><img src="http://a.blip.tv/skin/mercury/images/something_close.gif?v=oldgaryz"></a></div>
+				</div>
+				<div class="Clear"></div>
+				<div id="SomethingBottom"></div>
+			</div>
+			<div class="Clear"></div>
+			<div id="FeaturedContent">
+			</div>
+			<div id="FC_Refresh"><a href="javascript:FeaturedContent.refresh();"><img src="http://a.blip.tv/skin/mercury/images/handpicked_refresh.gif?v=oldgaryz"></a></div>
+			<div class="Clear"></div>
+			<div id="FilesAndLinks"></div>
+			<div class="Clear"></div>
+			<div id="Metadata"></div>
+			<script type="text/javascript">
+
+
+				var EpisodePageWriter = {
+
+					closeSomething : function() {
+						$("#Something").slideUp("fast");
+					},
+
+					openSomething : function() {
+						$("#Something").slideDown("fast");
+					},
+
+					showSomething: function(url,callback) {
+						var self = this;
+						
+						$("#SomethingError").empty();
+						
+						if (typeof(DoSomethingActions) == "undefined") {
+							$.getScript("http://a.blip.tv/scripts/DoSomethingActions.js?v=oldgaryz",
+								function() { window.setTimeout(function() {
+										self.showSomething(url,callback);
+									}, 100);			
+								}
+							);
+						}
+						else {
+							this.closeSomething();
+							$('#SomethingContents').load(url, function() {
+								self.openSomething();
+								if (callback) {
+									callback();
+								}
+							});
+						}
+					},
+
+				
+					email : function () {
+						var self = this;
+						this.showSomething("/dosomething/share?no_wrap=1 #Email", function() {
+							self.insertCaptcha();
+							DoSomethingActions.emailSender.initialize(2918890);
+						});
+					},
+
+					embedShowPlayer: function() {
+						
+						this.showSomething("/dosomething/embed?no_wrap=1 #ShowPlayer", function() { DoSomethingActions.playerSelector.load(2918890, 486878); });
+						
+					},
+
+					embedLegacyPlayer : function() {
+						this.showSomething("/dosomething/embed?no_wrap=1 #LegacyPlayer", function () {
+							DoSomethingActions.legacySelector.initialize(2899135);
+						});
+					},
+
+					embedWordpress : function() {
+						this.showSomething("/dosomething/embed?no_wrap=1 #Wordpress", function() {
+							DoSomethingActions.wordpressSelector.initialize(2918890);
+						});
+					},
+					
+					insertCaptcha : function() {
+						var uuid = new UUID();
+						$("#captchaHere").html("<input type='hidden' name='captchas_guid' value='" + uuid + "' />\n" + "<img src='/captchas/" + uuid + "' id='CaptchaImg' />\n");
+					},
+					
+					blog : function() {
+						this.showSomething("/users/blogging_info?posts_id=2918890&no_wrap=1", function() {						
+							DoSomethingActions.crosspostSelector.initialize();
+						});
+					},
+					
+					subscribeInNewWindow: function(url) {
+						var nW = window.open(url,"_blank", '');
+						nW.focus();
+					},
+
+					subscribeRss: function() {
+						this.showSomething("/dosomething/subscribe?no_wrap=1&safeusername=jsconfeu #Rss");
+					},
+
+					subscribeChannels: function() {
+						this.subscribeInNewWindow("http://www.channels.com/autosubscribe?feed_url=http://jsconfeu.blip.tv/rss");
+					},
+
+					subscribeItunes: function() {
+						this.subscribeInNewWindow("itpc://jsconfeu.blip.tv/rss/itunes/");
+					},
+
+					subscribeMiro: function() {
+						this.subscribeInNewWindow("http://subscribe.getmiro.com/?url1=http%3A//jsconfeu.blip.tv/rss");
+					},
+
+					subscribePando: function() {
+						this.subscribeInNewWindow(
+							PokkariPandoPlayer.getSubscribeUrl("http://jsconfeu.blip.tv/rss/pando","JSConf.eu")
+						);
+					},
+
+					myspace: function() {
+						$.getScript('/players/embed/?posts_id=2918890&skin=json&callback=EpisodePageWriter.myspaceSubmit');
+					},
+
+					myspaceSubmit: function(params) {
+						if (params && params.length && params[0] && params[0].code) {
+							var code = encodeURIComponent("<div class='BlipEmbed'>" + params[0].code + "</div><div class='BlipDescription'><p></p></div>");
+							window.open('http://www.myspace.com/Modules/PostTo/Pages/?T=Ryan%20Dahl%3A%20Node.js&C=' + code);
+						}
+					}
+
+				};
+
+
+				var DSO = {
+					"verbs" : [
+					
+						{"verb" : "<img src='http://a.blip.tv/skin/mercury/images/ds_verb_share.gif?v=oldgaryz'>", "preposition" : "with", "nouns" : [
+							{"noun" : "Email", "action" : function(){EpisodePageWriter.email();}},
+							{"noun" : "Cross-posting", "action" : function(){EpisodePageWriter.blog();}},
+							{"noun" : "Del.icio.us", "action" : function(){ window.open('http://del.icio.us/post?url=http://blip.tv/file/2899135')}},
+							{"noun" : "Digg", "action" : function() { window.open('http://digg.com/submit?phase=2&url=http://blip.tv/file/2899135/&title=Ryan%20Dahl%3A%20Node.js')}},
+							{"noun" : "Facebook", "action" : function() {u=location.href;t=document.title;window.open('http://www.facebook.com/sharer.php?u='+encodeURIComponent(u)+'&t='+encodeURIComponent(t),'sharer','toolbar=0,status=0,width=626,height=436');return false;}},
+							{"noun" : "Lycos", "action" : function() { window.open('http://mix.lycos.com/bookmarklet.php?url='+escape(window.location.href),'lyMixBookmarklet', 'width=550,height=400')}},
+							{"noun" : "MySpace", "action" : function() { EpisodePageWriter.myspace(); }},
+							{"noun" : "Newsvine", "action" : function() { window.open('http://www.newsvine.com/_tools/seed&amp;save?u=http://blip.tv/file/2899135&amp;h=file')}},
+							{"noun" : "Reddit", "action" : function() { window.open('http://reddit.com/submit?url=http://blip.tv/file/2899135&amp;name=file')}},
+							{"noun" : "StumbleUpon", "action" : function() { window.open('http://www.stumbleupon.com/submit?url=http://blip.tv/file/2899135&amp;name=file')}},
+							]},
+
+						{"verb" : "<img src='http://a.blip.tv/skin/mercury/images/ds_verb_embed.gif?v=oldgaryz'>", "preposition" : "with", "nouns" : [
+							{"noun" : "Show Player", "action" : function(){EpisodePageWriter.embedShowPlayer();}},
+							{"noun" : "Legacy Player", "action" : function(){EpisodePageWriter.embedLegacyPlayer();}},
+							{"noun" : "Wordpress.com", "action" : function(){EpisodePageWriter.embedWordpress();}}
+							]},
+
+						{"verb" : "<img src='http://a.blip.tv/skin/mercury/images/ds_verb_subscribe.gif?v=oldgaryz'>", "preposition" : "with", "nouns" : [
+							{"noun" : "RSS", "action" : function() { EpisodePageWriter.subscribeRss(); }},
+							
+							{"noun" : "iTunes", "action" : function() { EpisodePageWriter.subscribeItunes(); }},
+							
+							{"noun" : "Channels.com", "action" : function() {EpisodePageWriter.subscribeChannels(); }},
+							{"noun" : "Miro", "action" : function() { EpisodePageWriter.subscribeMiro(); }}
+						]}]
+					};
+
+				var ATOf = {
+				"name" : "Files and Links",
+				"src" : "http://a.blip.tv/skin/mercury/images/files_at.gif?v=oldgaryz",
+				"attributes" : [
+                    
+						{"name" : "Thumbnail", "attribute" : "http://a.images.blip.tv/Jsconfeu-RyanDahlNodejs958-562.jpg", "type" :
+							[{"link" : "http://a.images.blip.tv/Jsconfeu-RyanDahlNodejs958-562.jpg", "selectable" : 1}]
+						},
+                    
+					
+						{"name" : "Quicktime (.mov)", "attribute" : "http://blip.tv/file/get/Jsconfeu-RyanDahlNodejs958.mov", "type" :
+							[{"link" : "http://blip.tv/file/get/Jsconfeu-RyanDahlNodejs958.mov", "selectable" : 1}]
+						},
+					
+						{"name" : "Flash Video (.flv)", "attribute" : "http://blip.tv/file/get/Jsconfeu-RyanDahlNodejs728.flv", "type" :
+							[{"link" : "http://blip.tv/file/get/Jsconfeu-RyanDahlNodejs728.flv", "selectable" : 1}]
+						}
+					
+				]};
+
+				var ATOm = {
+				"name" : "Metadata",
+				"src" : "http://a.blip.tv/skin/mercury/images/metadata_at.gif?v=oldgaryz",
+				"attributes" : [
+					{"name" : "Date", "attribute" : "Nov 26, 2009 12:03pm", "type" :
+						[{"link" : "", "selectable" : 0}]
+					},
+					{"name" : "Category", "attribute" : "Technology", "type" :
+						[{"link" : "/posts/?category=7&category_name=Technology", "selectable" : 0}]
+					},
+					
+					{"name" : "Tags", "attribute" : "<a href='http://blip.tv/topics/view/javascript' title='Find more content marked \"javascript\"' rel='tag'>javascript</a>, <a href='http://blip.tv/topics/view/node' title='Find more content marked \"node\"' rel='tag'>node</a> ", "type" :
+						[{"link" : "", "selectable" : 0}]
+					},
+					
+					
+					{"name" : "License", "attribute" : "Creative Commons Attribution-NonCommercial-ShareAlike 3.0", "type" :
+						[{"rel" : "license", "link" : "http://creativecommons.org/licenses/by-nc-sa/3.0/", "selectable" : 0}]
+					},
+					
+					{"name" : "Quicktime filesize", "attribute" : "447953081 Bytes", "type" :
+						[{"link" : "", "selectable" : 0}]
+					},
+					
+					{"name" : "Flash filesize", "attribute" : "193925107 Bytes", "type" :
+						[{"link" : "", "selectable" : 0}]
+					}
+					
+
+				]};
+
+				TextCompact.compact("#ShowTitle", 40);
+				
+				$(document).ready(function(){			
+					EpisodeFlipper.initialize(document.getElementById("EpisodeItemHolder"), "2918890", "486878", "1259255038");
+					DoSomething.embed(DSO, "DS_MenuHolder");
+					FeaturedContent.embed("http://blip.tv/posts/?bookmarked_by=hotepisodes&skin=json&callback=?&version=2 ", "http://blip.tv/posts/?bookmarked_by=hotepisodes&skin=json&callback=?&version=2 ", "FeaturedContent");
+					AttributeTable.embed(ATOf, "FilesAndLinks", "#555555","#CCCCCC");
+					AttributeTable.embed(ATOm, "Metadata", "#555555", "#CCCCCC");
+				});
+				
+
+			</script>
+			<div class="Clear"></div>
+						
+			<div id="AdCode">
+				 <span id="medium_rectangle" class="_fwph">
+				 <form id="_fw_form_medium_rectangle" style="display:none">
+				 <input type="hidden" name="_fw_input_medium_rectangle" id="_fw_input_medium_rectangle" value="w=300&h=250&envp=g_js&sflg=-nrpl;" />
+				 </form>
+				 <span id="_fw_container_medium_rectangle_companion" class="_fwac"></span>
+				 <span id="_fw_container_medium_rectangle" class="_fwac">
+					 <script src="http://2822.v.fwmrm.net/ad/g/1?nw=10274&pvrn=Insert Random Number Here&csid=display&resp=ad;;ptgt=s&envp=g_js&slid=Rectangle&w=300&h=250" language="javascript"></script><noscript><iframe src="http://2822.v.fwmrm.net/ad/g/1?nw=10274&pvrn=Insert Random Number Here&csid=display&resp=ad;;ptgt=s&envp=g_iframe&slid=Rectangle&w=300&h=250" width="300" height="250" border="0" marginwidth="0" marginheight="0" frameborder="0" scrolling="no"></iframe></noscript>
+				 </span>
+				 </span>			
+			</div>
+			<div class="Clear"></div>
+                        
+		</div>
+		<div class="Clear"></div>
+	</div>
+	<div class="Clear"></div>
+
+  
+
+  <!-- end unless deleted -->
+
+
+
+
+
+
+
+<div style="display:block;">
+	<table width="950px" height="100%">
+		<tr>
+			<td>&nbsp;</td>
+			<td>&nbsp;
+
+					</td>
+				</tr>
+			</table>
+		
+
+	</div>
+	<div class="Clear"></div>
+	<div id="Footer">
+		<div class="FooterColumn FooterBorder">
+			<div class="FooterColumnContents">
+				<h4>About blip.tv</h4>
+				<span class="FooterBabble">We help creative people be creative.</span> <a href="/about/" class="FooterBabble">More about us &rsaquo;</a>
+			</div>
+		</div>
+		<div class="FooterColumn FooterBorder">
+			<div class="FooterColumnContents">
+				<h4>You</h4>
+				<div class="ColumnHalf">
+					<a href="http://blip.tv/dashboard/">Dashboard</a>
+					<a href="http://blip.tv/file/post/">Publishing</a>
+					<a href="http://blip.tv/blogs/list/">Distribution</a>
+				</div>
+				<div class="ColumnHalf">
+					<a href="http://blip.tv/dashboard/ads">Advertising</a>
+					<a href="http://blip.tv/users/stats/">Statistics</a>
+					<a href="http://blip.tv/">Showpage</a>
+					<a href="http://blip.tv/prefs/security/">Account</a>
+				</div>
+
+			</div>
+		</div>
+		<div class="FooterColumn FooterBorder">
+			<div class="FooterColumnContents">
+				<h4>Help</h4>
+				<span class="FooterBabble"><a href="http://support.blip.tv/forums" class="FooterBabble">The Knowledge Base</a> is great for those new to Web show production on blip.tv. Check out our <a href="http://support.blip.tv/" class="FooterBabble">Help Section</a> for more information about how to use the blip.tv service.</span>
+			</div>
+		</div>
+		<div class="FooterColumn">
+			<div class="FooterColumnContents">
+				<h4>Us</h4>
+				<div class="ColumnHalf">
+					<a href="http://blog.blip.tv/">Our Blog</a>
+					<a href="http://blip.tv/careers/" class="Highlight">Careers at blip</a>
+					<a href="http://blip.tv/epk">Advertise on blip</a>
+				</div>
+				<div class="ColumnHalf">
+					<a href="http://blip.tv/tos/">Terms of Use</a>
+					<a href="http://blip.tv/dmca/">Copyright Policy</a>
+					<a href="http://blip.tv/about/api/">Developers</a>
+				</div>
+			</div>
+			<div class="Clear"></div>
+			
+			<script type="text/javascript">
+			var browserVersion = navigator.appVersion;
+			if(browserVersion.substring(5,11)=="iPhone"){
+				document.write("<div id=\"Navigation\">");
+				document.write("<a href=\"http://blip.tv/?skin=iphone\" class=\"LastLink\">Blip Mobile Site</a>");
+	                	document.write("</div>");
+				document.write("<div class=\"Clear\"></div>");
+			}
+			</script>
+
+			<div class="FooterColumnContents">
+				<p>Copyright &copy; 2010 Blip Networks Inc.</p>
+			</div>
+			</div>
+		</div>
+	
+	<script type="text/javascript">
+		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+		document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+	<script type="text/javascript">
+		var pageTracker = _gat._getTracker("UA-713068-1");
+		pageTracker._initData();
+		pageTracker._trackPageview();
+	</script>
+
+	<!--app06-->
+	
+	<!-- Start Quantcast tag -->
+	<script type="text/javascript">
+	_qoptions={
+	qacct:"p-74vRiZ03u2gFw"
+	};
+	</script>
+	<script type="text/javascript" src="http://edge.quantserve.com/quant.js"></script>
+	<noscript>
+	<img src="http://pixel.quantserve.com/pixel/p-74vRiZ03u2gFw.gif" style="display: none;" border="0" height="1" width="1" alt="Quantcast"/>
+	</noscript>
+	<!-- End Quantcast tag -->
+	<!-- chartbeat code -->
+<script type="text/javascript">
+var _sf_async_config={uid:15601,domain:"blip.tv"};
+(function(){
+  function loadChartbeat() {
+    window._sf_endpt=(new Date()).getTime();
+    var e = document.createElement('script');
+    e.setAttribute('language', 'javascript');
+    e.setAttribute('type', 'text/javascript');
+    e.setAttribute('src',
+       (("https:" == document.location.protocol) ? "https://s3.amazonaws.com/" : "http://") +
+       "static.chartbeat.com/js/chartbeat.js");
+    document.body.appendChild(e);
+  }
+  var oldonload = window.onload;
+  window.onload = (typeof window.onload != 'function') ?
+     loadChartbeat : function() { oldonload(); loadChartbeat(); };
+})();
+
+</script>
+	</body>
+</html>
