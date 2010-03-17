@@ -1,0 +1,486 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Setting Clojure&#8217;s Log Level | Paul Legato</title>
+<link rel="stylesheet" type="text/css" href="http://www.paullegato.com/wp-content/themes/openark-blog/style.css" media="screen" />
+<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.paullegato.com/feed/" />
+<link rel="pingback" href="http://www.paullegato.com/xmlrpc.php" />
+<script type="text/javascript">
+	window.google_analytics_uacct = "UA-2741504-5";
+</script>
+				
+	<script type="text/javascript">//<![CDATA[
+	// Google Analytics for WordPress by Yoast v4.06 | http://yoast.com/wordpress/google-analytics/
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount','UA-2741504-5']);
+	_gaq.push(['_trackPageview']);
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
+	// End of Google Analytics for WordPress by Yoast v4.0
+	//]]></script>
+<link rel="alternate" type="application/rss+xml" title="Paul Legato &raquo; Setting Clojure&#8217;s Log Level Comments Feed" href="http://www.paullegato.com/blog/setting-clojure-log-level/feed/" />
+<script type='text/javascript' src='http://www.paullegato.com/wp-includes/js/jquery/jquery.js?ver=1.4.2'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.paullegato.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.paullegato.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='index' title='Paul Legato' href='http://www.paullegato.com/' />
+<link rel='start' title='Apple iPad: Axel Payne is Disturbed' href='http://www.paullegato.com/blog/apple-ipad-axel-payne-is-disturbed/' />
+<link rel='prev' title='Libcurl bindings for Java on Macintosh' href='http://www.paullegato.com/blog/libcurl-java-macintosh/' />
+<link rel='next' title='Clojure SQL Dates and Times with Joda' href='http://www.paullegato.com/blog/clojure-joda-sql-date-time/' />
+<meta name="generator" content="WordPress 3.0.3" />
+<link rel='shortlink' href='http://www.paullegato.com/?p=177' />
+
+<!-- All in One SEO Pack 1.6.13 by Michael Torbert of Semper Fi Web Design[247,303] -->
+<meta name="description" content="Clojure.contrib.logging doesn't have any way to set the log level. This is obviously a problem if you want to make use of various log levels (debug, warn, etc.) to separate different logging depths. Here's a function to set the logging level." />
+<meta name="keywords" content="clojure,java,programming" />
+<link rel="canonical" href="http://www.paullegato.com/blog/setting-clojure-log-level/" />
+<!-- /all in one seo pack -->
+
+<script type="text/javascript">var AKPC_IDS = "";</script>
+	
+			<link rel="stylesheet" type="text/css" href="http://www.paullegato.com/index.php?ak_action=aktt_css&v=2.4" />
+			<script type="text/javascript" src="http://www.paullegato.com/index.php?ak_action=aktt_js&v=2.4"></script>
+		<meta id="syntaxhighlighteranchor" name="syntaxhighlighter-version" content="3.1.1" />
+</head>
+
+<body>
+<div align="center">
+<div id="wrapper">
+<div id="doc1" class="yui-t4">
+<div id="hd">
+	<div id="sitemeta">
+		<ul>
+     			     			     			<li class="rss"><a href="http://www.paullegato.com/feed/">Subscribe RSS Feed</a></li>
+  		</ul>
+	</div>
+	<div id="titlewrapper">
+		<div id="blogtitle">
+			<a href="http://www.paullegato.com/">Paul Legato</a>
+		</div>
+		<div id="menu">
+			<ul>
+				<li><div id="blogdescription"></div></li>
+							</ul>
+		</div>
+	</div>
+	<div id="newsflash">
+                
+	</div>
+	<div class="clear">&nbsp;</div>
+</div>
+
+<div id="sidebar" class="yui-b">
+<ul class="sidebar">
+<li id="text-3" class="widget widget_text"><h2 class="widgettitle">E-Mail Updates:</h2>
+			<div class="textwidget"><form action="http://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open('http://feedburner.google.com/fb/a/mailverify?uri=PaulLegato', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true"><input type="text" style="width:140px" name="email"/><input type="hidden" value="PaulLegato" name="uri"/><input type="hidden" name="loc" value="en_US"/><input type="submit" value="Subscribe" /></form></div>
+		</li>
+<li id="text-5" class="widget widget_text">			<div class="textwidget"><script type="text/javascript"><!--
+google_ad_client = "pub-3403094634189262";
+/* 120x240, created 10/4/10 */
+google_ad_slot = "4127729982";
+google_ad_width = 120;
+google_ad_height = 240;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+		</li>
+<li id="text-4" class="widget widget_text"><h2 class="widgettitle">Contact Me</h2>
+			<div class="textwidget"><p><a href="mailto:pjlegato at gmail dot com">pjlegato at gmail dot com</a></p>
+<p><a href="http://github.com/pjlegato/" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','github.com']);">My GitHub account</a></p></div>
+		</li>
+		<li id="recent-posts-3" class="widget widget_recent_entries">		<h2 class="widgettitle">Recent Posts</h2>
+		<ul>
+				<li><a href="http://www.paullegato.com/blog/custom-dialog-boxes-cocos2d-iphone/" title="Custom Dialog Boxes Using Cocos2d on iPhone">Custom Dialog Boxes Using Cocos2d on iPhone</a></li>
+				<li><a href="http://www.paullegato.com/blog/projectm-visualization-youtube/" title="HowTo: projectM visualization + mp3 = video for YouTube">HowTo: projectM visualization + mp3 = video for YouTube</a></li>
+				<li><a href="http://www.paullegato.com/blog/iphone-android/" title="iPhone or Android?">iPhone or Android?</a></li>
+				<li><a href="http://www.paullegato.com/blog/dell-poweredge-bios-linux/" title="Dell PowerEdge BIOS Upgrade on Linux">Dell PowerEdge BIOS Upgrade on Linux</a></li>
+				<li><a href="http://www.paullegato.com/blog/swing-clojure-gui-black-scholes/" title="Swing-Clojure GUI for the Black-Scholes Option Modeler">Swing-Clojure GUI for the Black-Scholes Option Modeler</a></li>
+				</ul>
+		</li>
+<li id="categories-3" class="widget widget_categories"><h2 class="widgettitle">Categories</h2>
+		<ul>
+	<li class="cat-item cat-item-4"><a href="http://www.paullegato.com/blog/category/economics/" title="View all posts filed under Economics">Economics</a>
+</li>
+	<li class="cat-item cat-item-20"><a href="http://www.paullegato.com/blog/category/politics-and-international-relations/" title="View all posts filed under Politics and International Relations">Politics and International Relations</a>
+</li>
+	<li class="cat-item cat-item-43"><a href="http://www.paullegato.com/blog/category/recipes/" title="View all posts filed under Recipes">Recipes</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://www.paullegato.com/blog/category/reviews/" title="View all posts filed under Reviews">Reviews</a>
+</li>
+	<li class="cat-item cat-item-14"><a href="http://www.paullegato.com/blog/category/tech/" title="View all posts filed under Tech">Tech</a>
+</li>
+	<li class="cat-item cat-item-3"><a href="http://www.paullegato.com/blog/category/tech-industry/" title="View all posts filed under tech industry">tech industry</a>
+</li>
+		</ul>
+</li>
+<li id="search-3" class="widget widget_search"><h2 class="widgettitle">Search</h2>
+<form method="get" id="searchform" action="http://www.paullegato.com/">
+<input type="text" size="14" value="" name="s" id="s" class="s" />
+<input type="submit" id="searchsubmit" value="GO" />
+</form></li>
+<li id="archives-3" class="widget widget_archive"><h2 class="widgettitle">Archives</h2>
+		<ul>
+			<li><a href='http://www.paullegato.com/blog/2010/12/' title='December 2010'>December 2010</a></li>
+	<li><a href='http://www.paullegato.com/blog/2010/10/' title='October 2010'>October 2010</a></li>
+	<li><a href='http://www.paullegato.com/blog/2010/07/' title='July 2010'>July 2010</a></li>
+	<li><a href='http://www.paullegato.com/blog/2010/06/' title='June 2010'>June 2010</a></li>
+	<li><a href='http://www.paullegato.com/blog/2010/05/' title='May 2010'>May 2010</a></li>
+	<li><a href='http://www.paullegato.com/blog/2010/04/' title='April 2010'>April 2010</a></li>
+	<li><a href='http://www.paullegato.com/blog/2010/03/' title='March 2010'>March 2010</a></li>
+	<li><a href='http://www.paullegato.com/blog/2010/02/' title='February 2010'>February 2010</a></li>
+	<li><a href='http://www.paullegato.com/blog/2010/01/' title='January 2010'>January 2010</a></li>
+		</ul>
+</li>
+<li id="tag_cloud-3" class="widget widget_tag_cloud"><h2 class="widgettitle">Tags</h2>
+<div><a href='http://www.paullegato.com/blog/tag/apple/' class='tag-link-11' title='4 topics' style='font-size: 13.714285714286pt;'>apple</a>
+<a href='http://www.paullegato.com/blog/tag/automated-trading/' class='tag-link-33' title='2 topics' style='font-size: 10.571428571429pt;'>automated trading</a>
+<a href='http://www.paullegato.com/blog/tag/bubble/' class='tag-link-10' title='1 topic' style='font-size: 8pt;'>bubble</a>
+<a href='http://www.paullegato.com/blog/tag/china/' class='tag-link-21' title='1 topic' style='font-size: 8pt;'>china</a>
+<a href='http://www.paullegato.com/blog/tag/clojure/' class='tag-link-27' title='15 topics' style='font-size: 20.857142857143pt;'>clojure</a>
+<a href='http://www.paullegato.com/blog/tag/constructivism/' class='tag-link-24' title='1 topic' style='font-size: 8pt;'>constructivism</a>
+<a href='http://www.paullegato.com/blog/tag/currency/' class='tag-link-9' title='1 topic' style='font-size: 8pt;'>currency</a>
+<a href='http://www.paullegato.com/blog/tag/databases/' class='tag-link-46' title='1 topic' style='font-size: 8pt;'>databases</a>
+<a href='http://www.paullegato.com/blog/tag/dd-wrt/' class='tag-link-15' title='2 topics' style='font-size: 10.571428571429pt;'>dd-wrt</a>
+<a href='http://www.paullegato.com/blog/tag/economics/' class='tag-link-4' title='2 topics' style='font-size: 10.571428571429pt;'>Economics</a>
+<a href='http://www.paullegato.com/blog/tag/emacs/' class='tag-link-26' title='1 topic' style='font-size: 8pt;'>emacs</a>
+<a href='http://www.paullegato.com/blog/tag/euro/' class='tag-link-6' title='2 topics' style='font-size: 10.571428571429pt;'>euro</a>
+<a href='http://www.paullegato.com/blog/tag/finance/' class='tag-link-55' title='2 topics' style='font-size: 10.571428571429pt;'>finance</a>
+<a href='http://www.paullegato.com/blog/tag/firefox/' class='tag-link-16' title='1 topic' style='font-size: 8pt;'>firefox</a>
+<a href='http://www.paullegato.com/blog/tag/gold/' class='tag-link-5' title='1 topic' style='font-size: 8pt;'>gold</a>
+<a href='http://www.paullegato.com/blog/tag/goldman-sachs/' class='tag-link-50' title='1 topic' style='font-size: 8pt;'>goldman sachs</a>
+<a href='http://www.paullegato.com/blog/tag/greece/' class='tag-link-8' title='1 topic' style='font-size: 8pt;'>greece</a>
+<a href='http://www.paullegato.com/blog/tag/incanter/' class='tag-link-42' title='1 topic' style='font-size: 8pt;'>Incanter</a>
+<a href='http://www.paullegato.com/blog/tag/internet-explorer/' class='tag-link-17' title='1 topic' style='font-size: 8pt;'>internet explorer</a>
+<a href='http://www.paullegato.com/blog/tag/ipad/' class='tag-link-12' title='1 topic' style='font-size: 8pt;'>iPad</a>
+<a href='http://www.paullegato.com/blog/tag/iphone/' class='tag-link-57' title='2 topics' style='font-size: 10.571428571429pt;'>iPhone</a>
+<a href='http://www.paullegato.com/blog/tag/java/' class='tag-link-39' title='9 topics' style='font-size: 18pt;'>Java</a>
+<a href='http://www.paullegato.com/blog/tag/javascript/' class='tag-link-29' title='1 topic' style='font-size: 8pt;'>javascript</a>
+<a href='http://www.paullegato.com/blog/tag/jni/' class='tag-link-40' title='1 topic' style='font-size: 8pt;'>JNI</a>
+<a href='http://www.paullegato.com/blog/tag/jquery/' class='tag-link-28' title='1 topic' style='font-size: 8pt;'>jquery</a>
+<a href='http://www.paullegato.com/blog/tag/jvm/' class='tag-link-36' title='1 topic' style='font-size: 8pt;'>JVM</a>
+<a href='http://www.paullegato.com/blog/tag/leiningen/' class='tag-link-37' title='1 topic' style='font-size: 8pt;'>leiningen</a>
+<a href='http://www.paullegato.com/blog/tag/macros/' class='tag-link-47' title='1 topic' style='font-size: 8pt;'>macros</a>
+<a href='http://www.paullegato.com/blog/tag/metaprogramming/' class='tag-link-48' title='1 topic' style='font-size: 8pt;'>metaprogramming</a>
+<a href='http://www.paullegato.com/blog/tag/phenomenology/' class='tag-link-25' title='1 topic' style='font-size: 8pt;'>phenomenology</a>
+<a href='http://www.paullegato.com/blog/tag/postmodernism/' class='tag-link-23' title='1 topic' style='font-size: 8pt;'>postmodernism</a>
+<a href='http://www.paullegato.com/blog/tag/pretentiousness/' class='tag-link-13' title='1 topic' style='font-size: 8pt;'>pretentiousness</a>
+<a href='http://www.paullegato.com/blog/tag/programming/' class='tag-link-31' title='18 topics' style='font-size: 22pt;'>programming</a>
+<a href='http://www.paullegato.com/blog/tag/r/' class='tag-link-38' title='1 topic' style='font-size: 8pt;'>r</a>
+<a href='http://www.paullegato.com/blog/tag/randomness/' class='tag-link-49' title='1 topic' style='font-size: 8pt;'>randomness</a>
+<a href='http://www.paullegato.com/blog/tag/recipe/' class='tag-link-44' title='1 topic' style='font-size: 8pt;'>recipe</a>
+<a href='http://www.paullegato.com/blog/tag/restaurants/' class='tag-link-34' title='1 topic' style='font-size: 8pt;'>restaurants</a>
+<a href='http://www.paullegato.com/blog/tag/ruby/' class='tag-link-32' title='1 topic' style='font-size: 8pt;'>ruby</a>
+<a href='http://www.paullegato.com/blog/tag/santa-barbara/' class='tag-link-35' title='1 topic' style='font-size: 8pt;'>santa barbara</a>
+<a href='http://www.paullegato.com/blog/tag/soros/' class='tag-link-7' title='1 topic' style='font-size: 8pt;'>soros</a>
+<a href='http://www.paullegato.com/blog/tag/sql/' class='tag-link-45' title='1 topic' style='font-size: 8pt;'>sql</a>
+<a href='http://www.paullegato.com/blog/tag/statistics/' class='tag-link-41' title='1 topic' style='font-size: 8pt;'>statistics</a>
+<a href='http://www.paullegato.com/blog/tag/tablesorter/' class='tag-link-30' title='1 topic' style='font-size: 8pt;'>tablesorter</a>
+<a href='http://www.paullegato.com/blog/tag/taiwan/' class='tag-link-22' title='1 topic' style='font-size: 8pt;'>taiwan</a>
+<a href='http://www.paullegato.com/blog/tag/unix/' class='tag-link-18' title='4 topics' style='font-size: 13.714285714286pt;'>unix</a></div>
+</li>
+</ul>
+</div>
+
+<div id="bd" class="single">
+<div id="yui-main"><div class="yui-b">
+	<div class="post-wrap" id="post">
+		<h1 class="post-title"><a href="http://www.paullegato.com/blog/setting-clojure-log-level/" rel="bookmark" title="Permanent Link to Setting Clojure&#8217;s Log Level">Setting Clojure&#8217;s Log Level</a></h1>
+	                <div>March 14, 2010</div> 
+			<div class="story-content">
+			<p>Clojure.contrib.logging doesn&#8217;t have any way to set the log level. This is obviously a problem if you want to make use of various log levels (debug, warn, etc.) to separate different logging depths. Here&#8217;s a function to set the logging level on my default clojure.contrib.logging setup:</p>
+<pre class="brush: clojure; title: ;" title="">
+(use 'clojure.contrib.logging)
+(defn set-log-level! [level]
+  &quot;Sets the root logger's level, and the level of all of its Handlers, to level.
+   Level should be one of the constants defined in java.util.logging.Level.&quot;
+  (let [logger (.getLogger (impl-get-log &quot;&quot;))]
+    (.setLevel logger level)
+    (doseq [handler (.getHandlers logger)]
+      (. handler setLevel level))))
+</pre>
+<p>This log level setting function works with a standard out-of-the-box clojure.contrib.logger on my system &mdash;  depending on what logging libraries it finds on your classpath, <a href="http://richhickey.github.com/clojure-contrib/logging-api.html" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','richhickey.github.com']);">as per the docs</a>, it may not work for you. In particular, you need to be using clojure.contrib.logger to wrap an Apache Commons Logging instance, which in turn wraps a java.util.logging instance. This is the way my system works without any configuration; YMMV. Hopefully, something like this will be assimilated into a universal wrapper in the next clojure.contrib.logging.</p>
+<p>For the gory details of how this was constructed&#8230; <span id="more-177"></span></p>
+<h2>Changing log levels</h2>
+<p>I needed to log some data in my Clojure app. I looked through clojure-contrib and found <a href="http://richhickey.github.com/clojure-contrib/logging-api.html" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','richhickey.github.com']);">clojure.contrib.logging</a>. It provides a unified logging wrapper for Apache commons-logging, log4j, and java.util.logging.</p>
+<p>The <a href="http://richhickey.github.com/clojure-contrib/logging-api.html#clojure.contrib.logging/spy" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','richhickey.github.com']);"><code>spy</code> macro</a> looks particularly useful for debugging intermediate functions without complicating their code with a bunch of logging cruft: just wrap them in a single tiny <code>spy</code> call, and you&#8217;re set.</p>
+<p>Unfortunately, <a href="http://github.com/richhickey/clojure-contrib/blob/655060b3f265026ef3b45b44f5ab22d8897b3034/src/main/clojure/clojure/contrib/logging.clj#L236" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','github.com']);"><code>spy</code> logs at the :debug level</a>, and my logger by default seems to be set to <code>:info</code> level. No problem, I thought, I&#8217;ll just increase the log level to <code>:debug</code>&#8230; Hm&#8230; Turns out that there&#8217;s no simple way to do that.</p>
+<p><code>clojure.contrib.logging</code> presently includes nothing at all for setting the debug level, in fact, a curious omission of obvious and very basic functionality. So we dig.</p>
+<p>Setting the log level must be done in the underlying logging library, since there&#8217;s no clojure.commons.logging wrapper. Looking at <code>*impl-name*</code>, it seems that I&#8217;m using <code>org.apache.commons.logging</code>.</p>
+<h3>Apache Commons Logging</h3>
+<p>OK, great. Let&#8217;s take a look at the Commons Logging docs. The Commons Logging <a href="http://commons.apache.org/logging/guide.html" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','commons.apache.org']);">User Guide</a> sounds like a good place to start. Surely changing the log level is a very common task that will be prominently addressed there&#8230; Perhaps even in the <a href="http://commons.apache.org/logging/guide.html#Quick%20Start" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','commons.apache.org']);">Quick Start guide</a>.</p>
+<p>Hmm, nope, nothing about changing the log level, but there <em>is</em> a somewhat disturbing reference to &#8220;a simple <code>commons-logging.properties</code> file&#8221;, conjuring up long-ago memories of Java overengineering and bloat &mdash; an entire configuration file, just to temporarily change the log level?? Surely not&#8230; Also mildly disturbingly, there are references to &#8220;the underlying logging system&#8221;. Commons Logging seems to be, itself, just an abstraction around some other logging system. So I&#8217;m using <em>two</em> layers of logging wrappers now.</p>
+<p>Well, let&#8217;s see what Clojure thinks we&#8217;re using:</p>
+<pre class="brush: clojure; title: ;" title="">
+&gt; (log/impl-get-log &quot;user&quot;)
+#&lt;Jdk14Logger org.apache.commons.logging.impl.Jdk14Logger@13e168&gt;
+</pre>
+<p>Now we&#8217;re getting somewhere. Let&#8217;s look at <a href="http://commons.apache.org/logging/apidocs/org/apache/commons/logging/impl/Jdk14Logger.html" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','commons.apache.org']);">Jdk14Logger&#8217;s JavaDocs</a>: the <code>getLogger()</code> &#8211; &#8220;Return the native Logger instance we are using&#8221; method looks promising.</p>
+<h3>java.util.logging.Logger</h3>
+<pre class="brush: clojure; title: ;" title="">
+&gt; (.. (log/impl-get-log &quot;user&quot;) getLogger)
+#&lt;Logger java.util.logging.Logger@1a32f73&gt;
+</pre>
+<p><code>java.util.logging.Logger</code>! Aha! Let&#8217;s see <a href="http://java.sun.com/javase/6/docs/api/java/util/logging/Logger.html" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','java.sun.com']);">what we can do with that</a>&#8230; &#8220;The log level &#8230; may also be dynamically changed by calls on the Logger.setLevel method.&#8221; Finally!</p>
+<p>This being Java, <a href="http://java.sun.com/javase/6/docs/api/java/util/logging/Logger.html#setLevel(java.util.logging.Level)" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','java.sun.com']);">setLevel() naturally requires an entire object</a> to wrap the integer specifying the log level, with the integer in turn standing in for what we would call a symbol in Lisp (and being referenced symbolically through constants in the Level class.) Ugh. And confusingly, the <a href="http://java.sun.com/javase/6/docs/api/java/util/logging/Level.html#field_summary" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','java.sun.com']);">log level constants in that class</a> are named <code>FINE</code>, <code>FINER</code>, <code>FINEST</code>, <code>INFO</code>, <code>OFF</code>, <code>SEVERE</code>, and <code>WARNING</code>, which do not correspond to the :debug, :info, :warn, :error levels used by Clojure and Apache Commons Logging.</p>
+<p>Let&#8217;s see what we&#8217;re at now:</p>
+<pre class="brush: clojure; title: ;" title="">
+user&gt; (use 'clojure.contrib.logging)
+nil
+user&gt; (warn &quot;foo&quot;) ; -&gt; WARNING: foo
+nil
+user&gt; (info &quot;foo&quot;) ; -&gt; INFO: foo
+nil
+user&gt; (debug &quot;foo&quot;) ; nothing printed
+nil
+user&gt; (.. (impl-get-log &quot;user&quot;) getLogger getLevel)
+nil
+;;
+;; Nil? WTF?
+;;
+user&gt; (.. (impl-get-log &quot;user&quot;) getLogger )
+#&lt;Logger java.util.logging.Logger@197952&gt;
+;;
+;; Yep, we're using the right object...
+;;
+user&gt; (.. (impl-get-log &quot;user&quot;) getLogger getName)
+&quot;user&quot;
+;;
+;; and we have the logger for the correct namespace...
+;; it has a getParent() method - maybe it inherits?
+;;
+user&gt; (.. (impl-get-log &quot;user&quot;) getLogger getParent)
+#&lt;RootLogger java.util.logging.LogManager$RootLogger@1c2df08&gt;
+user&gt; (.. (impl-get-log &quot;user&quot;) getLogger getParent getLevel)
+#&lt;Level INFO&gt;
+;;
+;; AHA. it does.
+;;
+</pre>
+<p>So we&#8217;ve finally tracked down where the log level is set. According to the Javadocs, a logger with a null log level will inherit its parent&#8217;s log level, and changing the parent with <code>setLevel()</code> will also affect any children that are inheriting. The docs tell us that we can get the root logger by asking for the &#8220;&#8221; (empty string) name, so we can simply modify that:</p>
+<pre class="brush: clojure; title: ;" title="">
+(defn set-log-level! [level]
+&quot;Sets the root logger level.&quot;
+  (.setLevel (.getLogger (log/impl-get-log &quot;&quot;)) level))
+</pre>
+<p>But all is not well:</p>
+<pre class="brush: clojure; title: ;" title="">
+user&gt; (.. (impl-get-log &quot;&quot;) getLogger getLevel)
+#&lt;Level FINE&gt;
+user&gt; (debug &quot;foobar&quot;) ;; prints nothing
+nil
+user&gt; (set-log-level! java.util.logging.Level/FINER)
+nil
+user&gt; (debug &quot;foobar&quot;) ;; prints nothing
+nil
+user&gt; (set-log-level! java.util.logging.Level/FINEST)
+nil
+user&gt; (debug &quot;foobar&quot;) ;; prints nothing
+nil
+user&gt; (set-log-level! java.util.logging.Level/ALL)
+nil
+user&gt; (debug &quot;foobar&quot;) ;; prints nothing
+nil
+</pre>
+<p>Err&#8230; ok. Maybe that&#8217;s the wrong method? Maybe it&#8217;s not actually setting it?</p>
+<pre class="brush: clojure; title: ;" title="">
+user&gt; (.. (impl-get-log &quot;user&quot;) isDebugEnabled)
+true
+user&gt; (.. (impl-get-log &quot;&quot;) isDebugEnabled)
+true
+user&gt; (log :debug &quot;asdf&quot;) ;; prints nothing
+nil
+user&gt; (debug &quot;asdf&quot;) ;; prints nothing
+nil
+;;
+;; Maybe printing directly to the Java object rather than going through contrib.logger will help?
+;;
+user&gt; (. (impl-get-log &quot;user&quot;) debug  &quot;foo bar&quot;) ;; prints nothing
+nil
+user&gt; (. (impl-get-log &quot;&quot;) debug  &quot;foo bar&quot;) ;; prints nothing
+nil
+user&gt; (. (impl-get-log &quot;user&quot;) warn  &quot;foo bar&quot;) ;; prints &quot;WARNING: foo bar&quot;
+nil
+</pre>
+<p>WTF.</p>
+<p>Digging even further into the docs, we find:</p>
+<blockquote><p>
+ On each logging call the Logger initially performs a cheap check of the request level (e.g. SEVERE or FINE) against the effective log level of the logger. If the request level is lower than the log level, the logging call returns immediately.</p>
+<p>After passing this initial (cheap) test, the Logger will allocate a LogRecord to describe the logging message. It will then call a Filter (if present) to do a more detailed check on whether the record should be published. If that passes it will then publish the LogRecord to its output Handlers. By default, loggers also publish to their parent&#8217;s Handlers, recursively up the tree.
+</p></blockquote>
+<p>Great, more Filters of some kind (beyond the log level check filter), a LogRecord object to wrap a string, and an inherited tree of Handlers. All to write a simple level-bound log message to STDERR. (And this is the <em>simple</em> logging library. I shudder to think of log4j&#8217;s internals.)</p>
+<pre class="brush: clojure; title: ;" title="">
+user&gt; (..  (impl-get-log &quot;&quot;) getLogger getFilter)
+nil
+user&gt; (..  (impl-get-log &quot;user&quot;) getLogger getFilter)
+nil
+user&gt; (..  (impl-get-log &quot;&quot;) getLogger getHandlers)
+#&lt;Handler[] [Ljava.util.logging.Handler;@23f019&gt;
+user&gt; (first (..  (impl-get-log &quot;&quot;) getLogger getHandlers))
+#&lt;ConsoleHandler java.util.logging.ConsoleHandler@829d91&gt;
+user&gt; (.. (first (..  (impl-get-log &quot;&quot;) getLogger getHandlers)) getLevel)
+#&lt;Level INFO&gt;
+user&gt;
+</pre>
+<p>So... in the "simple" logger package, we have <strong>two. seperate. levels.</strong> of filtering on the log level, which are entirely uncoordinated. And no mention in the documentation of what exactly these "Filters" and "Handlers" do, or that they can also discard log messages. Certainly no mention at the logger's <code>setLevel()</code> method docs that your setting might be overruled by a "Handler" in some other part of the object tree. (Now, why did I ever stop coding in Java, again...?)</p>
+<h3>The working function to set the log level</h3>
+<pre class="brush: clojure; title: ;" title="">
+user&gt; (defn set-log-level! [level]
+  &quot;Sets the root logger's level, and the level of all of its Handlers, to level.&quot;
+  (let [logger (.getLogger (impl-get-log &quot;&quot;))]
+    (.setLevel logger level)
+    (doseq [handler (.getHandlers logger)]
+      (. handler setLevel level))))
+#'user/set-log-level!
+user&gt; (set-log-level! java.util.logging.Level/ALL)
+nil
+user&gt; (debug &quot;foo bar&quot;) ;; FINALLY prints &quot;FINE: foo bar&quot;. Not quite what I wanted (&quot;FINE&quot;?), but close enough.
+nil
+user&gt; (spy (str &quot;abc&quot; &quot;def&quot;)) ;; -&gt; &quot; FINE: (str &quot;abc&quot; &quot;def&quot;) =&gt; abcdef&quot;. cool.
+&quot;abcdef&quot;
+</pre>
+<p>So there you have it. You can now adjust your clojure.contrib.logger log level at runtime &mdash; at least for clojure.contrib.logger wrapping Apache Commons Logging wrapping a java.util.logging logger. No doubt log4j requires its own unique set of black magic. I hope a future version of clojure.contrib.logger will include a universal loglevel-setting function &mdash; I&#8217;ll gladly donate this code to it.</p>
+<script type="text/javascript">AKPC_IDS += "177,";</script><p class="akpc_pop">Popularity: 31% <span class="akpc_help">[<a href="http://alexking.org/projects/wordpress/popularity-contest" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','alexking.org']);" title="What does this mean?">?</a>]</span></p>
+
+<h2>You might also like to read:</h2><ol><li><a href='http://www.paullegato.com/blog/yahoo-finance-clojure/' rel='bookmark' title='Permanent Link: Yahoo Finance in Clojure'>Yahoo Finance in Clojure</a></li>
+</ol>			</div><!-- end post content -->
+		<div class="metawrap">
+		<p>
+			tags: <a href="http://www.paullegato.com/blog/tag/clojure/" rel="tag">clojure</a>, <a href="http://www.paullegato.com/blog/tag/java/" rel="tag">Java</a>, <a href="http://www.paullegato.com/blog/tag/programming/" rel="tag">programming</a><br />			posted in <a href="http://www.paullegato.com/blog/category/tech/" title="View all posts in Tech" rel="category tag">Tech</a> by Paul Legato					</p>
+
+		<p class="interact"> Follow comments via the <a href='http://www.paullegato.com/blog/setting-clojure-log-level/feed/'>RSS Feed</a> | <a href="#respond">Leave a comment</a> | <a href="http://www.paullegato.com/blog/setting-clojure-log-level/trackback/">Trackback URL</a> </p>
+		</div><!-- end meta wrap -->
+	</div><!-- end post -->
+
+<!-- You can start editing here. -->
+<div id="commentwrap">
+<h3 id="comments">6 Comments to "Setting Clojure&#8217;s Log Level"</h3>
+	
+	<ol id="commentlist">
+					<li class="alt" id="comment-37">
+			<p><img alt='' src='http://1.gravatar.com/avatar/9b31b9d123bff80f00317a1df0dd00e2?s=32&amp;d=identicon&amp;r=PG' class='avatar avatar-32 photo' height='32' width='32' /><cite><a href="http://alexott.blogspot.com" onclick="javascript:_gaq.push(['_trackEvent','outbound-commentauthor','http://alexott.blogspot.com']);"  rel='external nofollow' class='url'>Alex Ott</a></cite> wrote:</p>
+			<p>Hi Paul</p>
+<p>Is  it possible to provide separate category for clojure posts? I wanted to add your blog to Planet Clojure. Please write to me via mail?</p>
+						<p class="commentmetadata"><a href="#comment-37" title="">Link</a> | March 18th, 2010 at 8:13 AM </p>
+		</li>
+					<li class="authorpost" id="comment-38">
+			<p><img alt='' src='http://0.gravatar.com/avatar/4ce55cfd8b3ae2f63f5ecbc8fc1c05d4?s=32&amp;d=identicon&amp;r=PG' class='avatar avatar-32 photo' height='32' width='32' /><cite>Paul Legato</cite> wrote:</p>
+			<p>Hi Alex,</p>
+<p>There&#8217;s a Clojure category / RSS feed at <a href="http://www.paullegato.com/blog/tag/clojure/"  rel="nofollow">http://www.paullegato.com/blog/tag/clojure/</a>. I&#8217;ll cc your mail.</p>
+<p>Cheers,<br />
+Paul</p>
+						<p class="commentmetadata"><a href="#comment-38" title="">Link</a> | March 18th, 2010 at 10:17 AM </p>
+		</li>
+					<li class="alt" id="comment-97">
+			<p><img alt='' src='http://1.gravatar.com/avatar/b9ea7ac8ee173d594d58e66d6757a62f?s=32&amp;d=identicon&amp;r=PG' class='avatar avatar-32 photo' height='32' width='32' /><cite><a href="http://spariev.com" onclick="javascript:_gaq.push(['_trackEvent','outbound-commentauthor','http://spariev.com']);"  rel='external nofollow' class='url'>Sergey Pariev</a></cite> wrote:</p>
+			<p>if result of<br />
+(..(clojure.contrib.logging/impl-get-log &#8220;user&#8221;) getLogger)<br />
+will be something like<br />
+#<br />
+instead of<br />
+java.util.logging.Logger stuff, here are some snippets that might be useful<br />
+<a href="http://gist.github.com/361124" onclick="javascript:_gaq.push(['_trackEvent','outbound-comment','gist.github.com']);" rel="nofollow">http://gist.github.com/361124</a></p>
+<p>basically there is no need to mess with handlers, but you should call getRootLogger</p>
+						<p class="commentmetadata"><a href="#comment-97" title="">Link</a> | April 9th, 2010 at 5:54 AM </p>
+		</li>
+					<li class="" id="comment-98">
+			<p><img alt='' src='http://1.gravatar.com/avatar/b9ea7ac8ee173d594d58e66d6757a62f?s=32&amp;d=identicon&amp;r=PG' class='avatar avatar-32 photo' height='32' width='32' /><cite><a href="http://spariev.com" onclick="javascript:_gaq.push(['_trackEvent','outbound-commentauthor','http://spariev.com']);"  rel='external nofollow' class='url'>Sergey Pariev</a></cite> wrote:</p>
+			<p>it was </p>
+<p>org.apache.log4j.Logger</p>
+<p>at the 4th line of my previous comment</p>
+						<p class="commentmetadata"><a href="#comment-98" title="">Link</a> | April 9th, 2010 at 5:58 AM </p>
+		</li>
+					<li class="alt" id="comment-246">
+			<p><img alt='' src='http://1.gravatar.com/avatar/b1648ace4d75a3930d772ae1f4f07794?s=32&amp;d=identicon&amp;r=PG' class='avatar avatar-32 photo' height='32' width='32' /><cite>ataggart</cite> wrote:</p>
+			<p>Alternately, you could have submitted an assembla ticket and I would have added the omitted functionality.  Things won&#8217;t improve if you don&#8217;t tell the maintainers.</p>
+						<p class="commentmetadata"><a href="#comment-246" title="">Link</a> | August 12th, 2010 at 9:37 AM </p>
+		</li>
+					<li class="" id="comment-247">
+			<p><img alt='' src='http://0.gravatar.com/avatar/4ce55cfd8b3ae2f63f5ecbc8fc1c05d4?s=32&amp;d=identicon&amp;r=PG' class='avatar avatar-32 photo' height='32' width='32' /><cite>Paul Legato</cite> wrote:</p>
+			<p>@ataggart: Feel free to incorporate any of this code that you like.</p>
+						<p class="commentmetadata"><a href="#comment-247" title="">Link</a> | August 12th, 2010 at 2:24 PM </p>
+		</li>
+		</ol>
+		
+<h3 id="respond">Leave Your Comment</h3>
+		<form action="http://www.paullegato.com/wp-comments-post.php" method="post" id="commentform">
+					<p><input type="text" name="author" id="author" value="" size="22" tabindex="1" />
+			<label for="author"><small>Name (required)</small></label></p>
+			
+			<p><input type="text" name="email" id="email" value="" size="22" tabindex="2" />
+			<label for="email"><small>Mail (will not be published) (required)</small></label></p>
+			
+			<p><input type="text" name="url" id="url" value="" size="22" tabindex="3" />
+			<label for="url"><small>Website</small></label></p>
+				<!-- to show commenters which tags are allowed, uncomment the line below. -->
+		<!--<p><strong>Allowed (X)HTML:</strong> &lt;a href=&quot;&quot; title=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;acronym title=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote cite=&quot;&quot;&gt; &lt;cite&gt; &lt;code&gt; &lt;del datetime=&quot;&quot;&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=&quot;&quot;&gt; &lt;strike&gt; &lt;strong&gt; </p>-->
+		<textarea name="comment" id="comment" cols="50" rows="10" tabindex="4"></textarea>
+		<p><input name="submit" type="submit" id="submit" tabindex="5" value="Post Comment" /></p>
+		<input type="hidden" name="comment_post_ID" value="177" />
+		<p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="fe6db4a9db" /></p>	</form>
+
+</div><!-- end comment wrap --></div>
+</div>
+</div>
+<div id="ft">
+
+<script type="text/javascript">
+jQuery(function() {
+	
+	jQuery.post("index.php",{ak_action:"api_record_view", ids: AKPC_IDS, type:"single"}, false, "json");
+});
+</script>
+	<script type='text/javascript' src='http://www.paullegato.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/scripts/shCore.js?ver=3.0.83b'></script>
+<script type='text/javascript' src='http://www.paullegato.com/wp-content/plugins/syntaxhighlighter/third-party-brushes/shBrushClojure.js?ver=20090602'></script>
+<script type='text/javascript'>
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var corecssurl = "http://www.paullegato.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shCore.css?ver=3.0.83b";
+		if ( corecss.setAttribute ) {
+				corecss.setAttribute( "rel", "stylesheet" );
+				corecss.setAttribute( "type", "text/css" );
+				corecss.setAttribute( "href", corecssurl );
+		} else {
+				corecss.rel = "stylesheet";
+				corecss.href = corecssurl;
+		}
+		document.getElementsByTagName("head")[0].insertBefore( corecss, document.getElementById("syntaxhighlighteranchor") );
+		var themecssurl = "http://www.paullegato.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shThemeDefault.css?ver=3.0.83b";
+		if ( themecss.setAttribute ) {
+				themecss.setAttribute( "rel", "stylesheet" );
+				themecss.setAttribute( "type", "text/css" );
+				themecss.setAttribute( "href", themecssurl );
+		} else {
+				themecss.rel = "stylesheet";
+				themecss.href = themecssurl;
+		}
+		//document.getElementById("syntaxhighlighteranchor").appendChild(themecss);
+		document.getElementsByTagName("head")[0].insertBefore( themecss, document.getElementById("syntaxhighlighteranchor") );
+	})();
+	SyntaxHighlighter.config.strings.expandSource = '+ expand source';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t configured for html-script option: ';
+	SyntaxHighlighter.defaults['auto-links'] = false;
+	SyntaxHighlighter.defaults['pad-line-numbers'] = true;
+	SyntaxHighlighter.all();
+</script>
+</div>
+</div><!-- End id=doc -->
+</div><!-- End id=wrapper -->
+<div class="clear">&nbsp;</div>
+<div id="footnote" align="center">
+    Copyright &copy; 2009 Paul Legato. All rights reserved. Theme based on <a href="http://code.openark.org/blog/shlomi-noach">Shlomi Noach</a>, <a href="http://openark.org">openark.org</a>
+</div>
+</div><!-- End align=center -->
+</body>
+</html>
+
+<!-- Dynamic page generated in 0.619 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2010-12-25 00:13:54 -->
