@@ -1,0 +1,88 @@
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"><head><meta content="text/html; charset=UTF-8" http-equiv="content-type" /><meta name="description" /><meta content="clojure compojure xml" name="keywords" /><meta content="Nurullah Akkaya" name="author" /><link href="/images/favicon.ico" rel="icon" type="image/x-icon" /><link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon" /><link href="/default.css" rel="stylesheet" type="text/css" /><link href="/rss-feed" rel="alternate" title="Nurullah Akkaya: an explorer's log" type="application/rss+xml" /><link href="http://nakkaya.com/2010/03/27/pretty-printing-xml-with-clojure/" rel="canonical" /><script src="/highlight.pack.js" type="text/javascript"></script><script src="/jquery.js" type="text/javascript"></script><script type="text/javascript">$(document).ready(function() {
+        $("pre").wrapInner("<code></code>");
+        hljs.initHighlightingOnLoad();
+    });</script><title>Pretty Printing XML with Clojure</title></head><body><script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-87333-8']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+  })();
+
+</script><div id="wrap"><div id="header"><h1><a href="/">nakkaya<span class="fade-small">dot</span><span class="fade">com</span></a></h1><div class="pages"><a class="page" href="/">Home</a> | <a class="page" href="/projects.html">Projects</a> | <a class="page" href="/archives/">Archives</a> | <a class="page" href="/tags/">Tags</a> | <a class="page" href="/contact.html">About</a><form action="http://www.google.com/search" id="searchform" method="get"><div><input class="box" id="s" name="q" type="text" /><input name="sitesearch" type="hidden" value="nakkaya.com" /></div></form></div></div><div id="content"><div id="post"><h2>Pretty Printing XML with Clojure</h2><p>The other day, I did some XML cleanup. I am posting the snippet here for
+safekeeping purposes in case I need to refer to it later.</p>
+
+<pre><code> (defn ppxml [xml]
+   (let [in (javax.xml.transform.stream.StreamSource.
+             (java.io.StringReader. xml))
+         writer (java.io.StringWriter.)
+         out (javax.xml.transform.stream.StreamResult. writer)
+         transformer (.newTransformer 
+                      (javax.xml.transform.TransformerFactory/newInstance))]
+     (.setOutputProperty transformer 
+                         javax.xml.transform.OutputKeys/INDENT "yes")
+     (.setOutputProperty transformer 
+                         "{http://xml.apache.org/xslt}indent-amount" "2")
+     (.setOutputProperty transformer 
+                         javax.xml.transform.OutputKeys/METHOD "xml")
+     (.transform transformer in out)
+     (-&gt; out .getWriter .toString)))
+</code></pre>
+
+<p>Now you can pass your XML string,</p>
+
+<pre><code>(ppxml "&lt;root&gt;&lt;child&gt;aaa&lt;/child&gt;&lt;child/&gt;&lt;/root&gt;")
+</code></pre>
+
+<p>and get the pretty printed version,</p>
+
+<pre><code> &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+ &lt;root&gt;
+   &lt;child&gt;aaa&lt;/child&gt;
+   &lt;child/&gt;
+ &lt;/root&gt;
+</code></pre>
+
+<p>You can also use it to pretty print Compojure output either manually,</p>
+
+<pre><code> (ppxml (html
+         [:html
+          [:head
+           [:title "Hello World"]]
+          [:body "Hello World!"]]))
+</code></pre>
+
+<p>or using a middleware,</p>
+
+<pre><code> (defn with-ppxml [handler]
+   (fn [request]
+     (let [response (handler request)]
+       (assoc response :body (ppxml (:body response))))))
+</code></pre>
+
+<p>and have your pretty printed HTML,</p>
+
+<pre><code> &lt;html&gt; 
+   &lt;head&gt; 
+     &lt;title&gt;Hello World&lt;/title&gt; 
+   &lt;/head&gt; 
+   &lt;body&gt;Hello World!&lt;/body&gt; 
+ &lt;/html&gt;
+</code></pre>
+<div class="post-tags">Tags: <a href="/tags/#clojure">clojure </a><a href="/tags/#compojure">compojure </a><a href="/tags/#xml">xml </a></div><script type="text/javascript">var flattr_btn = 'compact';var flattr_uid = '27677';var flattr_tle = 'Pretty Printing XML with Clojure';var flattr_dsc = 'Pretty Printing XML with Clojure';var flattr_cat = 'text';var flattr_lng = 'en_GB';var flattr_tag = '';var flattr_url = 'http://nakkaya.com/2010/03/27/pretty-printing-xml-with-clojure/';var flattr_hide = 'true';</script><script src="http://api.flattr.com/button/load.js" type="text/javascript"></script></div><div id="related"><h3>Random Posts</h3><ul class="posts"><li><span>06 Nov 2009</span><a href="/2009/11/06/remote-file-editing-using-emacs/">Remote File Editing Using Emacs</a></li><li><span>19 Jan 2010</span><a href="/2010/01/19/clojure-opencv-detecting-movement/">Clojure OpenCV Detecting Movement</a></li><li><span>27 Mar 2010</span><a href="/2010/03/27/pretty-printing-xml-with-clojure/">Pretty Printing XML with Clojure</a></li><li><span>04 Nov 2009</span><a href="/2009/11/04/clojure-on-google-app-engine/">Clojure on Google App Engine</a></li><li><span>22 Nov 2009</span><a href="/2009/11/22/smashing-java-for-fun-and-profit/">Smashing Java for Fun and Profit</a></li></ul></div><div id="disqus"><div id="disqus_thread"></div><script type="text/javascript" src="http://disqus.com/forums/nakkaya/embed.js"></script><noscript><a href="http://disqus.com/forums/nakkaya/?url=ref">View the discussion thread.</a></noscript><a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a></div></div><div id="footer"><a href="/rss-feed"> RSS Feed</a><p>&copy; 2010<a href="/contact.html"> Nurullah Akkaya</a></p></div></div><script type="text/javascript">
+//<![CDATA[
+(function() {
+	     var links = document.getElementsByTagName('a');
+	     var query = '?';
+	     for(var i = 0; i < links.length; i++) {
+		     if(links[i].href.indexOf('#disqus_thread') >= 0) {
+								       query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+								       }
+		     }
+	     document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/nakkaya/get_num_replies.js' + query + '"></' + 'script>');
+	     })();
+//]]>
+</script></body></html>
