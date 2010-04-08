@@ -1,0 +1,577 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head><meta http-equiv="refresh" content="172795" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Code Jam History - Google Code Jam</title>
+    <link href="/codejam/contest/css/3/base.css"
+          type="text/css" rel="stylesheet" />
+    <link href="/codejam/contest/css/3/index2.css"
+          type="text/css" rel="stylesheet" />
+    <link href="/codejam/contest/css/3/archive.css"
+          type="text/css" rel="stylesheet" />
+  
+  <script type="text/javascript"
+          src="/codejam/contest/js/3/Navpanel.js">
+  </script>
+  
+  <script type="text/javascript"><!--
+    GCJ.initPageData = function () {
+      GCJ.base_url = '/codejam/contest';
+      GCJ.splash_base_url = '/codejam';
+      GCJ.contentType = 'history';
+      GCJ.tournamentParam = '';
+      GCJ.tournamentId = '-1';
+    };
+  //-->
+  </script>
+  </head>
+
+<body onLoad="GCJ.main();">
+
+<script type="text/javascript">
+  // A shorthand for links to timeanddate.com
+  GCJ.timeAndDateLink = function(year, month, day, hour, minute) {
+    window.location = [
+      "http://www.timeanddate.com/worldclock/fixedtime.html?p1=0",
+      "year=" + year,
+      "month=" + month,
+      "day=" + day,
+      "hour=" + hour,
+      "min=" + minute,
+      "sec=0"
+    ].join("&");
+  };
+
+  /** Aligns column widths in two or more tables. */
+  GCJ.linkTablesVertically = function(classLabel) {
+    // Find all HTML tables.
+    var allTables = document.getElementsByTagName("table");
+
+    // Select the ones that have the given class label.
+    var tables = [];
+    for (var i = 0; i < allTables.length; i++) {
+      if (allTables[i].getAttribute("class") == classLabel) {
+        tables.push(allTables[i]);
+      }
+    }
+    if (tables.length == 0) {
+      return;
+    }
+
+    // Get the list of columns of each table.
+    var columns = [];
+    for (var i = 0; i < tables.length; i++) {
+      var firstRow = tables[i].getElementsByTagName("tr")[0];
+      columns.push(firstRow.getElementsByTagName("td"));
+    }
+
+    // Compute the optimal width of each column.
+    var columnWidths = [];
+    for (var j = 0; j < columns[0].length; j++) {
+      var myWidth = 0;
+      for (var i = 0; i < columns.length; i++) {
+        myWidth = Math.max(myWidth, columns[i][j].offsetWidth);
+      }
+      columnWidths.push(myWidth);
+    }
+
+    // Set the widths to their new values.
+    for (var i = 0; i < tables.length; i++) {
+      for (var j = 0; j < columns[0].length; j++) {
+        // Figure out the magic difference between width and offsetWidth.
+        columns[i][j].width = columnWidths[j];
+        var delta = columns[i][j].offsetWidth - columnWidths[j];
+
+        // Now set the width such that offsetWidth is what we want it to be.
+        columns[i][j].width = columnWidths[j] - delta;
+      }
+    }
+  };
+
+  GCJ.main = function() {
+    GCJ.renderNavPanel();
+    GCJ.linkTablesVertically("schedule");
+    GCJ.linkTablesVertically("results");
+  };
+</script>
+
+<div id="logo-div">
+  <a href="/codejam">
+    <img src="/codejam/contest/static/logo_image0.gif" id="logo"
+         alt="Google
+         Code Jam" />
+  </a>
+</div>
+
+
+<div id="guser">
+  
+    <a href="https://www.google.com/accounts/ServiceLogin?service=ah&continue=http://code.google.com/_ah/login%3Fcontinue%3Dhttp://code.google.com/codejam/archive.html&ltmpl=&sig=b59acf2c8865075b6e2fb487e76d4554">Sign in</a>
+  
+</div>
+
+<div id="welcome-bar">&nbsp;</div>
+
+<div id="common-body">
+  <div id="common-nav-div">
+    <div id="logo-padder">&nbsp;</div>
+    <div id="common-nav-wrapper">
+      <div>&nbsp;</div>
+      <div>&nbsp;</div>
+      <div class="common-nav-section-title">
+        Code Jam 2010
+      </div>
+      <div class="common-nav-links">
+        <div id="common-links-home">
+          <a href="/codejam">Code Jam Home</a>
+        </div>
+        <div id="common-links-schedule">
+          <a href="/codejam/schedule.html">Schedule</a>
+        </div>
+        <div id="common-links-rules">
+          <a href="/codejam/rules.html">Rules and Terms</a>
+        </div>
+        <div id="common-links-faq">
+          <a href="/codejam/faq.html">Frequently Asked Questions</a>
+        </div>
+        <div id="common-links-quickstart">
+          <a href="/codejam/quickstart.html">Quick-Start Guide</a>
+        </div>
+     </div>
+     <div>&nbsp;</div>
+     <div>&nbsp;</div>
+      <div class="common-nav-section-title">
+        Archive
+      </div>
+      <div class="common-nav-links">
+        <div id="common-links-problems">
+          <a href="/codejam/contests.html">Practice and Learn</a>
+        </div>
+        <div id="common-links-history">
+          <a href="/codejam/archive.html">Code Jam History</a>
+        </div>
+      </div>
+     <div>&nbsp;</div>
+     <div>&nbsp;</div>
+     <div>&nbsp;</div>
+     <div>&nbsp;</div>
+    </div>
+  </div>
+
+<div id="common-content-div">
+
+<div>
+  <h1>Code Jam History</h1>
+  <div class="year_row">
+    <h3>Code Jam Facts</h3>
+    <ul>
+      <li>There have been three problems in global Code Jam rounds that were not
+        solved by anyone during the round in which they were posed: 2008's
+        chessboard puzzler
+        <a href="http://code.google.com/codejam/contest/dashboard?c=32008#s=p3">
+          King</a>, and two problems from the 2010 World Finals:
+        <a href="http://code.google.com/codejam/contest/dashboard?c=801485#s=p4">
+          Ninjutsu</a>, a geometry problem about grappling-hook-wielding
+        assassins; and
+        <a href="http://code.google.com/codejam/contest/dashboard?c=801485#s=p5">
+          The Paths of Yin Yang</a>, a grid-based combinatorial problem with
+          shades of Taoist philosophy.
+      </li>
+      <li>
+        No contestant has ever achieved a perfect score in an onsite final.
+      </li>
+      <li>
+        The fastest correct submission came from Russia's SergeiFedorov on
+        2010's
+        <a href=
+           "http://code.google.com/codejam/contest/dashboard?c=619102#s=p0">
+          Rope Intranet</a>.
+        The submission, solving the problem's Small input, came in just 2
+        minutes 41 seconds after he saw the problem for the first time at the
+        start of the contest.  For the fastest Large, Australia's xiaowuc1 was
+        either quicker or more confident, submitting his final solution to the
+        same problem just 3 minutes 14 seconds into the contest (22 seconds
+        after his own Small), beating SergeiFedorov's Large by a healthy 9
+        seconds.
+        These numbers ignore qualification rounds, where contestants start at
+        different times.
+      </li>
+    </ul>
+  </div>
+  <div class="year_row"><div class="year_row_top">
+  <h3>2010 Gold Goes to Russia's Egor Kulikov (Egor)</h3>
+</div>
+
+<div class="year_row_bottom">
+  <div class="year_row_l" style="width:100%;">
+    <div style="width:100%;overflow:hidden;">
+      <div style="float:left;width:64%;height:100%;">
+        <div style="padding:5px;" class="archive-images-div">
+          <a href=
+             "http://code.google.com/codejam/contest/dashboard?c=619102#s=p2">
+            <img src="/codejam/contest/static/2010_1.png"/></a>
+          <a href=
+             "http://code.google.com/codejam/contest/dashboard?c=801485#s=p4">
+            <img src="/codejam/contest/static/2010_2.png"/></a>
+          <a href=
+             "http://code.google.com/codejam/contest/dashboard?c=801485#s=p5">
+            <img src="/codejam/contest/static/2010_3.png"/></a>
+        </div>
+      </div>
+      <div style="background-color:#eee;float:left;width:35%;height:100%;text-align:center;">
+      &nbsp;<br/>
+      <div style="margin:5px;display:inline-block;text-align:left;">
+      <table class="results">
+      <tr>
+        <td class="places">1st Place</td>
+        <td class="prize">$5,000</td>
+        <td class="nickname"><img class="flag"
+            src="/codejam/contest/static/flags/Russia.png"
+            > Egor</td>
+      </tr>
+      <tr>
+        <td class="places">2nd Place</td>
+        <td class="prize">$2,000</td>
+        <td class="nickname"><img class="flag"
+            src="/codejam/contest/static/flags/Netherlands.png"
+            > krijgertje</td>
+      </tr>
+      <tr>
+        <td class="places">3rd Place</td>
+        <td class="prize">$1,000</td>
+        <td class="nickname"><img class="flag"
+            src="/codejam/contest/static/flags/Russia.png"
+            > Burunduk1</td>
+      </tr>
+      <tr>
+        <td class="places">4th - 25th Place</td>
+        <td class="prize">$100</td>
+        <td class="nickame"></td>
+      </tr>
+      </table>
+      <a href="http://code.google.com/codejam/contest/scoreboard?c=801485"
+         class="arrow-link">Detailed results</a>
+      <p class="arrow-p">T-Shirt: Coming soon!</a>
+      &nbsp;<br/>
+      </div>
+      </div>
+
+      <div style="height:100%; padding:0 2em 0 1em;">
+        &nbsp;<br/>
+        <p>
+          2010 saw a few new Code Jam records.
+          More people competed (12092); more passed the Qualification Round
+          (8308); more countries were represented (125); and more programming
+          languages were used (53) than ever before.  One of our
+          favourite Code Jam traditions, started in 2008 by polyglot
+          contestant <b>Linguo</b>, kept going strong this year: a number of
+          contestants used several different, often unsuitable, programming
+          languages to solve the problems in the qualification round.
+        </p>
+        <p>
+          We saw a lot of new faces at the top of rounds this year:
+          <b>rng..58</b>, <b>Gluk</b>, <b>ZhukovDmitry</b> and
+          <b>Burunduk1</b> all won rounds for the first time; but no Code Jam
+          would be complete without a round win from South Africa's Bruce
+          Merry (<b>bmerry</b>), who took Round 2.
+        </p>
+        <p>
+          The finals, held in Dublin, Ireland, were intense.  First place
+          changed hands several times, with defending champion <b>ACRush</b>
+          grabbing the lead and holding onto it for several minutes; meanwhile
+          the Netherlands' Erik-Jan Krijgsman (<b>krijgertje</b>) hid near the
+          bottom of the scoreboard, with solutions to A, B and D ready to
+          submit.  When he submitted those solutions, Erik-Jan vaulted into a
+          high score that would ultimately net him second place.  Russian
+          contestant <b>Burunduk1</b> took a risk and went after
+          <a href="http://code.google.com/codejam/contest/dashboard?c=801485#s=p5">
+            The Paths of Yin Yang</a>; he was ultimately the only contestant
+          to solve the Small, a tough problem in its own right, which moved
+          him up from fourth to his final third-place finish.
+        </p>
+        <p>
+          In the end, the day belonged to new Code Jam Champion Egor
+          Kulikov (<b>Egor</b>), one of two contestants to fully solve four
+          problems and one of the brave few to make progress on
+          <a href="http://code.google.com/codejam/contest/dashboard?c=801485#s=p4">
+            Ninjutsu</a>.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>
+</div>
+  <div class="year_row"><div class="year_row_top">
+  <h3>Code Jam Africa 2010</h3>
+</div>
+<div class="year_row_bottom">
+<div style="background-color:#eee;width:30%;float:left;text-align:center;">
+  <div style="margin:5px;display:inline-block;text-align:left;">
+    &nbsp;<br/>
+    <table class="results">
+      <tr>
+        <td class="places">1st Place</td>
+        <td class="nickname">
+          <img class="flag"
+               src="/codejam/contest/static/flags/South_Africa.png">
+          RalfKistner</td>
+      </tr>
+      <tr>
+        <td class="places">2nd Place</td>
+        <td class="nickname">
+          <img class="flag"
+               src="/codejam/contest/static/flags/Egypt.png">
+          mohamedafattah</td>
+      </tr>
+      <tr>
+        <td class="places">3rd Place</td>
+        <td class="nickname">
+          <img class="flag"
+               src="/codejam/contest/static/flags/Egypt.png">
+          Ahmed.Kamel</td>
+      </tr>
+    </table>
+    <a href="http://code.google.com/codejam/contest/scoreboard?c=438101"
+       class="arrow-link">Detailed results</a>
+    <br/>
+  </div>
+</div>
+<div style="float:left;width:69%;">
+<div style="padding:0 1em 0 2em;">
+  <p>
+  Code Jam Africa 2010 was an online-only tournament designed to engage the
+  community of software developers in Africa.
+  Some of Africa's best coders signed up to participate in two rounds of
+  brain-teasing algorithmic challenges.  When the dust settled, the winner
+  was South African student Ralf Kistner (<b>RalfKistner</b>).
+  Congratulations to Ralf and the rest of our Code Jam Africa competitors!
+  </p>
+</div>
+</div>
+</div>
+</div>
+  <div class="year_row"><div class="year_row_top">
+  <h3>China's Tiancheng Lou (ACRush) Takes No. 1 at Google Code Jam 2009</h3>
+</div>
+
+<div class="year_row_bottom">
+  <div class="year_row_l" style="width:100%;">
+    <div style="width:100%;overflow:hidden;">
+      <div style="float:left;width:64%;height:100%;">
+        <div style="padding:5px;" class="archive-images-div">
+          <a href=
+             "http://code.google.com/codejam/contest/dashboard?c=188266#s=p1">
+            <img src="/codejam/contest/static/2009_1.png"/></a>
+          <a href=
+             "http://code.google.com/codejam/contest/dashboard?c=204113#s=p1">
+            <img src="/codejam/contest/static/2009_2.png"/></a>
+          <a href=
+             "http://code.google.com/codejam/contest/dashboard?c=243103">
+            <img src="/codejam/contest/static/2009_3.png"/></a>
+        </div>
+        <div style="height:100%; padding:0 2em 0 1em;">
+          <p>
+            In the qualification round we spoke to our contestants
+            in an
+            <a href="http://code.google.com/codejam/contest/dashboard?c=90101">
+              Alien Language</a>,
+            and we bade them
+            <a href=
+               "http://code.google.com/codejam/contest/dashboard?c=90101#s=p2">
+            Welcome to Code Jam</a>.
+            Over ten thousand contestants participated, representing 111
+            countries and "speaking" 40 programming languages.
+            From there they launched into the online rounds, where old
+            favourites Tiancheng Lou (<b>ACRush</b>) and
+            Bruce Merry (<b>bmerry</b>) took Rounds 2 and 3.
+          </p>
+          <p>
+            The finals this year were no less dramatic than 2008's,
+            though for a different reason.  The contestants disagreed about
+            which problem was the easiest, and the first four submissions
+            were for four entirely different problems.
+            Nobody could disagree, though, about who deserved to win the
+            round: 2008's champion, <b>ACRush</b>, grabbed the lead 27 minutes
+            in and never let go, finishing the competition with double
+            the points of everyone but his countryman, second-place
+            Zichao Qi (<b>qizichao</b>).
+        </div>
+      </div>
+      <div style="background-color:#eee;float:left;width:35%;height:100%;text-align:center;">
+      &nbsp;<br/>
+      <div style="margin:5px;display:inline-block;text-align:left;">
+      <table class="results">
+      <tr>
+        <td class="places">1st Place</td>
+        <td class="prize">$5,000</td>
+        <td class="nickname"><img class="flag"
+            src="/codejam/contest/static/flags/China.png"
+            > ACRush</td>
+      </tr>
+      <tr>
+        <td class="places">2nd Place</td>
+        <td class="prize">$2,000</td>
+        <td class="nickname"><img class="flag"
+            src="/codejam/contest/static/flags/China.png"
+            > qizichao</td>
+      </tr>
+      <tr>
+        <td class="places">3rd Place</td>
+        <td class="prize">$1,000</td>
+        <td class="nickname"><img class="flag"
+            src="/codejam/contest/static/flags/Japan.png"
+            > wata</td>
+      </tr>
+      <tr>
+        <td class="places">4th - 25th Place</td>
+        <td class="prize">$100</td>
+        <td class="nickame"></td>
+      </tr>
+      </table>
+      <a href="http://code.google.com/codejam/contest/scoreboard?c=311101"
+         class="arrow-link">Detailed results</a>
+      <a href=
+         "/codejam/contest/static/gcj-2009-shirt-back.jpg" class="arrow-link">
+        T-Shirt: What Language do you Speak?</a>
+      &nbsp;&nbsp;&nbsp;&nbsp;<a rel="license"
+         href="http://creativecommons.org/licenses/by-nc-nd/3.0/us/">
+        <img alt="Creative Commons License"
+             style="border-width:0; margin-top:3px;"
+             src="//i.creativecommons.org/l/by-nc-nd/3.0/us/80x15.png" /></a>
+      <br />
+      &nbsp;<br/>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+  <div class="year_row"><div class="year_row_top">
+  <h3>China's Tiancheng Lou (ACRush) Takes No. 1 at Google Code Jam 2008</h3>
+</div>
+
+<div class="year_row_bottom">
+  <div class="year_row_l" style="width:100%;">
+    <div style="width:100%;overflow:hidden;">
+      <div style="background-color:#eee;float:left;width:35%;height:100%;text-align:center;">
+      &nbsp;<br/>
+      <div style="margin:5px;display:inline-block;text-align:left;">
+      <table class="results">
+      <tr>
+        <td class="places">1st Place</td>
+        <td class="prize">$10,000</td>
+        <td class="nickname"><img class="flag"
+            src="/codejam/contest/static/flags/China.png"
+            > ACRush</td>
+      </tr>
+      <tr>
+        <td class="places">2nd Place</td>
+        <td class="prize">$5,000</td>
+        <td class="nickname"><img class="flag"
+            src="/codejam/contest/static/flags/China.png"
+            > Innovative.Cat</td>
+      </tr>
+      <tr>
+        <td class="places">3rd Place</td>
+        <td class="prize">$2,500</td>
+        <td class="nickname"><img class="flag"
+            src="/codejam/contest/static/flags/United_Kingdom.png"
+            > bmerry</td>
+      </tr>
+      <tr>
+        <td class="places">4th - 10th Place</td>
+        <td class="prize">$1,500</td>
+        <td class="nickame"></td>
+      </tr>
+      <tr>
+        <td class="places">11th - 30th Place</td>
+        <td class="prize">$1,000</td>
+        <td class="nickame"></td>
+      </tr>
+      <tr>
+        <td class="places">31th - 50th Place</td>
+        <td class="prize">$750</td>
+        <td class="nickame"></td>
+      </tr>
+      <tr>
+        <td class="places">51th - 75th Place</td>
+        <td class="prize">$500</td>
+        <td class="nickame"></td>
+      </tr>
+      <tr>
+        <td class="places">76th - 100th Place</td>
+        <td class="prize">$250</td>
+        <td class="nickame"></td>
+      </tr>
+      </table>
+      <a href="http://code.google.com/codejam/contest/scoreboard?c=32011"
+         class="arrow-link">Detailed results</a>
+      <br/>&nbsp;
+      </div>
+      </div>
+      <div style="float:left;width:64%;">
+        <div style="padding:0 1em 0 2em;text-align:right"
+             class="archive-images-div">
+          <a href=
+             "http://code.google.com/codejam/contest/dashboard?c=32002#s=p1">
+            <img src="/codejam/contest/static/2008_1.png"/></a>
+          <a href=
+             "http://code.google.com/codejam/contest/dashboard?c=32011#s=p2">
+            <img src="/codejam/contest/static/2008_2.png"/></a>
+          <a href=
+             "http://code.google.com/codejam/contest/dashboard?c=32011#s=p4">
+            <img src="/codejam/contest/static/2008_3.png"/></a>
+        </div>
+        <div style="padding:0 1em 0 2em;">
+          <p>
+          This was the first Code Jam run by Google on our own platform, built
+          on Google App Engine.  The competition boasted over eleven thousand
+          contestants from 118 different countries.  One of the reasons we were
+          excited about running our own Code Jam was that contestants would be
+          able to use the programming language of their choice, and they sure
+          did: in the qualification round alone we saw over 40 programming
+          languages, from C++ to Objective CAML to Erlang.
+          </p>
+          <p>
+          Two of the big stories of this tournament hailed from very different
+          parts of the globe: South Africa's Bruce Merry (<b>bmerry</b>) and
+          China's Tiancheng Lou (<b>ACRush</b>).  <b>bmerry</b> dominated his
+          last three rounds before the final, with two firsts and a second place,
+          including a regional victory that left him twiddling his thumbs for
+          the last third of the competition; meanwhile <b>ACRush</b> won his own
+          regional.
+          In the final, the South African had all but one of the problems solved
+          with an hour to spare.  Fortunately for his Chinese competitor,
+          Bruce couldn't see the trick needed to finish
+          <a href=
+             "http://code.google.com/codejam/contest/dashboard?c=32011#s=p2">
+            Mine Layer</a>; and with
+          seven minutes left in the competition, Tiancheng solved it to edge him
+          out by a mere two points, and to claim the title of champion.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+&nbsp;<br/>
+&nbsp;<br/>
+
+<div id=footer>
+  
+  <span id="copyright">&copy; 2008-2010 Google</span>
+  <a href="http://www.google.com/">Google Home</a> -
+  <a href="/codejam/terms.html">Terms and Conditions</a><br/><br/>
+  <a href="http://code.google.com/appengine"><img src="//code.google.com/appengine/images/appengine-noborder-120x30.gif"/></a>
+</div>
+
+
+</body>
+</html>
