@@ -1,0 +1,439 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<title>You could have invented zippers :  Inside T5</title>
+	
+<!--[if gte IE 7]><!-->
+  <link rel="stylesheet" href="http://blog.ezyang.com/wp-content/themes/manifest/style.css" type="text/css" media="screen" charset="utf-8" />
+<!-- <![endif]-->
+
+<!--[if IE 7]>
+  <link rel="stylesheet" href="http://blog.ezyang.com/wp-content/themes/manifest/style_ie.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+<!--[if IE 6]>
+<link rel="stylesheet" type="text/css" media="screen" href="http://blog.ezyang.com/wp-content/themes/manifest/styles_ie6.css" />
+<![endif]-->
+
+  <link rel="alternate" type="application/rss+xml" title="Inside T5 RSS Feed" href="http://blog.ezyang.com/feed/" />
+  <link rel="alternate" type="application/atom+xml" title="Inside T5 Atom Feed" href="http://blog.ezyang.com/feed/atom/" />
+  <link rel="pingback" href="http://blog.ezyang.com/xmlrpc.php" />
+  <link rel="alternate" type="application/rss+xml" title="Inside T5 &raquo; You could have invented zippers Comments Feed" href="http://blog.ezyang.com/2010/04/you-could-have-invented-zippers/feed/" />
+<script type='text/javascript' src='http://blog.ezyang.com/wp-includes/js/jquery/jquery.js?ver=1.4.2'></script>
+<script type='text/javascript' src='http://blog.ezyang.com/wp-content/plugins/google-analyticator/external-tracking.min.js?ver=6.1.1'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://blog.ezyang.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://blog.ezyang.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='index' title='Inside T5' href='http://blog.ezyang.com/' />
+<link rel='start' title='Iron Blogger' href='http://blog.ezyang.com/2009/12/iron-blogger/' />
+<link rel='prev' title='Cup of FP with a Java twist' href='http://blog.ezyang.com/2010/04/cup-of-fp-java-twis/' />
+<link rel='next' title='Diagramming in Xournal and Gimp' href='http://blog.ezyang.com/2010/04/diagramming-in-xournal-and-gimp/' />
+<meta name="generator" content="WordPress 3.0.1" />
+<link rel='canonical' href='http://blog.ezyang.com/2010/04/you-could-have-invented-zippers/' />
+<link rel='shortlink' href='http://blog.ezyang.com/?p=1142' />
+<style type="text/css">
+/* <![CDATA[ */
+img.latex { vertical-align: middle; border: none; }
+/* ]]> */
+</style>
+<!-- Google Analytics Tracking by Google Analyticator 6.1.1: http://ronaldheft.com/code/analyticator/ -->
+<script type="text/javascript">
+	var analyticsFileTypes = [''];
+	var analyticsEventTracking = 'enabled';
+</script>
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-12247861-1']);
+	_gaq.push(['_trackPageview']);
+
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
+</script>
+</head>
+
+<body>
+
+
+<div id="siteWrapper">
+
+  <h1 class="vcard author"><a href="http://blog.ezyang.com/" title="Home" class="fn">Inside T5</a></h1> 
+
+  <div id="mainNav">
+    <ul>
+      <li class="page_item page-item-2"><a href="http://blog.ezyang.com/about/" title="About">About</a></li>
+<li class="page_item page-item-21"><a href="http://blog.ezyang.com/archives/" title="Archives">Archives</a></li>
+      <li><a href="http://blog.ezyang.com/feed/">Subscribe</a></li>
+    </ul>
+  </div>
+  
+  <div id="siteDescription">
+    Existential Pontification and Generalized Abstract Digressions  </div>
+
+<div id="coreContent">
+
+	
+
+      <div class="post single hentry">
+        <div class="postContent">
+          <h3 class="entry-title">You could have invented zippers</h3>
+          <h4 class="vcard author">by <span class="fn">Edward Z. Yang</span></h4>
+          <div class="entry-content">
+              
+<div class="document">
+
+
+<!-- -*- mode: rst -*- -->
+<p>In the beginning, there was a binary tree:</p>
+<pre class="literal-block">
+struct ctree { // c for children
+  int val;
+  struct ctree *left;
+  struct ctree *right;
+}
+</pre>
+<p>The flow of pointers ran naturally from the root of the tree to the leaves, and it was easy as blueberry pie to walk to the children of a node.</p>
+<img alt="/img/zipper/ctree.png" src="/img/zipper/ctree.png" />
+<p>Unfortunately, given a node, there was no good way to find out its parent! If you only needed efficient parent access, though, you could just use a single pointer in the other direction:</p>
+<pre class="literal-block">
+struct ptree { // p for parent
+  int val;
+  struct ptree *parent;
+}
+</pre>
+<p>The flow of pointers then ran from the leaves of the tree to the root:</p>
+<img alt="/img/zipper/ptree.png" src="/img/zipper/ptree.png" />
+<p>And of course, put together, you could have the best of both worlds:</p>
+<pre class="literal-block">
+struct btree {
+  int val;
+  struct btree *parent;
+  struct btree *left;
+  struct btree *right;
+}
+</pre>
+<img alt="/img/zipper/btree.png" src="/img/zipper/btree.png" />
+<p>Our data structure had become circular, but as a result we had extremely efficient ways to walk up and down the tree, as well as insert, delete and move nodes, simply by mutating the relevant pointers on our node, its children and its parent.</p>
+<p><em>Trouble in paradise.</em> Pointer tricks are fine and good for the mutable story, but we want immutable nodes. We want nodes that won't change under our nose because someone else decided to muck around the pointer.</p>
+<p>In the case of <tt class="docutils literal">ctree</tt>, we can use a standard practice called <em>path copying</em>, where we only need to change the nodes in the path to the node that changed.</p>
+<img alt="/img/zipper/ctree-mod.png" src="/img/zipper/ctree-mod.png" />
+<p>In fact, path copying is just a specific manifestation of the rule of immutable updates: if you replace (i.e. update) something, you have to replace anything that points to it, recursively. In a <tt class="docutils literal">ptree</tt>, we'd need to know the subtree of the updated node and change all of them.</p>
+<img alt="/img/zipper/ptree-mod.png" src="/img/zipper/ptree-mod.png" />
+<p>But <tt class="docutils literal">btree</tt> fails pretty spectacularly:</p>
+<img alt="/img/zipper/btree-mod.png" src="/img/zipper/btree-mod.png" />
+<p>Our web of pointers has meant we need to replace <em>every</em> single node in the tree! The extra circular pointers work to our detriment when looking for a persistent update.</p>
+<p>What we'd like to do is somehow combine the <tt class="docutils literal">ptree</tt> and the <tt class="docutils literal">ctree</tt> more intelligently, so we don't end up with a boat of extra pointers, but we still can find the children and the parent of a node.</p>
+<p>Here, we make the critical simplifying assumption: we only care about efficient access of parents and children as well as updates <em>of a single node.</em> This is not actually a big deal in a world of immutable data structures: the only reason to have efficient updates on distinct nodes is to have a modification made by one code segment show up in another, and the point of immutability is to stop that spooky action at a distance.</p>
+<p>So, on a single node, we want fast access to the parent and children and fast updates. Fast access means we need pointers going away from this node, fast updates means we need to eliminate pointers going into this node.</p>
+<p>Easy! Just flip some pointers (shown in red.)</p>
+<img alt="/img/zipper/pointers.png" src="/img/zipper/pointers.png" />
+<p>Congratulations, the data structure you see here is what we call a zipper! The only task left for us now is to figure out how we might actually encode this in a <tt class="docutils literal">struct</tt> definition. In the process, we'll assign some names to the various features inside this diagram.</p>
+<p>Let's consider a slightly more complicated example:</p>
+<img alt="/img/zipper/zipper.png" src="/img/zipper/zipper.png" />
+<p>We've introduced a few more notational conveniences: triangles represent the tree attached to a given node when we don't care about any of its subnodes. The squares are the values attached to any given node (we've shown them explicitly because the distinction between the node and its data is important.) The red node is the node we want to focus around, and we've already gone and flipped the necessary pointers (in red) to make everything else accessible.</p>
+<p>When we're at this location, we can either traverse the tree, or go up the red arrow pointed away from the green node; we'll call the structure pointed to by this arrow a context. The combination of a tree and a context gives us a location in the zipper.</p>
+<img alt="/img/zipper/loc.png" src="/img/zipper/loc.png" />
+<pre class="literal-block">
+struct loc {
+  struct ctree *tree;
+  struct context *context;
+}
+</pre>
+<p>The context, much like the tree, is a recursive data-structure. In the diagram below, it is precisely the node shaded in black. It's not a normal node, though, since it's missing one of its child pointers, and may contain a pointer to its own parent.</p>
+<p>The particular one that this location contains is a &quot;right context&quot;, that is, the arrow leading to the context points to the right (shown in black in the following diagram).</p>
+<img alt="/img/zipper/right-context.png" src="/img/zipper/right-context.png" />
+<p>As you can see, for our tree structure, a context contains another context, a tree, and a value.</p>
+<img alt="/img/zipper/left-context.png" src="/img/zipper/left-context.png" />
+<p>Similarly, a &quot;left context&quot; corresponds to an arrow pointing to the left. It contains the same components, although it may not be quite obvious from the diagram here: where's the recursive subcontext? Well, since we're at the top of the tree, instead we have a &quot;top context&quot;, which doesn't contain any values. It's the moral equivalent of <tt class="docutils literal">Nothing</tt>.</p>
+<pre class="literal-block">
+enum context_type {LEFT, RIGHT, TOP}
+struct context {
+  enum context_type type;
+  // below only filled for LEFT and RIGHT
+  int val;
+  struct context *context;
+  struct ctree *tree;
+}
+</pre>
+<p>And there we have it! All the pieces you need to make a zipper:</p>
+<pre class="literal-block">
+&gt; data Tree a = Nil | Node a (Tree a) (Tree a)
+&gt; data Loc a = Loc (Tree a) (Context a)
+&gt; data Context a = Top
+&gt;                | Left a (Tree a) (Context a)
+&gt;                | Right a (Tree a) (Context a)
+</pre>
+<p><em>Exercises:</em></p>
+<ol class="arabic simple">
+<li>Write functions to move up, down-left and down-right our definition of <tt class="docutils literal">Tree</tt>.</li>
+<li>If we had the alternative tree definition <tt class="docutils literal">data Tree a = Leaf a | Branch Tree a) (Tree a)</tt>, how would our context definition change?</li>
+<li>Write the data and context types for a linked list.</li>
+</ol>
+<p><em>Further reading:</em> The original crystallization of this pattern can be found in <a class="reference external" href="http://www.st.cs.uni-saarland.de/edu/seminare/2005/advanced-fp/docs/huet-zipper.pdf">Huet's paper (PDF)</a>, and two canonical sources of introductory material are at <a class="reference external" href="http://en.wikibooks.org/wiki/Haskell/Zippers">Wikibooks</a> and <a class="reference external" href="http://www.haskell.org/haskellwiki/Zipper">Haskell Wiki</a>. From there, there is a fascinating discussion about how the differentiation of a type results in a zipper! See <a class="reference external" href="http://www.cs.nott.ac.uk/~ctm/diff.pdf">Conor's paper (PDF)</a>, the Wikibooks article, and also Edward Kmett's post on using <a class="reference external" href="http://comonad.com/reader/2008/generatingfunctorology/">generating functions</a> to introduce more exotic datatypes to the discussion.</p>
+</div>
+          </div>
+          <div class="subscribe">
+            <p>Did you enjoy this post?  Please <a href="/feed">subscribe to my feed</a>!</p>
+          </div>
+        </div>
+        <div class="postMeta">
+                  
+          <div class="postDate"><span>Published:</span> <abbr class="published" title="2010-04-07T09:00:54+0000"><a href="http://blog.ezyang.com/2010/04/07/">April 7, 2010</a></abbr></div>
+        	<div class="categories"><span>Filed Under:</span> <a href="http://blog.ezyang.com/category/c/" title="View all posts in C" rel="category tag">C</a>, <a href="http://blog.ezyang.com/category/haskell/" title="View all posts in Haskell" rel="category tag">Haskell</a></div>
+        	        </div>
+      </div>
+
+            
+	
+<!-- You can start editing here. -->
+<div id="comments">
+
+  <h4 id="comments">Comments</h4>
+
+	
+    <div class="commentEntry">
+      <img alt='' src='http://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=48' class='avatar avatar-48 photo avatar-default' height='48' width='48' />        <div class="commentContent" id="comment-271">
+          			
+        <p>Closer to the source, it might be worth mentioning Gérard Huet&#8217;s 1997 JFP Functional Pearl &#8220;The Zipper&#8221; which kicked the topic off and introduced the name. James McKinna shoved it into my hands, and it burrowed to my bones&#8230;</p>
+        
+       <div class="commentMeta">
+        posted by <cite>Conor</cite> on <a href="#comment-271" title="">04.07.10</a> at 11:36 am       </div>
+     </div>
+    </div>
+      
+	
+    <div class="commentEntry">
+      <img alt='' src='http://0.gravatar.com/avatar/434aee9ad675384a9e745c7217ac4abe?s=48&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D48&amp;r=G' class='avatar avatar-48 photo' height='48' width='48' />        <div class="commentContent" id="comment-272">
+          			
+        <p>I don&#8217;t know how I forgot to mention that paper! Added.</p>
+        
+       <div class="commentMeta">
+        posted by <cite><a href='http://ezyang.com' rel='external nofollow' class='url'>Edward Z. Yang</a></cite> on <a href="#comment-272" title="">04.07.10</a> at 11:42 am       </div>
+     </div>
+    </div>
+      
+	
+    <div class="commentEntry">
+      <img alt='' src='http://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=48' class='avatar avatar-48 photo avatar-default' height='48' width='48' />        <div class="commentContent" id="comment-275">
+          			
+        <p>I wonder if you could describe the context a bit further, perhaps a data definition in C?<br />
+This is the closest I&#8217;ve come to understanding zippers, so I hope you explains a few things further.</p>
+<p>&#8220;&#8230;or go up the red arrow pointed away from the green node; we&#8217;ll call the structure pointed to by this arrow a context.&#8221;<br />
+The red arrow is pointing to the parent node, so the context is just another name for the relevant node?</p>
+        
+       <div class="commentMeta">
+        posted by <cite>falcon</cite> on <a href="#comment-275" title="">04.07.10</a> at 12:54 pm       </div>
+     </div>
+    </div>
+      
+	
+    <div class="commentEntry">
+      <img alt='' src='http://0.gravatar.com/avatar/434aee9ad675384a9e745c7217ac4abe?s=48&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D48&amp;r=G' class='avatar avatar-48 photo' height='48' width='48' />        <div class="commentContent" id="comment-276">
+          			
+        <p>I added a C data definition for context; I&#8217;ll see if I can add some more explanatory text.</p>
+<p><em>The red arrow is pointing to the parent node, so the context is just another name for the relevant node?</em></p>
+<p>Yup! But it&#8217;s not a tree node in the usual sense, because it lacks one of its two child pointers and may have another pointer going up. That&#8217;s a good clarification I&#8217;ll add.</p>
+        
+       <div class="commentMeta">
+        posted by <cite><a href='http://ezyang.com' rel='external nofollow' class='url'>Edward Z. Yang</a></cite> on <a href="#comment-276" title="">04.07.10</a> at 1:05 pm       </div>
+     </div>
+    </div>
+      
+	
+    <div class="commentEntry">
+      <img alt='' src='http://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=48' class='avatar avatar-48 photo avatar-default' height='48' width='48' />        <div class="commentContent" id="comment-278">
+          			
+        <p>Great post Edward. Excellent content as usual, and the presentation is top notch.</p>
+        
+       <div class="commentMeta">
+        posted by <cite>Dan Farmer</cite> on <a href="#comment-278" title="">04.07.10</a> at 3:45 pm       </div>
+     </div>
+    </div>
+      
+	
+    <div class="commentEntry">
+      <img alt='' src='http://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=48' class='avatar avatar-48 photo avatar-default' height='48' width='48' />        <div class="commentContent" id="comment-279">
+          			
+        <p>The clojure core has a nice implementation that is used by the XML processing libraries</p>
+        
+       <div class="commentMeta">
+        posted by <cite>Aria Haghighi</cite> on <a href="#comment-279" title="">04.07.10</a> at 4:01 pm       </div>
+     </div>
+    </div>
+      
+	
+    <div class="commentEntry">
+      <img alt='' src='http://0.gravatar.com/avatar/434aee9ad675384a9e745c7217ac4abe?s=48&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D48&amp;r=G' class='avatar avatar-48 photo' height='48' width='48' />        <div class="commentContent" id="comment-280">
+          			
+        <p>Aria, for the curious:</p>
+<p><a href="http://clojure.org/other_libraries" rel="nofollow">http://clojure.org/other_libraries</a><br />
+<a href="http://en.wikibooks.org/wiki/Clojure_Programming/Examples/API_Examples/Advanced_Data_Structures#zipper" rel="nofollow">http://en.wikibooks.org/wiki/Clojure_Programming/Examples/API_Examples/Advanced_Data_Structures#zipper</a><br />
+<a href="http://github.com/richhickey/clojure/blob/master/src/clj/clojure/zip.clj" rel="nofollow">http://github.com/richhickey/clojure/blob/master/src/clj/clojure/zip.clj</a></p>
+        
+       <div class="commentMeta">
+        posted by <cite><a href='http://ezyang.com' rel='external nofollow' class='url'>Edward Z. Yang</a></cite> on <a href="#comment-280" title="">04.07.10</a> at 7:42 pm       </div>
+     </div>
+    </div>
+      
+	
+    <div class="commentEntry">
+      <img alt='' src='http://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=48' class='avatar avatar-48 photo avatar-default' height='48' width='48' />        <div class="commentContent" id="comment-281">
+          			
+        <p>Zippers are a trivial application of a technique called &#8220;pointer reversal&#8221;, which apparently is not referred to by Huet, invented in or before the 1970s.</p>
+        
+       <div class="commentMeta">
+        posted by <cite>Ron de Bruijn</cite> on <a href="#comment-281" title="">04.08.10</a> at 4:06 am       </div>
+     </div>
+    </div>
+      
+	
+    <div class="commentEntry">
+      <img alt='' src='http://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=48' class='avatar avatar-48 photo avatar-default' height='48' width='48' />        <div class="commentContent" id="comment-282">
+          			
+        <p>As Ron says, this pointer reversal idea has been around since the 1960s.  I think the following paper has the original description and it&#8217;s often referred to as the Schorr-Waite algorithm.</p>
+<p>Schorr, H. and W. Waite, ‘‘An Efficient Machine-Independent Procedure for Garbage Collection in Various List Structures’’, Communications of the ACM 10, 8 (Aug. 1967), pp. 481-492.</p>
+        
+       <div class="commentMeta">
+        posted by <cite>Tony Sloane</cite> on <a href="#comment-282" title="">04.08.10</a> at 5:40 am       </div>
+     </div>
+    </div>
+      
+	
+    <div class="commentEntry">
+      <img alt='' src='http://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=48' class='avatar avatar-48 photo avatar-default' height='48' width='48' />        <div class="commentContent" id="comment-283">
+          			
+        <p>Huet may not mention &#8220;pointer reversal&#8221; explicitly, but he does say that he&#8217;s merely recording folklore. He&#8217;s also specifically addressing the issue in the context of applicative programming with persistent, immutable data. Moreover, he does so in a typed way, distinguishing forward pointers from backward, thus statically maintaining the invariant that the backward pointers form a path. An offstage discipline becomes an onstage type. Meanwhile, the entire pattern becomes a program, given a bit of differential calculus at the type level.</p>
+<p>So, while there is a clear connection with pointer reversal, this is what purely functional programmers do instead. As to whether or not the business of applying a type discipline and a sharing strategy to produce a functional analogue of pointer reversal is &#8220;trivial&#8221;, I couldn&#8217;t possibly comment. It&#8217;s certainly rather useful.</p>
+        
+       <div class="commentMeta">
+        posted by <cite>Conor</cite> on <a href="#comment-283" title="">04.08.10</a> at 6:56 am       </div>
+     </div>
+    </div>
+      
+	
+    <div class="commentEntry">
+      <img alt='' src='http://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=48' class='avatar avatar-48 photo avatar-default' height='48' width='48' />        <div class="commentContent" id="comment-284">
+          			
+        <p>What did you use to make the diagrams? (I&#8217;m serious. I want to know).</p>
+        
+       <div class="commentMeta">
+        posted by <cite>Johan Tibell</cite> on <a href="#comment-284" title="">04.08.10</a> at 10:03 am       </div>
+     </div>
+    </div>
+      
+	
+    <div class="commentEntry">
+      <img alt='' src='http://0.gravatar.com/avatar/434aee9ad675384a9e745c7217ac4abe?s=48&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D48&amp;r=G' class='avatar avatar-48 photo' height='48' width='48' />        <div class="commentContent" id="comment-287">
+          			
+        <p>Conor has said it well. I&#8217;ll also add, in my opinion, the pointer reversal idea is the easy bit (the part &#8220;you could have invented&#8221;), whereas the actual shoehorning of the idea into an algebraic data structure, where we tend not to really think about pointers, is the conceptual leap. It&#8217;s not very far, but as some have said, &#8220;a &#8216;trivial&#8217; concept gets invented over and over again until someone writes it down and gets credit for it.&#8221;</p>
+<p>Johan, I use Xournal (for drawing and shading) and Gimp (for cropping and PDF to PNG conversion), on my X61 tablet.</p>
+        
+       <div class="commentMeta">
+        posted by <cite><a href='http://ezyang.com' rel='external nofollow' class='url'>Edward Z. Yang</a></cite> on <a href="#comment-287" title="">04.08.10</a> at 11:53 am       </div>
+     </div>
+    </div>
+      
+	
+    <div class="commentEntry">
+      <img alt='' src='http://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=48' class='avatar avatar-48 photo avatar-default' height='48' width='48' />        <div class="commentContent" id="comment-288">
+          			
+        <p>Conor and Edward, I certainly don&#8217;t mean to downplay Huet&#8217;s achievement, but we should also give credit to the earlier work, whether or not we believe it to be the &#8220;easy bit&#8221;.</p>
+        
+       <div class="commentMeta">
+        posted by <cite>Tony Sloane</cite> on <a href="#comment-288" title="">04.08.10</a> at 7:34 pm       </div>
+     </div>
+    </div>
+      
+	
+    <div class="commentEntry">
+      <img alt='' src='http://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=48' class='avatar avatar-48 photo avatar-default' height='48' width='48' />        <div class="commentContent" id="comment-293">
+          			
+        <p>Gorgeous introduction! Thank you!</p>
+        
+       <div class="commentMeta">
+        posted by <cite>paurullan</cite> on <a href="#comment-293" title="">04.10.10</a> at 1:09 pm       </div>
+     </div>
+    </div>
+      
+	  
+    	
+
+ 
+
+
+
+
+<form action="http://blog.ezyang.com/wp-comments-post.php" method="post" id="commentform">
+
+
+  <div class="leaveComment">
+        
+    <fieldset>
+      <legend><span>Leave a Comment</span></legend>
+      <div class="commentForm">
+            <label>Name (optional): <input type="text" name="author" id="author" value="" /></label>
+            <label>Comment:
+        <textarea name="comment" id="comment" cols="50" rows="20"></textarea></label>
+        <input type="submit" value="Post Comment" /> <input type="hidden" name="comment_post_ID" value="1142" />
+      </div>
+    </fieldset>
+  </div>
+
+<p><input type="text" name="c2ffdd876b17e" value="c51c34a4e" style="display:none;" /><input type="text" name="0871aa911f2a27168fd72eb2d" value="" style="display:none;" /></p>
+</form>
+
+
+
+  </div>
+
+  <div class="pageNav">
+    <div class="prev"><a href="http://blog.ezyang.com/2010/04/cup-of-fp-java-twis/" rel="prev">&laquo; Previous Post</a></div>
+    <div class="next"><a href="http://blog.ezyang.com/2010/04/diagramming-in-xournal-and-gimp/" rel="next">Next Post &raquo;</a></div>
+  </div>
+
+
+	
+</div>
+
+
+</div>
+
+<div id="footer">
+
+  <!-- Footer Links
+  
+  <h5>Elsewhere</h5>
+  <ul class="elsewhere">
+    <li><a href="#">Facebook</a></li>
+    <li><a href="#">Flickr</a></li>
+    <li><a href="#">Last.fm</a></li>
+    <li><a href="#">Deli.icio.us</a></li>
+    <li><a href="#">Linkedin</a></li>
+    <li><a href="#">Twitter</a></li>
+    <li class="last"><a href="#">Vimeo</a></li>
+  </ul>
+
+  -->
+
+  <!-- Search Field -->
+  
+  <div class="footerContent">
+    <form method="get" id="searchform" action="http://blog.ezyang.com/">
+      <div id="search">
+        <input type="text" value="" name="s" id="s" />
+        <input type="submit" id="searchsubmit" value="Search" />
+      </div>
+    </form>
+    
+    
+    <p>&copy; Inside T5. Powered by <a href="http://wordpress.org/">WordPress</a> and <a href="http://jimbarraud.com/manifest/">Manifest</a></p>
+  </div>
+</div>
+
+
+</body>
+</html>
