@@ -1,0 +1,1055 @@
+
+
+
+
+<html><head><title>
+HotOS IX &#151; Paper</title>
+</head>
+<!-- IE understands topmargin, leftmargin, rightmargin, NS understands marginheight -->
+<body BGCOLOR="#ffffff" TEXT="#000000"  link="#990000" alink="#666666" vlink="#666666" TOPMARGIN="0" LEFTMARGIN="0" RIGHTMARGIN="0" MARGINHEIGHT="0">
+<!-- Banner -->
+<table BGCOLOR="#ffffff" BORDER="0" WIDTH="100%" CELLSPACING="0" CELLPADDING="0">
+<tr><td ALIGN="LEFT" VALIGN="TOP"><table BORDER="0" CELLSPACING="0" CELLPADDING="0" WIDTH="600"><tr><td>
+<table border="0" cellpadding="0" cellspacing="0" width="600">
+<!-- space at top -->
+<tr><td colspan="13"><img src="/graphics/dot_clear.gif" width="1" height="5" alt=""><br></td></tr>
+ <tr><!-- row 1 -->
+   <td colspan="13"><img src="/graphics/smalltop.gif" width="600" height="6" border="0" alt=""></td>
+
+  </tr>
+
+  <tr><!-- row 2 -->
+   <td rowspan="2"><img src="/graphics/smallleft.gif" width="102" height="23" border="0" alt=""></td>
+   <td bgcolor="#666666"><a href="/"><img src="/graphics/smallhome.gif" width="38" height="16" border="0" alt="Home"></a></td>
+   <td bgcolor="#666666"><img src="/graphics/divider16.gif" width="17" height="16" border="0" alt=""></td>
+   <td bgcolor="#666666"><a href="/about"><img src="/graphics/smallabout.gif" width="90" height="16" border="0" alt="About USENIX"></a></td>
+   <td bgcolor="#666666"><img src="/graphics/divider16.gif" width="17" height="16" border="0" alt=""></td>
+   <td bgcolor="#666666"><a HREF="/events"><img src="/graphics/smallevents.gif" width="42" height="16" border="0" alt="Events"></a></td>
+
+   <td bgcolor="#666666"><img src="/graphics/divider16.gif" width="17" height="16" border="0" alt=""></td>
+   <td bgcolor="#666666"><a HREF="/membership"><img src="/graphics/smallmembership.gif" width="78" height="16" border="0" alt="Membership"></a></td>
+   <td bgcolor="#666666"><img src="/graphics/divider16.gif" width="17" height="16" border="0" alt=""></td>
+   <td bgcolor="#666666"><a href="/publications"><img src="/graphics/on/smallpublications.gif" width="77" height="16" border="0" alt="Publications"></a></td>
+   <td bgcolor="#666666"><img src="/graphics/divider16.gif" width="17" height="16" border="0" alt=""></td>
+   <td bgcolor="#666666"><a href="/students"><img src="/graphics/smallstudents.gif" width="54" height="16" border="0" alt="Students"></a></td>
+   <td bgcolor="#666666"><img src="/graphics/smallright16.gif" width="34" height="16" border="0" alt=""></td>
+  </tr>
+
+  <tr><!-- row 3 -->
+   <td colspan=12 bgcolor="#666666"><img src="/graphics/dot_clear.gif" width="2" height="7" border="0" alt=""></td>
+  </tr>
+
+</table>
+</td></tr></table></td></tr></table>
+<!-- End of Banner -->
+
+
+<table width=100% border=0 cellspacing=0 cellpadding=8><tr><td>
+
+
+<font SIZE="+1" COLOR="#990000" FACE="verdana, arial, helvetica, sans-serif"><b>HotOS IX Paper</b></font>&nbsp&nbsp&nbsp
+
+<font SIZE="-1" FACE="verdana, arial, helvetica, sans-serif">[<a href="/events/hotos03/program.html">HotOS IX  Program Index</a>]</font>
+<p>
+<!-- START OF PAGE CONTENTS -->
+
+<P>
+<H1 ALIGN="CENTER"><FONT SIZE="+2"><B>Why Events Are A Bad Idea 
+<BR>(for high-concurrency servers)</B></FONT></H1>
+<P ALIGN="CENTER"><STRONG><BR> Rob von Behren, Jeremy Condit and Eric Brewer 
+<BR><EM>Computer Science Division, University of California at Berkeley</EM> 
+<BR> {jrvb, jcondit, brewer}@cs.berkeley.edu  
+<BR> <a href="http://capriccio.cs.berkeley.edu/">http://capriccio.cs.berkeley.edu/</a>
+</STRONG></P>
+
+<P>
+
+<P>
+
+<P>
+
+<H1><A NAME="SECTION00010000000000000000">
+Abstract</A>
+</H1>
+
+<P>
+<FONT SIZE="-1">Event-based programming has been highly touted in recent years as the
+best way to write highly concurrent applications.  Having worked on
+several of these systems, we now believe this approach to be a
+mistake.  Specifically, we believe that threads can achieve all of the
+strengths of events, including support for high concurrency, low
+overhead, and a simple concurrency model.  Moreover, we argue that
+threads allow a simpler and more natural programming style.
+</FONT>
+<P>
+<FONT SIZE="-1">We examine the claimed strengths of events over threads and show that
+the weaknesses of threads are artifacts of specific threading
+implementations and not
+inherent to the threading paradigm.  As evidence, we present a
+user-level thread package that scales to 100,000 threads and achieves
+excellent performance in a web server.
+We also refine the duality argument of Lauer and Needham, which implies
+that good implementations of thread systems and event systems will
+have similar performance. 
+Finally, we argue that compiler support for
+thread systems is a fruitful area for future research.  It is a
+mistake to attempt high concurrency without help from the compiler,
+and we discuss several enhancements that are enabled by relatively
+simple compiler changes.
+</FONT>
+<P>
+
+
+<P>
+
+<P>
+
+<H1><A NAME="SECTION00020000000000000000"></A>
+<A NAME="sec:intro"></A><BR>
+Introduction
+</H1>
+
+<P>
+Highly concurrent applications such as Internet servers and
+transaction processing databases present a number of challenges to
+application designers.  First, handling large numbers of concurrent tasks
+requires the use of scalable data structures.  Second, these systems typically 
+operate near maximum capacity, which creates resource contention and
+high sensitivity to scheduling decisions; overload must be handled
+with care to avoid thrashing.  Finally, race conditions and
+subtle corner cases are common, which makes debugging
+and code maintenance difficult.
+
+<P>
+Threaded servers have historically failed to meet these challenges,
+leading many researchers to conclude that event-based programming is
+the best (or even only) way to achieve high performance in
+highly concurrent applications.  The literature gives four primary
+arguments for the supremacy of events:
+
+<UL>
+<LI>Inexpensive synchronization due to cooperative multitasking;<BR>
+</LI>
+<LI>Lower overhead for managing state (no stacks);<BR>
+</LI>
+<LI>Better scheduling and locality, based on application-level
+      information; and<BR>
+</LI>
+<LI>More flexible control flow (not just call/return).
+</LI>
+</UL>
+We have made extensive use of events in several high-concurrency
+environments, including Ninja&nbsp;[<A
+ HREF="index.html#ninja">16</A>], SEDA&nbsp;[<A
+ HREF="index.html#seda">17</A>], and
+Inktomi's Traffic Server.  In working with these systems, we realized
+that the properties above are not restricted to event systems; many
+have already been implemented with threads, and the rest are possible.
+
+<P>
+Ultimately, our experience led us to conclude that event-based
+programming is the wrong choice for highly concurrent systems.  We
+believe that (1) threads provide a more natural abstraction for
+high-concurrency servers, and that (2) small improvements to compilers
+and thread runtime systems can eliminate the historical reasons to use
+events.  Additionally, threads are more amenable to compiler-based
+enhancements; we believe the right paradigm for highly concurrent
+applications is a thread package with better compiler support.
+
+<P>
+Section&nbsp;<A HREF="index.html#sec:threads-v-events">2</A> compares events with threads and
+rebuts the common arguments against threads.
+Next, Section&nbsp;<A HREF="index.html#sec:case-for-threads">3</A> explains why threads are
+particularly natural for writing high-concurrency servers.
+Section&nbsp;<A HREF="index.html#sec:compiler">4</A> explores the value of
+compiler support for threads.  In Section&nbsp;<A HREF="index.html#sec:eval">5</A>, we validate
+our approach with a simple web server.  Finally,
+Section&nbsp;<A HREF="index.html#sec:related-work">6</A> covers (some) related work, and
+Section&nbsp;<A HREF="index.html#sec:conclusion">7</A> concludes.
+
+<P>
+
+<P>
+
+<H1><A NAME="SECTION00030000000000000000"></A>
+<A NAME="sec:threads-v-events"></A><BR>
+Threads vs. Events
+</H1>
+
+<P>
+The debate between threads and events is a very old one.  Lauer and
+Needham attempted to end the discussion in 1978 by showing that
+message-passing systems and process-based systems are duals, both in
+terms of program structure and performance
+characteristics&nbsp;[<A
+ HREF="index.html#duality">10</A>].  Nonetheless, in recent years many authors 
+have declared the need for event-driven
+programming for highly concurrent systems&nbsp;[<A
+ HREF="index.html#ousterhout">11</A>,<A
+ HREF="index.html#flash">12</A>,<A
+ HREF="index.html#seda">17</A>].  
+
+<P>
+
+<H2><A NAME="SECTION00031000000000000000">
+Duality Revisited</A>
+</H2>
+
+<P>
+To understand the threads and events debate, it is useful to reexamine
+the duality arguments of Lauer and Needham.  Lauer and Needham
+describe canonical threaded and message-passing (i.e., event-based)
+systems.  Then, they provide a mapping between the concepts of the two
+regimes (paraphrased in Figure&nbsp;<A HREF="index.html#fig:duality">1</A>) and make the case
+that with proper implementations, these two approaches should yield
+equivalent performance.
+Finally, they argue that the decision comes down to which
+paradigm is more natural for the target application.  In the case of
+high-concurrency servers, we believe the thread-based approach is
+preferable.
+
+<P>
+
+<P></P>
+<DIV ALIGN="CENTER"><A NAME="fig:duality"></A><A NAME="173"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure:</STRONG>
+<FONT SIZE="-1">A selection of dual notions in thread and event systems, 
+paraphrased from Lauer and Needham.  We have converted their
+terminology to contemporary terms from event-driven systems.
+</FONT></CAPTION>
+<TR><TD>
+
+<table bgcolor="#d0d0d0" cellpadding="2" border="2">
+<tr align="center" noborder><td><b>Events</b></td>   <td><b>Threads</b></td></tr>
+<tr align="center"><td>
+event handlers<br>
+events accepted by a handler<br>
+SendMessage / AwaitReply<br>
+SendReply<br>
+waiting for messages<br>
+</td>
+<td>
+monitors<br>
+functions exported by a module<br>
+procedure call, or fork/join<br>
+return from procedure<br>
+waiting on condition variables<br>
+</td></tr>
+</table>
+
+</TD></TR>
+</TABLE>
+</DIV><P></P>
+
+<P>
+The message-passing systems described by Lauer and Needham do not
+correspond precisely to modern event systems in their full generality.
+First, Lauer and Needham ignore the cooperative scheduling used by
+events for synchronization. Second, most event systems use shared
+memory and global data structures, which are described as atypical for
+Lauer and Needham's message-passing systems.  In fact, the only event
+system that really matches their canonical message-passing system is
+SEDA [<A
+ HREF="index.html#seda">17</A>], whose stages and queues map exactly to processes and
+message ports.<A NAME="tex2html2"
+  HREF="#foot177"><SUP>1</SUP></A> 
+
+<P>
+Finally, the performance equivalence claimed by Lauer and Needham requires
+equally good implementations; we don't believe there has been a
+suitable threads implementation for very high concurrency.  We
+demonstrate one in the next section, and we discuss further enhancements
+in Section&nbsp;<A HREF="index.html#sec:compiler">4</A>.
+
+<P>
+In arguing that performance should be equivalent, Lauer and Needham
+implicitly use a graph that we call a <EM>blocking graph</EM>.
+This graph describes the flow of control through an application with
+respect to blocking or yielding points.  Each node in this graph
+represents a blocking or yielding point, and each edge represents the
+code that is executed between two such points.  The Lauer-Needham duality
+argument essentially says that duals have the same graph.
+
+<P>
+The duality argument suggests that criticisms of thread performance
+and usability in recent years have been motivated by problems with
+<EM>specific</EM> threading packages, rather than with threads in
+general.  We examine the most common criticisms below.
+
+<P>
+
+<H2><A NAME="SECTION00032000000000000000">
+&ldquo;Problems&rdquo; with Threads</A>
+</H2> 
+
+<P>
+<B>Performance.</B>
+<EM>Criticism: Many attempts to use threads for high concurrency have
+not performed well.</EM>  We don't dispute this criticism; rather, we
+believe it is an artifact of poor thread implementations,
+at least with respect to high concurrency.  None of the currently
+available thread packages were
+designed for both high concurrency and blocking
+operations, and thus it is not surprising that they perform poorly.
+
+<P>
+A major source of overhead is the presence of operations that are
+<em>O(n)</em>
+in the number of threads.  
+Another common problem with thread packages is their relatively high
+context switch overhead when compared with events.
+This overhead is due to both preemption,
+which requires saving registers and other state during context
+switches, and additional kernel crossings (in the case of kernel
+threads).
+
+<P>
+However, these shortcomings are not intrinsic properties of threads.
+To illustrate this fact,
+we repeated the SEDA threaded server benchmark&nbsp;[<A
+ HREF="index.html#seda">17</A>]
+with a modified version of the GNU Pth user-level threading package,
+which we optimized to remove most of the <em>O(n)</em>
+operations from the scheduler.
+The results are shown in Figure&nbsp;<A HREF="index.html#fig:microbench">2</A>.  
+Our optimized version of Pth scales quite well up to 100,000 threads, 
+easily matching the performance of the event-based server.
+
+<P>
+
+<P></P>
+<DIV ALIGN="CENTER"><A NAME="fig:microbench"></A><A NAME="208"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure:</STRONG>
+<FONT SIZE="-1">A repeat of the threaded server benchmark from the SEDA
+paper [<A
+ HREF="index.html#seda">17</A>].
+The threaded server uses a preallocated thread pool to process
+requests, while the event server uses a single thread to pull items
+from the queue.  Requests are internally generated to avoid network
+effects.  Each request consists of an 8K read from a cached disk file.
+</FONT></CAPTION>
+<TR><TD>
+<img src="scale.png">
+
+</TD></TR>
+</TABLE>
+</DIV><P></P>
+
+<P>
+<B>Control Flow.</B>  <EM>Criticism: Threads have restrictive
+control flow.</EM>  One argument against threaded programming is that it
+encourages the programmer to think too linearly about control flow, 
+potentially precluding the use of  more
+efficient control flow patterns.  However, complicated control flow
+patterns are rare in practice.  We examined the code
+structure of the Flash web server and of several applications in
+Ninja, SEDA, and TinyOS&nbsp;[<A
+ HREF="index.html#tinyos">8</A>,<A
+ HREF="index.html#flash">12</A>,<A
+ HREF="index.html#ninja">16</A>,<A
+ HREF="index.html#seda">17</A>].
+In all cases, the control flow patterns used by these applications fell
+into three
+simple categories: call/return, parallel calls, and 
+pipelines.  All of these patterns can be expressed more naturally
+with threads.
+
+<P>
+We believe more complex patterns are not used because they are
+difficult to use well. The accidental non-linearities that often occur
+in event systems are already hard to understand, leading to subtle
+races and other errors.  Intentionally complicated control flow is
+equally error prone.
+
+<P>
+Indeed, it is no coincidence that common event patterns map cleanly onto
+the call/return mechanism of threads.  Robust systems need
+acknowledgements for error handling, for storage deallocation, and for
+cleanup; thus, they need a &ldquo;return&rdquo; even in the event model.
+
+<P>
+The only patterns we considered that are less graceful with threads are dynamic
+fan-in and fan-out; such patterns might occur with multicast or
+publish/subscribe applications.  In these cases, events are probably more
+natural.  However, none of the high-concurrency servers that we studied
+used these patterns.
+
+<P>
+<B>Synchronization.</B>  <EM>Criticism: Thread synchronization
+mechanisms are too heavyweight.</EM>  Event systems often claim as an
+advantage that cooperative multitasking gives them synchronization
+&ldquo;for free,&rdquo; since the runtime system does not need to provide
+mutexes, handle wait queues, and so on&nbsp;[<A
+ HREF="index.html#ousterhout">11</A>].  However,
+Adya <EM>et al.</EM>&nbsp;[<A
+ HREF="index.html#coop-task">1</A>] show that
+this advantage is really due to cooperative multitasking (i.e.,
+no preemption), not events themselves;
+thus, cooperative thread systems can reap the same benefits.
+It is important to note that in either regime, cooperative
+multitasking only provides &ldquo;free&rdquo; synchronization on uniprocessors,
+whereas many high-concurrency servers run on multiprocessors.  We
+discuss compiler techniques for supporting multiprocessors in
+Section&nbsp;<A HREF="index.html#sec:datarace">4.3</A>.
+
+<P>
+<B>State Management.</B>  <EM>Criticism: Thread stacks are an
+ineffective way to manage live state.</EM>  Threaded systems typically
+face a tradeoff between risking stack overflow and wasting virtual address
+space on large stacks.  Since event systems typically use few
+threads and unwind the thread stack after each event handler, they
+avoid this problem.  To solve this problem in threaded servers,
+we propose a mechanism that
+will enable dynamic stack growth; we will discuss this solution
+in Section&nbsp;<A HREF="index.html#sec:compiler">4</A>.
+
+<P>
+Additionally, event systems encourage programmers to minimize live
+state at blocking points, since they require the programmer to manage
+this state by hand.  In contrast, thread systems provide automatic state
+management via the call stack, and this mechanism can allow programmers
+to be wasteful.
+Section&nbsp;<A HREF="index.html#sec:compiler">4</A> details our solution to this problem. 
+
+<P>
+<B>Scheduling.</B>  <EM>Criticism: The virtual processor model
+provided by threads forces the runtime system to be too generic and
+prevents it from making optimal scheduling decisions.</EM>
+Event systems are capable of scheduling event
+deliveries at application level.  Hence, the application can
+perform shortest remaining completion time scheduling, favor certain
+request streams, or perform other optimizations.  
+There has also been some evidence that events allow better
+code locality by running several of the same kind of event in a row
+[<A
+ HREF="index.html#staged-server">9</A>].
+However, Lauer-Needham duality indicates that we can apply the same
+scheduling tricks to cooperatively scheduled threads.
+
+<P>
+
+<H2><A NAME="SECTION00033000000000000000">
+Summary</A>
+</H2>
+
+<P>
+The above arguments show that threads can perform at least as well as
+events for high concurrency and that there are no substantial
+qualitative advantages to events.  The absence of scalable user-level
+threads has provided the largest push toward the event style, but we have
+shown that this deficiency is an artifact of the available implementations
+rather than a fundamental property of the thread abstraction.
+
+<P>
+
+<H1><A NAME="SECTION00040000000000000000"></A>
+<A NAME="sec:case-for-threads"></A><BR>
+The Case for Threads
+</H1>
+
+<P>
+Up to this point, we have largely argued that threads and events are
+equivalent in power and that threads can in fact perform well with
+high concurrency.  In this section, we argue that threads are actually
+a more appropriate abstraction for high-concurrency servers.  This
+conclusion is based on two observations about modern servers.  First,
+the concurrency in modern servers results from concurrent requests
+that are largely independent.  Second, the code that handles each
+request is usually sequential.  We believe that threads provide a
+better programming abstraction for servers with these two properties.
+
+<P>
+<B>Control Flow.</B>
+For these high-concurrency systems,
+event-based programming tends to obfuscate the
+control flow of the application.
+For instance, many event systems &ldquo;call&rdquo; a method in
+another module by sending an event and expect a &ldquo;return&rdquo; from that
+method via a similar event mechanism.  In order to understand the
+application, the programmer must mentally match these call/return
+pairs, even when they are in different parts of the code.
+Furthermore, these call/return pairs often require the programmer to
+manually save and restore live state.  This process, referred to as
+&ldquo;stack ripping&rdquo; by Adya <EM>et al.</EM>&nbsp;[<A
+ HREF="index.html#coop-task">1</A>], is a major burden for
+programmers who wish to use event systems.  
+Finally, this obfuscation of the program's control flow can also lead
+to subtle race conditions and logic errors due to unexpected message
+arrivals. 
+
+<P>
+Thread systems allow programmers to express control flow and
+encapsulate state in a more natural manner.  Syntactically,
+thread systems group calls with returns, making it much easier to
+understand cause/effect relationships, and ensuring a one-to-one
+relationship.  Similarly, the run-time call stack encapsulates all
+live state for a task, making existing debugging tools quite
+effective.
+
+<P>
+<B>Exception Handling and State Lifetime.</B>
+Cleaning up task state after exceptions and after normal termination
+is simpler in a threaded system, since the thread stack naturally
+tracks the live state for that task.  In event systems, task state is
+typically heap allocated.  Freeing this state at the correct time can
+be extremely difficult because branches in the application's control flow
+(especially in the case of error conditions) can cause deallocation
+steps to be missed.
+
+<P>
+Many event systems, such as Ninja and SEDA, use garbage collection to
+solve this problem.  However, previous work has found that Java's
+general-purpose garbage collection mechanism is inappropriate for
+high-performance systems [<A
+ HREF="index.html#shah01java">14</A>].
+Inktomi's Traffic Server used reference
+counting to manage state, but maintaining correct counts was
+difficult, particularly for error handling.<A NAME="tex2html4"
+  HREF="#foot317"><SUP>2</SUP></A>
+<P>
+<B>Existing Systems.</B>
+The preference for threads is subtly visible even in existing
+event-driven systems. For example, our own Ninja system [<A
+ HREF="index.html#ninja">16</A>]
+ended up using
+threads for the most complex parts, such as recovery, simply because
+it was nearly impossible to get correct behavior using events (which
+we tried first).  In addition, applications that didn't need high
+concurrency were always written with threads, just because it was
+simpler. Similarly, the FTP server in Harvest uses
+threads&nbsp;[<A
+ HREF="index.html#harvest">4</A>].
+
+<P>
+<B>Just Fix Events?</B>
+One could argue that instead of switching to thread systems, we should
+build tools or languages that address the problems with event systems
+(i.e., reply matching, live state management, and shared state
+management).  However, such tools would effectively duplicate the
+syntax and run-time behavior of threads.  As a case in point, the
+cooperative task management technique described by Adya
+<EM>et al.</EM>&nbsp;[<A
+ HREF="index.html#coop-task">1</A>] allows users of an event system
+to write thread-like code that gets transformed into continuations
+around blocking calls.  In many cases,
+fixing the problems with events is tantamount to switching to
+threads.
+
+<P>
+
+<P>
+
+<H1><A NAME="SECTION00050000000000000000"></A>
+<A NAME="sec:compiler"></A><BR>
+Compiler Support for Threads
+</H1>
+
+<P>
+Tighter integration between compilers and runtime systems is an
+extremely powerful concept for systems design.  Threaded systems can
+achieve improved safety and performance with only minor modifications to
+existing compilers and runtime systems.  
+We describe how this synergy can be used
+both to overcome limitations in current threads packages and to
+improve safety, programmer productivity, and performance.
+
+<P>
+
+<H2><A NAME="SECTION00051000000000000000">
+Dynamic Stack Growth</A>
+</H2>  
+We are developing a mechanism that allows the size of the stack to be
+adjusted at run time.  This approach avoids the tradeoff between
+potential overflow and wasted space associated with fixed-size stacks.
+Using a compiler analysis, we can provide an upper bound on the amount
+of stack space needed when calling each function; furthermore, we can
+determine which call sites may require stack growth.
+Recursive functions and function pointers produce additional
+challenges, but these problems can be addressed with further analyses.
+
+<P>
+
+<H2><A NAME="SECTION00052000000000000000">
+Live State Management</A>
+</H2>
+Compilers could easily purge unnecessary state from the stack before
+making function calls.  For example, temporary variables could be
+popped before subroutines are called, and the entire frame could be
+popped in the case of a tail call.  Variables with overlapping lifetimes
+could be automatically reordered or moved off the stack in order to
+prevent live variables
+from unnecessarily pinning dead ones in memory.  The compiler could
+also warn the programmer of cases where large amounts of state might
+be held across a blocking call, allowing the programmer to modify the
+algorithms if space is an issue.
+
+<P>
+
+<H2><A NAME="SECTION00053000000000000000"></A>  
+<A NAME="sec:datarace"></A><BR>
+Synchronization
+</H2>
+Compile-time analysis can reduce the occurrence of bugs by warning the
+programmer about data races.  Although static detection of race
+conditions is challenging, there has been recent progress due to
+compiler improvements and tractable whole-program analyses.  In
+nesC&nbsp;[<A
+ HREF="index.html#nesC">6</A>], a language for networked sensors based on the TinyOS
+architecture&nbsp;[<A
+ HREF="index.html#tinyos">8</A>], there is support for atomic sections, and
+the compiler understands the concurrency model.  TinyOS uses a mixture
+of events and run-to-completion threads, and the compiler uses a
+variation of a call graph that is similar to the blocking graph.  The
+compiler ensures that atomic sections reside within one edge on that
+graph; in particular, calls within an atomic section cannot yield or
+block (even indirectly).
+Compiler analysis can also help determine which atomic sections are
+safe to run concurrently.  This information can then be given to the
+runtime system to allow safe execution on multiprocessors, thus
+automating the hand-coded graph coloring technique used in
+libasync&nbsp;[<A
+ HREF="index.html#mit-libasync">5</A>].
+
+<P>
+
+<P>
+
+<H1><A NAME="SECTION00060000000000000000"></A>
+<A NAME="sec:eval"></A><BR>
+Evaluation
+</H1>
+
+<P>
+To evaluate the ability of threads to support high concurrency, we
+designed and implemented a simple (5000 line) user-level cooperative
+threading package for Linux.  Our thread package uses the <TT>coro</TT>
+coroutine library&nbsp;[<A
+ HREF="index.html#coro">15</A>] for minimalist context switching, and it
+translates blocking I/O requests to asynchronous requests internally.
+For asynchronous socket I/O, we use the UNIX <TT>poll()</TT>
+system call, whereas asynchronous disk I/O
+is provided by a thread pool that performs blocking I/O operations.
+The library also overrides blocking system calls and provides a simple
+emulation of pthreads, which allows applications written for our
+library to compile unmodified with standard pthreads.
+
+<P>
+With this thread package we wrote a 700-line test web
+server, Knot.  Knot accepts static data requests, allows persistent
+connections, and includes a basic page cache.  The code is
+written in a clear, straightforward threaded style and required very
+little performance tuning.
+
+<P>
+We compared the performance of Knot to that of SEDA's event-driven web
+server, Haboob, using the test suite used to evaluate SEDA
+[<A
+ HREF="index.html#seda">17</A>].  The <TT>/dev/poll</TT> patch used for the original Haboob tests
+has been deprecated, so our tests of Haboob used standard UNIX <TT>poll()</TT> (as does Knot).  The test machine was a 2x2000 MHz Xeon SMP
+with 1 GB of RAM running Linux 2.4.20.  The test uses a small
+workload, so there is little disk activity.  We ran Haboob with the 1.4
+JVM from IBM, with the JIT enabled. 
+Figure&nbsp;<A HREF="index.html#fig:web-server">3</A> presents the results.
+
+<P>
+
+<P></P>
+<DIV ALIGN="CENTER"><A NAME="fig:web-server"></A><A NAME="395"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure:</STRONG>
+<FONT SIZE="-1">Web server bandwidth versus the number of simultaneous
+clients.  We were unable to run the benchmark for Haboob with more
+than 16384 clients, as Haboob ran out of memory.</FONT></CAPTION>
+<TR><TD><DIV ALIGN="CENTER">
+<img src="bandwidth.png">
+
+</DIV></TD></TR>
+</TABLE>
+</DIV><P></P>
+
+<P>
+We tested two different scheduling policies for Knot, one that favors
+processing of active connections over accepting new ones (Knot-C in
+the figure) and one that does the reverse (Knot-A).  The first policy provides
+a natural throttling mechanism by limiting the number of new
+connections when the server is saturated with requests.  The
+second policy was designed to create higher internal concurrency, and it more
+closely matches the policy used by Haboob.
+
+<P>
+Figure&nbsp;<A HREF="index.html#fig:web-server">3</A> shows that Knot and Haboob have the same
+general performance pattern.  Initially, there is a linear increase in
+bandwidth as the number of simultaneous connections increases; when
+the server is saturated, the bandwidth levels out.  The performance
+degradation for both Knot-A and Haboob is due to the poor scalability
+of <TT>poll()</TT>.  Using the newer <TT>sys_epoll</TT> system call with
+Knot avoids this problem and achieves excellent scalability.  However, we have
+used the <TT>poll()</TT> result for comparison,
+since <TT>sys_epoll</TT> is incompatible with Haboob's socket library.
+This result shows that a well-designed thread package can achieve the same
+scaling behavior as a well-designed event system.
+
+<P>
+The steady-state bandwidth achieved by Knot-C is
+nearly 700 Mbit/s.  At this rate, the server is apparently
+limited by interrupt processing overhead in the kernel.  We believe
+the performance spike around 1024 clients is due to lower interrupt
+overhead when fewer connections to the server are being created.
+
+<P>
+Haboob's maximum bandwidth of 500 Mbit/s is significantly lower than
+Knot's, because Haboob becomes CPU limited at 512 clients.  There are
+several possible reasons for this result.  First, Haboob's thread-pool-per-handler
+model requires context switches whenever events pass from one handler
+to another.  This requirement causes Haboob to context switch 30,000 times per
+second when fully loaded--more than 6 times as frequently as Knot.
+Second, the proliferation of small modules in Haboob and SEDA (a
+natural outgrowth of the event programming model) creates a large
+number of module crossings and queuing operations.  Third, Haboob
+creates many temporary objects and relies heavily on garbage
+collection.  These challenges seem deeply tied to the event model; the
+simpler threaded style of Knot avoids these problems and allows for
+more efficient execution.  Finally, event systems require various
+forms of run-time dispatch, since the next event handler to execute is
+not known statically. This problem is related to the problem of ambiguous
+control flow, which affects performance by reducing opportunities
+for compiler optimizations and by increasing CPU pipeline stalls.
+
+<P>
+
+<P>
+
+<H1><A NAME="SECTION00070000000000000000"></A>
+<A NAME="sec:related-work"></A><BR>
+Related Work
+</H1>
+
+<P>
+Ousterhout [<A
+ HREF="index.html#ousterhout">11</A>] made the most well-known case in favor of
+events, but his arguments do not conflict with ours.  He argues that
+programming with concurrency is fundamentally difficult, and he
+concludes that cooperatively scheduled events are preferable (for most
+purposes) because they allow programmers to avoid concurrent
+code in most cases.
+He explicitly supports the use of threads for true concurrency,
+which is the case in our target space. We also agree that cooperative
+scheduling helps to simplify concurrency, but we argue that this tool
+is better used in the context of the simpler programming model of
+threads. 
+
+<P>
+Adya <EM>et al.</EM>&nbsp;[<A
+ HREF="index.html#coop-task">1</A>] cover a subset of these issues better
+than we have. They identify the value of cooperative scheduling for
+threads, and they define the term &ldquo;stack ripping&rdquo; for management of live
+state.  Our work expands on these ideas by exploring thread
+performance issues and 
+compiler support techniques. 
+
+<P>
+SEDA is a hybrid approach between events and threads, using events
+between stages and threads within them [<A
+ HREF="index.html#seda">17</A>].  This approach is
+quite similar to the message-passing model discussed by Lauer and Needham
+[<A
+ HREF="index.html#duality">10</A>], though Lauer and Needham advocate a single thread per
+stage in order to avoid synchronization within a stage.  SEDA showed
+the value of keeping the server in its operating range, which it did
+by using explicit queues; we agree that the various queues for threads
+<EM>should</EM> be visible, as they enable better debugging and
+scheduling.  In addition, the stage boundaries of SEDA provide a form
+of modularity that simplifies composition in the case of pipelines.
+When call/return patterns are used, such boundaries require stack
+ripping and are better implemented with threads using blocking calls.
+
+<P>
+Many of the techniques we advocate for improving threads were
+introduced in previous work.  Filaments [<A
+ HREF="index.html#filaments">7</A>] and
+NT's Fibers are good examples of cooperative user-level threads
+packages, although neither is targeted at large numbers of blocking
+threads.  Languages such as Erlang [<A
+ HREF="index.html#armstrong96concurrent">2</A>] and Concurrent ML
+[<A
+ HREF="index.html#cml-thesis">13</A>] include direct support for concurrency and
+lightweight threading.
+Bruggeman <EM>et al.</EM>&nbsp;[<A
+ HREF="index.html#oneshot">3</A>] employ dynamically linked stacks to
+implement one-shot continuations, which can in turn be used to build user-level
+thread packages.  Our contribution is to bring these techniques
+together in a single package and to make them accessible to a broader
+community of programmers. 
+
+<P>
+
+<P>
+
+<H1><A NAME="SECTION00080000000000000000"></A>
+<A NAME="sec:conclusion"></A><BR>
+Conclusions
+</H1>
+
+<P>
+Although event systems have been used to obtain good performance in
+high concurrency systems, we have shown that similar or even higher
+performance can be achieved with threads.  Moreover, the
+simpler programming model and wealth of compiler analyses that
+threaded systems afford gives threads an important advantage over
+events when writing highly concurrent servers.
+In the future, we advocate tight integration between the
+compiler and the thread system, which will result in a programming
+model that offers a clean and simple interface to the programmer while
+achieving superior performance.
+
+<P>
+
+<H1><A NAME="SECTION00090000000000000000">
+Acknowledgements</A>
+</H1>
+
+<P>
+We would like to thank George Necula, Matt Welsh, Feng Zhou, and Russ Cox for
+their helpful contributions.  We would also like to thank the Berkeley
+Millennium group for loaning us the hardware for the benchmarks in
+this paper.  This material is based upon work supported under a
+National Science Foundation Graduate Research Fellowship, and under
+the NSF Grant for Millennium, EIA-9802069.
+
+<P>
+
+
+<H2><A NAME="SECTION000100000000000000000">
+Bibliography</A>
+</H2><DL COMPACT><DD><P></P><DT><A NAME="coop-task">1</A>
+<DD>
+A.&nbsp;Adya, J.&nbsp;Howell, M.&nbsp;Theimer, W.&nbsp;J. Bolosky, and J.&nbsp;R. Douceur.
+<BR>Cooperative task management without manual stack management.
+<BR>In <EM>Proceedings of the 2002 Usenix ATC</EM>, June 2002.
+<br><a href="http://citeseer.nj.nec.com/543557.html">http://citeseer.nj.nec.com/543557.html</a>
+
+<P></P><DT><A NAME="armstrong96concurrent">2</A>
+<DD>
+J.&nbsp;Armstrong, R.&nbsp;Virding, C.&nbsp;Wikstr&#246;m, and M.&nbsp;Williams.
+<BR><EM>Concurrent Programming in Erlang</EM>.
+<BR>Prentice-Hall, second edition, 1996.
+<br><a href="http://citeseer.nj.nec.com/armstrong93concurrent.html">
+    http://citeseer.nj.nec.com/armstrong93concurrent.html</a>
+
+<P></P><DT><A NAME="oneshot">3</A>
+<DD>
+C.&nbsp;Bruggeman, O.&nbsp;Waddell, and R.&nbsp;K. Dybvig.
+<BR>Representing control in the presence of one-shot continuations.
+<BR>In <EM>ACM SIGPLAN 1996 Conference on Programming Language Design
+  and Implementation</EM>, June 1996.
+<br><a href="http://citeseer.nj.nec.com/bruggeman96representing.html">
+    http://citeseer.nj.nec.com/bruggeman96representing.html</a>
+
+<P></P><DT><A NAME="harvest">4</A>
+<DD>
+A.&nbsp;Chankhunthod, P.&nbsp;B. Danzig, C.&nbsp;Neerdaels, M.&nbsp;F. Schwartz, and K.&nbsp;J. Worrell.
+<BR>A Hierarchical Internet Object Cache.
+<BR>In <EM>Proceedings of the 1996 Usenix Annual Technical Conference</EM>,
+  January 1996.
+<br><a href="http://citeseer.nj.nec.com/chankhunthod95hierarchical.html">
+    http://citeseer.nj.nec.com/chankhunthod95hierarchical.html</a>
+
+<P></P><DT><A NAME="mit-libasync">5</A>
+<DD>
+F.&nbsp;Dabek, N.&nbsp;Zeldovich, F.&nbsp;Kaashoek, D.&nbsp;Mazieres, and R.&nbsp;Morris.
+<BR>Event-driven programming for robust software.
+<BR>In <EM>Proceedings of the 10th ACM SIGOPS European Workshop</EM>,
+  September 2002.
+<br><a href="http://citeseer.nj.nec.com/525358.html">
+    http://citeseer.nj.nec.com/525358.html</a>
+
+<P></P><DT><A NAME="nesC">6</A>
+<DD>
+D.&nbsp;Gay, P.&nbsp;Levis, R.&nbsp;von Behren, M.&nbsp;Welsh, E.&nbsp;Brewer, and D.&nbsp;Culler.
+<BR>The nesC language: A holistic approach to networked embedded
+  systems.
+<BR>In <EM>ACM SIGPLAN Conference on Programming Language Design and
+  Implementation</EM>, 2003.
+<br><a href="http://citeseer.nj.nec.com/574912.html">
+    http://citeseer.nj.nec.com/574912.html</a>
+
+<P></P><DT><A NAME="filaments">7</A>
+<DD>
+D.&nbsp;R.&nbsp;Engler, G.&nbsp;R.&nbsp;Andrews, and D.&nbsp;K.&nbsp;Lowenthal.
+<BR>Filaments : Efficient support for fine-grain parallelism.
+<BR>Technical Report 93-13, Massachusetts Institute of Technology, 1993.
+<br><a href="http://citeseer.nj.nec.com/128846.html">
+    http://citeseer.nj.nec.com/128846.html</a>
+
+<P></P><DT><A NAME="tinyos">8</A>
+<DD>
+J.&nbsp;Hill, R.&nbsp;Szewczyk, A.&nbsp;Woo, S.&nbsp;Hollar, D.&nbsp;E. Culler, and K.&nbsp;S.&nbsp;J. Pister.
+<BR>System Architecture Directions for Networked Sensors.
+<BR>In <EM>Architectural Support for Programming Languages and Operating
+  Systems</EM>, pages 93-104, 2000.
+<BR>TinyOS is available at http://webs.cs.berkeley.edu.
+<br><a href="http://citeseer.nj.nec.com/382595.html">
+    http://citeseer.nj.nec.com/382595.html</a>
+
+<P></P><DT><A NAME="staged-server">9</A>
+<DD>
+J.&nbsp;Larus and M.&nbsp;Parkes.
+<BR>Using cohort scheduling to enhance server performance.
+<BR>Technical Report MSR-TR-2001-39, Microsoft Research, March 2001.
+<br><a href="http://research.microsoft.com/users/larus/papers.htm">
+    http://research.microsoft.com/users/larus/papers.htm</a>
+
+<P></P><DT><A NAME="duality">10</A>
+<DD>
+H.&nbsp;C. Lauer and R.&nbsp;M. Needham.
+<BR>On the duality of operating system structures.
+<BR>In <EM>Second International Symposium on Operating Systems, IR1A</EM>,
+  October 1978.
+
+<P></P><DT><A NAME="ousterhout">11</A>
+<DD>
+J.&nbsp;K. Ousterhout.
+<BR>Why Threads Are A Bad Idea (for most purposes).
+<BR>Presentation given at the 1996 Usenix Annual Technical Conference,
+  January 1996.
+<br><a href="http://www.softpanorama.org/People/Ousterhout/Threads/">
+    http://www.softpanorama.org/People/Ousterhout/Threads/</a>
+
+<P></P><DT><A NAME="flash">12</A>
+<DD>
+V.&nbsp;S. Pai, P.&nbsp;Druschel, and W.&nbsp;Zwaenepoel.
+<BR>Flash: An Efficient and Portable Web Server.
+<BR>In <EM>Proceedings of the 1999 Annual Usenix Technical Conference</EM>,
+  June 1999.
+<br><a href="http://citeseer.nj.nec.com/211086.html">
+    http://citeseer.nj.nec.com/211086.html</a>
+
+<P></P><DT><A NAME="cml-thesis">13</A>
+<DD>
+J.&nbsp;H. Reppy.
+<BR>Higher-order concurrency.
+<BR>Technical Report 92-1285, Cornell University, June 1992.
+<br><a href="http://citeseer.nj.nec.com/104521.html">
+    http://citeseer.nj.nec.com/104521.html</a>
+
+<P></P><DT><A NAME="shah01java">14</A>
+<DD>
+M.&nbsp;A. Shah, S.&nbsp;Madden, M.&nbsp;J. Franklin, and J.&nbsp;M. Hellerstein.
+<BR>Java support for data-intensive systems: Experiences building the
+  Telegraph dataflow system.
+<BR><EM>SIGMOD Record</EM>, 30(4):103-114, 2001.
+<br><a href="http://citeseer.nj.nec.com/shah01java.html">
+     http://citeseer.nj.nec.com/shah01java.html</a>
+
+<P></P><DT><A NAME="coro">15</A>
+<DD>
+E.&nbsp;Toernig.
+<BR>Coroutine library source.
+<BR><a href="http://www.goron.de/~froese/coro/">
+    http://www.goron.de/&tilde;froese/coro/<a>.
+
+<P></P><DT><A NAME="ninja">16</A>
+<DD>
+J.&nbsp;R. von Behren, E.&nbsp;Brewer, N.&nbsp;Borisov, M.&nbsp;Chen, M.&nbsp;Welsh, J.&nbsp;MacDonald,
+  J.&nbsp;Lau, S.&nbsp;Gribble, , and D.&nbsp;Culler.
+<BR>Ninja: A framework for network services.
+<BR>In <EM>Proceedings of the 2002 Usenix Annual Technical Conference</EM>,
+  June 2002.
+<br><a href="http://www.cs.berkeley.edu/~jrvb/research/pubs/ninja-usenix.pdf">
+    http://www.cs.berkeley.edu/~jrvb/research/pubs/ninja-usenix.pdf</a>
+
+<P></P><DT><A NAME="seda">17</A>
+<DD>
+M.&nbsp;Welsh, D.&nbsp;E. Culler, and E.&nbsp;A. Brewer.
+<BR>SEDA: An architecture for well-conditioned, scalable Internet
+  services.
+<BR>In <EM>Symposium on Operating Systems Principles</EM>, pages 230-243,
+  2001.
+<br><a href="http://citeseer.nj.nec.com/welsh01seda.html">
+    http://citeseer.nj.nec.com/welsh01seda.html</a>
+</DL>
+
+</FONT>
+<P>
+
+<H1><A NAME="SECTION000110000000000000000">
+About this document ...</A>
+</H1><FONT SIZE="-1">
+ </FONT><STRONG><FONT SIZE="+2"><B>Why Events Are A Bad Idea 
+<BR>(for high-concurrency servers)</B></FONT></STRONG><P>
+This document was generated using the
+<A HREF="http://www-texdev.mpce.mq.edu.au/l2h/docs/manual/"><STRONG>LaTeX</STRONG>2<tt>HTML</tt></A> translator Version 2K.1beta (1.48)
+<P>
+Copyright &#169; 1993, 1994, 1995, 1996,
+<A HREF="http://cbl.leeds.ac.uk/nikos/personal.html">Nikos Drakos</A>, 
+Computer Based Learning Unit, University of Leeds.
+<BR>Copyright &#169; 1997, 1998, 1999,
+<A HREF="http://www.maths.mq.edu.au/~ross/">Ross Moore</A>, 
+Mathematics Department, Macquarie University, Sydney.
+<P>
+The command line arguments were: <BR>
+ <STRONG>latex2html</STRONG> <TT>-no_math -no_navigation -local_icons -address jrvb@cs.berkeley.edu -split 0 -reuse 0 threads-hotos-2003.tex</TT>
+<P>
+The translation was initiated by J. Robert von Behren on 2003-06-17<BR><HR><H4>Footnotes</H4>
+<DL>
+<DT><A NAME="foot177">... ports.</A><A NAME="foot177"
+ HREF="index.html#tex2html2"><SUP>1</SUP></A>
+<DD>Arguably, one of SEDA's contributions was to
+return event-driven systems to the &ldquot;good practices&rdquo; of
+Lauer-Needham.
+
+<DT><A NAME="foot317">... handling.</A><A NAME="foot317"
+ HREF="index.html#tex2html4"><SUP>2</SUP></A>
+<DD>Nearly every
+release battled with slow memory leaks due to this kind of reference
+counting; such leaks are often the limiting factor for the MTBF of the
+server.
+
+</DL><BR><HR>
+<ADDRESS>
+jrvb@cs.berkeley.edu
+</ADDRESS>
+
+<!-- END OF PAGE CONTENTS -->
+</td></tr>
+</table>
+<hr>
+<table BORDER="0" WIDTH="100%" CELLSPACING="0" CELLPADDING="0" ALIGN="LEFT">
+<tr><td VALIGN="TOP" WIDTH="40%">
+<address>
+<font SIZE="2">This paper was originally published in the
+
+Proceedings of HotOS IX: The 9th Workshop on Hot Topics in Operating Systems,
+
+May 18&#150;21, 2003, 
+ Lihue, Hawaii, USA
+
+</font><br>
+<!-- EDIT THE DATE AND YOUR LOGIN NAME BELOW -->
+<font SIZE="2">Last changed:  26 Aug. 2003 aw</font><br>
+
+</address>
+</td><td VALIGN="TOP" ALIGN="RIGHT" WIDTH="60%">
+
+<!-- Upwards Navigation Table -->
+<table border=0 cellspacing=0 cellpadding=0>
+<tr><td>
+<a href="/events/hotos03/program.html"><font size=1> HotOS IX Program Index</font></a><br>
+</td></tr>
+<tr><td>
+<a href="/events/hotos03"><font size=1>HotOS IX Home</font></a><br>
+</td></tr>
+<tr><td>
+<a href="/"><font size=1>USENIX home</font></a><br>
+</td></tr></table>
+
+<!-- End of Upwards Navigation Table -->
+
+</td></tr></table>
+</td></tr></table>
+</center>
+</body>
+</html>
+
