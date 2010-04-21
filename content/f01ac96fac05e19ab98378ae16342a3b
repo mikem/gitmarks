@@ -1,0 +1,454 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<!--
+  Copyright © 2010 Daniel Solano Gómez
+  All rights reserved.
+
+  Except as permitted by law, no part of this work may be copied, photocopied,
+  reproduced, translated, or reduced to any electronic medium or machine-
+  readable form, in whole or in part, without prior written consent of Daniel
+  Solano Gómez.  Any other reproduction in any other form without the
+  permission of Daneil Solano Gómez is prohibited.
+-->
+
+<html>
+  <head profile='http://www.w3.org/2005/10/profile'>
+    <title>
+      Programming Clojure with Vim : 
+      
+      Deep Blue Lambda
+    </title>
+    <link rel='icon' type='image/png' href='/images/deep_blue_lambda-icon.png'>
+    <link rel='alternate' type='application/rss+xml' href='http://www.deepbluelambda.org/index.rss' title='Primary Deep Blue Lambda RSS Feed'>
+    
+    
+      <!--[if !IE]>-->
+      <link rel='stylesheet' type='text/css'  href='/css/screen.css'>
+      <!--<![endif]-->
+      <!--[if IE 6]>
+        <link rel='stylesheet' type='text/css'  href='/css/screen-ie6.css'>
+      <![endif]-->
+      <!--[if IE 7]>
+        <link rel='stylesheet' type='text/css'  href='/css/screen-ie7.css'>
+      <![endif]-->
+      <!--[if IE 8]>
+        <link rel='stylesheet' type='text/css'  href='/css/screen-ie8.css'>
+      <![endif]-->
+    
+    
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+    
+      <meta name='author' content='Daniel Solano Gómez'>
+    
+    
+      <meta name='description' content='Daniel surveys some of the plug-ins available for Clojure development in Vim, namely VimClojure (with variants) and Slimv.  He also details how he sets up his development environment using VimClojure and a REPL.'>
+    
+    
+    <meta name='generator' content='blosxom'>
+  </head>
+  <body>
+    <div id='page'>
+      <div id='header'>
+        <a id='logo-link' href='/' title='Home Page'>
+	 <img id='logo'
+	     src='/images/deep_blue_lambda-logo.png'
+	     alt='Deep Blue Lambda logo'>
+        </a>
+        <h1 id='site-title'>
+	 <a href='/' title='Home Page'>
+	   Deep Blue Lambda
+	 </a>
+        </h1>
+      </div> <!-- header -->
+      <div id='body' class='group'>
+        <div id='content'>
+<h2 class='date'>Monday, 19 April 2010</h2>
+<div class='story'>
+  <h3 class='story-title'><a href='http://www.deepbluelambda.org/programming/clojure/programming-clojure-with-vim'>Programming Clojure with Vim</a></h3>
+  <div class='story-body'>
+    <p>I have been using Vim for a decade and a half.  It has become ingrained in how
+I do things.  I use vi bindings in my browser (via <a href="http://vimperator.org/vimperator">Vimperator</a>), my command
+line, my e-mail client, my newsreader, etc.  Whenever I am editing a document
+in some strange environment, like Word, I inevitably end up inserting a load of
+aitches, jays, kays, and ells—much to my infuriation.</p>
+
+<p>Unsuprisingly, when I started working with Clojure, I immediately sought a
+plug-in to provide the sorts of niceties we all expect in a development tool,
+such as syntax highlighting, completion, etc.  Of course, with Clojure, I also
+wanted a REPL.  However, getting a satisfactory REPL from Vim is easier said
+than done.</p>
+
+<h4>A word about SLIME</h4>
+
+<p><a href="http://common-lisp.net/project/slime/">SLIME, the Superior Lisp Interaction Mode for Emacs</a>, is an Emacs mode
+for working with Common Lisp.  Even if you are not familiar with Emacs, it does
+not take long to realise how nice and convenient it is.  Unsurprisingly,
+Clojure programmers have written the necessary plug-ins for a Clojure mode in
+Emacs with SLIME support.  Often, Emacs is considered the preferred choice for
+working with Clojure.</p>
+
+<p>Unfortunately for those of us who are hard-wired for vi, it is currently very
+difficult to implement a “Superior Lisp Interaction Mode for Vim”. This is
+because Vim lacks support for asynchronous subprocesses.  Nevertheless, there
+are a number of Clojure options for Vim users.  Most prominent among these is
+VimClojure.</p>
+
+<h4>VimClojure</h4>
+
+<p><a href="http://kotka.de/projects/clojure/vimclojure.html">VimClojure</a> is a Vim plug-in developed by Meikel Brandmeyer.  It provides
+support for Clojure syntax highlighting (including rainbow parentheses),
+indentation, and completion.</p>
+
+<p>In addition, it supports a number of SLIME-type features, such as:</p>
+
+<ul>
+<li>Evaluate and see the results of the current:
+<ul>
+<li>top-level s-expression</li>
+<li>file</li>
+<li>line</li>
+<li>visual block</li>
+<li>paragraph</li>
+</ul></li>
+<li>Tell Clojure to require the current namespace with either a <code class='inline'>:reload</code> or <code class='inline'>:reload-all</code></li>
+<li>See the macro expansion of the current innermost s-expression with either <code class='inline'>macroexpand</code> or <code class='inline'>macroexpand-1</code></li>
+<li>Interactively execute <code class='inline'>(find-doc …)</code></li>
+<li>For the current word or an interactively given word:
+<ul>
+<li>Lookup documentation using <code class='inline'>(doc …)</code></li>
+<li>Lookup JavaDoc using <code class='inline'>(clojure.contrib.repl-utils/javadoc …)</code></li>
+<li>See the source using <code class='inline'>(clojure.contrib.repl-utils/source …)</code></li>
+<li>Open the source in Vim</li>
+<li>Show the word’s metadaka, like <code class='inline'>(meta #'…)</code></li>
+</ul></li>
+<li>Start a REPL within Vim</li>
+</ul>
+
+<p>This is a pretty nice set of features that can make developing Clojure within
+Vim a much more delightful experience.  For example, say one of your functions
+is failing a test.  From Vim, you can fix the function and  type <code class='inline'>,et</code> to send
+the entire <code class='inline'>(defn …)</code> form to Clojure (assuming <code class='inline'>,</code> is your <code class='inline'>LocalLeader</code>).
+Now you can re-run your tests and see whether or not your fix worked.</p>
+
+<p>Unfortunately, VimClojure is not without its idiosyncrasies.</p>
+
+<h5>Caveat lector</h5>
+
+<p>No tool is perfect, and think VimClojure does a very good job.  Nonetheless,
+there a few things about which you should be aware:</p>
+
+<ol>
+<li>For most of the above functionality to work, The gorilla (nailgun) server
+for VimClojure must include your Clojure source directories in its class
+path.</li>
+<li>You can't mix VimClojure 2.1.2 with Clojure 1.2.  The current mercurial
+version of VimClojure is no longer tied to a particular Clojure version.</li>
+<li>The REPL stinks.  Admittedly, because of the above-mentioned Vim
+shortcoming, it's hard to get a REPL that is quite as nice as the one for
+SLIME.  However, things that I normally expect to have, such as the ability
+to arrow keys to navigate the REPL history, are not supported.</li>
+</ol>
+
+<h4>Alternative Clojure plug-ins for Vim</h4>
+
+<p>VimClojure is not the only way to go with Clojure and Vim.  Some of the
+alternatives include using VimClojure in off-line mode, using VimClojure in
+off-line mode with an alternative REPL, and Slimv, another Vim plug-in.</p>
+
+<h5>VimClojure (off-line)</h5>
+
+<p>It may be a stretch to call this a ‘VimClojure alternative’, but it is possible
+to use Vim without any of the SLIME-like features.  In this mode, you keep the
+indentation, syntax highlighting, and completion.  It may not be as powerful as
+the full VimClojure plug-in, but it saves you the trouble having to start a
+nailgun server and worry about class paths.</p>
+
+<h5>VimClojure (off-line) and <code class='inline'>slime.vim</code></h5>
+
+<p>This method is described by Lee Hinman in his article ‘<a href="http://writequit.org/blog/?p=386">How I develop Clojure
+with Vim</a>’.  This method uses a supplemental Vim script called <code class='inline'>slime.vim</code>
+that works around Vim’s asynchronous shortcomings through the use of GNU
+Screen.</p>
+
+<p>In this arrangement, you can run your REPL in a separate Screen and have
+Vim send commands to it using screen’s command line interface.  I first
+encountered this plug-in when I tried some Lisp development in Vim.  I do not
+use it because I think that VimClojure’s capabilities are much better.</p>
+
+<h5>Slimv</h5>
+
+<p><a href="http://www.vim.org/scripts/script.php?script_id=2531">Slimv</a> is a relatively unknown plug-in in the Clojure community.  It is
+written by Tamas Kovacs, and originated as plug-in for Lisp programmers.
+However, in the past few versions, it has begun to support Clojure.</p>
+
+<p>Slimv uses a Python script to launch a REPL, to which it sends commands in a
+way, in principle, not terribly unlike <code class='inline'>slime.vim</code>.  Instead of running a REPL
+using Screen, it launches the REPL in a new terminal.</p>
+
+<p>Unlike <code class='inline'>slime.vim</code>, it seems like it supports a much greater amount of
+functionality, much like VimClojure.  In fact, it supports having a REPL inside
+of Vim that has the potential to be vastly superior to the one provided by
+VimClojure.  In particular, it allows using the arrow keys in insert mode to
+navigate the REPL history.</p>
+
+<p>Unfortunately, the current version is a bit buggy.  For example, the REPL
+works, but after every command I get series of Vim errors that, although
+apparently harmless, make the experience intolerable.</p>
+
+<p>The latest version also includes a paredit plug-in, that promises some of the
+features of Emacs’ <a href="http://www.emacswiki.org/emacs/ParEdit">paredit</a> minor mode.  Unfortunately, I found it fairly
+buggy.  For example, in one case where I wanted to delete to the end of a line
+using <code class='inline'>D</code>, it deleted my entire line.  In another case when I wanted to move a
+one-line <code class='inline'>def</code> using <code class='inline'>dd</code> and <code class='inline'>p</code>, I found that the <code class='inline'>p</code> pasted nothing at all.
+Yanking and putting still worked, though.</p>
+
+<p>I think Slimv has some great features, but until some of these bugs are worked
+out, it is not going to be my plug-in of choice.  Unfortunately, there does not
+seem to be a project page or repository available anywhere for Slimv.</p>
+
+<h4>How I develop Clojure with Vim</h4>
+
+<p>My ideal Vim plug-in would combine all of the best features of both VimClojure
+and Slimv, eliminate all of the bugs, and make it simple to install and use.
+Unfortunately, no such plug-in exists, nor will I be taking the time to write
+it any time soon.  So, I do the best I can with the tools that are available.</p>
+
+<p>For a given Clojure project, my development environment consists of three things:</p>
+
+<ol>
+<li>A Clojure script that I use to launch nailgun, set up utility functions, and
+run my REPL.</li>
+<li>A shell script to set up my class path and run my script.</li>
+<li>Vim with VimClojure</li>
+</ol>
+
+<h5>The development script</h5>
+
+<p>This development script does a few things that make development easier.  I will
+load <code class='inline'>clojure.contrib.repl-utils</code>, start nailgun, and often times write a
+function that runs all of my unit tests.  Here is an example of such a script:</p>
+
+<pre class='codeblock brush: clojure; light: false'>
+(ns #^{:doc "A sample development.environment Clojure script"
+       :author "Daniel Solano Gómez"}
+  example-repl
+  (:import com.martiansoftware.nailgun.NGServer
+           java.net.InetAddress)
+  (:use clojure.contrib.repl-utils
+        clojure.test))
+
+(defn- dotests []
+  (require :reload-all :verbose 'example.test)
+  (run-tests 'example.test))
+
+(def ng-host "127.0.0.1")
+(def ng-port 2113)
+(def ng-server (NGServer. (InetAddress/getByName ng-host) ng-port))
+(.start (Thread. ng-server))
+
+(println "Welcome to your development REPL")
+(clojure.main/repl)
+(.shutdown ng-server false)
+</pre>
+
+<p>Without going into a lot of detail, this script accomplishes the following:</p>
+
+<ol>
+<li>Set up a namespace, making the necessary imports to get nailgun to run and
+including <code class='inline'>repl-utils</code> so can <code class='inline'>(source …)</code> from the REPL.</li>
+<li>Set up a convenience function that will reload all my namespaces and execute
+my tests.  From the REPL, I only have to <code class='inline'>(dotests)</code>.</li>
+<li>Instantiate and start a nailgun server.</li>
+<li>Start the REPL with a friendly welcome message.</li>
+<li>When the REPL ends, shut down the nailgun server gracefully.</li>
+</ol>
+
+<p>You can do other things in this script, such as set up a server for Compojure
+development or set values for vars like <code class='inline'>*warn-on-reflection*</code>.</p>
+
+<h5>The shell script</h5>
+
+<p>The job of the shell script is to set up my class path and run the development
+script.  I also use <a href="http://en.wikibooks.org/wiki/Clojure_Programming/Getting_Started#Enhancing_Clojure_REPL_with_rlwrap">rlwrap to give me readline support with vi key bindings
+within the REPL</a>.</p>
+
+<p>A minimal example of such a script:</p>
+
+<pre class='codeblock brush: bash; light: false'>
+#!/bin/sh
+
+CLOJURE_CP=/usr/share/clojure-1.1/lib/clojure.jar
+CLOJURE_CONTRIB_CP=/usr/share/clojure-contrib-1.1/lib/clojure-contrib.jar
+VIMCLOJURE_CP=/tmp/vimclojure-2.1.2/build/vimclojure.jar
+PROJECT_CP=src
+
+CLASSPATH="${CLOJURE_CP}:${CLOJURE_CONTRIB_CP}:${VIMCLOJURE_CP}:${PROJECT_CP}"
+
+BREAK_CHARS="(){}[],^%$#@\"\";:''|\\"
+rlwrap --remember -c -b "${BREAKCHARS}" -f "${HOME}/.clj_completions" java -cp ${CLASSPATH} clojure.main devrepl.clj
+</pre>
+
+<h5>VimClojure</h5>
+
+<p>I usually develop within GNU Screen.  In one screen, I launch my REPL, via
+<code class='inline'>./devrepl</code>, and in another I launch Vim.  With this configuration, I have all
+of the goodies from VimClojure along with a REPL with readline support and Vim
+bindings.</p>
+
+<p>On occassion when I have just launched my REPL, VimClojure will complain that
+it can not connect to the nailgun server.  If I do a <code class='inline'>netstat -lt</code>, I will in
+fact see that the REPL is not listening on the nailgun port.  I have usually
+found that running <code class='inline'>(.isRunning ng-server)</code> within the REPL remedies this
+situation.  I suppose this is a bug in nailgun.</p>
+
+<h4>Concluding remarks</h4>
+
+<p>Is this a perfect set-up?  No, not entirely.  Am I missing out on some SLIMEy
+goodness?  Probably.  However, it gives me most of what I need to be able to
+develop Clojure productively.</p>
+
+<p>If you have any good Vim and Clojure hints or tips, feel free to share them by
+posting a comment.</p>
+
+  </div> <!-- story-body -->
+  <ul class='story-footer'>
+    <li class='first'><a href='http://www.deepbluelambda.org/programming/clojure/programming-clojure-with-vim#trackbacks'>
+      Add a TrackBack
+      
+      
+    </a></li>
+    <li><a href='http://www.deepbluelambda.org/programming/clojure/programming-clojure-with-vim#comments'>
+      Add a comment
+      
+      
+    </a></li>
+    <li><a href='http://www.deepbluelambda.org/programming/clojure/programming-clojure-with-vim' title='Permanent link to this entry'>perma-link</a></li>
+    <li class='last'>posted at 09:08</li>
+  </ul>
+  
+  <h4><a name='trackbacks'></a>TrackBacks</h4>
+    <div class='feedback-section'>
+      
+      
+        <p class='no-feedback'>No trackbacks, yet.</p>
+      
+      <div class='feedback-infobox'>
+  The URL for TrackBack pings is
+  <code>http://www.deepbluelambda.org/programming/clojure/programming-clojure-with-vim.trackback</code>.
+  <em>Note that trackbacks are subject to moderation.</em>
+</div>
+<!--
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+    <rdf:Description
+        rdf:about="http://www.deepbluelambda.org/programming/clojure/programming-clojure-with-vim"
+        dc:identifier="http://www.deepbluelambda.org/programming/clojure/programming-clojure-with-vim"
+        dc:title="Programming Clojure with Vim"
+        trackback:ping="http://www.deepbluelambda.org/programming/clojure/programming-clojure-with-vim.trackback" />
+</rdf:RDF>
+-->
+
+    </div> <!-- feedback-section -->
+  
+  
+    <h4><a name='comments'></a>Comments</h4>
+    <div class='feedback-section'>
+      
+      
+        <p class='no-feedback'>No comments, yet.</p>
+      
+      <div class='feedback-infobox'>
+        
+        
+<form method='POST' action='http://www.deepbluelambda.org/programming/clojure/programming-clojure-with-vim'>
+  <div id='comment-form' class='group'>
+    <label for='comment.name'>Name</label>
+    <input id='comment.name' name='name' size='35' type='text' value=''>
+    <label for='comment.url'>URL (optional)</label>
+    <input id='comment.url' name='url' size='35' type='text' value=''>
+    <label for='comment.comment'>Comment</label>
+    <textarea id='comment.comment' name='comment' rows='5' cols='45'></textarea>
+    <input type='hidden' name='plugin' value='writeback'>
+  </div>
+  <div id='comment-form-buttons'>
+    <input type='submit' name='submit' value='Preview'>
+    <input type='submit' name='submit' value='Post'>
+  </div>
+</form>
+
+      </div>
+    </div> <!-- feedback-section -->
+  
+</div> <!-- story -->
+        </div> <!-- content -->
+
+        <!--  NAVIGATION BAR -->
+        <div id='navbar'>
+	 <dl id='navbar-menu' class='navbar-section first'>
+	   <dt class='first'><a href="/" title='Go to home page'>Home Page</a></dt>
+	   <dt>Personal</dt>
+	   <dd>
+	     <ul>
+	       <li><a href="/personal/resume" title='See my résumé'>Résumé</a></li>
+	     </ul>
+	   </dd>
+	   <dt>Programs</dt>
+	   <dd>
+	     <ul>
+	       <li><a href="/programs/sh-clojure/" title='An improved Clojure brush for SyntaxHighlighter.'>sh-clojure</a></li>
+	     </ul>
+	   </dd>
+	   <dt class='last'>Categories</dt>
+	   <dd class='last'>
+	     <ul>
+	       <li><a href="/programming/clojure/" title='Posts about programming in Clojure'>Clojure</a></li>
+	       <li><a href="/events/" title='Posts about events in which I am participating'>Events</a></li>
+	       <li><a href="/gentoo/" title='Posts about Gentoo Linux'>Gentoo</a></li>
+	       <li><a href="/blog/" title='Posts about the Deep Blue Lambda web log'>Web Log</a></li>
+	     </ul>
+	   </dd>
+	 </dl>
+	 <div id='archives' class='navbar-section'>
+	   <div class='navbar-section-title'>Archives</div>
+	   <ul class="archives">
+<li><a href="http://www.deepbluelambda.org/2010/">2010</a> (10)
+<ul>
+<li><a href="http://www.deepbluelambda.org/2010/03/">March</a> (4)</li>
+<li><a href="http://www.deepbluelambda.org/2010/04/">April</a> (5)</li>
+<li><a href="http://www.deepbluelambda.org/2010/11/">November</a> (1)</li>
+</ul>
+</li>
+</ul>
+
+	   <a id='rss-link' class='navbar-section-title' href='http://www.deepbluelambda.org/index.rss'>
+	     RSS Feed
+	     <img class='rss-icon' src='/images/feed-icon-14x14.png' alt='RSS feed icon'>
+	   </a>
+	 </div>
+        </div> <!-- navbar -->
+      </div> <!-- body -->
+
+      <!--  FOOTER -->
+      <div id='footer'>
+        <p>Copyright © 2010 Daniel Solano Gómez</p>
+        <p><a href='http://www.blosxom.com'>Powered by Blosxom</a></p>
+      </div> <!-- footer -->
+    </div> <!-- page -->
+    
+      <script type='text/javascript' src='/js/shCore.js'></script>
+      
+        <script type='text/javascript' src='/js/shBrushClojure.js'></script>
+      
+      
+        <script type='text/javascript' src='/js/shBrushBash.js'></script>
+      
+      
+      <script type='text/javascript'>
+        SyntaxHighlighter.defaults['tab-size']=2;
+        SyntaxHighlighter.all();
+      </script>
+    
+  </body>
+</html>
