@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="description" content="Which celebrity's fans are most stupid? It's time to find out.">
+<link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
+<link rel="image_src" href="http://www.tomscott.com/stupidfight/stupidfight.jpg">
+<link rel="alternate" title="Tom Scott's web site" href="/updates.xml" type="application/rss+xml">
+<script type="text/javascript" src="/includes/jquery-1.3.2.min.js"></script>
+<title>Stupid Fight &laquo; Tom Scott</title>
+
+<script>
+
+// Auto-Fill Plugin
+// Written by Joe Sak http://www.joesak.com/2008/11/19/a-jquery-function-to-auto-fill-input-fields-and-clear-them-on-click/
+// modified to allow multiple assignments for translations
+(function($){$.fn.autofill=function(options){var defaults={value:'Choose a new city',defaultTextColor:"#999999",activeTextColor:"#000000"};var options=$.extend(defaults,options);return this.each(function(){var obj=$(this);obj.unbind();obj.css({color:options.defaultTextColor}).val(options.value).focus(function(){if(obj.val()==options.value){obj.val("").css({color:options.activeTextColor});}}).blur(function(){if(obj.val()==""){obj.css({color:options.defaultTextColor}).val(options.value);}});});};})(jQuery);
+
+
+var txt = { 'line1':    ['The results are in:',
+                         'Our survey says:',
+                         'According to SCIENCE:',
+                         'Today\'s FACT:',
+                         'The honest truth:',
+                         'Oh dear.'],
+            'line2':    ['This is not something to be proud of.',
+                         'Someone\'s going to claim they were being ironic.',
+                         'Heaven forbid you use punctuation.',
+                         'They\'ll probably use it as a badge of honour.',
+                         'Fortunately, you can always block them.',
+                         '&quot;OMG WTF&quot; indeed, sir.'],
+            'line3':    ['Yes, these people are real.',
+                         'I weep for our future.',
+                         'Last one to leave, please turn out the lights.',
+                         'The worst part is, they might be able to vote.']
+          }
+
+function t(w) {
+
+  return txt[w][Math.floor(Math.random() * txt[w].length)];
+
+}
+
+
+var tweets;
+
+function debug(msg) {
+  $('#debug').append('<p>' + msg + '</p>');
+}
+
+function battle() {
+
+  var u1 = $('#u1').val().replace(/[^a-zA-Z0-9_]/g,'');
+  var u2 = $('#u2').val().replace(/[^a-zA-Z0-9_]/g,'');
+  $('#u1').val(u1);
+  $('#u2').val(u2);
+    
+  tweets = [];
+  
+  fetchTweets(u1);
+  fetchTweets(u2);  
+  
+}
+
+function fetchTweets(user) {
+
+  $.ajax({
+    type     : 'GET',
+    dataType : 'jsonp',
+    url      : 'http://search.twitter.com/search.json',  
+    // dataType : 'json',
+    // url      : user + '.txt',  
+    data     : 'q=to%3A' + user + '&rpp=100&result_type=recent',
+    success  : 
+
+      function(data){
+  
+        $.each(data.results, function(i,item){
+            tweets[item.id.toString()] = item;
+          });
+
+      },
+      
+    error    :
+    
+      function(xml,status) {
+      }
+    
+        
+  });
+  
+}
+
+function handleResults(tweets) {
+  
+  r = analyse(tweets);
+  
+  if (r[0].c == 0 || r[1].c == 0) {
+    errorOut();
+    return false;
+  } else {
+  
+    var l1 = t('line1');
+  
+    if (r[0].stupid == r[1].stupid) {
+      l1 += ' they\'re as dumb as each other.';
+      $('#tweeta').attr('href','http://twitter.com/home?status=' + encodeURI('Today\'s SCIENCE FACT: @' + r[0].user + ' fans are just as dumb as @' + r[1].user + ' fans. http://bit.ly/cbF3Xi'));
+    } else {
+      if (r[0].stupid > r[1].stupid) {
+        l1 += ' @' + r[0].user + '\'s fans are more stupid.';
+        $('#tweeta').attr('href','http://twitter.com/home?status=' + encodeURI('Today\'s SCIENCE FACT: @' + r[0].user + ' fans are dumber than @' + r[1].user + ' fans. http://bit.ly/cbF3Xi'));
+      } else {
+        l1 += ' @' + r[1].user + '\'s fans are more stupid.';
+        $('#tweeta').attr('href','http://twitter.com/home?status=' + encodeURI('Today\'s SCIENCE FACT: @' + r[1].user + ' fans are dumber than @' + r[0].user + ' fans. http://bit.ly/cbF3Xi'));
+      }
+    }
+    $('#line1').html(l1);
+    $('#line2').html(t('line2'));
+    $('#line3').html(t('line3'));
+    $('#t0').html('&quot;' + r[0].mostStupid.text + '&quot &mdash;&nbsp;<a href="http://twitter.com/' + r[0].mostStupid.from_user + '">@' + r[0].mostStupid.from_user + '</a>');
+    $('#t1').html('&quot;' + r[1].mostStupid.text + '&quot &mdash;&nbsp;<a href="http://twitter.com/' + r[1].mostStupid.from_user + '">@' + r[1].mostStupid.from_user + '</a>');
+    $('#r1 p').html(r[0].stupid.toString());
+    $('#r2 p').html(r[1].stupid.toString());
+   
+    $('#r1').css('left',-50);
+    $('#r2').css('left',-50);
+    
+    $('#results').slideDown();
+    
+    r[0].position = r[0].stupid - 50;
+    if (r[0].position > 700) { r[0].position = 700; }
+    r[1].position = r[1].stupid - 50;
+    if (r[1].position > 700) { r[1].position = 700; }
+    
+    $('#r1').animate({
+      left: (r[0].position).toString() + 'px'
+    },2000);
+    $('#r2').animate({
+      left: (r[1].position).toString() + 'px'
+    },2000);
+  }
+  
+  window.location.hash = r[0].user + '-vs-' + r[1].user;
+  
+}
+
+function errorOut() {
+  
+  $('#error').slideDown();
+  
+}
+
+function analyse(t) {
+
+  var msg = '';
+  var stupid = 0;
+
+  var u1 = new Object();
+  var u2 = new Object();
+
+  u1.user = $('#u1').val();
+  u2.user = $('#u2').val();
+  u1.c = 0;
+  u2.c = 0;
+  u1.stupid = 0;
+  u2.stupid = 0;
+  u1.mostStupid = new Object();
+  u1.mostStupid.stupid = -1;
+  u2.mostStupid = new Object();
+  u2.mostStupid.stupid = -1;
+  
+  for (var i in t) {
+  
+    msg = t[i].text.substring(t[i].text.indexOf(' ')+1);
+    stupid = calculateStupid(msg,t[i].iso_language_code);
+    
+    if (t[i].to_user.toLowerCase() == $('#u1').val().toLowerCase()) {
+    
+      u1.c++;
+      u1.stupid += stupid;
+      if (stupid > u1.mostStupid.stupid) {
+        u1.mostStupid = t[i];
+        u1.mostStupid.stupid = stupid;
+      }
+
+    } else {
+  
+      u2.c++;
+      u2.stupid += stupid;
+      if (stupid > u2.mostStupid.stupid) {
+        u2.mostStupid = t[i];
+        u2.mostStupid.stupid = stupid;
+      }  
+      
+    }
+  
+  }
+  
+  u1.stupid = Math.round((u1.stupid / u1.c) * 100);
+  u2.stupid = Math.round((u2.stupid / u2.c) * 100);
+  
+  return [u1,u2];
+
+}
+
+function calculateStupid(msg,lang) {
+
+  var stupid = 0;
+  stupid += rCount(msg,/(.)\1{3}/g);
+  stupid += rCount(msg,/(.)\1{7}/g);
+  stupid += rCount(msg,/(!!)/g);
+  stupid += rCount(msg,/(\?\?)/g);
+  
+  if (!msg.match(/[\.,!\?;:]/)) { stupid += 10; }
+  
+  if (lang != 'jp' && lang != 'ru') {
+    if (!msg.match(/[a-z]/)) { stupid += 10; }
+    if (!msg.match(/[A-Z]/)) { stupid += 10; }
+  }
+  
+  if (lang == 'hu') {
+    stupid += rCount(msg.toLowerCase(),/\W(vki|vok|mek)\W/g) * 5;    
+  }
+  
+  stupid += rCount(msg.toLowerCase(),/\s[b-h|j-z]\s/g) * 5;
+  stupid += rCount(msg.toLowerCase(),/(lol|omg|wtf|ftw|\&lt\;3|luv|xo|yr|wit\W|\Wur\W|btw|rofl|lmao|stfu)/g) * 5;    
+  
+  return stupid;
+
+}
+
+function rCount(msg,reg) {
+  result = msg.match(reg);
+  if (result) { 
+    return result.length;
+  } else {
+    return 0;
+  }
+}
+
+function suggest(a,b,c) {
+  $('#u1').autofill({
+    value: a
+  });
+  $('#u2').autofill({
+    value: b
+  });
+  if(c == true) { battle(); return false; }
+}
+
+$(document).ready(function() {
+  $('#battleForm').submit(function() {
+    battle();
+  });
+  var e = /([a-zA-Z0-9_]+)-vs-([a-zA-Z0-9_]+)/.exec(window.location.hash);
+  if (e && e.length == 3) {
+    suggest(e[1],e[2]);
+    battle();
+  } else {
+    suggest('ladygaga','justinbieber');
+  }
+  
+});
+
+
+$(document).ajaxStart(function(){
+  $('h2').html('Battling... <img src="ajax-loader.gif" alt="" width="16" "height="16">');
+  $('input', this).attr('disabled', 'disabled');
+    $('#results').slideUp();
+    $('#error').slideUp();
+});
+
+$(document).ajaxStop(function(){
+  $('h2').html('Choose two celebrity Twitterers. See whose fans are dumber.');
+  $('input', this).attr('disabled', '');
+  handleResults(tweets);
+  
+});
+
+
+
+</script>
+
+<style>
+  
+  /* RESET CSS
+Copyright (c) 2009, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.net/yui/license.txt
+version: 3.0.0  
+build: 1549
+*/
+html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:text-top;}sub{vertical-align:text-bottom;}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}input,textarea,select{*font-size:100%;}legend{color:#000;}
+
+
+
+body { background: #c4c4c4 url(bg-bar.gif) top left repeat-x; font: 15px Arial, Helvetica, sans-serif; margin-top: 36px; }
+em { font-style: italic; }
+strong { font-weight: bold; }
+img { vertical-align: middle; }
+a { color: #c02c38; }
+#backdrop { background: url(crowd.jpg) top center no-repeat; }
+#container { width: 960px; margin: auto; position: relative; }
+h1 { position: absolute; top: 30px; left: 256px; }
+#credits { position: absolute; top: 0px; background-color: #c02c38; width: 100%; text-align: center; padding: 10px 0; color: #ffffff; border-bottom: 3px solid #000000; font-family: Verdana, Arial, Helvetica, sans-serif; }
+#credits a { color: #ffffff; font-weight: bold; }
+#content { padding-top: 130px; }
+#box { background: rgba(255, 255, 255, 0.8);
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#88FFFFFF, endColorstr=#88FFFFFF)";
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#88FFFFFF, endColorstr=#88FFFFFF);
+  padding: 20px;
+  } 
+h2, h3, .score { letter-spacing: -2px; font-size: 30px; line-height: 35px; margin: 5px 0; }
+h2, .score { font-weight: bold; }
+h4 { color: #cccccc; }
+input { font: 30px Arial, Helvetica, sans-serif; padding: 10px; margin-bottom: 10px;}
+.user { width: 300px; }
+form { text-align: center;  }
+
+dl { margin: 80px 80px 30px; }
+dd,dt,dl { text-align: left; line-height: 20px;}
+dt { border-top: 1px dashed #cccccc; padding: 10px 20px 10px 10px; font-weight: bold; }
+dd { padding: 0 20px 10px 20px; }
+
+table { table-layout: fixed; width: 700px; margin: auto; margin: 20px; }
+td { overflow: hidden; }
+
+#preload { position: absolute; top: -500px; left: -500px; }
+#results, #error { border: 1px solid #cccccc; background-color: #ffffff; padding: 0px 80px 20px; margin: 20px 0 0; text-align: center; display: none; }
+#results p, #error p { margin-top: 10px; }
+#results h3, #error h3 { margin-top: 20px; }
+#graph { width: 750px; margin: auto; position: relative; height: 130px; }
+.score { width: 100px; height: 60px; text-align: center; color: #ffffff;}
+#r1 { left: -50px; bottom: 60px; position: absolute; background: url(bubble.png) top center no-repeat; }
+#r1 p { margin-top: 5px; }
+#r2 { left: -50px; top: 60px; position: absolute; background: url(bubble2.png) top center no-repeat;}
+#r2 p { margin-top: 20px; }
+.legend { position: absolute; top: 70px; }
+#legend1 { left: 0px; color: #00cc00; }
+#legend2 { left: 0px; width: 750px; color: #999900; text-align: center; }
+#legend3 { right: 0px; color: #cc0000; }
+#grad { left: 0px; top: 55px; position: absolute;  }
+.tweetthis { font-weight: bold; margin-bottom: 5px; }
+
+img { border: 0; text-decoration: none; behavior: url(/includes/iepngfix.htc); }
+
+</style>
+
+</head>
+  <body>
+
+    <div id="backdrop">
+      <div id="line">
+        <div id="container">
+        
+          <h1><img src="h1.png" alt="Stupid Fight" width="448" height="77"></h1>
+
+          <div id="content">
+
+            <div id="box">
+            
+              <form id="battleForm" action="#" onSubmit="return false;">
+
+                <h2>Choose two celebrity Twitterers. See whose fans are dumber.</h2>
+            
+                <input type="text" class="user" maxlength="16" name="u1" id="u1" value="">
+                <input type="text" class="user" maxlength="16" name="u2" id="u2" value="">
+                <input type="submit" name="battle" id="battle" value="Battle">
+                
+                  <p>Suggestions: <a href="#" onClick="suggest('glennbeck','maddow',true);return false;">Glenn Beck vs Rachel Maddow</a>, <a href="#" onClick="suggest('charltonbrooker','RealDMitchell',true);return false;">Charlie Brooker vs David Mitchell</a>, <a href="#" onClick="suggest('stephenfry','kimkardashian',true);return false;">Stephen Fry vs Kim Kardashian</a></p>
+              </form>
+              
+              <div id="results">
+                
+                <h3 id="line1"></h3>
+                <h4 id="line2"></h4>
+                
+                <p class="tweetthis"><img src="/icon/icon_twitter.png"> <a id="tweeta" href="">Tweet this result</a></p>
+                
+                <div id="graph">
+                
+                <div id="grad">
+                <img src="gradient.png" alt="" width="750" height="10">
+                </div>
+                
+                <div id="legend1" class="legend">smart as a whip</div>
+                <div id="legend2" class="legend">thick as two short planks</div>
+                <div id="legend3" class="legend">dumb as a bag of hammers</div>
+                
+                <div id="r1" class="score">
+                <p>0</p>
+                </div>
+                <div id="r2" class="score">
+                <p>0</p>
+                </div>
+                </div>
+                
+                <table>
+                <tr>
+                <td>
+                <p id="t0"></p>
+                </td>
+                <td>
+                <p id="t1"></p>
+                </td>
+                </tr>
+                </table>
+                <h4 id="line3"></h4>
+              </div>
+              
+              <div id="error">
+                <h3>Sorry, there seems to have been a problem.</h3>
+                <p>Perhaps Twitter's down, or perhaps you misspelled one of the names. Try again!</p>
+              </div>
+              
+              <dl>
+            <dt>What's this all about?</dt>
+            <dd>FACT: A lot of people on Twitter are stupid. Many of these people follow celebrities and try to send them messages. But which celebrity's fans are <em>most stupid</em>? It's time to find out.</dd>
+            <dt>Who made it?</dt>
+            <dd>Hello. I'm <a href="http://www.tomscott.com">Tom Scott</a>. I live at <a href="http://www.tomscott.com">tomscott.com</a>, and you can <a href="mailto:tom@tomscott.com">email me</a> or <a href="http://twitter.com/tomscott/">follow me on Twitter</a>. The crowd photo is from <a href="http://www.flickr.com/photos/anirudhkoul/2632880868/">Anirud Khoul</a> and is CC-licensed.</dd>
+            <dt>What do you mean by 'stupid'?</dt>
+            <dd>Stupid Fight can't go out and administer an intelligence test to each person that's sending messages to a celebrity. So instead, it estimates based on several <em>stupid indicators</em>. Are they using twenty exclamation marks in a row? Do they endlessly use the abbreviation 'OMG'? Do they seem incapable of working out where their Shift key is? These indicators have a strong correlation with the message, and its sender, being stupid.</dd>
+            <dt>How valid are Stupid Fight's results?</dt>
+            <dd>Like the Body Mass Index, it's an excellent indicator but may not work for certain people. It is, for example, blind to irony. It may have issues with non-English languages. Its accuracy given one individual Twitter message, or one individual user, is quite low. <em>On average</em>, however, it's not a bad test at all.</dd>
+            <dt>Who do you count as a 'fan'?</dt>
+            <dd>The last 100 people to send an @reply to the target celebrity.</dd>
+            <dt>It's broken!</dt>
+            <dd>Quite possibly. This was coded in a few hours' frenzy after getting the idea, and there are almost certainly bugs.</dd>
+            <dt>Are you storing the results?</dt>
+            <dd>No: all the processing is happening on your own computer. That means the results can, and will, change over time as new messages are sent.</dd>
+            <dt>I'm a linguist, and I find your prescriptive approach to language unacceptable.</dt>
+            <dd>I'm also a linguist, and I find <em>your mum's</em> prescriptive approach to language unacceptable.</dd>
+            <dt>I have another question!</dt>
+            <dd><a href="mailto:tom@tomscott.com">Email me</a>. I'm friendly. Oh, and I thought I should mention that I'm looking for work doing web, video and viral stuff. Just in case.</dd>
+            
+          </dl>
+      
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="credits">
+                  <p>This is Stupid Fight by <a href="http://www.tomscott.com">Tom Scott</a>. &nbsp; | &nbsp; <a href="http://www.tomscott.com" class="icon"><img src="/icon/icon_world_black.gif" alt="" height="14" width="14"></a>&nbsp;<a href="http://www.tomscott.com">More stuff like this</a> &nbsp; | &nbsp; <a href="mailto:tom@tomscott.com" class="icon"><img src="/icon/icon_email_black.gif" alt="" height="14" width="14"></a>&nbsp;<a href="mailto:tom@tomscott.com">Email</a> &nbsp; | &nbsp; <a href="http://twitter.com/tomscott" rel="nofollow" class="icon"><img src="/icon/icon_twitter_black.png" alt="" height="14" width="14"></a>&nbsp;<a href="http://twitter.com/tomscott" rel="nofollow">@tomscott on Twitter</a></p>
+
+          </div>
+          
+          <div id="preload">
+          <img src="ajax-loader.gif" alt="" width="16" height="16">
+          <img src="gradient.png" alt="" width="16" height="16">
+          <img src="bubble.png" alt="" width="16" height="16">
+          <img src="bubble2.png" alt="" width="16" height="16">
+          </div>
+          
+          <script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-1663252-4");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>
+  </body>
+</html>
