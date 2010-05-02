@@ -1,0 +1,464 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html>
+<head>
+   <title>Parsing C++ at nobugs.org</title>
+   <meta name="Author" content="Andrew Birkett">
+   <link rel="StyleSheet" href="../../css/style.css" type="text/css" title="Dark and stark">
+   <link rel="Alternate StyleSheet" href="../../css/style2.css" type="text/css" title="Bright and white">
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+
+<body>
+<div id="content">
+<div>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3651876624305976";
+/* Parsingcpp */
+google_ad_slot = "2988345815";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+ <h1><tt>Parsing C++</tt></h1>
+
+ <p>(<a href="mailto:andy@nobugs.org">andy@nobugs.org</a>, March 2001)</p>
+
+<div class="feature">
+<h3>Introduction</h3>
+<div class="detail">
+<p>
+I recently became interested in parsing C++.  It's taken me quite a
+while to gather together various resources from the web, so I thought
+I'd share my findings with the world in the hope that it saves someone
+else a bit of time.
+</p>
+
+<p>
+I strongly recommend getting yourself a copy of 
+<a href="http://www.amazon.com/gp/product/0201543303?ie=UTF8&tag=nobugs-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=0201543303">The Design and Evolution of C++</a> by Bjarne Stroustrup, creator of C++.  It's an excellent book, and will give you an advanced understanding of why C++ is the way it is.  The best compiler book (IMHO) is Andrew Appel's <a href="http://www.amazon.com/gp/product/0521607655?ie=UTF8&tag=nobugs-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=0521607655">Modern Compiler Implementation</a> series.  It's much more modern and readable than some of the dated 'classic' texts.
+
+<img src="http://www.assoc-amazon.com/e/ir?t=nobugs-20&l=as2&o=1&a=0521607655" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+<img src="http://www.assoc-amazon.com/e/ir?t=nobugs-20&l=as2&o=1&a=0201543303" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+</p>
+
+<p>
+Note:  Since I wrote this, Mike Dimmick <a href="mikedimmick.txt">posted an
+overview of his attempt</a> to parse C++, which is well worth reading. Also,
+there's a really good page at the <a href="http://os.inf.tu-dresden.de/vfiasco/related.html">VFiasco</a> project.
+</p>
+
+
+</div>
+</div>
+
+<div class="feature">
+<h3>Background</h3>
+<div class="detail">
+<p>
+I've been interested in writing a semi-automated refactoring tool for
+C++.  When I'm developing software, I often have a simple refactoring
+idea, like "I should rename this class", which turns out to be very
+fiddly and time-consuming to actually make happen.  It would involve
+renaming all uses of the class, renaming files, updating project files
+and documentation.  Other refactoring tend to get done by moving code
+around in a flurry of cut and pasting.  These are all error-prone.
+</p>
+
+<p>
+So, I looked for a refactoring tool.  There's one for the Smalltalk
+language called the <a
+
+href="http://st-www.cs.uiuc.edu/~brant/Refactory/RefactoringBrowser.html">Refactoring
+Browser</a>.  There's <a
+href="http://www.xref-tech.com">Xref-Speller</a> which extends emacs
+to allow some refactoring of C, Java and YACC (along with code
+completion and browsing).  There's <a
+href="http://sources.redhat.com/sourcenav/index.html">Source
+Navigator</a>, which is a source browsing tool not a refactoring tool,
+but it does generate a useful symbol table.
+</p>
+
+<p>
+So, it looks like there isn't a C++ refactoring tool already out
+
+there.  However, applying refactoring transformations isn't tricky once
+you can parse the source.  Refactorings are described well in <a
+href="http://www.refactoring.com/">Martin Fowler's Refactoring
+book</a>.  They are also described in a more formal way, useful for
+implementing them, in <a
+href="ftp://st.cs.uiuc.edu/pub/papers/refactoring/opdyke-thesis.ps.Z">William
+Opdyke's PhD thesis</a>.  <a
+href="http://st-www.cs.uiuc.edu/~droberts/thesis.pdf">Donald Robert's
+PhD thesis</a> also covers the Smalltalk Refactoring Browser.
+</p>
+
+<p>
+So, if we can parse C++ then refactoring is a Simple Matter Of
+Programming (ha!).  Let's find out how to parse C++.
+</p>
+
+<p>
+(Incidentally, the refactoring tool won't have to deal with some of
+the issues which make source-to-source transformations tricky - things
+like preserving comments and indentation structure.  The refactoring
+tool will internally produce a set of ed-like commands which are then
+used to patch the original files.  They could also produce the inverse
+set of commands to allow a refactoring to be undone later.  The
+refactoring tool needn't reparse the change files, since it will know
+what changes have taken place and can update it's internal state
+directly).
+</p>
+</div>
+</div>
+
+<div class="feature">
+<h3>Parsing C++</h3>
+<div class="detail">
+<p>
+For general compiler/parsing information, I'd recommend reading <a
+href="http://www.cs.princeton.edu/~appel/modern/ml/">Andrew Appel's
+Modern Compiler Implementation</a> (in three different flavours - C,
+Java and ML.  I got the ML version because it's easier to see the wood
+for the trees in a declarative language).  The <a
+href="http://www.jargon.net/jargonfile/d/DragonBook.html">Dragon
+
+Book</a> is the classic compiler reference, but it's not the best book
+in the world.  The first few chapters of the <a
+href="http://www.antlr.org/papers/pcctsbk.pdf">online PCCTS book</a>
+make for a good introduction to parsing.  Finally, <a
+href="http://www.bearcave.com/software/antlr/antlr_expr.html">Ian
+Kaplan has a page</a> which describes various options for writing
+parser.
+</p>
+
+<p>
+The first obvious place to look for C++ parsing is in <a
+href="http://gcc.gnu.org/">gcc</a>.  It's a C++ compiler, so it must
+be able to parse C++.  However, it's not the best documented code in
+the world, and the various stages of parsing (lexical, syntactic and
+semantic analysis) are fairly tangled together.  It's also written in
+C, which is not the best language for a large, complicated program.  On
+the plus side, it definitely parses stuff fine, it's got good
+performance and it generates a symbol table.
+</p>
+
+<p>
+<a href="http://sources.redhat.com/sourcenav/index.html">Source
+Navigator</a> operates by parsing the source code and entering a whole
+load of information into various database tables.  A source browser
+GUI then accesses these database tables to allow the user to browser
+the code.  The C++ parser in source navigator is quite scary and not
+
+very educational.
+</p>
+
+<p>
+
+A few web searches turned up an <a
+href="http://www.empathy.com/pccts/roskind.html">YACC-compatible LALR
+grammar written Jim Roskind</a> which parses an early version of C++
+
+(before namespaces, exceptions, templates and the bool type were added
+into the language).  This is accompanied by a very useful discussion
+of the ambiguities in the C++ language, and how various conflicts in
+the grammar were resolved.  This is just a grammar, and so doesn't
+build a full symbol table.  It also uses a 'hack' to help the parsing
+-- enough semantic information is fed back to the lexer to allow the
+lexer to classify identifiers as either plain identifiers or typedef
+names, which makes parsing a bit easier at the expense of tangling the
+implementation a bit.
+</p>
+
+
+<p>
+The next thing I came across was a C++ grammar for <a
+href="http://www.antlr.org/">ANTLR</a>.  ANTLR is a parser generator
+which works on predicated LL(k) grammars.  A predicated LL(k) grammar
+differs from an LL(1) grammar in the following respects.  Firstly, it
+uses k symbols of lookahead.  Theoretically, this would make the
+parser much slower, but in practise it doesn't slow things down much.
+Secondly, the choice of which production to use can be based on the
+
+next k terminals, and additionally, some syntactic predicate and/or a
+semantic predicate (such as 'lookup the identifier in the symbol table
+and if it's a type then use this production').
+</p>
+
+<p>
+<a href="http://www.empathy.com/pccts/index.html">John Lilley's C++
+grammar</a> for ANTLR (actually, a modified version of ANTLR) supports
+all C++ features except namespaces.  It builds a symbol table as it
+parses, but it doesn't output an AST.  It's quite cleanly written, and
+the supporting code is readily understandable.  However, the grammar
+isn't particularly understandable - particularly when ambiguities are
+resolved by fiddling around with the grammar.
+</p>
+
+<p>
+(Along the way, I came across the paper <a
+href="http://www.csse.monash.edu.au/~damian/papers/PS/ModestProposal.ps">"A
+Modest Proposal: C++ Resyntaxed"</a> which proposed a different syntax
+for C++.  It still expresses the same language (ie. there's a 1-1
+correspondance between traditional C++ source code and source code
+using the suggested syntax), but it's much much easier to parse.  For
+example, C declarations mimic their use ("int *a;" is a declaration
+and the type of the expression "*a" is int) but this makes it hard for
+a parser to decide whether a sequence of tokens is a declaration or an
+expression.  The proposed syntax avoids this problem by adding the new
+'type' keyword to all declarations, and having an entirely new way of
+describing types.  Somewhere in a parallel universe, all C++ is
+written in this way.)
+</p>
+
+<p>
+The most useful bit of information which I've found is <a
+href="http://www.computing.surrey.ac.uk/Research/CSRG/fog/FogThesis.pdf">Edward
+Willink's "Meta-Compilation for C++" PhD thesis</a>.  While the main
+focus is on providing meta-compilation support for C++, a lot of the
+thesis concentrates on the difficulty of parsing C++.  Willink creates
+a useful tool for looking at grammars by extending regular expressions
+with a functional operator which allows you to express recursion.
+Normally, you describe languages using a context-free grammar written
+in BNF.  However, it's not very easy to glance at a grammar and work
+out what's going on.  It's certainly quite difficult to work out if
+two parts of the grammar can generate identical strings (which can
+make parsing difficult if it happens).  Using the extended regular
+expressions you can come up with a concise and easy to read
+description of parts of the language (which typically fits on a single
+line) which is easy to compare with other parts of the language.  This
+gives Willink a tool to examine the C++ language to find out which
+areas are ambiguous.
+</p>
+
+<p>
+The other nice bit about this thesis is that it describes a way of
+parsing C++ which doesn't require the use of semantic information
+(symbol tables etc) in either the lexer or the syntax parsing stage.
+All semantic analysis is delayed until a separate phase which is
+performed on the AST's generated by the syntax parsing stage.  This
+makes for a conceptually tidier implementation.  To do this, Willink
+doesn't actually parse for C++ in the syntax stage, he parses for a
+somewhat larger language of which C++ is a subset.  So, the syntactic
+parsing stage will accept all valid C++ programs, plus some additional
+programs which are not valid C++.  These 'extra' programs are easily
+detected during semantic analysis.  This split has two benefits.
+Firstly, the implementation is cleaner since the lexer just lexes, the
+syntax analysis stage just analyses syntax, and the semantic analysis
+stage deals with all the semantic issues.  Compare this with gcc,
+where the lexer gets enough semantic information fed back to it to
+classify identifiers into seven classes, and where the syntax analysis
+stage has to therefore gather semantic information to feed back to the
+lexer.  There's a second benefit to delaying all semantic checks until
+after all parsing has been done - you have more information by this
+stage and so will be able to give more helpful error messages to the
+user if the parser encounters a badly formed program.
+</p>
+
+<p>
+Finally, I'll mention one commercial C++ front end because they appear
+to be quite friendly towards non-commercial research.  The <a
+href="http://www.edg.com/">Edison Design Group</a> sell a C++ front
+end which generates an intermediate representation, along with
+optional cross-reference information.  This is used in various
+research projects, including the <a
+href="http://www.cs.uoregon.edu/research/paracomp/pdtoolkit/">Program
+Database Toolkit</a> project.
+</p>
+</div>
+
+<div class="feature">
+<h3>Update</h3>
+<div class="detail">
+<p>
+I've had a few emails recently asking about parsing C++, so I thought
+I'd update this page rather than repeat myself in private emails.
+</p>
+
+<p> 
+After lots of investigation, I decided that writing a
+parser/analysis-tool for C++ is sufficiently difficult that it's
+beyond what I want to do as a hobby.  Additionally, it didn't feel
+like a <i>worthwhile</i> task in some respect.  Parsing a language
+doesn't need to be hard per se.  It's just that C++ inherited a whole
+lot of syntactic issues from C, such as the "failed experiment" of
+deliberately choosing to have declarations of variables look really
+like usages of these variables (eg. "int *a[10]" is a declaration, and
+therefore "*a[1]" is an int).  Dennis Ritchie talks about this in the
+critique section of his <a
+href="http://cm.bell-labs.com/cm/cs/who/dmr/chist.html">"History of
+C"</a> article, but to be fair to him, hindsight is 20/20 and probably
+had little idea that his pet project would end up being so successful!
+</p>
+
+<p>
+Having said that, syntactic parsing of C++ isn't particularly
+difficult.  The above difficulties mean that your C++ parser won't be
+a shiny perfectly-elegant parser like you see in computer science
+textbooks, but they don't add too much difficulty to the process.
+It's just a bit fiddly.
+</p>
+
+<p> 
+In contrast, other languages are dead easy to parse the syntax.  They
+have LALR (or similar) grammars and no fiddly extra cases.  You feed
+the grammar into yacc/antlr and, hey presto, you have an AST.  This is
+always present in my mind when think about C++.  It is C++ which make
+things difficult.  Why not code in another language which is more
+elegant and easier to parse.  Why struggle with Herculean labours
+against C++ when it's crippled by not being easily
+machine-processable.  We're programmers!  We write programs to do
+things for us!  If C++ itself isn't amenable to being manipulated by
+programs, then why allow it to reside in your toolbox?
+</p>
+
+<p>
+Okay, I know that there <i>are</i> reasons.  For most of the last six
+years, I've spent every weekday working on large C++ applications.  I
+would love automated tools to analyze and refactor my applications.
+There are clearly lots of pragmatic reasons (not to mention financial
+ones!) why being able to parse C++ is a good idea.  But do I want to
+spend years picking over tiny details in order to write a parser?  The
+world will move on, and C++ will be a footnote in history.  There are
+some "real" problems out there in the field of programming languages,
+and these problems are much more attractive to me.
+</p>
+
+<p>
+Back to the subject.  Parsing the syntax of C++ is the easy part of
+the problem.  Once you have an abstract syntax tree, you need to do
+semantic analysis to figure out which functions are being called and
+which variables are being referenced at each point in your program.  A
+call to "foo" somewhere in the application could refer to a top-level
+function called "foo", or a method within the current class, or one of
+its (possibly multiple) base classes.  There could be several
+overloaded versions of "foo" with different argument types, possibly
+with some default parameters, in each of these places.  There may be
+some other "foo"'s available which take arguments which are subtypes
+of the supplied arguments.  And on top of that, C++ allows implicit
+coercion between types, so the types of the arguments could get
+totally changed.  Your semantic analysis stage has to codify all of
+these rules, in the right order.
+</p>
+
+<p>
+These rules are stated in the C++ language spec using English.
+English isn't a great language for being precise in.  Again, other
+language choose a different route.  Denotational semantics are a way
+of formally defining the meaning of a programming language.  They're
+not as easy to read as an English description, but they do give a
+formal unambiguous description of the language, which is very very
+useful when you're writing or testing a compiler.  Again, this is me
+writing with the benefit of hindsight.  Dennis Ritchie probably didn't
+anticipate that his useful little language would be held up to such
+high standards.  But that's kind of my point.  A language written in
+the 70's is bound to have flaws, when perceived from 2005.  We're
+tried out lots of stuff in the intervening years, and we know more.  A
+car build in the 70's might have a certain charm, but it's not going
+to be as fast/efficient/good as one built now.
+</p>
+
+<p> 
+Enough rambling. I spent quite a lot of time looking at parsing
+C++ and decided, for mostly ideological reasons, that it wasn't the
+kind of problem that I wanted to spend (potentially) years of my life
+working on.  However, before I stopped I did contact <a
+href="http://www.edg.com">EDG</a>, who are a small commercial company
+who do nothing but sell language front-ends, mostly to the big players
+like Intel.  These guys have spent years writing these front-ends,
+poring over the standard documents and even making them work with
+vendor-specific language extensions.  The front end does parsing and
+syntax analysis.  They've done all the hard work, so you don't have
+to.  They have created something with great value, and quite
+reasonably charge money for it.  Unfortunately, they want a one-off
+lump sum upfront for commercial users of their parser, rather than
+per-sale royalties.  And obviously, it wouldn't be much use for an
+open source project.
+</p>
+
+<p>
+However, <a
+href="http://xref-tech.com/xrefactory/main.html">Xref-tech</a> clearly
+had the same idea around the same time.  They've bought in the EDG
+frontend and are using it to extend their C refactoring tool so that
+it supports C++.  I admire them for going the EDG route.  Parsing C++
+is not an exciting problem.  EDG have done it already.  So buy EDG's
+product.  The end.
+</p>
+
+<p> 
+Open-source?  Well, the EDG option isn't available to you.
+Richard Stallman would argue that the EDG option is bad, because we
+can't read their source code and learn from it.  Well, I think you
+probably don't want to read their source code.  It's going to be full
+of special cases and warts, all of which are caused by the C++
+language design itself.  It's not interesting code solving a Real
+problem, it's mostly noise.  If you want to read source code, pick
+something which solves an interesting problem and read that.
+</p>
+
+<p> 
+Unlike on commercial projects, where management and existing culture
+often impose a choice of tools and language on the development team,
+an open-source project has a free choice of language.  If you're
+working on stuff in your free time, why endure the pain of C++ and the
+lack of good tools?  You won't lie on your deathbed wishing that you'd
+spent more time tracking down dangling pointer errors.  There are lots
+of other languages out there which are more fun to use and much easier
+to parse.  When I was younger, I used to enjoy all the little details
+of C++.  It felt like useful knowledge, and to a certain extent it was,
+in that it lead to jobs.  But when I'm programming for fun, I'm not
+interested in the programming language.  It's a means to an end.  For
+me, the difficulty of parsing C++ is yet another nail in the coffin
+for a flawed language.  I choose to use other languages for my "fun
+programming" now.
+</p>
+
+
+<p>
+But, having said all that, on Monday morning I'll be sitting on front
+of a 200 (or so) KLOC C++ application, cursing the historical
+accidents which lead to the popularity of such a hard-to-parse
+language.  So, please ignore all my above criticisms of the language
+and, if you are brave and persistent enough to write an open-source
+C++ parser and semantic analyzer, then I commend you!
+</p>
+
+<p>
+The other interesting route is the <a
+href="http://harmonia.cs.berkeley.edu/harmonia/index.html">Harmonia
+project</a>.  They are actually solving a much harder problem -
+incremental parsing and semantic analysis of several languages.  But
+they do advertise that they'll support C++ Real Soon Now.  They
+presumably aren't buying in EDG's frontend, since I don't think it'll
+meet their "incremental" criteria.  Their parser is a GLR parser (yay,
+sensible choice!  Yacc is a historical artifact!  Let's move out of
+the 70's).  However, they still have to solve the semantic side of the
+coin.  I'll be interested to see how they manage that.  If you are
+thinking of writing a C++ parser yourself, then use a GLR parser
+generator such as <a
+href="http://www.cs.berkeley.edu/~smcpeak/elkhound/">Elkhound</a> and
+you'll save yourself lots of hassle.  The guy who wrote Elkhound is
+also writing a C++ parser (including semantic analysis) called Elsa,
+which can parse everything except STL headers it seems.  If you're
+interested in C++ parsing, it'd be good to have a long look at this project.
+</p>
+
+</div>
+
+</div>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-11779709-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+</body>
+</html>
