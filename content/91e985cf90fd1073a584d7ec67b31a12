@@ -1,0 +1,627 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<link rel="shortcut icon" href="http://www.stereomood.com/gui/img/favicon.ico" />
+<title>stereomood – emotional internet radio - music for my mood and activities</title>
+<meta name="title" content="stereomood – emotional internet radio - music for my mood and activities" />
+<meta name="description" content="Stereomood is the emotional internet radio that provides me music that best suits my mood and my activities and personalized playlists for specific emotions and events." />
+<link rel="image_src" href="http://www.stereomood.com/gui/img/logo.png" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://www.stereomood.com/opensearch.xml" title="Stereomood" />
+<link href="/gui/css/style.css" rel="stylesheet" type="text/css" />
+<!-- js -->
+<!-- globals -->
+<script language="javascript" type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/prototype/1.6.0.2/prototype.js"></script>
+<script language="javascript" type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/scriptaculous/1.8.1/scriptaculous.js?load=effects,controls,dragdrop"></script>
+<script language="javascript" type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
+<script language="javascript" type="text/javascript" src="/gui/js/global-min.js"></script>
+<!-- globals -->
+<script type='text/javascript' src='http://partner.googleadservices.com/gampad/google_service.js'>
+</script>
+<script type='text/javascript'>
+GS_googleAddAdSenseService("ca-pub-7328621053096751");
+GS_googleEnableAllServices();
+</script>
+<script type='text/javascript'>
+GA_googleAddSlot("ca-pub-7328621053096751", "background");
+GA_googleAddSlot("ca-pub-7328621053096751", "wide_skyscrapers");
+GA_googleAddSlot("ca-pub-7328621053096751", "top_skyscaper");
+</script>
+<script language="javascript" type="text/javascript"> 
+GA_googleAddAttr("page-url", "home");
+</script>
+<script type='text/javascript'>
+GA_googleFetchAds();
+</script><!-- fine js -->
+<!-- light window -->
+<script type="text/javascript" src="/gui/js/lightwindow/javascript/lightwindow-min.js"></script>
+<link rel="stylesheet" type="text/css" href="/gui/js/lightwindow/css/lightwindow.css" />
+<!-- light window -->
+<!--[if IE 7]>
+<style type="text/css" media="all">
+	.TagCloud a { float:left; display:inline; line-height: 48px; height:48px; margin-right:1.45em; white-space:nowrap }
+</style>
+<![endif]-->
+<script language="javascript" type="text/javascript">
+	function play_mood()
+	{
+		mood_tag_index = document.getElementById("mood").selectedIndex;
+		mood_tag_value = document.getElementById("mood")[mood_tag_index].value;
+		if(mood_tag_value != "")
+			location.href = "/mood/" + escape(mood_tag_value);
+	}
+	
+	function play_situation()
+	{
+		situation_tag_index = document.getElementById("situation").selectedIndex;
+		situation_tag_value = document.getElementById("situation")[situation_tag_index].value;
+		if(situation_tag_value != "")
+			location.href = "/activity/" + escape(situation_tag_value);
+	}
+	function get_more_tags()
+	{
+		//request
+		new Ajax.Request
+			(
+				'/tools/ajax_more_tags.php',
+				{ 
+					onSuccess: more_tags,
+					onFailure: no_tags
+				}
+			);
+	}
+	
+	function no_tags()
+	{
+		$('moreTagsContainer').innerHTML = "<div>No more tags...</div>";
+		Effect.toggle('moreTagsContainer', 'blind');
+		$('lnkMoreTags').hide();
+		$('lnkLessTags').show();
+	}
+	
+	function more_tags(request)
+	{
+		if(request.responseText != "")
+			$('moreTagsContainer').innerHTML = "<div>" + request.responseText + "</div>";
+		else
+			$('moreTagsContainer').innerHTML = "<div>No more tags...</div>";
+		
+		Effect.toggle('moreTagsContainer', 'blind');
+		$('lnkMoreTags').hide();
+		$('lnkLessTags').show();
+	}
+	
+	function less_tags()
+	{
+		Effect.toggle('moreTagsContainer', 'blind');
+		$('lnkMoreTags').show();
+		$('lnkLessTags').hide();
+	}
+	
+	function toggle_tag_class(idtag, classtag)
+	{
+		if($(idtag))
+		{
+			if($(idtag).hasClassName(classtag))
+			{
+				$(idtag).removeClassName(classtag);
+			}
+			else
+			{
+				$(idtag).addClassName(classtag);
+			}
+		}
+	}
+	
+	function replace_id(id_needle, id_replace)
+	{
+		if($(id_needle))
+		{
+			$(id_needle).setAttribute('id', id_replace);
+		}
+		else
+		{
+			if($(id_replace))
+			{
+				$(id_replace).setAttribute('id', id_needle);
+			}
+		}
+	}
+</script>
+<!-- TradeDoubler site verification 1773917 -->
+
+<!-- Back Ground CSS -->
+<link href="/gui/css/background.css" rel="stylesheet" type="text/css" />
+<!-- Back Ground CSS -->
+</head>
+<body>
+<script type='text/javascript'>
+	GA_googleFillSlot("background");
+</script><!-- Back Ground IMG -->
+<img class="bg" src="/gui/backGround/bg.jpg">
+<!-- Back Ground IMG -->
+	<div id="container">
+		<!--inizio header-->
+				<script language="javascript" type="text/javascript">		
+		
+			function search_key_press(e)
+			{
+				if (!e) e = event;
+				var keyCode = (e.which) ? e.which : e.keyCode;
+				if (keyCode == 13)
+				{
+					submit_modulo_search();
+					return false;
+				}
+			}
+		
+			function submit_modulo_search()
+			{
+				objMainDrop = $('modulo_search_type');
+				selvalue = objMainDrop.options[objMainDrop.selectedIndex].value;
+				q_drop = $("modulo_search_q_drop");
+				q_txt = $("modulo_search_q_txt");
+				
+				switch(selvalue)
+				{
+					case "mood":
+						if(q_drop.options[q_drop.selectedIndex].value != "")
+							$('search').submit();
+						break;
+					case "activity":
+			   		case "situation":
+						if(q_drop.options[q_drop.selectedIndex].value != "")
+							$('search').submit();
+						break;
+					case "mylibrary":
+						if(q_txt.value != "")
+						{
+							//cambio l'action del form
+							$('search').action = "/search/mylibrary";
+							$('search').submit();
+						}
+						break;
+					default:
+						if(q_txt.value != "")
+							$('search').submit();
+						break;
+				}
+			}
+			
+			function load_q_drop(objMainDrop, q_drop, q_txt)
+			{
+				selvalue = objMainDrop.options[objMainDrop.selectedIndex].value;
+				switch(selvalue)
+				{
+					case "mood":
+						//showhide
+						hide_show_obj(q_txt, q_drop);
+						//reset
+						q_drop.length = 0;
+						//add
+						q_drop.length++;
+q_drop.options[q_drop.length - 1].text = '';
+q_drop.options[q_drop.length - 1].value = '';
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('absolutely mad');
+q_drop.options[q_drop.length - 1].value = ('absolutely mad');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('aggressive');
+q_drop.options[q_drop.length - 1].value = ('aggressive');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('angry');
+q_drop.options[q_drop.length - 1].value = ('angry');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('bohémien');
+q_drop.options[q_drop.length - 1].value = ('bohémien');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('calm');
+q_drop.options[q_drop.length - 1].value = ('calm');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('cool');
+q_drop.options[q_drop.length - 1].value = ('cool');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('crap');
+q_drop.options[q_drop.length - 1].value = ('crap');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('crazy');
+q_drop.options[q_drop.length - 1].value = ('crazy');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('digital');
+q_drop.options[q_drop.length - 1].value = ('digital');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('dirty');
+q_drop.options[q_drop.length - 1].value = ('dirty');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('dreamy');
+q_drop.options[q_drop.length - 1].value = ('dreamy');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('elegant');
+q_drop.options[q_drop.length - 1].value = ('elegant');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('energetic');
+q_drop.options[q_drop.length - 1].value = ('energetic');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('epic');
+q_drop.options[q_drop.length - 1].value = ('epic');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('ethnic');
+q_drop.options[q_drop.length - 1].value = ('ethnic');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('free');
+q_drop.options[q_drop.length - 1].value = ('free');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('funky');
+q_drop.options[q_drop.length - 1].value = ('funky');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('funny');
+q_drop.options[q_drop.length - 1].value = ('funny');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('gangsta');
+q_drop.options[q_drop.length - 1].value = ('gangsta');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('groovy');
+q_drop.options[q_drop.length - 1].value = ('groovy');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('happy');
+q_drop.options[q_drop.length - 1].value = ('happy');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('high');
+q_drop.options[q_drop.length - 1].value = ('high');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('lonely');
+q_drop.options[q_drop.length - 1].value = ('lonely');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('melancholy');
+q_drop.options[q_drop.length - 1].value = ('melancholy');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('need of love');
+q_drop.options[q_drop.length - 1].value = ('need of love');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('optimistic');
+q_drop.options[q_drop.length - 1].value = ('optimistic');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('psychedelic');
+q_drop.options[q_drop.length - 1].value = ('psychedelic');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('romantic');
+q_drop.options[q_drop.length - 1].value = ('romantic');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('sad');
+q_drop.options[q_drop.length - 1].value = ('sad');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('serious');
+q_drop.options[q_drop.length - 1].value = ('serious');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('sexy');
+q_drop.options[q_drop.length - 1].value = ('sexy');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('sleepy');
+q_drop.options[q_drop.length - 1].value = ('sleepy');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('sloth');
+q_drop.options[q_drop.length - 1].value = ('sloth');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('spooky');
+q_drop.options[q_drop.length - 1].value = ('spooky');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('sweet');
+q_drop.options[q_drop.length - 1].value = ('sweet');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('trippy');
+q_drop.options[q_drop.length - 1].value = ('trippy');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('untroubled');
+q_drop.options[q_drop.length - 1].value = ('untroubled');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('vintage');
+q_drop.options[q_drop.length - 1].value = ('vintage');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('well-read');
+q_drop.options[q_drop.length - 1].value = ('well-read');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('worried');
+q_drop.options[q_drop.length - 1].value = ('worried');
+						break;
+					case "activity":
+		    		case "situation":
+						//showhide
+						hide_show_obj(q_txt, q_drop);
+						//reset
+						q_drop.length = 0;
+						q_drop.length++;
+q_drop.options[q_drop.length - 1].text = '';
+q_drop.options[q_drop.length - 1].value = '';
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('afrodesiac');
+q_drop.options[q_drop.length - 1].value = ('afrodesiac');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('asleep on my feet');
+q_drop.options[q_drop.length - 1].value = ('asleep on my feet');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('balkankan');
+q_drop.options[q_drop.length - 1].value = ('balkankan');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('beach party');
+q_drop.options[q_drop.length - 1].value = ('beach party');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('berlin calling');
+q_drop.options[q_drop.length - 1].value = ('berlin calling');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('bicycle');
+q_drop.options[q_drop.length - 1].value = ('bicycle');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('busy as a bee');
+q_drop.options[q_drop.length - 1].value = ('busy as a bee');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('candlelit dinner');
+q_drop.options[q_drop.length - 1].value = ('candlelit dinner');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('chillout');
+q_drop.options[q_drop.length - 1].value = ('chillout');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('christmas');
+q_drop.options[q_drop.length - 1].value = ('christmas');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('cinema');
+q_drop.options[q_drop.length - 1].value = ('cinema');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('cooking time');
+q_drop.options[q_drop.length - 1].value = ('cooking time');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('dinner with friends');
+q_drop.options[q_drop.length - 1].value = ('dinner with friends');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('disco dance');
+q_drop.options[q_drop.length - 1].value = ('disco dance');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('dressing up ');
+q_drop.options[q_drop.length - 1].value = ('dressing up ');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('driving route 66');
+q_drop.options[q_drop.length - 1].value = ('driving route 66');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('escape');
+q_drop.options[q_drop.length - 1].value = ('escape');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('feel like crying');
+q_drop.options[q_drop.length - 1].value = ('feel like crying');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('focus on');
+q_drop.options[q_drop.length - 1].value = ('focus on');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('foreplay');
+q_drop.options[q_drop.length - 1].value = ('foreplay');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('good karma');
+q_drop.options[q_drop.length - 1].value = ('good karma');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('it\'s raining');
+q_drop.options[q_drop.length - 1].value = ('it\'s raining');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('jogging');
+q_drop.options[q_drop.length - 1].value = ('jogging');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('just woke up');
+q_drop.options[q_drop.length - 1].value = ('just woke up');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('let\'s knit');
+q_drop.options[q_drop.length - 1].value = ('let\'s knit');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('let\'s party');
+q_drop.options[q_drop.length - 1].value = ('let\'s party');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('lost in jamaica');
+q_drop.options[q_drop.length - 1].value = ('lost in jamaica');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('lost in thought');
+q_drop.options[q_drop.length - 1].value = ('lost in thought');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('make love');
+q_drop.options[q_drop.length - 1].value = ('make love');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('meditation');
+q_drop.options[q_drop.length - 1].value = ('meditation');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('pump up the volume');
+q_drop.options[q_drop.length - 1].value = ('pump up the volume');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('reading');
+q_drop.options[q_drop.length - 1].value = ('reading');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('relax');
+q_drop.options[q_drop.length - 1].value = ('relax');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('road trip');
+q_drop.options[q_drop.length - 1].value = ('road trip');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('saturday night fever');
+q_drop.options[q_drop.length - 1].value = ('saturday night fever');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('saudade');
+q_drop.options[q_drop.length - 1].value = ('saudade');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('snuggle');
+q_drop.options[q_drop.length - 1].value = ('snuggle');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('spring cleaning');
+q_drop.options[q_drop.length - 1].value = ('spring cleaning');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('states of hallucination');
+q_drop.options[q_drop.length - 1].value = ('states of hallucination');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('summer');
+q_drop.options[q_drop.length - 1].value = ('summer');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('sunday morning');
+q_drop.options[q_drop.length - 1].value = ('sunday morning');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('sunny day');
+q_drop.options[q_drop.length - 1].value = ('sunny day');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('tango lesson');
+q_drop.options[q_drop.length - 1].value = ('tango lesson');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('total improvisation');
+q_drop.options[q_drop.length - 1].value = ('total improvisation');
+q_drop.length++;
+q_drop.options[q_drop.length - 1].text = ('traffic jam');
+q_drop.options[q_drop.length - 1].value = ('traffic jam');
+						break;
+					default:
+						//reset
+						q_drop.length = 0;
+						//showhide
+						hide_show_obj(q_drop, q_txt);
+						//focus txt
+						try
+						{
+							if(q_txt.hasClassName('obj_visible'))
+								q_txt.focus();
+						}
+						catch(e)
+						{
+							//colpa di internet explorer
+						}
+						break;					
+				}
+			}
+		</script>
+		<div id="header">
+			<div id="containerLogo"><a id="logoWhite" href="/" title="">stereomood - emotional internet radio</a></div>
+			<form action="/search" id="search" name="search_form" method="get" onkeypress="return search_key_press(event);" style="position:relative;">
+					<fieldset>
+						<a  href="javascript:hide_show_str('modulo_search', 'modulo_search_standard');" onclick="$('modulo_search_close').hide();" id="modulo_search_close">x</a>						
+						<div class="obj_visible" id="modulo_search_standard">
+							<input maxlength="50"  onclick="hide_show_str('modulo_search_standard', 'modulo_search');$('modulo_search_close').show();$('modulo_search_q_txt').focus();" name="q" id="stato_iniziale" type="text" />
+							<a  href="#" onclick="hide_show_str('modulo_search_standard', 'modulo_search');$('modulo_search_close').show();$('modulo_search_q_txt').focus();" title="Search">search</a>						
+						</div>
+						<div class="obj_hidden" id="modulo_search">	
+							<select onchange="load_q_drop(this, $('modulo_search_q_drop'), $('modulo_search_q_txt'));" id="modulo_search_type" name="type">
+								<option value="mood">mood</option>
+								<option value="activity">activity</option>
+								<option selected="selected" value="site">site</option>
+															</select>
+							<select class="obj_visible" id="modulo_search_q_drop" name="tag" style="width:140px;"></select>
+							<div class="floatleft"><input maxlength="50" class="obj_hidden" style="width:140px; float:left;" name="q_txt" id="modulo_search_q_txt" type="text" /></div>
+							<a href="javascript:submit_modulo_search();" class="submit floatright" title="search">search</a>
+						</div>			
+					</fieldset>
+			</form>
+						</div>
+		<script language="javascript" type="text/javascript">
+			$('modulo_search_close').hide();
+			load_q_drop($("modulo_search_type"), $('modulo_search_q_drop'), $('modulo_search_q_txt'));			
+		</script>		<!--fine header-->
+		<!--inizio contenuto centrale-->
+		<br clear="all" />
+		<div id="content">
+			<!--inizio Menu header-->
+						<div id="menu">
+				<ul id="dx">
+					<li class="selected">home</li>
+					<li><a href="/login/" id="login_link" title="login">login</a></li>
+					<li><a href="/join/" title="join">join</a></li>
+				</ul>
+			</div>
+			<div class="clear"></div>			<!--inizio Menu header-->
+			<div class="cont_long">
+				<p>behind every song there's always an emotion. we don't know why but maybe that's why we love music.</p>
+			  	<p>so we've created a way to suggest songs that follow your feelings: <strong>stereomood</strong> is the <strong>emotional internet radio</strong>, providing<strong> music that best suits your mood and your activities</strong>.</p> 
+			    <strong>how do i feel? what am i doing now?</strong>
+                
+                                     
+		  </div>
+			<div class="clear"></div>
+			<div class="cont_longCloud">
+					<h1>listen to the music that best suits my mood or my activity</h1>
+					<div class="spacer2x"></div>
+<ul class="TagCloud"><li><a target="_blank" style="" href="http://www.stereomood.com/mood/urbanproof%2benergised" title="listen to urbanproof energised mood" class="tag-type-mood tag-dimension-1" id="urbanproofenergised">urbanproof energised</a></li><li><a href="/activity/relax" title="listen to relax activity" class="tag-type-activity tag-dimension-6" id="relax">relax</a></li><li><a href="/mood/happy" title="listen to happy mood" class="tag-type-mood tag-dimension-5" id="happy">happy</a></li><li><a href="/mood/calm" title="listen to calm mood" class="tag-type-mood tag-dimension-5" id="calm">calm</a></li><li><a href="/activity/chillout" title="listen to chillout activity" class="tag-type-activity tag-dimension-4" id="chillout">chillout</a></li><li><a href="/mood/melancholy" title="listen to melancholy mood" class="tag-type-mood tag-dimension-4" id="melancholy">melancholy</a></li><li><a href="/mood/dreamy" title="listen to dreamy mood" class="tag-type-mood tag-dimension-4" id="dreamy">dreamy</a></li><li><a href="/mood/optimistic" title="listen to optimistic mood" class="tag-type-mood tag-dimension-4" id="optimistic">optimistic</a></li><li><a href="/mood/beautiful" title="listen to beautiful mood" class="tag-type-mood tag-dimension-4" id="beautiful">beautiful</a></li><li><a href="/activity/summer" title="listen to summer activity" class="tag-type-activity tag-dimension-3" id="summer">summer</a></li><li><a href="/mood/sleepy" title="listen to sleepy mood" class="tag-type-mood tag-dimension-3" id="sleepy">sleepy</a></li><li><a href="/mood/cool" title="listen to cool mood" class="tag-type-mood tag-dimension-3" id="cool">cool</a></li><li><a href="/mood/sad" title="listen to sad mood" class="tag-type-mood tag-dimension-3" id="sad">sad</a></li><li><a href="/activity/christmas" title="listen to christmas activity" class="tag-type-activity tag-dimension-3" id="christmas">christmas</a></li><li><a href="/mood/sweet" title="listen to sweet mood" class="tag-type-mood tag-dimension-3" id="sweet">sweet</a></li><li><a target="_self" style="" href="http://www.stereomood.com/mood/angry" title="listen to angry mood" class="tag-type-mood tag-dimension-3" id="angry">angry</a></li><li><a href="/mood/need%2bof%2blove" title="listen to need of love mood" class="tag-type-mood tag-dimension-3" id="needoflove">need of love</a></li><li><a href="/mood/romantic" title="listen to romantic mood" class="tag-type-mood tag-dimension-3" id="romantic">romantic</a></li><li><a href="/activity/lost%2bin%2bthought" title="listen to lost in thought activity" class="tag-type-activity tag-dimension-3" id="lostinthought">lost in thought</a></li><li><a href="/mood/energetic" title="listen to energetic mood" class="tag-type-mood tag-dimension-3" id="energetic">energetic</a></li><li><a href="/activity/good%2bkarma" title="listen to good karma activity" class="tag-type-activity tag-dimension-3" id="goodkarma">good karma</a></li><li><a href="/mood/instrumental" title="listen to instrumental mood" class="tag-type-mood tag-dimension-3" id="instrumental">instrumental</a></li><li><a href="/activity/just%2bwoke%2bup" title="listen to just woke up activity" class="tag-type-activity tag-dimension-3" id="justwokeup">just woke up</a></li><li><a href="/activity/reading" title="listen to reading activity" class="tag-type-activity tag-dimension-2" id="reading">reading</a></li><li><a href="/activity/it%2527s%2braining" title="listen to it's raining activity" class="tag-type-activity tag-dimension-2" id="itsraining">it's raining</a></li><li><a target="_self" style="" href="http://www.stereomood.com/mood/crazy" title="listen to crazy mood" class="tag-type-mood tag-dimension-2" id="crazy">crazy</a></li><li><a href="/activity/let%2527s%2bparty" title="listen to let's party activity" class="tag-type-activity tag-dimension-2" id="letsparty">let's party</a></li><li><a href="/activity/working" title="listen to working activity" class="tag-type-activity tag-dimension-2" id="working">working</a></li><li><a href="/activity/dance" title="listen to dance activity" class="tag-type-activity tag-dimension-2" id="dance">dance</a></li><li><a href="/mood/funny" title="listen to funny mood" class="tag-type-mood tag-dimension-2" id="funny">funny</a></li><li><a target="_self" style="" href="http://www.stereomood.com/mood/boh%25C3%25A9mien" title="listen to bohémien mood" class="tag-type-mood tag-dimension-2" id="bohmien">bohémien</a></li><li><a href="/activity/studying" title="listen to studying activity" class="tag-type-activity tag-dimension-2" id="studying">studying</a></li><li><a href="/mood/sexy" title="listen to sexy mood" class="tag-type-mood tag-dimension-2" id="sexy">sexy</a></li><li><a target="_self" style="" href="http://www.stereomood.com/activity/saudade" title="listen to saudade activity" class="tag-type-activity tag-dimension-2" id="saudade">saudade</a></li><li><a href="/mood/nostalgic" title="listen to nostalgic mood" class="tag-type-mood tag-dimension-2" id="nostalgic">nostalgic</a></li><li><a target="_self" style="" href="http://www.stereomood.com/mood/gangsta" title="listen to gangsta activity" class="tag-type-activity tag-dimension-2" id="gangsta">gangsta</a></li><li><a href="/mood/lonely" title="listen to lonely mood" class="tag-type-mood tag-dimension-2" id="lonely">lonely</a></li><li><a href="/mood/acoustic" title="listen to acoustic mood" class="tag-type-mood tag-dimension-2" id="acoustic">acoustic</a></li><li><a href="/mood/electronic" title="listen to electronic mood" class="tag-type-mood tag-dimension-2" id="electronic">electronic</a></li><li><a href="/mood/ambient" title="listen to ambient mood" class="tag-type-mood tag-dimension-2" id="ambient">ambient</a></li><li><a target="_self" style="" href="http://www.stereomood.com/mood/worried" title="listen to worried mood" class="tag-type-mood tag-dimension-2" id="worried">worried</a></li><li><a href="/activity/feel%2blike%2bcrying" title="listen to feel like crying activity" class="tag-type-activity tag-dimension-2" id="feellikecrying">feel like crying</a></li><li><a target="_self" style="" href="http://www.stereomood.com/mood/aggressive" title="listen to aggressive mood" class="tag-type-mood tag-dimension-2" id="aggressive">aggressive</a></li><li><a href="/mood/folk" title="listen to folk mood" class="tag-type-mood tag-dimension-2" id="folk">folk</a></li><li><a href="/mood/untroubled" title="listen to untroubled mood" class="tag-type-mood tag-dimension-2" id="untroubled">untroubled</a></li><li><a href="/activity/sunny%2bday" title="listen to sunny day activity" class="tag-type-activity tag-dimension-2" id="sunnyday">sunny day</a></li><li><a target="_blank" style="" href="http://www.stereomood.com/activity/busy%2Bas%2Ba%2Bbee" title="listen to busy as a bee activity" class="tag-type-activity tag-dimension-2" id="busyasabee">busy as a bee</a></li><li><a href="/activity/dressing%2bup" title="listen to dressing up activity" class="tag-type-activity tag-dimension-2" id="dressingup">dressing up</a></li><li><a href="/activity/road%2btrip" title="listen to road trip activity" class="tag-type-activity tag-dimension-2" id="roadtrip">road trip</a></li><li><a href="/mood/vintage" title="listen to vintage mood" class="tag-type-mood tag-dimension-2" id="vintage">vintage</a></li><li><a href="/activity/sunday%2bmorning" title="listen to sunday morning activity" class="tag-type-activity tag-dimension-2" id="sundaymorning">sunday morning</a></li><li><a href="/mood/epic" title="listen to epic mood" class="tag-type-mood tag-dimension-2" id="epic">epic</a></li><li><a href="/activity/spring%2bcleaning" title="listen to spring cleaning activity" class="tag-type-activity tag-dimension-2" id="springcleaning">spring cleaning</a></li><li><a href="/mood/relax" title="listen to relax mood" class="tag-type-mood tag-dimension-2" id="relax">relax</a></li><li><a href="/mood/female" title="listen to female mood" class="tag-type-mood tag-dimension-2" id="female">female</a></li><li><a href="/activity/thinking" title="listen to thinking activity" class="tag-type-activity tag-dimension-2" id="thinking">thinking</a></li><li><a href="/mood/funky" title="listen to funky mood" class="tag-type-mood tag-dimension-2" id="funky">funky</a></li><li><a href="/mood/digital" title="listen to digital mood" class="tag-type-mood tag-dimension-2" id="digital">digital</a></li><li><a target="_self" style="" href="http://www.stereomood.com/activity/tango%2Blesson" title="listen to TANGO LESSON activity" class="tag-type-activity tag-dimension-2" id="TANGOLESSON">TANGO LESSON</a></li><li><a href="/mood/high" title="listen to high mood" class="tag-type-mood tag-dimension-2" id="high">high</a></li><li><a target="_blank" style="" href="http://www.stereomood.com/activity/balkankan" title="listen to balkankan activity" class="tag-type-activity tag-dimension-2" id="balkankan">balkankan</a></li><li><a href="/mood/soft" title="listen to soft mood" class="tag-type-mood tag-dimension-2" id="soft">soft</a></li><li><a href="/mood/elegant" title="listen to elegant mood" class="tag-type-mood tag-dimension-2" id="elegant">elegant</a></li><li><a href="/mood/creativecommons" title="listen to creativecommons mood" class="tag-type-mood tag-dimension-2" id="creativecommons">creativecommons</a></li><li><a target="_blank" style="" href="http://www.stereomood.com/activity/lost%2Bin%2Bjamaica" title="listen to Lost in jamaica activity" class="tag-type-activity tag-dimension-2" id="Lostinjamaica">Lost in jamaica</a></li><li><a href="/mood/groovy" title="listen to groovy mood" class="tag-type-mood tag-dimension-2" id="groovy">groovy</a></li><li><a href="/activity/cinema" title="listen to cinema activity" class="tag-type-activity tag-dimension-2" id="cinema">cinema</a></li><li><a target="_self" style="" href="http://www.stereomood.com/activity/afrodesiac" title="listen to afrodesiac activity" class="tag-type-activity tag-dimension-2" id="afrodesiac">afrodesiac</a></li><li><a href="/activity/make%2blove" title="listen to make love activity" class="tag-type-activity tag-dimension-2" id="makelove">make love</a></li><li><a href="/mood/sloth" title="listen to sloth mood" class="tag-type-mood tag-dimension-2" id="sloth">sloth</a></li><li><a href="/mood/cover" title="listen to cover mood" class="tag-type-mood tag-dimension-2" id="cover">cover</a></li><li><a href="/mood/upbeat" title="listen to upbeat mood" class="tag-type-mood tag-dimension-2" id="upbeat">upbeat</a></li><li><a href="/mood/jazz" title="listen to jazz mood" class="tag-type-mood tag-dimension-2" id="jazz">jazz</a></li><li><a href="/mood/peaceful" title="listen to peaceful mood" class="tag-type-mood tag-dimension-2" id="peaceful">peaceful</a></li></ul>				<!-- Link More -->
+				<div id="moreTagsContainer" class="floatright" style="display:none;"></div>
+				<a id="lnkMoreTags" href="javascript:get_more_tags();">more tags</a>
+				<a id="lnkLessTags" class="floatright link1px" style="display:none" href="javascript:less_tags();">less tags</a>
+				<!-- Link More -->
+			</div>
+		</div>
+		<!--fine contenuto centrale-->
+		<!--inizio footer-->
+		<br clear="all" />
+<div id="footer">
+	<div id="linea_footer" ><span></span></div>
+		<ul id="sx">
+			<li><a href="/about/" title="about us">about us</a></li>
+<li><a href="/terms/" title="terms of use">terms of use</a></li>
+<li><a href="/blogslist/" title="blogs list">blogs list</a></li>
+<li><a href="/faq/" title="faq">faq</a></li>
+<li><a href="/resources/" title="resources">resources</a></li>
+<li><a href="/api/" title="api">api</a></li>
+<li><a href="/contacts/" title="contact us">contact us</a></li>
+		</ul>
+					<ul id="dx">
+				<li><a href="/faq">Your browser is not fully supported</a></li>
+			</ul>
+			</div>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-6724083-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>		<!--fine footer-->
+	</div>
+	<!-- colonna esterna destra per contenuti extra -->
+	<div id="extra-container">
+	<!--social networks-->
+	<div id="stereoSocial">
+	<div id="socialLink" style="margin:0">
+		<ul>
+			<li class="trebuchet-10" style="margin:0"><span class="floatleft margintop3">follow us on:</span></li>
+			<li style="margin:0 0 0 4px">
+				<a href="http://www.flickr.com/photos/stereomood/" title="stereomood on flickr" target="_blank">
+					<img src="/gui/img/icon_flickr.jpg" border="0" alt="stereomood on flickr" width="20" height="20" />
+				</a>
+			</li>
+			<li>
+				<a href="http://www.facebook.com/stereomood" title="stereomood on facebook" target="_blank">
+					<img src="/gui/img/icon_facebook.jpg" border="0" alt="stereomood on facebook" width="20" height="20" />
+				</a>
+			</li>
+			<li>
+				<a href="http://twitter.com/stereomood" title="stereomood on twitter" target="_blank">
+					<img src="/gui/img/icon_twitter.jpg" border="0" alt="stereomood on twitter" width="20" height="20" />
+				</a>
+			</li>
+			<li>
+				<a href="http://www.myspace.com/stereomood" title="stereomood on myspace" target="_blank">
+					<img src="/gui/img/icon_myspace.jpg" border="0" alt="stereomood on myspace" width="20" height="20" />
+				</a>
+			</li>
+			<li>
+				<a href="http://friendfeed.com/stereomood" title="stereomood on friendfeed" target="_blank">
+					<img src="/gui/img/icon_friendfeed.jpg" border="0" alt="stereomood on friendfeed" width="20" height="20" />
+				</a>
+			</li>
+		</ul>
+	</div>	
+</div>	<!--social networks-->
+	<div id="sponsorLink">		
+	<script type='text/javascript'>
+        GA_googleFillSlot("top_skyscaper");
+    </script>
+	<script type='text/javascript'>
+        GA_googleFillSlot("wide_skyscrapers");
+    </script>
+</div>     
+	<!-- Back Ground LABEL -->
+	<div id='bgLabel'>
+ 	<div id='textbgLabel' class='trebuchet-10 white'>
+		<a class='white' href='http://www.flickr.com/photos/linadelika/5122117920' title='xmas bkg | linadelika' target='_blank'>xmas bkg | linadelika</a>
+	</div>
+</div>
+	<!-- Back Ground LABEL -->
+	</div>
+	<!-- fine colonna esterna destra per contenuti extra -->
+</body>
+</html>
