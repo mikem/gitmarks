@@ -1,0 +1,312 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+<head profile="http://gmpg.org/xfn/11">
+        <meta name="google-site-verification" content="lgo3TWp3aavA_8iaTDx3BZVuY73ty2Ekqo2foaG0oZQ" />
+	<title>How to write software | LispCast</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" href="http://www.lispcast.com/wp-content/themes/sandbox/style.css" />
+<link rel="alternate" type="application/rss+xml" title="LispCast &raquo; How to write software Comments Feed" href="http://www.lispcast.com/software-engineering/how-to-write-software/feed/" />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.lispcast.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.lispcast.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='index' title='LispCast' href='http://www.lispcast.com/' />
+<link rel='start' title='Articles' href='http://www.lispcast.com/uncategorized/articles-4/' />
+<link rel='prev' title='Clojure News March 26' href='http://www.lispcast.com/video/clojure-news-march-26/' />
+<link rel='next' title='PEG Parser for Clojure' href='http://www.lispcast.com/projects/peg-parser-for-clojure/' />
+<meta name="generator" content="WordPress 3.0.1" />
+<link rel='shortlink' href='http://www.lispcast.com/?p=371' />
+
+<!-- All in One SEO Pack 1.6.12.2 by Michael Torbert of Semper Fi Web Design[337,382] -->
+<meta name="description" content="How to write software as a solo programmer with a small budget. There is a secret." />
+<meta name="keywords" content="getting real,how to write software,low budget,minimalist software,paul graham,release early release often,solo programmer,worse is better" />
+<link rel="canonical" href="http://www.lispcast.com/software-engineering/how-to-write-software/" />
+<!-- /all in one seo pack -->
+<link rel="stylesheet" href="http://disqus.com/stylesheets/lispcast/disqus.css?v=2.0" type="text/css" media="screen" /><link rel="shortcut icon" href="http://new.lispcast.com/favicon.ico" type="image/x-icon" /><!-- Favi --><style type="text/css">
+/* <![CDATA[ */
+img.latex { vertical-align: middle; border: none; }
+/* ]]> */
+</style>
+	<link rel="alternate" type="application/rss+xml" href="http://www.lispcast.com/feed/" title="LispCast latest posts" />
+	<link rel="alternate" type="application/rss+xml" href="http://lispcast.disqus.com/latest.rss" title="LispCast latest comments" />
+	<link rel="pingback" href="http://www.lispcast.com/xmlrpc.php" />
+<link rel="me" type="text/html" href="http://www.google.com/profiles/ericwnormand" />
+
+</head>
+
+
+
+<body class="wordpress y2010 m12 d25 h08 single postid-371 s-y2010 s-m05 s-d29 s-h00 s-category-software-engineering s-tag-getting-real s-tag-how-to-write-software s-tag-low-budget s-tag-minimalist-software s-tag-paul-graham s-tag-release-early-release-often s-tag-solo-programmer s-tag-worse-is-better s-author-admin">
+
+<div id="wrapper" class="hfeed">
+
+	<div id="header">
+		<h1 id="blog-title"><span><a href="http://www.lispcast.com/" title="LispCast" rel="home">LispCast</a></span></h1>
+		<div id="blog-description">passion for programming</div>
+	</div><!--  #header -->
+
+	<div id="access">
+		<div class="skip-link"><a href="#content" title="Skip to content">Skip to content</a></div>
+		<div id="menu"><ul><li class="page_item page-item-2"><a href="http://www.lispcast.com/about/" title="About">About</a></li><li class="page_item page-item-292"><a href="http://www.lispcast.com/archives/" title="Archives">Archives</a></li></ul></div>
+	</div><!-- #access -->
+
+	<div id="container">
+		<div id="content">
+
+
+			<div id="nav-above" class="navigation">
+				<div class="nav-previous"><a href="http://www.lispcast.com/video/clojure-news-march-26/" rel="prev"><span class="meta-nav">&laquo;</span> Clojure News March 26</a></div>
+				<div class="nav-next"><a href="http://www.lispcast.com/projects/peg-parser-for-clojure/" rel="next">PEG Parser for Clojure <span class="meta-nav">&raquo;</span></a></div>
+			</div>
+
+			<div id="post-371" class="hentry p1 post publish author-eric category-software-engineering tag-getting-real tag-how-to-write-software tag-low-budget tag-minimalist-software tag-paul-graham tag-release-early-release-often tag-solo-programmer tag-worse-is-better y2010 m05 d29 h00">
+				<h2 class="entry-title">How to write software</h2>
+				<div class="entry-content">
+<h3>A guide for the solo programmer</h3>
+
+<p>I have created a planning and organization process for developing
+software.  The process works for me.  I need to organize my work ahead
+of time or I get stuck working on unimportant details.</p>
+
+<p>I have built minimalism into the process.  I tend to work alone.  Solo
+programming imposes very real limitations on the scope and
+completeness of software.  One man can only do so much.</p>
+
+<p>My process includes nothing that cannot be found in <a href="http://www.jwz.org/doc/worse-is-better.html">Worse is Better</a>,
+<a href="http://catb.org/esr/writings/homesteading/cathedral-bazaar/ar01s04.html">The Cathedral and the Bazaar</a>, <a href="http://www.paulgraham.com/startuplessons.html">Paul Graham&#8217;s writing</a>,
+and <a href="http://gettingreal.37signals.com/">Getting Real</a>.  These are well-written and well-known works.  I thought I understood them when I read them, but I was wrong.  It wasn&#8217;t until recently, after
+projects stalled and failed due to feature creep, that I understood
+the essence of the <em>release early, release often</em> idea.  I have attempted to formalize the idea to
+be more actionable instead of philosophical.</p>
+
+<p>Here is my hard-earned process for writing software.  Note that this
+is not a strict algorithm.  Sometimes I will apply filters from Step 2
+when I am doing experiments in Step 3.</p>
+
+<ol>
+<li><span><p><strong>Choose a purpose.</strong></p>
+
+<p>The software must serve a single purpose. Clearly defining it will illuminate the entire software process.</p></span></li>
+<li><span><p>For each release:</p>
+
+<ol>
+<li><span><p><strong>List features.</strong></p>
+
+<p>List out all of the features you want in the
+software.  Not all of these will make it into the release, but if
+it is <em>not</em> on this list, it will <em>not</em> make it into the release.</p></span></li>
+<li><span><p>Apply the following filters and transformations, in any order,
+repeatedly, until there is nothing further to filter out from the
+list of features.</p>
+
+<ul>
+<li><span><p><strong>Break features into subfeatures.</strong></p>
+
+<p>If a feature can be broken
+into two features, do it.  All features must be atomic.  For
+instance, an easy one would be if I want to send messages by
+email and through a web API, that&#8217;s two features.  Rule of
+thumb: if it can break, it&#8217;s a separate feature.</p></span></li>
+<li><span><p><strong>Eliminate unnecessary features.</strong></p>
+
+<p>Features that are not
+essential to the purpose are unnecessary.  Features that can
+be put off until the next version are unnecessary.  In the
+above example, maybe email can wait until the next release.
+If it can wait, it will wait.  You are trying to make a B
+line to release.</p></span></li>
+<li><span><p><strong>Fill in &#8220;hidden features&#8221;.</strong></p>
+
+<p>Remember, if it can break, it&#8217;s
+a feature.  Sometimes there are features that need to be
+listed because of the existence of other features.  If you
+support two different communication channels, you need a way
+to choose between them.  Whatever mechanism presents that
+choice is a feature, too.  List it.</p></span></li>
+<li><span><p><strong>Simplify features.</strong></p>
+
+<p>If a feature can be done more simply or
+more easily than what you originally intended, replace it.
+The primary way to release quickly is to simplify the
+release.  Do you really need it to be customizable?</p></span></li>
+</ul></span></li>
+<li><span><p><strong>Design and carry out experiments.</strong></p>
+
+<p>Within your minimal set
+of features, there are often questions as to the best means of
+implementation.  The experiments determine the answers to those
+questions.</p></span></li>
+<li><span><p><strong>Order the features in order of dependency.</strong></p>
+
+<p>The first feature
+is the one that does not depend on any others.  Dependency is a
+complex and sneaky issue.  You might say that a function needs a
+button to activate it.  But the button is useless without the
+function.  Which depends on which?  Personally, dependency means
+dependent on another feature for usefulness.  If I can activate a
+function in a very simple way (like immediately when the program
+starts), then that function does not depend on the button.  The
+button depends on the function for its usefulness.</p></span></li>
+<li><span><p><strong>Sketch out the <em>first</em> remaining feature on paper.</strong></p>
+
+<p>Sketch
+out the code.  The experiments should have instructed you in how to
+implement the feature.  Rewrite the code repeatedly, eliminating
+fluff and abstraction until the code is minimal and perfect.</p></span></li>
+<li><span><p><strong>Type the code in.</strong></p>
+
+<p>Build it and test it.</p></span></li>
+<li><span><p><strong>Make the code rock solid.</strong></p>
+
+<p>Clean it up.  As a solo
+programmer, you are <em>never</em> going to come back to this code and
+clean it up.  You won&#8217;t have time.  You will never have the time to
+hunt for bugs in this code.  Make sure it works in every possible
+case.  The code must catch every exception.  It must handle the
+null case.  The feature is not done until it is unbreakable.  If
+you are doubting whether it&#8217;s worth your time to work this much on
+one feature, maybe you should eliminate the feature.</p></span></li>
+<li><span><p><strong>Loop to Step 5 until you run out of features.</strong></p></span></li>
+<li><span><p><strong>Release.</strong></p></span></li>
+</ol></span></li>
+</ol>
+
+<p>The essence of this process is to follow the <em>release early, release often</em> philosophy by reducing the amount of development between releases.  I mistakenly thought that release often meant &#8220;write code really fast&#8221; in the past.  Now I understand that it means write less but more important code between releases but write it correctly.</p>
+<h3 class='related_post_title'>Related Posts:</h3><ul class='related_post'><li>No Related Posts</li></ul>
+				</div>
+				<div class="entry-meta"><a href="http://www.lispcast.com/category/software-engineering/" title="View all posts in software engineering" rel="category tag">software engineering</a><br />
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'lispcast'; // required: replace example with your forum shortname
+
+    // The following are highly recommended additional parameters. Remove the slashes in front to use.
+    // var disqus_identifier = 'unique_dynamic_id_1234';
+    // var disqus_url = 'http://example.com/permalink-to-page.html';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+				</div>
+			</div><!-- .post -->
+
+			<div id="nav-below" class="navigation">
+				<div class="nav-previous"><a href="http://www.lispcast.com/video/clojure-news-march-26/" rel="prev"><span class="meta-nav">&laquo;</span> Clojure News March 26</a></div>
+				<div class="nav-next"><a href="http://www.lispcast.com/projects/peg-parser-for-clojure/" rel="next">PEG Parser for Clojure <span class="meta-nav">&raquo;</span></a></div>
+			</div>
+
+
+<div id="disqus_thread">
+	</div>
+
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+	var disqus_url = 'http://www.lispcast.com/software-engineering/how-to-write-software/ ';
+	var disqus_identifier = '371 http://www.lispcast.com/?p=371';
+	var disqus_container_id = 'disqus_thread';
+	var disqus_domain = 'disqus.com';
+	var disqus_shortname = 'lispcast';
+	var disqus_title = "How to write software";
+		var disqus_config = function () {
+	    var config = this; // Access to the config object
+
+	    /* 
+	       All currently supported events:
+	        * preData — fires just before we request for initial data
+	        * preInit - fires after we get initial data but before we load any dependencies
+	        * onInit  - fires when all dependencies are resolved but before dtpl template is rendered
+	        * afterRender - fires when template is rendered but before we show it
+	        * onReady - everything is done
+	     */
+
+		config.callbacks.preData.push(function() {
+			// clear out the container (its filled for SEO/legacy purposes)
+			document.getElementById(disqus_container_id).innerHTML = '';
+		});
+			};
+	var facebookXdReceiverPath = 'http://www.lispcast.com/wp-content/plugins/disqus-comment-system/xd_receiver.htm';
+/* ]]> */
+</script>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+	var DsqLocal = {
+		'trackbacks': [
+		],
+		'trackback_url': "http:\/\/www.lispcast.com\/software-engineering\/how-to-write-software\/trackback\/"	};
+/* ]]> */
+</script>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+(function() {
+	var dsq = document.createElement('script'); dsq.type = 'text/javascript';
+	dsq.async = true;
+	dsq.src = 'http://' + disqus_shortname + '.' + disqus_domain + '/embed.js?pname=wordpress&pver=2.52';
+	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+/* ]]> */
+</script>
+
+		</div><!-- #content -->
+	</div><!-- #container -->
+
+	<div id="primary" class="sidebar">
+		<ul class="xoxo">
+
+			<li id="text-3" class="widget widget_text">			<div class="textwidget"><a href="/"><img src="/logo.png" /></a>
+<h1 id="title"><a href="/">LispCast</a></h1>
+
+<p><a href="http://feeds2.feedburner.com/LispCast">RSS Feed</a></p>
+<p><a href="mailto:eric@lispcast.com">Contact</a></p>
+<p><a href="http://lispcast.blip.tv/">Videos</a></p>
+<p><a href="/archives">Archives</a></p>
+<p><a href="/about">About me</a></p>
+</div>
+		
+			</li>
+		</ul>
+	</div><!-- #primary .sidebar -->
+
+	<div id="secondary" class="sidebar">
+		<ul class="xoxo">
+
+			<li id="text-4" class="widget widget_text">			<div class="textwidget"></div>
+		
+			</li>
+		</ul>
+	</div><!-- #secondary .sidebar -->
+	<div id="footer">
+		<span id="generator-link"><a href="http://wordpress.org/" title="WordPress" rel="generator">WordPress</a></span>
+		<span class="meta-sep">|</span>
+		<span id="theme-link"><a href="http://www.plaintxt.org/themes/sandbox/" title="Sandbox theme for WordPress" rel="designer">Sandbox</a></span>
+	</div><!-- #footer -->
+
+</div><!-- #wrapper .hfeed -->
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-8943940-6']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body>
+</html>
+<!-- Dynamic page generated in 0.473 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2010-12-25 08:16:44 -->
