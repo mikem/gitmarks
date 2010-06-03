@@ -1,0 +1,2290 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" id="sixapart-standard">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>What is data science? - O'Reilly Radar</title>
+<meta name="generator" content="Movable Type Pro 4.21-en" />
+
+
+
+
+<meta name="keywords" content="data, data science, data scientist" />
+
+
+
+<meta name="description" content="Editor's Pick: From the Archives -- The future belongs to the companies who figure out how to collect and use data successfully. In this in-depth piece, O'Reilly editor Mike Loukides examines the unique skills and opportunities that flow from data science." />
+
+
+
+<meta name="search_date" content="2010-06-02" />
+<meta name="author" content="Mike Loukides" />
+
+
+
+<link rel="canonical" href="http://radar.oreilly.com/2010/06/what-is-data-science.html" />
+
+
+
+
+
+<link rel="stylesheet" href="http://www.oreillynet.com/styles/chrome.css" type="text/css" />
+<link rel="stylesheet" href="http://radar.oreilly.com/styles.css?1" type="text/css" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" type="image/png" />
+<link rel="shortcut icon" href="http://radar.oreilly.com/images/favicon.ico" />
+
+<link rel="alternate" type="application/atom+xml" title="O'Reilly Radar Atom Feed" href="http://feeds.feedburner.com/oreilly/radar/atom" />
+
+
+
+
+
+
+
+<link rel="alternate" type="application/atom+xml" title="Mike Loukides's O'Reilly Radar Atom Feed" href="http://radar.oreilly.com/mikel/atom.xml" />
+
+
+
+
+<link rel="start" href="http://radar.oreilly.com/index.html" title="Home" />
+
+
+
+
+
+<link rel="prev" href="http://radar.oreilly.com/2010/06/unlocking-innovation-through-d.html" title="Making community health information as useful as weather data" />
+<link rel="next" href="http://radar.oreilly.com/2010/06/velocity-web-performance-operations-webops-devops.html" title="Velocity Culture: Web Operations, DevOps, etc..." />
+
+
+
+
+
+
+
+
+</head>
+
+<body class="mt-comment-confirmation layout-wt" onload="individualArchivesOnLoad(commenter_name)" id="radar">
+
+<ul class="accessibility-links">
+<li><a href="#page-content" title="skip navigation" accesskey="s">Skip navigation</a></li>
+<li><a href="#q" title="Skip to search" accesskey="4">Skip to search form</a></li>
+</ul>
+
+<div id="page">
+<div id="header-09">
+<div id="navbar">	
+<ul id="nav">
+<li id="home"><a href="http://oreilly.com" accesskey="h">Home</a>
+<ul>
+<li><a href="http://oreilly.com/community/">Community</a></li>
+<li><a href="http://oreilly.com/events/">Events</a></li>
+<li><a href="http://oreilly.com/webcasts/">Webcasts</a></li>
+
+<li><a href="http://elists.oreilly.com/">Newsletters</a></li>
+</ul></li>
+<li><a href="http://oreilly.com/store/index.html">Shop</a>
+<ul>
+<li><a href="http://oreilly.com/store/newreleases.html">New</a></li>
+<li><a href="http://oreilly.com/store/upcoming.html">Upcoming</a></li>
+<li><a href="http://oreilly.com/store/bestsellers.html">Bestselling</a></li>
+<li><a href="http://oreilly.com/store/complete.html">Complete List</a></li>
+<li><a href="http://oreilly.com/store/publisher.html">By Publisher</a></li>
+
+<li><a href="http://oreilly.com/roughcuts/">Rough Cuts</a></li>
+<li><a href="http://oreilly.com/ebooks/">Ebooks</a></li>
+<li><a href="http://oreilly.com/videos/">Videos</a></li>
+<li><a href="http://oreilly.com/store/order.html">Order Info</a></li>
+</ul>
+</li>
+<li><a href="http://answers.oreilly.com/">Answers</a></li>
+<li class="selected"><a href="http://radar.oreilly.com/index.html">Radar: News &amp; Commentary</a>
+<ul>
+<li><a href="http://radar.oreilly.com/data/"  class="selected">Data</a></li>
+<li><a href="http://radar.oreilly.com/edu2/" >Edu 2.0</a></li>
+<li><a href="http://radar.oreilly.com/gov2/" >Gov 2.0</a></li>
+<li><a href="http://radar.oreilly.com/mobile/" >Mobile</a></li>
+<li><a href="http://radar.oreilly.com/programming/" >Programming</a></li>
+<li><a href="http://radar.oreilly.com/publishing/" >Publishing</a></li>
+<li><a href="http://radar.oreilly.com/web2/" >Web 2.0</a></li>
+</ul>
+
+</li>
+<li><a href="http://safari.oreilly.com/?cid=orm-nav-global">Safari Books Online</a>
+<ul>
+<li><a href="http://my.safaribooksonline.com/home?cid=orm-nav-global&amp;portal=oreilly">Safari Home</a></li>
+<li><a href="http://my.safaribooksonline.com/subscribe?cid=orm-nav-global&amp;portal=oreilly">Subscribe</a></li>
+<li><a href="http://my.safaribooksonline.com/trial?cid=orm-nav-global&amp;portal=oreilly">Free Trial</a></li>
+
+<li><a href="http://my.safaribooksonline.com/books?cid=orm-nav-global&amp;portal=oreilly">Books</a></li>
+<li><a href="http://my.safaribooksonline.com/video?cid=orm-nav-global&amp;portal=oreilly">Videos</a></li>
+</ul></li>
+<li><a href="http://conferences.oreilly.com/">Conferences</a></li>
+<li><a href="http://training.oreilly.com/">Training</a>
+</li>
+<li><a href="http://www.oreillyschool.com/">School of Technology</a>
+<ul>
+<li><a href="https://oreillyschool.com/enroll/">Enroll</a></li>
+<li><a href="https://oreillyschool.com/career/">Your Career</a></li>
+
+<li><a href="https://oreillyschool.com/why/">Why OST</a></li>
+<li><a href="https://oreillyschool.com/courses/">Courses&nbsp;&amp;&nbsp;Certificates</a></li>
+<li><a href="https://oreillyschool.com/contact.php">Contact</a></li>
+<li><a href="https://oreillyschool.com/student/">Student Sign In</a></li>
+</ul></li>
+
+</ul>
+
+<ul id="account-actions">
+<li><a href="https://members.oreilly.com/" class="acct">My Account</a></li>
+<li><a href="https://epoch.oreilly.com/shop/cart.orm" class="cart">View Cart</a></li>
+
+</ul>
+</div>
+
+<div id="header">	
+<div id="logo"><a href="http://radar.oreilly.com/">O'Reilly Radar</a></div>
+<div id="tagline">Insight, analysis, and research about emerging technologies</div>
+
+<div id="search-box" class="yui-skin-sam">
+
+<form action="http://search.oreilly.com/" id="search-form">
+<fieldset>
+<span id="search-input">
+<span id="search-field"><input style="//height: 18px;" id="q" name="q" type="text" maxlength="64" accesskey="s" value="" /></span>
+<span id="search-button">
+<input class="button" type="submit" value="SEARCH" onclick="return searchverif();" />
+<input type="hidden" name="tmpl" value="radar">
+</span>
+</span>
+<span class="clear"></span>
+</fieldset>
+</form>
+</div>
+
+</div>
+
+<div id="subnav">
+<ul>
+<li><a href="http://radar.oreilly.com/data/"  class="selected">Data</a></li>
+<li><a href="http://radar.oreilly.com/edu2/" >Edu 2.0</a></li>
+<li><a href="http://radar.oreilly.com/gov2/" >Gov 2.0</a></li>
+<li><a href="http://radar.oreilly.com/mobile/" >Mobile</a></li>
+<li><a href="http://radar.oreilly.com/programming/" >Programming</a></li>
+<li><a href="http://radar.oreilly.com/publishing/" >Publishing</a></li>
+<li><a href="http://radar.oreilly.com/web2/" >Web 2.0</a></li>
+</ul>
+
+<ul class="chicklets">
+<li>Find us on: </li>
+<li><a href="http://www.youtube.com/user/OreillyMedia" onClick="var s=s_gi(s_account);  
+s.eVar22='radar sm icon youtube';
+s.events='event6';  
+s.linkTrackVars='eVar22,events';  
+s.linkTrackEvents='event6';  
+s.tl(this,'o','Featured Content Click');" title="Youtube" class="youtube"></a></li>
+<li><a href="http://www.facebook.com/OReilly" onClick="var s=s_gi(s_account);  
+s.eVar22='radar sm icon facebook';
+s.events='event6';  
+s.linkTrackVars='eVar22,events';  
+s.linkTrackEvents='event6';  
+s.tl(this,'o','Featured Content Click');" title="Facebook" class="facebook"></a></li>
+<li><a href="http://twitter.com/radar" onClick="var s=s_gi(s_account);  
+s.eVar22='radar sm icon twitter';
+s.events='event6';  
+s.linkTrackVars='eVar22,events';  
+s.linkTrackEvents='event6';  
+s.tl(this,'o','Featured Content Click');" title="Twitter" class="twitter"></a></li>
+<li><a href="http://plancast.com/OReilly" onClick="var s=s_gi(s_account);  
+s.eVar22='radar sm icon plancast';
+s.events='event6';  
+s.linkTrackVars='eVar22,events';  
+s.linkTrackEvents='event6';  
+s.tl(this,'o','Featured Content Click');" title="Plancast" class="plancast"></a></li>
+<li><a href="http://feeds.feedburner.com/oreilly/radar/atom" onClick="var s=s_gi(s_account);  
+s.eVar22='radar sm icon rss';
+s.events='event6';  
+s.linkTrackVars='eVar22,events';  
+s.linkTrackEvents='event6';  
+s.tl(this,'o','Featured Content Click');" title="Subscribe to Radar" class="rss"></a></li>
+<li><a href="http://radar.oreilly.com/about/" class="about">About Radar</a></li>
+</ul>
+
+</div>
+
+</div> <!-- /#header-09 -->
+
+<div id="content-09">
+<div id="alpha">
+
+
+
+
+
+
+<div class="post_block">
+			
+<!-- ISI_LISTEN_START -->
+<span class=ISI_MESSAGE><!-- This weblog is brought to you by the O'Reilly Radar --></span>
+
+<!-- Speakers -->
+<span class="ISI_IGNORE">
+<ul class="entry-tools">
+<span class="tool-block">
+<li class="button print"><a target="_new" href="#" onclick="window.open('http://radar.oreilly.com/print/2010/06/what-is-data-science.html','print','width=800,height=600,menubar=no,status=no,location=yes,toolbar=yes,scrollbars=yes'); return false;" rel="nofollow">Print <img src="http://cdn.oreilly.com/news/images/printtag.jpg" width="16" height="16"  alt="" /></a></li>
+<li class="button listen"><a accesskey="L" href="http://app.readspeaker.com/cgi-bin/rsent?customerid=14&amp;lang=en_us&amp;url=http://radar.oreilly.com/2010/06/what-is-data-science.html" onclick="readspeaker(this.href+'&amp;selectedhtml='+escape(selectedString), 'rs_39989'); return false;">Listen <img src="http://cdn.oreilly.com/radar/images/icon_listen_small.gif" width="10" height="9" alt="Speech Icon" /></a></li>
+<div class="readspeak"><div id="rs_39989"></div></div>
+</span>
+</ul>
+</span>
+<!-- end speakers -->
+
+<a href="http://radar.oreilly.com/mikel/index.html"><img src="http://cdn.oreilly.com/radar/images/people/photo_mikel_s.jpg" class="au-photo" alt="Mike Loukides" title="Mike Loukides" /></a>
+<h2 id="title"><a href="http://radar.oreilly.com/2010/06/what-is-data-science.html" target="_self"><!-- RSPEAK_START -->What is data science?</a></h2>
+<h3 class="subhead">Analysis: The future belongs to the companies and people that turn data into products.</h3>
+<p class="asset-meta">by <a href="http://radar.oreilly.com/mikel/index.html">Mike Loukides</a><!-- RSPEAK_STOP -->
+ |&nbsp;<a href="http://twitter.com/mikeloukides">@mikeloukides</a>
+|&nbsp;<a href="http://radar.oreilly.com/2010/06/what-is-data-science.html#comments">Comments: 47</a> 
+|&nbsp;<span class="date"> 2 June 2010</span></p>
+<p class="asset-meta"><span class="social-counters">
+<span class="retweet"><a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-url="http://radar.oreilly.com/2010/06/what-is-data-science.html" data-text="What is data science?" data-via="radar" data-related="oreillymedia:oreilly.com">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script></span>
+<span class="like"><iframe src="http://www.facebook.com/plugins/like.php?href=http://radar.oreilly.com/2010/06/what-is-data-science.html&amp;layout=button_count&amp;show_faces=false&amp;width=200&amp;action=like&amp;colorscheme=light&amp;height=20" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:110px; height:20px;" allowTransparency="true"></iframe></span>
+</span></p>
+
+<div class="entry-body">
+
+
+
+
+<!-- RSPEAK_START --><p><div style="float: right; width: 250px; padding: 0 0 0 25px; margin: 0 0 10px 20px; border-left: 1px solid #ccc9c3; border-bottom: 0px solid #ccc9c3;">
+<h3>Report sections</h3>
+
+<p style="margin-top: 5px;"><a href="#data-science">What is data science?</a></p>
+<p><a href="#data-location">Where data comes from</a></p>
+<p><a href="#data-scale">Working with data at scale</a></p>
+<p><a href="#data-story">Making data tell its story</a></p>
+<p><a href="#data-scientists">Data scientists</a></p>
+
+<p style="margin-left: -3px; margin-top: 10px;"><a href="http://cdn.oreilly.com/radar/2010/06/What_is_Data_Science.pdf"><img src="http://radar.oreilly.com/datascience-pdf-promo.png" border="0" width="200" alt="What is Data Science?"></a></p>
+
+<p style="margin-top: -5px;"><a href="http://cdn.oreilly.com/radar/2010/06/What_is_Data_Science.pdf">Download free PDF version</a></p>
+
+</p>
+</div>We've all heard it: according to Hal Varian, <a href="http://www.nytimes.com/2009/08/06/technology/06stats.html">statistics is the next sexy job</a>. Five years ago, in <a href="http://oreilly.com/web2/archive/what-is-web-20.html">What is Web 2.0</a>, Tim O'Reilly said that "data is the next Intel Inside."  But what does that statement mean?  Why do we suddenly care about statistics and about data?</p>
+
+<p>In this post, I examine the many sides of data science -- the technologies, the companies and the unique skill sets.</p>
+
+
+
+<p></p>
+
+<h2 id="data-science">What is data science?</h2>
+<p></p>
+
+
+<p>The web is full of "data-driven apps."  Almost any e-commerce application is a data-driven application. There's a database behind a web front end, and middleware that talks to a number of other databases and data services (credit card processing companies, banks, and so on).  But merely using data isn't really what we mean by "data science."  A data application acquires its value from the data itself, and creates more data as a result.  It's not just an application with data; it's a data product. Data science enables the creation of data products.</p>
+
+
+
+<p>One of the earlier data products on the Web was the <a href="http://en.wikipedia.org/wiki/CDDB">CDDB database</a>.  The developers of CDDB realized that any CD had a unique signature, based on the exact length (in samples) of each track on the CD.  Gracenote built a database of track lengths, and coupled it to a database of album metadata (track titles, artists, album titles). If you've ever used iTunes to rip a CD, you've taken advantage of this database. Before it does anything else, iTunes reads the length of every track, sends it to CDDB, and gets back the track titles. If you have a CD that's not in the database (including a CD you've made yourself), you can create an entry for an unknown album. While this sounds simple enough, it's revolutionary: CDDB views music as data, not as audio, and creates new value in doing so.  Their business is fundamentally different from selling music, sharing music, or analyzing musical tastes (though these can also be "data products"). CDDB arises entirely from viewing a musical problem as a data problem.</p>
+
+
+<div style="border-top: thin gray solid; border-bottom: thin gray solid; padding: 20px; margin: 20px 2px;"><a href="https://en.oreilly.com/strata2011/public/register?cmp=il-radar-st11-strata-data-science"><img style="float: left; border: none; padding-right: 10px;" src="http://radar.oreilly.com/strata11-promo-radar.png" /></a><a href="http://strataconf.com/"><strong>Strata: Making Data Work</strong></a>, being held Feb. 1-3, 2011 in Santa Clara, Calif.,  will focus on the business and practice of data. The conference will provide three days of training, breakout sessions, and plenary discussions -- along with an Executive Summit, a Sponsor Pavilion, and other events showcasing the new data ecosystem.<br /><br />
+
+<a href="https://en.oreilly.com/strata2011/public/register?cmp=il-radar-st11-strata-data-science"><strong>Save 30% off registration with the code STR111RAD</strong></a><br clear="left"></div><br />
+
+
+<p>Google is a master at creating data products. Here's a few examples:</p>
+
+<ul>
+<li> <p>Google's breakthrough was realizing that a search engine could use input other than the text on the page. Google's <a href="http://en.wikipedia.org/wiki/PageRank">PageRank</a> algorithm was among the first to use data outside of the page itself, in particular, the number of links pointing to a page.  Tracking links made Google searches much more useful, and PageRank has been a key ingredient to the company's success.</p></li>
+
+<li><p>Spell checking isn't a terribly difficult problem, but by suggesting corrections to misspelled searches, and observing what the user clicks in response, Google made it much more accurate.  They've built a dictionary of common misspellings, their corrections, and the contexts in which they occur.</p></li> 
+
+<li> <p> Speech recognition has always been a hard problem, and it remains difficult.  But Google has made huge strides by using the voice data they've collected, and has been able to <a href="http://gdgt.com/discuss/voice-recognition-is-amazing-ive-only-68e/">integrate voice search</a> into their core search engine. </li>
+
+<li> <p>During the Swine Flu epidemic of 2009, Google was able to track the progress of the epidemic <a href="http://www.google.org/flutrends/about/how.html">by following searches for flu-related topics</a>.</p></li> </ul>
+
+
+<!-- Swine Flu sidebar -->
+<div style="border: 1px solid #ddd; width: 98%; height: auto; padding: 3px; margin: 10px 0 10px 0;">
+
+<p style="margin: 0 0 10px 0; font-weight: bold; font-size: 1.1em; color: #fff; background: #990000; padding: 3px; text-align: left; border-bottom: 1px solid #000;">Flu trends</p>
+
+<p style="margin: 0;"><img src="http://radar.oreilly.com/2010/06/01/datascience-swing-flu.png" width="580"></p>
+
+<p style="margin: 5px 5px 5px 5px; font-style: italic;">Google was able to spot trends in the Swine Flu epidemic roughly two weeks before the Center for Disease Control by analyzing searches that people were making in different regions of the country.</p>
+</div>
+
+
+<p>Google isn't the only company that knows how to use data.  <a href="http://www.facebook.com">Facebook</a> and <a href="http://www.linkedin.com">LinkedIn</a> use patterns of friendship relationships to suggest other people you may know, or should know, with sometimes frightening accuracy.  <a href="http://www.amazon.com">Amazon</a> saves your searches, correlates what you search for with what other users search for, and uses it to create surprisingly appropriate recommendations.  These recommendations are  "data products" that help to drive Amazon's more traditional retail business.  They come about because Amazon understands that a book isn't just a book, a camera isn't just a camera, and a customer isn't just a customer; customers generate a trail of "data exhaust" that can be mined and put to use, and a camera is a cloud of data that can be correlated with the customers' behavior, the data they leave every time they visit the site.</p>
+
+
+
+<p>The thread that ties most of these applications together is that data collected from users provides added value.  Whether that data is search terms, voice samples, or product reviews, the users are in a feedback loop in which they contribute to the products they use.  That's the beginning of data science.</p>
+
+
+
+<p>In the last few years, there has been an explosion in the amount of data that's available.  Whether we're talking about web server logs, tweet streams, online transaction records, "citizen science," data from sensors, government data, or some other source, the problem isn't finding data, it's figuring out what to do with it. And it's not just companies using their own data, or the data contributed by their users. It's increasingly common to mashup data from a number of sources. "<a href="http://oreilly.com/catalog/9780596804787">Data Mashups in R</a>" analyzes mortgage foreclosures in Philadelphia County by taking a public report from the county sheriff's office, extracting addresses and using Yahoo to convert the addresses to latitude and longitude, then using the geographical data to place the foreclosures on a map (another data source), and group them by neighborhood, valuation, neighborhood per-capita income, and other socio-economic factors. </p>
+
+
+
+<p>The question facing every company today, every startup, every non-profit, every project site that wants to attract a community, is how to use data effectively -- not just their own data, but all the data that's available and relevant. Using data effectively requires something different from traditional statistics, where actuaries in business suits perform arcane but fairly well-defined kinds of analysis.  What differentiates data science from statistics is that data science is a holistic approach. We're increasingly finding data in the wild, and data scientists are involved with gathering data, massaging it into a tractable form, making it tell its story, and presenting that story to others. </p>
+
+
+
+<p>To get a sense for what skills are required, let's look at the data lifecycle: where it comes from, how you use it, and where it goes.</p>
+
+
+<p></p>
+<h2 id="data-location">Where data comes from</h2>
+<p></p>
+
+
+<p>Data is everywhere: your government, your web server, your business partners, <a href="http://www.nytimes.com/2010/05/02/magazine/02self-measurement-t.html?ref=magazine">even your body</a>.  While we aren't drowning in a sea of data, we're finding that almost everything can (or has) been instrumented.  At O'Reilly, we frequently combine publishing industry data from <a href="http://en.wikipedia.org/wiki/Nielsen_BookScan">Nielsen BookScan</a> with our own sales data, publicly available Amazon data, and even job data to see what's happening in the publishing industry.  Sites like <a href="http://infochimps.org/">Infochimps</a> and <a href="http://www.factual.com/">Factual</a> provide access to many large datasets, including climate data, MySpace activity streams, and game logs from sporting events.  Factual enlists users to update and improve its datasets, which cover topics as diverse as endocrinologists to hiking trails. </p>
+
+<p><div style="float: right; margin: 5px 0 12px 12px; border: 1px solid #ddd; width: 300px; height: auto; padding: 5px;"><p style="margin: 0 0 5px 0; font-weight: bold; color: #fff; background: #990000; padding: 3px; border-bottom: 1px solid #000;">1956 disk drive</p><img src="http://radar.oreilly.com/2010/06/01/datascience-56-drive.jpg" style="margin: 0 0 5px 0;"><p style="margin: 0; font-style: italic;">One of the first commercial disk drives from IBM. It has a 5 MB capacity and it's stored in a cabinet roughly the size of a luxury refrigerator.  In contrast, a 32 GB microSD card measures around 5/8 x 3/8 inch and weighs about 0.5 gram.</p>
+<p style="font-size: .8em; margin: 10px 0 5px 0;">Photo: Mike Loukides. Disk drive on display at <a href="http://www.almaden.ibm.com/">IBM Almaden Research</a></p></div>Much of the data we currently work with is the direct consequence of Web 2.0, and of Moore's Law applied to data.  The web has people spending more time online, and leaving a trail of data wherever they go. Mobile applications leave an even richer data trail, since many of them are annotated with geolocation, or involve video or audio, all of which can be mined.  Point-of-sale devices and frequent-shopper's cards make it possible to capture all of your retail transactions, not just the ones you make online.  All of this data would be useless if we couldn't store it, and that's where Moore's Law comes in.  Since the early '80s, processor speed has increased from <a href="http://en.wikipedia.org/wiki/Motorola_68000">10 MHz</a> to 3.6 GHz -- an increase of 360 (not counting increases in word length and number of cores).  But we've seen much bigger increases in storage capacity, on every level.  RAM has moved from $1,000/MB to roughly $25/GB -- a price reduction of about 40000, to say nothing of the reduction in size and increase in speed.  Hitachi made the <a href="http://news.cnet.com/2300-1010_3-6031405-6.html">first gigabyte disk drives</a> in 1982, weighing in at roughly 250 pounds; now terabyte drives are consumer equipment, and a 32 GB microSD card weighs about half a gram.  Whether you look at bits per gram, bits per dollar, or raw capacity, storage has more than kept pace with the increase of CPU speed.  </p>
+
+ 
+
+<p>The importance of Moore's law as applied to data isn't just geek pyrotechnics.  Data expands to fill the space you have to store it.  The more storage is available, the more data you will find to put into it.  The data exhaust you leave behind whenever you surf the web, friend someone on Facebook, or make a purchase in your local supermarket, is all carefully collected and analyzed.  Increased storage capacity demands increased sophistication in the analysis and use of that data. That's the foundation of data science. 
+</p>
+ 
+
+<p>So, how do we make that data useful?  The first step of any data analysis project is "data conditioning," or getting data into a state where it's usable. We are seeing more data in formats that are easier to consume: Atom data feeds, web services, microformats, and other newer technologies provide data in formats that's directly machine-consumable.  But old-style <a href="http://en.wikipedia.org/wiki/Data_scraping#Screen_scraping">screen scraping</a> hasn't died, and isn't going to die. Many sources of "wild data" are extremely messy.  They aren't well-behaved XML files with all the  metadata nicely in place.  The foreclosure data used in "<a href="http://oreilly.com/catalog/9780596804787 id=hni2">Data Mashups in R</a>" was posted on a public website by the Philadelphia county sheriff's office.  This data was presented as an HTML file that was probably generated automatically from a spreadsheet.  If you've ever seen the HTML that's generated by Excel, you know that's going to be fun to process. </p>
+
+ 
+
+<p>Data conditioning can involve cleaning up messy HTML with tools like <a href="http://www.crummy.com/software/BeautifulSoup/">Beautiful Soup</a>, natural language processing to parse plain text in English and other languages, or even getting  humans to do the dirty work.  You're likely to be dealing with an array of data sources, all in different forms.  It would be nice if there was a standard set of tools to do the job, but there isn't.  To do data conditioning, you have to be ready for whatever comes, and be willing to use anything from ancient Unix utilities such as <a href="http://oreilly.com/catalog/9780596000707">awk</a> to XML parsers and machine learning libraries. Scripting languages, such as <a href="http://oreilly.com/perl/">Perl</a> and <a href="http://oreilly.com/python/">Python</a>, are essential. </p>
+
+ 
+
+<p>Once you've parsed the data, you can start thinking about the quality of your data.  Data is frequently missing or incongruous.  If data is missing, do you simply ignore the missing points?  That isn't always possible.  If data is incongruous, do you decide that something is wrong with badly behaved data (after all, equipment fails), or that the incongruous data is telling its own story, which may be more  interesting?  It's reported that the discovery of ozone layer depletion was delayed because <a href="http://www.nas.nasa.gov/About/Education/Ozone/history.html">automated data collection tools discarded readings that were too low</a> <sup><a href="#footnote-1">1</a></sup>.  In data science, what you have is frequently all you're going to get. It's usually impossible to get "better" data, and you have no alternative but to work with the data at hand. </p>
+
+ 
+
+<p>If the problem involves human language, understanding the data adds another dimension to  the problem.  Roger Magoulas, who runs the data analysis group at O'Reilly, was recently searching a database for Apple job listings requiring geolocation skills.  While that sounds like a simple task, the trick was disambiguating "Apple" from many job postings in the growing Apple industry.  To do it well you need to understand the grammatical structure of a job posting; you need to be able to parse the English.  And that problem is showing up more and more frequently. Try using <a href="http://google.com/trends">Google Trends</a> to figure out what's happening with the <a href="http://google.com/trends?q=Cassandra">Cassandra</a> database or the <a href="http://google.com/trends?q=Python">Python</a> language, and you'll get a sense of the problem.  Google has indexed many, many websites about large snakes.  Disambiguation is never an easy task, but tools like the <a href="http://www.nltk.org/">Natural Language Toolkit</a> library can make it simpler. </p>
+
+ 
+
+<p>When natural language processing fails, you can replace artificial intelligence with human intelligence.  That's where services like Amazon's <a href="https://www.mturk.com/mturk/welcome id=k3la">Mechanical Turk</a> come in.  If you can split your task up into a large number of subtasks that are easily described, you can use Mechanical Turk's marketplace for cheap labor.  For example, if you're looking at job listings, and want to know which originated with Apple, you can have real people do the classification for roughly $0.01 each.  If you have already reduced the set to 10,000 postings with the word "Apple," paying humans $0.01 to classify them only costs $100. </p>
+
+
+<p></p>
+<h2 id="data-scale">Working with data at scale</h2>
+<p></p>
+
+<p>We've all heard a lot about "big data," but "big" is really a red herring.  Oil companies, telecommunications companies, and other data-centric industries have had huge datasets for a long time.  And as storage capacity continues to expand, today's "big" is certainly tomorrow's "medium" and next week's "small."  The most meaningful definition I've heard: <em>"big data" is when the size of the data itself becomes part of the problem</em>. We're discussing data problems ranging from gigabytes to petabytes of data.  At some point, traditional techniques for working with data run out of steam.  </p>
+
+ 
+
+<p>What are we trying to do with data that's different?  According to Jeff Hammerbacher <sup><a href="#footnote-2">2</a></sup> (<a href="http://twitter.com/hackingdata">@hackingdata</a>), we're trying to build information platforms or dataspaces.  Information platforms are similar to traditional data warehouses, but different. They expose rich APIs, and are designed for exploring and understanding the data rather than for traditional analysis and reporting.  They accept all data formats, including the most messy, and their schemas evolve as the understanding of the data changes. </p>
+
+ 
+
+<p>Most of the organizations that have built data platforms have found it necessary to go beyond the relational database model.  Traditional relational database systems stop being effective at this scale. Managing sharding and  replication across a horde of database servers is difficult and slow.  The need to define a schema in advance conflicts with reality of multiple, unstructured data sources, in which you may not know what's important until after you've analyzed the data. Relational databases are designed for consistency, to support complex transactions that can easily be rolled back if any one of a complex set of operations fails. While rock-solid consistency is crucial to many applications, it's not really necessary for the kind of analysis we're discussing here.  Do you really care if you have 1,010 or 1,012 Twitter followers?  Precision has an allure, but in most data-driven applications outside of finance, that allure is deceptive.  Most data analysis is comparative: if you're asking whether sales to Northern Europe are increasing faster than sales to Southern Europe, you aren't concerned about the difference between 5.92 percent annual growth and 5.93 percent. </p>
+
+ 
+
+<p>To store huge datasets effectively, we've seen a new breed of databases appear.  These are frequently called NoSQL databases, or Non-Relational databases, though neither term is very useful. They group together fundamentally dissimilar products by telling you what they aren't. Many of these databases are the logical descendants of Google's <a href="http://labs.google.com/papers/bigtable.html">BigTable</a> and Amazon's <a href="http://www.allthingsdistributed.com/2007/10/amazons_dynamo.html">Dynamo</a>, and are designed to be distributed across many nodes, to provide "eventual consistency" but not absolute consistency, and to have very flexible schema. While there are two dozen or so products available (almost all of them open source), a few leaders have established themselves:</p> 
+
+   
+
+  <ul>
+
+    <li>
+
+     <p> <a href="http://cassandra.apache.org/">Cassandra</a>: Developed at Facebook, in production use at Twitter, Rackspace, Reddit, and  other large sites.  Cassandra is designed for high performance, reliability, and automatic replication.  It has a very flexible data model. A new startup, <a href="http://www.riptano.com/">Riptano</a>, provides commercial support.  </p>
+
+    </li>
+
+    <li>
+
+    <p>  <a href="http://hadoop.apache.org/hbase/">HBase</a>: Part of the Apache Hadoop project, and modelled on Google's BigTable.  Suitable for extremely large databases (billions of rows, millions of columns), distributed across thousands of nodes.  Along with Hadoop, commercial support is provided by <a href="http://www.cloudera.com/">Cloudera</a>. </p>
+
+    </li>
+
+  </ul>
+
+
+
+ <p>Storing data is only part of building a data platform, though.  Data is only useful if you can do something with it, and enormous datasets present computational problems.  Google popularized the <a href="http://labs.google.com/papers/mapreduce.html">MapReduce</a> approach, which is basically a divide-and-conquer strategy for distributing an extremely large problem across an extremely large computing cluster.  In the "map" stage, a programming task is divided into a number of identical subtasks, which are then distributed across many processors; the intermediate results are then combined by a single reduce task.  In hindsight, MapReduce seems like an obvious solution to Google's biggest problem, creating large searches. It's easy to distribute a search across thousands of processors, and then combine the results into a single set of answers.  What's less obvious is that MapReduce has proven to be widely applicable to many large data problems, ranging from search to machine learning.</p>
+ 
+<p>The most popular open source implementation of MapReduce is the <a href="http://hadoop.apache.org/">Hadoop project</a>.  Yahoo's claim that they had built the <a href="http://developer.yahoo.net/blogs/hadoop/2008/02/yahoo-worlds-largest-production-hadoop.html">world's largest production Hadoop application</a>, with 10,000 cores running Linux, brought it onto center stage. Many of the key Hadoop developers have found a home at <a href="http://www.cloudera.com/">Cloudera</a>, which provides commercial support.  Amazon's <a href="http://aws.amazon.com/elasticmapreduce/">Elastic MapReduce</a> makes it much easier to put Hadoop to work without investing in racks of Linux machines, by providing preconfigured Hadoop images for its EC2 clusters. You can allocate and de-allocate processors as needed, paying only for the time you use them.  </p>
+
+ 
+
+<p><a href="http://oreilly.com/catalog/9780596521981">Hadoop</a> goes far beyond a simple MapReduce implementation (of which there are several); it's the key component of a data platform.  It incorporates <a href="http://hadoop.apache.org/hdfs/">HDFS</a>, a distributed filesystem designed for the performance and reliability requirements of huge datasets; the HBase database; <a href="http://hadoop.apache.org/hive/">Hive</a>, which lets developers explore Hadoop datasets using SQL-like queries; a high-level dataflow language called <a href="http://hadoop.apache.org/pig/">Pig</a>; and other components.  If anything can be called a one-stop information platform, Hadoop is it.</p>
+
+<p>Hadoop has been instrumental in enabling "agile" data analysis.  In software development, "agile practices" are associated with faster product cycles, closer interaction between developers and consumers, and testing. Traditional data analysis has been hampered by extremely long turn-around times. If you start a calculation, it might not finish for hours, or even days. But Hadoop (and particularly Elastic MapReduce) make it easy to build clusters that can perform computations on long datasets quickly.  Faster computations make it easier to test different assumptions, different datasets, and different algorithms. It's easer to consult with clients to figure out whether you're asking the right questions, and it's possible to pursue intriguing possibilities that you'd otherwise have to drop for lack of time. </p>
+
+ 
+
+<p>Hadoop is essentially a batch system, but <a href="http://code.google.com/p/hop/">Hadoop Online Prototype (HOP)</a> is an experimental project that enables stream processing. Hadoop processes data as it arrives, and delivers intermediate results in (near) real-time.  Near real-time data analysis enables features like <a href="http://search.twitter.com/">trending topics</a> on sites like <a href="http://twitter.com">Twitter</a>.  These features only require soft real-time; reports on trending topics don't require millisecond accuracy. As with the number of followers on Twitter, a "trending topics" report only needs to be current to within five minutes -- or even an hour.  According to Hilary Mason (<a href="http://twitter.com/hmason">@hmason</a>), data scientist at <a href="http://bit.ly/">bit.ly</a>, it's possible to precompute much of the calculation, then use one of the experiments in real-time MapReduce to get presentable results.  </p>
+
+ 
+
+<p>Machine learning is another essential tool for the data scientist.  We now expect web and mobile applications to incorporate recommendation engines, and building a recommendation engine is a quintessential artificial intelligence problem. You don't have to look at many modern web applications to see classification, error detection, image matching (behind <a href="http://www.google.com/mobile/goggles/">Google Goggles</a> and <a href="http://www.snaptell.com/">SnapTell</a>) and even face detection -- an ill-advised mobile application lets you take someone's picture with a cell phone, and look up that person's identity using photos available online.  <a href="http://www.stanford.edu/class/cs229/">Andrew Ng's Machine Learning course</a> is one of the most popular courses in computer science at Stanford, with hundreds of students (<a href="http://www.youtube.com/watch?v=UzxYlbK2c7E id=j0ha">this video is highly recommended</a>). </p>
+
+ 
+
+<p>There are many libraries available for machine learning: <a href="http://pybrain.org/">PyBrain</a> in Python, <a href="http://elefant.developer.nicta.com.au/">Elefant</a>, <a href="http://www.cs.waikato.ac.nz/ml/weka/">Weka</a> in Java, and <a href="http://lucene.apache.org/mahout/">Mahout</a> (coupled to Hadoop).  Google has just announced their <a href="http://code.google.com/apis/predict/">Prediction API</a>, which exposes their machine learning algorithms for public use via a RESTful interface.  For computer vision, the <a href="http://opencv.willowgarage.com/wiki/">OpenCV</a> library is a de-facto standard.</p> 
+
+<p><a href="https://www.mturk.com/mturk/welcome id=k3la">Mechanical Turk</a> is also an important part of the toolbox. Machine learning almost always requires a "training set," or a significant body of known data with which to develop and tune the application. The Turk is an excellent way to develop training sets. Once you've collected your training data (perhaps a large collection of public photos from Twitter), you can have humans classify them inexpensively -- possibly sorting them into categories, possibly drawing circles around faces, cars, or whatever interests you.  It's an excellent way to classify a few thousand data points at a cost of a few cents each. Even a relatively large job only costs a few hundred dollars.  </p>
+ 
+
+<p>While I haven't stressed traditional statistics, building statistical models plays an important role in any data analysis.  According to <a href="http://www.dataspora.com/">Mike Driscoll</a> (<a href="http://twitter.com/dataspora">@dataspora</a>), statistics is the "grammar of data science." It is crucial to "making data speak coherently."  We've all heard the joke that eating pickles causes death, because everyone who dies has eaten pickles. That joke doesn't work if you understand what correlation means.  More to the point, it's easy to notice that one advertisement for <em><a href="http://oreilly.com/catalog/9780596801717/">R in a Nutshell</a></em> generated 2 percent more conversions than another.  But it takes statistics to know whether this difference is significant, or just a random fluctuation.  Data science isn't just about the existence of data, or making guesses about what that data might mean; it's about testing hypotheses and making sure that the conclusions you're drawing from the data are valid.  Statistics plays a role in everything from traditional business intelligence (BI) to understanding how Google's ad auctions work. Statistics has become a basic skill.  It isn't superseded by newer techniques from machine learning and other disciplines; it complements them. </p>
+
+ 
+
+<p>While there are many commercial statistical packages, the open source <a href="http://www.r-project.org/">R language</a> -- and its comprehensive package library, <a href="http://cran.r-project.org/">CRAN</a> -- is an essential tool.  Although R is an odd and quirky language, particularly to someone with a background in computer science, it comes close to providing "one stop shopping" for most statistical work.  It has excellent graphics facilities; CRAN includes parsers for many kinds of data; and newer extensions extend R into distributed computing.  If there's a single tool that provides an end-to-end solution for statistics work, R is it. </p>
+
+
+<p></p>
+<h2 id="data-story">Making data tell its story</h2>
+<p></p>
+
+
+<p>A picture may or may not be worth a thousand words, but a picture is certainly worth a thousand numbers.  The problem with most data analysis algorithms is that they generate a set of numbers.  To understand what the numbers mean, the stories they are really telling, you need to generate a graph.  Edward Tufte's <a href="http://www.amazon.com/Visual-Display-Quantitative-Information-2nd/dp/0961392142/">Visual Display of Quantitative Information</a> is the classic for data visualization, and a foundational text for anyone practicing data science. But that's not really what concerns us here.  Visualization is crucial to each stage of the data scientist.  According to Martin Wattenberg (<a href="http://twitter.com/wattenberg">@wattenberg</a>, founder of <a href="http://flowingmedia.com/ id=iu13 title="Flowing Media)">Flowing Media)</a>, visualization is key to data conditioning: if you want to find out just how bad your data is, try plotting it. Visualization is also frequently the first step in analysis. Hilary Mason says that when she gets a new data set, she starts by making a dozen or more scatter plots, trying to get a sense of what might be interesting. Once you've gotten some hints at what the data might be saying, you can follow it up with more detailed analysis. </p>
+
+
+<p>There are many packages for plotting and presenting data.  <a href="http://www.gnuplot.info/">GnuPlot</a> is very effective; R incorporates a fairly comprehensive graphics package; Casey Reas' and Ben Fry's <a href="http://processing.org/">Processing</a> is the state of the art, particularly if you need to create animations that show how things change over time.  At IBM's <a href="http://manyeyes.alphaworks.ibm.com/manyeyes/">Many Eyes</a>, many of the visualizations are full-fledged interactive applications. </p>
+
+ 
+
+<p>Nathan Yau's <a href="http://flowingdata.com/">FlowingData</a> blog is a great place to look for creative visualizations. One of my favorites is this animation of the <a href="http://flowingdata.com/2010/04/07/watching-the-growth-of-walmart-now-with-100-more-sams-club/">growth of Walmart</a> over time. And this is one place where "art" comes in: not just the aesthetics of the visualization itself, but how you understand it.  Does it look like the spread of cancer throughout a body?  Or the spread of a flu virus through a population?  Making data tell its story isn't just a matter of presenting results; it involves making connections, then going back to other data sources to verify them.  Does a successful retail chain spread like an epidemic, and if so, does that give us new insights into how economies work?  That's not a question we could even have asked a few years ago. There was insufficient computing power, the data was all locked up in proprietary sources, and the tools for working with the data were insufficient. It's the kind of question we now ask routinely.</p>
+
+<p></p>
+<h2 id="data-scientists">Data scientists</h2>
+<p></p>
+
+<p>Data science requires skills ranging from traditional computer science to mathematics to art.  Describing the data science group he put together at Facebook (possibly the first data science group at a consumer-oriented web property), Jeff Hammerbacher said: </p>
+
+<blockquote>
+
+<p>  ... on any given day, a team member could author a multistage processing pipeline in Python, design a hypothesis test, perform a regression analysis over data samples with R, design and implement an algorithm for some data-intensive product or service in Hadoop, or communicate the results of our analyses to other members of the organization <sup><a href="#footnote-3">3</a></sup> </p> 
+
+</blockquote>
+
+<p>Where do you find the people this versatile?  According to DJ Patil, chief scientist at <a href="http://www.linkedin.com/">LinkedIn</a> (<a href="http://twitter.com/dpatil">@dpatil</a>), the best data scientists tend to be "hard scientists," particularly physicists, rather than computer science majors. Physicists have a strong mathematical background, computing skills, and come from a discipline in which survival depends on getting the most from the data.  They have to think about the big picture, the big problem. When you've just spent a lot of grant money generating data, you can't just throw the data out if it isn't as clean as you'd like.  You have to make it tell its story.  You need some creativity for when the story the data is telling isn't what you think it's telling.</p>  
+
+ 
+
+<p>Scientists also know how to break large problems up into smaller problems. Patil described the process of creating the group recommendation feature at LinkedIn.  It would have been easy to turn this into a high-ceremony development project that would take thousands of hours of developer time, plus thousands of hours of computing time to do massive correlations across LinkedIn's membership.  But the process worked quite differently: it started out with a relatively small, simple program that looked at members' profiles and made recommendations accordingly. Asking things like, did you go to Cornell? Then you might like to join the Cornell Alumni group.  It then branched out incrementally. In addition to looking at profiles, LinkedIn's data scientists started looking at events that members attended.  Then at books members had in their libraries.  The result was a valuable data product that analyzed a huge database -- but it was never conceived as such.  It started small, and added value iteratively.  It was an agile, flexible process that built toward its goal incrementally, rather than tackling a huge mountain of data all at once. </p>
+
+<p>This is the heart of what Patil calls "data jiujitsu" -- using smaller auxiliary problems to solve a large, difficult problem that appears intractable.  CDDB is a great example of data jiujitsu: identifying music by analyzing an audio stream directly is a very difficult problem (though not unsolvable -- see <a href="http://www.midomi.com/">midomi</a>, for example).  But the CDDB staff used data creatively to solve a much more tractable problem that gave them the same result. Computing a signature based on track lengths, and then looking up that signature in a database, is trivially simple. </p>
+
+
+<!-- hiring trends sidebar -->
+<div style="border: 1px solid #ddd; width: 98%; height: auto; padding: 3px; margin: 10px 0 10px 0;">
+
+<p style="margin: 0 0 10px 0; padding: 3px; font-size: 1.1em; font-weight: bold; color: #fff; background: #990000; text-align: left; border-bottom: 1px solid #000;">Hiring trends for data science</p>
+
+<p style="margin: 0;"><img src="http://radar.oreilly.com/2010/06/01/datascience-jobs.png" width="580"></p>
+
+<p style="margin: 10px 5px 5px 5px; font-style: italic;">It's not easy to get a handle on jobs in data science.  However, data from <a href="http://radar.oreilly.com/research/">O'Reilly Research</a> shows a steady year-over-year increase in Hadoop and Cassandra job listings, which are good proxies for the "data science" market as a whole.  This graph shows the increase in Cassandra jobs, and the companies listing Cassandra positions, over time.  </p>
+</div>
+
+
+<p>Entrepreneurship is another piece of the puzzle.  Patil's first flippant answer to "what kind of person are you looking for when you hire a data scientist?" was "someone you would start a company with."  That's an important insight: we're entering the era of products that are built on data.  We don't yet know what those products are, but we do know that the winners will be the people, and the companies, that find those products.  Hilary Mason came to the same conclusion. Her job as scientist at bit.ly is really to investigate the data that bit.ly is generating, and find out how to build interesting products from it.  No one in the nascent data industry is trying to build the 2012 Nissan Stanza or Office 2015; they're all trying to find new products.  In addition to being physicists, mathematicians, programmers, and artists, they're entrepreneurs. </p>
+
+
+<p>Data scientists combine entrepreneurship with patience, the willingness to build data products incrementally, the ability to explore, and the ability to iterate over a solution.  They are inherently interdiscplinary. They can tackle all aspects of a problem, from initial data collection and data conditioning to drawing conclusions.  They can think outside the box to come up with new ways to view the problem, or to work with very broadly defined problems: "here's a lot of data, what can you make from it?" </p>
+
+
+<p>The future belongs to the companies who figure out how to collect and use data successfully. Google, Amazon, Facebook, and LinkedIn have all tapped into their datastreams and made that the core of their success.  They were the vanguard, but newer companies like bit.ly are following their path. Whether it's mining your personal biology, building maps from the shared experience of millions of travellers, or studying the URLs that people pass to others, the next generation of successful businesses will be built around data.  <a href="http://www.mckinseyquarterly.com/Hal_Varian_on_how_the_Web_challenges_managers_2286">The part of Hal Varian's quote that nobody remembers says it all</a>: 
+
+<blockquote><p><strong>The ability to take data -- to be able to understand it, to process it, to extract value from it, to visualize it, to communicate it -- that's going to be a hugely important skill in the next decades.</strong></p></blockquote>
+
+<p>Data is indeed the new Intel Inside.  </p>
+
+<br />
+
+<hr>
+
+<br />
+
+<p><strong>O'Reilly publications related to data science</strong></p>
+
+<p><a href="http://oreilly.com/catalog/9780596801717/">R in a Nutshell</a><br />
+A quick and practical reference to learn what is becoming the standard for developing statistical software.</p>
+
+<p><a href="http://oreilly.com/catalog/9780596510497/">Statistics in a Nutshell</a><br />
+An introduction and reference for anyone with no previous background in statistics.</p>
+
+
+<p><a href="http://oreilly.com/catalog/9780596802363/">Data Analysis with Open Source Tools</a><br />
+This book shows you how to think about data and the results you want to achieve with it.</p>
+
+<p><a href="http://oreilly.com/catalog/9780596529321/">Programming Collective Intelligence</a><br />
+Learn how to build web applications that mine the data created by people on the Internet.</p>
+
+<p><a href="http://oreilly.com/catalog/9780596157128/">Beautiful Data</a><br />
+Learn from the best data practitioners in the field about how wide-ranging -- and beautiful -- working with data can be.</p>
+
+<p><a href="http://oreilly.com/catalog/0636920000617/">Beautiful Visualization</a><br />
+This book demonstrates why visualizations are beautiful not only for their aesthetic design, but also for elegant layers of detail.</p>
+
+<p><a href="http://oreilly.com/catalog/9780596527587/">Head First Statistics</a><br />
+This book teaches statistics through puzzles, stories, visual aids, and real-world examples.</p>
+
+<p><a href="http://oreilly.com/catalog/9780596153946/">Head First Data Analysis</a><br />
+Learn how to collect your data, sort the distractions from the truth, and find meaningful patterns.</p>
+
+<br />
+
+<hr>
+
+<br />
+
+<p><sup id="footnote-1">1</sup> The NASA article denies this, but also says that in 1984, they decided that the low values (whch went back to the 70s) were "real." Whether humans or software decided to ignore anomalous data, it appears that data was ignored.</p>
+
+<p><sup id="footnote-2">2 </sup> "Information Platforms as Dataspaces," by Jeff Hammerbacher (in <em><a href="http://oreilly.com/catalog/9780596157128/ id=qvhu title="Beautiful Data">Beautiful Data</a></em>)</p>
+
+<p><sup id="footnote-3">3 </sup> "Information Platforms as Dataspaces," by Jeff Hammerbacher (in <em><a href="http://oreilly.com/catalog/9780596157128/ id=aod4 title="Beautiful Data">Beautiful Data</a></em>)</p>
+<!-- RSPEAK_STOP -->
+
+</div>
+
+<!-- ISI_LISTEN_STOP -->
+<div class="noindex">
+<p class="entry-footer">tags:&nbsp;<a href="http://blogs.oreilly.com/cgi-bin/mt/mt-search.cgi?blog_id=57&amp;tag=data&amp;limit=20&amp;IncludeBlogs=57">data</a>, <a href="http://blogs.oreilly.com/cgi-bin/mt/mt-search.cgi?blog_id=57&amp;tag=data%20science&amp;limit=20&amp;IncludeBlogs=57">data science</a>, <a href="http://blogs.oreilly.com/cgi-bin/mt/mt-search.cgi?blog_id=57&amp;tag=data%20scientist&amp;limit=20&amp;IncludeBlogs=57">data scientist</a></p>
+<p class="entry-footer"><span class="social-counters">
+<span class="retweet"><a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-url="http://radar.oreilly.com/2010/06/what-is-data-science.html" data-text="What is data science?" data-via="radar" data-related="oreillymedia:oreilly.com">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script></span>
+<span class="like"><iframe src="http://www.facebook.com/plugins/like.php?href=http://radar.oreilly.com/2010/06/what-is-data-science.html&amp;layout=button_count&amp;show_faces=false&amp;width=200&amp;action=like&amp;colorscheme=light&amp;height=20" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:110px; height:20px;" allowTransparency="true"></iframe></span>
+</span></p>
+</div> <!-- /noindex -->
+
+
+
+</div> <!-- /post_block -->
+
+<div class="content-nav">
+
+</div>
+
+<div id="comments">
+<div class="noindex">
+
+
+<p class="header">Comments: 47</p>
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2561560">Tim O'Reilly
+</span> 
+<a href="#comment-2561560" title="Permalink to this comment"><span class="date">[ 2 June 2010 12:25 PM]</span></a>
+</p>
+<p>
+<p>This is a really important and articulate post, Mike.  I wish I'd written it.</p>
+
+<p>I'm surprised that there are no comments, but 123 retweets already.  I guess retweets are the new comments.<br />
+</p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2561574">joe
+</span> 
+<a href="#comment-2561574" title="Permalink to this comment"><span class="date">[ 2 June 2010 12:33 PM]</span></a>
+</p>
+<p>
+<p>Good post, definitely where things are going. I just wrote about this and related topics over the long weekend. <a href="http://www.joeandmotorboat.com/2010/05/31/beyond-bigdata/" rel="nofollow">http://www.joeandmotorboat.com/2010/05/31/beyond-bigdata/</a></p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2561642">Robert Richards
+</span> 
+<a href="#comment-2561642" title="Permalink to this comment"><span class="date">[ 2 June 2010 01:10 PM]</span></a>
+</p>
+<p>
+<p>Thanks for this post. It might be useful to note that data science has been recognized as a discipline since at least 2001; that one of the first scholars to use "data science" in the sense used in this post was Dr. William S. Cleveland in his 2001 article, "Data Science: An Action Plan for Expanding the Technical Areas of the Field of Statistics," <a href="http://j.mp/a8mQeP" rel="nofollow">http://j.mp/a8mQeP</a> ; that people working in this discipline have organized professional associations, including CODATA, the International Council for Science: Committee on Data for Science and Technology <a href="http://www.codata.org/" rel="nofollow">http://www.codata.org/</a> ; that there are conferences devoted to this discipline, including the International CODATA Conference <a href="http://www.codata2010.com/" rel="nofollow">http://www.codata2010.com/</a> ; and that there are journals that publish data science research, including Journal of Data Science <a href="http://www.jds-online.com/" rel="nofollow">http://www.jds-online.com/</a> (founded in 2003), and Data Science Journal <a href="http://j.mp/9YYh5r" rel="nofollow">http://j.mp/9YYh5r</a> (founded in 2002).</p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2561669">Michael F. Martin
+</span> 
+<a href="#comment-2561669" title="Permalink to this comment"><span class="date">[ 2 June 2010 01:33 PM]</span></a>
+</p>
+<p>
+<p>Accountants are a kind of data scientist too.</p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2561876">Andrew Walkingshaw
+</span> 
+<a href="#comment-2561876" title="Permalink to this comment"><span class="date">[ 2 June 2010 02:42 PM]</span></a>
+</p>
+<p>
+<p>As one of the three founders of Timetric (http://timetric.com), all of whom have a background in the physical sciences, I'm biased: but we couldn't agree more. </p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2562346">Alex Tolley
+</span> 
+<a href="#comment-2562346" title="Permalink to this comment"><span class="date">[ 2 June 2010 07:21 PM]</span></a>
+</p>
+<p>
+<p>Good article.  I do question the term data 'science', as in "Data science enables the creation of data products.".   Science is a process for discovering truth (or at least discarding falsity).  Extracting information from data is more like cooking, an art.</p>
+
+<p>I also am a bit skeptical about the fetish-izing of 'big data'.  Certainly sometimes data sets are necessarily large, but arguably better data, acquired through better questions, is preferable.  A second best can be data sampling to reduce the analyzable data set to more tractable proportions.  Mining large data sets to death is very similar to "spreadsheet-itis" that spread quickly in te 1980's once spreadsheets became widely available.  Nothing wrong with using spreadsheets, except that they tended to focus attention on the questions where data that was available, rather than the questions that really needed answers.</p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2562442">Brandyn
+</span> 
+<a href="#comment-2562442" title="Permalink to this comment"><span class="date">[ 2 June 2010 08:06 PM]</span></a>
+</p>
+<p>
+<p>"In hindsight, MapReduce seems like an obvious solution to Google's biggest problem, creating large searches. It's easy to distribute a search across thousands of processors, and then combine the results into a single set of answers."</p>
+
+<p>You wouldn't use MapReduce like this in a low-latency query situation.  It is made for high throughput batch processing, not quick turn around.</p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2562608">Joel
+</span> 
+<a href="#comment-2562608" title="Permalink to this comment"><span class="date">[ 2 June 2010 09:25 PM]</span></a>
+</p>
+<p>
+<p>...and still, to date, the best tool to mess around with large data sets is SAS - been around for ages. Seems that as the web matures, so too does the tool sets and methodologies it uses to extract value.</p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2563125">Rukmal Fernando
+</span> 
+<a href="#comment-2563125" title="Permalink to this comment"><span class="date">[ 2 June 2010 10:25 PM]</span></a>
+</p>
+<p>
+<p>Great read! On the subject of visualization, Stanford's Protovis is also probably worthy of consideration <a href="http://vis.stanford.edu/protovis/" rel="nofollow">http://vis.stanford.edu/protovis/</a></p>
+
+<p>I've only started trying it out, but Protovis is just Javascript and SVG, and that's a big plus for me.</p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2563182">Kirk
+</span> 
+<a href="#comment-2563182" title="Permalink to this comment"><span class="date">[ 2 June 2010 11:02 PM]</span></a>
+</p>
+<p>
+<p>Thanks Mike, "terabyte drives are consumer equipment" are the cord wood to my campfire. I want to know more about how video data is being analyzed. Does Google's new machine transcription service change the game?  </p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2563198">Brian Ahier
+</span> 
+<a href="#comment-2563198" title="Permalink to this comment"><span class="date">[ 2 June 2010 11:08 PM]</span></a>
+</p>
+<p>
+<p>This is the best post on data I have ever read. I am stunned...</p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2563208">Ken
+</span> 
+<a href="#comment-2563208" title="Permalink to this comment"><span class="date">[ 2 June 2010 11:16 PM]</span></a>
+</p>
+<p>
+<p>Aw heck, I hate to say this Mike, but "data are", not "data is". But despite my nitpicking, this a good article.</p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2563376">Igor
+</span> 
+<a href="#comment-2563376" title="Permalink to this comment"><span class="date">[ 3 June 2010 01:14 AM]</span></a>
+</p>
+<p>
+<p>Great article!</p>
+
+<p>Please, consider to include <a href="http://MyTaskHelper.com" rel="nofollow">http://MyTaskHelper.com</a> in your review.</p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2563612">Brand Niemann
+</span> 
+<a href="#comment-2563612" title="Permalink to this comment"><span class="date">[ 3 June 2010 03:38 AM]</span></a>
+</p>
+<p>
+<p>I think I have always been a "Data Scientist" as coined by Jeff Hammerbacher in Facebook 2007, combining Data Analyst & Research Scientist:<br />
+<a href="http://twitter.com/bniemannsr/status/15207340783" rel="nofollow">http://twitter.com/bniemannsr/status/15207340783</a><br />
+Please see my Data Science Library in the Cloud:<br />
+<a href="http://ondemand.spotfire.com/public/library.aspx?folder=Users/USEEVL-4372/public" rel="nofollow">http://ondemand.spotfire.com/public/library.aspx?folder=Users/USEEVL-4372/public</a></p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2564073">Juan Moya
+</span> 
+<a href="#comment-2564073" title="Permalink to this comment"><span class="date">[ 3 June 2010 07:54 AM]</span></a>
+</p>
+<p>
+<p>Thanks Mike.</p>
+
+<p>One of the best articles I've ever read.</p>
+
+<p>Data are our future.</p>
+
+<p>jf</p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2564092">Robert Young
+</span> 
+<a href="#comment-2564092" title="Permalink to this comment"><span class="date">[ 3 June 2010 08:03 AM]</span></a>
+</p>
+<p>
+<p>First (or most recently, at least) yall made up Web 2.0.  Now you make up Data Science.  </p>
+
+<p>If you want to create new information from existing, read Codd.  That's what relations do.</p>
+
+<p>As to R, yes, it is useful, but SAS still rules the job listings.</p>
+
+<p>The explosion of text data (distinct from audio, video, etc.) is wholly due to Kiddies such as Google who didn't want to build BCNF datastores because they're (the Kiddies, not the data) just too dense.  So they build, using xml to compound the insult, massively redundant flat files, which in turn demand vast amounts of HDD and CPU to process.  And they (and you) pat them on the back as being oh so clever.  Yikes.</p>
+
+<p>The errors in the R and Stat books are such to make it obvious your authors (you, too) have an understanding of inferential statistics (the only variety of any value) about as deep as the ISO-9000 and Six Sigma folks.  No, that isn't an AttaBoy.</p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2564110">Michael R. Bernstein
+</span> 
+<a href="#comment-2564110" title="Permalink to this comment"><span class="date">[ 3 June 2010 08:11 AM]</span></a>
+</p>
+<p>
+<p>"The future belongs to the companies who figure out how to collect and use data successfully. Google, Amazon, Facebook, and LinkedIn have all tapped into their datastreams and made that the core of their success."</p>
+
+<p>Also important is the ability to figure out how to tap into existing sources of data, rather than collecting your own.</p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2566239">Eric Christensen
+</span> 
+<a href="#comment-2566239" title="Permalink to this comment"><span class="date">[ 3 June 2010 07:23 PM]</span></a>
+</p>
+<p>
+<p>Data is cool.  Data Science is cool.  Put out the feelers and collect more data (figure out what to do with it later).</p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2566725">Muhammad Mudssar
+</span> 
+<a href="#comment-2566725" title="Permalink to this comment"><span class="date">[ 3 June 2010 10:45 PM]</span></a>
+</p>
+<p>
+<p>Good article about data and its its importance specially importance of massive unstructured data. The point is how one can get benefit from unstructured massive amount of data. I think by using MapReduce one can find out the hidden patterns in unstructured data. <br />
+I think data along with better processing techniques is the future.</p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2567206">marc
+</span> 
+<a href="#comment-2567206" title="Permalink to this comment"><span class="date">[ 4 June 2010 03:54 AM]</span></a>
+</p>
+<p>
+<p>Your graph of job listings vs time displays no indication of its vertical scale.  Does the maximum vertical point on the graph represent 3 listings or 300,000? In an article on the importance of data, that leaves me wondering how much of the content is hype and how much is well thought out.</p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2568238">Alan Howlett aka @Technontologist
+</span> 
+<a href="#comment-2568238" title="Permalink to this comment"><span class="date">[ 4 June 2010 07:19 AM]</span></a>
+</p>
+<p>
+<p>I see lots of commonality with Richard Saul Wurman's definition of Information Architect[ure] (not the co-opted Web developer version), ""information architect. 1) the individual who organizes the patterns inherent in data, making the complex clear. 2) a person who creates the structure or map of information which allows others to find their personal paths to knowledge. 3) the emerging 21st century professional occupation addressing the needs of the age focused upon clarity, human understanding, and the science of the organization of information."</p>
+
+<p>@Technontologist</p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2568991">Jorn Bettin
+</span> 
+<a href="#comment-2568991" title="Permalink to this comment"><span class="date">[ 4 June 2010 03:16 PM]</span></a>
+</p>
+<p>
+<p>Very nice article. However there is still a long way to go for data products. The value of data analysis and representation critically depends on access to trustworthy source data. Quantification of trustworthiness is one of the harder problems.</p>
+
+<p>For example, the entire financial system hinges on trust, and the level of trust in financial instruments is not known to be particularly stable. Manufacturing and publicising statements that are designed to influence the level of trust in financial instruments is an entire industry in its own right.</p>
+
+<p>The article would be even better if it didn't contain simple calculation errors like "RAM has moved from $1,000/MB to roughly $25/GB -- a price reduction of about 4000". Errors like this one have a direct impact on trustworthiness.</p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2569135">Brian Shaler
+</span> 
+<a href="#comment-2569135" title="Permalink to this comment"><span class="date">[ 4 June 2010 04:40 PM]</span></a>
+</p>
+<p>
+<p>I'm going to cite the hell out of this article. While a little scatterbrained, it covers an amazingly broad array of subjects within the realm of data science. The number of references & links to languages, platforms/frameworks, tools, and projects was very impressive! Thanks!</p>
+
+<p>While all these hip new projects have been cropping up during the last five years, we're still at the beginning of this conversation. I'm looking forward to seeing where the industry goes in the next five years and hope to play a part!</p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2569140">Brian Shaler
+</span> 
+<a href="#comment-2569140" title="Permalink to this comment"><span class="date">[ 4 June 2010 04:44 PM]</span></a>
+</p>
+<p>
+<p>I want to clarify on my last comment, when I said "all these" I was not referring to all data-related projects in general. I'm aware that tools have been available to manipulate data for decades. I probably should have phrased it more like, "With all these hip new projects cropping up [...]"</p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2569732">Jessie Wells
+</span> 
+<a href="#comment-2569732" title="Permalink to this comment"><span class="date">[ 4 June 2010 08:04 PM]</span></a>
+</p>
+<p>
+<p>Hi Mike, <br />
+thanks for a really interesting article.</p>
+
+<p>I think you mean that NASA's data screening delayed discovery of Ozone Depletion (as your links discuss), not global warming.<br />
+ <br />
+The two physical phenomena are often confused, but please don't further this problem!</p>
+
+<p>They share the fact that their principal drivers are forms of pollution from human activities, but they are not the same in their impacts or the actions needed to mitigate them.</p>
+
+<p>Recently a meteorological link was discovered whereby a the increased UVB radiation due to the depleted ozone layer does affect air circulation patterns in the Antarctic, but this is basically a reflection of the fact that almost any aspects of the earth system if you look hard enough.</p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_op_block">
+
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2570777"><a title="http://radar.oreilly.com/mikel" href="http://radar.oreilly.com/mikel">Mike Loukides</a>
+</span> 
+<a href="#comment-2570777" title="Permalink to this comment"><span class="date">[ 5 June 2010 05:37 AM]</span></a>
+</p>
+<p>
+<p>I'm glad you liked the article.  I've just fixed the reference to the Ozone Layer.  Thanks for pointing that out.</p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_op_block">
+
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2570869"><a title="http://radar.oreilly.com/mikel" href="http://radar.oreilly.com/mikel">Mike Loukides</a>
+</span> 
+<a href="#comment-2570869" title="Permalink to this comment"><span class="date">[ 5 June 2010 06:17 AM]</span></a>
+</p>
+<p>
+<p>Ouch.  That arithmetic error really hurts. Thanks for pointing it out--it's been corrected.</p>
+
+<p>The problem of trust is interesting.  It depends to a large extent on the nature of the product: we demand a different level of trust for financial products (and that trust has obviously been shaken badly over the past two years) than we do for Facebook or LinkedIn recommendations.  And you're right, in finance there's a marketing industry that's designed to manufacture trust entirely aside from the quality of the data or the analysis.  </p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2572016">Megan
+</span> 
+<a href="#comment-2572016" title="Permalink to this comment"><span class="date">[ 5 June 2010 01:33 PM]</span></a>
+</p>
+<p>
+<p>Kudos for encouraging thoughtfulness about data, and interdisciplinary approaches to data analysis problems.  However, I must make two points:</p>
+
+<p>1) actuarial science != Statistics</p>
+
+<p>2) For those commenting that this is the best article they've read about data, please allow me to introduce you to W. Edwards Deming (http://en.wikipedia.org/wiki/W._Edwards_Deming).  Statisticians have been thinking hard about data for many, many years.  Let's not discard them with a flippant comment about actuaries and the false belief that anyone can run a few programs in R and correctly analyze data.</p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2575301">G. Boyd
+</span> 
+<a href="#comment-2575301" title="Permalink to this comment"><span class="date">[ 6 June 2010 09:20 PM]</span></a>
+</p>
+<p>
+<p>Data Science exists in order to usurp an individual's OODA loop without their knowledge, as described by former Air Force Pilot John Boyd.  Of course data science is described as a sexy gig when you're bosses are control freaks.</p>
+
+<p>It doesn't matter whether we get the image of the golden ring, or the network centric system, as both images represent identical ends.  <br />
+</p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2575837">Ben Hoyle
+</span> 
+<a href="#comment-2575837" title="Permalink to this comment"><span class="date">[ 7 June 2010 03:32 AM]</span></a>
+</p>
+<p>
+<p>Great article.</p>
+
+<p>In many ways "data science" and "information engineering" are synonymous; both deal with a large amount of unstructured data and form conclusions, inferences and predictions. Both can also be thought of as overlapping with AI and brain science; what does the brain (human, fly etc.) do if not process lots of (sensory) data extremely cleverly.</p>
+
+<p>We are reaching a stage where the great limiting factor to significant progress is our intelligent processing systems, we are beginning to have the data but we don't yet have suitably developed systems to intelligently process that data (both in a human and non-human manner). </p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2576395">G. Boyd
+</span> 
+<a href="#comment-2576395" title="Permalink to this comment"><span class="date">[ 7 June 2010 10:42 AM]</span></a>
+</p>
+<p>
+<p>@Ben Hoyle,</p>
+
+<p>First, information engineering is a means to an end, this end which can be referred to as "social engineering", or the designing of society and its participants.  Usurp ones "Observe" and "Orient" functions in their closed-loop decision processes, and you can then predict an individual's "Decide" and "Act" part of the loop (as described by John Boyd). </p>
+
+<p>Second, of course we have, or will soon have, the algorithms available to process this data.  What do you think "intent harvesting" and "intent generation" is about?  This is Facebook's play in the display advertising game, with their launch of the "I Like" feature.  We're talking about generating individual profiles on the 'feedback' side of the loop such that 'controls' can be implemented on other half of the loop.</p>
+
+<p>Loss of privacy and the simultaneous rise of data engineering is no accident.  All these moves are driven by the goal of usurping ones OODA loop.  Do that across enough people in the public domain, and guess what you have.</p>
+
+<p>Now, why is O'Reilly et all not discussing this critical aspect of the technologies and strategies that are being pushed on to the tech community for deployment?</p>
+
+<p>Tell us it's not relevant doesn't cut it.</p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2581516">M S Prasad
+</span> 
+<a href="#comment-2581516" title="Permalink to this comment"><span class="date">[ 9 June 2010 01:40 AM]</span></a>
+</p>
+<p>
+<p>Great knowledge filled  post and  good coverage of tehnology.</p>
+
+<p>Data science , as I understand  has been a forte of  statistics  & mathematicians  for long . we converted it as a formidable tool and gave a face to understand it  better by  user's.( something like putting  relativity theory in simple  words e.g. LINUX for Dummies . </p>
+
+<p>Information Engineering is a process to extract the useful knowledge or result from a set of information  which can be data  and sometime intangibles also or perceived ones.<br />
+As far image data sets are concerned , being  multidimensional  has a total mathematical basis for its processing  and result  retrievals.</p>
+
+<p>just my  thoughts.<br />
+i have posted this article  on Cloud Secuirty alliance  group in Linked in.<br />
+ thanks<br />
+</p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2609988">Torrance S
+</span> 
+<a href="#comment-2609988" title="Permalink to this comment"><span class="date">[16 June 2010 08:59 AM]</span></a>
+</p>
+<p>
+<p>An incredibly well written article...</p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2625599">martin king
+</span> 
+<a href="#comment-2625599" title="Permalink to this comment"><span class="date">[20 June 2010 10:46 AM]</span></a>
+</p>
+<p>
+<p>There are many aspects to science much of it consists of the daily grind with data and the tools of science.</p>
+
+<p>I think we need to be careful not to lose sight of the drivers of science and where much of science comes from - intuition and great ideas .. after which we create experiments to test hypotheses which inevitably involve data of some kind. </p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2629833">Jewel Ward
+</span> 
+<a href="#comment-2629833" title="Permalink to this comment"><span class="date">[21 June 2010 12:53 PM]</span></a>
+</p>
+<p>
+<p>I would add to this list of aspects of Data Science the ability to determine the best way to migrate, store, & archive data. As well as whether or not to keep it. Storage, is indeed, cheap, and getting cheaper. But given petabytes or yottabytes of data, if you aren't using 90% of what you are storing, does it make sense to keep paying to store, migrate, etc., the data (barring legal requirements to do so)? Think in terms of the larger scale of it -- the electricity required (both in generating the electricity itself & paying for use), plus the machines that must be purchased, and the humans who must be paid to manage the data through its lifecycle. Cost-benefit analysis is an important component. </p>
+
+<p>Having said that, this is a great article.</p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2656150">Fred Beringer
+</span> 
+<a href="#comment-2656150" title="Permalink to this comment"><span class="date">[28 June 2010 03:04 AM]</span></a>
+</p>
+<p>
+<p>Excellent article and a good summary of where data is headed. On the where data comes from, you don't mentions the OpenData movement I'm mentioning in my article about the Future of Data and Predictive Analytics (http://www.fredberinger.com/musings-on-the-future-of-data-and-predictive-analytics-3/). I hope this movement will play a big role in the future as there is so much benefits to leverage data from the public and private sectors. <br />
+Another source of data you briefly mentions are the millions of sensors we're going to see in our life in the next 5-10 years, with the so called Internet of Things. This is really getting real ! (http://www.fredberinger.com/is-the-internet-of-things-ready-for-prime-time/)</p>
+
+<p>We've haven't seen anything yet !</p>
+
+<p>Fred     </p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2695165">Leo Irakliotis
+</span> 
+<a href="#comment-2695165" title="Permalink to this comment"><span class="date">[ 5 July 2010 08:22 PM]</span></a>
+</p>
+<p>
+<p>As I keel reading and reading the article, the academic inside me keeps repeating the same question: do we (academics) do a good, or even adequate job, at educating future data scientists?  Should we consider creating data science programs?  What can we do to offer better more relevant education to individuals who may be pursuing or using data science?  And who can possibly advise us about the practical realities of data science?</p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2763799">Vassilis Nikolopoulos
+</span> 
+<a href="#comment-2763799" title="Permalink to this comment"><span class="date">[21 July 2010 07:47 AM]</span></a>
+</p>
+<p>
+<p>Excellent article on new data management trends... traditional approaches to DB and storage / analytics have to be changed, in order to cope with this huge evolution on data and stream decision analysis...</p>
+
+<p>OLAP, BI and traditional Data mining have to be "updated" with new R&D tips...</p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2976031">David Alan Christopher
+</span> 
+<a href="#comment-2976031" title="Permalink to this comment"><span class="date">[22 August 2010 05:17 PM]</span></a>
+</p>
+<p>
+<p>Fascinating article Mike. I'm a librarian and our lot faces a handful of data as well. We've been writing some Java and Ruby code lately for in-house data analysis and even some basic segmentation of our huge inventory.</p>
+
+<p>We often need to pull content from external public websites (usually government and NPO's), which don't have any form of exportable data formats. We've started using a tool called Feedity - <a href="http://feedity.com" rel="nofollow"><a href="http://feedity.com" rel="nofollow">http://feedity.com</a></a> for that purpose. So far it's worked out pretty well as we've been able to "scrape" raw data as structured information from hundreds of public sources.</p>
+
+<p>I bet this space will only grow as data becomes more and more important for organizations world-wide.</p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-2983319">Ellen O'Neal
+</span> 
+<a href="#comment-2983319" title="Permalink to this comment"><span class="date">[23 August 2010 08:41 AM]</span></a>
+</p>
+<p>
+<p>This stuff fascinates me! I love the examples of Facebook, LinkedIn and Amazon using patterns to suggest other relationships and cross sell. Another example that comes to mind is Pandora. A friend of mine wrote an article that I think may be interesting to fellow readers:</p>
+
+<p><a href="http://info.livelogic.net/customer-intelligence-project-success/bid/47060/Pandora-s-Jar-and-the-Art-of-the-Cross-Sell" rel="nofollow">http://info.livelogic.net/customer-intelligence-project-success/bid/47060/Pandora-s-Jar-and-the-Art-of-the-Cross-Sell</a> </p>
+
+<p>Thanks for the post. I'm excited to see the future of Predictive Analytics, as my company calls it. </p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-3067430"><a title="http://www.CaseyCheshire.com" href="http://www.CaseyCheshire.com" rel="nofollow">Casey Cheshire</a>
+</span> 
+<a href="#comment-3067430" title="Permalink to this comment"><span class="date">[ 2 September 2010 06:40 AM]</span></a>
+</p>
+<p>
+<p>Amazing! I'm looking at the future, thank you for teaching and sharing!</p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-3411420">Tim H.
+</span> 
+<a href="#comment-3411420" title="Permalink to this comment"><span class="date">[23 October 2010 03:08 PM]</span></a>
+</p>
+<p>
+<p>Great article. How does a young guy with strong communications skills experience in statistics, computing, math, and data get into this field? Suggestions?</p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_op_block">
+
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-3467163"><a title="http://radar.oreilly.com/mikel" href="http://radar.oreilly.com/mikel">Mike Loukides</a>
+</span> 
+<a href="#comment-3467163" title="Permalink to this comment"><span class="date">[28 October 2010 11:14 AM]</span></a>
+</p>
+<p>
+<p>There's been a good discussion on Quora on how to become a data scientist:  <a href="http://www.quora.com/How-do-I-become-a-data-scientist">http://www.quora.com/How-do-I-become-a-data-scientist</a> With the skills you list, it  sounds like you're a good part of the way there already...</p>
+
+<p>Mike</p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-3679689"><a title="http://about.me/steveardire" href="http://about.me/steveardire" rel="nofollow">Steve Ardire</a>
+</span> 
+<a href="#comment-3679689" title="Permalink to this comment"><span class="date">[15 November 2010 06:53 PM]</span></a>
+</p>
+<p>
+<p>Great post !</p>
+
+<p>Yes the web is full of data-driven apps but semantic data-driven apps is the future.</p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-3907780"><a title="http://halooglasi.com" href="http://halooglasi.com" rel="nofollow">vector</a>
+</span> 
+<a href="#comment-3907780" title="Permalink to this comment"><span class="date">[ 4 December 2010 10:46 AM]</span></a>
+</p>
+<p>
+<p>Thanks for the good and quite useful article. This is really an issue </p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-3920595">Booten Gurg
+</span> 
+<a href="#comment-3920595" title="Permalink to this comment"><span class="date">[ 5 December 2010 11:27 AM]</span></a>
+</p>
+<p>
+<p>Does Wikileaks apply here?</p>
+
+<p>Anyway, this is Government 2.0 at work !</p>
+
+<p><a href="http://www.nytimes.com/2010/12/05/world/05restrict.html?hp" rel="nofollow">http://www.nytimes.com/2010/12/05/world/05restrict.html?hp</a></p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+<div class="comment_block">
+
+<div class="content">
+<p class="comment-head">
+<span class="author" id="comment-4314596"><a title="http://industrialengineertools.blogspot.com" href="http://industrialengineertools.blogspot.com" rel="nofollow">Larry (IEOR Tools)</a>
+</span> 
+<a href="#comment-4314596" title="Permalink to this comment"><span class="date">[23 December 2010 05:50 AM]</span></a>
+</p>
+<p>
+<p>This is a great article about how getting information from data is going to be so important in the future.  I've been writing about this for years.  I love how "data science" is really taking on a life of its own now.</p>
+</p>
+</div>
+</div> <!-- /comment_block -->
+
+
+
+
+
+</div> <!-- /noindex -->
+
+<div class="formBg">
+
+<form method="post" action="http://blogs.oreilly.com/cgi-bin/mt/mt-c.cgi" name="comments_form" id="comments-form" onsubmit="if (this.bakecookie.checked) rememberMe(this)">
+<input type="hidden" name="static" value="1" />
+<input type="hidden" name="entry_id" value="39989" />
+<input type="hidden" name="__lang" value="en" />
+
+<p>
+<label for="comment-author">Name: </label><br />
+<input id="comment-author" name="author" size="30" value="" />
+</p>
+<p>
+<label for="comment-email">Email Address: </label><br />
+<input id="comment-email" name="email" size="30" value="" />
+</p>
+<p>
+<label for="comment-url">URL: </label><br />
+<input id="comment-url" name="url" size="30" value="" />
+</p>
+<p id="comment-form-remember-me">
+<label for="comment-bake-cookie"><input type="checkbox" id="comment-bake-cookie" name="bakecookie" onclick="if (!this.checked) forgetMe(document.comments_form)" value="1" />
+Remember personal info?</label>
+</p>
+
+
+<p>
+<label for="comment-text">Comments: (You may use HTML tags for style)</label><br />
+<textarea id="comment-text" name="text" rows="15" cols="50"></textarea>
+</p>
+
+<p id="comments-open-challenge"><input type="hidden" id="commchallenge_beacon" name="commchallenge_beacon" value="1" /><label for="commchallenge_answer">Please type the word RADAR below. <strong>(required)</strong>:</label><br /><input type="text" id="commchallenge_answer" name="commchallenge_answer" /></p><script type="text/javascript">
+<!--    
+if ((typeof commenter_name != 'undefined') ||
+    (typeof getCommenterName != 'undefined' &&  getCommenterName())) {
+    mtHide('comments-open-challenge');
+} else {
+    mtShow('comments-open-challenge');
+} 
+// -->
+</script>
+
+
+<div id="comments-open-footer">
+<!--input type="submit" accesskey="v" name="preview" id="comment-preview" value="Preview" /-->
+<input type="submit" accesskey="s" name="post" id="comment-submit" value="Submit" />
+
+</div>
+</form>
+</div><!-- /formBg -->
+
+
+
+
+
+
+
+
+</div>
+
+
+
+</div><!-- #alpha -->
+
+
+<div id="beta">
+<div class="sidebar-item">
+<p class="sidebar-title">Most Recently Discussed</p>
+
+
+
+
+<ul>
+
+<li><a href="http://radar.oreilly.com/2010/06/what-is-data-science.html" onClick="var s=s_gi(s_account);  
+s.eVar22='radar most discussed';
+s.events='event6';  
+s.linkTrackVars='eVar22,events';  
+s.linkTrackEvents='event6';  
+s.tl(this,'o','Featured Content Click');" rel="nofollow">What is data science?</a></li>
+
+
+
+<li><a href="http://radar.oreilly.com/2007/12/olpc-and-the-kindle.html" onClick="var s=s_gi(s_account);  
+s.eVar22='radar most discussed';
+s.events='event6';  
+s.linkTrackVars='eVar22,events';  
+s.linkTrackEvents='event6';  
+s.tl(this,'o','Featured Content Click');" rel="nofollow">OLPC and the Kindle</a></li>
+
+
+
+<li><a href="http://radar.oreilly.com/2010/12/education-standards-innovation.html" onClick="var s=s_gi(s_account);  
+s.eVar22='radar most discussed';
+s.events='event6';  
+s.linkTrackVars='eVar22,events';  
+s.linkTrackEvents='event6';  
+s.tl(this,'o','Featured Content Click');" rel="nofollow">Can standardization and innovation coexist in education?</a></li>
+
+
+
+<li><a href="http://radar.oreilly.com/2010/10/strata-week-videos-and-visuali.html" onClick="var s=s_gi(s_account);  
+s.eVar22='radar most discussed';
+s.events='event6';  
+s.linkTrackVars='eVar22,events';  
+s.linkTrackEvents='event6';  
+s.tl(this,'o','Featured Content Click');" rel="nofollow">Strata Week: Videos and visualization</a></li>
+
+
+
+<li><a href="http://radar.oreilly.com/2007/02/yahoo-pipes-some-tips.html" onClick="var s=s_gi(s_account);  
+s.eVar22='radar most discussed';
+s.events='event6';  
+s.linkTrackVars='eVar22,events';  
+s.linkTrackEvents='event6';  
+s.tl(this,'o','Featured Content Click');" rel="nofollow">Yahoo! Pipes: Some Tips</a></li>
+
+</ul>
+
+ 
+</div>
+ <div class="sidebar-item">
+<p class="sidebar-title">Related Topics</p>
+
+<ul>
+
+<li><a href="http://radar.oreilly.com/data/">Data</a></li>
+
+</ul>
+
+
+</div>
+
+
+
+<div class="sidebar-item related-events">
+<p class="sidebar-title">Related Events</p>
+
+<!-- data related events -->
+
+<div class="event-tile">
+<ul>
+
+<li>
+<a href="http://strataconf.com/strata2011?cmp=il-radar-entry-conf-strata11"><img src="http://cdn.oreilly.com/radar/images/events/tiles/strata_m_logo111.gif" alt="Strata" title="Strata" width="111"/></a><h3><a href="http://strataconf.com/strata2011?cmp=il-radar-entry-conf-strata11">Strata</a></h3><p>The Business of Data, February 1-3, 2011 Santa Clara, CA</p>
+<span class="clear"></span>
+</li>
+
+</ul>
+</div>
+</ul>
+
+
+<!-- edu 2.0 related events -->
+
+
+<!--gov 2.0 topic page video -->
+
+
+<!--mobile topic page video -->
+
+
+<!-- programming related events -->
+
+
+
+<!--publishing topic page video -->
+
+
+<!-- web 2.0 related events -->
+
+
+
+</div>
+
+
+
+
+<div class="sidebar-item" id="widget-archive-monthly-topic-author-dropdown">
+   <p class="sidebar-title">Archives</p>
+      <ul>
+      <li><select onchange="nav(this)">
+         <option>Archives by Month...</option>
+         
+         <option value="http://radar.oreilly.com/2010/12/">December 2010</option>
+         
+         <option value="http://radar.oreilly.com/2010/11/">November 2010</option>
+         
+         <option value="http://radar.oreilly.com/2010/10/">October 2010</option>
+         
+         <option value="http://radar.oreilly.com/2010/09/">September 2010</option>
+         
+         <option value="http://radar.oreilly.com/2010/08/">August 2010</option>
+         
+         <option value="http://radar.oreilly.com/2010/07/">July 2010</option>
+         
+         <option value="http://radar.oreilly.com/2010/06/">June 2010</option>
+         
+         <option value="http://radar.oreilly.com/2010/05/">May 2010</option>
+         
+         <option value="http://radar.oreilly.com/2010/04/">April 2010</option>
+         
+         <option value="http://radar.oreilly.com/2010/03/">March 2010</option>
+         
+         <option value="http://radar.oreilly.com/2010/02/">February 2010</option>
+         
+         <option value="http://radar.oreilly.com/2010/01/">January 2010</option>
+         
+         <option value="http://radar.oreilly.com/2009/12/">December 2009</option>
+         
+         <option value="http://radar.oreilly.com/2009/11/">November 2009</option>
+         
+         <option value="http://radar.oreilly.com/2009/10/">October 2009</option>
+         
+         <option value="http://radar.oreilly.com/2009/09/">September 2009</option>
+         
+         <option value="http://radar.oreilly.com/2009/08/">August 2009</option>
+         
+         <option value="http://radar.oreilly.com/2009/07/">July 2009</option>
+         
+         <option value="http://radar.oreilly.com/2009/06/">June 2009</option>
+         
+         <option value="http://radar.oreilly.com/2009/05/">May 2009</option>
+         
+         <option value="http://radar.oreilly.com/2009/04/">April 2009</option>
+         
+         <option value="http://radar.oreilly.com/2009/03/">March 2009</option>
+         
+         <option value="http://radar.oreilly.com/2009/02/">February 2009</option>
+         
+         <option value="http://radar.oreilly.com/2009/01/">January 2009</option>
+         
+         <option value="http://radar.oreilly.com/2008/12/">December 2008</option>
+         
+         <option value="http://radar.oreilly.com/2008/11/">November 2008</option>
+         
+         <option value="http://radar.oreilly.com/2008/10/">October 2008</option>
+         
+         <option value="http://radar.oreilly.com/2008/09/">September 2008</option>
+         
+         <option value="http://radar.oreilly.com/2008/08/">August 2008</option>
+         
+         <option value="http://radar.oreilly.com/2008/07/">July 2008</option>
+         
+         <option value="http://radar.oreilly.com/2008/06/">June 2008</option>
+         
+         <option value="http://radar.oreilly.com/2008/05/">May 2008</option>
+         
+         <option value="http://radar.oreilly.com/2008/04/">April 2008</option>
+         
+         <option value="http://radar.oreilly.com/2008/03/">March 2008</option>
+         
+         <option value="http://radar.oreilly.com/2008/02/">February 2008</option>
+         
+         <option value="http://radar.oreilly.com/2008/01/">January 2008</option>
+         
+         <option value="http://radar.oreilly.com/2007/12/">December 2007</option>
+         
+         <option value="http://radar.oreilly.com/2007/11/">November 2007</option>
+         
+         <option value="http://radar.oreilly.com/2007/10/">October 2007</option>
+         
+         <option value="http://radar.oreilly.com/2007/09/">September 2007</option>
+         
+         <option value="http://radar.oreilly.com/2007/08/">August 2007</option>
+         
+         <option value="http://radar.oreilly.com/2007/07/">July 2007</option>
+         
+         <option value="http://radar.oreilly.com/2007/06/">June 2007</option>
+         
+         <option value="http://radar.oreilly.com/2007/05/">May 2007</option>
+         
+         <option value="http://radar.oreilly.com/2007/04/">April 2007</option>
+         
+         <option value="http://radar.oreilly.com/2007/03/">March 2007</option>
+         
+         <option value="http://radar.oreilly.com/2007/02/">February 2007</option>
+         
+         <option value="http://radar.oreilly.com/2007/01/">January 2007</option>
+         
+         <option value="http://radar.oreilly.com/2006/12/">December 2006</option>
+         
+         <option value="http://radar.oreilly.com/2006/11/">November 2006</option>
+         
+         <option value="http://radar.oreilly.com/2006/10/">October 2006</option>
+         
+         <option value="http://radar.oreilly.com/2006/09/">September 2006</option>
+         
+         <option value="http://radar.oreilly.com/2006/08/">August 2006</option>
+         
+         <option value="http://radar.oreilly.com/2006/07/">July 2006</option>
+         
+         <option value="http://radar.oreilly.com/2006/06/">June 2006</option>
+         
+         <option value="http://radar.oreilly.com/2006/05/">May 2006</option>
+         
+         <option value="http://radar.oreilly.com/2006/04/">April 2006</option>
+         
+         <option value="http://radar.oreilly.com/2006/03/">March 2006</option>
+         
+         <option value="http://radar.oreilly.com/2006/02/">February 2006</option>
+         
+         <option value="http://radar.oreilly.com/2006/01/">January 2006</option>
+         
+         <option value="http://radar.oreilly.com/2005/12/">December 2005</option>
+         
+         <option value="http://radar.oreilly.com/2005/11/">November 2005</option>
+         
+         <option value="http://radar.oreilly.com/2005/10/">October 2005</option>
+         
+         <option value="http://radar.oreilly.com/2005/09/">September 2005</option>
+         
+         <option value="http://radar.oreilly.com/2005/08/">August 2005</option>
+         
+         <option value="http://radar.oreilly.com/2005/07/">July 2005</option>
+         
+         <option value="http://radar.oreilly.com/2005/06/">June 2005</option>
+         
+         <option value="http://radar.oreilly.com/2005/05/">May 2005</option>
+         
+         <option value="http://radar.oreilly.com/2005/04/">April 2005</option>
+         
+         <option value="http://radar.oreilly.com/2005/03/">March 2005</option>
+         
+      </select>
+      </li>
+      <li>
+         <select onchange="nav(this)">
+         <option>Archives by Topic...</option>
+         
+          
+           <option value="http://radar.oreilly.com/data/">Data</option>
+         
+         
+          
+           <option value="http://radar.oreilly.com/edu2/">Edu 2.0</option>
+         
+         
+          
+         
+          
+           <option value="http://radar.oreilly.com/gov2/">Gov 2.0</option>
+         
+         
+          
+           <option value="http://radar.oreilly.com/mobile/">Mobile</option>
+         
+         
+          
+           <option value="http://radar.oreilly.com/programming/">Programming</option>
+         
+         
+          
+           <option value="http://radar.oreilly.com/publishing/">Publishing</option>
+         
+         
+          
+           <option value="http://radar.oreilly.com/web2/">Web 2.0</option>
+         
+         
+      </select>
+      </li>
+      <li><select onchange="nav(this)">
+         <option>Archives by Author...</option>
+         
+         <option value="http://radar.oreilly.com/adam/">Adam Messinger</option>
+         
+         <option value="http://radar.oreilly.com/adamd/">Adam DuVander</option>
+         
+         <option value="http://radar.oreilly.com/adamw/">Adam Witwer</option>
+         
+         <option value="http://radar.oreilly.com/alexanderm/">Alexander Macgillivray</option>
+         
+         <option value="http://radar.oreilly.com/alexh/">Alex Howard</option>
+         
+         <option value="http://radar.oreilly.com/alexi/">Alex Iskold</option>
+         
+         <option value="http://radar.oreilly.com/alistairc/">Alistair Croll</option>
+         
+         <option value="http://radar.oreilly.com/allen/">Allen Noren</option>
+         
+         <option value="http://radar.oreilly.com/allison/">Allison Randal</option>
+         
+         <option value="http://radar.oreilly.com/andrew/">Andrew Savikas</option>
+         
+         <option value="http://radar.oreilly.com/andrewo/">Andrew Odewahn</option>
+         
+         <option value="http://radar.oreilly.com/andrewsh/">Andrew Shafer</option>
+         
+         <option value="http://radar.oreilly.com/andyo/">Andy Oram</option>
+         
+         <option value="http://radar.oreilly.com/arig/">Ari Gesher</option>
+         
+         <option value="http://radar.oreilly.com/artur/">Artur Bergman</option>
+         
+         <option value="http://radar.oreilly.com/bahier/">Brian Ahier</option>
+         
+         <option value="http://radar.oreilly.com/ben/">Ben Lorica</option>
+         
+         <option value="http://radar.oreilly.com/billm/">Bill McCoy</option>
+         
+         <option value="http://radar.oreilly.com/brady/">Brady Forrest</option>
+         
+         <option value="http://radar.oreilly.com/brett/">Brett McLaughlin</option>
+         
+         <option value="http://radar.oreilly.com/bretts/">Brett Sandusky</option>
+         
+         <option value="http://radar.oreilly.com/brianb/">Brian Boyer</option>
+         
+         <option value="http://radar.oreilly.com/briano/">Brian O'Leary</option>
+         
+         <option value="http://radar.oreilly.com/carlh/">Carl Hewitt</option>
+         
+         <option value="http://radar.oreilly.com/carlm/">Carl Malamud</option>
+         
+         <option value="http://radar.oreilly.com/chrism/">Chris Meade</option>
+         
+         <option value="http://radar.oreilly.com/cperey/">Christine Perey</option>
+         
+         <option value="http://radar.oreilly.com/dale/">Dale Dougherty</option>
+         
+         <option value="http://radar.oreilly.com/darren/">Darren Barefoot</option>
+         
+         <option value="http://radar.oreilly.com/davem/">Dave McClure</option>
+         
+         <option value="http://radar.oreilly.com/daves/">David Sims</option>
+         
+         <option value="http://radar.oreilly.com/davidl/">David Leinweber</option>
+         
+         <option value="http://radar.oreilly.com/davidr/">David Recordon</option>
+         
+         <option value="http://radar.oreilly.com/ddenison/">DC Denison</option>
+         
+         <option value="http://radar.oreilly.com/dylan@oreilly.com/">Dylan Field</option>
+         
+         <option value="http://radar.oreilly.com/edd/">Edd Dumbill</option>
+         
+         <option value="http://radar.oreilly.com/elizabeth/">Elizabeth Corcoran</option>
+         
+         <option value="http://radar.oreilly.com/eoinp/">Eoin Purcell</option>
+         
+         <option value="http://radar.oreilly.com/ericr/">Eric Ries</option>
+         
+         <option value="http://radar.oreilly.com/gavin/">Gavin Starks</option>
+         
+         <option value="http://radar.oreilly.com/gwhisenant/">Greg Whisenant</option>
+         
+         <option value="http://radar.oreilly.com/heatherm/">Heather McCormack</option>
+         
+         <option value="http://radar.oreilly.com/hughm/">Hugh McGuire</option>
+         
+         <option value="http://radar.oreilly.com/imran/">Imran Ali</option>
+         
+         <option value="http://radar.oreilly.com/jamesb/">James Bridle</option>
+         
+         <option value="http://radar.oreilly.com/jamest/">James Turner</option>
+         
+         <option value="http://radar.oreilly.com/jasong/">Jason Grigsby</option>
+         
+         <option value="http://radar.oreilly.com/jeevanp/">Jeevan Padiyar</option>
+         
+         <option value="http://radar.oreilly.com/jeffc/">Jeff Carr</option>
+         
+         <option value="http://radar.oreilly.com/jennw/">Jenn Webb</option>
+         
+         <option value="http://radar.oreilly.com/jenpahlka/">Jennifer Pahlka</option>
+         
+         <option value="http://radar.oreilly.com/jespera/">Jesper Andersen</option>
+         
+         <option value="http://radar.oreilly.com/jesse/">Jesse Robbins</option>
+         
+         <option value="http://radar.oreilly.com/jgc/">John Graham-Cumming</option>
+         
+         <option value="http://radar.oreilly.com/jgeraci/">John Geraci</option>
+         
+         <option value="http://radar.oreilly.com/jimmy/">Jimmy Guterman</option>
+         
+         <option value="http://radar.oreilly.com/jims/">Jim Stogdill</option>
+         
+         <option value="http://radar.oreilly.com/joeh/">Joseph Hellerstein</option>
+         
+         <option value="http://radar.oreilly.com/joew/">Joe Wikert</option>
+         
+         <option value="http://radar.oreilly.com/johnl/">John Labovitz</option>
+         
+         <option value="http://radar.oreilly.com/johnw/">John Warren</option>
+         
+         <option value="http://radar.oreilly.com/jonu/">Jon Udell</option>
+         
+         <option value="http://radar.oreilly.com/josephe/">Joseph J. Esposito</option>
+         
+         <option value="http://radar.oreilly.com/josh/">Joshua-Michéle Ross</option>
+         
+         <option value="http://radar.oreilly.com/jspinney/">Jon Spinney</option>
+         
+         <option value="http://radar.oreilly.com/judv/">Jud Valeski</option>
+         
+         <option value="http://radar.oreilly.com/julies/">Julie Steele</option>
+         
+         <option value="http://radar.oreilly.com/justinh/">Justin Hall</option>
+         
+         <option value="http://radar.oreilly.com/kassiak/">Kassia Krozser</option>
+         
+         <option value="http://radar.oreilly.com/katee/">Kate Eltham</option>
+         
+         <option value="http://radar.oreilly.com/katep/">Kate Pullinger</option>
+         
+         <option value="http://radar.oreilly.com/katm/">Kat Meyer</option>
+         
+         <option value="http://radar.oreilly.com/keithf/">Keith Fahlgren</option>
+         
+         <option value="http://radar.oreilly.com/kevinsh/">Kevin Shockey</option>
+         
+         <option value="http://radar.oreilly.com/kevinsm/">Kevin Smokler</option>
+         
+         <option value="http://radar.oreilly.com/kurtc/">Kurt Cagle</option>
+         
+         <option value="http://radar.oreilly.com/laurad/">Laura Dawson</option>
+         
+         <option value="http://radar.oreilly.com/leighd/">Leigh Dodds</option>
+         
+         <option value="http://radar.oreilly.com/lindas/">Linda Stone</option>
+         
+         <option value="http://radar.oreilly.com/lizad/">Liza Daly</option>
+         
+         <option value="http://radar.oreilly.com/lucy/">Lucy Gray</option>
+         
+         <option value="http://radar.oreilly.com/lukasb/">Lukas Biewald</option>
+         
+         <option value="http://radar.oreilly.com/marc/">Marc Hedlund</option>
+         
+         <option value="http://radar.oreilly.com/marieb/">Marie Bjerede</option>
+         
+         <option value="http://radar.oreilly.com/markd/">Mark Drapeau</option>
+         
+         <option value="http://radar.oreilly.com/markn/">Mark Nelson</option>
+         
+         <option value="http://radar.oreilly.com/matthewr/">Matthew Russell</option>
+         
+         <option value="http://radar.oreilly.com/mattw/">Matt Wood</option>
+         
+         <option value="http://radar.oreilly.com/melissa@oreilly.com/">Melissa Morgan</option>
+         
+         <option value="http://radar.oreilly.com/mhonda/">Mike Honda</option>
+         
+         <option value="http://radar.oreilly.com/michaelf/">Michael Ferrari</option>
+         
+         <option value="http://radar.oreilly.com/michaelj/">Michael Jon Jensen</option>
+         
+         <option value="http://radar.oreilly.com/mikeh/">Mike Hendrickson</option>
+         
+         <option value="http://radar.oreilly.com/mikel/">Mike Loukides</option>
+         
+         <option value="http://radar.oreilly.com/mikesh/">Mike Shatzkin</option>
+         
+         <option value="http://radar.oreilly.com/msigal/">Mark Sigal</option>
+         
+         <option value="http://radar.oreilly.com/mslocum/">Mac Slocum</option>
+         
+         <option value="http://radar.oreilly.com/nat/">Nat Torkington</option>
+         
+         <option value="http://radar.oreilly.com/nickbilton/">Nick Bilton</option>
+         
+         <option value="http://radar.oreilly.com/nickr/">Nick Ruffilo</option>
+         
+         <option value="http://radar.oreilly.com/nikolaj/">Nikolaj Nyholm</option>
+         
+         <option value="http://radar.oreilly.com/osmanr/">Osman Rashid</option>
+         
+         <option value="http://radar.oreilly.com/pablog/">Pablo Francisco Arrieta Gomez</option>
+         
+         <option value="http://radar.oreilly.com/pamelas/">Pamela Samuelson</option>
+         
+         <option value="http://radar.oreilly.com/peterb/">Peter Brantley</option>
+         
+         <option value="http://radar.oreilly.com/quinn/">Quinn Norton</option>
+         
+         <option value="http://radar.oreilly.com/rael/">Rael Dornfest</option>
+         
+         <option value="http://radar.oreilly.com/raven/">Raven Zachary</option>
+         
+         <option value="http://radar.oreilly.com/reichental/">Jonathan Reichental, Ph.D.</option>
+         
+         <option value="http://radar.oreilly.com/roberta/">Roberta Cairney</option>
+         
+         <option value="http://radar.oreilly.com/robertp/">Robert Passarella</option>
+         
+         <option value="http://radar.oreilly.com/robk/">Robert Kaye</option>
+         
+         <option value="http://radar.oreilly.com/robt/">Rob Tucker</option>
+         
+         <option value="http://radar.oreilly.com/rogerm/">Roger Magoulas</option>
+         
+         <option value="http://radar.oreilly.com/ryan/">Ryan Stewart</option>
+         
+         <option value="http://radar.oreilly.com/sara/">Sara Winge</option>
+         
+         <option value="http://radar.oreilly.com/sarahm/">Sarah Milstein</option>
+         
+         <option value="http://radar.oreilly.com/sarap/">Sara Peyton</option>
+         
+         <option value="http://radar.oreilly.com/scottr/">Scott Ruthfield</option>
+         
+         <option value="http://radar.oreilly.com/silona/">Silona Bonewald</option>
+         
+         <option value="http://radar.oreilly.com/simon/">Simon Wardley</option>
+         
+         <option value="http://radar.oreilly.com/simonstl/">Simon St. Laurent</option>
+         
+         <option value="http://radar.oreilly.com/steves/">Steve Souders</option>
+         
+         <option value="http://radar.oreilly.com/tanderson/">Tim Anderson</option>
+         
+         <option value="http://radar.oreilly.com/terryj/">Terry Jones</option>
+         
+         <option value="http://radar.oreilly.com/tim/">Tim O'Reilly</option>
+         
+         <option value="http://radar.oreilly.com/timothy/">Timothy M. O'Brien</option>
+         
+         <option value="http://radar.oreilly.com/tylerb/">Tyler Bell</option>
+         
+         <option value="http://radar.oreilly.com/vanessa/">Vanessa Fox</option>
+         
+      </select>
+      </li>
+</ul>
+</div>
+
+
+<script type="text/javascript" charset="utf-8">
+//<![CDATA[
+function nav(sel) {
+   if (sel.selectedIndex == -1) return;
+   var opt = sel.options[sel.selectedIndex];
+   if (opt && opt.value)
+      location.href = opt.value;
+}    
+//]]>
+</script>
+
+<p>
+<a href="http://feeds.feedburner.com/oreilly/radar/atom">
+<img src="http://feeds.feedburner.com/~fc/oreilly/radar/atom?bg=ff6633&amp;fg=444444&amp;anim=0" height="26" width="88" style="border:0" alt="" /></a>
+</p>
+ 
+</div><!-- #beta -->
+
+
+
+<div id="footer" class="noindex">
+<table border="0" style="padding-top:20px; padding-bottom:20px;">
+
+<tbody>
+
+
+<tr><td align="left" width="25%" valign="top" style="padding-left: 20px; padding-right: 20px;">
+<a href="http://oreilly.com/"><img height="35" border="0" width="155" src="http://cdn.oreilly.com/images/standard/oreilly-logo-footer.gif" alt="O'Reilly Media"></a>
+<br><br>
+&copy;2010, O'Reilly Media, Inc.<br>(707) 827-7000 / (800) 998-9938<br> All trademarks and registered trademarks appearing on oreilly.com are the property of their respective owners. </td>
+
+<td valign="top" class="footercol1">
+<ul>
+<li><a href="http://oreilly.com/about/"><strong>About O'Reilly</strong></a></li>
+<li><a href="http://oreilly.com/academic/">Academic Solutions</a></li>
+<li><a href="http://oreilly.com/contact.html">Contacts</a></li>
+<li><a href="http://oreilly.com/oreilly/cs/">Customer Service</a></li>
+<li><a href="http://oreilly.com/jobs/">Careers</a></li>
+<li><a href="http://press.oreilly.com/">Press Room</a></li>
+<li><a href="http://oreilly.com/oreilly/privacy.csp">Privacy Policy</a></li>
+<li><a href="http://oreilly.com/terms/">Terms of Service</a></li>
+<li><a href="http://oreilly.com/oreilly/author/intro.csp">Writing for O'Reilly</a></li>
+</ul>
+</td>
+
+<td valign="top" class="footercol2">
+<ul>
+<li><a href="http://oreilly.com/community/"><strong>Community</strong></a></li>
+<li><a href="http://oreilly.com/authors/">Authors</a></li>
+<li><a href="http://forums.oreilly.com/">Forums</a></li>
+<li><a href="https://members.oreilly.com/">Membership</a></li>
+<li><a href="http://elists.oreilly.com/">Newsletters</a></li>
+<li><a href="http://oreilly.com/feeds/">RSS Feeds</a></li>
+<li><a href="http://ug.oreilly.com/">User Groups</a></li>
+</ul>
+</td>
+
+<td valign="top" class="footercol3">
+<ul>
+<li><strong>More O'Reilly Sites</strong></li>
+<li><a href="http://igniteshow.com/">igniteshow.com</a></li>
+<li><a href="http://makerfaire.com/">makerfaire.com</a></li>
+<li><a href="http://makezine.com/">makezine.com</a></li>
+<li><a href="http://craftzine.com">craftzine.com</a></li>
+<li><a href="http://labs.oreilly.com">labs.oreilly.com</a></li>
+</ul>
+
+<ul>
+<li><strong>Partner Sites</strong></li>
+<li><a href="https://www.x.com/community/ppx/devzone">PayPal Developer Zone</a></li>
+<li><a href="http://insideria.com/?CMP=ILC-orm_sponsor_footer_links&amp;ATT=ria">InsideRIA</a></li>
+<li><a href="http://www.forbes.com/oreillyinsights/">O'Reilly Insights on Forbes.com</a></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+
+<script language="JavaScript" type="text/javascript">
+var s_account="orradar,orglobal" // change report suite ID accordingly
+</script>
+<!-- SiteCatalyst code version: H.20.3. Copyright 1997-2009 Omniture, Inc. More info available at http://www.omniture.com -->
+<script language="JavaScript" type="text/javascript" src="http://assets.oreilly.com/js/s_code.js"></script>
+<script language="JavaScript" type="text/javascript">
+s.pageName="radar:what is data science"
+s.channel="radar"
+s.prop1="radar:data"
+s.prop2="radar:data:data"
+s.prop3="radar:data:data:data"
+s.prop4="article"
+s.hier1="radar,data,data,data"
+s.prop5="what is data science"
+s.prop6="RD39989" 
+s.prop7="06/02/2010" // publish date
+//s.prop15=""
+//These props should be set when a blog/article is read, post or reply made. 
+s.prop21="mike loukides" // author name
+s.prop22="radar" // blog name
+s.prop23="what is data science" // entry title
+s.prop24="06/02/2010" // post date
+//s.prop25="" // days since last post
+s.prop26="thursday" // day of week
+/* Conversion Variables */
+s.campaign=""
+s.events=""
+
+/************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/
+var s_code=s.t();if(s_code)document.write(s_code)//--></script>
+<!-- End SiteCatalyst code version: H.20.2. -->
+
+
+
+<script src="http://cdn.oreilly.com/radar/scripts/readspeaker1.js" type="text/javascript" ></script>
+
+
+
+
+
+
+</div>
+</div><!-- /#end content-09 -->
+</body>
+</html>
+
+
+
+
+
