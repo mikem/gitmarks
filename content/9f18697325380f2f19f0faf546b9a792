@@ -1,0 +1,966 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
+   <meta name="Robots" content="index,follow" /> 
+  
+  
+  <!-- measuringmeasures -->
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+
+  <link id="primaryStylesheet" rel="stylesheet" type="text/css" href="/display/common.css?styleId=30&amp;RK=1292880221106&amp;CE=23"/>
+  
+  
+  
+    <link rel="alternate" type="application/atom+xml" title="ATOM" href="http://measuringmeasures.com/blog/atom.xml" />
+  
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="http://measuringmeasures.com/blog/rss.xml" />
+  
+    <link rel="alternate" type="application/rdf+xml" title="RDF" href="http://measuringmeasures.com/blog/rdf.xml" />
+  
+
+  <script type="text/javascript" src="/universal/yui/yahoo-dom-event/yahoo-dom-event.js?CE=23"></script>
+<script type="text/javascript" src="/universal/yui/connection/connection_core-min.js?CE=23"></script>
+<script type="text/javascript" src="/universal/yui/json/json-min.js?CE=23"></script>
+<script type="text/javascript" src="/universal/yui/animation/animation-min.js?CE=23"></script>
+<script type="text/javascript" src="/universal/scripts/global.js?CE=23"></script>
+<script type="text/javascript" src="/universal/scripts/lightbox.js?CE=23"></script>
+<script type="text/javascript" src="/universal/scripts/api.js?CE=23"></script>
+
+
+  <script type="text/javascript">
+  // <![CDATA[
+
+    Squarespace.Constants.SS_AUTHKEY = encodeURIComponent("");
+    Squarespace.Constants.WEBSITE_TITLE =  "Measuring Measures"; 
+    
+     Squarespace.Constants.CURRENT_MODULE_ID = "5918186"; 
+    
+    
+    
+    Squarespace.Constants.ADMINISTRATION_UI =  false; 
+    
+    
+     Squarespace.Constants.OBJECT_PERMALINK = "http://measuringmeasures.com/blog/2010/6/3/software-product-granularity-building-depth-first-vs-breadth.html"; 
+
+    
+
+    
+
+  // ]]>
+  </script>
+
+      <title>Measuring Measures - Measuring Measures - Software Product Granularity: building depth-first vs.&nbsp;breadth-first</title>
+  
+
+  <!-- End Heading -->
+
+  <script type="text/javascript" src="/storage/scripts/jquery-1.4.1.min.js"></script>
+<script type="text/javascript" src="/storage/scripts/jquery.jslatex.packed.js"></script>
+
+</head>
+
+<body  id="modulePage5918186"   class="objectId7854977"  >
+
+  <script type="text/javascript">
+  YAHOO.util.Event.onDOMReady(function() {
+    if (document.location.href.indexOf("SSLogoutOk=true") != -1) {
+      new Squarespace.FixedPositionTip("Logout Successful", "You have been successfully logged out.", { xMargin: 15, yMargin: 15, icon: "/universal/images/helptip-info.png", orientation: "upper-right", viewportFixed: true, autoHide: 1800 }).show();
+    }
+  });
+</script>
+
+    
+
+  <script type="text/javascript">
+    YAHOO.util.Event.addListener(document, "keyup", function (e) { if (!e) { e = event; } if (e.keyCode == 27) { document.location.href = "/login/?returnUrl=%2Fblog%2F2010%2F6%2F3%2Fsoftware-product-granularity-building-depth-first-vs-breadth.html"; } });
+  </script>
+
+
+
+
+  
+
+  <div id="canvasWrapper"><div id="canvas">
+  
+  
+
+  <div id="pageHeaderWrapper"><div id="pageHeader">
+
+      <div id="navigationTop"><div id="navigationTop-sectionContent2612256" class="horizontalNavigationBar"><ul class="content-navigation">
+    
+  <li class="module active-module  " id="navigationTop-moduleContentWrapper5918186">
+
+    <div id="navigationTop-moduleContent5918186">
+
+              <a id="navigationTop-moduleLink5918186" class=" " href="/" ><span>blog</span></a>
+      
+
+      
+
+    </div>
+
+  </li>
+
+
+  <li class="module   " id="navigationTop-moduleContentWrapper5867231">
+
+    <div id="navigationTop-moduleContent5867231">
+
+              <a id="navigationTop-moduleLink5867231" class=" " href="/about/" ><span>About</span></a>
+      
+
+      
+
+    </div>
+
+  </li>
+
+
+  <li class="module   " id="navigationTop-moduleContentWrapper5966038">
+
+    <div id="navigationTop-moduleContent5966038">
+
+              <a id="navigationTop-moduleLink5966038" class=" " href="/contact/" ><span>contact</span></a>
+      
+
+      
+
+    </div>
+
+  </li>
+
+
+  </ul><br class="clearer"/></div></div>
+
+    
+        
+      
+  
+      <div id="bannerAreaWrapper"><div id="bannerArea">
+
+              <div id="siteTitleWrapper">
+          <h1 id="siteTitle"><a href="http://measuringmeasures.com/">Measuring Measures</a></h1>
+           <div id="siteSubtitle" class="h1subtitle">Information from data.  Intelligence from information.</div> 
+        </div>
+      
+      
+      </div></div>
+    
+    
+    
+
+      <div id="navigationBottom"><div id="navigationBottom-sectionContent2612256" class="horizontalNavigationBar"><ul class="content-navigation">
+    
+  <li class="module active-module  " id="navigationBottom-moduleContentWrapper5918186">
+
+    <div id="navigationBottom-moduleContent5918186">
+
+              <a id="navigationBottom-moduleLink5918186" class=" " href="/" ><span>blog</span></a>
+      
+
+      
+
+    </div>
+
+  </li>
+
+
+  <li class="module   " id="navigationBottom-moduleContentWrapper5867231">
+
+    <div id="navigationBottom-moduleContent5867231">
+
+              <a id="navigationBottom-moduleLink5867231" class=" " href="/about/" ><span>About</span></a>
+      
+
+      
+
+    </div>
+
+  </li>
+
+
+  <li class="module   " id="navigationBottom-moduleContentWrapper5966038">
+
+    <div id="navigationBottom-moduleContent5966038">
+
+              <a id="navigationBottom-moduleLink5966038" class=" " href="/contact/" ><span>contact</span></a>
+      
+
+      
+
+    </div>
+
+  </li>
+
+
+  </ul><br class="clearer"/></div></div>
+
+
+  </div></div>
+  
+  
+
+  
+
+  
+  <div id="pageBodyWrapper"><div id="pageBody">
+  
+  <div id="sidebar1Wrapper" class="verticalNavigationBarWrapper"><div class="iw-vnb1"><div class="iw-vnb2"><div class="iw-vnb3"><div class="iw-vnb4"><div id="sidebar1" class="verticalNavigationBar">
+
+  
+
+    <div id="sectionContent2612256" class="sectionWrapper promotedContainer "><div class="iw-s1"><div class="iw-s2"><div class="iw-s3"><div class="iw-s4"><div class="section">
+
+       <div class="caption">Top</div> 
+
+      
+        
+          <ul class="content-navigation">
+  <li class="module active-module  " id="moduleContentWrapper5918186">
+
+    <div id="moduleContent5918186">
+
+              <a id="moduleLink5918186" class=" " href="/" ><span>blog</span></a>
+      
+
+      
+
+    </div>
+
+  </li>
+
+
+  <li class="module   " id="moduleContentWrapper5867231">
+
+    <div id="moduleContent5867231">
+
+              <a id="moduleLink5867231" class=" " href="/about/" ><span>About</span></a>
+      
+
+      
+
+    </div>
+
+  </li>
+
+
+  <li class="module   " id="moduleContentWrapper5966038">
+
+    <div id="moduleContent5966038">
+
+              <a id="moduleLink5966038" class=" " href="/contact/" ><span>contact</span></a>
+      
+
+      
+
+    </div>
+
+  </li>
+
+</ul>
+
+        
+
+      
+  
+    </div></div></div></div></div></div>
+
+  
+
+    <div id="sectionContent2612258" class="sectionWrapper  "><div class="iw-s1"><div class="iw-s2"><div class="iw-s3"><div class="iw-s4"><div class="section">
+
+       <div class="caption">follow bradford on</div> 
+
+      
+        
+          <div class="content-passthrough"><div id="moduleContentWrapper5966194" class="widget-wrapper  widget-type-page"><div id="moduleContent5966194">
+
+
+
+
+
+  <table style="width: auto;">
+  <tbody>
+  <tr>
+  <td><a href="http://picasaweb.google.com/lh/photo/_Op0xv7_Q2A_Q_VjsrRlIA?feat=embedwebsite"><img src="http://lh3.ggpht.com/_5GKxj4galt4/S1JLyVB_UhI/AAAAAAAAAHY/cmMEjo8nYyg/s144/brad-blog.jpg" alt="" /></a></td>
+  </tr>
+  <tr>
+  <td style="font-family: arial,sans-serif; font-size: 11px; text-align: right;"><a href="http://picasaweb.google.com/lh/sredir?uname=Bradford.N.Cross&amp;target=ALBUM&amp;id=5426114986363720881&amp;feat=embedwebsite"></a></td>
+  </tr>
+  </tbody>
+  </table>
+</div></div><div id="moduleContentWrapper5909675" class="widget-wrapper  widget-type-sociallinks"><div id="moduleContent5909675">
+
+
+
+  
+
+    
+    <ul class="social-link-list-pt">
+  
+      
+              <li id="socialLink72323">
+                <a  class="icon-link" style="background-image: url(/universal/images/social/twitter.png);"  onclick="this.target='new';" href="http://www.twitter.com/bradfordcross">Twitter</a>
+              </li>
+            
+              <li id="socialLink72324">
+                <a  class="icon-link" style="background-image: url(/universal/images/social/delicious.png);"  onclick="this.target='new';" href="http://www.delicious.com/01000010">Delicious</a>
+              </li>
+            
+              <li id="socialLink72325">
+                <a  class="icon-link" style="background-image: url(/universal/images/social/facebook.png);"  onclick="this.target='new';" href="http://www.facebook.com/profile.php?id=567748813">Facebook</a>
+              </li>
+            
+              <li id="socialLink96793">
+                <a  class="icon-link" style="background-image: url(/universal/images/social/linkedin.png);"  onclick="this.target='new';" href="http://www.linkedin.com/pub/bradford-cross/22/451/a59">LinkedIn</a>
+              </li>
+            
+  
+    </ul>
+    
+  
+
+</div></div><div id="moduleContentWrapper8130888" class="widget-wrapper  widget-type-rss-syndicate"><div id="moduleContent8130888">
+
+
+
+  <ul class="feed-list-inline">
+    
+          <li><a href="http://measuringmeasures.com/blog/rss.xml" class="feed-link">Measuring Measures RSS</a></li>
+        
+  </ul>
+
+</div></div><div id="moduleContentWrapper5910101" class="widget-wrapper  widget-type-links"><div id="moduleContent5910101">
+
+
+
+
+
+
+  <ul class="link-group-list-pt">
+
+    
+
+          <li id="linkGroup470054">
+
+            
+             <div class="title">codes &amp;&nbsp;books</div> 
+            
+
+            <ul>
+
+            
+
+                      <li id="link1462215">
+                        <div class="title"><a onclick="this.target='new';" href="http://github.com/bradford">github</a></div>
+                        <div class="description"></div>
+                        
+                      </li>
+
+                    
+
+                      <li id="link1462210">
+                        <div class="title"><a onclick="this.target='new';" href="http://www.amazon.com/gp/richpub/listmania/byauthor/A1JKHQFC9WMPN5">booklists by&nbsp;topic</a></div>
+                        <div class="description"></div>
+                        
+                      </li>
+
+                    
+
+                      <li id="link1462209">
+                        <div class="title"><a onclick="this.target='new';" href="http://www.amazon.com/wishlist/3RB4REDIKE28I">wishlists by&nbsp;topic</a></div>
+                        <div class="description"></div>
+                        
+                      </li>
+
+                    
+
+            </ul>
+
+          </li>
+
+        
+
+  </ul>
+
+</div></div><div id="moduleContentWrapper6064631" class="widget-wrapper  widget-type-page"><div id="moduleContent6064631">
+
+
+
+
+
+  <p>Search This Blog</p>
+</div></div><div id="moduleContentWrapper5909671" class="widget-wrapper  widget-type-search"><div id="moduleContent5909671">
+
+
+<form method="get" action="/display/Search">
+
+<div class="search-form-pt-wrapper">
+  <div class="search-form-pt">
+    <span class="queryFieldWrapper"><input type="text" class="text queryField" name="searchQuery" value=""/></span>
+    <span class="queryButtonWrapper"><input type="submit" class="button queryButton" value="&raquo;"/></span>
+    <input type="hidden" name="moduleId" value="5909671"/>
+    <br class="clearer"/>
+  </div>
+</div> 
+
+</form></div></div><div id="moduleContentWrapper6064637" class="widget-wrapper  widget-type-page"><div id="moduleContent6064637">
+
+
+
+
+
+  <p>Latest Posts</p>
+</div></div><div id="moduleContentWrapper6046065" class="widget-wrapper  widget-type-journalarchive"><div id="moduleContent6046065">
+
+
+
+
+
+
+
+  <ul class="archive-item-list-pt">
+     <li><a href="/blog/2010/12/23/why-is-groupon-so-important.html">Why is Groupon so Important?</a></li>  <li><a href="/blog/2010/11/30/7-questions-for-vcs-and-angels.html">7 Questions for VCs and Angels</a></li>  <li><a href="/blog/2010/11/25/flexible-persistence-and-iterative-vision.html">Flexible Persistence and Iterative Vision</a></li>  <li><a href="/blog/2010/11/22/human-capital-pops-the-money-capital-bubble.html">Human Capital Pops the Money Capital Bubble </a></li>  <li><a href="/blog/2010/11/8/mining-the-web-with-clojure.html">Mining the Web with Clojure</a></li>  <li><a href="/blog/2010/10/21/clojure-key-value-stores-voldemort-and-s3.html">Clojure Key-Value Stores, Voldemort, and S3</a></li>  <li><a href="/blog/2010/10/19/async-fetching-in-clojure.html">Async Fetching in Clojure</a></li>  <li><a href="/blog/2010/10/18/building-and-deploying-clojure-rest-services.html">Building and Deploying Clojure REST Services</a></li>  <li><a href="/blog/2010/10/17/clojure-streams-dont-hold-on-to-the-head.html">Clojure Streams: Don't Hold on to the Head</a></li>  <li><a href="/blog/2010/10/11/deploying-clojure-services-with-crane.html">Deploying Clojure Services with Crane</a></li> 
+  </ul>
+
+
+
+</div></div></div>
+
+        
+
+      
+  
+    </div></div></div></div></div></div>
+
+  
+
+    <div id="sectionContent2612257" class="sectionWrapper  "><div class="iw-s1"><div class="iw-s2"><div class="iw-s3"><div class="iw-s4"><div class="section">
+
+       <div class="caption">Navigation</div> 
+
+      
+        
+          <ul class="content-navigation">
+  <li class="module   " id="moduleContentWrapper5867233">
+
+    <div id="moduleContent5867233">
+
+              <a id="moduleLink5867233" class=" " href="/login/?returnUrl=%2Fblog%2F2010%2F6%2F3%2Fsoftware-product-granularity-building-depth-first-vs-breadth.html" ><span>Login</span></a>
+      
+
+      
+
+    </div>
+
+  </li>
+
+</ul>
+
+        
+
+      
+  
+    </div></div></div></div></div></div>
+
+  
+
+  
+
+</div></div></div></div></div></div>
+  <div id="sidebar2Wrapper" class="verticalNavigationBarWrapper"><div class="iw-vnb1"><div class="iw-vnb2"><div class="iw-vnb3"><div class="iw-vnb4"><div id="sidebar2" class="verticalNavigationBar">
+
+  
+
+  
+
+</div></div></div></div></div></div>
+  
+  
+
+  <div id="contentWrapper"><div id="content">
+    
+          
+    
+
+
+  
+
+  
+  
+      
+  <div class="journal-entry-navigation">
+
+    
+       <a class="journal-entry-navigation-prev" href="/blog/2010/6/8/maximum-viable-product.html">&laquo; Maximum Viable Product</a> | 
+      <a class="journal-entry-navigation-main" href="/blog/">Main</a>
+       | <a class="journal-entry-navigation-next" href="/blog/2010/6/2/looking-back-at-lean-6-lessons-for-winning.html">Looking Back at Lean: 6 lessons for winning &raquo;</a> 
+
+    
+
+  </div>
+
+
+  
+  
+  <div class="single-journal-entry-wrapper">
+    
+
+
+<div class="journal-entry-wrapper post-text authored-by-measuringmeasures ">
+<div id="item7854977" class="journal-entry">
+
+  <div class="journal-entry-float-day"><span class="name">Thursday</span></div><div class="journal-entry-float-date"><span class="month">Jun</span><span class="date">03</span><span class="year">2010</span></div>
+  
+  
+  
+  <div class="journal-entry-text">
+  
+      
+      <h2 class="title">
+    
+        
+    
+        <a class="journal-entry-navigation-current" href="/blog/2010/6/3/software-product-granularity-building-depth-first-vs-breadth.html">Software Product Granularity: building depth-first vs.&nbsp;breadth-first</a>  
+     
+         
+    
+      </h2>
+      
+       <div class="journal-entry-tag journal-entry-tag-post-title"><span class="posted-on">   <img title="Date" alt="Date" class="inline-icon date-icon" src="/universal/images/transparent.png" />Thursday, June 3, 2010 at 10:48AM</span> </div> 
+
+    
+  
+      
+      <div class="body">
+  
+        
+        
+        
+          <p><strong>Depth-first vs. breadth-first: the difference between functionality focus and scenario focus</strong><br /><img src="http://docs.google.com/File?id=dhhw653p_760cp7kqqgh_b" alt="" /><br />[ <a href="http://www.flickr.com/photos/huntthewumpus/2524321870/">source</a> ]<br /><br />A depth-first approach to building software goes function by function, fully implementing each function before moving on to the next. Implement data storage, then user interface, then a service for calculating stuff, etc. <br /><br />A breadth-first approach builds scenario by scenario, fully implementing cross-functional scenarios before moving on to the next scenario. Implement a scenario where a user logs in, then logs in and does something, then logs in and does something else, etc.<br /><br />We sometimes also say that the function by function view is a vertical slice view and the scenario by scenario is the horizontal slice view.<br /><br />For some reason, most of us seem to naturally start out building software using a depth-first approach; tackling one functional piece at a time. Over the years, depth-first thinking has been a big part of some of the failures I've experienced and observed. A big part of these failures have been due to missing so many very important things in the beginning while stuck in the implementation weeds of some particular area of functionality.<br /><br />The most costly mistakes are typically forgetting to consider something important from the very beginning and a depth-first approach is the easiest way to make this kind of a big mistake. This happens because depth-first forces dependence on low-level decisions before experiencing the impact of high-level decisions, so it is easy to completely miss something, or do a bunch of stuff that is useless.<br /><br />Breadth-first thinking gives you vision and scope. It highlights integration points, dependencies, architecture, non-functional requirements and user workflows. It uncovers missing scope, eliminates speculative scope, and helps you prioritize by business value. It allows your iterations be stuff that your users can use as you progress from simple scenarios that cover a lot of functional breadth up to complex scenarios that are deep in various functional slices.<br /><br /><strong>Layers of software granularity: from business objectives to code</strong><br /><img src="http://docs.google.com/File?id=dhhw653p_761c7gmspgs_b" alt="" /><br />[ <a href="http://www.flickr.com/photos/estherase/8309628/">source</a> ] <br /><br />In the process of building software, we go from business objectives to code.<br /><br />There is a broad spectrum of granularity between objectives and code. Ideally, we would like a smooth gradient from the business objectives (problem), to achieving the objectives (solution), to how it's fulfilled (implementation.)<br /><br />Achieving a smooth flow of information from business objectives to code is hard. It requires clarity at different many levels of granularity: business objectives, product, user scenarios, user stories, etc.<br /><br />Everything is an artifact of the business at different levels of granularity. The things we create are artifacts because they are side effects. These are things you must do as a means toward the end of creating a successful business - by some measures of success.<br /><br />Keep in mind there is a big difference between "creating lots of documentation", and "just achieving clarity." Process is a means to an end, <a href="../../blog/2009/12/2/the-decline-of-the-agile-charlatan.html">not an end in itself</a>.<br /><br /><strong>User scenarios: the critical mental shift</strong><br /><img src="http://docs.google.com/File?id=dhhw653p_762c7f98ws3_b" alt="" /><br />[ <a href="http://www.flickr.com/photos/cabinet/2470256829/">source</a> ]<br /><br />As we just discussed, it is normal to start with a functionality focus, but you get into the weeds from the depth-first approach and typically fail to deliver an early end-to-end version and iterate upon it.<br /><br />User scenarios address this directly because they fill a disconnect between levels of granularity. We want to get the nice fade in granularity rather than sharp jumps. <a href="http://en.wikipedia.org/wiki/User_story">User stories</a> are high granularity - good ones are a lot closer to code than top level business objectives on a relative granularity basis. <br /><br />Even on most well-run agile/lean projects I've seen, it is common to see huge gaps in the granularity scale such as; monetized business objectives -&gt; user stories -&gt; code. Since user stories are so close to code in granularity, this misses massive steps in refining the product vision and user scenarios.<br /><br />If you have never worked with user scenarios, it can take a bit to get the hang of it. If you have built software projects for years and have an intuition for agile/lean, scenarios will make sense right away and feel like the blessing you've always wanted.<br /><br />In this <a href="http://agileproductdesign.com/blog/emerging_best_agile_ux_practice.html">great post</a> on incorporating user experience into the agile development process, the motivation for scenarios is laid out as:</p>
+<blockquote>high level scenarios and/or wireframes are usually built to communicate screen flow, general look and feel, and general user interaction patterns.<br /></blockquote>
+<p>There are happy-path and sad-path scenarios. An abridged version of a happy-path scenario might look something like: user logs in, views their home page, and clicks on a link to view something. An abridged version of a sad-path scenario might look something like: user tries to log in, forgets password, recovers password via email, creates new password, logs in with new password, views their home page, and clicks on a link to view something.<br /><br />When we build breadth-first using the scenario focused approach, we build happy paths first and then layer on the sad paths that intersect with the happy path. Often we build full end-to-end versions of the software that are happy-path only before we cover any sad path scenarios at all. The idea there is to test all the most fundamental hypotheses of the software first before we spend time on the minutia - even though those minutia might be critical to an "industrial strength" production version.<br /><br />We sometimes lay out a "mega scenario" as a full end-to-end release. Megas break down into a few smaller scenarios. Your first mega should more or less force you build the skeleton for the entire system. You will discover and tackle some of the challenging technical infrastructure problems, but avoid excess complexity in fully implementing all the subtle logic and complexity associated with the sad-path scenarios or more lengthy scenarios that cover more complex features.<br /><br /><strong>Top down vs. cyclic graph: the value of feedback cycles</strong><br /><img src="http://docs.google.com/File?id=dhhw653p_763fqcgsxcf_b" alt="" /><br />[ <a href="http://www.flickr.com/photos/fish2000/2039548271/">source</a> ]<br /><br />The process of software development does not work well when it is a stepwise, linear, upstream-downstream process. That said, you do want to map the more granular stuff to the less granular stuff - codes maps to stories, which map to scenarios, which map to business objectives. If we can map and track through levels of granularity then it helps to keep us on task, avoid tangential efforts, and foster a nice process of incremental clarification and feedback.<br /><br />Any part of the process can feedback into any other parts. Code can show you the infeasibility or extreme difficulty with a certain direction and change your business objectives. Code can highlight new business objectives or identify other underlying business problems.<br /><br />You can use technical insights to determine new possible products or features. It is not uncommon for creative engineers to discover that they could do something new using the same underlying infrastructure. It is not uncommon for product development insights to inform a new strategic direction. Don't just use technical and product insight to estimate constraints, use it to discover new possibilities.<br /><br />Granularity is not a hierarchy but a free flow of information. Success at any one level by no means ensures success at any other level.<br /><br />Rather than top-down hierarchical thinking, we can highlight the cycles in the graph where insights from more granular work (technical and product) can feed back into less granular work (business objectives and strategy). There is always optimization between the supposed business value of some work vis-a-vis the cost of that work; including engineering cost, maintenance cost, and the opportunity cost of not doing something else right now.<br /><br /><strong>Missing in the middle: the cost of gaps</strong><br /><img src="http://docs.google.com/File?id=dhhw653p_765xxv3qcgr_b" alt="" />[ <a href="http://www.flickr.com/photos/judybaxter/127530217/">source</a> ]<br /><br />Over the years, I have noticed that a lot of problems in software product development come from gaps in the levels of granularity. People jump straight from "let's create a business that does X" into "OK, let's start coding".<br /><br />We rush in and fail to define the problem, end up solving the wrong problem, or solve nothing at all. The gaps in granularity create communication disconnects and reduce the reward-to-risk ratio of the software implementation.<br /><br />If there are major gaps in understanding across the levels of granularity, it results in implementations that do not support the business objectives. If you deliver against false objectives you probably haven't delivered value, and even if you get lucky, you've delivered sub-optimal value.<br /><br />The process of going from high level business objectives into code is difficult - particularly when it is a top-down one-way street.<br /><br />Agile is a reaction to the days of the software requirements specification and heavyweight big upfront design. We don't want to go back to loads of documentation, heavyweight process, and meeting-driven development. The fear often leads us to focus on the code side of the granularity scale and jump from the high level business objectives right into the user stories that are just a tiny bit away from our code level of granularity.<br /><br />This approach often works poorly in practice regardless of how skilled the implementation team is. The jump in granularity is too large and the team is implementation-thinking rather than problem-solving-thinking. The on-the-fly context switching just doesn't happen, despite what we try to tell ourselves.<br /><br />Take some time to meet me in the middle. Give me some hot steamy chunks of need which I can prioritize, through which I can communicate, and against which I can track. This middle-ground is a place of great joy. It will help you clarify your business objectives by clarifying how you map from user scenarios to business objectives. It will be your bridge so that everyone sees as much of both the big and small pictures as they need to. It will create feedback loops that allow technical insight to help inform new possibilities and adjust priorities based upon feasibility, cost, time, and other variables.<br /><br />This "middle level" is historically the purview of middle management - something we have done very little to incubate, define, nurture, and develop. We hold it in scorn: behold, Dilbert. We "promote" people into such roles either by promoting e.g., the salesperson with the best sales track record because we're looking at "results" and not their ability to work with people, or the worst individual contributor on the team because we won't miss what they weren't doing in the first place (the "Peter principle.").<br /><br />We end up devolving the middle levels of granularity by tasking them to the ill suited middle management. It's no-body's career ambition. The missing middle is encouraging big gaps in the software value stream.<br /><br /><strong>The fallacy of the deadline</strong><br /><br /><img src="http://docs.google.com/File?id=dhhw653p_766d5bjd9hq_b" alt="" /><br /><br />[ <a href="http://www.flickr.com/photos/strawbleu/3210208213/">source</a> ]<br /><br />You have two variables to tweak; 1) the time you have to do shit, 2) how much shit you want to do. You don't get to fix both, if you fix one, the other has to vary to make the "total shit done" equation come out right. If you think you can set both parameters to whatever you want, you are kidding yourself. Sadly, this is still quite common.<br /><br />There is sometimes value in "timeboxing" - setting the time parameter to a constant value and getting as much as you can on it in that time window. There are other times when you must get a certain thing done, even if it takes longer.<br /><br />Unfortunately, both of these approaches are simplistic for what the most common day to day scenario, which is a continuous dynamic optimization problem where we balance what we want to do with the time and resources our team has available to us.<br /><br />Reality is a constant balancing act, so why do we think in terms of hard targets? The absurdity mirrors financial analysts and their quarterly earnings estimates.<br /><br />What we really want is an ongoing clarification of business objectives and tracking of how what we are doing toward accomplishing our objectives, so that we can maximize the investment of our time. This mode of continuous optimization doesn't lend itself well to the traditional plan-and-deadline style because the style isn't optimized for continuously incorporating feedback and dynamically changing direction.<br /><br />As a result of all this, I argue that the traditional plan-and-deadline approach is not a sound strategy for product development. In particular, it is especially ill suited to products whose specifications and development cycles are highly uncertain, which is the case for most software.<br /><br /><strong>Conclusion: from raw material to finished product</strong><br /><img src="http://docs.google.com/File?id=dhhw653p_767gzmgwzch_b" alt="" /><br />[ <a href="http://www.flickr.com/photos/library_of_congress/2179218868/">source</a> ]<br /><br />Just as iron ore undergoes processing with other raw materials to produce the steel with which we build things, or crude oil undergoes refinement before it is used as an ingredient in other products, so too the raw materials of your ideas and business objectives must undergo a multi-stage processing of refinement before they are useful for implementing software products.<br /><br />We could work with raw iron ore directly if we like, but since we've been smelting it <a href="http://en.wikipedia.org/wiki/Iron_Age">since 2000 BC</a>, it would be a bit of a setback. When you try to jump directly from raw business objectives into implementation details, you are 4000 years behind.<br /><br />Whether you write a vision statement for the company, a business model, a product strategy, a user scenario, a user story, or code - they all describe and/or implement something as a means to your end. The better you recognize that and allow a free flow between the different levels of granularity, the more you end up with low level implementations that map to high level objectives, and high level objectives that are informed by low level implementation constraints and possibilities.<br /><br />Great software products come from careful refinement and clarity at each stage in the process from idea to implementation.<br /><br /></p>
+<ul>
+<li>Use a Breadth-first approach, not depth first. </li>
+<li>The most costly mistakes are typically forgetting to consider something important from the very beginning and a depth-first approach is the easiest way to make this kind of a big mistake. </li>
+<li>Depth-first forces dependence to low-level decisions before experiencing the impact of high-level decisions.</li>
+<li>Breadth-first is big picture - it gives you vision and scope.</li>
+<li>Breadth-first facilitates business value prioritization and iterative development by letting you start with simple scenarios that cover a lot of functional breadth, and then move on to maximum complexity scenarios that cover the full breadth. </li>
+<li>Breadth-first highlights integration points and functional dependencies.</li>
+<li>Breadth-first highlights architecture and non-functional requirements.</li>
+<li>Breadth-first is a user-centric form of product development and highlights user workflows.</li>
+<li>Depth-first can lead to missing breadth, or later expand into unwanted breadth (uncovers missing scope and eliminates speculative scope).</li>
+</ul>
+
+        
+  
+          
+  
+         
+  
+      </div>
+
+    
+
+  </div>
+
+      <div class="journal-entry-tag journal-entry-tag-post-body">
+      <div class="journal-entry-tag-post-body-line1"><span class="post-comments"><a href="/blog/2010/6/3/software-product-granularity-building-depth-first-vs-breadth.html#comments"> <img title="Comment" alt="Comment" class="inline-icon comment-icon" src="/universal/images/transparent.png" />1 Comment</a></span> |  <span class="share-item"><a href="javascript:noop();" onclick="Squarespace.Interaction.shareLink(this,'%2Fblog%2F2010%2F6%2F3%2Fsoftware-product-granularity-building-depth-first-vs-breadth.html','Software%20Product%20Granularity%3A%20building%20depth-first%20vs.%20breadth-first');"> <img title="Share Article" alt="Share Article" class="inline-icon share-icon" src="/universal/images/transparent.png" />Share Article </a></span> |  <span class="email-item"><a href="/blog/recommend/7854977"> <img title="Email Article" alt="Email Article" class="inline-icon email-icon" src="/universal/images/transparent.png" />Email Article </a></span> </div>
+      <div class="journal-entry-tag-post-body-line2"></div>
+      <div class="journal-entry-tag-post-body-line3"></div>
+    </div>
+  
+  
+  <div class="clearer"></div>
+
+</div>
+</div>
+
+
+
+
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+    <div class="journal-comment-area-wrapper">
+    <div id="comments" class="journal-comment-area">
+
+      <h3 class="caption">Reader Comments  (1) </h3>
+
+      
+        
+  <div class="comment-wrapper authored-by-None">
+  <div class="comment" id="comment10078542">
+
+    <div id="item10078542" class="body">
+
+      <p>Hello folks<br/>I just registered an account here... I would love to be a part of this network<br/> I really love the air here. .<br/>Today I got a links from my friend via my social network account. <br/>what is it? !</p><p>http://www.2009wpfg.com/?p=1240<br/>http://businessnewsforus.info/?p=1439</p>
+
+    </div>
+    <div class="signature">
+
+      October 6, 2010 | 
+  <a href="/contributor/11115798" title="Unregistered Commenter">
+  <img title="Unregistered Commenter" alt="Unregistered Commenter" class="inline-icon" src="/universal/images/core-resources/icons/dark/user-unregistered.png"/>sperrefratt
+  
+  </a>
+
+
+
+      
+        
+
+        
+
+      
+
+    </div>
+
+  </div>
+  </div>
+
+
+
+        
+
+      
+
+    </div>
+    </div>
+
+    
+      <div class="journal-add-comment-area-wrapper">
+  
+          
+            
+            
+  <script type="text/javascript">
+  // <![CDATA[
+
+    var isAddCommentsVisible = true;
+
+    function toggleReferenceMode() {
+      if (isAddCommentsVisible) {
+        hideObject(document.getElementById("add-comment-area"));
+        showObject(document.getElementById("add-reference-area"));
+      } else {
+        showObject(document.getElementById("add-comment-area"));
+        hideObject(document.getElementById("add-reference-area"));
+      }
+      isAddCommentsVisible = !isAddCommentsVisible;
+    }
+
+  // ]]>
+  </script>
+
+  <form method="post" style="margin: 0; padding: 0;" name="postform" id="postform" action="/process/CreateJournalEntryComment?moduleId=5918186&amp;entryId=7854977">
+
+     <input type="hidden" name="currentPage" value="1"/> 
+ 
+    <div class="notice-box" style="margin-top: 2em;" id="add-comment-area">
+
+      
+                              <h3 class="caption"><img title="Post" alt="Post" class="inline-icon" src="/universal/images/core-resources/icons/dark/comment.png"/>Post a New Comment</h3>
+          
+        
+
+        <div class="caption-text">
+
+          Enter your information below to add a new comment.
+
+          
+            <br/><br/>
+            <a href="javascript:toggleReferenceMode();">My response is on my own website &raquo;</a>
+
+          
+
+        </div>
+
+        
+
+        <script type="text/javascript" src="/universal/scripts/storable-fields.js?CE=23"></script>
+
+        
+          <div class="input-field">
+            
+            <div id="authorName_title" class="title">
+               Author: 
+
+              &nbsp;<a id="storedFieldControls" style="display: none; font-size: 9px;" href="javascript:forgetSavedFields();">(forget stored information)</a>
+            </div>
+            <input class="text" type="text" style="width: 200px;" name="authorName" id="authorName" value="" maxlength="50" tabindex="2"/>
+          </div>
+
+          <div class="input-field">
+            
+            <div id="authorEmail_title" class="title"> Author Email (optional): 
+</div>
+            <input class="text" type="text" style="width: 200px;" name="authorEmail" id="authorEmail" value="" maxlength="255" tabindex="3"/>
+          </div>
+
+          <div class="input-field">
+            
+            <div id="authorUrl_title" class="title"> Author URL (optional): 
+</div>
+            <input class="text" type="text" style="width: 200px;" name="authorUrl" id="authorUrl" value="" maxlength="255" tabindex="4"/>
+          </div>
+
+          <script type="text/javascript">
+
+            YAHOO.util.Event.addListener(window, "load", function() {
+
+              document.getElementById("storedFieldControls").style.display = (Squarespace.StorableFields.isDataSaved("authorName", "authorEmail", "authorUrl") ? "inline" : "none");
+              Squarespace.StorableFields.recall("authorName", "authorEmail", "authorUrl");
+
+            });
+
+            function forgetSavedFields() {
+
+              Squarespace.StorableFields.forget("authorName", "authorEmail", "authorUrl");
+              document.getElementById("storedFieldControls").style.display = "none";
+
+            }
+
+          </script>
+
+        
+
+        <script type="text/javascript">
+          function expandBody() { b = document.getElementById("body"); b.style.height = (b.offsetHeight + 40) + "px"; }
+          function shrinkBody() { b = document.getElementById("body"); b.style.height = (b.offsetHeight - 40) + "px"; }
+        </script>
+
+        
+        <div id="body_title" style="padding-bottom: 5px; float: left;"> Post: 
+</div>
+        <div style="padding-bottom: 5px; float: right;"><a title="Increase the size of the comment area." href="javascript:expandBody();">&#8595;</a> | <a title="Decrease the size of the comment area." href="javascript:shrinkBody();">&#8593;</a></div>
+        <div class="clearer">&nbsp;</div>
+        <div style="padding-bottom: 5px;"><textarea rows="15" cols="60" name="body" id="body" tabindex="5"></textarea></div>
+        <div style="padding-bottom: 5px;">Some HTML allowed: &lt;a href=&quot;&quot; title=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;acronym title=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote cite=&quot;&quot;&gt; &lt;code&gt; &lt;em&gt; &lt;i&gt; &lt;strike&gt; &lt;strong&gt;</div>
+
+        
+
+        <div class="footer">
+
+          
+
+                    
+            <p style="padding-bottom: 10px;"><input class="checkbox" type="checkbox" name="followOptIn" id="followOptIn" value="true"  tabindex="6"/>
+              <span onclick="toggleNotify()" style="cursor: pointer; cursor: hand">Notify me of follow-up comments via email.</span>
+            </p>
+            <br/>
+
+          
+
+          <input type="hidden" name="finalize" id="finalize" value="false"/>
+
+          <input style="width: 150px;" tabindex="6" class="button" type="button" name="createPostButton"  id="createPostButton"  value="Create Post"  onclick="submitContent(true);"/> &nbsp;&nbsp;
+          <input style="width: 150px;" tabindex="7" class="button" type="button" name="previewPostButton" id="previewPostButton" value="Preview Post" onclick="submitContent(false);"/>
+
+        </div>
+
+      
+
+    </div>
+
+  </form>
+
+  <script type="text/javascript">
+  // <![CDATA[
+
+    function toggleNotify() {
+      document.getElementById("followOptIn").click();
+    }
+              
+    function submitContent(isFinal) {
+      if (isFinal) {
+        document.getElementById("finalize").value = "true";
+        Squarespace.StorableFields.save("authorName", "authorEmail", "authorUrl");
+      }
+      Squarespace.Form.smartSubmit("postform");
+    }
+
+  // ]]>
+  </script>
+
+  
+    <form method="post" style="margin: 0; padding: 0;" name="postreferenceform" id="postreferenceform" action="/process/CreateReference?moduleId=5918186&amp;entryId=7854977">
+
+      <div class="notice-box" style="margin-top: 2em; display: none;" id="add-reference-area">
+
+                  <h3 class="caption"><img title="Post" alt="Post" class="inline-icon" src="/universal/images/core-resources/icons/dark/reference.png"/>Link an External Response</h3>
+        
+
+        <div class="caption-text">
+
+          Have a response on your own site?
+
+                      You can either use the [<a href="http://measuringmeasures.com/blog/trackback/7854977">Trackback URL</a>] for this entry, or link to your response directly.
+          
+
+          <br/><br/>
+
+          <a href="javascript:toggleReferenceMode();">I want to leave a comment directly on this site &raquo;</a>
+
+        </div>
+
+        <div class="caption-text" id="directLink">
+
+          <div class="input-field">
+            
+            <div class="title"> Article Title: 
+</div>
+            <div class="control"><input class="text" type="text" name="title" id="title" value="" tabindex="2"/></div>
+          </div>
+
+          <div class="input-field">
+            
+            <div class="title"> Article URL: 
+</div>
+            <div class="control"><input class="text" type="text" name="url" id="url" value="" tabindex="3"/></div>
+          </div>
+
+          <div class="input-field">
+            
+            <div class="title"> Article Excerpt (optional): 
+</div>
+            <div class="control"><input class="text" type="text" name="excerpt" id="excerpt" value="" tabindex="4"/></div>
+          </div>
+
+          <div class="input-field">
+            
+            <div class="title"> Site Name: 
+</div>
+            <div class="control"><input class="text" type="text" name="blog_name" id="blog_name" value="" tabindex="5"/></div>
+          </div>
+
+          <div class="input-field">
+            
+            <div class="title"> Site URL (optional): 
+</div>
+            <div class="control"><input class="text" type="text" name="blog_url" id="blog_url" value="" tabindex="5"/></div>
+          </div>
+
+          <div class="input-field">
+            
+            <div class="title"> Author Name: 
+</div>
+            <div class="control"><input class="text" type="text" name="author_name" id="author_name" value="" tabindex="6"/></div>
+          </div>
+
+        </div>
+
+        <div class="footer">
+
+          
+
+          <input style="width: 150px;" tabindex="7" class="button" type="button" value="Create Reference" onclick="Squarespace.Form.smartSubmit('postreferenceform');"/>
+
+          
+            <!-- <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/"> <rdf:Description rdf:about="http://measuringmeasures.com/blog/2010/6/3/software-product-granularity-building-depth-first-vs-breadth.html" dc:identifier="http://measuringmeasures.com/blog/2010/6/3/software-product-granularity-building-depth-first-vs-breadth.html" dc:title="Software Product Granularity: building depth-first vs. breadth-first" trackback:ping="http://measuringmeasures.com/blog/trackback/7854977" /> </rdf:RDF> -->
+
+          
+
+        </div>
+
+      </div>
+
+    </form>
+
+    
+
+  
+
+
+  
+            
+  
+          
+  
+        
+  
+      </div>
+        
+    
+  
+  
+  
+
+  
+
+
+  
+
+  
+
+  
+  
+
+</div></div> <!-- Content -->
+  
+    
+  
+    </div></div> <!-- Page Body -->
+
+    
+    
+    <div id="pageFooterWrapper"><div id="pageFooter">
+  
+              <script>  
+$(function () {  
+$(".latex").latex();  
+});  
+</script>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-6874250-2");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+<script type="text/javascript" charset="utf-8">
+	var disqus_forum_url = 'measuringmeasures';
+</script>
+<script type="text/javascript" src="http://mediacdn.disqus.com/1028/embed/squarespace.js"></script>
+<script type="text/javascript" src="http://disqus.com/forums/measuringmeasures/embed.js"></script>
+
+
+<p style="color: rgb(0, 0, 0); font-family: Arial; font-style: normal;"><font size="2">This blog uses Disqus for commenting.&nbsp;
+
+Click on the "share article" link at the bottom of the post.&nbsp; This will allow you to share via Twitter, Facebook, Digg, StumbleUpon, Reddit, Delicious and the other major social networks and sharing sites.&nbsp; You can share on Hackernews<font size="2"> <a href="http://news.ycombinator.com/submit">here</a>.&nbsp; </font></p>
+<p style="color: rgb(0, 0, 0); font-family: Arial; font-style: normal;"><font size="2">Check out my links on <a href="http://twitter.com/bradfordcross">twitter</a>, <a href="http://www.delicious.com/01000010">delicious</a>, and <a href="http://www.facebook.com/profile.php?id=567748813">facebook</a>.&nbsp; my code on <a href="http://github.com/bradford">github</a>.&nbsp; and my <a href="http://www.amazon.com/gp/richpub/listmania/byauthor/A1JKHQFC9WMPN5">book lists</a> and <a href="http://www.amazon.com/wishlist/3RB4REDIKE28I">wish lists</a> on Amazon, organized by topic.<br>
+</font></p>
+      
+  
+      
+  
+    </div></div>
+  
+  </div></div> <!-- Canvas -->
+  
+   
+
+
+  <div class="clearer" id="bodyClearer"></div>
+
+  
+
+</body>
+</html>
