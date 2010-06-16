@@ -1,0 +1,109 @@
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"><head><meta content="text/html; charset=UTF-8" http-equiv="content-type" /><meta name="description" /><meta content="clojure" name="keywords" /><meta content="Nurullah Akkaya" name="author" /><link href="/images/favicon.ico" rel="icon" type="image/x-icon" /><link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon" /><link href="/default.css" rel="stylesheet" type="text/css" /><link href="/rss-feed" rel="alternate" title="Nurullah Akkaya: an explorer's log" type="application/rss+xml" /><link href="http://nakkaya.com/2010/06/15/clojure-io-cookbook/" rel="canonical" /><script src="/highlight.pack.js" type="text/javascript"></script><script src="/jquery.js" type="text/javascript"></script><script type="text/javascript">$(document).ready(function() {
+        $("pre").wrapInner("<code></code>");
+        hljs.initHighlightingOnLoad();
+    });</script><title>Clojure I/O Cookbook</title></head><body><script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-87333-8']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+  })();
+
+</script><div id="wrap"><div id="header"><h1><a href="/">nakkaya<span class="fade-small">dot</span><span class="fade">com</span></a></h1><div class="pages"><a class="page" href="/">Home</a> | <a class="page" href="/projects.html">Projects</a> | <a class="page" href="/archives/">Archives</a> | <a class="page" href="/tags/">Tags</a> | <a class="page" href="/contact.html">About</a><form action="http://www.google.com/search" id="searchform" method="get"><div><input class="box" id="s" name="q" type="text" /><input name="sitesearch" type="hidden" value="nakkaya.com" /></div></form></div></div><div id="content"><div id="post"><h2>Clojure I/O Cookbook</h2><p>There are a number of ways for us to read a file. If the file is small
+enough and can be held in memory, simplest approach is to use slurp
+which will return a string containing the content of the file,</p>
+
+<pre><code>(slurp "some.txt")
+</code></pre>
+
+<p>For files that you can't or don't want to hold in memory, we can use
+BufferedReader, line-seq combo and process files on a line by line basis,</p>
+
+<pre><code> (with-open [rdr (java.io.BufferedReader. 
+                  (java.io.FileReader. "project.clj"))]
+   (let [seq (line-seq rdr)]
+     (count seq)))
+</code></pre>
+
+<p>These days it is more common (at least for me) to retrieve a URL then it
+is to read file, </p>
+
+<pre><code> (defn fetch-url[address]
+   (with-open [stream (.openStream (java.net.URL. address))]
+     (let  [buf (java.io.BufferedReader. 
+                 (java.io.InputStreamReader. stream))]
+       (apply str (line-seq buf)))))
+
+ (fetch-url "http://google.com")
+</code></pre>
+
+<p>Above will work on text files but corrupt binary files because
+BufferedReader assumes it is dealing with textual data, for downloading
+a binary file (video, music etc.) and saving it to a file on disk,</p>
+
+<pre><code> (defn fetch-data [url]
+   (let  [con    (-&gt; url java.net.URL. .openConnection)
+          fields (reduce (fn [h v] 
+                           (assoc h (.getKey v) (into [] (.getValue v))))
+                         {} (.getHeaderFields con))
+          size   (first (fields "Content-Length"))
+          in     (java.io.BufferedInputStream. (.getInputStream con))
+          out    (java.io.BufferedOutputStream. 
+                  (java.io.FileOutputStream. "out.file"))
+          buffer (make-array Byte/TYPE 1024)]
+     (loop [g (.read in buffer)
+            r 0]
+       (if-not (= g -1)
+         (do
+           (println r "/" size)
+           (.write out buffer 0 g)
+           (recur (.read in buffer) (+ r g)))))
+     (.close in)
+     (.close out)
+     (.disconnect con)))
+
+ (fetch-data "http://google.com")
+</code></pre>
+
+<p>Or if you prefer interacting with the socket directly,</p>
+
+<pre><code> (defn socket [host port]
+   (let [socket (java.net.Socket. host port)
+         in (java.io.BufferedReader. 
+             (java.io.InputStreamReader. (.getInputStream socket)))
+         out (java.io.PrintWriter. (.getOutputStream socket))]
+     {:in in :out out}))
+
+ (def conn (socket "irc.freenode.net" 6667))
+ (println (.readLine (:in conn)))
+</code></pre>
+
+<p>Now for writing stuff back to disk,</p>
+
+<pre><code> (require 'clojure.contrib.duck-streams)
+ (clojure.contrib.duck-streams/spit "output.txt" "test")
+</code></pre>
+
+<p>If you don't want to depend on the contrib library you can bind *out* to
+a FileWriter and print the content,</p>
+
+<pre><code> (binding [*out* (java.io.FileWriter. "some.dat")]
+   (prn {:a :b :c :d}))
+</code></pre>
+<div class="post-tags">Tags: <a href="/tags/#clojure">clojure </a></div><script type="text/javascript">var flattr_btn = 'compact';var flattr_uid = '27677';var flattr_tle = 'Clojure I/O Cookbook';var flattr_dsc = 'Clojure I/O Cookbook';var flattr_cat = 'text';var flattr_lng = 'en_GB';var flattr_tag = '';var flattr_url = 'http://nakkaya.com/2010/06/15/clojure-io-cookbook/';var flattr_hide = 'true';</script><script src="http://api.flattr.com/button/load.js" type="text/javascript"></script></div><div id="related"><h3>Random Posts</h3><ul class="posts"><li><span>22 Jun 2010</span><a href="/2010/06/22/finite-state-machine-implementation-in-clojure/">Finite State Machine Implementation in Clojure</a></li><li><span>04 Jun 2010</span><a href="/2010/06/04/motor-control-via-ardumoto-using-arduino-and-clodiuno/">Motor Control via Ardumoto Using Arduino and Clodiuno</a></li><li><span>20 May 2009</span><a href="/2009/05/20/passwordless-logins-with-ssh/">Passwordless Logins with SSH</a></li><li><span>16 Oct 2009</span><a href="/2009/10/16/password-based-encryption-using-aes/">Password Based Encryption Using AES</a></li><li><span>21 Oct 2009</span><a href="/2009/10/21/simple-bash-installer/">Simple Bash Installer</a></li></ul></div><div id="disqus"><div id="disqus_thread"></div><script type="text/javascript" src="http://disqus.com/forums/nakkaya/embed.js"></script><noscript><a href="http://disqus.com/forums/nakkaya/?url=ref">View the discussion thread.</a></noscript><a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a></div></div><div id="footer"><a href="/rss-feed"> RSS Feed</a><p>&copy; 2010<a href="/contact.html"> Nurullah Akkaya</a></p></div></div><script type="text/javascript">
+//<![CDATA[
+(function() {
+	     var links = document.getElementsByTagName('a');
+	     var query = '?';
+	     for(var i = 0; i < links.length; i++) {
+		     if(links[i].href.indexOf('#disqus_thread') >= 0) {
+								       query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+								       }
+		     }
+	     document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/nakkaya/get_num_replies.js' + query + '"></' + 'script>');
+	     })();
+//]]>
+</script></body></html>
