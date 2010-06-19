@@ -1,0 +1,481 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+<head profile="http://gmpg.org/xfn/11">
+
+    <title>Actors in Clojure — Why Not?</title>
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<meta name="description" content="Exploring the design and implementation of reliable, scalable, massively-concurrent computer systems" />
+		
+	<link rel="stylesheet" type="text/css" href="http://www.dalnefre.com/wp/wp-content/themes/dalnefre/style.css" />
+	
+  	<link rel="alternate" type="application/rss+xml" href="http://www.dalnefre.com/wp/feed/" title="It&#039;s Actors All The Way Down Posts RSS feed" />
+	<link rel="alternate" type="application/rss+xml" href="http://www.dalnefre.com/wp/comments/feed/" title="It&#039;s Actors All The Way Down Comments RSS feed" />
+	<link rel="pingback" href="http://www.dalnefre.com/wp/xmlrpc.php" />
+	
+<link rel="alternate" type="application/rss+xml" title="It&#039;s Actors All The Way Down &raquo; Actors in Clojure — Why Not? Comments Feed" href="http://www.dalnefre.com/wp/2010/06/actors-in-clojure-why-not/feed/" />
+<script type='text/javascript' src='http://www.dalnefre.com/wp/wp-includes/js/jquery/jquery.js?ver=1.4.2'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.dalnefre.com/wp/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.dalnefre.com/wp/wp-includes/wlwmanifest.xml" /> 
+<link rel='index' title='It&#039;s Actors All The Way Down' href='http://www.dalnefre.com/wp/' />
+<link rel='start' title='Deconstructing the Actor Model' href='http://www.dalnefre.com/wp/2010/05/deconstructing-the-actor-model/' />
+<link rel='prev' title='Solving &#8220;Same Fringe&#8221; with Stream Generators' href='http://www.dalnefre.com/wp/2010/06/solving-same-fringe-with-stream-generators/' />
+<link rel='next' title='Message Passing, part 1 &#8211; Synchronous Rendezvous' href='http://www.dalnefre.com/wp/2010/07/message-passing-part-1-synchronous-rendezvous/' />
+
+<link rel='canonical' href='http://www.dalnefre.com/wp/2010/06/actors-in-clojure-why-not/' />
+<link rel='shortlink' href='http://www.dalnefre.com/wp/?p=26' />
+
+</head>
+
+<body class="wordpress y2010 m12 d25 h02 single postid-26 s-y2010 s-m06 s-d17 s-h13 s-category-uncategorized s-tag-actor s-tag-blocking s-tag-clojure s-tag-data-flow s-tag-deadlock s-tag-debugging s-tag-distribution s-tag-erlang s-tag-functional s-tag-protocol s-tag-scalability s-tag-value s-author-admin">
+<script language="javascript" type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-16421475-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script');
+    ga.type = 'text/javascript';
+    ga.async = true;
+    ga.src = ('https:' == document.location.protocol 
+      ? 'https://ssl' 
+      : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+<div id="wrapper" class="hfeed">
+
+    <div id="header">
+    	<div id="branding">
+    		<div id="blog-title"><span><a href="http://www.dalnefre.com/wp/" title="It&#039;s Actors All The Way Down" rel="home">It&#039;s Actors All The Way Down</a></span></div>
+    			
+    		<div id="blog-description">Exploring the design and implementation of reliable, scalable, massively-concurrent computer systems</div>
+    		    	</div><!--  #branding -->
+    	<div id="access">
+    		<div class="skip-link"><a href="#content" title="Skip navigation to the content">Skip to content</a></div>
+            <div id="menu"><ul><li class="page_item page-item-2"><a href="http://www.dalnefre.com/wp/about/" title="About">About</a></li><li class="page_item page-item-3"><a href="http://www.dalnefre.com/wp/humus/" title="Humus">Humus</a><ul class='children'><li class="page_item page-item-13"><a href="http://www.dalnefre.com/wp/humus/humus-overview/" title="Humus Overview">Humus Overview</a></li><li class="page_item page-item-11"><a href="http://www.dalnefre.com/wp/humus/humus-grammar/" title="Humus Grammar">Humus Grammar</a></li></ul></li></ul></div>
+        </div><!-- #access -->
+    </div><!-- #header-->
+    
+   
+    <div id="main">
+    
+	<div id="container">
+		<div id="content">
+
+			<div id="nav-above" class="navigation">
+				<div class="nav-previous"><a href="http://www.dalnefre.com/wp/2010/06/solving-same-fringe-with-stream-generators/" rel="prev"><span class="meta-nav">&laquo;</span> Solving &#8220;Same Fringe&#8221; with Stream Generators</a></div>
+				<div class="nav-next"><a href="http://www.dalnefre.com/wp/2010/07/message-passing-part-1-synchronous-rendezvous/" rel="next">Message Passing, part 1 &#8211; Synchronous Rendezvous <span class="meta-nav">&raquo;</span></a></div>
+			</div>
+
+<div id="single-top" class="aside">
+<ul class="xoxo">
+</ul>
+</div><!-- #single-top .aside -->
+
+			<div id="post-26" class="hentry p1 post publish author-dale-schumacher category-uncategorized tag-actor tag-blocking tag-clojure tag-data-flow tag-deadlock tag-debugging tag-distribution tag-erlang tag-functional tag-protocol tag-scalability tag-value y2010 m06 d17 h13">
+    			<h1 class="entry-title">Actors in Clojure — Why Not?</h1>
+<div class="entry-meta"><span class="author vcard">By <a class="url fn n" href="http://www.dalnefre.com/wp/author/admin/" title="View all posts by Dale Schumacher">Dale Schumacher</a></span><span class="meta-sep"> | </span><span class="entry-date"><abbr class="published" title="2010-06-17T19:09:21+0000">June 17, 2010</abbr></span></div><!-- .entry-meta -->
+				<div class="entry-content">
+<p>In his article about <a href="http://clojure.org/state#actors">state management in Clojure</a>, Rich Hickey discusses his reasons for choosing not to use the Erlang-style actor model. While Erlang has made some implementation choices that can lead to problems, the problems are not intrinsic to the actor model. As the actor implementation with the longest history of success, Erlang naturally represents many peoples&#8217; understanding of the nature of actors — just as Smalltalk represents many peoples&#8217; understanding of objects. Patterns for actor-based problem solving are still emerging, but my experience with programming actors-in-the-small (i.e.: fine-grained concurrency in a shared-memory multicore context) leads me to believe that there is great potential for this largely-misunderstood model. So with that in mind, let&#8217;s break down Rich&#8217;s reasons and address them one-at-a-time.</p>
+<blockquote><p>It is a much more complex programming model, requiring 2-message conversations for the simplest data reads, and forcing the use of blocking message receives, which introduce the potential for deadlock.</p></blockquote>
+<p>Erlang&#8217;s nested (blocking) receive is not part of Hewitt&#8217;s original actor model [1] or Agha&#8217;s elaboration of it [2]. By introducing such a mechanism, a kind of deadlock can occur in Erlang. Of course, Erlang provides additional mechanisms, such as time-outs and supervision trees, for handling these failures. In the context of fault-tolerant components and distributed systems these mechanisms are very useful for creating reliable systems, but they are not required for shared-memory multiprocessing.</p>
+<p>The actor model does require two messages to &#8220;read&#8221; data from an object/actor — a request message and its corresponding reply. This is actually what allows you to <em>avoid</em> blocking concurrent requests. The messages are asynchronous, so nothing really needs to be blocked. If the requestor is unable to proceed without the data from the reply, then the requestor may be <em>logically</em> blocked, but that is not a result of using actors, it&#8217;s a result of the pattern of interaction used in a particular design.</p>
+<p>In most cases, there is much more potential concurrency to exploit in a particular system. Results may not even be &#8220;returned&#8221; to the requestor. Instead, results can be directed to the object/actor that needs the data. This leads to more of a flow-based approach to decomposing the system. Data flows asynchronously and concurrently to where it is needed. The actors in the system simply react to the arrival of new information in the form of messages representing work to do.</p>
+<blockquote><p>Programming for the failure modes of distribution means utilizing timeouts etc. It causes a bifurcation of the program protocols, some of which are represented by functions and others by the values of messages.</p></blockquote>
+<p>The key idea here is to focus on the protocol of messages. Think of &#8220;protocol&#8221; as a replacement for &#8220;interface&#8221; in designing loosely-coupled components. Components that can speak the same protocol can be used interchangeably and even safely upgraded or hot-swapped. Having appropriate strategies and mechanisms for handling distributed failure modes makes it possible to build extremely reliable and resilient systems. Erlang provides many valuable patterns for addressing these issues. However, these mechanisms are not required for communication within the same address space and are not intrinsic to the actor model.</p>
+<p>The bifurcation encouraged by actor-based programming is between values and actors. Values remain constant over time. Actors may change their behavior based on messages (values) they receive, so they represent the changable state of the system. Clojure encourages just the same bifurcation. Most of the language deals with values and functions on values. The &#8220;identity&#8221; concept is used to represent the changable state of the system.</p>
+<blockquote><p>It doesn&#8217;t let you fully leverage the efficiencies of being in the same process. It is quite possible to efficiently directly share a large immutable data structure between threads, but the actor model forces intervening conversations and, potentially, copying.</p></blockquote>
+<p>The actor model does not force copying of data. Passing messages between address spaces is what forces copying. Actor model messages are <em>always</em> pure immutable data values, and thus can be safely shared within an address space. An efficient actor implementation will fully leverage the ability to share large immutables values (data structures) among multiple actors. When copying <em>must</em> occur (e.g.: between machines) then it happens safely and transparently, since neither the original nor the copy are allowed to change.</p>
+<blockquote><p>Reads and writes get serialized and block each other, etc.</p></blockquote>
+<p>Actors implement a &#8220;shared nothing&#8221; data model. If you create an actor that has stateful behavior (such as a &#8220;storage cell&#8221;) then — and only then — you must define a protocol for access. Since messages are asynchronous, a sender never really blocks, not even to wait for the message to be received. If a response is generated, it is sent as a separate asynchronous message to whatever customer is specified in the request (which may not be the requestor). If there is a problem with &#8220;blocking&#8221; then either the protocol is poorly designed or the problem inherently requires synchronization. If synchronization is really needed, there are several good protocol patterns available. You&#8217;re not limited to the intrinsic synchronization assumed by sequential processing and call-return procedural protocols.</p>
+<blockquote><p>It reduces your flexibility in modeling &#8211; this is a world in which everyone sits in a windowless room and communicates only by mail.</p></blockquote>
+<p>On the contrary! The actor model is flexible enough to model the mechanisms of practically any other model of computation, including functional, logical, procedural and object-oriented. The basic mechanisms of the actor model, asynchronous communication of pure values among concurrent components, and dynamic reconfiguration of state, provides a reliable and well-defined semantic foundation.</p>
+<p>Thinking differently about the structure of your programs is <em>required</em> for scalable concurrent programming. Fortunately, we have examples all around us. The real world <em>is</em> concurrent. Change requires interaction. State is only observable through behavior. The actor model gives us the tools to represent this directly in our designs.</p>
+<blockquote><p>Programs are decomposed as piles of blocking switch statements.</p></blockquote>
+<p>This is specific to Erlang, which implements actors as tail-recursive functions that block on &#8220;receive&#8221;. But that is not the only possible implementation. Hewitt/Agha-style actors have no explicit &#8220;receive&#8221;. Instead, they are activated by the reception of a message. The behavior they execute on activation is finite, and they <em>can not block</em>. In fact, there are really no &#8220;threads&#8221; at all. Only reactive components that maintain their (passive) state between invocations (messages). All pending work is the system is represented by messages-in-transit.</p>
+<blockquote><p>You can only handle messages you anticipated receiving.</p></blockquote>
+<p>And objects (in a traditional object-oriented language) can only handle messages <em>they</em> anticipated receiving. But both objects and actors can be designed to delegate &#8220;unanticipated&#8221; messages to another handler. Are all functions in Clojure &#8220;total&#8221;, or are they undefined for some &#8220;unanticipated&#8221; input values? In <a href="http://www.dalnefre.com/wp/humus/">Humus</a>, actors can choose to ignore, modify, redirect, or throw an exception when they receive a message they don&#8217;t want to handle directly.</p>
+<blockquote><p>Coordinating activities involving multiple actors is very difficult.</p></blockquote>
+<p>Programming with actors does require a different mental model, just like programming with functions, logic, procedures or objects. That&#8217;s what makes it a <em>model</em> of computation, not just a new set of tools and patterns we can capture in a library. You should expect that a shift to actor-based thinking will be as much of a challenge as shifting to any new computational model.</p>
+<blockquote><p>You can&#8217;t observe anything without its cooperation/coordination &#8211; making ad-hoc reporting or analysis impossible, instead forcing every actor to participate in each protocol.</p></blockquote>
+<p>Two powerful mechanisms are available to address this issue. First, actors can be easily hidden behind proxies, adapters or even a façade. Since you can only interact with an actor through its message protocol, you can interpose all kinds of reporting and analysis actors without the knowledge or consent of either the customers or the target actor. All kinds of aspects, monitoring, instrumentation, verification, and adaptation can be implemented this way.</p>
+<p>Second, actors can be hosted in a heavily-instrumented meta-configuration which records the full history of all messages and the provenance of all actors in the configuration. The resulting event-trees can be combined with references to the actors&#8217; behaviors for a full picture of any given execution. You can&#8217;t get more observable than that.</p>
+<blockquote><p>It is often the case that taking something that works well locally and transparently distributing it doesn&#8217;t work out &#8211; the conversation granularity is too chatty or the message payloads are too large or the failure modes change the optimal work partitioning, i.e. transparent distribution isn&#8217;t transparent and the code has to change anyway.</p></blockquote>
+<p>Properly modularized actor configurations can be distributed, and often replicated, without changing their fundamental operation. This does not make distribution &#8220;transparent&#8221;, partly for the reasons quoted. However, distributed programming is not the only application for actors. Safe concurrent applications, even on multiple processor cores sharing memory, can be created with actors. And extremely efficient actor implementations <em>do</em> exist.</p>
+<p><a name="conclusion"></a></p>
+<h2>Conclusion</h2>
+<p>I have nothing against Clojure.  In fact, I think there are a lot of interesting ideas there.  Focusing mostly on pure functions and providing explicit mechanisms for handling mutable state is a good idea.  In a future article, I intend to explore the implementation of <a href="http://en.wikipedia.org/wiki/Software_transactional_memory">Software Transactional Memory</a>, another interesting idea.  I also respect the choice to not support actors.  However, I do object to some of the reasons given for making that design decision.  This rebuttal is intended to provide a counterpoint to Rich Hickey&#8217;s rationale and hopefully dispel some of the misconceptions relating to actor implementations.</p>
+<p><a name="references"></a></p>
+<h2>References</h2>
+<dl>
+<dt>[1]</dt>
+<dd>C. Hewitt. Viewing Control Structures as Patterns of Passing Messages. <em>Journal of Artificial Intelligence</em>, 8(3):323-364, 1977.</dd>
+<dt>[2]</dt>
+<dd>G. Agha. <em>Actors: A Model of Concurrent Computation in Distributed Systems</em>. MIT Press, Cambridge, Mass., 1986.</dd>
+</dl>
+
+									</div>
+				<div class="entry-utility"><span class="cat-links">This entry was posted in <a href="http://www.dalnefre.com/wp/category/uncategorized/" title="View all posts in Uncategorized" rel="category tag">Uncategorized</a></span><span class="tag-links">  and tagged <a href="http://www.dalnefre.com/wp/tag/actor/" rel="tag">actor</a>, <a href="http://www.dalnefre.com/wp/tag/blocking/" rel="tag">blocking</a>, <a href="http://www.dalnefre.com/wp/tag/clojure/" rel="tag">Clojure</a>, <a href="http://www.dalnefre.com/wp/tag/data-flow/" rel="tag">data-flow</a>, <a href="http://www.dalnefre.com/wp/tag/deadlock/" rel="tag">deadlock</a>, <a href="http://www.dalnefre.com/wp/tag/debugging/" rel="tag">debugging</a>, <a href="http://www.dalnefre.com/wp/tag/distribution/" rel="tag">distribution</a>, <a href="http://www.dalnefre.com/wp/tag/erlang/" rel="tag">Erlang</a>, <a href="http://www.dalnefre.com/wp/tag/functional/" rel="tag">functional</a>, <a href="http://www.dalnefre.com/wp/tag/protocol/" rel="tag">protocol</a>, <a href="http://www.dalnefre.com/wp/tag/scalability/" rel="tag">scalability</a>, <a href="http://www.dalnefre.com/wp/tag/value/" rel="tag">value</a></span>. Bookmark the <a href="http://www.dalnefre.com/wp/2010/06/actors-in-clojure-why-not/" title="Permalink to Actors in Clojure — Why Not?">permalink</a>. <a class="comment-link" href="#respond" title ="Post a comment">Post a comment</a> or leave a trackback: <a class="trackback-link" href="http://www.dalnefre.com/wp/2010/06/actors-in-clojure-why-not/trackback/" title ="Trackback URL for your post" rel="trackback">Trackback URL</a>.</div><!-- .entry-utility -->
+			</div><!-- .post -->
+			
+<div id="single-insert" class="aside">
+<ul class="xoxo">
+</ul>
+</div><!-- #single-insert .aside -->
+
+			<div id="nav-below" class="navigation">
+				<div class="nav-previous"><a href="http://www.dalnefre.com/wp/2010/06/solving-same-fringe-with-stream-generators/" rel="prev"><span class="meta-nav">&laquo;</span> Solving &#8220;Same Fringe&#8221; with Stream Generators</a></div>
+				<div class="nav-next"><a href="http://www.dalnefre.com/wp/2010/07/message-passing-part-1-synchronous-rendezvous/" rel="next">Message Passing, part 1 &#8211; Synchronous Rendezvous <span class="meta-nav">&raquo;</span></a></div>
+			</div>
+
+			<div id="comments">
+
+
+				<div id="comments-list" class="comments">
+					<h3><span>14</span> Comments</h3>
+
+					<ol>
+						<li id="comment-17" class="comment c0 c-y2010 c-m06 c-d18 c-h13 alt">
+							<div class="comment-author vcard"><img alt='' src='http://1.gravatar.com/avatar/9367d0448b8fc3e6d7f6cd421940ac62?s=80&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D80&amp;r=G' class='photo avatar avatar-80 photo' height='80' width='80' /> <span class="fn n"><a href='http://concise-software.blogspot.com/' rel='external nofollow' class='url url'>Alain O'Dea</a></span></div>
+							<div class="comment-meta">Posted 2010-06-18 at 7:09 pm <span class="meta-sep">|</span> <a href="#comment-17" title="Permalink to this comment">Permalink</a></div>
+							<p>This is a clear and concise article.  Thank you.</p>
+<p>The Actor Model is a complex topic and yet you have managed effectively to boil it down to some essential strengths.  This article will be a useful resource when explaining Actors to my colleagues.</p>
+						</li>
+						<li id="comment-19" class="comment c1 c-y2010 c-m06 c-d18 c-h17">
+							<div class="comment-author vcard"><img alt='' src='http://0.gravatar.com/avatar/22788ec68b2aee512f8f4c5d8ae819ae?s=80&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D80&amp;r=G' class='photo avatar avatar-80 photo' height='80' width='80' /> <span class="fn n"><a href='http://technomancy.us' rel='external nofollow' class='url url'>Phil</a></span></div>
+							<div class="comment-meta">Posted 2010-06-18 at 11:49 pm <span class="meta-sep">|</span> <a href="#comment-19" title="Permalink to this comment">Permalink</a></div>
+							<p>I don&#8217;t think Rich has anything against the Actor model. It&#8217;s just something that&#8217;s easy to implement in libraries and doesn&#8217;t need to be part of the core of the language.</p>
+						</li>
+						<li id="comment-20" class="comment c2 c-y2010 c-m06 c-d19 c-h00 alt">
+							<div class="comment-author vcard"><img alt='' src='http://0.gravatar.com/avatar/48de219c65d99f076b23ef54f9ee567e?s=80&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D80&amp;r=G' class='photo avatar avatar-80 photo' height='80' width='80' /> <span class="fn n"><a href='http://ishmal.org' rel='external nofollow' class='url url'>ishmal</a></span></div>
+							<div class="comment-meta">Posted 2010-06-19 at 6:23 am <span class="meta-sep">|</span> <a href="#comment-20" title="Permalink to this comment">Permalink</a></div>
+							<p>The limitations of which he speaks are, of course, an implementation thing, and not spec&#8217;d that way by the Actor model itself.  Two of the quotes, specifically:</p>
+<p>&gt;  Reads and writes get serialized and block each other, etc.</p>
+<p>&#8230;and&#8230;</p>
+<p>&gt;  You can only handle messages you anticipated receiving.</p>
+<p>&#8230;are both because of implementation.  I have been wondering if maybe a select()-type model would be better, where incoming messages -of any type- and from any source are received in some order (first come first served, priority queue, etc) and are parsed and dispatched.   So whether you have an input stream to read, a socket receive, a pipe, an Actor message, WHATEVER,  they all get handled in turn, with none blocking the others.</p>
+						</li>
+						<li id="comment-21" class="comment c3 c-y2010 c-m06 c-d19 c-h04">
+							<div class="comment-author vcard"><img alt='' src='http://0.gravatar.com/avatar/a97b2b78094e9fa7680d0d05ce1be945?s=80&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D80&amp;r=G' class='photo avatar avatar-80 photo' height='80' width='80' /> <span class="fn n">Tristan</span></div>
+							<div class="comment-meta">Posted 2010-06-19 at 10:00 am <span class="meta-sep">|</span> <a href="#comment-21" title="Permalink to this comment">Permalink</a></div>
+							<p>@Phil</p>
+<p>On the contrary. Implementing Actors as a library in another language is automatically restricting by accepting all the assumptions of that language. Fundamentally, Actor language, when implemented true to form, could perform non-Turing computation (think unbounded nondeterminism, hypercomputation, Artificial Recurrent Neural Networks). As soon as one takes another language and builds a library, that key benefit is gone.</p>
+						</li>
+						<li id="comment-22" class="comment c4 c-y2010 c-m06 c-d19 c-h05 alt">
+							<div class="comment-author vcard"><img alt='' src='http://0.gravatar.com/avatar/ce461b57b6a1f65ce5b6cc1c124673e3?s=80&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D80&amp;r=G' class='photo avatar avatar-80 photo' height='80' width='80' /> <span class="fn n">Sean</span></div>
+							<div class="comment-meta">Posted 2010-06-19 at 11:12 am <span class="meta-sep">|</span> <a href="#comment-22" title="Permalink to this comment">Permalink</a></div>
+							<p>This is a very insightful post, thanks! </p>
+<p>One thing that bears repeating is that Erlang was not designed originally to exploit multiprocessing, it just happened that the Actor model was the most efficient way to design a fault-tolerant system &#8212; the isolation provided by message-passing inherently makes components less coupled to each other&#8217;s failures.  Only recently (within about the last 10 years) has SMP been available for Erlang.</p>
+						</li>
+						<li id="comment-23" class="comment c5 c-y2010 c-m06 c-d19 c-h12">
+							<div class="comment-author vcard"><img alt='' src='http://0.gravatar.com/avatar/49a75a851b25eb03b64862f20292872c?s=80&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D80&amp;r=G' class='photo avatar avatar-80 photo' height='80' width='80' /> <span class="fn n"><a href='http://zakwilson.posterous.com' rel='external nofollow' class='url url'>Zak</a></span></div>
+							<div class="comment-meta">Posted 2010-06-19 at 6:12 pm <span class="meta-sep">|</span> <a href="#comment-23" title="Permalink to this comment">Permalink</a></div>
+							<p>Clojure&#8217;s mechanisms for concurrent state are more powerful and flexible than actors. Clojure&#8217;s agents actually have a lot in common with actors, but take arbitrary functions instead of predefined messages. From a Clojure point of view, actors are agents with restricted functionality to enable use in a distributed environment.</p>
+<p>Adding actors to Clojure might be a good idea, but they should be explicitly for the purpose of distributed systems, and probably built on top of agents.</p>
+						</li>
+						<li id="comment-24" class="comment c6 c-y2010 c-m06 c-d19 c-h14 alt">
+							<div class="comment-author vcard"><img alt='' src='http://1.gravatar.com/avatar/7a445c8404189cf750c72a37b48fccb1?s=80&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D80&amp;r=G' class='photo avatar avatar-80 photo' height='80' width='80' /> <span class="fn n">Gerry</span></div>
+							<div class="comment-meta">Posted 2010-06-19 at 8:30 pm <span class="meta-sep">|</span> <a href="#comment-24" title="Permalink to this comment">Permalink</a></div>
+							<p>Very interesting and helpful.<br />
+You wrote<br />
+&#8220;Erlang’s nested (blocking) receive is not part of Hewitt’s original actor model [1] or Agha’s elaboration of it [2]. By introducing such a mechanism, a kind of deadlock can occur in Erlang. Of course, Erlang provides additional mechanisms, such as time-outs and supervision trees, for handling these failures&#8221;<br />
+What kind of deadlocks, are they restricted to  a distributed or local environment?<br />
+How do Clojure or Scala effectively deal with the equivalent of Erlang OTP, and distributed apps in general?</p>
+						</li>
+						<li id="comment-25" class="comment c7 byuser comment-author-admin bypostauthor c-y2010 c-m06 c-d20 c-h12">
+							<div class="comment-author vcard"><img alt='' src='http://0.gravatar.com/avatar/60248f081add83385683fa0042c7189f?s=80&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D80&amp;r=G' class='photo avatar avatar-80 photo' height='80' width='80' /> <span class="fn n">admin</span></div>
+							<div class="comment-meta">Posted 2010-06-20 at 6:23 pm <span class="meta-sep">|</span> <a href="#comment-25" title="Permalink to this comment">Permalink</a></div>
+							<p>@Phil &#8211; As Tristan noted, even though a library implementation may be possible, there are advantages to a direct implementation.  So far I&#8217;ve been able to avoid any blocking operations.  Everything is interrupt/event/message driven at the lowest level.</p>
+<p>@ishmal &#8211; That&#8217;s essentially what my prototype actor-based environment does.  Message delivery events are interleaved to provide very fine-grained concurrency.</p>
+<p>@Sean &#8211; You have an excellent point.  Since many people&#8217;s understanding of actors comes from Erlang, I&#8217;m trying to point out some of the differences between Erlang-style actors and the original Actor Model.</p>
+<p>@Zak &#8211; I&#8217;m not arguing for inclusion of actors in Clojure.  That&#8217;s not my call.  I&#8217;m simply attempting to dispel some misconceptions that were represented by the original article.  In any case, relative power and flexibility are somewhat subjective.  I think you may be surprised at how powerful and flexible actors actually are.  Hopefully, I can illustrate this further in future articles.</p>
+<p>@Gerry &#8211; Deadlocks can occur whenever an Erlang-style actor is waiting in a nested receive and thus is unresponsive to other messages (local or remote).  OTP is much too big a subject to address here :-)</p>
+						</li>
+						<li id="comment-26" class="comment c8 c-y2010 c-m06 c-d20 c-h12 alt">
+							<div class="comment-author vcard"><img alt='' src='http://1.gravatar.com/avatar/567898c496278341be69087507d5ed24?s=80&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D80&amp;r=G' class='photo avatar avatar-80 photo' height='80' width='80' /> <span class="fn n"><a href='http://lifeisagraph.com' rel='external nofollow' class='url url'>Jeff Rose</a></span></div>
+							<div class="comment-meta">Posted 2010-06-20 at 6:55 pm <span class="meta-sep">|</span> <a href="#comment-26" title="Permalink to this comment">Permalink</a></div>
+							<p>While an interesting analysis, this post feels more like partisan politics than an honest investigation of the advantages and disadvantages of using actors to structure concurrent programs.  Oh, and we are talking about real programs with state, not pure computations that just heat up the CPU, because I think it would be very difficult to argue for actors over regular pure functions if that were the case, however useless it might be.</p>
+<p>First, you say, &#8220;if the requestor is unable to proceed without the data from the reply, then the requestor may be logically blocked, but that is not a result of using actors, it’s a result of the pattern of interaction used in a particular design.&#8221;  This doesn&#8217;t address the basic point that I think Hickey intended, which is that actors that have state must be coded to respond to messages which are querying for the state, and vice versa, the requesting actor has to wait for the response message.  Sure, it could be asynchronous, but if this is a request from another processor we could be either spinning or paying for context switching when in reality we could have just read a value and saved both time and coding overhead.  This isn&#8217;t about being logically blocked, it&#8217;s about jumping through hoops to satisfy a given programming model when in reality a simple read is sufficient, unless you need to go over the network.</p>
+<p>In response to Hickey&#8217;s claim that the actor model results in a branching of the programming model, between messaging and function calls, you state that, &#8220;The bifurcation encouraged by actor-based programming is between values and actors. Values remain constant over time. Actors may change their behavior based on messages (values) they receive, so they represent the changable state of the system. Clojure encourages just the same bifurcation. &#8221; This is side-stepping his criticism.  I ran into this exact problem with Erlang a number of times, so I know first hand what he means.  While sitting there breaking up a problem you have to make the call over and over again, &#8220;do I send a message and implement this next computation in an actor, or do I just write a function and make a function call?&#8221;  I think this is the bifurcation he is discussing.  Values remain constant?  I don&#8217;t see how that is relevant.  We are talking about performing computation to create new data structures or to generate new values, and the split is in deciding where this computation should occur and how it should be triggered.</p>
+<p>Hickey said, &#8220;it doesn’t let you fully leverage the efficiencies of being in the same process,&#8221; and you responded with discussion of efficient implementations not needing to copy.  While copying is potentially an issue, the larger point is that reading a value requires a conversation.  To read a value from an in-process actor, even in a zero-copy dream implementation, you have to make a request, handle the request and send a response, and then handle the response, while in equivalent Clojure you just read the value.  That means less coding, less debugging, and less processing time.  To read the current value of an agent that could be currently executing on a local CPU in Clojure you type @foo.  I don&#8217;t think an actor equivalent could compare, but I&#8217;d like to see a counter example.</p>
+<p>Hickey pointed out that an actor can only handle messages which it has been programmed to respond to, and you respond by asking, &#8220;are all functions in Clojure “total”, or are they undefined for some “unanticipated” input values?&#8221;  Again, this misses the point.  If an actor is representing something more complicated than a single value, say a data structure, it has to be programmed to respond to all possible queries about that data structure if it is going to be as useful as just getting at the data structure directly, but responding with a whole data structure isn&#8217;t a great idea if you imagine that it could one day become a distributed system rather than just a concurrent program (let alone if you have to pay for a copy).  Of course functions in Clojure expect specific input arguments, but this is more about getting at state then it is about a protocol.  The state in a Clojure program isn&#8217;t being guarded by an actor that has to be programmed to respond to requests for that state, it can just be accessed directly, so you don&#8217;t have to foresee what questions might be asked of it.</p>
+<p>You say that &#8220;programming with actors does require a different mental model, just like programming with functions, logic, procedures or objects,&#8221; but I think you misunderstood what Hickey was referring to when he said that coordating multiple actors can be difficult.  At least in Clojure land coordination typically comes up when speaking about references (refs), which are the special variables that can only be modified inside a transaction.  This type of coordination is necessary, for example, if you want to have multiple threads operating on shared data structures.  In Clojure the STM protects you from many of the most difficult issues related to deadlock when updating state from multiple threads.  With actors you can introduce many of the same problems that you run into with standard multi-threaded programming, hence the need for supervision trees, etc.  With Erlang it is typical to hear people talk about just killing off processes when they mis-behave, which is actually a refreshingly pragmatic take on the deadlock issue.  If things get funky, just kill them and retry.  Clearly this does work, but it is also sub-optimal.  With software transactional memory I think we get closer to just making things work correctly instead.</p>
+<p>All of that said, I actually like the actor model for distributed computing, and I think Erlang and OTP have many interesting ideas that I&#8217;d love to see people work with in Clojure.  My guess though is that actors are not the future of concurrent computation exactly because of the issues Hickey brings up.</p>
+						</li>
+						<li id="comment-27" class="comment c9 c-y2010 c-m06 c-d21 c-h00">
+							<div class="comment-author vcard"><img alt='' src='http://1.gravatar.com/avatar/b65af119374019be58586058cbab5981?s=80&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D80&amp;r=G' class='photo avatar avatar-80 photo' height='80' width='80' /> <span class="fn n"><a href='http://www.dancres.org/blitzblog' rel='external nofollow' class='url url'>Dan Creswell</a></span></div>
+							<div class="comment-meta">Posted 2010-06-21 at 6:13 am <span class="meta-sep">|</span> <a href="#comment-27" title="Permalink to this comment">Permalink</a></div>
+							<p>&#8220;Actor model messages are always pure immutable data values&#8221;</p>
+<p>Did you mean the messages themselves or the messages and all the things they reference?</p>
+<p>Or put another way: Are you stating that these messages can&#8217;t contain references to mutable state?</p>
+						</li>
+						<li id="comment-28" class="comment c10 byuser comment-author-admin bypostauthor c-y2010 c-m06 c-d22 c-h02 alt">
+							<div class="comment-author vcard"><img alt='' src='http://0.gravatar.com/avatar/60248f081add83385683fa0042c7189f?s=80&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D80&amp;r=G' class='photo avatar avatar-80 photo' height='80' width='80' /> <span class="fn n">admin</span></div>
+							<div class="comment-meta">Posted 2010-06-22 at 8:03 am <span class="meta-sep">|</span> <a href="#comment-28" title="Permalink to this comment">Permalink</a></div>
+							<p>@Jeff &#8211; I appreciate the diversity of opinion represented by your comments.  Thanks for adding to the conversation.  In my opinion, one of the key mental shifts involved in effectively applying the actor model is to focus on behavior rather than state.  The awkwardness of accessing state from outside the actor is a constant reminder to &#8220;tell, not ask&#8221;.  That is, tell the actor what you would like it to do for you, not ask for some state to manipulate yourself.  This was the original intent of the object-oriented model, and it is still largely unrealized.  For pure data manipulation, I prefer to use the functional model.  Humus combines the data manipulation power of pure functions with the use of actors to manage concurrent access to mutable state.  I find this to be a valuable design separation.  YMMV.</p>
+<p>@Dan &#8211; Messages may contain actor &#8220;identities&#8221;, which are immutable, just like all values.  You must send a message to the actor in order to affect its state.</p>
+						</li>
+						<li id="comment-115" class="comment c11 c-y2010 c-m07 c-d29 c-h22">
+							<div class="comment-author vcard"><img alt='' src='http://1.gravatar.com/avatar/928b47489462b9301d8e7026d9b074cf?s=80&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D80&amp;r=G' class='photo avatar avatar-80 photo' height='80' width='80' /> <span class="fn n"><a href='http://polprav.blogspot.com/' rel='external nofollow' class='url url'>inkognitum</a></span></div>
+							<div class="comment-meta">Posted 2010-07-30 at 4:34 am <span class="meta-sep">|</span> <a href="#comment-115" title="Permalink to this comment">Permalink</a></div>
+							<p>it was very interesting to read <a href="http://www.dalnefre.com" rel="nofollow">http://www.dalnefre.com</a><br />
+I want to quote your post in my blog. It can?<br />
+And you et an account on Twitter?</p>
+						</li>
+						<li id="comment-117" class="comment c12 byuser comment-author-admin bypostauthor c-y2010 c-m07 c-d30 c-h02 alt">
+							<div class="comment-author vcard"><img alt='' src='http://0.gravatar.com/avatar/60248f081add83385683fa0042c7189f?s=80&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D80&amp;r=G' class='photo avatar avatar-80 photo' height='80' width='80' /> <span class="fn n">admin</span></div>
+							<div class="comment-meta">Posted 2010-07-30 at 8:28 am <span class="meta-sep">|</span> <a href="#comment-117" title="Permalink to this comment">Permalink</a></div>
+							<p>@inkognitum A quote with attribution (or just a link to the original) would be great.</p>
+<p>I am @dalnefre on Twitter.</p>
+						</li>
+						<li id="comment-184" class="comment c13 c-y2010 c-m08 c-d15 c-h20">
+							<div class="comment-author vcard"><img alt='' src='http://0.gravatar.com/avatar/c043cb3236572fec6ceabf7e4500d3d9?s=80&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D80&amp;r=G' class='photo avatar avatar-80 photo' height='80' width='80' /> <span class="fn n">Tavakankila</span></div>
+							<div class="comment-meta">Posted 2010-08-16 at 2:16 am <span class="meta-sep">|</span> <a href="#comment-184" title="Permalink to this comment">Permalink</a></div>
+							<p>i&#8217;m new&#8230; anticipation to despatch nearly more oftentimes!</p>
+						</li>
+
+					</ol>
+				</div><!-- #comments-list .comments -->
+
+
+				<div id="trackbacks-list" class="comments">
+					<h3><span>2</span> Trackbacks</h3>
+
+					<ol>
+
+						<li id="comment-18" class="pingback t0 c-y2010 c-m06 c-d18 c-h13 alt">
+							<div class="comment-author">By <a href='http://topsy.com/www.dalnefre.com/wp/2010/06/actors-in-clojure-why-not/?utm_source=pingback&amp;utm_campaign=L2' rel='external nofollow' class='url'>Tweets that mention Actors in Clojure — Why Not? -- Topsy.com</a> on 2010-06-18 at 7:18 pm</div>
+							<p>[...] This post was mentioned on Twitter by Dale Schumacher, Alain O&#39;Dea. Alain O&#39;Dea said: RT @dalnefre: Published: &quot;Actors in Clojure — Why Not?&quot; <a href="http://bit.ly/9ZUXaQ" rel="nofollow">http://bit.ly/9ZUXaQ</a> #clojure #erlang #humus [...]</p>
+						</li>
+
+						<li id="comment-29" class="pingback t1 c-y2010 c-m06 c-d23 c-h18">
+							<div class="comment-author">By <a href='http://topsy.com/trackback?url=http%3A%2F%2Fwww.dalnefre.com%2Fwp%2F2010%2F06%2Factors-in-clojure-why-not%2F%23comment-26?utm_source=pingback&amp;utm_campaign=L2' rel='external nofollow' class='url'>Tweets that mention http://www.dalnefre.com/wp/2010/06/actors-in-clojure-why-not/#comment-26?utm_source=pingback -- Topsy.com</a> on 2010-06-24 at 12:03 am</div>
+							<p>[...] This post was mentioned on Twitter by . said: [...]</p>
+						</li>
+
+					</ol>
+				</div><!-- #trackbacks-list .comments -->
+
+				<div id="respond">
+					<h3>Post a Comment</h3>
+
+					<div class="formcontainer">	
+						<form id="commentform" action="http://www.dalnefre.com/wp/wp-comments-post.php" method="post">
+
+
+							<p id="comment-notes">Your email is <em>never</em> published nor shared. Required fields are marked <span class="required">*</span></p>
+
+                            <div id="form-section-author" class="form-section">
+    							<div class="form-label"><label for="author">Name</label> <span class="required">*</span></div>
+    							<div class="form-input"><input id="author" name="author" type="text" value="" size="30" maxlength="20" tabindex="3" /></div>
+                            </div><!-- #form-section-author .form-section -->
+
+                            <div id="form-section-email" class="form-section">
+    							<div class="form-label"><label for="email">Email</label> <span class="required">*</span></div>
+    							<div class="form-input"><input id="email" name="email" type="text" value="" size="30" maxlength="50" tabindex="4" /></div>
+                            </div><!-- #form-section-email .form-section -->
+
+                            <div id="form-section-url" class="form-section">
+    							<div class="form-label"><label for="url">Website</label></div>
+    							<div class="form-input"><input id="url" name="url" type="text" value="" size="30" maxlength="50" tabindex="5" /></div>
+                            </div><!-- #form-section-url .form-section -->
+
+
+                            <div id="form-section-comment" class="form-section">
+    							<div class="form-label"><label for="comment">Comment</label></div>
+    							<div class="form-textarea"><textarea id="comment" name="comment" cols="45" rows="8" tabindex="6"></textarea></div>
+                            </div><!-- #form-section-comment .form-section -->
+
+
+							<div class="form-submit"><input id="submit" name="submit" type="submit" value="Post Comment" tabindex="7" /><input type="hidden" name="comment_post_ID" value="26" /></div>
+
+							
+						</form><!-- #commentform -->
+						
+						
+					</div><!-- .formcontainer -->
+
+				</div><!-- #respond -->
+
+			</div><!-- #comments -->
+
+<div id="single-bottom" class="aside">
+<ul class="xoxo">
+</ul>
+</div><!-- #single-bottom .aside -->
+
+		</div><!-- #content -->
+	</div><!-- #container -->
+
+	<div id="primary" class="aside main-aside">
+		<ul class="xoxo">
+			<li id="search" class="widgetcontainer widget_thematic_search">				<h3 class="widgettitle"><label for="s">Search</label></h3>
+				<form id="searchform" method="get" action="http://www.dalnefre.com/wp">
+					<div>
+						<input id="s" name="s" type="text" value="" size="20" tabindex="1" />
+						<input id="searchsubmit" name="searchsubmit" type="submit" value="Search" tabindex="2" />
+					</div>
+				</form>
+			</li>
+<li id="tag_cloud-4" class="widgetcontainer widget_tag_cloud"><h3 class="widgettitle">Tag Cloud</h3>
+<div><a href='http://www.dalnefre.com/wp/tag/actor/' class='tag-link-4' title='14 topics' style='font-size: 22pt;'>actor</a>
+<a href='http://www.dalnefre.com/wp/tag/asynchronous/' class='tag-link-26' title='2 topics' style='font-size: 10.863636363636pt;'>asynchronous</a>
+<a href='http://www.dalnefre.com/wp/tag/blocking/' class='tag-link-16' title='3 topics' style='font-size: 12.772727272727pt;'>blocking</a>
+<a href='http://www.dalnefre.com/wp/tag/channel/' class='tag-link-29' title='1 topic' style='font-size: 8pt;'>channel</a>
+<a href='http://www.dalnefre.com/wp/tag/clojure/' class='tag-link-13' title='1 topic' style='font-size: 8pt;'>Clojure</a>
+<a href='http://www.dalnefre.com/wp/tag/cola/' class='tag-link-32' title='1 topic' style='font-size: 8pt;'>COLA</a>
+<a href='http://www.dalnefre.com/wp/tag/composition/' class='tag-link-10' title='2 topics' style='font-size: 10.863636363636pt;'>composition</a>
+<a href='http://www.dalnefre.com/wp/tag/concurrency/' class='tag-link-23' title='4 topics' style='font-size: 14.363636363636pt;'>concurrency</a>
+<a href='http://www.dalnefre.com/wp/tag/consistency/' class='tag-link-5' title='2 topics' style='font-size: 10.863636363636pt;'>consistency</a>
+<a href='http://www.dalnefre.com/wp/tag/data-flow/' class='tag-link-12' title='4 topics' style='font-size: 14.363636363636pt;'>data-flow</a>
+<a href='http://www.dalnefre.com/wp/tag/deadlock/' class='tag-link-15' title='2 topics' style='font-size: 10.863636363636pt;'>deadlock</a>
+<a href='http://www.dalnefre.com/wp/tag/debugging/' class='tag-link-21' title='1 topic' style='font-size: 8pt;'>debugging</a>
+<a href='http://www.dalnefre.com/wp/tag/distribution/' class='tag-link-22' title='1 topic' style='font-size: 8pt;'>distribution</a>
+<a href='http://www.dalnefre.com/wp/tag/equality/' class='tag-link-47' title='1 topic' style='font-size: 8pt;'>equality</a>
+<a href='http://www.dalnefre.com/wp/tag/equation/' class='tag-link-45' title='2 topics' style='font-size: 10.863636363636pt;'>equation</a>
+<a href='http://www.dalnefre.com/wp/tag/erlang/' class='tag-link-14' title='1 topic' style='font-size: 8pt;'>Erlang</a>
+<a href='http://www.dalnefre.com/wp/tag/evaluation/' class='tag-link-37' title='7 topics' style='font-size: 17.545454545455pt;'>evaluation</a>
+<a href='http://www.dalnefre.com/wp/tag/fonc/' class='tag-link-31' title='1 topic' style='font-size: 8pt;'>FoNC</a>
+<a href='http://www.dalnefre.com/wp/tag/functional/' class='tag-link-18' title='4 topics' style='font-size: 14.363636363636pt;'>functional</a>
+<a href='http://www.dalnefre.com/wp/tag/humus/' class='tag-link-35' title='1 topic' style='font-size: 8pt;'>Humus</a>
+<a href='http://www.dalnefre.com/wp/tag/imperative/' class='tag-link-50' title='2 topics' style='font-size: 10.863636363636pt;'>imperative</a>
+<a href='http://www.dalnefre.com/wp/tag/iteration/' class='tag-link-6' title='1 topic' style='font-size: 8pt;'>iteration</a>
+<a href='http://www.dalnefre.com/wp/tag/lambda-calculus/' class='tag-link-38' title='3 topics' style='font-size: 12.772727272727pt;'>lambda-calculus</a>
+<a href='http://www.dalnefre.com/wp/tag/language/' class='tag-link-39' title='7 topics' style='font-size: 17.545454545455pt;'>language</a>
+<a href='http://www.dalnefre.com/wp/tag/message-passing/' class='tag-link-25' title='3 topics' style='font-size: 12.772727272727pt;'>message-passing</a>
+<a href='http://www.dalnefre.com/wp/tag/object-oriented/' class='tag-link-33' title='1 topic' style='font-size: 8pt;'>object-oriented</a>
+<a href='http://www.dalnefre.com/wp/tag/pair/' class='tag-link-43' title='3 topics' style='font-size: 12.772727272727pt;'>pair</a>
+<a href='http://www.dalnefre.com/wp/tag/pattern-matching/' class='tag-link-41' title='4 topics' style='font-size: 14.363636363636pt;'>pattern-matching</a>
+<a href='http://www.dalnefre.com/wp/tag/primitive/' class='tag-link-51' title='2 topics' style='font-size: 10.863636363636pt;'>primitive</a>
+<a href='http://www.dalnefre.com/wp/tag/protocol/' class='tag-link-17' title='8 topics' style='font-size: 18.340909090909pt;'>protocol</a>
+<a href='http://www.dalnefre.com/wp/tag/queue/' class='tag-link-9' title='1 topic' style='font-size: 8pt;'>queue</a>
+<a href='http://www.dalnefre.com/wp/tag/recursion/' class='tag-link-7' title='3 topics' style='font-size: 12.772727272727pt;'>recursion</a>
+<a href='http://www.dalnefre.com/wp/tag/rendezvous/' class='tag-link-28' title='1 topic' style='font-size: 8pt;'>rendezvous</a>
+<a href='http://www.dalnefre.com/wp/tag/scalability/' class='tag-link-20' title='1 topic' style='font-size: 8pt;'>scalability</a>
+<a href='http://www.dalnefre.com/wp/tag/sequence/' class='tag-link-24' title='2 topics' style='font-size: 10.863636363636pt;'>sequence</a>
+<a href='http://www.dalnefre.com/wp/tag/serializer/' class='tag-link-8' title='2 topics' style='font-size: 10.863636363636pt;'>serializer</a>
+<a href='http://www.dalnefre.com/wp/tag/smalltalk/' class='tag-link-42' title='1 topic' style='font-size: 8pt;'>Smalltalk</a>
+<a href='http://www.dalnefre.com/wp/tag/starvation/' class='tag-link-34' title='1 topic' style='font-size: 8pt;'>starvation</a>
+<a href='http://www.dalnefre.com/wp/tag/state-machine/' class='tag-link-36' title='2 topics' style='font-size: 10.863636363636pt;'>state-machine</a>
+<a href='http://www.dalnefre.com/wp/tag/streams/' class='tag-link-11' title='1 topic' style='font-size: 8pt;'>streams</a>
+<a href='http://www.dalnefre.com/wp/tag/synchronization/' class='tag-link-30' title='5 topics' style='font-size: 15.636363636364pt;'>synchronization</a>
+<a href='http://www.dalnefre.com/wp/tag/synchronous/' class='tag-link-27' title='1 topic' style='font-size: 8pt;'>synchronous</a>
+<a href='http://www.dalnefre.com/wp/tag/tuple/' class='tag-link-44' title='1 topic' style='font-size: 8pt;'>tuple</a>
+<a href='http://www.dalnefre.com/wp/tag/unification/' class='tag-link-46' title='2 topics' style='font-size: 10.863636363636pt;'>unification</a>
+<a href='http://www.dalnefre.com/wp/tag/value/' class='tag-link-19' title='7 topics' style='font-size: 17.545454545455pt;'>value</a></div>
+</li><li id="calendar-3" class="widgetcontainer widget_calendar"><h3 class="widgettitle">&nbsp;</h3>
+<div id="calendar_wrap"><table id="wp-calendar" summary="Calendar">
+	<caption>June 2010</caption>
+	<thead>
+	<tr>
+		<th scope="col" title="Sunday">S</th>
+		<th scope="col" title="Monday">M</th>
+		<th scope="col" title="Tuesday">T</th>
+		<th scope="col" title="Wednesday">W</th>
+		<th scope="col" title="Thursday">T</th>
+		<th scope="col" title="Friday">F</th>
+		<th scope="col" title="Saturday">S</th>
+	</tr>
+	</thead>
+
+	<tfoot>
+	<tr>
+		<td colspan="3" id="prev"><a href="http://www.dalnefre.com/wp/2010/05/" title="View posts for May 2010">&laquo; May</a></td>
+		<td class="pad">&nbsp;</td>
+		<td colspan="3" id="next"><a href="http://www.dalnefre.com/wp/2010/07/" title="View posts for July 2010">Jul &raquo;</a></td>
+	</tr>
+	</tfoot>
+
+	<tbody>
+	<tr>
+		<td colspan="2" class="pad">&nbsp;</td><td>1</td><td>2</td><td>3</td><td><a href="http://www.dalnefre.com/wp/2010/06/04/" title="Solving &#8220;Same Fringe&#8221; with Stream Generators">4</a></td><td>5</td>
+	</tr>
+	<tr>
+		<td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td>
+	</tr>
+	<tr>
+		<td>13</td><td>14</td><td>15</td><td>16</td><td><a href="http://www.dalnefre.com/wp/2010/06/17/" title="Actors in Clojure — Why Not?">17</a></td><td>18</td><td>19</td>
+	</tr>
+	<tr>
+		<td>20</td><td>21</td><td>22</td><td>23</td><td>24</td><td>25</td><td>26</td>
+	</tr>
+	<tr>
+		<td>27</td><td>28</td><td>29</td><td>30</td>
+		<td class="pad" colspan="3">&nbsp;</td>
+	</tr>
+	</tbody>
+	</table></div></li>		</ul>
+	</div><!-- #primary .aside -->
+
+	<div id="secondary" class="aside main-aside">
+		<ul class="xoxo">
+
+<li id="linkcat-2" class="linkcat"><h3>Blogroll</h3>
+	<ul class='xoxo blogroll'>
+<li><a href="http://wordpress.org/development/">Development Blog</a></li>
+<li><a href="http://codex.wordpress.org/">Documentation</a></li>
+<li><a href="http://wordpress.org/extend/plugins/">Plugins</a></li>
+<li><a href="http://wordpress.org/extend/ideas/">Suggest Ideas</a></li>
+<li><a href="http://wordpress.org/support/">Support Forum</a></li>
+<li><a href="http://wordpress.org/extend/themes/">Themes</a></li>
+<li><a href="http://planet.wordpress.org/">WordPress Planet</a></li>
+
+	</ul>
+</li>
+
+			<li id="rss-links">
+				<h3>RSS Feeds</h3>
+				<ul>
+					<li><a href="http://www.dalnefre.com/wp/feed/" title="It&#039;s Actors All The Way Down Posts RSS feed" rel="alternate" type="application/rss+xml">All posts</a></li>
+					<li><a href="http://www.dalnefre.com/wp/comments/feed/" title="It&#039;s Actors All The Way Down Comments RSS feed" rel="alternate" type="application/rss+xml">All comments</a></li>
+				</ul>
+			</li>
+
+			<li id="meta">
+				<h3>Meta</h3>
+				<ul>
+					
+					<li><a href="http://www.dalnefre.com/wp/wp-login.php">Log in</a></li>
+					
+				</ul>
+			</li>
+		</ul>
+	</div><!-- #secondary .aside -->
+    </div><!-- #main -->
+    
+    
+
+	<div id="footer">
+                <div id="subsidiary">
+    
+        <div id="first" class="aside sub-aside">
+<ul class="xoxo">
+</ul>
+</div><!-- #first .aside -->
+                
+    
+        <div id="second" class="aside sub-aside">
+<ul class="xoxo">
+</ul>
+</div><!-- #second .aside -->
+       
+   
+        <div id="third" class="aside sub-aside">
+<ul class="xoxo">
+</ul>
+</div><!-- #third .aside -->
+        
+        
+    </div><!-- #subsidiary -->
+            <div id="siteinfo">        
+    		<span id="generator-link">Powered by <a href="http://WordPress.org/" title="WordPress" rel="generator">WordPress</a></span><span class="meta-sep">. </span><span id="designer-link">Built on the <a href="http://themeshaper.com/thematic-for-wordpress" title="Thematic Theme Framework" rel="designer">Thematic Theme Framework</a>.</span>		</div><!-- #siteinfo -->
+	</div><!-- #footer -->
+
+</div><!-- #wrapper .hfeed -->
+
+
+</body>
+</html>
