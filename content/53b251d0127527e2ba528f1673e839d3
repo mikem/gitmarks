@@ -1,0 +1,679 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="mat" content="PG_NOT" />
+		<meta http-equiv="Content-Style-Type" content="text/css" />
+		<meta name="generator" content="MediaWiki 1.15.5" />
+		<meta name="keywords" content="Message Queue Evaluation Notes" />
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="search" type="application/opensearchdescription+xml" href="/w/opensearch_desc.php" title="Second Life Wiki (en)" />
+		<link title="Creative Commons" type="application/rdf+xml" href="/w/index.php?title=Message_Queue_Evaluation_Notes&amp;action=creativecommons" rel="meta" />
+		<link rel="copyright" href="/wiki/Project:Terms_of_Service" />
+		<link rel="alternate" type="application/rss+xml" title="Second Life Wiki RSS feed" href="/w/index.php?title=Special:RecentChanges&amp;feed=rss" />
+		<link rel="alternate" type="application/atom+xml" title="Second Life Wiki Atom feed" href="/w/index.php?title=Special:RecentChanges&amp;feed=atom" />
+		<title>Message Queue Evaluation Notes - Second Life Wiki</title>
+		<link rel="stylesheet" href="http://d1yjxggot69855.cloudfront.net/skins/common/shared.css?207" type="text/css" media="screen" />
+		<link rel="stylesheet" href="http://d1yjxggot69855.cloudfront.net/skins/common/commonPrint.css?207" type="text/css" media="print" />
+		<link rel="stylesheet" href="http://d1yjxggot69855.cloudfront.net/skins/monobook/main.css?207" type="text/css" media="screen" />
+		<!--[if lt IE 5.5000]><link rel="stylesheet" href="http://d1yjxggot69855.cloudfront.net/skins/monobook/IE50Fixes.css?207" type="text/css" media="screen" /><![endif]-->
+		<!--[if IE 5.5000]><link rel="stylesheet" href="http://d1yjxggot69855.cloudfront.net/skins/monobook/IE55Fixes.css?207" type="text/css" media="screen" /><![endif]-->
+		<!--[if IE 6]><link rel="stylesheet" href="http://d1yjxggot69855.cloudfront.net/skins/monobook/IE60Fixes.css?207" type="text/css" media="screen" /><![endif]-->
+		<!--[if IE 7]><link rel="stylesheet" href="http://d1yjxggot69855.cloudfront.net/skins/monobook/IE70Fixes.css?207" type="text/css" media="screen" /><![endif]-->
+		<link rel="stylesheet" href="/w/extensions/FlaggedRevs/flaggedrevs.css?48" type="text/css" />
+		<link rel="stylesheet" href="/w/index.php?title=MediaWiki:Common.css&amp;usemsgcache=yes&amp;ctype=text%2Fcss&amp;smaxage=18000&amp;action=raw&amp;maxage=18000" type="text/css" />
+		<link rel="stylesheet" href="/w/index.php?title=MediaWiki:Print.css&amp;usemsgcache=yes&amp;ctype=text%2Fcss&amp;smaxage=18000&amp;action=raw&amp;maxage=18000" type="text/css" media="print" />
+		<link rel="stylesheet" href="/w/index.php?title=MediaWiki:Monobook.css&amp;usemsgcache=yes&amp;ctype=text%2Fcss&amp;smaxage=18000&amp;action=raw&amp;maxage=18000" type="text/css" />
+		<link rel="stylesheet" href="/w/index.php?title=-&amp;action=raw&amp;maxage=18000&amp;gen=css" type="text/css" />
+		<!--[if lt IE 7]><script type="text/javascript" src="http://d1yjxggot69855.cloudfront.net/skins/common/IEFixes.js?207"></script>
+		<meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+
+		<script type= "text/javascript">/*<![CDATA[*/
+		var skin = "monobook";
+		var stylepath = "http://d1yjxggot69855.cloudfront.net/skins";
+		var wgArticlePath = "/wiki/$1";
+		var wgScriptPath = "/w";
+		var wgScript = "/w/index.php";
+		var wgVariantArticlePath = false;
+		var wgActionPaths = {};
+		var wgServer = "http://wiki.secondlife.com";
+		var wgCanonicalNamespace = "";
+		var wgCanonicalSpecialPageName = false;
+		var wgNamespaceNumber = 0;
+		var wgPageName = "Message_Queue_Evaluation_Notes";
+		var wgTitle = "Message Queue Evaluation Notes";
+		var wgAction = "view";
+		var wgArticleId = "52382";
+		var wgIsArticle = true;
+		var wgUserName = null;
+		var wgUserGroups = null;
+		var wgUserLanguage = "en";
+		var wgContentLanguage = "en";
+		var wgBreakFrames = false;
+		var wgCurRevisionId = 702853;
+		var wgVersion = "1.15.5";
+		var wgEnableAPI = true;
+		var wgEnableWriteAPI = true;
+		var wgSeparatorTransformTable = ["", ""];
+		var wgDigitTransformTable = ["", ""];
+		var wgMWSuggestTemplate = "http://wiki.secondlife.com/w/api.php?action=opensearch\x26search={searchTerms}\x26namespace={namespaces}";
+		var wgDBname = "lindenlab1";
+		var wgSearchNamespaces = [0, 100];
+		var wgMWSuggestMessages = ["with suggestions", "no suggestions"];
+		var wgRestrictionEdit = [];
+		var wgRestrictionMove = [];
+		/*]]>*/</script>
+
+		<script type="text/javascript" src="http://d1yjxggot69855.cloudfront.net/skins/common/wikibits.js?207"><!-- wikibits js --></script>
+		<!-- Head Scripts -->
+		<script type="text/javascript" src="http://d1yjxggot69855.cloudfront.net/skins/common/ajax.js?207"></script>
+		<script type="text/javascript" src="http://d1yjxggot69855.cloudfront.net/skins/common/mwsuggest.js?207"></script>
+<script type="text/javascript">
+var wgFlaggedRevsParams = {"tags": {"accuracy": 3, "completeness": 3, "clarity": 3}};
+var wgFlaggedRevsParams2 = {"tags": {"reliability": 3, "completeness": 2, "npov": 2, "presentation": 1}};
+var wgStableRevisionId = 0;
+var wgAjaxFeedback = {"sendingMsg": "Submitting...", "sentMsg": "Thank you!"}
+var wgAjaxReview = {"sendingMsg": "Submitting...", "sentMsg": "Review complete!", "actioncomplete": "Action complete"}
+</script>
+<script type="text/javascript" src="/w/extensions/FlaggedRevs/flaggedrevs.js?48"></script>
+		<script type="text/javascript" src="/w/index.php?title=-&amp;action=raw&amp;gen=js&amp;useskin=monobook"><!-- site js --></script>
+	</head>
+<body class="mediawiki ltr ns-0 ns-subject page-Message_Queue_Evaluation_Notes skin-monobook">
+	<div id="globalWrapper">
+		<div id="column-content">
+	<div id="content">
+		<a name="top" id="top"></a>
+				<h1 id="firstHeading" class="firstHeading">Message Queue Evaluation Notes</h1>
+		<div id="bodyContent">
+			<h3 id="siteSub">From Second Life Wiki</h3>
+			<div id="contentSub"><a href="/wiki/Main_Page" title="Main Page">Second Life Wiki</a> &gt; Message Queue Evaluation Notes</div>
+									<div id="jump-to-nav">Jump to: <a href="#column-one">navigation</a>, <a href="#searchInput">search</a></div>			<!-- start content -->
+			<div class="hf-nsheader"></div><div class="hf-header"></div><table id="toc" class="toc" summary="Contents"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1"><a href="#Summary_and_Overview"><span class="tocnumber">1</span> <span class="toctext">Summary and Overview</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Criteria"><span class="tocnumber">1.1</span> <span class="toctext">Criteria</span></a>
+<ul>
+<li class="toclevel-3"><a href="#Group_Chat_Use_Case"><span class="tocnumber">1.1.1</span> <span class="toctext">Group Chat Use Case</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-1"><a href="#Scaling"><span class="tocnumber">2</span> <span class="toctext">Scaling</span></a></li>
+<li class="toclevel-1"><a href="#Currently_Available_Software"><span class="tocnumber">3</span> <span class="toctext">Currently Available Software</span></a>
+<ul>
+<li class="toclevel-2"><a href="#AMQ_Protocol"><span class="tocnumber">3.1</span> <span class="toctext">AMQ Protocol</span></a>
+<ul>
+<li class="toclevel-3"><a href="#RabbitMQ"><span class="tocnumber">3.1.1</span> <span class="toctext">RabbitMQ</span></a></li>
+<li class="toclevel-3"><a href="#Apache_QPID.2FRed_Hat_MRG"><span class="tocnumber">3.1.2</span> <span class="toctext">Apache QPID/Red Hat MRG</span></a></li>
+<li class="toclevel-3"><a href="#OpenAMQ"><span class="tocnumber">3.1.3</span> <span class="toctext">OpenAMQ</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2"><a href="#XMPP"><span class="tocnumber">3.2</span> <span class="toctext">XMPP</span></a>
+<ul>
+<li class="toclevel-3"><a href="#ejabberd"><span class="tocnumber">3.2.1</span> <span class="toctext">ejabberd</span></a>
+<ul>
+<li class="toclevel-4"><a href="#AMP_Extension"><span class="tocnumber">3.2.1.1</span> <span class="toctext">AMP Extension</span></a></li>
+<li class="toclevel-4"><a href="#PubSub_Extension"><span class="tocnumber">3.2.1.2</span> <span class="toctext">PubSub Extension</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-2"><a href="#Stomp"><span class="tocnumber">3.3</span> <span class="toctext">Stomp</span></a>
+<ul>
+<li class="toclevel-3"><a href="#ActiveMQ"><span class="tocnumber">3.3.1</span> <span class="toctext">ActiveMQ</span></a></li>
+<li class="toclevel-3"><a href="#Sprinkle"><span class="tocnumber">3.3.2</span> <span class="toctext">Sprinkle</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2"><a href="#JMS"><span class="tocnumber">3.4</span> <span class="toctext">JMS</span></a>
+<ul>
+<li class="toclevel-3"><a href="#OpenMQ"><span class="tocnumber">3.4.1</span> <span class="toctext">OpenMQ</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2"><a href="#Other"><span class="tocnumber">3.5</span> <span class="toctext">Other</span></a>
+<ul>
+<li class="toclevel-3"><a href="#IRC"><span class="tocnumber">3.5.1</span> <span class="toctext">IRC</span></a></li>
+<li class="toclevel-3"><a href="#PSYC"><span class="tocnumber">3.5.2</span> <span class="toctext">PSYC</span></a></li>
+<li class="toclevel-3"><a href="#Gearman"><span class="tocnumber">3.5.3</span> <span class="toctext">Gearman</span></a></li>
+<li class="toclevel-3"><a href="#Amazon_SQS"><span class="tocnumber">3.5.4</span> <span class="toctext">Amazon SQS</span></a></li>
+<li class="toclevel-3"><a href="#beanstalkd"><span class="tocnumber">3.5.5</span> <span class="toctext">beanstalkd</span></a></li>
+<li class="toclevel-3"><a href="#Peafowl"><span class="tocnumber">3.5.6</span> <span class="toctext">Peafowl</span></a></li>
+<li class="toclevel-3"><a href="#Starling"><span class="tocnumber">3.5.7</span> <span class="toctext">Starling</span></a></li>
+<li class="toclevel-3"><a href="#SMTP"><span class="tocnumber">3.5.8</span> <span class="toctext">SMTP</span></a></li>
+<li class="toclevel-3"><a href="#Zero_MQ"><span class="tocnumber">3.5.9</span> <span class="toctext">Zero MQ</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-1"><a href="#Reading.2FRelated_Links"><span class="tocnumber">4</span> <span class="toctext">Reading/Related Links</span></a></li>
+</ul>
+</td></tr></table><script type="text/javascript"> if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } </script>
+<a name="Summary_and_Overview" id="Summary_and_Overview"></a><h1> <span class="mw-headline"> Summary and Overview </span></h1>
+<p>One of the infrastructure tools that we've identified for the future internal architecture of Second Life is messaging.  Message queuing systems allow systems that send messages to not have to worry about how they will be delivered, and allow consumers of messages to gather whichever ones interest them, at their own pace.
+</p><p>Ideally we'd have a completely scaleable system that clients could treat as singular black box.  It would act as a well-known cluster to which senders or receivers of messages could connect, and be able to communicate asynchronously to or from anywhere else on the grid.  Unfortunately it seems as though this dream, like so many others, is unattainable by any currently available software.  We investigated around 15 open source systems that were explicitly designed for message queueing and found that none of them achieved this ideal.
+</p><p>Our use cases mostly involve very large numbers of queues; the smallest number we're even considering is double the number of concurrent users.  Our largest use case would be of the same order of magnitude as registered users.  This means that we have to plan for millions, and probably tens or hundreds of millions, of message queues, since we want whatever system we choose to last us until then. Pretty much all of the message queue systems we investigated are intended to maximize message throughput rather than number of consumers. The clustering that they implement mainly serves as additional horsepower to deliver more message throughput.  In particular the clustering we've seen replicates all state to every machine in the cluster, meaning that the cluster cannot add queues beyond the capacity of an individual node.  In order to have a solution that scales in terms of number of queues, each node will have to be able to contain a subset of the global state -- it actually seems as though such a message system would want to be coupled with a distributed storage system.
+</p><p>In any case, given that we expect that we'd have to develop our own queue scaling solution that involves partitioning, which may or may not be a task we are interested in taking on, the strongest candidates are
+RabbitMQ and Apache QPID.  Both are mature products that support AMQP (though they support different versions).  Both have strong vendor support, and both have good single-host performance numbers. There is some more investigation to be done -- we'd like to know their true maximum capacity when clustered, to evaluate whether it's worth clustering at all, given that we have to implement partitioning ourselves anyway.
+</p><p>We're unfortunately pretty far from having closed the case on which technology to choose, or even if we can use any of these at all.  Investigation will continue!
+</p>
+<a name="Criteria" id="Criteria"></a><h2> <span class="mw-headline"> Criteria </span></h2>
+<p>Questions
+</p>
+<ol><li> Support for consuming messages in our two main languages, Python and C++
+</li><li> Support for producing them in all of our main languages (or, e.g., an HTTP gateway)
+</li><li> What's the raw message rate that a single server can handle at different message sizes (e.g. 1 byte, 128 bytes, 1K, 128K)?
+</li><li> What are the latency figures for these message rates?
+</li><li> What are the server's clustering characteristics?
+<ul><li> HA/failover
+</li><li> scalability for message quantity
+</li><li> scalability for number of clients/queues
+</li></ul>
+</li><li> What about cross-colo traffic?  Does it do SSL, does it need tunneling, is it designed to deal with interrupted communications?
+</li><li> How do the health of the protocol standard, the software, and the community look?
+</li><li> Can we engage people on support and development contracts if necessary?
+</li><li> Is it possible to set up persistent queues, where undelivered messages will survive server restarts? For some interesting perspectives, see <a href="http://www.rockstarprogrammer.org/post/2008/oct/04/what-matters-asynchronous-job-queue/" class="external text" title="http://www.rockstarprogrammer.org/post/2008/oct/04/what-matters-asynchronous-job-queue/" rel="nofollow">"What Matters in an Asynchronous Job Queue"</a> and <a href="http://groups.google.com/group/beanstalk-talk/browse_thread/thread/e8d1a6ea80f0d57a" class="external text" title="http://groups.google.com/group/beanstalk-talk/browse_thread/thread/e8d1a6ea80f0d57a" rel="nofollow">this discussion on persistence and failure scenarios</a>.
+</li></ol>
+<p>The major use cases that we believe could be implemented with message queues are these:
+</p>
+<ul><li> IM
+</li><li> blue box notifications in the viewer
+</li><li> group notices
+</li><li> group chat
+</li><li> group votes
+</li><li> presence notifications
+</li><li> anything else that currently is an <a href="http://wiki.secondlife.com/wiki/ImprovedInstantMessage" class="external text" title="http://wiki.secondlife.com/wiki/ImprovedInstantMessage" rel="nofollow">ImprovedInstantMessage</a>
+</li><li> friendship
+</li><li> details of registration such as initial inventory
+</li><li> requests to regenerate map tiles
+</li></ul>
+<p>Many other uses that we haven't put up there would arise when developing various applications.  Note that we <b>do not</b> intend to expose the message queue system directly to the viewer; we would use it instead for behind-the-scenes implementation of the above use cases.  Discussing the protocol by which the viewer sends and receives messages with the server is far outside the scope of this research.
+</p>
+<a name="Group_Chat_Use_Case" id="Group_Chat_Use_Case"></a><h3> <span class="mw-headline"> Group Chat Use Case </span></h3>
+<p>The primary use case that we examined was that of group chat.  This is the most obvious use that we'd put message queues to, and it's also one of the only use cases up there that is a current pain point for Residents.  Here are some numbers describing group chat, which were captured at 11am one day:
+</p>
+<ul><li> online residents: ~68,000
+</li><li> number of group chats: 131953
+</li><li> number of memberships: 629637
+</li><li> avg number of groups/resident: 9.3
+</li><li> average group size:  4.8
+</li><li> most online members in a group: 785
+</li><li> stdev group size:  13.1
+</li><li> group churn/second: 23.2
+</li><li> membership churn/second: 260
+</li><li> messages sent/second: 8.6
+</li></ul>
+<p><b>Please note:</b> this data was measured some time ago, and every value you see has increased by today, and will continue to grow for the forseeable future.  It was not enough for us to pick a technology that could just barely handle the current load; we have to pessimistically assume that whatever we pick will be used for many years hence, and will therefore have to deal with at least an order of magnitude more of everything.
+</p><p>Our minimum hurdle for a platform is 4x the above values, and ideally could horizontally scale nearly infinitely across the most important axes to us: number of group chats, number of memberships, and messages/second.
+</p><p>Group churn represents the number of groups added or removed from the system every second.  In an AMQP-based system a "group" would be added when someone binds the first queue to the a key representing the group's id, and the group would be dropped when the last binding to the key is removed.  In any routing system of this nature, there will be two data structures that are the inverse of each other: one is queuename-&gt;keys table and the other is the keys-&gt;queuenames table.  Group churn would primarily affect the keys-&gt;queuenames table.
+</p><p>Membership churn comes from agents joining and leaving groups, and is indirectly related to group churn.  There is vastly more membership churn because each agent is in roughly 9 groups -- one agent logs in for 15 seconds and then logs out, that's 18 points of "churn".  In an AMQP-based system this churn would be visible as bindings being added and dropped, which would thus affect the queuename-&gt;keys table.
+</p><p>Both types of churn are substantially higher than messaging rate.  Even if we successfully implement a feature that will allow residents to opt out of joining group chat on login, I'd guess that we'd see at most a 75% reduction in churn as a result, which would still leave membership churn nearly an order of magnitude larger than messages sent.
+</p><p>The group size metrics are interesting because it implies that most groups are pretty small.  The downside is we have roughly 2 unique groups for every concurrent resident, so our group system has to scale along that axis very well.
+</p><p>Overall, these numbers are a real whack upside the head because they reveal that for our particular use case, we worry far more about number of queues, and ability to handle high churn, than we do about message delivery rate.  Most of the benchmarks regarding the software we evaluated optimize for message rate rather than churn or quantity of queues.
+</p><p>Note that <a href="http://gojko.net/2009/03/16/qcon-london-2009-upgrading-twitter-without-service-disruptions/" class="external text" title="http://gojko.net/2009/03/16/qcon-london-2009-upgrading-twitter-without-service-disruptions/" rel="nofollow">Twitter has a similar set of requirements</a> (complete with startlingly low message rate), though they don't have such tight latency requirements as we do.
+</p>
+<a name="Scaling" id="Scaling"></a><h1> <span class="mw-headline"> Scaling </span></h1>
+<p>Given that we haven't found any system that provides seamless scaling along the axis of queues, we have come up with some designs for how the system could be partitioned.  Any partition scheme is a bit of a downer because then the clients have to know about the partitioning.
+</p><p>The best way to partition is probably to partition on routing key.  When a client wants to receive messages for a routing key, or when a sender wants to send to a routing key, the first thing it does is ask a redirector which slice to talk to. The system would look like:
+</p><p><a href="/wiki/File:Message_queue_partition_unclustered.png" class="image" title="Image:Message_queue_partition_unclustered.png"><img alt="Image:Message_queue_partition_unclustered.png" src="https://d1yjxggot69855.cloudfront.net/images/8/82/Message_queue_partition_unclustered.png" width="453" height="290" border="0" /></a>
+</p><p>This system has the property that each client will be talking to as many slices as routing keys of interest (proportional, anyhow).  This may be acceptable for an application where there's only a finite number of routing keys that any particular client may be interested in (such as group chat, where there's an upper limit on the number of groups a resident may be in).
+</p><p>We could cut down on the sheer quantity of connections by using clustering to reduce the number of slices.  The messaging technologies we looked at support clustering in a way that would allow us to create clusters of 2-3 nodes that have roughly 1.5-2 times the quantity of queues as a single node.  This would be a more complex system than not using clustering at all, but it would reduce the number of slices, and thus connections, by a factor of 1.5-2, which may be important.
+</p><p><a href="/wiki/File:Message_queue_partition_clustered.png" class="image" title="Image:Message_queue_partition_clustered.png"><img alt="Image:Message_queue_partition_clustered.png" src="https://d1yjxggot69855.cloudfront.net/images/7/78/Message_queue_partition_clustered.png" width="549" height="347" border="0" /></a>
+</p><p>The clustered partition scheme isn't fundamentally different than the unclustered partition scheme, it's just a constant-factor optimization.  However, if the cluster added high-availability properties (such as being able to continue running even when one node fails), then it would be worth it.
+</p>
+<a name="Currently_Available_Software" id="Currently_Available_Software"></a><h1> <span class="mw-headline"> Currently Available Software </span></h1>
+<a name="AMQ_Protocol" id="AMQ_Protocol"></a><h2> <span class="mw-headline"> AMQ Protocol </span></h2>
+<p>AMQP is a developing standard that is aimed pretty squarely at our use cases: high-performance, flexible, message routing and delivery.  The standard is being iterated upon and is not finalized yet.  This is a risk factor because it's a moving target and all current editions are mutually incompatible -- the 0-10 edition is nontrivially different from 0-8, and I've read some rumors that the next edition removes or changes some of the core concepts in a dramatic way.
+</p><p>We believe that AMQP is the appropriate standard for our use cases; therefore we investigated the AMQP servers much more heavily.  Here's <a href="http://blogs.digitar.com/jjww/2009/01/rabbits-and-warrens/" class="external text" title="http://blogs.digitar.com/jjww/2009/01/rabbits-and-warrens/" rel="nofollow">a decent example</a> of how to apply AMQP to a particular use case (with emphasis on Rabbit).
+</p>
+<ul><li> <a href="https://launchpad.net/txamqp" class="external text" title="https://launchpad.net/txamqp" rel="nofollow">Twisted AMQP</a>, a 0-8 and 0-9 Twisted Python client
+</li><li> <a href="http://hopper.squarespace.com/blog/2008/6/21/build-your-own-amqp-client.html" class="external text" title="http://hopper.squarespace.com/blog/2008/6/21/build-your-own-amqp-client.html" rel="nofollow">Build your Own AMQP Client</a>
+</li></ul>
+<a name="RabbitMQ" id="RabbitMQ"></a><h3> <span class="mw-headline"> RabbitMQ </span></h3>
+<p><a href="http://www.rabbitmq.com/" class="external text" title="http://www.rabbitmq.com/" rel="nofollow">Rabbit Home</a>
+</p><p>RabbitMQ is already installed in our image and is currently being deployed by the data warehousing team (Ivan in particular) to handle syslog message delivery.
+</p>
+<ol><li> Support for consuming messages in our two main languages, Python and C++?
+<ul><li> Yes, many python clients and <a href="http://code.google.com/p/carrot-rabbit/" class="external text" title="http://code.google.com/p/carrot-rabbit/" rel="nofollow">carrot-rabbit</a>
+</li></ul>
+</li><li> Support for producing them in all of our main languages (or e.g. an HTTP gateway)
+<ul><li> Yes, they have HTTP and Stomp gateways.
+</li></ul>
+</li><li> What's the raw message rate that a single server can handle at different message sizes (e.g. 1 byte, 128 bytes, 1K, 128K)?
+<ul><li> Not investigated because widespread reports indicate that this number is very high; this will not be a bottleneck.
+</li></ul>
+</li><li> What are the latency figures for these message rates?
+<ul><li> Latency is in tens of microseconds.
+</li></ul>
+</li><li> What are the server's clustering characteristics?
+<ul><li> HA/failover
+<ul><li> Weak.  If clustered, the cluster behaves poorly when nodes go away, until their data is restored; see <a href="http://lists.rabbitmq.com/pipermail/rabbitmq-discuss/2009-February/003338.html" class="external autonumber" title="http://lists.rabbitmq.com/pipermail/rabbitmq-discuss/2009-February/003338.html" rel="nofollow">[1]</a>.  The developers suggested setting up two queues on two hosts and doing client-side duplicate removal, but this seems like we'd be doing work that the message queue system should be doing for us.
+</li></ul>
+</li><li> scalability for message quantity
+<ul><li> Untested but theoretically clustering improves this.
+</li></ul>
+</li><li> scalability for number of clients/queues 
+<ul><li> Not supported.  Currently a single Rabbit node will support up to 250,000 queues before consuming all available memory.  If clustered with a second host, the second host will have 800 MB of its memory consumed as well even though it's not doing any work.  This is because all hosts in a cluster contain a complete copy of the routing tables.  The data structures required for queues themselves are stored on the first host, and consume the other 1200 MB available.  This implies that if queues were evenly added to both hosts, we could probably get up to around 400,000 queues total.  We'd like to test that hypothesis.
+</li></ul>
+</li></ul>
+</li><li> What about cross-colo traffic?
+<ul><li> Not if hosts in a cluster are cross-colo from each other.  There's <a href="http://hopper.squarespace.com/blog/2008/6/22/introducing-shovel-an-amqp-relay.html" class="external text" title="http://hopper.squarespace.com/blog/2008/6/22/introducing-shovel-an-amqp-relay.html" rel="nofollow">a plugin called shovel</a> that is explicitly designed for cross-colo situations, though.  However, if clustering doesn't support the number of queues we want, there's little reason to worry about clusters that span colos.  The wire protocol is believed to be robust against flaky connections; it's hard to test that though.
+</li></ul>
+</li><li> Does it do SSL, does it need tunneling, is it designed to deal with interrupted communications?
+<ul><li> <a href="http://www.rabbitmq.com/api-guide.html#ssl" class="external text" title="http://www.rabbitmq.com/api-guide.html#ssl" rel="nofollow">Supports SSL</a>, however this appears to be both outside of the spec and a bit of a hack.  AMQP as a whole doesn't yet have an ssl story, so we'd have to go outside the spec to achieve security.
+</li></ul>
+</li><li> How do the health of the protocol standard, the software, and the community look?
+<ul><li> Strong.  Rabbit in particular has a relatively strong community -- ~500 messages per month on mailing list and key developers respond frequently.
+</li></ul>
+</li><li> Can we engage people on support and development contracts if necessary?
+<ul><li> Yes, we already have contacts with them and have already gotten enhancements.
+</li></ul>
+</li><li> Is it possible to set up persistent queues, where undelivered messages will survive server restarts?
+<ul><li> Yes.  These are not replicated.
+</li></ul>
+</li></ol>
+<p>Notes:
+</p>
+<ul><li> ~5000 lines of code (i.e. not many places to hide bugs)
+</li><li> Queues can fill up available memory if clients can't consume non-immediate messages quickly enough (immediate messages get discarded if a client can't consume them).
+</li><li> <a href="http://forum.trapexit.org/mailinglists/viewtopic.php?p=42890&amp;sid=cb78a92ab50adefbf60e3770c0ba7e9b" class="external text" title="http://forum.trapexit.org/mailinglists/viewtopic.php?p=42890&amp;sid=cb78a92ab50adefbf60e3770c0ba7e9b" rel="nofollow">RabbitMQ Performance Testing and Troubles</a>
+</li><li> Even in clustered configuration, queues only reside on a single machine.
+</li><li> <a href="http://hopper.squarespace.com/" class="external text" title="http://hopper.squarespace.com/" rel="nofollow">Blog oriented towards Rabbit</a>
+</li><li> <a href="http://everburning.com/news/tag/amqp/" class="external free" title="http://everburning.com/news/tag/amqp/" rel="nofollow">http://everburning.com/news/tag/amqp/</a> Ruby-oriented but examples are pretty clear
+</li><li> <a href="http://www.somic.org/d/samovskiy-amqp-rabbitmq-cohesiveft.pdf" class="external free" title="http://www.somic.org/d/samovskiy-amqp-rabbitmq-cohesiveft.pdf" rel="nofollow">http://www.somic.org/d/samovskiy-amqp-rabbitmq-cohesiveft.pdf</a>
+</li><li> <a href="http://somic.org/2008/11/11/using-rabbitmq-beyond-queueing/" class="external free" title="http://somic.org/2008/11/11/using-rabbitmq-beyond-queueing/" rel="nofollow">http://somic.org/2008/11/11/using-rabbitmq-beyond-queueing/</a>
+</li><li> <a href="http://www.lshift.net/blog/category/lshift-sw/rabbitmq/" class="external free" title="http://www.lshift.net/blog/category/lshift-sw/rabbitmq/" rel="nofollow">http://www.lshift.net/blog/category/lshift-sw/rabbitmq/</a>
+</li><li> In our tests, if you create a bunch of auto-delete queues (~100), the rabbit server becomes unresponsive for 2 minutes after you remove the clients (presumably because the server starts deleting the queues when you remove the clients).  We generally have to restart the server.  This may be problematic in production; we should generate a test case that repros this.
+</li><li> py-amqplib requires Python &gt;2.4
+</li><li> Collected data: <a href="http://spreadsheets.google.com/a/lindenlab.com/ccc?key=p0_PzEgG1YZeKbg_y4n1nFg" class="external free" title="http://spreadsheets.google.com/a/lindenlab.com/ccc?key=p0_PzEgG1YZeKbg_y4n1nFg" rel="nofollow">http://spreadsheets.google.com/a/lindenlab.com/ccc?key=p0_PzEgG1YZeKbg_y4n1nFg</a>
+</li><li> Restarting individual hosts in a cluster is seamless -- it totally comes back together without any extra work, yay.
+</li><li> Rabbit (and mnesia) is very sensitive to DHCP/DNS failures.  We had a DHCP failure on our host, and it corrupted everything, leading to rogue beam processes and messed up mnesia files.  Had to nuke everything.
+</li><li> HA by creating multiple queues on multiple hosts: <a href="http://www.nabble.com/Re:-Q-replication-anxiety-p21953124.html" class="external free" title="http://www.nabble.com/Re:-Q-replication-anxiety-p21953124.html" rel="nofollow">http://www.nabble.com/Re:-Q-replication-anxiety-p21953124.html</a>
+</li><li> Discussing huge numbers of queues: <a href="http://lists.rabbitmq.com/pipermail/rabbitmq-discuss/2009-February/003431.html" class="external free" title="http://lists.rabbitmq.com/pipermail/rabbitmq-discuss/2009-February/003431.html" rel="nofollow">http://lists.rabbitmq.com/pipermail/rabbitmq-discuss/2009-February/003431.html</a>
+</li><li> Discussion about what happens when one node in a cluster goes away, and how it's less than ideal: <a href="http://lists.rabbitmq.com/pipermail/rabbitmq-discuss/2009-February/003338.html" class="external free" title="http://lists.rabbitmq.com/pipermail/rabbitmq-discuss/2009-February/003338.html" rel="nofollow">http://lists.rabbitmq.com/pipermail/rabbitmq-discuss/2009-February/003338.html</a>
+</li></ul>
+<a name="Apache_QPID.2FRed_Hat_MRG" id="Apache_QPID.2FRed_Hat_MRG"></a><h3> <span class="mw-headline"> Apache QPID/Red Hat MRG </span></h3>
+<p><a href="http://cwiki.apache.org/confluence/display/qpid/Index" class="external free" title="http://cwiki.apache.org/confluence/display/qpid/Index" rel="nofollow">http://cwiki.apache.org/confluence/display/qpid/Index</a>
+<a href="http://www.redhat.com/mrg/" class="external free" title="http://www.redhat.com/mrg/" rel="nofollow">http://www.redhat.com/mrg/</a>
+</p><p>QPID is sort of a compilation project from Apache.  They have a pile of clients, and two brokers that each support different versions of the AMQP standard.  The C++ broker appears to be where the good stuff is at.  Installing it was not difficult -- it only required a few additional Boost libraries to be installed.
+</p>
+<ol><li> Support for consuming messages in our two main languages, Python and C++
+<ul><li> Yes, comes bundled with clients in both.
+</li></ul>
+</li><li> Support for producing them in all of our main languages (or e.g. an HTTP gateway)
+<ul><li> No, only python and C++.
+</li></ul>
+</li><li> What's the raw message rate that a single server can handle at different message sizes (e.g. 1 byte, 128 bytes, 1K, 128K)?
+<ul><li> Untested; again, not likely to be a bottleneck.
+</li></ul>
+</li><li> What are the latency figures for these message rates?
+<ul><li> Untested, it comes with a perftest tool that we should run.
+</li></ul>
+</li><li> What are the server's clustering characteristics?
+<ul><li> HA/failover
+<ul><li> <a href="http://cwiki.apache.org/confluence/display/qpid/queue+state+replication" class="external text" title="http://cwiki.apache.org/confluence/display/qpid/queue+state+replication" rel="nofollow">Queue Replication</a> could be used in conjunction with <a href="http://qpid.apache.org/connection-url-format.html" class="external text" title="http://qpid.apache.org/connection-url-format.html" rel="nofollow">client failover</a> to implement HA queues.  Untested.
+</li></ul>
+</li><li> scalability for message quantity
+<ul><li> Unknown.
+</li></ul>
+</li><li> scalability for number of clients/queues 
+<ul><li> The C++ broker tops out at around 500,000 queues per host.  We haven't yet determined whether this number can be increased by <a href="http://cwiki.apache.org/confluence/display/qpid/Using+Broker+Federation" class="external text" title="http://cwiki.apache.org/confluence/display/qpid/Using+Broker+Federation" rel="nofollow">clustering/federation</a>.
+</li></ul>
+</li></ul>
+</li><li> What about cross-colo traffic?  Does it do SSL, does it need tunneling, is it designed to deal with interrupted communications?
+<ul><li> Same as rabbit; these questions are properties of AMQP.
+</li></ul>
+</li><li> How do the health of the protocol standard, the software, and the community look?
+<ul><li> Relatively small community, though active.  721 messages to qpid-dev list in December 2008, though 90% seem to be JIRA spam; only 71 to qpid-users.
+</li></ul>
+</li><li> Can we engage people on support and development contracts if necessary?
+<ul><li> Red Hat supports a version called MRG -- unknown whether we could get them to help us use it on Debian. &nbsp;;-)
+</li></ul>
+</li><li> Is it possible to set up persistent queues, where undelivered messages will survive server restarts?
+<ul><li> Yes.
+</li></ul>
+</li></ol>
+<p>Notes:
+</p>
+<ul><li> MRG is based on QPID, per <a href="http://www.redhat.com/docs/en-US/Red_Hat_Enterprise_MRG/1.0/html/Messaging_Installation_Guide/sect-Messaging_Installation_Guide-Installing_RHM-Installing_RHM_on_RHEL5.html" class="external text" title="http://www.redhat.com/docs/en-US/Red_Hat_Enterprise_MRG/1.0/html/Messaging_Installation_Guide/sect-Messaging_Installation_Guide-Installing_RHM-Installing_RHM_on_RHEL5.html" rel="nofollow">this page</a>.
+</li><li> Client libs: C++, Java, Ruby, Python, C#.  Only the C++ client appears to have any documentation.
+</li><li> <a href="http://cwiki.apache.org/confluence/display/qpid/Documentation" class="external free" title="http://cwiki.apache.org/confluence/display/qpid/Documentation" rel="nofollow">http://cwiki.apache.org/confluence/display/qpid/Documentation</a>  &lt;-- this link was surprisingly hard to find
+</li><li> Python client is annoying to use.  Before even getting started you have to set an environment variable pointing at the spec (<code>export AMQP_SPEC=/tmp/qpid/qpid-M4/specs/amqp.0-10.xml</code>) and modify the spec file itself to point at the DTD because relative paths don't work for some reason.  The code is written poorly; no comments, run-on functions, uses long-deprecated things like raise "string" everywhere.  Also, it's slow as hell starting up and at runtime.  Finding another 0-10 compatible python client would be important.
+</li></ul>
+<a name="OpenAMQ" id="OpenAMQ"></a><h3> <span class="mw-headline"> OpenAMQ </span></h3>
+<p><a href="http://www.openamq.org/" class="external free" title="http://www.openamq.org/" rel="nofollow">http://www.openamq.org/</a>
+</p>
+<table class="messagebox standard-talk" style="border: 1px solid #DD8888;">
+
+<tr>
+<td align="center"><a href="/wiki/File:Exclamation.png" class="image" title="Eliminated"><img alt="Eliminated" src="https://d1yjxggot69855.cloudfront.net/images/c/c0/Exclamation.png" width="16" height="16" border="0" /></a>
+</td><td align="left" width="100%"> This product has been eliminated from the race
+</td></tr></table>
+<ul><li> <a href="http://www.openamq.org/doc:user-3-advanced" class="external free" title="http://www.openamq.org/doc:user-3-advanced" rel="nofollow">http://www.openamq.org/doc:user-3-advanced</a>
+</li><li> Supports HA via primary/secondary failover, EXCEPT "What we do not attempt to do includes: ... The handling of persistent messages or transactions in any way.....Replication of exchanges, queues, bindings, or messages between servers. All server-side state much be recreated by applications when they fail over."
+</li><li> HA support is mutually exclusive from federation support.
+</li><li> Supports federation; we'd want to use the "locator" federation type.
+</li><li> Seems immature; few docs, not a strong community -- however, it's actually pretty old.
+</li><li> Implements a subset of AMQP 0.9
+</li><li> <a href="http://amqp.wdfiles.com/local--files/deleted:library:cluster/clustering.pdf" class="external free" title="http://amqp.wdfiles.com/local--files/deleted:library:cluster/clustering.pdf" rel="nofollow">http://amqp.wdfiles.com/local--files/deleted:library:cluster/clustering.pdf</a>
+</li><li> Java centric, no bindings for other languages we love to use.
+</li></ul>
+<a name="XMPP" id="XMPP"></a><h2> <span class="mw-headline"> XMPP </span></h2>
+<a name="ejabberd" id="ejabberd"></a><h3> <span class="mw-headline"> ejabberd </span></h3>
+<p><a href="http://www.ejabberd.im/" class="external free" title="http://www.ejabberd.im/" rel="nofollow">http://www.ejabberd.im/</a>
+</p>
+<table class="messagebox standard-talk" style="border: 1px solid #DD8888;">
+
+<tr>
+<td align="center"><a href="/wiki/File:Exclamation.png" class="image" title="Eliminated"><img alt="Eliminated" src="https://d1yjxggot69855.cloudfront.net/images/c/c0/Exclamation.png" width="16" height="16" border="0" /></a>
+</td><td align="left" width="100%"> This product has NOT been eliminated, but we did not evaluate it for want of time.
+</td></tr></table>
+<p>Clients: <a href="http://www.jabber.org/web/Clients" class="external free" title="http://www.jabber.org/web/Clients" rel="nofollow">http://www.jabber.org/web/Clients</a>
+</p>
+<ul><li> Widely deployed and super-popular.
+</li><li> XMPP seems to not be the best fit for generic applications -- it seems that it could at best solve the group-chat and person-to-person IM cases, if at all.
+</li></ul>
+<a name="AMP_Extension" id="AMP_Extension"></a><h4> <span class="mw-headline"> AMP Extension </span></h4>
+<p><a href="http://xmpp.org/extensions/xep-0079.html" class="external free" title="http://xmpp.org/extensions/xep-0079.html" rel="nofollow">http://xmpp.org/extensions/xep-0079.html</a> 
+Message queue extension, available for ejabberd via <a href="https://support.process-one.net/browse/EJAB-449" class="external text" title="https://support.process-one.net/browse/EJAB-449" rel="nofollow">this patch</a>.  
+</p><p>This extension adds:
+</p>
+<ul><li> Reliable data transport -- the sender requires notification (positive and/or negative) of message delivery.
+</li><li> Time-sensitive messages -- the message is valid only until a certain date and time.
+</li><li> Transient messages -- the message should not be stored offline for later delivery.
+</li></ul>
+<p>The AMP extension is immature and has no client support -- we'd be going it ourselves if we wanted to use that.  We might decide that we don't need the AMP extension's semantics.
+</p>
+<a name="PubSub_Extension" id="PubSub_Extension"></a><h4> <span class="mw-headline"> PubSub Extension </span></h4>
+<p><a href="http://www.ejabberd.im/mod_pubsub-usage" class="external free" title="http://www.ejabberd.im/mod_pubsub-usage" rel="nofollow">http://www.ejabberd.im/mod_pubsub-usage</a>
+</p><p><a href="http://ppolv.wordpress.com/2007/11/28/managing-a-jabber-pubsub-service/" class="external free" title="http://ppolv.wordpress.com/2007/11/28/managing-a-jabber-pubsub-service/" rel="nofollow">http://ppolv.wordpress.com/2007/11/28/managing-a-jabber-pubsub-service/</a>
+</p><p>Doesn't seem to be client support for this, but it's probably better than AMP extension client support and I haven't looked especially hard yet.
+</p>
+<a name="Stomp" id="Stomp"></a><h2> <span class="mw-headline"> Stomp </span></h2>
+<p>Products that support primarily the Stomp protocol.
+</p><p><a href="http://stomp.codehaus.org/Protocol" class="external free" title="http://stomp.codehaus.org/Protocol" rel="nofollow">http://stomp.codehaus.org/Protocol</a>
+</p><p>Stomp is a message passing scheme that is tremendously simple.  It kinda looks like HTTP, but it's actually even simpler.  The simplicity is both a strength and a weakness.
+</p>
+<ul><li> Human-readable
+</li><li> Requires null-termination of message bodies; the spec implies that it's OK to include nulls in the message body if a content-length header is included, but if the header is not supplied nulls are not acceptable.  <a href="http://cometdaily.com/2008/10/08/scalable-real-time-web-architecture-part-1-stomp-comet-and-message-queues/" class="external text" title="http://cometdaily.com/2008/10/08/scalable-real-time-web-architecture-part-1-stomp-comet-and-message-queues/" rel="nofollow">This article</a> and subsequent discussion is interesting.
+</li><li> Underspecified header syntax means implementations might differ w.r.t. all-dashes, spaces between&nbsp;: and header body, capitalization, etc.
+</li></ul>
+<p>There are stomp clients written in nearly every language; since the protocol is so simple it seems as if people write new clients whenever they encounter even the slightest problem with someone else's client.
+</p>
+<ul><li> stomp.py -- nicely written, but seems to be just barely maintained by a guy who doesn't really use it any more.  Its error reporting sucks (prints java exceptions to stdout, doesn't give any feedback to python program).  But it works!
+</li></ul>
+<a name="ActiveMQ" id="ActiveMQ"></a><h3> <span class="mw-headline"> ActiveMQ </span></h3>
+<p><a href="http://activemq.apache.org/" class="external free" title="http://activemq.apache.org/" rel="nofollow">http://activemq.apache.org/</a>
+</p>
+<table class="messagebox standard-talk" style="border: 1px solid #DD8888;">
+
+<tr>
+<td align="center"><a href="/wiki/File:Exclamation.png" class="image" title="Eliminated"><img alt="Eliminated" src="https://d1yjxggot69855.cloudfront.net/images/c/c0/Exclamation.png" width="16" height="16" border="0" /></a>
+</td><td align="left" width="100%">This product has been eliminated from the race
+</td></tr></table>
+<p>Related Jira&nbsp;: &lt;jira&gt;DEV-19958&lt;/jira&gt;
+</p>
+<ul><li> HA via master/slave failover built-in: <a href="http://activemq.apache.org/masterslave.html" class="external free" title="http://activemq.apache.org/masterslave.html" rel="nofollow">http://activemq.apache.org/masterslave.html</a>  It's not great, but it's better than "you lost all your shit!"
+</li><li> Does not support AMQP (how did we miss this earlier?)
+</li><li> Clustering built-in with autodiscovery.  It's very nice to start up activemq on two machines and see them find each other automagically.
+</li><li> Broker fails after opening 700 queues on a node due to too many open files -- apparently it has a tempfile for each queue, and an open file for each JAR (of which there are 124!), and 60 miscellaneous filehandles.  The number of open files does not decrease when the client quits.  Some googling implies that there are numerous bugs in ActiveMQ relating to leaked filehandles.  
+</li><li> Even if you cluster two nodes together, each created subscription opens a new filehandle on both nodes in the cluster!  This means that the total number of queues creatable in a clustered system is very small.
+</li></ul>
+<a name="Sprinkle" id="Sprinkle"></a><h3> <span class="mw-headline"> Sprinkle </span></h3>
+<p><a href="http://www.thuswise.org/sprinkle/index.html" class="external free" title="http://www.thuswise.org/sprinkle/index.html" rel="nofollow">http://www.thuswise.org/sprinkle/index.html</a>
+</p>
+<table class="messagebox standard-talk" style="border: 1px solid #DD8888;">
+
+<tr>
+<td align="center"><a href="/wiki/File:Exclamation.png" class="image" title="Eliminated"><img alt="Eliminated" src="https://d1yjxggot69855.cloudfront.net/images/c/c0/Exclamation.png" width="16" height="16" border="0" /></a>
+</td><td align="left" width="100%">This product has been eliminated from the race
+</td></tr></table>
+<ul><li> Consumes 100% of CPU when idle.
+</li><li> Requires an external process to create a new directory for each queue -- no way to create queues by talking to the server (unless you hook up a demon listening to a special meta-queue for messages to create new queues...an approach that is appealing in its purity, but...no)
+</li></ul>
+<a name="JMS" id="JMS"></a><h2> <span class="mw-headline"> JMS </span></h2>
+<p>JMS is a Java API for asynchronous messaging.  In a charming bit of java-centrism it specifies the API that a java program sees, but not a wire protocol or anything like that; I can only assume that each client is intended to develop its own custom wire protocol for talking to the broker, but there isn't much information about this out there.  Some of the clients that support Stomp or AMQP also support some subset of JMS, and presumably the JMS API simply uses Stomp or AMQP as the wire protocol.  The development of the wire protocols have been influenced somewhat by the needs of JMS.
+</p>
+<a name="OpenMQ" id="OpenMQ"></a><h3> <span class="mw-headline"> OpenMQ </span></h3>
+<p><a href="https://mq.dev.java.net/about.html" class="external free" title="https://mq.dev.java.net/about.html" rel="nofollow">https://mq.dev.java.net/about.html</a>
+</p>
+<table class="messagebox standard-talk" style="border: 1px solid #DD8888;">
+
+<tr>
+<td align="center"><a href="/wiki/File:Exclamation.png" class="image" title="Eliminated"><img alt="Eliminated" src="https://d1yjxggot69855.cloudfront.net/images/c/c0/Exclamation.png" width="16" height="16" border="0" /></a>
+</td><td align="left" width="100%">This product has been eliminated from the race
+</td></tr></table>
+<ul><li> Very java-specific.
+</li><li> This is the free version of <a href="http://www.sun.com/software/products/message_queue/index.xml" class="external text" title="http://www.sun.com/software/products/message_queue/index.xml" rel="nofollow">Java System Message Queue</a>
+</li><li> JMS only.
+</li></ul>
+<a name="Other" id="Other"></a><h2> <span class="mw-headline"> Other </span></h2>
+<p>Products that have their own protocol.  These are generally less interesting to us because they are already at a disadvantage relative to implementations of a particular protocol in terms of community size, possibility of paid support, and being able to replace them with a different implementation if the need arises.  However, we still take these into consideration in the hopes of finding a diamond in the rough.
+</p>
+<a name="IRC" id="IRC"></a><h3> <span class="mw-headline"> IRC </span></h3>
+<ul><li> <a href="http://searchirc.com/top100.php" class="external text" title="http://searchirc.com/top100.php" rel="nofollow">Top 100 IRC Rooms</a>.  Looks like the largest tops out near 3400 members.
+</li><li> <a href="http://www.xs4all.nl/~carlo17/irc/run-irc.htm" class="external text" title="http://www.xs4all.nl/~carlo17/irc/run-irc.htm" rel="nofollow">Carlo Wood's notes on IRC</a>. Of note is the fact that IRC does not guarantee message order.
+</li><li> <a href="http://irc.pages.de/research.html" class="external text" title="http://irc.pages.de/research.html" rel="nofollow">Interesting and discouraging overview of chat protocol scalability</a>
+</li><li> Not designed for anything other than group chat or P2P IM; we'd have to come up with something else for our other use cases.
+</li><li> No offline storage of messages.
+</li><li> Doesn't have a great <a href="http://www.irchelp.org/irchelp/rfc/chapter2.html#c2_2" class="external text" title="http://www.irchelp.org/irchelp/rfc/chapter2.html#c2_2" rel="nofollow">character set story</a>; content would have to be encoded.
+</li></ul>
+<a name="PSYC" id="PSYC"></a><h3> <span class="mw-headline"> PSYC </span></h3>
+<p><a href="http://about.psyc.eu/" class="external free" title="http://about.psyc.eu/" rel="nofollow">http://about.psyc.eu/</a>
+</p>
+<ul><li> Just gauging off the <a href="http://about.psyc.eu/Roadmap" class="external text" title="http://about.psyc.eu/Roadmap" rel="nofollow">roadmap</a>, doesn't seem to have "arrived".
+</li></ul>
+<a name="Gearman" id="Gearman"></a><h3> <span class="mw-headline"> Gearman </span></h3>
+<p><a href="http://www.danga.com/gearman/" class="external free" title="http://www.danga.com/gearman/" rel="nofollow">http://www.danga.com/gearman/</a>
+</p>
+<table class="messagebox standard-talk" style="border: 1px solid #DD8888;">
+
+<tr>
+<td align="center"><a href="/wiki/File:Exclamation.png" class="image" title="Eliminated"><img alt="Eliminated" src="https://d1yjxggot69855.cloudfront.net/images/c/c0/Exclamation.png" width="16" height="16" border="0" /></a>
+</td><td align="left" width="100%">This product has been eliminated from the race
+</td></tr></table>
+<ul><li> "Gearman is a system to farm out work to other machines, dispatching function calls to machines that are better suited to do work, to do work in parallel, to load balance lots of function calls, or to call functions between languages."
+</li><li> Not really what we're looking for.
+</li></ul>
+<a name="Amazon_SQS" id="Amazon_SQS"></a><h3> <span class="mw-headline"> Amazon SQS </span></h3>
+<p><a href="http://aws.amazon.com/sqs/" class="external free" title="http://aws.amazon.com/sqs/" rel="nofollow">http://aws.amazon.com/sqs/</a>
+</p>
+<table class="messagebox standard-talk" style="border: 1px solid #DD8888;">
+
+<tr>
+<td align="center"><a href="/wiki/File:Exclamation.png" class="image" title="Eliminated"><img alt="Eliminated" src="https://d1yjxggot69855.cloudfront.net/images/c/c0/Exclamation.png" width="16" height="16" border="0" /></a>
+</td><td align="left" width="100%">This product has been eliminated from the race
+</td></tr></table>
+<ul><li> <a href="http://notes.variogr.am/post/67710296/replacing-amazon-sqs-with-something-faster-and-cheaper" class="external text" title="http://notes.variogr.am/post/67710296/replacing-amazon-sqs-with-something-faster-and-cheaper" rel="nofollow">Performance 40x slower than rabbitmq</a>
+</li><li> External hosting raises troubling questions about security/privacy, and the ability of our operations team to handle failure cases (i.e. if SQS goes down we are SOL unless we separately maintain our own compatible farm of servers, in which case we gain little in operational savings)
+</li><li> External hosting adds non-negligible latency
+</li></ul>
+<a name="beanstalkd" id="beanstalkd"></a><h3> <span class="mw-headline"> beanstalkd </span></h3>
+<p><a href="http://xph.us/software/beanstalkd/" class="external free" title="http://xph.us/software/beanstalkd/" rel="nofollow">http://xph.us/software/beanstalkd/</a>
+</p>
+<table class="messagebox standard-talk" style="border: 1px solid #DD8888;">
+
+<tr>
+<td align="center"><a href="/wiki/File:Exclamation.png" class="image" title="Eliminated"><img alt="Eliminated" src="https://d1yjxggot69855.cloudfront.net/images/c/c0/Exclamation.png" width="16" height="16" border="0" /></a>
+</td><td align="left" width="100%"> This product has been eliminated from the race.
+</td></tr></table>
+<ul><li> Client libs in Python (2.5), PHP, Perl, but not C++.
+</li><li> No persistent queues, but one of the touted features is preservation of queue state between server restarts/crashes.
+</li><li> Here's the protocol doc: <a href="http://github.com/kr/beanstalkd/tree/v1.1/doc/protocol.txt?raw=true" class="external free" title="http://github.com/kr/beanstalkd/tree/v1.1/doc/protocol.txt?raw=true" rel="nofollow">http://github.com/kr/beanstalkd/tree/v1.1/doc/protocol.txt?raw=true</a>
+</li><li> Immature
+</li><li> Works only with Python-2.6, which is two versions above the installed version on etch.
+</li></ul>
+<a name="Peafowl" id="Peafowl"></a><h3> <span class="mw-headline"> Peafowl </span></h3>
+<p><a href="http://code.google.com/p/peafowl/" class="external free" title="http://code.google.com/p/peafowl/" rel="nofollow">http://code.google.com/p/peafowl/</a>
+(A light weight server for reliable distributed message passing.)
+</p>
+<table class="messagebox standard-talk" style="border: 1px solid #DD8888;">
+
+<tr>
+<td align="center"><a href="/wiki/File:Exclamation.png" class="image" title="Eliminated"><img alt="Eliminated" src="https://d1yjxggot69855.cloudfront.net/images/c/c0/Exclamation.png" width="16" height="16" border="0" /></a>
+</td><td align="left" width="100%"> This product has been eliminated prima facie from the race.
+</td></tr></table>
+<ul><li> Uses memcache protocol, which is not a message queueing protocol.  The argument that we should be using a message queueing protocol rather than a key-value protocol is convincing to us.  The impedance mismatch between what the memcache protocol is trying to do and what we want out of a message queue system is quite large and it seems our effort is better spent trying to find something that is designed for the purpose.
+</li></ul>
+<a name="Starling" id="Starling"></a><h3> <span class="mw-headline"> Starling </span></h3>
+<p><a href="http://rubyforge.org/projects/starling/" class="external free" title="http://rubyforge.org/projects/starling/" rel="nofollow">http://rubyforge.org/projects/starling/</a>
+</p><p>Persistent Message Queue, in Ruby though
+</p>
+<table class="messagebox standard-talk" style="border: 1px solid #DD8888;">
+
+<tr>
+<td align="center"><a href="/wiki/File:Exclamation.png" class="image" title="Eliminated"><img alt="Eliminated" src="https://d1yjxggot69855.cloudfront.net/images/c/c0/Exclamation.png" width="16" height="16" border="0" /></a>
+</td><td align="left" width="100%"> This product has been eliminated prima facie from the race.
+</td></tr></table>
+<a name="SMTP" id="SMTP"></a><h3> <span class="mw-headline"> SMTP </span></h3>
+<p><a href="http://www.ietf.org/rfc/rfc2821.txt" class="external free" title="http://www.ietf.org/rfc/rfc2821.txt" rel="nofollow">http://www.ietf.org/rfc/rfc2821.txt</a>
+</p>
+<table class="messagebox standard-talk" style="border: 1px solid #DD8888;">
+
+<tr>
+<td align="center"><a href="/wiki/File:Exclamation.png" class="image" title="Eliminated"><img alt="Eliminated" src="https://d1yjxggot69855.cloudfront.net/images/c/c0/Exclamation.png" width="16" height="16" border="0" /></a>
+</td><td align="left" width="100%"> Ha ha we're just kidding.
+</td></tr></table>
+<ul><li> Very mature protocol
+</li><li> Many vendors
+</li><li> Huge community
+</li><li> Persistent queues only - no support for transient queues
+</li><li> No built-in CreateQueue/DeleteQueue operations
+</li><li> No support for transactional messages
+</li><li> Many failure modes will result in multiple delivery of messages
+</li></ul>
+<a name="Zero_MQ" id="Zero_MQ"></a><h3> <span class="mw-headline"> Zero MQ </span></h3>
+<p><a href="http://www.zeromq.org/" class="external free" title="http://www.zeromq.org/" rel="nofollow">http://www.zeromq.org/</a>
+</p>
+<table class="messagebox standard-talk" style="border: 1px solid #DD8888;">
+
+<tr>
+<td align="center"><a href="/wiki/File:Exclamation.png" class="image" title="Eliminated"><img alt="Eliminated" src="https://d1yjxggot69855.cloudfront.net/images/c/c0/Exclamation.png" width="16" height="16" border="0" /></a>
+</td><td align="left" width="100%">This product has been eliminated from the race. Read "NOTE"
+</td></tr></table>
+<ul><li> From above page: ØMQ is already very fast. We're getting 13.4 microseconds end-to-end latencies and up to 4,100,000 messages a second today.
+</li><li> Papers on Tests - <a href="http://www.zeromq.org/area:results" class="external free" title="http://www.zeromq.org/area:results" rel="nofollow">http://www.zeromq.org/area:results</a>
+</li><li> Not based on <a href="http://amqp.org" class="external text" title="http://amqp.org" rel="nofollow">AMQP</a> and has an AMQP plugin.
+</li><li> Chat example: <a href="http://www.zeromq.org/code:examples-chat" class="external free" title="http://www.zeromq.org/code:examples-chat" rel="nofollow">http://www.zeromq.org/code:examples-chat</a>
+</li><li> Python module's API is currently much simpler when compared to original C++ API. The difference is that Python module doesn't allow for full control of ØMQ threading as C++ does. Instead, the Python module extension creates single I/O thread that can be accessed from a single application thread. This doesn't allow for seamless scaling on multicore boxes. However, it is our intent to expose full ØMQ API via Python in the future.
+</li><li> <b>NOTE</b>: It looks like the python 0mq extension is broken. The sending and receiving functions work only when they are performed within the same Python process (probably has something to do with the above note about the module API in Python)
+</li><li> <b>UPDATE to NOTE</b>: Python extension works as advertised using the trunk version. Using this, it was possible to generate 100000 queues, for 4 'clients', and the zmq_server did not bog down the CPU (in fact it hovered around 2%)
+</li><li> Java wrapper does not work as it fails at <code>System.loadLibrary()</code>
+</li></ul>
+<a name="Reading.2FRelated_Links" id="Reading.2FRelated_Links"></a><h1> <span class="mw-headline"> Reading/Related Links </span></h1>
+<ul><li> <a href="http://jeremy.zawodny.com/blog/archives/010511.html" class="external text" title="http://jeremy.zawodny.com/blog/archives/010511.html" rel="nofollow">Open Source Queueing and Messaging Systems?</a>
+</li><li> <a href="http://www.cse.ohio-state.edu/~narravul/papers/subramoni_whpcf08.pdf" class="external text" title="http://www.cse.ohio-state.edu/~narravul/papers/subramoni_whpcf08.pdf" rel="nofollow">MQP Benchmarking</a>
+</li><li> <a href="http://lists.rabbitmq.com/pipermail/rabbitmq-discuss/2008-June/001290.html" class="external text" title="http://lists.rabbitmq.com/pipermail/rabbitmq-discuss/2008-June/001290.html" rel="nofollow">AMQP vs XMPP/RabbitMQ vs ejabberd</a>
+</li></ul>
+
+<!-- 
+NewPP limit report
+Preprocessor node count: 30/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key lindenlab1-mw_:pcache:idhash:52382-0!1!0!!en!2!edit=0 and timestamp 20101225051539 -->
+<div class="hf-footer"></div><div class="hf-nsfooter"></div><div class="printfooter">
+Retrieved from "<a href="http://wiki.secondlife.com/wiki/Message_Queue_Evaluation_Notes">http://wiki.secondlife.com/wiki/Message_Queue_Evaluation_Notes</a>"</div>
+						<!-- end content -->
+						<div class="visualClear"></div>
+		</div>
+	</div>
+		</div>
+		<div id="column-one">
+	<div id="p-cactions" class="portlet">
+		<h5>Views</h5>
+		<div class="pBody">
+			<ul>
+	
+				 <li id="ca-nstab-main" class="selected"><a href="/wiki/Message_Queue_Evaluation_Notes" title="View the content page [c]" accesskey="c">Page</a></li>
+				 <li id="ca-talk"><a href="/wiki/Talk:Message_Queue_Evaluation_Notes" title="Discussion about the content page [t]" accesskey="t">Discussion</a></li>
+				 <li id="ca-viewsource"><a href="/w/index.php?title=Message_Queue_Evaluation_Notes&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li>
+				 <li id="ca-history"><a href="/w/index.php?title=Message_Queue_Evaluation_Notes&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-personal">
+		<h5>Personal tools</h5>
+		<div class="pBody">
+			<ul>
+				<li id="pt-login"><a href="/w/index.php?title=Special:UserLogin&amp;returnto=Message_Queue_Evaluation_Notes" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-logo">
+		<a style="background-image: url(http://d1yjxggot69855.cloudfront.net/images/secondlife.jpg);" href="/wiki/Main_Page" title="Visit the main page [z]" accesskey="z"></a>
+	</div>
+	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
+	<div class='generated-sidebar portlet' id='p-navigation'>
+		<h5>Navigation</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-About-.26-Help"><a href="/wiki/Project:About">About &amp; Help</a></li>
+				<li id="n-Editing-Guidelines"><a href="/wiki/Editing_Guidelines">Editing Guidelines</a></li>
+				<li id="n-mainpage"><a href="/wiki/Main_Page" title="Visit the main page">Main Page</a></li>
+				<li id="n-knowledgebase"><a href="http://wiki.secondlife.com/wiki/Knowledge_Base">Knowledge Base</a></li>
+				<li id="n-editguidelines"><a href="/wiki/Editing_Guidelines">Editing Guidelines</a></li>
+				<li id="n-recentchanges"><a href="/wiki/Special:RecentChanges" title="The list of recent changes in the wiki [r]" accesskey="r">Recent Changes</a></li>
+				<li id="n-Advanced-Search"><a href="/wiki/Special:Search">Advanced Search</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class='generated-sidebar portlet' id='p-other_sites'>
+		<h5>other sites</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-secondlife.com"><a href="http://secondlife.com">secondlife.com</a></li>
+				<li id="n-Bug-Tracker"><a href="http://jira.secondlife.com">Bug Tracker</a></li>
+				<li id="n-Blogs-.26-Forums"><a href="http://blogs.secondlife.com">Blogs &amp; Forums</a></li>
+				<li id="n-Support-Portal"><a href="http://secondlife.com/support">Support Portal</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="p-search" class="portlet">
+		<h5><label for="searchInput">Search</label></h5>
+		<div id="searchBody" class="pBody">
+			<form action="/w/index.php" id="searchform"><div>
+				<input type='hidden' name="title" value="Special:Search"/>
+				<input id="searchInput" name="search" type="text" title="Search Second Life Wiki [f]" accesskey="f" value="" />
+				<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />&nbsp;
+				<input type='submit' name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</div></form>
+		</div>
+	</div>
+	<div class="portlet" id="p-tb">
+		<h5>Toolbox</h5>
+		<div class="pBody">
+			<ul>
+				<li id="t-whatlinkshere"><a href="/wiki/Special:WhatLinksHere/Message_Queue_Evaluation_Notes" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+				<li id="t-recentchangeslinked"><a href="/wiki/Special:RecentChangesLinked/Message_Queue_Evaluation_Notes" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+<li id="t-specialpages"><a href="/wiki/Special:SpecialPages" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+				<li id="t-print"><a href="/w/index.php?title=Message_Queue_Evaluation_Notes&amp;printable=yes" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li>				<li id="t-permalink"><a href="/w/index.php?title=Message_Queue_Evaluation_Notes&amp;oldid=702853" title="Permanent link to this revision of the page">Permanent link</a></li><li id="t-cite"><a href="/w/index.php?title=Special:Cite&amp;page=Message_Queue_Evaluation_Notes&amp;id=702853">Cite this page</a></li>			</ul>
+		</div>
+	</div>
+		</div><!-- end of the left (by default at least) column -->
+			<div class="visualClear"></div>
+			<div id="footer">
+				<div id="f-poweredbyico"><a href="http://www.mediawiki.org/"><img src="http://d1yjxggot69855.cloudfront.net/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" /></a></div>
+				<div id="f-copyrightico"><a href="http://www.creativecommons.org/licenses/by-sa/3.0/"><img src="/static/2007/img/somerights20.png" alt='Creative Commons Attribution-Share Alike 3.0' /></a></div>
+			<ul id="f-list">
+					<li id="lastmod"> This page was last modified on 13 January 2010, at 01:27.</li>
+					<li id="viewcount">This page has been accessed 21,205 times.</li>
+					<li id="copyright">Copyright © 2009 Linden Research, Inc. Licensed under <a href="/wiki/Project:Terms_of_Service" title="Project:Terms of Service">Creative Commons Attribution-Share Alike 3.0</a> unless otherwise noted.</li>
+					<li id="privacy"><a href="/wiki/Project:Terms_of_Use" title="Project:Terms of Use">Privacy policy</a></li>
+					<li id="about"><a href="/wiki/Project:About" title="Project:About">About Second Life Wiki</a></li>
+					<li id="disclaimer"><a href="/wiki/Project:Terms_of_Use" title="Project:Terms of Use">Terms of Use</a></li>
+			</ul>
+		</div>
+</div>
+
+		<script type="text/javascript">if (window.runOnloadHook) runOnloadHook();</script>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-190376-9");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script><!-- Served in 0.102 secs. --></body></html>
