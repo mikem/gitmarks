@@ -1,0 +1,279 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-gb" lang="en-gb">
+
+<head>
+  <base href="http://www.distributed-systems.net/gtcn/" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="robots" content="index, follow" />
+  <meta name="keywords" content="graph theory
+complex networks" />
+  <meta name="description" content="Graph Theory and Complex Networks, An Introduction" />
+  <meta name="generator" content="Joomla! 1.5 - Open Source Content Management" />
+  <title>Graph Theory and Complex Networks</title>
+  <link href="/gtcn/index.php?format=feed&amp;type=rss" rel="alternate" type="application/rss+xml" title="RSS 2.0" />
+  <link href="/gtcn/index.php?format=feed&amp;type=atom" rel="alternate" type="application/atom+xml" title="Atom 1.0" />
+  <link href="/gtcn/templates/JAPurity2/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+  <script type="text/javascript" src="/gtcn/media/system/js/mootools.js"></script>
+  <script type="text/javascript" src="/gtcn/media/system/js/caption.js"></script>
+
+
+<link rel="stylesheet" href="http://www.distributed-systems.net/gtcn/templates/system/css/system.css" type="text/css" />
+<link rel="stylesheet" href="http://www.distributed-systems.net/gtcn/templates/system/css/general.css" type="text/css" />
+<link rel="stylesheet" href="http://www.distributed-systems.net/gtcn/templates/JAPurity2/css/addons.css" type="text/css" />
+<link rel="stylesheet" href="http://www.distributed-systems.net/gtcn/templates/JAPurity2/css/layout.css" type="text/css" />
+<link rel="stylesheet" href="http://www.distributed-systems.net/gtcn/templates/JAPurity2/css/template.css" type="text/css" />
+<link rel="stylesheet" href="http://www.distributed-systems.net/gtcn/templates/JAPurity2/css/typo.css" type="text/css" />
+
+<!--[if IE]>
+<link rel="stylesheet" href="http://www.distributed-systems.net/gtcn/templates/JAPurity2/css/ie.css" type="text/css" />
+<![endif]-->
+
+<!--[if lt IE 7.0]>
+<link rel="stylesheet" href="http://www.distributed-systems.net/gtcn/templates/JAPurity2/css/ie7minus.css" type="text/css" />
+<style>
+.main { width: expression(document.body.clientWidth < 770? "770px" : document.body.clientWidth > 1200? "1200px" : "auto"); }
+</style>
+<![endif]-->
+
+<!--[if IE 7.0]>
+<style>
+.clearfix { display: inline-block; } /* IE7xhtml*/
+</style>
+<![endif]-->
+
+<script type="text/javascript">
+var siteurl='http://www.distributed-systems.net/gtcn/';
+var tmplurl='http://www.distributed-systems.net/gtcn/templates/JAPurity2';
+</script>
+
+<script language="javascript" type="text/javascript" src="http://www.distributed-systems.net/gtcn/templates/JAPurity2/js/ja.script.js"></script>
+<script language="javascript" type="text/javascript" src="http://www.distributed-systems.net/gtcn/templates/JAPurity2/js/ja.ddmod.js"></script>
+
+
+<link href="http://www.distributed-systems.net/gtcn/templates/JAPurity2/css/menu/mega.css" rel="stylesheet" type="text/css" /><script src="http://www.distributed-systems.net/gtcn/templates/JAPurity2/js/menu/mega.js" language="javascript" type="text/javascript"></script>
+
+
+<script language="javascript" type="text/javascript">
+var rightCollapseDefault='show';
+var excludeModules='38';
+</script>
+<script language="javascript" type="text/javascript" src="http://www.distributed-systems.net/gtcn/templates/JAPurity2/js/ja.rightcol.js"></script>
+
+<!--Width of template -->
+<style type="text/css">
+.main {width: 880px;margin: 0 auto;}
+#ja-wrapper {min-width: 881px;}
+</style>
+
+</head>
+
+<body id="bd" class="fs3 Others">
+
+<div id="ja-wrapper">
+	<a name="Top" id="Top"></a>
+
+	<!-- HEADER -->
+	<div id="ja-header" class="wrap">
+<div class="main" style="background-image: url(http://www.distributed-systems.net/gtcn/templates/JAPurity2/images/header/);">
+<div class="inner clearfix">
+
+	<div class="ja-headermask">&nbsp;</div>
+
+		<div class="logo-text">
+		<h1><a href="/gtcn/index.php" title="Graph Theory and Complex Networks"><span>Graph Theory and Complex Networks</span></a></h1>
+		<p class="site-slogan">An Introduction</p>
+	</div>
+		
+	<ul class="ja-usertools-screen">
+	<li><img style="cursor: pointer;" src="http://www.distributed-systems.net/gtcn/templates/JAPurity2/images/auto.png" title="Full Screen" alt="Full Screen" id="ja-tool-auto" onclick="switchTool('JAPurity2_ja_screen','auto');return false;" /></li>
+
+	<li><img style="cursor: pointer;" src="http://www.distributed-systems.net/gtcn/templates/JAPurity2/images/wide.png" title="Wide Screen" alt="Wide Screen" id="ja-tool-wide" onclick="switchTool('JAPurity2_ja_screen','980');return false;" /></li>
+
+	<li><img style="cursor: pointer;" src="http://www.distributed-systems.net/gtcn/templates/JAPurity2/images/narrow.png" title="Narrow Screen" alt="Narrow Screen" id="ja-tool-narrow" onclick="switchTool('JAPurity2_ja_screen','770');return false;" /></li>
+</ul>
+	<ul class="ja-usertools-font">
+	<li><img style="cursor: pointer;" title="Increase font size" src="http://www.distributed-systems.net/gtcn/templates/JAPurity2/images/user-increase.png" alt="Increase font size" id="ja-tool-increase" onclick="switchFontSize('JAPurity2_ja_font','inc'); return false;" /></li>
+	<li><img style="cursor: pointer;" title="Default font size" src="http://www.distributed-systems.net/gtcn/templates/JAPurity2/images/user-reset.png" alt="Default font size" id="ja-tool-reset" onclick="switchFontSize('JAPurity2_ja_font',3); return false;" /></li>
+	<li><img style="cursor: pointer;" title="Decrease font size" src="http://www.distributed-systems.net/gtcn/templates/JAPurity2/images/user-decrease.png" alt="Decrease font size" id="ja-tool-decrease" onclick="switchFontSize('JAPurity2_ja_font','dec'); return false;" /></li>
+</ul>
+<script type="text/javascript">var CurrentFontSize=parseInt('3');</script>	
+	
+</div>
+
+</div>
+</div>
+	<!-- //HEADER -->
+
+	<!-- MAIN NAVIGATION -->
+	<div id="ja-mainnav" class="wrap">
+<div class="main clearfix">
+	<div class="ja-megamenu">
+<ul class="megamenu level0"><li class="mega active first haschild"><a href="http://www.distributed-systems.net/gtcn/" class="mega active first haschild" id="menu1" title="Home"><span class="menu-title">Home</span></a><div class="childcontent cols1 " style="width: 200px;"><div class="childcontent-inner clearfix"><div class="megacol column1 first" style="width: 200px;"><ul class="megamenu level1"><li class="mega first"><a href="/gtcn/index.php/home/background" class="mega first" id="menu23" title="Background"><span class="menu-title">Background</span></a></li><li class="mega"><a href="http://www.distributed-systems.net/gtcn/data/toc.pdf" class="mega" id="menu22" title="Table of contents"><span class="menu-title">Table of contents</span></a></li><li class="mega last"><a href="http://www.distributed-systems.net/maarten" class="mega last" id="menu31" title="About the author"><span class="menu-title">About the author</span></a></li></ul></div></div></div></li><li class="mega haschild"><a href="/gtcn/index.php/courseware" class="mega haschild" id="menu20" title="Courseware"><span class="menu-title">Courseware</span></a><div class="childcontent cols1 " style="width: 200px;"><div class="childcontent-inner clearfix"><div class="megacol column1 first" style="width: 200px;"><ul class="megamenu level1"><li class="mega first"><a href="/gtcn/index.php/courseware/slides-handouts" class="mega first" id="menu24" title="Slides and handouts"><span class="menu-title">Slides and handouts</span></a></li><li class="mega"><a href="/gtcn/index.php/courseware/slide-sources" class="mega" id="menu30" title="Slide sources"><span class="menu-title">Slide sources</span></a></li><li class="mega"><a href="/gtcn/index.php/courseware/exercises" class="mega" id="menu25" title="Exercises"><span class="menu-title">Exercises</span></a></li><li class="mega"><a href="/gtcn/index.php/courseware/mathematica" class="mega" id="menu29" title="Mathematica tools"><span class="menu-title">Mathematica tools</span></a></li><li class="mega"><a href="/gtcn/index.php/courseware/req-sol-manual" class="mega" id="menu28" title="Request solutions manual"><span class="menu-title">Request solutions manual</span></a></li><li class="mega last"><a href="http://bb.vu.nl/webapps/portal/frameset.jsp?tab_id=_2_1&amp;url=%2fwebapps%2fblackboard%2fexecute%2flauncher%3ftype%3dCourse%26id%3d_57576_1%26url%3d" target="_blank" class="mega last" id="menu32" title="VU course plan 2010"><span class="menu-title">VU course plan 2010</span></a></li></ul></div></div></div></li><li class="mega"><a href="/gtcn/index.php/background" class="mega" id="menu21" title="Why for free?"><span class="menu-title">Why for free?</span></a></li><li class="mega"><a href="/gtcn/index.php/book-request" class="mega" id="menu26" title="Obtaining a copy"><span class="menu-title">Obtaining a copy</span></a></li><li class="mega last"><a href="/gtcn/index.php/contact" class="mega last" id="menu27" title="Contact"><span class="menu-title">Contact</span></a></li></ul>
+</div></div>
+</div>
+
+
+<ul class="no-display">
+    <li><a href="/gtcn/#ja-content" title="Skip to content">Skip to content</a></li>
+</ul>
+	<!-- //MAIN NAVIGATION -->
+	
+	
+	<!-- MAIN CONTAINER -->
+	<div id="ja-container" class="wrap ">
+	<div class="main clearfix">
+
+		<div id="ja-mainbody" style="width:100%">
+			<!-- CONTENT -->
+<div id="ja-main" style="width:100%">
+<div class="inner clearfix">
+	
+	
+
+	
+	<div id="ja-contentwrap" class="">
+				<div id="ja-content" class="column" style="width:100%">
+
+			<div id="ja-current-content" class="column" style="width:100%">
+								
+								<div class="ja-content-main clearfix">
+					
+
+<div class="blog">
+
+			<div class="leading clearfix">
+			
+<div class="contentpaneopen">
+
+
+
+
+
+<div class="article-content">
+<div style="text-align: center;">
+<table border="0">
+<tbody>
+<tr>
+<td><img height="194" width="128" src="/gtcn/images/stories/cover-photo-small.jpg" alt="cover-photo-small" /></td>
+<td>
+<h1 style="text-align: center;">Graph Theory and Complex Networks</h1>
+<h3>AN INTRODUCTION</h3>
+<p>by <a target="_self" href="/gtcn/../maarten">Maarten van Steen</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2>Goals</h2>
+<p>GTCN aims to explain the basics of <strong>graph theory</strong> that are needed at an introductory level for students in computer or information sciences. To motivate students and to show that even these basic notions can be extremely useful, the book also aims to provide an introduction to the modern field of <strong>network science</strong>.</p>
+<p>I take the starting-point that mathematics for most students is unnecessarily intimidating. Explicit attention is paid in the first chapters to mathematical notations and proof techniques, emphasizing that the notations form the biggest obstacle, not the mathematical concepts themselves. Taking this approach has allowed me to gradually prepare students for using tools that are necessary to put graph theory to work: complex networks.</p>
+<p>In the second part of the book the student learns about random networks, small worlds, the structure of the Internet and the Web, and social networks. Again, everything is discussed at an elementary level, but such that in the end students indeed have the feeling that they:</p>
+<ol>
+<li>Have learned how to read and understand the basic mathematics related to graph theory</li>
+<li>Understand how basic graph theory can be applied to optimization problems such as routing in communication networks</li>
+<li>Know a bit more about this sometimes mystical field of small worlds and random networks.</li>
+</ol>
+<h2>Courseware</h2>
+<p>The book is only part of what is needed to teach this material. Practice is very important. To this end, we have collected numerous exercises, but have also prepared lab assignments (big and small). The latter are done using Mathematica with Combinatorica, which we have found to be an extremely powerful tool. This site holds supplementary material including:</p>
+<ul>
+<li>Exercises (and solutions)</li>
+<li>Slides and handouts</li>
+<li>Mathematica notebooks with example code</li>
+<li>Data sets and graph generators</li>
+</ul>
+<hr />
+<h1 style="text-align: center;">All material, including the book, can be freely accessed</h1>
+<hr />
+<p> </p></div>
+
+
+
+</div>
+
+		</div>
+	
+	
+	
+	</div>
+
+				</div>
+				
+							</div>
+
+			
+		</div>
+		
+			</div>
+
+	
+</div>
+</div>
+<!-- //CONTENT -->					</div>
+
+		
+	</div>
+	</div>
+	<!-- //MAIN CONTAINER -->
+
+	
+	<!-- FOOTER -->
+	<div class="ja-navhelper wrap">
+<div class="main clearfix">
+
+	<div class="ja-breadcrums">
+		<strong>You are here</strong> 
+	</div>
+    
+    <ul class="ja-links">
+		<li class="layout-switcher">&nbsp;</li>
+		<li class="top"><a href="/gtcn/#Top" title="Back to Top">Top</a></li>
+	</ul>
+	
+	<ul class="no-display">
+		<li><a href="/gtcn/#ja-content" title="Skip to content">Skip to content</a></li>
+	</ul>
+
+</div>
+</div>
+
+<div id="ja-footer" class="wrap">
+<div class="main clearfix">
+
+<div class="ja-footnav">
+	
+</div>
+	
+<div class="inner">
+	<div class="ja-copyright">
+		
+	</div>
+</div>
+
+</div>
+</div>
+
+	<!-- //FOOTER -->
+
+</div>
+
+
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-16947530-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body>
+
+</html>
