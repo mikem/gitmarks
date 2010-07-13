@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC"-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+<head>
+	<title>The Integrated Ruby Hacker's Guide</title>
+	<base href="http://edwinmeyer.com/Release_Integrated_RHG_09_10_2008/">
+	<html lang="en">
+	<meta http-equiv="Content-Type"content="text/html;charset=ISO-8859-1"/>
+	<meta http-equiv="Content-Language"content="en">
+	<meta name="description"content="Free Web tutorials"/>
+	<meta name="keywords"content="ruby,Ruby Hacker's Guide,irhg,rhg,matsumoto,matz,aoki,caoil,gravina,isambart,thornton,meyer"/>
+	<meta name="author"content="Edwin Meyer"/>
+	<!-- <link rel="stylesheet"type="text/css"href="rhg.css"> -->
+	<link rev="bookmark"href="http://edwinmeyer.com/">
+	<link href="../em-style.css" rel="stylesheet" type="text/css" />
+	<style type="text/css">
+		.content-annotation {color:green}
+		.content-annotation-m {color:gray}
+		p, li {font-size:1.0em}
+	</style>
+</head>
+
+
+<body>
+		<h1>Ruby Source Code &ndash; A Full Description</h1>
+		<h2>by Minero AOKI</h2>
+
+		<h3>Translated into English as</h3>
+		<h2>The Ruby Hacker's Guide</h2>
+
+	<h3>
+		Contributors:
+		Clifford Escobar CAOILE,
+		Robert GRAVINA,
+		Vincent ISAMBART,
+		C.E. THORNTON
+	</h3>
+
+	<h2>Introduction</h2>
+	<h3>Edwin W. Meyer</h3>
+	<p>
+		The Ruby language was created by Yukihiro Matsumoto ("Matz"), a Japanese computer language enthusiast, who released the first public version in 1995. For many years a little known niche language, it has surged in popularity since the first release of the Ruby on Rails web development framework in 2004. Ruby remains in continuous development under the guidance of its originator Matz.
+	</p>
+	<p>
+		As of June, 2010 there are now two branches of Ruby. The latest (and probably last) release of Ruby using the original MRI interpreter (Matz's Ruby Interpreter) is 1.8.7.  A new version of Ruby, using the faster YARV (Yet Another Ruby Virtual machine) is available in Ruby development release 1.9.1.
+	</p>
+	<p>
+		YARV is a bytecode interpreter created by Koichi Sasada that converts the syntax tree &ndash; an internal representation of a Ruby program &ndash; into an intermediate bytecode target, which is then executed by the "virtual machine". YARV is considerably faster than Matz's original MRI, which directly interprets the internal syntax tree, but the implementation is substantially different. Both are written in the C language.
+	</p>
+	<p>
+		Note: While Rails 2.3.8 (released May 25, 2010) works with Ruby 1.8.7 and some earlier versions, the new version (as of June, 2010) Rails 3.0 beta requires Ruby 1.8.7 or the not yet officially released Ruby 1.9.2.
+	</p>
+	<p>
+		Although there is a continuing flood of books on various aspects of the Ruby on Rails web framework, there are a scant half-dozen or so fairly recent English-language introductions to Ruby, and there is absolutely <u>nothing</u> in print that describes the structure of the interpreter, which forms the foundation of the Ruby language. I find this unfathomable, since the best way to understand the idiosyncrasies of Ruby's behavior is to understand key aspects of its interpreter.
+	</p>
+	<p>
+		The one source is an online book written in 2004 by Minero Aoki -- however it is in Japanese.
+		<ul>
+			<li><a href="http://i.loveruby.net/ja/rhg/book/">Ruby Source Code: A Full Description</a> &ndash; The Japanese original at i.loveruby.net</li>
+			<li><a href="http://translate.google.com/translate?hl=en&sl=ja&tl=en&u=http%3A%2F%2Fi.loveruby.net%2Fja%2Frhg%2Fbook%2F">Google Translation</a> of the Japanese text</li>
+		</ul>
+	</p>
+	<p>
+		There have been two successive attempts to translate this book for English readers.
+	</p>
+	<p>
+		The first, in 2006, by Vincent Isambart and others is published as the <a href="http://rhg.rubyforge.org/">Ruby Hacking Guide (RHG)</a> at rubyforge.org (<a href="http://rubyforge.org/projects/rhg">RHG RubyForge project page</a>). However of the 20+ segments, only chapters 2 through 4 and chapter 6 are translated.  No further updates since May, 2006 have occurred.
+	</p>
+	<p>
+		In 2008 a semi-retired computer consultant C. E. Thornton of Houston, Texas released a revised and more extensive translation as the Integrated Ruby Hacker's Guide (IHRG) on his <a href="http://hawthorne-press.com/">Hawthorne Press</a> website. He has provided translations of the prefatory sections plus chapters 1 through 11 and chapter 18. Furthermore, he provides machine-translated versions (barely readable but better than nothing) of the original untranslated Japanese chapters. Hence the prefix "Integrated".
+	</p>
+	<p>
+		A brief comparison of the two versions indicates that Thornton's translation is more colloquial the that of Isambart, et. al. on RubyForge, which seems to mimic the phrasing of the Japanese original. He also has interpolated useful material that the RubyForge version lacks. Thornton also has not made any updates since his original September, 2008 version.
+	</p>
+	<p>
+		Thornton's website provides IRHG only in a not readily readable <a href="http://www.hawthorne-press.com/RHG_09_10_2008.tgz">".tgz" archive file</a> format.
+		As of this date, one other website (<a href="http://trybeee.me/ruby_hackers_guide/index.html">trybeee.me</a>) provides the html files, but its home page does not link to it.
+	</p>
+	<p>
+		The Integrated Ruby Hacker's Guide suffers from several serious faults:
+		<ul>
+			<li>The original text is in Japanese, and machine translations of the chapters not human-translated are slow reading and often hard to decipher. (Try this on for size: <i>What the data without permission Do not play with people. It should be used if there is an interface function.</i>)</li>
+			<li>This work reflects an earlier Ruby version 1.7.3 of September 2002, not the latest MRI interpreter version, 1.8.7. However, the differences are likely to be relatively minor.</li>
+			<li>The newer version of Ruby currently under development, 1.9, is based on  YARV, an entirely different interpreter, whose internal structure is undoubtedly different.</li>
+		</ul>
+	</p>
+	<p>
+		Still, even with its faults, the Integrated Ruby Hacker's Guide remains a valuable resource that deserves much wider exposure. Not only will the 1.8 versions of Ruby remain in wide use for some time until 1.9 matures (and is released as 2.0), but the structure of 1.9's YARV interpreter, while different in detail, must basically mimic that of 1.8 in order to be compatible with it.
+	</p>
+	<p>
+		While the implementation language the Ruby interpreter is C, the document's major focus is on the architecture and internal data structures, which are readily understandable even by one without a C background. Little or no executable C code is presented.
+	</p>
+	<p>
+		The unmodified C. E. Thornton version of this essential work is available on <a href="http://edwinmeyer.com">Edwin Meyer's professional website</a> as <a href="http://edwinmeyer.com/Release_Integrated_RHG_09_10_2008/index.html">The Integrated Ruby Hacker's Guide</a>
+	</p>
+	<p>
+		An annotated table of contents indicating what chapter versions are available follows.
+	</p>
+
+	<h2>Table of contents</h2>
+	<ul>
+		<li><a href="title_page.html">Title Page</a><span class="content-annotation">&nbsp;&nbsp;&nbsp;(Thornton translation)</span></li>
+		<li><a href="title_english.html">English Version Contributors Page</a><span class="content-annotation">&nbsp;&nbsp;&nbsp;(Thornton translation)</span></li>
+		<li><a href="preface.html">Preface</a><span class="content-annotation">&nbsp;&nbsp;&nbsp;(Thornton translation)</span></li>
+		<li><a href="intro.html">Introduction to the Ruby Language</a><span class="content-annotation">&nbsp;&nbsp;&nbsp;(Thornton translation)</span></li>
+		<li><a href="intro_analysis.html">Introduction to Code Analysis</a><span class="content-annotation">&nbsp;&nbsp;&nbsp;(Thornton translation)</span></li>
+	</ul>
+
+	<h3>1st Section &ndash; "Objects"</h3>
+	<ul>
+		<li><a href="chapter01.html">1st Chapter "Ruby language Minimum"</a><span class="content-annotation">&nbsp;&nbsp;&nbsp;(Thornton translation)</span></li>
+		<li><a href="chapter02.html">2nd Chapter "Objects"</a><span class="content-annotation">&nbsp;&nbsp;&nbsp;(Thornton translation &ndash; RubyForge version also exists)</span></li>
+		<li><a href="chapter03.html">3rd Chapter "name and name chart"</a><span class="content-annotation">&nbsp;&nbsp;&nbsp;(Thornton translation &ndash; RubyForge version also exists)</span></li>
+		<li><a href="chapter04.html">4th Chapter "class"</a><span class="content-annotation">&nbsp;&nbsp;&nbsp;(Thornton translation &ndash; RubyForge version also exists)</span></li>
+		<li><a href="chapter05.html">5th Chapter " garbage collection"</a><span class="content-annotation">&nbsp;&nbsp;&nbsp;(Thornton translation)</span></li>
+		<li><a href="chapter06.html">6th  Chapter "variable and constant"</a><span class="content-annotation">&nbsp;&nbsp;&nbsp;(Thornton translation &ndash; RubyForge version also exists)</span></li>
+		<li><a href="chapter07.html">7th Chapter " security"</a><span class="content-annotation">&nbsp;&nbsp;&nbsp;(Thornton translation)</span></li>
+	</ul>
+
+	<h3>2nd Section &ndash; "Syntax Analysis"</h3>
+	<ul>
+		<li><a href="chapter08.html">8th Chapter "Ruby Language Details"</a><span class="content-annotation">&nbsp;&nbsp;&nbsp;(Thornton translation)</span></li>
+		<li><a href="chapter09.html">9th Chapter "fast learning yacc"</a><span class="content-annotation">&nbsp;&nbsp;&nbsp;(Thornton translation)</span></li><li><a href="chapter10.html">10th Chapter "parser"</a><span class="content-annotation">&nbsp;&nbsp;&nbsp;(Thornton translation)</span></li>
+		<li><a href="chapter11.html">11th Chapter "state equipped scanner"</a><span class="content-annotation">&nbsp;&nbsp;&nbsp;(Thornton translation)</span></li>
+		<li><a href="chapter12.html">12th Chapter "Syntactic Tree"</a><span class="content-annotation-m">&nbsp;&nbsp;&nbsp;(machine translation only)</span></li>
+	</ul>
+
+	<h3>3rd Section &ndash; "Appraisal"</h3>
+	<ul>
+		<li><a href="chapter13.html">13th Chapter "Structure of  Evaluator"</a><span class="content-annotation-m">&nbsp;&nbsp;&nbsp;(machine translation only)</span></li>
+		<li><a href="chapter14.html">14th Chapter "context"</a><span class="content-annotation-m">&nbsp;&nbsp;&nbsp;(machine translation only)</span></li>
+		<li><a href="chapter15.html">15th Chapter "method"</a><span class="content-annotation-m">&nbsp;&nbsp;&nbsp;(machine translation only)</span></li><li><a href="chapter16.html">16th Chapter "block"</a><span class="content-annotation-m">&nbsp;&nbsp;&nbsp;(machine translation only)</span></li>
+		<li><a href="chapter17.html">17th Chapter "dynamic appraisal"</a><span class="content-annotation-m">&nbsp;&nbsp;&nbsp;(machine translation only)</span></li>
+	</ul>
+
+	<h3>4th Section &ndash; "Around"</h3>
+	<ul>
+		<li><a href="chapter18.html">18th Chapter "load"</a><span class="content-annotation">&nbsp;&nbsp;&nbsp;(Thornton translation)</span></li>
+		<li><a href="chapter19.html">19th Chapter "Threads"</a><span class="content-annotation-m">&nbsp;&nbsp;&nbsp;(machine translation only)</span></li>
+		<li><a href="chapter20.html">20th Chapter "Ruby's future"</a><span class="content-annotation-m">&nbsp;&nbsp;&nbsp;(machine translation only)</span></li>
+	</ul>
+	<br><hr>
+	<p>
+	The original work is Copyright &copy; 2002 - 2004 Minero Aoki<br>
+	Original English translation by Vincent Isambart and others<br>
+	Further Translations and Additions  by C.E. Thornton<br>
+	This introduction by Edwin W. Meyer<br>
+	This work is licensed under a <a rel="license"href="http://creativecommons.org/licenses/by-nc-sa/2.5/">Creative Commons Attribution-NonCommercial-ShareAlike2.5 License</a>.
+	</p>
+
+	<script type="text/javascript">
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-437042-5']); // "-5" is for edwinmeyer.com
+	  _gaq.push(['_trackPageview']);
+
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+	</script>
+
+</body>
+</html>
