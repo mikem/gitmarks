@@ -1,0 +1,357 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<meta name="designer" content="esmi@quirm.net" />
+
+<link rel="stylesheet" type="text/css" href="http://blog.lars-francke.de/wp-content/themes/zenlite/style.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="http://blog.lars-francke.de/wp-content/themes/zenlite/print.css" media="print" />
+
+<!--[if IE]>
+<link rel="stylesheet" href="http://blog.lars-francke.de/wp-content/themes/zenlite/ie.css" media="screen" type="text/css" />
+<![endif]-->
+<!--[if lte IE 7]>
+<link rel="stylesheet" href="http://blog.lars-francke.de/wp-content/themes/zenlite/ie7.css" media="screen" type="text/css" />
+<script src="http://blog.lars-francke.de/wp-content/themes/zenlite/library/focus.js" type="text/javascript"></script>
+<![endif]-->
+
+<style type="text/css" media="screen,print">
+#header-image {background-image:url(http://blog.lars-francke.de/wp-content/themes/zenlite/images/banner.jpg);}#header h1,#header h1 a {color:#606060;}
+</style>
+
+
+<link rel="pingback" href="http://blog.lars-francke.de/xmlrpc.php" />
+
+	<link rel='archives' title='August 2010' href='http://blog.lars-francke.de/2010/08/' />
+	<link rel='archives' title='July 2010' href='http://blog.lars-francke.de/2010/07/' />
+
+<title>Processing OpenStreetMap data with Hive : new Put(&quot;lars&quot;.toBytes(&quot;UTF-8&quot;))</title>
+
+<link rel="alternate" type="application/rss+xml" title="new Put(&quot;lars&quot;.toBytes(&quot;UTF-8&quot;)) &raquo; Feed" href="http://blog.lars-francke.de/feed/" />
+<link rel="alternate" type="application/rss+xml" title="new Put(&quot;lars&quot;.toBytes(&quot;UTF-8&quot;)) &raquo; Comments Feed" href="http://blog.lars-francke.de/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="new Put(&quot;lars&quot;.toBytes(&quot;UTF-8&quot;)) &raquo; Processing OpenStreetMap data with Hive Comments Feed" href="http://blog.lars-francke.de/2010/07/22/processing-openstreetmap-data-with-hive/feed/" />
+<script type='text/javascript' src='http://api.flattr.com/js/0.6/load.js?mode=auto&#038;ver=3.0.3'></script>
+<script type='text/javascript' src='http://blog.lars-francke.de/wp-includes/js/comment-reply.js?ver=20090102'></script>
+<script type='text/javascript' src='http://blog.lars-francke.de/wp-includes/js/jquery/jquery.js?ver=1.4.2'></script>
+<script type='text/javascript' src='http://blog.lars-francke.de/wp-content/plugins/google-analyticator/external-tracking.min.js?ver=6.1.1'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://blog.lars-francke.de/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://blog.lars-francke.de/wp-includes/wlwmanifest.xml" /> 
+<link rel='index' title='new Put(&quot;lars&quot;.toBytes(&quot;UTF-8&quot;))' href='http://blog.lars-francke.de/' />
+<link rel='start' title='Processing OpenStreetMap data with Hive' href='http://blog.lars-francke.de/2010/07/22/processing-openstreetmap-data-with-hive/' />
+<link rel='next' title='Performance testing HBase using YCSB' href='http://blog.lars-francke.de/2010/08/16/performance-testing-hbase-using-ycsb/' />
+<link rel='canonical' href='http://blog.lars-francke.de/2010/07/22/processing-openstreetmap-data-with-hive/' />
+<link rel='shortlink' href='http://blog.lars-francke.de/?p=7' />
+<style type="text/css">
+body { background-color: #fff; }
+</style>
+<!-- Google Analytics Tracking by Google Analyticator 6.1.1: http://ronaldheft.com/code/analyticator/ -->
+<script type="text/javascript">
+	var analyticsFileTypes = [''];
+	var analyticsEventTracking = 'enabled';
+</script>
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-364495-5']);
+	_gaq.push(['_trackPageview']);
+
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
+</script>
+</head>
+
+<body id="top" class="single single-post postid-7">
+
+<div id="wrapper">
+
+<ul class="jumplinks">
+<li><a href="#content">Jump to Main Content</a></li>
+<li><a href="#footer">Jump to Footer</a></li>
+</ul>
+
+<div id="header">
+<h1><a href="http://blog.lars-francke.de" title="new Put(&quot;lars&quot;.toBytes(&quot;UTF-8&quot;))">new Put(&quot;lars&quot;.toBytes(&quot;UTF-8&quot;))</a>
+<small>some crap about the future</small></h1>
+</div>
+
+<div id="header-image"></div>
+
+
+<div class="sidebar">
+
+
+<ul>
+	<li><a href="http://blog.lars-francke.de">Home</a></li>
+	<li class="page_item page-item-2"><a href="http://blog.lars-francke.de/about/" title="About">About</a></li>
+<li class="page_item page-item-46"><a href="http://blog.lars-francke.de/impressum/" title="Impressum">Impressum</a></li>
+</ul>
+
+</div>
+
+
+<div id="content">
+
+
+<div class="post-7 post type-post hentry category-uncategorized tag-cloudera tag-hadoop tag-hive tag-openstreetmap"id="post-7">
+
+<h2 class="post-title">Processing OpenStreetMap data with Hive</h2>
+
+<ul class="meta">
+<li>July 22, 2010 17:00</li>
+<li></li>
+</ul>
+
+<div class="postcontent">
+<p><em>Update: I have updated the post with information about the Sqoop problem with reserved keywords. See below or </em><a href="https://issues.cloudera.org/browse/SQOOP-37"><em>this issue</em></a><em>.<br />
+Update 2: The problem with Hue seems to be <a href="https://issues.cloudera.org/browse/HUE-54">HUE-54</a>. Hue just doesn&#8217;t seem to handle anything beyond ASCII at the moment (Python and UTF-8 always were a frickle beast)<br />
+Update 3: Last problem solved. Direct import with PostgreSQL seems to be working. See <a href="https://issues.cloudera.org/browse/SQOOP-38">SQOOP-38</a> and below.<br />
+Update 4: There&#8217;s yet another problem with the direct import option for PostgreSQL. Don&#8217;t use it for any tables that contain boolean columns: </em><em><a href="https://issues.cloudera.org/browse/SQOOP-43">SQOOP-43</a></em></p>
+<p>As you might or might not know (depending on how you found your way to this blog post) I&#8217;m a heavy user of OpenStreetMap (OSM) and I try to promote it whenever I can. I run the smallish website <a title="OSMdoc" href="http://osmdoc.com">OSMdoc</a> which analyzes a bit of the OSM data. As I also work with the HStack (<a title="Hadoop" href="https://hadoop.apache.org/">Hadoop</a>, <a title="HBase" href="http://hbase.apache.org/">HBase</a>, etc.) I always wanted to combine those two. So this article shows how to install Hadoop and <a title="Hive" href="https://hadoop.apache.org/hive/">Hive</a> on a fresh installation of <a title="Ubuntu" href="http://www.ubuntu.com/">Ubuntu 10.4</a> and load OSM data into it to run queries against it.</p>
+<p>I am using <a href="http://www.cloudera.com/">Cloudera&#8217;s</a> <a href="http://www.cloudera.com/hadoop/">CDH3</a> (version Beta 2) distribution for this. I could have also used their pre-built <a href="http://www.cloudera.com/developers/downloads/">Virtual Machine</a> but I wanted to learn more and install everything myself. If you follow this post you should hopefully end up with a working way to use Hive and OSM yourself. While the way I use may not be perfect it is one that doesn&#8217;t require us to write any code for now.</p>
+<p>Here is the outline of what I&#8217;m doing:</p>
+<ul>
+<li>Starting with a fresh updated installation of Ubuntu 10.4 in a virtual machine (I&#8217;m using <a href="http://www.virtualbox.org/">Virtualbox</a>)</li>
+<li>Install <a href="http://www.postgresql.org/">PostgreSQL</a> and <a href="http://wiki.openstreetmap.org/wiki/Osmosis">Osmosis</a></li>
+<li>Import OSM data into PostgreSQL</li>
+<li>Install Hadoop, <a href="http://archive.cloudera.com/cdh/3/hue/manual.html">Hue</a>, <a href="http://archive.cloudera.com/cdh/3/sqoop/SqoopUserGuide.html">Sqoop</a> and Hive</li>
+<li>Load data from PostgreSQL to Hive using Sqoop</li>
+<li>Run Hive queries</li>
+</ul>
+<h2>Install and set up PostgreSQL</h2>
+<p>We&#8217;ll need PostgreSQL to store the OSM data as is usual in the OSM world. Later on we&#8217;ll also use it to host the metastore for Hive.</p>
+<p>This one is easy thanks to the package system of Ubuntu:</p>
+<pre class="brush:shell">sudo apt-get -y install postgresql
+sudo -u postgres createuser -S -D -R -P osm
+sudo -u postgres createdb -O osm osm
+sudo sed -i "/^# \"local\"/i\local all all md5" /etc/postgresql/8.4/main/pg_hba.conf
+sudo service postgresql-8.4 restart</pre>
+<p>This install PostgreSQL 8.4, creates a <code>osm</code> user which owns a database called <code>osm</code> and allows access for this user from the local machine with the password. Chose any password, just remember it.</p>
+<h2>Install Osmosis</h2>
+<p>For those who don&#8217;t know: Osmosis is the tool of choice for any tasks related to OSM data. It is used by almost everyone to keep databases updated and for various other tasks. It also runs on the OSM servers to provide diff files for OSM data. We use it here to import OSM data in a simple database schema.</p>
+<p>Again this is relatively easy. Unfortunately there is no .deb package to install for Osmosis (yet) so we&#8217;ve got to do it manually. The first step is to install Java. It is recommended to use the Sun version of Java for Hadoop but as of Ubuntu 10.04 <a href="http://openjdk.java.net/">OpenJDK</a> is the default. We&#8217;ve got to add another repository so we can install the Sun version first. If that is not possible for you or you want to use OpenJDK it should still work but there were some bugs in there that made the Hadoop/HBase guys recommend the Sun JDK.</p>
+<p>As we&#8217;ll need Osmosis only occasionally or for a one-off job I won&#8217;t bother setting it up and installing it in the system directories. You&#8217;ll also have to get some OSM data. For testing I just use a small extract <a title="Geofabrik download server" href="http://download.geofabrik.de/osm/">provided</a> by the <a title="You need OSM services ask these guys" href="http://www.geofabrik.de/">Geofabrik</a> but you might want to parse the whole planet or other extracts.</p>
+<pre class="brush:shell">sudo add-apt-repository "deb http://archive.canonical.com/ lucid partner"
+sudo apt-get update
+sudo apt-get -y install sun-java6-jdk
+cd ~
+wget http://dev.openstreetmap.org/~bretth/osmosis-build/osmosis-bin-latest.tgz
+tar xvfz osmosis-bin-latest.tgz
+psql -U osm -f osmosis-0.35.1/script/contrib/apidb_0.6.sql -d osm
+osmosis-0.35.1/bin/osmosis --read-xml file="&lt;OSM XML file here&gt;" --write-apidb host="localhost" database="osm" user="osm" password="&lt;your password&gt;"</pre>
+<p>Depending on which OSM data set you chose to import this can take a while. But the beautiful thing is that we can continue with installing Hadoop while this import is running. So open a new terminal and continue, Osmosis will eventually finish.</p>
+<h2>Installing Hadoop, Hue, Hive and Sqoop</h2>
+<p>Thanks to Cloudera this is pretty straightforward:</p>
+<pre class="brush:shell"># Add Cloudera repositories
+sudo sh -c 'echo "deb http://archive.cloudera.com/debian `lsb_release -c -s`-cdh3 contrib" &gt; /etc/apt/sources.list.d/cloudera.list'
+sudo sh -c 'echo "deb-src http://archive.cloudera.com/debian `lsb_release -c -s`-cdh3 contrib" &gt;&gt; /etc/apt/sources.list.d/cloudera.list'
+wget -q -O - http://archive.cloudera.com/debian/archive.key | sudo apt-key add -
+sudo apt-get update
+sudo apt-get -y install hadoop
+
+# Install Hue
+sudo apt-get -y install hadoop-0.20-conf-pseudo-hue
+
+# Install Sqoop
+sudo apt-get -y install sqoop
+
+# Install Hive
+sudo apt-get -y install hadoop-hive
+sudo -u postgres createuser -S -D -R -P hive
+sudo -u postgres createdb -O hive hive</pre>
+<p>After this is finished all those tools should be installed and PostgreSQL is prepared for Hive. What is left to do is to set up Hive and Hue to use PostgreSQL instead of SQLlite/Derby so they can share the metastore.</p>
+<p>You need to edit the file <code><a href="http://wiki.apache.org/hadoop/Hive/AdminManual/MetastoreAdmin#Local_Metastore">/etc/hive/conf/hive-site.xml</a></code> and in particular the following properties:</p>
+<ul>
+<li><code>javax.jdo.option.ConnectionURL</code>: In our current setup this would be <code>jdbc:postgresql://localhost/osm</code></li>
+<li><code>javax.jdo.option.ConnectionUserName</code>: <code>hive</code></li>
+<li><code>javax.jdo.option.ConnectionPassword</code>: The password you chose earlier for the database user</li>
+<li><code>javax.jdo.option.ConnectionDriverName</code>: <code>org.postgresql.Driver</code></li>
+</ul>
+<p>Additionally you need to set the property <code>hive_conf_dir</code> in the file <code><a href="http://archive.cloudera.com/cdh/3/hue/manual.html#_beeswax_the_hive_ui">/etc/hue/hue-beeswax.ini</a></code> to <code>/etc/hive/conf</code>.</p>
+<p>If you followed my post so far <em>and</em> used the password <code>hive</code> for the PostgreSQL user you can just run the following commands:</p>
+<pre class="brush:as3">wget http://gist.github.com/raw/485836/512357fef1be0ac9cf8596770939355fc61a4d1c/hive-site.xml
+sudo mv hive-site.xml /etc/hive/conf
+sudo chown root:root /etc/hive/conf/hive-site.xml
+wget http://gist.github.com/raw/485836/e32b00bc69744509123ef584be226328c37ccf77/hue-beeswax.ini
+sudo mv hue-beeswax.ini /etc/hue</pre>
+<p>Now you need to <a title="PostgreSQL JDBC site" href="http://jdbc.postgresql.org/download/postgresql-8.4-701.jdbc4.jar">download</a> the current JDBC driver for PostgreSQL. At the time of this writing this is version <a title="PostgreSQL JDBC Driver 8.4-701 download" href="http://jdbc.postgresql.org/download/postgresql-8.4-701.jdbc4.jar">8.4-701</a>:</p>
+<pre class="brush:shell">wget http://jdbc.postgresql.org/download/postgresql-8.4-701.jdbc4.jar
+sudo mv postgresql-8.4-701.jdbc4.jar /usr/lib/hadoop-0.20/lib/
+sudo chown -R hadoop:hadoop /usr/lib/hadoop-0.20/lib/postgresql-8.4-701.jdbc4.jar</pre>
+<p>Now all that is left is to start Hadoop and Hue. Please note that the startup takes a while (at least for me and I&#8217;m not sure if that is correct):</p>
+<pre class="brush:shell">for x in /etc/init.d/hadoop-0.20-*; do sudo $x start; done
+sudo /etc/init.d/hue start</pre>
+<p>After this you should have three web interfaces:</p>
+<ul>
+<li><a href="http://localhost:50030">http://localhost:50030</a> &#8211; MapReduce</li>
+<li><a href="http://localhost:50070">http://localhost:50070</a> &#8211; HDFS</li>
+<li><a href="http://localhost:8088">http://localhost:8088</a> &#8211; Hue</li>
+</ul>
+<p>Take the time to look at all those sites and make sure that everything seems fine. Also browse through HDFS using Hue and see if Beeswax and Hive work by clicking on the <em>Tables</em> button; there should be no tables for now.</p>
+<h2>Importing the OSM data from PostgreSQL to HDFS</h2>
+<p>We&#8217;re almost done. All that&#8217;s left to do is to get the data from PostgreSQL to HDFS and into Hive. That&#8217;s what Sqoop is for and here is how to run it:</p>
+<pre class="brush:shell">sqoop import --connect "jdbc:postgresql://localhost/osm" --username osm --password &lt;your password&gt; --table node_tags --hive-import</pre>
+<p>An alternative to this command is the so called <em>direct</em> mode which does not use JDBC to connect to PostgreSQL but uses the <em>psql</em> tool to issue <a href="http://www.postgresql.org/docs/8.4/interactive/sql-copy.html">COPY</a> commands which provides a speed boost to the export. There is currently a bug in Sqoop (see below) so the command to start Sqoop is a little bit different to circumvent this:</p>
+<pre class="brush:shell">sqoop import --direct --connect "jdbc:postgresql://localhost:5432/osm" --username osm --password &lt;your password&gt; --table node_tags --hive-import</pre>
+<p><strong>Note: </strong>Do not forget the port number in the JDBC URL!</p>
+<p>The options should be pretty straight forward and easy to understand. But there&#8217;s a caveat. Or two, or three. I&#8217;ll update this post if anything changes with these points:</p>
+<ul>
+<li>The import of the nodes, ways, relations, etc. tables doesn&#8217;t work with this option as Sqoop seems to have a bug (at least I think Sqoop can do something about it) with reserved words in Hive. timestamp is one such word and it is unfortunately the name of a column in all those tables. So the above command would fail with an error if you used the nodes table instead. I&#8217;ll update this post when I had time to investigate this further. <strong>Update</strong><strong>:</strong> I&#8217;ve opened a <a href="https://issues.cloudera.org/browse/SQOOP-37">ticket</a> for the problem and attached a patch. Reserved words like <em>timestamp</em> can be escaped by backticks: <code>`timestamp`</code>. So for now you&#8217;ll have to create the table manually. See the <a href="http://wiki.apache.org/hadoop/Hive/GettingStarted">Getting Started</a> guide and the <a href="http://wiki.apache.org/hadoop/Hive/LanguageManual/DDL">Data Definition Language</a> for details.</li>
+<li>Sqoop tells me that I should use the &#8211;direct option for better performance but I only got error messages. I&#8217;ll investigate this further. The above method may be slower but it works for now. <strong>Update:</strong> Found the problem and reported it to <a href="https://issues.cloudera.org/browse/SQOOP-38">SQOOP-38</a>. I&#8217;ve updated the text above with a way to use the direct import</li>
+<li>Unfortunately Hue does seem to have problems with non ASCII data somewhere. This means that Beeswax doesn&#8217;t work for us at the moment as we got  almost every character from the known Unicode set in the database somewhere. The command line however works and I&#8217;ll show a quick example. <strong>Update:</strong> This seems to be <a href="https://issues.cloudera.org/browse/HUE-54">HUE-54</a></li>
+</ul>
+<p>Now to actually query your data &#8211; and I&#8217;ll use the <code>node_tags</code> table as an example here &#8211; you just have to start Hive with the <code>hive</code> command and enter your query:</p>
+<pre class="brush:sql">SELECT * FROM node_tags;
+SELECT k, COUNT(k) AS count FROM node_tags GROUP BY k ORDER BY count DESC;
+SELECT k, count FROM (SELECT k, COUNT(k) AS count FROM node_tags GROUP BY k) sub WHERE sub.count &gt; 100 ORDER BY count DESC;</pre>
+<p>Those are pretty basic but they are the basis for the OSMdoc data so it&#8217;s what I wanted in the first place. The last query looks a bit complicated but Hive doesn&#8217;t have the HAVING clause yet so this is a workaround. It might not be very fast on small data sets but at least it is predictable. On PostgreSQL similar queries on a whole planet would take hours or days. And this is scalable.</p>
+<h2>Conclusion</h2>
+<p>I was happy to find that the whole setup was pretty easy. I first did this over a year ago and  it was much more involved then. It&#8217;s great seeing the Hadoop community still going strong. As I&#8217;ve mentioned there are a few drawbacks and a few problems left but for <em>my</em> use case this is enough for now to provide a much needed refresh of the OSMdoc data. The last update was about a year ago.</p>
+<p>My method has room for improvement &#8211; I for one don&#8217;t really need the PostgreSQL database and would love to store all the data in HBase but I&#8217;m lacking the resources. So for now PostgreSQL is an intermediate step. I&#8217;ve also not yet evaluated the performance but to compare PostgreSQL and Hive would be unfair at best. And the last thing I&#8217;ll need to do is to keep the data in HDFS updated and synchronized with the latest OSM updates.</p>
+<p>Let me know if there are any questions or problems and I&#8217;d be glad to help either in the OpenStreetMap or the Hadoop world.</p>
+<p>I&#8217;d like to end this post with a call for sponsors: OSMdoc in particular and the OpenStreetMap community in general could benefit greatly from a few more resources for our toy projects. I&#8217;d love to host a HBase version of OSM somewhere to allow for queries against it and to allow for much improved analysis in OSMdoc. <a href="http://www.strato.de/">Strato</a> has kindly <a href="http://wiki.openstreetmap.org/wiki/FOSSGIS/Server">donated</a> three of their largest servers to <a href="http://www.fossgis.de/">FOSSGIS</a> for use in the OSM community but they are overloaded and there&#8217;s already a huge <a href="http://wiki.openstreetmap.org/wiki/FOSSGIS/Server/Projects#Vorgeschlagene_Projekte.2FProposed_Projects">waiting list</a> for new projects. So if you or your company has anything to spare please <a href="mailto:lars.francke@gmail.com">contact</a> me.</p>
+<h2>Reference</h2>
+<p>You&#8217;ll find all the necessary commands in the following files:<br />
+<script src="http://gist.github.com/485301.js"> </script></p>
+<p><script src="http://gist.github.com/485422.js"> </script></p>
+<p><script src="http://gist.github.com/485836.js"> </script></p>
+<p class="wp-flattr-button"><a class="FlattrButton" style="display:none;" href="http://blog.lars-francke.de/2010/07/22/processing-openstreetmap-data-with-hive/" title="Processing OpenStreetMap data with Hive" rev="flattr;uid:29341;language:en_GB;category:text;tags:cloudera,hadoop,hive,openstreetmap;">Update: I have updated the post with information about the Sqoop problem with reserved keywords. See below or this issue.
+Update 2: The problem with Hue seems to be HUE-54. Hue just doesn't seem to handle anything beyond ASCII at the moment (Python and UTF-8 always were a frickle beast)
+Update 3: Last problem solved. Direct import with PostgreSQL seems to be working. See SQOOP-38 and below.
+Update 4: There's yet another problem with the direct import option for PostgreSQL. Don't use it for any tables that contain boolean columns: SQOOP-43
+
+As you might or might not know (depending on how you found your way to this blog post) I'm a heavy user of OpenStreetMap (OSM) and I try to promote it whenever I can. I run the smallish website OSMdoc which analyzes a bit of the OSM data. As I also work with the HStack (Hadoop, HBase, etc.) I always wanted to combine those two. So this article shows how to install Hadoop and Hive on a fresh installation of Ubuntu 10.4 and load OSM data into it to run queries against it</a></p></div>
+
+
+<ul class="meta postfoot">
+<li>Author: <a href="http://blog.lars-francke.de/author/admin/" title="Posts by Lars Francke">Lars Francke</a></li><li>Filed under: <ul><li><a href="http://blog.lars-francke.de/category/uncategorized/" title="View all posts in Uncategorized" rel="category tag">Uncategorized</a></li></ul></li>
+<li>Tags: <ul><li><a href="http://blog.lars-francke.de/tag/cloudera/" rel="tag">cloudera</a>,</li> <li><a href="http://blog.lars-francke.de/tag/hadoop/" rel="tag">hadoop</a>,</li> <li><a href="http://blog.lars-francke.de/tag/hive/" rel="tag">hive</a>,</li> <li><a href="http://blog.lars-francke.de/tag/openstreetmap/" rel="tag">openstreetmap</a></li></ul></li>
+</ul>
+
+</div>
+
+<h2 id="comments" class="total-comments">2 Comments on Processing OpenStreetMap data with Hive</h2>
+
+<ul class="comment-links">
+
+<li><a href="#respond">Add your comment</a></li>
+<li><a href="http://blog.lars-francke.de/2010/07/22/processing-openstreetmap-data-with-hive/feed/">Comments feed for this post</a></li>
+<li><a href="http://blog.lars-francke.de/2010/07/22/processing-openstreetmap-data-with-hive/trackback/" rel="trackback">TrackBack <abbr title="Uniform Resource Identifier">URI</abbr></a></li>
+</ul>
+
+
+<ol id="commentlist">
+		<li class="comment even thread-even depth-1 parent" id="comment-2">
+				<div id="div-comment-2" class="comment-body">
+				<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/86b3a02b61afb12a905f7832eed46281?s=32&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D32&amp;r=G' class='avatar avatar-32 photo' height='32' width='32' />		<cite class="fn"><a href='http://cloudera.com' rel='external nofollow' class='url'>Aaron Newton</a></cite> <span class="says">says:</span>		</div>
+
+		<div class="comment-meta commentmetadata"><a href="http://blog.lars-francke.de/2010/07/22/processing-openstreetmap-data-with-hive/#comment-2">
+			July 22, 2010 at 18:13</a>		</div>
+
+		<p>Nice Post!</p>
+<p>Your comment about the problems with Unicode and Beeswax caught my eye. Can you elaborate? Maybe send us something we can use as a test? If you don&#8217;t want to converse here, post to the HUE user group:</p>
+<p><a href="https://groups.google.com/a/cloudera.org/group/hue-user" rel="nofollow">https://groups.google.com/a/cloudera.org/group/hue-user</a></p>
+
+		<div class="reply">
+		<a rel='nofollow' class='comment-reply-link' href='/2010/07/22/processing-openstreetmap-data-with-hive/?replytocom=2#respond' onclick='return addComment.moveForm("div-comment-2", "2", "respond", "7")'>Reply</a>		</div>
+				</div>
+		<ul class='children'>
+		<li class="comment byuser comment-author-admin bypostauthor odd alt depth-2" id="comment-3">
+				<div id="div-comment-3" class="comment-body">
+				<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/69124393772349d32fb9fe975545757d?s=32&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D32&amp;r=G' class='avatar avatar-32 photo' height='32' width='32' />		<cite class="fn">Lars Francke</cite> <span class="says">says:</span>		</div>
+
+		<div class="comment-meta commentmetadata"><a href="http://blog.lars-francke.de/2010/07/22/processing-openstreetmap-data-with-hive/#comment-3">
+			July 23, 2010 at 00:03</a>		</div>
+
+		<p>Hello Aaron!<br />
+Thank you for your comment.<br />
+I&#8217;ll try to prepare a minimal example and see what&#8217;s going on. Might be the same as HUE-54? We&#8217;ll see.</p>
+<p>I&#8217;ve joined the group. Thanks for the link.</p>
+
+		<div class="reply">
+		<a rel='nofollow' class='comment-reply-link' href='/2010/07/22/processing-openstreetmap-data-with-hive/?replytocom=3#respond' onclick='return addComment.moveForm("div-comment-3", "3", "respond", "7")'>Reply</a>		</div>
+				</div>
+		</li>
+</ul>
+</li>
+</ol>
+
+
+								<div id="respond">
+				<h3 id="reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/2010/07/22/processing-openstreetmap-data-with-hive/#respond" style="display:none;">Cancel reply</a></small></h3>
+									<form action="http://blog.lars-francke.de/wp-comments-post.php" method="post" id="commentform">
+																			<p class="comment-notes"><label for="author">Your email address will <em>never</em> be published or shared.</label></p>							<p class="comment-form-author"><label class="text" for="author">Name</label><input id="author" name="author" type="text" value="" size="30" /></p>
+<p class="comment-form-email"><label class="text" for="email">Email</label><input id="email" name="email" type="text" value="" size="30" /></p>
+<p class="comment-form-url"><label class="text" for="url">Website</label><input id="url" name="url" type="text" value="" size="30" /></p>
+												<p class="comment-form-comment"><label for="comment">Comment</label><textarea id="comment" name="comment" cols="45" rows="8"></textarea></p>						<p class="form-allowed-tags"><label for="comment">You may use these <abbr title="eXtensible HyperText Markup Language">XHTML</abbr> tags and attributes: <code>&lt;a href=&quot;&quot; title=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;acronym title=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote cite=&quot;&quot;&gt; &lt;cite&gt; &lt;code&gt; &lt;del datetime=&quot;&quot;&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=&quot;&quot;&gt; &lt;strike&gt; &lt;strong&gt; </code></label></p>						<p class="form-submit">
+							<input name="submit" type="submit" id="submit" value="Submit Reply" />
+							<input type='hidden' name='comment_post_ID' value='7' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+						</p>
+						<input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="c8f815ad99" />					</form>
+							</div><!-- #respond -->
+						
+
+
+<div class="clear"></div>
+<!-- end content -->
+</div>
+
+<div id="footer">
+
+<ul>
+<li class="top"><a href="#top" title="Jump to the top of this page">Top</a></li>
+<li class="loginout"><a href="http://blog.lars-francke.de/wp-login.php">Log in</a></li>
+<li class="rss"><a href="http://blog.lars-francke.de/feed/" title="RSS Feed"><img src="http://blog.lars-francke.de/wp-content/themes/zenlite/images/rss.png" width="14" height="14" alt="RSS" /></a></li>
+</ul>
+
+<p>Powered by the <a href="http://quirm.net/zenlite/">ZenLite Theme </a></p>
+</div>
+
+<!-- end wrapper -->
+</div>
+
+
+<script type="text/javascript">tb_pathToImage = "http://blog.lars-francke.de/wp-includes/js/thickbox/loadingAnimation.gif";tb_closeImage = "http://blog.lars-francke.de/wp-includes/js/thickbox/tb-close.png";</script>
+<!-- Auto SyntaxHighlighter -->
+<script type='text/javascript' src='http://blog.lars-francke.de/wp-content/plugins/auto-syntaxhighlighter/scripts/shCore.js?ver=3.0.83'></script>
+<script type='text/javascript' src='http://blog.lars-francke.de/wp-content/plugins/auto-syntaxhighlighter/scripts/shBrushBash.js?ver=3.0.83'></script>
+<script type='text/javascript' src='http://blog.lars-francke.de/wp-content/plugins/auto-syntaxhighlighter/scripts/shBrushAS3.js?ver=3.0.83'></script>
+<script type='text/javascript' src='http://blog.lars-francke.de/wp-content/plugins/auto-syntaxhighlighter/scripts/shBrushSql.js?ver=3.0.83'></script>
+<script type='text/javascript'>
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var corecssurl = "http://blog.lars-francke.de/wp-content/plugins/auto-syntaxhighlighter/styles/shCore.css?ver=3.0.83";
+		if ( corecss.setAttribute ) {
+				corecss.setAttribute( "rel", "stylesheet" );
+				corecss.setAttribute( "type", "text/css" );
+				corecss.setAttribute( "href", corecssurl );
+		} else {
+				corecss.rel = "stylesheet";
+				corecss.href = corecssurl;
+		}
+		document.getElementsByTagName("head")[0].appendChild(corecss);
+		
+		var themecssurl = "http://blog.lars-francke.de/wp-content/plugins/auto-syntaxhighlighter/styles/shThemeDefault.css?ver=3.0.83";
+		if ( themecss.setAttribute ) {
+				themecss.setAttribute( "rel", "stylesheet" );
+				themecss.setAttribute( "type", "text/css" );
+				themecss.setAttribute( "href", themecssurl );
+		} else {
+				themecss.rel = "stylesheet";
+				themecss.href = themecssurl;
+		}
+		document.getElementsByTagName("head")[0].appendChild(themecss);
+		})();
+		SyntaxHighlighter.defaults['auto-links'] = false;
+		SyntaxHighlighter.defaults['toolbar'] = false;
+		SyntaxHighlighter.all();
+</script>
+<!-- /Auto SyntaxHighlighter -->
+</body>
+</html>
