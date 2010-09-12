@@ -1,0 +1,317 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+
+<head profile="http://gmpg.org/xfn/11">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>
+						  rsync and vfat | Geek at Play										</title>
+
+<link rel="stylesheet" href="http://www.kylev.com/wordpress/wp-content/themes/defusion/style.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="http://www.kylev.com/wordpress/wp-content/themes/defusion/nav.css" type="text/css" media="screen" />
+<script type="text/javascript" src="http://www.kylev.com/wordpress/wp-content/themes/defusion/js/dropdowns.js"></script>
+<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="http://www.kylev.com/feed/" />
+<link rel="pingback" href="http://www.kylev.com/wordpress/xmlrpc.php" />
+
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.kylev.com/wordpress/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.kylev.com/wordpress/wp-includes/wlwmanifest.xml" /> 
+<link rel='index' title='Geek at Play' href='http://www.kylev.com' />
+<link rel='start' title='Big Fat Load' href='http://www.kylev.com/2000/08/18/big-fat-load/' />
+<link rel='prev' title='SBC sucks' href='http://www.kylev.com/2005/03/27/sbc-sucks/' />
+<link rel='next' title='RIP Mitch Hedberg' href='http://www.kylev.com/2005/03/31/rip-mitch-hedberg/' />
+<meta name="generator" content="WordPress 2.9.2" />
+<link rel='canonical' href='http://www.kylev.com/2005/03/29/rsync-and-vfat/' />
+	<link type="text/css" rel="stylesheet" href="http://www.kylev.com/wordpress/wp-content/plugins/syntax-highlighter-and-code-prettifier/styles/shCore.css" />
+	<link type="text/css" rel="stylesheet" href="http://www.kylev.com/wordpress/wp-content/plugins/syntax-highlighter-and-code-prettifier/styles/shThemeDefault.css" />
+	<script type="text/javascript" src="http://www.kylev.com/wordpress/wp-content/plugins/syntax-highlighter-and-code-prettifier/scripts/shCore.js"></script>
+	<script type="text/javascript" src="http://www.kylev.com/wordpress/wp-content/plugins/syntax-highlighter-and-code-prettifier/scripts/shBrushBash.js"></script>
+	<script type="text/javascript" src="http://www.kylev.com/wordpress/wp-content/plugins/syntax-highlighter-and-code-prettifier/scripts/shBrushCpp.js"></script>
+	<script type="text/javascript" src="http://www.kylev.com/wordpress/wp-content/plugins/syntax-highlighter-and-code-prettifier/scripts/shBrushCSharp.js"></script>
+	<script type="text/javascript" src="http://www.kylev.com/wordpress/wp-content/plugins/syntax-highlighter-and-code-prettifier/scripts/shBrushCss.js"></script>
+	<script type="text/javascript" src="http://www.kylev.com/wordpress/wp-content/plugins/syntax-highlighter-and-code-prettifier/scripts/shBrushDelphi.js"></script>
+	<script type="text/javascript" src="http://www.kylev.com/wordpress/wp-content/plugins/syntax-highlighter-and-code-prettifier/scripts/shBrushDiff.js"></script>
+	<script type="text/javascript" src="http://www.kylev.com/wordpress/wp-content/plugins/syntax-highlighter-and-code-prettifier/scripts/shBrushGroovy.js"></script>
+	<script type="text/javascript" src="http://www.kylev.com/wordpress/wp-content/plugins/syntax-highlighter-and-code-prettifier/scripts/shBrushJava.js"></script>
+	<script type="text/javascript" src="http://www.kylev.com/wordpress/wp-content/plugins/syntax-highlighter-and-code-prettifier/scripts/shBrushJScript.js"></script>
+	<script type="text/javascript" src="http://www.kylev.com/wordpress/wp-content/plugins/syntax-highlighter-and-code-prettifier/scripts/shBrushPerl.js"></script>
+	<script type="text/javascript" src="http://www.kylev.com/wordpress/wp-content/plugins/syntax-highlighter-and-code-prettifier/scripts/shBrushPhp.js"></script>
+	<script type="text/javascript" src="http://www.kylev.com/wordpress/wp-content/plugins/syntax-highlighter-and-code-prettifier/scripts/shBrushPlain.js"></script>
+	<script type="text/javascript" src="http://www.kylev.com/wordpress/wp-content/plugins/syntax-highlighter-and-code-prettifier/scripts/shBrushPython.js"></script>
+	<script type="text/javascript" src="http://www.kylev.com/wordpress/wp-content/plugins/syntax-highlighter-and-code-prettifier/scripts/shBrushRuby.js"></script>
+	<script type="text/javascript" src="http://www.kylev.com/wordpress/wp-content/plugins/syntax-highlighter-and-code-prettifier/scripts/shBrushScala.js"></script>
+	<script type="text/javascript" src="http://www.kylev.com/wordpress/wp-content/plugins/syntax-highlighter-and-code-prettifier/scripts/shBrushSql.js"></script>
+	<script type="text/javascript" src="http://www.kylev.com/wordpress/wp-content/plugins/syntax-highlighter-and-code-prettifier/scripts/shBrushVb.js"></script>
+	<script type="text/javascript" src="http://www.kylev.com/wordpress/wp-content/plugins/syntax-highlighter-and-code-prettifier/scripts/shBrushXml.js"></script>
+	<script type="text/javascript">		
+		SyntaxHighlighter.config.clipboardSwf = 'http://www.kylev.com/wordpress/wp-content/plugins/syntax-highlighter-and-code-prettifier/scripts/clipboard.swf';
+		SyntaxHighlighter.all();
+	</script>
+	
+<meta name="author" content="Kyle VanderBeek" />
+
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+
+	<h1><a href="http://www.kylev.com">Geek at Play</a></h1>
+	<h2 id="blog-description">kylev in text form</h2>
+
+	<ul id="nav">
+		<li class="page_item current_page_item" id="first"><a href="http://www.kylev.com">Home</a></li>
+		<li class="page_item page-item-239"><a href="http://www.kylev.com/code/" title="Code and Geekery">Code and Geekery</a>
+<ul>
+	<li class="page_item page-item-241"><a href="http://www.kylev.com/code/kipcalc/" title="KIPCalc">KIPCalc</a></li>
+	<li class="page_item page-item-242"><a href="http://www.kylev.com/code/resumes/" title="Resumes">Resumes</a></li>
+	<li class="page_item page-item-244"><a href="http://www.kylev.com/code/bigsets/" title="Big Sets for Python">Big Sets for Python</a></li>
+	<li class="page_item page-item-246"><a href="http://www.kylev.com/code/wp-asin-link/" title="WP ASIN Link Plugin">WP ASIN Link Plugin</a></li>
+	<li class="page_item page-item-253"><a href="http://www.kylev.com/code/jboss-mysql-and-cmp/" title="JBoss, MySQL, and CMP">JBoss, MySQL, and CMP</a></li>
+	<li class="page_item page-item-258"><a href="http://www.kylev.com/code/engineering-essentials/" title="Engineering Essentials">Engineering Essentials</a></li>
+	<li class="page_item page-item-293"><a href="http://www.kylev.com/code/cricket-mysql-status-collector/" title="Cricket mysql-status Collector">Cricket mysql-status Collector</a></li>
+</ul>
+</li>
+<li class="page_item page-item-249"><a href="http://www.kylev.com/essays/" title="Essays">Essays</a>
+<ul>
+	<li class="page_item page-item-248"><a href="http://www.kylev.com/essays/mind-fuck/" title="Mind Fuck">Mind Fuck</a></li>
+	<li class="page_item page-item-250"><a href="http://www.kylev.com/essays/microsoft-doing-everything-but/" title="Microsoft: Doing Everything But">Microsoft: Doing Everything But</a></li>
+</ul>
+</li>
+<li class="page_item page-item-251"><a href="http://www.kylev.com/gallery/" title="Gallery">Gallery</a></li>
+<li class="page_item page-item-299"><a href="http://www.kylev.com/about/" title="About kylev.com">About kylev.com</a></li>
+	</ul>
+
+	<ul id="top-nav">
+				<li><a href="http://www.kylev.com/wordpress/wp-login.php">Log in</a></li>
+				<li id="rss"><a href="http://www.kylev.com/feed/">Subscribe RSS Feed</a></li>
+	</ul>
+
+	<div class="clear"></div>
+
+</div><!-- end header -->
+
+	<div id="content">
+
+		<div id="content-left">
+
+
+		
+			<div class="box-left" id="post-256">
+
+				<h3><a href="http://www.kylev.com/2005/03/29/rsync-and-vfat/" rel="bookmark" title="rsync and vfat">rsync and vfat</a></h3>
+				<p>It took several tries, and a lot of poking around, but I finally have my music collection mirrored to a disk I can take around (most notably to work).  The hard part was getting <code>rsync</code> to work right.  Finally I got it working after <a href="http://www.osnews.com/story.php?news_id=9681&amp;page=1">finding a helpful article on the topic</a>.  To summarize (in less than 3 pages), I used to following 2 commands:</p>
+<p><code>mount -t vfat -o shortname=mixed,iocharset=utf8 /dev/sda1 /mnt<br />
+rsync --modify-window=1 -rtv --delete /data/mp3/ /mnt/mp3</code></p>
+<p>Now <em>I won&#8217;t lose them</em>, and maybe they&#8217;ll help you.  The only reason for having problems is that I was using the <code>vfat</code> filesystem under FC3 Linux (where my custom-built audio archive exists) to make a disk I could plug in to my work laptop.  Windows filesystems aren&#8217;t so great, they have problems doing mixed case and being very accurate with times.  So this makes it work!</p>
+
+				
+				
+				<p><script type="text/javascript"><!--
+google_ad_client = "pub-7315565188777264";
+google_ad_slot = "5884464481";
+google_ad_width = 468;
+google_ad_height = 60;
+//--></script>
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+</p>				<div class="meta">
+					<span class="meta-date">Tuesday, March 29th, 2005</span>
+					<span class="meta-categories"><a href="http://www.kylev.com/category/geekdom/" title="View all posts in Geekdom" rel="category tag">Geekdom</a></span>
+				</div>
+
+				<div class="clear"></div>
+
+			</div>
+
+			
+<!-- You can start editing here. -->
+
+
+	
+
+
+		
+		
+	  </div><!-- end content-left -->
+
+	  <div id="content-right">
+
+		
+<div id="search-2" class="box-right"><form method="get" action="http://www.kylev.com/">
+	<input type="text" name="s" id="search" />&nbsp;
+	<input type="submit" id="search-submit" class="button" name="submit" value="Search" />
+</form></div><div id="wp_twitter_goodies_profile_widgets" class="box-right"><h4>Twitter Feed</h4><script src="http://widgets.twimg.com/j/2/widget.js"></script><script>new TWTR.Widget({  version: 2,  type: 'profile',  rpp: 30,  interval: 5000,  width: 210,  height: 300,  theme: {    shell: {      background: '#333333',      color: '#FFFFFF'    },    tweets: {      background: '#000000',      color: '#FFFFFF',      links: '#4AED05'    }  },  features: {    scrollbar: false,    loop: true,    live: true,    hashtags: true,    timestamp: true,    avatars: false,    behavior: 'default'  }}).render().setUser('kvbeek').start();</script><div align="left">- <a href="http://crunchmeme.com/plugins/twitter-goodies/" title="Twitter Goodies - Profile Widget" target="_blank"> <font size="1">Twitter Goodies - Profile</font></a></div></div><div id="categories-244369401" class="box-right"><h4>Categories</h4>		<ul>
+	<li class="cat-item cat-item-3"><a href="http://www.kylev.com/category/day-in-the-life/" title="View all posts filed under Day in the Life">Day in the Life</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://www.kylev.com/category/geekdom/" title="View all posts filed under Geekdom">Geekdom</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://www.kylev.com/category/miscellaneous-random/" title="View all posts filed under Miscellaneous Random">Miscellaneous Random</a>
+</li>
+	<li class="cat-item cat-item-8"><a href="http://www.kylev.com/category/music-movies-and-tv/" title="View all posts filed under Music, Movies, and TV">Music, Movies, and TV</a>
+</li>
+	<li class="cat-item cat-item-1"><a href="http://www.kylev.com/category/uncategorized/" title="View all posts filed under Uncategorized">Uncategorized</a>
+</li>
+		</ul>
+</div><div id="archives-2" class="box-right"><h4>Archives</h4>		<select name="archive-dropdown" onchange='document.location.href=this.options[this.selectedIndex].value;'> <option value="">Select Month</option> 	<option value='http://www.kylev.com/2010/03/'> March 2010 </option>
+	<option value='http://www.kylev.com/2009/11/'> November 2009 </option>
+	<option value='http://www.kylev.com/2009/09/'> September 2009 </option>
+	<option value='http://www.kylev.com/2009/07/'> July 2009 </option>
+	<option value='http://www.kylev.com/2009/06/'> June 2009 </option>
+	<option value='http://www.kylev.com/2009/05/'> May 2009 </option>
+	<option value='http://www.kylev.com/2009/04/'> April 2009 </option>
+	<option value='http://www.kylev.com/2009/01/'> January 2009 </option>
+	<option value='http://www.kylev.com/2008/12/'> December 2008 </option>
+	<option value='http://www.kylev.com/2008/11/'> November 2008 </option>
+	<option value='http://www.kylev.com/2008/10/'> October 2008 </option>
+	<option value='http://www.kylev.com/2008/07/'> July 2008 </option>
+	<option value='http://www.kylev.com/2008/06/'> June 2008 </option>
+	<option value='http://www.kylev.com/2008/05/'> May 2008 </option>
+	<option value='http://www.kylev.com/2008/04/'> April 2008 </option>
+	<option value='http://www.kylev.com/2008/03/'> March 2008 </option>
+	<option value='http://www.kylev.com/2007/08/'> August 2007 </option>
+	<option value='http://www.kylev.com/2007/05/'> May 2007 </option>
+	<option value='http://www.kylev.com/2007/04/'> April 2007 </option>
+	<option value='http://www.kylev.com/2007/03/'> March 2007 </option>
+	<option value='http://www.kylev.com/2007/01/'> January 2007 </option>
+	<option value='http://www.kylev.com/2006/07/'> July 2006 </option>
+	<option value='http://www.kylev.com/2006/06/'> June 2006 </option>
+	<option value='http://www.kylev.com/2006/04/'> April 2006 </option>
+	<option value='http://www.kylev.com/2006/03/'> March 2006 </option>
+	<option value='http://www.kylev.com/2006/02/'> February 2006 </option>
+	<option value='http://www.kylev.com/2006/01/'> January 2006 </option>
+	<option value='http://www.kylev.com/2005/12/'> December 2005 </option>
+	<option value='http://www.kylev.com/2005/10/'> October 2005 </option>
+	<option value='http://www.kylev.com/2005/09/'> September 2005 </option>
+	<option value='http://www.kylev.com/2005/08/'> August 2005 </option>
+	<option value='http://www.kylev.com/2005/06/'> June 2005 </option>
+	<option value='http://www.kylev.com/2005/05/'> May 2005 </option>
+	<option value='http://www.kylev.com/2005/04/'> April 2005 </option>
+	<option value='http://www.kylev.com/2005/03/'> March 2005 </option>
+	<option value='http://www.kylev.com/2005/02/'> February 2005 </option>
+	<option value='http://www.kylev.com/2005/01/'> January 2005 </option>
+	<option value='http://www.kylev.com/2004/12/'> December 2004 </option>
+	<option value='http://www.kylev.com/2004/11/'> November 2004 </option>
+	<option value='http://www.kylev.com/2004/10/'> October 2004 </option>
+	<option value='http://www.kylev.com/2004/09/'> September 2004 </option>
+	<option value='http://www.kylev.com/2004/08/'> August 2004 </option>
+	<option value='http://www.kylev.com/2004/07/'> July 2004 </option>
+	<option value='http://www.kylev.com/2004/06/'> June 2004 </option>
+	<option value='http://www.kylev.com/2004/05/'> May 2004 </option>
+	<option value='http://www.kylev.com/2004/03/'> March 2004 </option>
+	<option value='http://www.kylev.com/2004/02/'> February 2004 </option>
+	<option value='http://www.kylev.com/2004/01/'> January 2004 </option>
+	<option value='http://www.kylev.com/2003/12/'> December 2003 </option>
+	<option value='http://www.kylev.com/2003/11/'> November 2003 </option>
+	<option value='http://www.kylev.com/2003/10/'> October 2003 </option>
+	<option value='http://www.kylev.com/2003/09/'> September 2003 </option>
+	<option value='http://www.kylev.com/2003/08/'> August 2003 </option>
+	<option value='http://www.kylev.com/2003/07/'> July 2003 </option>
+	<option value='http://www.kylev.com/2003/06/'> June 2003 </option>
+	<option value='http://www.kylev.com/2003/05/'> May 2003 </option>
+	<option value='http://www.kylev.com/2003/03/'> March 2003 </option>
+	<option value='http://www.kylev.com/2003/02/'> February 2003 </option>
+	<option value='http://www.kylev.com/2003/01/'> January 2003 </option>
+	<option value='http://www.kylev.com/2002/12/'> December 2002 </option>
+	<option value='http://www.kylev.com/2002/11/'> November 2002 </option>
+	<option value='http://www.kylev.com/2002/10/'> October 2002 </option>
+	<option value='http://www.kylev.com/2002/09/'> September 2002 </option>
+	<option value='http://www.kylev.com/2002/08/'> August 2002 </option>
+	<option value='http://www.kylev.com/2002/07/'> July 2002 </option>
+	<option value='http://www.kylev.com/2002/06/'> June 2002 </option>
+	<option value='http://www.kylev.com/2002/05/'> May 2002 </option>
+	<option value='http://www.kylev.com/2002/04/'> April 2002 </option>
+	<option value='http://www.kylev.com/2002/03/'> March 2002 </option>
+	<option value='http://www.kylev.com/2002/02/'> February 2002 </option>
+	<option value='http://www.kylev.com/2002/01/'> January 2002 </option>
+	<option value='http://www.kylev.com/2001/12/'> December 2001 </option>
+	<option value='http://www.kylev.com/2001/11/'> November 2001 </option>
+	<option value='http://www.kylev.com/2001/10/'> October 2001 </option>
+	<option value='http://www.kylev.com/2001/09/'> September 2001 </option>
+	<option value='http://www.kylev.com/2001/08/'> August 2001 </option>
+	<option value='http://www.kylev.com/2001/07/'> July 2001 </option>
+	<option value='http://www.kylev.com/2001/06/'> June 2001 </option>
+	<option value='http://www.kylev.com/2001/05/'> May 2001 </option>
+	<option value='http://www.kylev.com/2001/04/'> April 2001 </option>
+	<option value='http://www.kylev.com/2001/03/'> March 2001 </option>
+	<option value='http://www.kylev.com/2001/02/'> February 2001 </option>
+	<option value='http://www.kylev.com/2001/01/'> January 2001 </option>
+	<option value='http://www.kylev.com/2000/12/'> December 2000 </option>
+	<option value='http://www.kylev.com/2000/11/'> November 2000 </option>
+	<option value='http://www.kylev.com/2000/10/'> October 2000 </option>
+	<option value='http://www.kylev.com/2000/09/'> September 2000 </option>
+	<option value='http://www.kylev.com/2000/08/'> August 2000 </option>
+ </select>
+</div><div id="linkcat-2" class="box-right"><h4>Blogroll</h4>
+	<ul class='xoxo blogroll'>
+<li><a href="http://aaronxavier.blogspot.com/" rel="friend met neighbor" title="Drumming, Piloting, SEO and Ferraris">Aaron Xavier</a></li>
+<li><a href="http://gabeandcharlaneiniceland.blogspot.com/" title="Gabe and Charlane in Iceland">Gabe and Charlane</a></li>
+<li><a href="http://www.generalfuzz.net/blog/" rel="acquaintance met">General Fuzz</a></li>
+<li><a href="http://mamagrizzlies.wordpress.com/">Mama Grizzlies</a></li>
+<li><a href="http://notalwaysright.com/" title="Funny &amp; Stupid Customer Quotes">Not Always Right</a></li>
+<li><a href="http://www.schneier.com/blog/">Schneier on Security</a></li>
+<li><a href="http://sexiestgeeksalive.com/" title="Cyan and Cianna blog on about their geekiness">Sexiest Geeks Alive</a></li>
+<li><a href="http://skepchick.org/" rel="crush">Skepchick</a></li>
+<li><a href="http://baldwin97family.blogspot.com/" rel="friend met sibling">The Baldwin Family</a></li>
+
+	</ul>
+</div>
+<div id="linkcat-4" class="box-right"><h4>Favorites</h4>
+	<ul class='xoxo blogroll'>
+<li><a href="http://digg.com/">digg</a></li>
+<li><a href="http://www.reddit.com/">reddit</a></li>
+<li><a href="http://www.researchblogging.org/" title="Links to bloggers writing about peer-reviewed research">Research Blogging</a></li>
+<li><a href="http://www.stopsylvia.com/">Stop Sylvia Browne</a></li>
+<li><a href="http://topsy.com/" title="A search engine powered by tweets">Topsy</a></li>
+
+	</ul>
+</div>
+<div id="linkcat-27" class="box-right"><h4>Related</h4>
+	<ul class='xoxo blogroll'>
+<li><a href="http://www.facebook.com/people/Kyle-VanderBeek/634475925" rel="me">Facebook Profile</a></li>
+<li><a href="http://www.linkedin.com/in/kylev" rel="me">LinkedIn Profile</a></li>
+<li><a href="http://www.amazon.com/wishlist/1IIRI9J6LUE2L/ref=wl_web" title="My Amazon.com Wish List"><img src="http://g-ecx.images-amazon.com/images/G/01/gifts/registries/wishlist/v2/web/wl-btn-75-c._V46776201_.gif"  alt="My Amazon.com Wish List"  title="My Amazon.com Wish List" /></a></li>
+<li><a href="http://github.com/kylev/" rel="me">My Github</a></li>
+<li><a href="https://www.ohloh.net/accounts/20276?ref=Tiny" rel="me" title="Ohloh profile for Kyle VanderBeek"><img src="https://www.ohloh.net/accounts/20276/widgets/account_tiny.gif"  alt="My Ohloh Profile"  title="Ohloh profile for Kyle VanderBeek" /></a></li>
+
+	</ul>
+</div>
+
+</div><!-- end content-right -->
+	  <div class="clear"></div>
+
+</div><!-- end content -->
+
+<div id="footer">
+
+	<div id="legal">
+		<p>Copyright &copy; 2008 <a href="http://www.kylev.com">Geek at Play</a></p>
+		<p>Powered by <a href="http://wordpress.org">WordPress</a></p>
+	</div>
+
+	<div id="webdemar">
+		<p><a href="http://webdemar.com">WordPress Themes</a> by webdemar</p>
+	</div>
+
+	<div class="clear"></div>
+
+</div><!-- end footer -->
+
+</div><!-- end page -->
+
+
+<!-- tracker added by Ultimate Google Analytics plugin v1.6.0: http://www.oratransplant.nl/uga -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-627907-1");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>
+		<!-- Advertising Manager v3.4.19 (0.257 seconds.) -->
+</body>
+</html>
+<!-- Dynamic page generated in 0.250 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2010-12-25 01:09:12 -->
