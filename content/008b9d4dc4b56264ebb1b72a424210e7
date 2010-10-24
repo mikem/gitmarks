@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>RSpec best practices | Carbon Five Community</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="stylesheet" type="text/css" media="all" href="http://s0.wp.com/wp-content/themes/pub/twentyten/style.css?m=1293053302g" />
+<link rel="pingback" href="http://blog.carbonfive.com/xmlrpc.php" />
+		<script src='http://wordpress.com/remote-login.php?action=js&amp;host=blog.carbonfive.com&amp;id=18167316&amp;t=1293264466&amp;back=blog.carbonfive.com%2F2010%2F10%2F21%2Frspec-best-practices%2F' type="text/javascript"></script>
+		<script type="text/javascript">
+		/* <![CDATA[ */
+			if ( 'function' === typeof WPRemoteLogin ) {
+				document.cookie = "wordpress_test_cookie=test; path=/";
+				if ( document.cookie.match( /(;|^)\s*wordpress_test_cookie\=/ ) ) {
+					WPRemoteLogin();
+				}
+			}
+		/* ]]> */
+		</script>
+		<link rel="alternate" type="application/rss+xml" title="Carbon Five Community &raquo; Feed" href="http://blog.carbonfive.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Carbon Five Community &raquo; Comments Feed" href="http://blog.carbonfive.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Carbon Five Community &raquo; RSpec best&nbsp;practices Comments Feed" href="http://blog.carbonfive.com/2010/10/21/rspec-best-practices/feed/" />
+<script type="text/javascript">
+/* <![CDATA[ */
+function addLoadEvent(func){var oldonload=window.onload;if(typeof window.onload!='function'){window.onload=func;}else{window.onload=function(){oldonload();func();}}}
+/* ]]> */
+</script>
+<link rel="stylesheet" href="http://s0.wp.com/wp-content/themes/h4/global.css?m=1291749258g" type="text/css" />
+<link rel='stylesheet' id='sharedaddy-css'  href='http://s1.wp.com/wp-content/mu-plugins/sharing/sharing.css?m=1287601727g&#038;ver=MU' type='text/css' media='all' />
+<script type='text/javascript' src='http://s2.wp.com/wp-includes/js/l10n.js?m=1290133841g&amp;ver=20101110'></script>
+<script type='text/javascript' src='http://s1.wp.com/wp-includes/js/jquery/jquery.js?m=1290133841g&amp;ver=1.4.4'></script>
+<script type='text/javascript' src='http://s0.wp.com/wp-includes/js/comment-reply.js?m=1235676225g&amp;ver=20090102'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://carbonfivecommunity.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://carbonfivecommunity.wordpress.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='index' title='Carbon Five Community' href='http://blog.carbonfive.com/' />
+<link rel='prev' title='Thanks for Celebrating 10 Years with Carbon&nbsp;Five' href='http://blog.carbonfive.com/2010/10/18/10-year-party/' />
+<link rel='next' title='Ew&#8230; you got CSS in my&nbsp;Javascript' href='http://blog.carbonfive.com/2010/10/21/ew-you-got-css-in-my-javascript/' />
+<meta name="generator" content="WordPress.com" />
+<link rel='canonical' href='http://blog.carbonfive.com/2010/10/21/rspec-best-practices/' />
+<link rel='shortlink' href='http://wp.me/p1ee9e-ji' />
+<link rel="shortcut icon" type="image/x-icon" href="http://s1.wp.com/i/favicon-stacked.ico?m=1284002170g" sizes="16x16 24x24 32x32 48x48" />
+<link rel="icon" type="image/x-icon" href="http://s1.wp.com/i/favicon-stacked.ico?m=1284002170g" sizes="16x16 24x24 32x32 48x48" />
+<link rel="apple-touch-icon" href="http://s0.wp.com/wp-content/themes/h4/i/webclip.png?m=1250548519g" />
+	<style type="text/css">
+	/* <![CDATA[ */
+				div#likes { margin-top: 15px; }
+		.like-button { border: 1px solid #eee; padding: 2px 6px; font-size: 13px; font-family: arial, tahoma, sans-serif; }
+		#wpl-likebox { clear: left; font-size: 11px; font-family: arial, tahoma, verdana, sans-serif !important; min-height: 30px; margin: 10px 0 !important; padding: 5px 0 10px 0 !important; }
+		#wpl-button { float: left; background: url( /i/buttonbg.png ) top left repeat-x; margin-right: 7px; border: 1px solid #d4d4d4; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; }
+		#wpl-button a { color: #666 !important; line-height: 130% !important; text-decoration: none !important; outline: none; float: left; padding: 3px 6px 2px 24px !important; font-size: 11px !important; background: url( /i/likestar.png ) 6px 49.8% no-repeat; }
+		#wpl-button.liked { background: #feffce; border: 1px solid #f3e389; }
+		#wpl-button.liked a { color: #ba871b !important; }
+		#wpl-likebox #wpl-count { min-height: 25px; line-height: 130% !important; float: left; padding-top: 4px; }
+		#wpl-likebox #wpl-avatars { clear: left; max-height: 98px; overflow: hidden; margin-top: 15px; line-height: 130% !important; }
+		#wpl-likebox #wpl-avatars img { border: none !important; }
+		#wpl-likebox #wpl-mustlogin { line-height: 14px !important; font-size: 11px; clear: left; margin-top: 5px; background: #f0f0f0; padding: 10px; width: 65%; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; }
+		#wpl-likebox #wpl-mustlogin a { color: #888; text-decoration: underline; }
+		#wpl-likebox #wpl-mustlogin p { margin: 5px 0; padding: 0 }
+		#wpl-likebox #wpl-mustlogin input.input { padding: 2px; background: #fff; font-size: 11px; font-family: inherit; border: 1px solid #ccc; -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1) inset; -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1) inset; line-height: 12px; }
+		#wpl-likebox #wpl-mustlogin input#wp-submit { border: 1px solid #ccc; font-size: 11px; background: #fafafa; repeat-x; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; padding: 2px 4px !important; line-height: 12px; }
+		#wpl-likebox #wpl-mustlogin label { position: relative; cursor: text; }
+		#wpl-likebox #wpl-mustlogin label span { position: absolute; top: 0px; left: 5px; padding: 0 !important; }
+		#wpl-likebox #wpl-mustlogin label span { top /*\**/: -10px\9; }
+	/* ]]> */
+	</style>
+	<link rel='openid.server' href='http://carbonfivecommunity.wordpress.com/?openidserver=1' />
+<link rel='openid.delegate' href='http://carbonfivecommunity.wordpress.com/' />
+<link rel="search" type="application/opensearchdescription+xml" href="http://blog.carbonfive.com/osd.xml" title="Carbon Five Community" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://wordpress.com/opensearch.xml" title="WordPress.com" />
+<style type="text/css">.recentcomments a{display:inline !important;padding: 0 !important;margin: 0 !important;}</style>
+<meta name="application-name" content="Carbon Five Community" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-tooltip" content="The blog of Carbon Five, creators of fine software." /><meta name="msapplication-task" content="name=Subscribe;action-uri=http://blog.carbonfive.com/feed/;icon-uri=http://s1.wp.com/i/favicon-stacked.ico" /><meta name="msapplication-task" content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=http://s2.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=http://s2.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=http://s2.wp.com/i/favicon.ico" /><style type="text/css" media="screen">
+.widget_author_grid ul { overflow: hidden; }
+.widget_author_grid ul li { background: none !important; clear: none !important; float: left !important; margin: 0 -5px -3px 0 !important; padding: 0 8px 6px 0 !important; border: none !important; list-style: none !important; }
+.widget_author_grid ul li a { background: none !important; margin: 0 !important; padding: 0 !important; border: 0 !important; }
+.widget_author_grid .avatar { vertical-align: middle; }
+</style>
+
+<style type='text/css'>
+table.recentcommentsavatar img.avatar {border: 0px; margin:0;}
+table.recentcommentsavatar a {border: 0px !important;background-color: transparent !important}
+td.recentcommentsavatartop {padding:0px 0px 1px 0px;margin:0px; }
+td.recentcommentsavatarend {padding:0px 0px 1px 0px;margin:0px; }
+td.recentcommentstexttop { border: none !important;padding:0px 0px 0px 10px;}
+td.recentcommentstextend { border: none !important;padding:0px 0px 2px 10px;}
+</style>
+	<link rel="stylesheet" type="text/css" href="http://blog.carbonfive.com?custom-css=1&#038;csblog=1ee9e&#038;cscache=5&#038;csrev=14" />
+<script type="text/javascript"> 
+	window.google_analytics_uacct = "UA-52447-2"; 
+</script>
+
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-52447-2']);
+	_gaq.push(['_setDomainName', 'none']);
+	_gaq.push(['_setAllowLinker', true]);
+	_gaq.push(['_initData']);
+	_gaq.push(['_trackPageview']);
+
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+	})();
+</script>
+</head>
+
+<body class="single single-post postid-1196 single-format-standard">
+<div id="wrapper" class="hfeed">
+	<div id="header">
+		<div id="masthead">
+			<div id="branding" role="banner">
+								<div id="site-title">
+					<span>
+						<a href="http://blog.carbonfive.com/" title="Carbon Five Community" rel="home">Carbon Five Community</a>
+					</span>
+				</div>
+				<div id="site-description">The blog of Carbon Five, creators of fine software.</div>
+
+										<img src="http://carbonfivecommunity.files.wordpress.com/2010/12/cropped-img_11911.jpg" width="940" height="198" alt="" />
+								</div><!-- #branding -->
+
+			<div id="access" role="navigation">
+			  				<div class="skip-link screen-reader-text"><a href="#content" title="Skip to content">Skip to content</a></div>
+								<div class="menu"><ul><li ><a href="http://blog.carbonfive.com/" title="Home">Home</a></li></ul></div>
+			</div><!-- #access -->
+		</div><!-- #masthead -->
+	</div><!-- #header -->
+
+	<div id="main">
+
+		<div id="container">
+			<div id="content" role="main">
+
+			
+
+				<div id="nav-above" class="navigation">
+					<div class="nav-previous"><a href="http://blog.carbonfive.com/2010/10/18/10-year-party/" rel="prev"><span class="meta-nav">&larr;</span> Thanks for Celebrating 10 Years with Carbon&nbsp;Five</a></div>
+					<div class="nav-next"><a href="http://blog.carbonfive.com/2010/10/21/ew-you-got-css-in-my-javascript/" rel="next">Ew&#8230; you got CSS in my&nbsp;Javascript <span class="meta-nav">&rarr;</span></a></div>
+				</div><!-- #nav-above -->
+
+				<div id="post-1196" class="post-1196 post type-post status-publish format-standard hentry category-ruby-on-rails category-testing tag-ruby-on-rails tag-testing">
+					<h1 class="entry-title">RSpec best&nbsp;practices</h1>
+
+					<div class="entry-meta">
+						<span class="meta-prep meta-prep-author">Posted on</span> <a href="http://blog.carbonfive.com/2010/10/21/rspec-best-practices/" title="9:15 am" rel="bookmark"><span class="entry-date">October 21, 2010</span></a> <span class="meta-sep">by</span> <span class="author vcard"><a class="url fn n" href="http://blog.carbonfive.com/author/jccarbonfive/" title="View all posts by Jared Carroll">Jared Carroll</a></span>					</div><!-- .entry-meta -->
+
+					<div class="entry-content">
+						<script type="text/javascript" src="http://s0.wp.com/wp-content/plugins/adverts/adsense.js?m=1253160243g&amp;1"></script><p><a href="http://rspec.info/">Rspec</a> is a great tool in the behavior driven design process of writing human readable specifications that direct and validate the development of your application. We&#8217;ve found the following practices helpful in writing elegant and maintainable specifications.</p>
+<h2>First #describe what you are doing &#8230;</h2>
+<p>Begin by using a #describe for each of the methods you plan on defining, passing the method&#8217;s name as the argument. For class method specs prefix a &#8220;.&#8221; to the name, and for instance level specs prefix a &#8220;#&#8221;. This follows standard Ruby documenting practices and will read well when output by the spec runner.</p>
+<pre class="brush: ruby;">
+describe User do
+
+  describe '.authenticate' do
+  end
+
+  describe '.admins' do
+  end
+
+  describe '#admin?' do
+  end
+
+  describe '#name' do
+  end
+
+end
+</pre>
+<p><span id="more-1196"></span></p>
+<h2>&#8230;Then establish the #context</h2>
+<p>Write a #context for each execution path through a method; literally specifying the behavior of a method in a given context.</p>
+<p>For example, the following method has 2 execution paths:</p>
+<pre class="brush: ruby;">
+class SessionsController  params[:email],
+                                 :password =&gt; params[:password]
+    if user.present?
+      session[:user_id] = user.id
+      redirect_to root_path
+    else
+      flash.now[:notice] = 'Invalid email and/or password'
+      render :new
+    end
+  end
+
+end
+</pre>
+<p>Create two contexts in the corresponding spec:</p>
+<pre class="brush: ruby;">
+describe '#create' do
+  context 'given valid credentials' do
+  end
+
+  context 'given invalid credentials' do
+  end
+end
+</pre>
+<p>Note the use of &#8220;given&#8221; in the argument to each #context. It communicates the context of receiving input. Another great word to use in a context for describing conditional driven behavior is &#8220;when&#8221;.</p>
+<pre class="brush: ruby;">
+describe '#destroy' do
+   context 'when logged in' do
+   end
+
+   context 'when not logged in' do
+   end
+ end
+</pre>
+<p>By following this style, you can then nest #contexts to clearly define further execution paths.</p>
+<h2>#it only expects one thing</h2>
+<p>By striving to only having one expectation per example, you increase the readability of your specs.</p>
+<p>A spec with multiple un-related expectations in a single example:</p>
+<pre class="brush: ruby;">
+describe UsersController do
+
+  describe '#create' do
+    ...
+
+    it 'creates a new user' do
+      User.count.should == @count + 1
+      flash[:notice].should be
+      response.should redirect_to(user_path(assigns(:user)))
+    end
+  end
+
+end
+</pre>
+<p>Breaking out the expectations into separate examples clearly defines the behavior and results in easier to maintain examples:</p>
+<pre class="brush: ruby;">
+describe UsersController do
+
+  describe '#create' do
+    ...
+
+    it 'creates a new user' do
+      User.count.should == @count + 1
+    end
+
+    it 'sets a flash message' do
+      flash[:notice].should be
+    end
+
+    it "redirects to the new user's profile" do
+      response.should redirect_to(user_path(assigns(:user)))
+    end
+  end
+
+end
+</pre>
+<p>Write examples by starting with a present tense verb that describes the behavior.</p>
+<pre class="brush: ruby;">
+
+    it 'creates a new user' do
+    end
+
+    it 'sets a flash message' do
+    end
+
+    it 'redirects to the home page' do
+    end
+
+    it 'finds published posts' do
+    end
+
+    it 'enqueues a job' do
+    end
+
+    it 'raises an error' do
+    end
+</pre>
+<p>Finally, don&#8217;t begin examples names with the word &#8216;should&#8217;.  It&#8217;s redundant and results in hard to read spec output.  Likewise, don&#8217;t hesitate to use words like &#8216;the&#8217; or &#8216;a&#8217; or &#8216;an&#8217; in your examples when they improve readability.</p>
+<h2>Prefer explicitness</h2>
+<p>#it, #its and #specify may cut down on the amount of typing but they sacrifice readability.  You now have to read the body of the example in order to determine what its specifying.  Use these sparingly if at all.</p>
+<p>Let&#8217;s compare the documentation formatter output of the following:</p>
+<pre class="brush: ruby;">
+describe PostsController do
+
+  describe '#new' do
+    context 'when not logged in' do
+      ...
+
+      subject do
+        response
+      end
+
+      it do
+        should redirect_to(sign_in_path)
+      end
+
+      its :body do
+        should match(/sign in/i)
+      end
+    end
+  end
+
+end
+</pre>
+<p>With the explicit behavior descriptions below:</p>
+<pre class="brush: ruby;">
+describe PostsController do
+
+  describe '#new' do
+    context 'when not logged in' do
+      ...
+
+      it 'redirects to the sign in page' do
+        response.should redirect_to(sign_in_path)
+      end
+
+      it 'displays a message to sign in' do
+        response.body.should match(/sign in/i)
+      end
+    end
+  end
+
+end
+</pre>
+<p>The first example results in blunt, code-like output with redundancy from using the word ‘should’ multiple times:</p>
+<pre class="brush: plain;">
+$ rspec spec/controllers/posts_controller_spec.rb --format documentation
+
+PostsController
+  #new
+    when not logged in
+      should redirect to "/sign_in"
+      should match /sign in/i
+</pre>
+<p>The second results in a very clearly, readable specification:</p>
+<pre class="brush: plain;">
+$ rspec spec/controllers/posts_controller_spec.rb --format documentation
+
+PostsController
+  #new
+    when not logged in
+      redirects to the sign in page
+      displays a message to sign in
+</pre>
+<h2>Run specs to confirm readability</h2>
+<p>Always run your specs with the &#8216;&#8211;format&#8217; option set to &#8216;documentation&#8217; (in RSpec 1.x the &#8211;format options are &#8216;nested&#8217; and &#8216;specdoc&#8217;)</p>
+<pre class="brush: plain;">
+$ rspec spec/controllers/users_controller_spec.rb --format documentation
+
+UsersController
+  #create
+    creates a new user
+    sets a flash message
+    redirects to the new user's profile
+  #show
+    finds the given user
+    displays its profile
+  #show.json
+    returns the given user as JSON
+  #destroy
+    deletes the given user
+    sets a flash message
+    redirects to the home page
+</pre>
+<p>Continue to rename your examples until this output reads like clear conversation.</p>
+<h2>Use the right matcher</h2>
+<p>RSpec comes with a lot of useful matchers to help your specs read more like language.  When you feel there is a cleaner way &#8230; there usually is!</p>
+<p>Here are some of our favorites matchers, before and after they are applied:</p>
+<pre class="brush: ruby;">
+# before: double negative
+object.should_not be_nil
+# after: without the double negative
+object.should be
+
+# before: 'lambda' is too low level
+lambda { model.save! }.should raise_error(ActiveRecord::RecordNotFound)
+# after: for a more natural expectation replace 'lambda' and 'should' with 'expect' and 'to'
+expect { model.save! }.to raise_error(ActiveRecord::RecordNotFound)
+
+# before: straight comparison
+collection.size.should == 4
+# after: a higher level size expectation
+collection.should have(4).items
+</pre>
+<p>Check out the <a href="http://rspec.info/documentation/">docs</a> and ask around.</p>
+<h2>Formatting</h2>
+<p>Use &#8216;do..end&#8217; style multiline blocks for all blocks, even for one-line examples. Further improve readability with a single blank line between all blocks and at the beginning and end of the top level #describe.</p>
+<p>Again compare:</p>
+<pre class="brush: ruby;">
+describe PostsController do
+  describe '#new' do
+    context 'when not logged in' do
+      ...
+      subject { response }
+      it { should redirect_to(sign_in_path) }
+      its(:body) { should match(/sign in/i) }
+    end
+  end
+end
+</pre>
+<p>With the clearly structured code below:</p>
+<pre class="brush: ruby;">
+describe PostsController do
+
+  describe '#new' do
+    context 'when not logged in' do
+      ...
+
+      it 'redirects to the sign in page' do
+        response.should redirect_to(sign_in_path)
+      end
+
+      it 'displays a message to sign in' do
+        response.body.should match(/sign in/i)
+      end
+    end
+  end
+
+end
+</pre>
+<p>A consistent formatting style is hard to achieve with a team of developers but the time saved from having to learn to visually parse each teammate&#8217;s style makes it worthwhile.</p>
+<h2>Conclusion</h2>
+<p>As you can see, all these practices revolve around writing clear specifications readable by all developers. The ideal is to run all specs to not only pass but to have their output completely define your application. Every little step towards that goal helps, and we&#8217;re still learning better ways to get there. What are some of your best RSpec practices?
+<div class="snap_nopreview sharing robots-nocontent">
+<ul>
+<li class="sharing_label">Share this:</li>
+<li class="share-twitter share-regular">
+<div class="twitter_button"><iframe allowtransparency="true" frameborder="0" scrolling="no" src="http://platform.twitter.com/widgets/tweet_button.html?url=http%3A%2F%2Fwp.me%2Fp1ee9e-ji&#038;counturl=http%3A%2F%2Fblog.carbonfive.com%2F2010%2F10%2F21%2Frspec-best-practices%2F&#038;count=horizontal&#038;text=RSpec%20best%20practices: " style="width:97px; height:20px;"></iframe></div>
+</li>
+<li class="share-facebook share-regular"><a rel="nofollow" class="share-facebook share-icon" href="http://blog.carbonfive.com/2010/10/21/rspec-best-practices/?share=facebook" title="Share on Facebook">Facebook</a></li>
+<li class="share-digg share-regular"><a rel="nofollow" class="share-digg share-icon" href="http://blog.carbonfive.com/2010/10/21/rspec-best-practices/?share=digg" title="Click to Digg this post">Digg</a></li>
+<li class="share-email share-regular"><a rel="nofollow" class="share-email share-icon" href="http://blog.carbonfive.com/2010/10/21/rspec-best-practices/?share=email" title="Click to email this to a friend">Email</a></li>
+<li class="share-print share-regular"><a rel="nofollow" class="share-print share-icon" href="http://blog.carbonfive.com/2010/10/21/rspec-best-practices/#print" title="Click to print">Print</a></li>
+<li class="share-end"></li>
+</ul>
+<div class="sharing-clear"></div>
+</div>
+<div style="margin-top: 1em" class="possibly-related"><hr /><p><strong>Possibly related posts: (automatically generated)</strong></p><ul><li><a rel='related nofollow' href='http://pandaji.wordpress.com/2010/06/26/evaluation-of-practice-and-continuing-professional-development/'>2. Evaluation of practice and continuing professional development</a></li></ul></div>
+<!--adcode-->
+<div align="center" style="padding-top: 5px; text-align: left;" class="adcode">
+<script type="text/javascript"><!--
+google_ad_client = "pub-3443918307802676";
+google_ad_output = "js";
+google_feedback = "on";
+google_max_num_ads = "4";
+google_ad_width = 336;
+google_ad_height = 280;
+google_ad_format = "336x280_as";
+google_image_size = "336x280";
+google_ad_type = "text,flash,html";
+google_ad_channel ="7770228814+3633280292+7401333398+7453468586";
+var color_bg = 'ffffff';
+var color_text = '000000';
+var color_link = '0000ff';
+var color_border = 'ffffff';
+var color_url = '0000ff';
+
+google_analytics_domain_name = "none";
+//--></script>
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+</div>
+<div style="clear: both"><br /></div>
+<!--/adcode-->
+											</div><!-- .entry-content -->
+
+
+					<div class="entry-utility">
+						This entry was posted in <a href="http://en.wordpress.com/tag/ruby-on-rails/" title="View all posts in Ruby (on Rails)" rel="category tag">Ruby (on Rails)</a>, <a href="http://en.wordpress.com/tag/testing/" title="View all posts in Testing" rel="category tag">Testing</a> and tagged <a href="http://en.wordpress.com/tag/ruby-on-rails/" rel="tag">Ruby (on Rails)</a>, <a href="http://en.wordpress.com/tag/testing/" rel="tag">Testing</a>. Bookmark the <a href="http://blog.carbonfive.com/2010/10/21/rspec-best-practices/" title="Permalink to RSpec best&nbsp;practices" rel="bookmark">permalink</a>.											</div><!-- .entry-utility -->
+				</div><!-- #post-## -->
+
+				<div id="nav-below" class="navigation">
+					<div class="nav-previous"><a href="http://blog.carbonfive.com/2010/10/18/10-year-party/" rel="prev"><span class="meta-nav">&larr;</span> Thanks for Celebrating 10 Years with Carbon&nbsp;Five</a></div>
+					<div class="nav-next"><a href="http://blog.carbonfive.com/2010/10/21/ew-you-got-css-in-my-javascript/" rel="next">Ew&#8230; you got CSS in my&nbsp;Javascript <span class="meta-nav">&rarr;</span></a></div>
+				</div><!-- #nav-below -->
+
+				<div id="wpl-likebox"><div id="wpl-button"><a href='http://blog.carbonfive.com/2010/10/21/rspec-best-practices/?like=1&amp;_wpnonce=1c6ce24a74' title='I like this post' class='like needs-login'><span>Like</span></a></div><div id="wpl-count">Be the first to like this post.</div></div>
+			<div id="comments">
+
+
+			<h3 id="comments-title">24 Responses to <em>RSpec best&nbsp;practices</em></h3>
+
+
+			<ol class="commentlist">
+					<li class="comment even thread-even depth-1" id="li-comment-1092">
+		<div id="comment-1092">
+		<div class="comment-author vcard">
+			<img alt='' src='http://1.gravatar.com/avatar/ff9eefc6ed72560c262b0e125151ea7c?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40' height='40' width='40' />			<cite class="fn"><a href='http://ruby.zigzo.com/' rel='external nofollow' class='url'>Mario</a></cite> <span class="says">says:</span>		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-meta commentmetadata"><a href="http://blog.carbonfive.com/2010/10/21/rspec-best-practices/#comment-1092">
+			October 21, 2010 at 1:24 pm</a>		</div><!-- .comment-meta .commentmetadata -->
+
+		<div class="comment-body"><p>Great post!! I hope you don&#8217;t mind but i posted it to rubyflow.com</p>
+</div>
+
+		<div class="reply">
+			<a class='comment-reply-link' href='/2010/10/21/rspec-best-practices/?replytocom=1092#respond' onclick='return addComment.moveForm("comment-1092", "1092", "respond", "1196")'>Reply</a>		</div><!-- .reply -->
+	</div><!-- #comment-##  -->
+
+	</li>
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-1093">
+		<div id="comment-1093">
+		<div class="comment-author vcard">
+			<img alt='' src='http://1.gravatar.com/avatar/13b7a8408bcd6fc2dfbf4acf1db3d453?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40' height='40' width='40' />			<cite class="fn"><a href='http://www.rimian.com.au' rel='external nofollow' class='url'>Rimian</a></cite> <span class="says">says:</span>		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-meta commentmetadata"><a href="http://blog.carbonfive.com/2010/10/21/rspec-best-practices/#comment-1093">
+			October 21, 2010 at 4:38 pm</a>		</div><!-- .comment-meta .commentmetadata -->
+
+		<div class="comment-body"><p>Nice one. How refreshing to see clean code and practicality.</p>
+</div>
+
+		<div class="reply">
+			<a class='comment-reply-link' href='/2010/10/21/rspec-best-practices/?replytocom=1093#respond' onclick='return addComment.moveForm("comment-1093", "1093", "respond", "1196")'>Reply</a>		</div><!-- .reply -->
+	</div><!-- #comment-##  -->
+
+	</li>
+	<li class="post pingback">
+		<p>Pingback: <a href='http://topsy.com/blog.carbonfive.com/2010/10/testing/rspec-best-practices?utm_source=pingback&amp;utm_campaign=L2' rel='external nofollow' class='url'>Tweets that mention RSpec best practices « Carbon Five Community -- Topsy.com</a></p>
+	</li>
+	<li class="comment even thread-even depth-1" id="li-comment-1095">
+		<div id="comment-1095">
+		<div class="comment-author vcard">
+			<img alt='' src='http://1.gravatar.com/avatar/5ee8c5de10548414fe630f290e6954c6?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40' height='40' width='40' />			<cite class="fn">Marcus</cite> <span class="says">says:</span>		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-meta commentmetadata"><a href="http://blog.carbonfive.com/2010/10/21/rspec-best-practices/#comment-1095">
+			October 21, 2010 at 5:35 pm</a>		</div><!-- .comment-meta .commentmetadata -->
+
+		<div class="comment-body"><p>Nice post. Good practices are always welcome.</p>
+</div>
+
+		<div class="reply">
+			<a class='comment-reply-link' href='/2010/10/21/rspec-best-practices/?replytocom=1095#respond' onclick='return addComment.moveForm("comment-1095", "1095", "respond", "1196")'>Reply</a>		</div><!-- .reply -->
+	</div><!-- #comment-##  -->
+
+	</li>
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-1096">
+		<div id="comment-1096">
+		<div class="comment-author vcard">
+			<img alt='' src='http://1.gravatar.com/avatar/ba1a65ac3eb1b5acc78ca36f5425ea98?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40' height='40' width='40' />			<cite class="fn"><a href='http://tpo.pe/' rel='external nofollow' class='url'>Tim Pope</a></cite> <span class="says">says:</span>		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-meta commentmetadata"><a href="http://blog.carbonfive.com/2010/10/21/rspec-best-practices/#comment-1096">
+			October 21, 2010 at 6:35 pm</a>		</div><!-- .comment-meta .commentmetadata -->
+
+		<div class="comment-body"><p>If I&#8217;m not supposed to include &#8220;should&#8221;, then why do all the automatically generated descriptions include it?</p>
+<p>As in the output from:</p>
+<p>    it do<br />
+      should redirect_to(sign_in_path)<br />
+    end</p>
+<p>I&#8217;m not necessarily disagreeing with you, but RSpec is. <img src='http://s2.wp.com/wp-includes/images/smilies/icon_smile.gif?m=1235676225g' alt=':)' class='wp-smiley' /> </p>
+</div>
+
+		<div class="reply">
+			<a class='comment-reply-link' href='/2010/10/21/rspec-best-practices/?replytocom=1096#respond' onclick='return addComment.moveForm("comment-1096", "1096", "respond", "1196")'>Reply</a>		</div><!-- .reply -->
+	</div><!-- #comment-##  -->
+
+	<ul class='children'>
+	<li class="comment even depth-2" id="li-comment-1097">
+		<div id="comment-1097">
+		<div class="comment-author vcard">
+			<img alt='' src='http://1.gravatar.com/avatar/1f8c49c0c6642216b9acf9083125b2da?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40' height='40' width='40' />			<cite class="fn">Rudy Jahchan</cite> <span class="says">says:</span>		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-meta commentmetadata"><a href="http://blog.carbonfive.com/2010/10/21/rspec-best-practices/#comment-1097">
+			October 21, 2010 at 7:46 pm</a>		</div><!-- .comment-meta .commentmetadata -->
+
+		<div class="comment-body"><p>We were talking about the argument given to #it message, not #should itself. Clearly you should be using #should <img src='http://s1.wp.com/wp-includes/images/smilies/icon_wink.gif?m=1235676225g' alt=';-)' class='wp-smiley' /> </p>
+<p>Of course, when the spec is run with documentation you would see a &#8220;should&#8221; appear in the output. We do feel that describing the example with a verb makes for less redundancy.</p>
+</div>
+
+		<div class="reply">
+			<a class='comment-reply-link' href='/2010/10/21/rspec-best-practices/?replytocom=1097#respond' onclick='return addComment.moveForm("comment-1097", "1097", "respond", "1196")'>Reply</a>		</div><!-- .reply -->
+	</div><!-- #comment-##  -->
+
+	</li>
+</ul>
+</li>
+	<li class="post pingback">
+		<p>Pingback: <a href='http://blog.thequeue.net/link-dump-for-october-21st/' rel='external nofollow' class='url'>Link dump for October 21st | The Queue Blog</a></p>
+	</li>
+	<li class="comment odd alt thread-even depth-1" id="li-comment-1099">
+		<div id="comment-1099">
+		<div class="comment-author vcard">
+			<img alt='' src='http://1.gravatar.com/avatar/b2da7fcaff78d444c1ac9034427ea230?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40' height='40' width='40' />			<cite class="fn">ross</cite> <span class="says">says:</span>		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-meta commentmetadata"><a href="http://blog.carbonfive.com/2010/10/21/rspec-best-practices/#comment-1099">
+			October 21, 2010 at 11:42 pm</a>		</div><!-- .comment-meta .commentmetadata -->
+
+		<div class="comment-body"><p>What about shared contexts? Let&#8217;s say that my class has an attribute, which state modifies expected results of bunch of other methods. Should I put a separate block of describes for those methods, or should I add a &#8216;when the x is set to y&#8217; to each global describe &#8216;#method&#8217; block? The later one seems a little bit more redundant in my opinion.</p>
+</div>
+
+		<div class="reply">
+			<a class='comment-reply-link' href='/2010/10/21/rspec-best-practices/?replytocom=1099#respond' onclick='return addComment.moveForm("comment-1099", "1099", "respond", "1196")'>Reply</a>		</div><!-- .reply -->
+	</div><!-- #comment-##  -->
+
+	</li>
+	<li class="comment even thread-odd thread-alt depth-1" id="li-comment-1100">
+		<div id="comment-1100">
+		<div class="comment-author vcard">
+			<img alt='' src='http://0.gravatar.com/avatar/ee1937ec38ea1e0d39ed25e4e5e833b9?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40' height='40' width='40' />			<cite class="fn"><a href='http://www.danhawkins.me.uk' rel='external nofollow' class='url'>Danny Hawkins</a></cite> <span class="says">says:</span>		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-meta commentmetadata"><a href="http://blog.carbonfive.com/2010/10/21/rspec-best-practices/#comment-1100">
+			October 22, 2010 at 12:43 am</a>		</div><!-- .comment-meta .commentmetadata -->
+
+		<div class="comment-body"><p>You could not have written this at a better time, I&#8217;ve just committed to converting an old Rails 2.3 site to Rails 3 and am making sure the site has full set of stories and tests. There is so much around for RSpec but difficult to get a simple concise picture of where to start. Thanks.</p>
+</div>
+
+		<div class="reply">
+			<a class='comment-reply-link' href='/2010/10/21/rspec-best-practices/?replytocom=1100#respond' onclick='return addComment.moveForm("comment-1100", "1100", "respond", "1196")'>Reply</a>		</div><!-- .reply -->
+	</div><!-- #comment-##  -->
+
+	</li>
+	<li class="comment odd alt thread-even depth-1" id="li-comment-1101">
+		<div id="comment-1101">
+		<div class="comment-author vcard">
+			<img alt='' src='http://1.gravatar.com/avatar/5996ec6efc2f04ae9b4dd72960e817a3?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40' height='40' width='40' />			<cite class="fn"><a href='http://prodis.pro.br' rel='external nofollow' class='url'>Prodis a.k.a. Fernando Hamasaki de Amorim</a></cite> <span class="says">says:</span>		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-meta commentmetadata"><a href="http://blog.carbonfive.com/2010/10/21/rspec-best-practices/#comment-1101">
+			October 22, 2010 at 5:03 am</a>		</div><!-- .comment-meta .commentmetadata -->
+
+		<div class="comment-body"><p>Great post. I will introduce the use of present tense verb rather than should in my team.</p>
+</div>
+
+		<div class="reply">
+			<a class='comment-reply-link' href='/2010/10/21/rspec-best-practices/?replytocom=1101#respond' onclick='return addComment.moveForm("comment-1101", "1101", "respond", "1196")'>Reply</a>		</div><!-- .reply -->
+	</div><!-- #comment-##  -->
+
+	</li>
+	<li class="comment even thread-odd thread-alt depth-1" id="li-comment-1102">
+		<div id="comment-1102">
+		<div class="comment-author vcard">
+			<img alt='' src='http://0.gravatar.com/avatar/0cbcffbb3f4bbf189054c8c6fa1d4d1a?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40' height='40' width='40' />			<cite class="fn"><a href='http://samullen.posterous.com' rel='external nofollow' class='url'>Samuel</a></cite> <span class="says">says:</span>		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-meta commentmetadata"><a href="http://blog.carbonfive.com/2010/10/21/rspec-best-practices/#comment-1102">
+			October 22, 2010 at 6:18 am</a>		</div><!-- .comment-meta .commentmetadata -->
+
+		<div class="comment-body"><p>Wow, high marks for thinking this through as much as you have and for the cleverness of the section titles. Tweeted and bookmarked.</p>
+</div>
+
+		<div class="reply">
+			<a class='comment-reply-link' href='/2010/10/21/rspec-best-practices/?replytocom=1102#respond' onclick='return addComment.moveForm("comment-1102", "1102", "respond", "1196")'>Reply</a>		</div><!-- .reply -->
+	</div><!-- #comment-##  -->
+
+	</li>
+	<li class="comment odd alt thread-even depth-1" id="li-comment-1103">
+		<div id="comment-1103">
+		<div class="comment-author vcard">
+			<img alt='' src='http://0.gravatar.com/avatar/42d4590355a1404230fbc9aff4dd377b?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40' height='40' width='40' />			<cite class="fn">Myron Marston</cite> <span class="says">says:</span>		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-meta commentmetadata"><a href="http://blog.carbonfive.com/2010/10/21/rspec-best-practices/#comment-1103">
+			October 22, 2010 at 7:43 am</a>		</div><!-- .comment-meta .commentmetadata -->
+
+		<div class="comment-body"><p>&#8220;By striving to only having one expectation per example, you increase the readability of your specs.&#8221;</p>
+<p>This is generally good advice, but I&#8217;ve definitely seen it taken too far, and I&#8217;m sure I&#8217;ve been guilty of that.  I also think that the benefit of one expectation per example isn&#8217;t primarily readability; it&#8217;s separating out the specifications of different behaviors into different examples so that the failure output tells your clearly which behavior is failing.  Increased readability is a nice side effect, though.</p>
+<p>So, to rephrase what you said a bit: you should strive to specify one behavior per example, and if you have multiple expectations in the same example, it&#8217;s a good sign that you may be specifying multiple behaviors and you should consider separating them into separate examples.</p>
+<p>There are times when it&#8217;s absolutely correct to have multiple expectations in the same example.  Here&#8217;s an example from RSpec&#8217;s own specs:</p>
+<p><a href="http://github.com/rspec/rspec-core/blob/v2.0.1/spec/rspec/core/let_spec.rb#L19-22" rel="nofollow">http://github.com/rspec/rspec-core/blob/v2.0.1/spec/rspec/core/let_spec.rb#L19-22</a></p>
+</div>
+
+		<div class="reply">
+			<a class='comment-reply-link' href='/2010/10/21/rspec-best-practices/?replytocom=1103#respond' onclick='return addComment.moveForm("comment-1103", "1103", "respond", "1196")'>Reply</a>		</div><!-- .reply -->
+	</div><!-- #comment-##  -->
+
+	</li>
+	<li class="post pingback">
+		<p>Pingback: <a href='http://real-url.org/twitted.php?id=28433797952' rel='external nofollow' class='url'>Twitted by felipedjinn</a></p>
+	</li>
+	<li class="comment even thread-odd thread-alt depth-1" id="li-comment-1105">
+		<div id="comment-1105">
+		<div class="comment-author vcard">
+			<img alt='' src='http://1.gravatar.com/avatar/987def7741e1f36805e45f92d66ccf92?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40' height='40' width='40' />			<cite class="fn">jared</cite> <span class="says">says:</span>		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-meta commentmetadata"><a href="http://blog.carbonfive.com/2010/10/21/rspec-best-practices/#comment-1105">
+			October 22, 2010 at 1:37 pm</a>		</div><!-- .comment-meta .commentmetadata -->
+
+		<div class="comment-body"><p>@ross &#8211; I duplicate the #context for each #describe.  For example, say I have 2 actions in a controller that require being logged in, #new and #create.  I&#8217;ll have 1 describe for each of those methods and the same 2 contexts (when logged in, when not logged in) nested within each #describe.  I prefer to have 1 place where all the specs for a method are located.  If I had 2 #contexts (when logged in, when not logged in) and then nested the #describe blocks in each I&#8217;d have 2 #describe&#8217;s per method.  I think this approach is fine as well, either way you have duplication.</p>
+<p>@myron &#8211; Excellent point, I agree with you on saying &#8220;one behavior per example&#8221;.  I&#8217;ve definitely had examples with more than 1 expectation.</p>
+<p>@all &#8211; Thanks for all the feedback!</p>
+</div>
+
+		<div class="reply">
+			<a class='comment-reply-link' href='/2010/10/21/rspec-best-practices/?replytocom=1105#respond' onclick='return addComment.moveForm("comment-1105", "1105", "respond", "1196")'>Reply</a>		</div><!-- .reply -->
+	</div><!-- #comment-##  -->
+
+	</li>
+	<li class="comment odd alt thread-even depth-1" id="li-comment-1106">
+		<div id="comment-1106">
+		<div class="comment-author vcard">
+			<img alt='' src='http://1.gravatar.com/avatar/5062a7d9e2878cb962e9a66648dbc576?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40' height='40' width='40' />			<cite class="fn"><a href='http://blog.remygiard.com' rel='external nofollow' class='url'>Rémy Giard</a></cite> <span class="says">says:</span>		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-meta commentmetadata"><a href="http://blog.carbonfive.com/2010/10/21/rspec-best-practices/#comment-1106">
+			October 23, 2010 at 10:31 am</a>		</div><!-- .comment-meta .commentmetadata -->
+
+		<div class="comment-body"><p>I love that kind of post that suggest a nice way to work.  I was looking for something like this about RSpec.  Thanks for sharing!</p>
+</div>
+
+		<div class="reply">
+			<a class='comment-reply-link' href='/2010/10/21/rspec-best-practices/?replytocom=1106#respond' onclick='return addComment.moveForm("comment-1106", "1106", "respond", "1196")'>Reply</a>		</div><!-- .reply -->
+	</div><!-- #comment-##  -->
+
+	</li>
+	<li class="comment even thread-odd thread-alt depth-1" id="li-comment-1107">
+		<div id="comment-1107">
+		<div class="comment-author vcard">
+			<img alt='' src='http://0.gravatar.com/avatar/ccf4fe97f61701a3f2fe96a29223fa35?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40' height='40' width='40' />			<cite class="fn"><a href='http://rubyflare.com' rel='external nofollow' class='url'>Michael MacDonald</a></cite> <span class="says">says:</span>		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-meta commentmetadata"><a href="http://blog.carbonfive.com/2010/10/21/rspec-best-practices/#comment-1107">
+			October 25, 2010 at 5:57 am</a>		</div><!-- .comment-meta .commentmetadata -->
+
+		<div class="comment-body"><p>A great article! I particularly like how you aren&#8217;t telling everyone else that they are doing it wrong, just showing us what has worked for you. I didn&#8217;t know about using &#8220;expect&#8221; instead of &#8220;lambda&#8221; so I&#8217;ll definitely give that a try.</p>
+</div>
+
+		<div class="reply">
+			<a class='comment-reply-link' href='/2010/10/21/rspec-best-practices/?replytocom=1107#respond' onclick='return addComment.moveForm("comment-1107", "1107", "respond", "1196")'>Reply</a>		</div><!-- .reply -->
+	</div><!-- #comment-##  -->
+
+	</li>
+	<li class="post pingback">
+		<p>Pingback: <a href='http://shiokers.com/7/archives/75' rel='external nofollow' class='url'>RSpec best practices « Carbon Five Community &laquo; shiokers.com</a></p>
+	</li>
+	<li class="comment odd alt thread-even depth-1" id="li-comment-1109">
+		<div id="comment-1109">
+		<div class="comment-author vcard">
+			<img alt='' src='http://1.gravatar.com/avatar/7bb0d7e74198c735783b8a65cd14989c?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40' height='40' width='40' />			<cite class="fn"><a href='http://blog.sidu.in' rel='external nofollow' class='url'>Sidu Ponnappa</a></cite> <span class="says">says:</span>		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-meta commentmetadata"><a href="http://blog.carbonfive.com/2010/10/21/rspec-best-practices/#comment-1109">
+			November 2, 2010 at 11:30 pm</a>		</div><!-- .comment-meta .commentmetadata -->
+
+		<div class="comment-body"><p>If you&#8217;re doing a lot of response asserting, you should use these matchers for response codes: <a href="https://github.com/c42/rspec_matchers" rel="nofollow">https://github.com/c42/rspec_matchers</a></p>
+<p>Gives you stuff like<br />
+response.should be_unprocessable_entity<br />
+response.should be_im_a_teapot</p>
+</div>
+
+		<div class="reply">
+			<a class='comment-reply-link' href='/2010/10/21/rspec-best-practices/?replytocom=1109#respond' onclick='return addComment.moveForm("comment-1109", "1109", "respond", "1196")'>Reply</a>		</div><!-- .reply -->
+	</div><!-- #comment-##  -->
+
+	</li>
+	<li class="comment even thread-odd thread-alt depth-1" id="li-comment-1110">
+		<div id="comment-1110">
+		<div class="comment-author vcard">
+			<img alt='' src='http://0.gravatar.com/avatar/e0f4c19148f8b1deb2e86847e225d33d?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40' height='40' width='40' />			<cite class="fn"><a href='http://wilker-dev.com' rel='external nofollow' class='url'>Wilker</a></cite> <span class="says">says:</span>		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-meta commentmetadata"><a href="http://blog.carbonfive.com/2010/10/21/rspec-best-practices/#comment-1110">
+			November 6, 2010 at 5:31 am</a>		</div><!-- .comment-meta .commentmetadata -->
+
+		<div class="comment-body"><p>Nice article!</p>
+<p>I mean will be nice to have a similar article about best practices on Steak for acceptance specs, I know it can be almost the same, but for acceptance specs is common to check things on the way of execution (ending with a lot of assertions on same spec).</p>
+<p>Thanks a lot!</p>
+</div>
+
+		<div class="reply">
+			<a class='comment-reply-link' href='/2010/10/21/rspec-best-practices/?replytocom=1110#respond' onclick='return addComment.moveForm("comment-1110", "1110", "respond", "1196")'>Reply</a>		</div><!-- .reply -->
+	</div><!-- #comment-##  -->
+
+	<ul class='children'>
+	<li class="comment odd alt depth-2" id="li-comment-1112">
+		<div id="comment-1112">
+		<div class="comment-author vcard">
+			<img alt='' src='http://1.gravatar.com/avatar/1f8c49c0c6642216b9acf9083125b2da?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40' height='40' width='40' />			<cite class="fn">Rudy Jahchan</cite> <span class="says">says:</span>		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-meta commentmetadata"><a href="http://blog.carbonfive.com/2010/10/21/rspec-best-practices/#comment-1112">
+			November 10, 2010 at 12:27 pm</a>		</div><!-- .comment-meta .commentmetadata -->
+
+		<div class="comment-body"><p>Thanks Wilker!</p>
+</div>
+
+		<div class="reply">
+			<a class='comment-reply-link' href='/2010/10/21/rspec-best-practices/?replytocom=1112#respond' onclick='return addComment.moveForm("comment-1112", "1112", "respond", "1196")'>Reply</a>		</div><!-- .reply -->
+	</div><!-- #comment-##  -->
+
+	</li>
+</ul>
+</li>
+	<li class="comment even thread-even depth-1" id="li-comment-1111">
+		<div id="comment-1111">
+		<div class="comment-author vcard">
+			<img alt='' src='http://0.gravatar.com/avatar/0e69b872f3c3f9d5a7048f1d65fe42e4?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40' height='40' width='40' />			<cite class="fn"><a href='http://www.techwench.com' rel='external nofollow' class='url'>neo</a></cite> <span class="says">says:</span>		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-meta commentmetadata"><a href="http://blog.carbonfive.com/2010/10/21/rspec-best-practices/#comment-1111">
+			November 10, 2010 at 2:12 am</a>		</div><!-- .comment-meta .commentmetadata -->
+
+		<div class="comment-body"><p>great post how clear cut code saving and testing</p>
+</div>
+
+		<div class="reply">
+			<a class='comment-reply-link' href='/2010/10/21/rspec-best-practices/?replytocom=1111#respond' onclick='return addComment.moveForm("comment-1111", "1111", "respond", "1196")'>Reply</a>		</div><!-- .reply -->
+	</div><!-- #comment-##  -->
+
+	</li>
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-1113">
+		<div id="comment-1113">
+		<div class="comment-author vcard">
+			<img alt='' src='http://1.gravatar.com/avatar/57240e72c8912c80bec2deda9b57d483?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40' height='40' width='40' />			<cite class="fn"><a href='http://sikachu.com' rel='external nofollow' class='url'>Prem Sichanugrist</a></cite> <span class="says">says:</span>		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-meta commentmetadata"><a href="http://blog.carbonfive.com/2010/10/21/rspec-best-practices/#comment-1113">
+			November 10, 2010 at 8:19 pm</a>		</div><!-- .comment-meta .commentmetadata -->
+
+		<div class="comment-body"><p>Thank you for this nice article. However, I&#8217;m curious about testing the validation. Do you just making another `describe &#8216;validations&#8217;` block, or do you just don&#8217;t test it altogether?</p>
+</div>
+
+		<div class="reply">
+			<a class='comment-reply-link' href='/2010/10/21/rspec-best-practices/?replytocom=1113#respond' onclick='return addComment.moveForm("comment-1113", "1113", "respond", "1196")'>Reply</a>		</div><!-- .reply -->
+	</div><!-- #comment-##  -->
+
+	</li>
+	<li class="comment even thread-even depth-1" id="li-comment-1114">
+		<div id="comment-1114">
+		<div class="comment-author vcard">
+			<img alt='' src='http://1.gravatar.com/avatar/987def7741e1f36805e45f92d66ccf92?s=40&amp;d=identicon&amp;r=G' class='avatar avatar-40' height='40' width='40' />			<cite class="fn">Jared Carroll</cite> <span class="says">says:</span>		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-meta commentmetadata"><a href="http://blog.carbonfive.com/2010/10/21/rspec-best-practices/#comment-1114">
+			November 11, 2010 at 5:14 pm</a>		</div><!-- .comment-meta .commentmetadata -->
+
+		<div class="comment-body"><p>@prem &#8211; I spec model validations using &#8220;describe &#8216;#valid?&#8217;&#8221; and if necessary nested contexts such as &#8220;on create&#8221; or &#8220;on an update&#8221;.</p>
+</div>
+
+		<div class="reply">
+			<a class='comment-reply-link' href='/2010/10/21/rspec-best-practices/?replytocom=1114#respond' onclick='return addComment.moveForm("comment-1114", "1114", "respond", "1196")'>Reply</a>		</div><!-- .reply -->
+	</div><!-- #comment-##  -->
+
+	</li>
+	<li class="post pingback">
+		<p>Pingback: <a href='http://www.lamolabs.org/blog/4430/delicious-bookmarks-for-november-12th-from-0301-to-0306/' rel='external nofollow' class='url'>Delicious Bookmarks for November 12th from 03:01 to 03:06 &laquo; Lâmôlabs</a></p>
+	</li>
+			</ol>
+
+
+
+								<div id="respond">
+				<h3 id="reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/2010/10/21/rspec-best-practices/#respond" style="display:none;">Cancel reply</a></small></h3>
+									<form action="http://blog.carbonfive.com/wp-comments-post.php" method="post" id="commentform">
+																			<p class="comment-notes">Your email address will not be published. Required fields are marked <span class="required">*</span></p>							<p class="comment-form-author"><label for="author">Name</label> <span class="required">*</span><input id="author" name="author" type="text" value="" size="30" aria-required='true' /></p>
+<p class="comment-form-email"><label for="email">Email</label> <span class="required">*</span><input id="email" name="email" type="text" value="" size="30" aria-required='true' /></p>
+<p class="comment-form-url"><label for="url">Website</label><input id="url" name="url" type="text" value="" size="30" /></p>
+												<p class="comment-form-comment"><label for="comment">Comment</label><textarea id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea></p>						<p class="form-allowed-tags">You may use these <abbr title="HyperText Markup Language">HTML</abbr> tags and attributes:  <code>&lt;a href=&quot;&quot; title=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;acronym title=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote cite=&quot;&quot;&gt; &lt;cite&gt; &lt;code&gt; &lt;pre&gt; &lt;del datetime=&quot;&quot;&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=&quot;&quot;&gt; &lt;strike&gt; &lt;strong&gt; </code></p>						<p class="form-submit">
+							<input name="submit" type="submit" id="submit" value="Post Comment" />
+							<input type='hidden' name='comment_post_ID' value='1196' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+						</p>
+						
+<input type="hidden" name="genseq" value="1293264467" />
+<p><input type="checkbox" name="subscribe" id="subscribe" value="subscribe" style="width: auto;" tabindex="6"/> <label class="subscribe-label" id="subscribe-label" for="subscribe">Notify me of follow-up comments via email.</label></p><p><input type="checkbox" name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto;" tabindex="7"/> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog">Notify me of new posts via email.</label></p><input type="hidden" name="sub-type" value="comment-form-text0" /><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="a5e69b2df9" /></p>					</form>
+							</div><!-- #respond -->
+						
+</div><!-- #comments -->
+
+
+			</div><!-- #content -->
+		</div><!-- #container -->
+
+
+		<div id="primary" class="widget-area" role="complementary">
+			<ul class="xoxo">
+
+<li id="search-2" class="widget-container widget_search"><form role="search" method="get" id="searchform" action="http://blog.carbonfive.com/" >
+	<div><label class="screen-reader-text" for="s">Search for:</label>
+	<input type="text" value="" name="s" id="s" />
+	<input type="submit" id="searchsubmit" value="Search" />
+	</div>
+	</form></li><li id="rss-2" class="widget-container widget_rss"><h3 class="widget-title"><a class='rsswidget' href='http://c5nn.carbonfive.com/feed/' title='Syndicate this content'><img style='background:orange;color:white;border:none;' width='14' height='14' src='http://s.wordpress.com/wp-includes/images/rss.png' alt='RSS' /></a> <a class='rsswidget' href='http://c5nn.carbonfive.com' title='Things we think are neat that you should check out'>C5 News Network</a></h3><ul><li><a class='rsswidget' href='http://c5nn.carbonfive.com/2010/12/24/jruby-finally-installs-ruby-debug-gem/' title='A debugger for your platform has always been a critical element in our toolkits. http://blog.headius.com/2010/12/jruby-finally-installs-ruby-debug-gem.html'>JRuby Finally Installs ruby-debug gem</a> <span class="rss-date">December 24, 2010</span></li><li><a class='rsswidget' href='http://c5nn.carbonfive.com/2010/12/24/improved-jruby-startup-by-deferring-gem-plugins/' title='Headius explains how a simple patch to Rubygems can relieve one of reasons for JRuby&#8217;s slow startup. http://blog.headius.com/2010/12/improved-jruby-startup-by-deferring-gem.html'>Improved JRuby Startup by Deferring Gem Plugins</a> <span class="rss-date">December 24, 2010</span></li><li><a class='rsswidget' href='http://c5nn.carbonfive.com/2010/12/23/create-plugins-for-rubymine-using-ruby/' title='http://code.google.com/p/pmip/'>Create Plugins for RubyMine using… Ruby.</a> <span class="rss-date">December 23, 2010</span></li><li><a class='rsswidget' href='http://c5nn.carbonfive.com/2010/12/23/more-rubinius-1-2-details/' title='Evan Phoenix wrote about the changes in rubinius 1.2 on the Engine Yard blog in more detail than on the rubinius site: http://www.engineyard.com/blog/2010/rubinius-1-2-now-available/'>More Rubinius 1.2 Details</a> <span class="rss-date">December 23, 2010</span></li><li><a class='rsswidget' href='http://c5nn.carbonfive.com/2010/12/22/iphone-development-free-course-in-linear-algebra/' title='How&#8217;s your Linear Algebra? Free course available online at: http://iphonedevelopment.blogspot.com/2010/12/free-course-in-linear-algebra.html'>iPhone Development: Free Course in Linear Algebra</a> <span class="rss-date">December 22, 2010</span></li><li><a class='rsswidget' href='http://c5nn.carbonfive.com/2010/12/22/notational-velocity/' title='I used to use Stickies on the Mac, now I use Notational Velocity (the Dropbox integration is especially nice for accessing notes from my iPhone): http://notational.net'>Notational Velocity</a> <span class="rss-date">December 22, 2010</span></li><li><a class='rsswidget' href='http://c5nn.carbonfive.com/2010/12/22/rubinius-1-2-released/' title='http://dev.rubini.us/releases/1.2.0/'>Rubinius 1.2 released</a> <span class="rss-date">December 22, 2010</span></li><li><a class='rsswidget' href='http://c5nn.carbonfive.com/2010/12/22/redis-has-a-slick-new-website/' title='http://www.redis.io/'>Redis has a slick new website</a> <span class="rss-date">December 22, 2010</span></li><li><a class='rsswidget' href='http://c5nn.carbonfive.com/2010/12/21/anatomy-of-a-perfect-landing-page/' title='http://www.formstack.com/the-anatomy-of-a-perfect-landing-page'>Anatomy of a Perfect Landing Page</a> <span class="rss-date">December 21, 2010</span></li><li><a class='rsswidget' href='http://c5nn.carbonfive.com/2010/12/20/angry-birds-making-me-angry/' title='http://lifehacker.com/5715188/these-apps-are-rampantly-stealing-your-info-without-permission'>Angry Birds making me angry</a> <span class="rss-date">December 20, 2010</span></li></ul></li><li id="twitter-3" class="widget-container widget_twitter"><h3 class="widget-title"><a href='http://twitter.com/carbonfive'>Follow us on Twitter</a></h3><ul class='tweets'>
+<li>Don&#039;t be so nosy... use shy tests when you are ping pong pair programming. <a href="http://bit.ly/e91PLm" rel="nofollow">http://bit.ly/e91PLm</a> <a href="http://twitter.com/carbonfive/statuses/16907288371535872" class="timesince">4&nbsp;days&nbsp;ago</a></li>
+<li>Jonah is back with more <a href='http://twitter.com/search?q=%23iPhone'>#iPhone</a> <a href='http://twitter.com/search?q=%23dev'>#dev</a> gems - this time he tells us how to handle unreliable networks. <a href="http://bit.ly/9SkdqC" rel="nofollow">http://bit.ly/9SkdqC</a> <a href="http://twitter.com/carbonfive/statuses/5024605454475264" class="timesince">1&nbsp;month&nbsp;ago</a></li>
+<li>Jonah reviews the fallacies of distributed computing for <a href='http://twitter.com/search?q=%23iphonedev'>#iphonedev</a>, <a href='http://twitter.com/search?q=%23iosdev'>#iosdev</a>. Fallacy #1 &quot;the network is reliable&quot;: <a href="http://bit.ly/9SkdqC" rel="nofollow">http://bit.ly/9SkdqC</a> <a href="http://twitter.com/carbonfive/statuses/4945615750430720" class="timesince">1&nbsp;month&nbsp;ago</a></li>
+<li><a href='http://twitter.com/search?q=%23TDD'>#TDD</a> your way to a richer domain model in <a href='http://twitter.com/search?q=%23rails'>#rails</a>.  Here is a basic process that works well for us. <a href="http://bit.ly/d1lgJK" rel="nofollow">http://bit.ly/d1lgJK</a> <a href="http://twitter.com/carbonfive/statuses/3215449038786560" class="timesince">1&nbsp;month&nbsp;ago</a></li>
+<li>Thanks everyone who came to the @<a href='http://twitter.com/carbonfive'>carbonfive</a> geek out last night!  We had a great time, and we&#039;ll see you at the next one. <a href="http://twitter.com/carbonfive/statuses/3154180705357824" class="timesince">1&nbsp;month&nbsp;ago</a></li>
+</ul>
+</li><li id="calendar-3" class="widget-container widget_calendar"><h3 class="widget-title">&nbsp;</h3><div id="calendar_wrap"><table id="wp-calendar" summary="Calendar">
+	<caption>October 2010</caption>
+	<thead>
+	<tr>
+		<th scope="col" title="Monday">M</th>
+		<th scope="col" title="Tuesday">T</th>
+		<th scope="col" title="Wednesday">W</th>
+		<th scope="col" title="Thursday">T</th>
+		<th scope="col" title="Friday">F</th>
+		<th scope="col" title="Saturday">S</th>
+		<th scope="col" title="Sunday">S</th>
+	</tr>
+	</thead>
+
+	<tfoot>
+	<tr>
+		<td colspan="3" id="prev"><a href="http://blog.carbonfive.com/2010/08/" title="View posts for August 2010">&laquo; Aug</a></td>
+		<td class="pad">&nbsp;</td>
+		<td colspan="3" id="next"><a href="http://blog.carbonfive.com/2010/11/" title="View posts for November 2010">Nov &raquo;</a></td>
+	</tr>
+	</tfoot>
+
+	<tbody>
+	<tr>
+		<td colspan="4" class="pad">&nbsp;</td><td>1</td><td>2</td><td>3</td>
+	</tr>
+	<tr>
+		<td>4</td><td>5</td><td>6</td><td><a href="http://blog.carbonfive.com/2010/10/07/" title="Join us for a Ruby&nbsp;Hackfest">7</a></td><td>8</td><td>9</td><td>10</td>
+	</tr>
+	<tr>
+		<td>11</td><td>12</td><td>13</td><td>14</td><td>15</td><td>16</td><td>17</td>
+	</tr>
+	<tr>
+		<td><a href="http://blog.carbonfive.com/2010/10/18/" title="Thanks for Celebrating 10 Years with Carbon&nbsp;Five">18</a></td><td>19</td><td>20</td><td><a href="http://blog.carbonfive.com/2010/10/21/" title="RSpec best&nbsp;practices, Ew&#8230; you got CSS in my&nbsp;Javascript">21</a></td><td>22</td><td>23</td><td>24</td>
+	</tr>
+	<tr>
+		<td>25</td><td>26</td><td><a href="http://blog.carbonfive.com/2010/10/27/" title="Play at Work for MCN in Austin, October&nbsp;27">27</a></td><td>28</td><td><a href="http://blog.carbonfive.com/2010/10/29/" title="Did you&nbsp;know&#8230;">29</a></td><td>30</td><td>31</td>
+	</tr>
+	</tbody>
+	</table></div></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<select name="archive-dropdown" onchange='document.location.href=this.options[this.selectedIndex].value;'> <option value="">Select Month</option> 	<option value='http://blog.carbonfive.com/2010/12/'> December 2010 &nbsp;(7)</option>
+	<option value='http://blog.carbonfive.com/2010/11/'> November 2010 &nbsp;(7)</option>
+	<option value='http://blog.carbonfive.com/2010/10/'> October 2010 &nbsp;(6)</option>
+	<option value='http://blog.carbonfive.com/2010/08/'> August 2010 &nbsp;(5)</option>
+	<option value='http://blog.carbonfive.com/2010/07/'> July 2010 &nbsp;(3)</option>
+	<option value='http://blog.carbonfive.com/2010/06/'> June 2010 &nbsp;(1)</option>
+	<option value='http://blog.carbonfive.com/2010/05/'> May 2010 &nbsp;(2)</option>
+	<option value='http://blog.carbonfive.com/2010/04/'> April 2010 &nbsp;(4)</option>
+	<option value='http://blog.carbonfive.com/2010/03/'> March 2010 &nbsp;(6)</option>
+	<option value='http://blog.carbonfive.com/2010/02/'> February 2010 &nbsp;(6)</option>
+	<option value='http://blog.carbonfive.com/2010/01/'> January 2010 &nbsp;(4)</option>
+	<option value='http://blog.carbonfive.com/2009/12/'> December 2009 &nbsp;(2)</option>
+	<option value='http://blog.carbonfive.com/2009/11/'> November 2009 &nbsp;(2)</option>
+	<option value='http://blog.carbonfive.com/2009/10/'> October 2009 &nbsp;(2)</option>
+	<option value='http://blog.carbonfive.com/2009/09/'> September 2009 &nbsp;(2)</option>
+	<option value='http://blog.carbonfive.com/2009/08/'> August 2009 &nbsp;(3)</option>
+	<option value='http://blog.carbonfive.com/2009/07/'> July 2009 &nbsp;(5)</option>
+	<option value='http://blog.carbonfive.com/2009/06/'> June 2009 &nbsp;(2)</option>
+	<option value='http://blog.carbonfive.com/2009/05/'> May 2009 &nbsp;(1)</option>
+	<option value='http://blog.carbonfive.com/2009/04/'> April 2009 &nbsp;(2)</option>
+	<option value='http://blog.carbonfive.com/2009/03/'> March 2009 &nbsp;(8)</option>
+	<option value='http://blog.carbonfive.com/2009/02/'> February 2009 &nbsp;(6)</option>
+	<option value='http://blog.carbonfive.com/2008/11/'> November 2008 &nbsp;(3)</option>
+	<option value='http://blog.carbonfive.com/2008/09/'> September 2008 &nbsp;(5)</option>
+	<option value='http://blog.carbonfive.com/2008/07/'> July 2008 &nbsp;(1)</option>
+	<option value='http://blog.carbonfive.com/2008/05/'> May 2008 &nbsp;(1)</option>
+	<option value='http://blog.carbonfive.com/2008/04/'> April 2008 &nbsp;(1)</option>
+	<option value='http://blog.carbonfive.com/2008/03/'> March 2008 &nbsp;(2)</option>
+	<option value='http://blog.carbonfive.com/2008/02/'> February 2008 &nbsp;(5)</option>
+	<option value='http://blog.carbonfive.com/2008/01/'> January 2008 &nbsp;(2)</option>
+	<option value='http://blog.carbonfive.com/2007/09/'> September 2007 &nbsp;(2)</option>
+	<option value='http://blog.carbonfive.com/2007/06/'> June 2007 &nbsp;(3)</option>
+	<option value='http://blog.carbonfive.com/2007/05/'> May 2007 &nbsp;(3)</option>
+	<option value='http://blog.carbonfive.com/2006/04/'> April 2006 &nbsp;(1)</option>
+	<option value='http://blog.carbonfive.com/2005/10/'> October 2005 &nbsp;(1)</option>
+	<option value='http://blog.carbonfive.com/2005/09/'> September 2005 &nbsp;(1)</option>
+	<option value='http://blog.carbonfive.com/2005/07/'> July 2005 &nbsp;(3)</option>
+ </select>
+</li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://blog.carbonfive.com/2010/12/20/shy-tests-and-ping-pong-pair-programming/" title="Shy Tests and Ping Pong Pair&nbsp;Programming">Shy Tests and Ping Pong Pair&nbsp;Programming</a></li>
+				<li><a href="http://blog.carbonfive.com/2010/12/10/speedy-test-iterations-for-rails-3-with-spork-and-guard/" title="Speedy Test Iterations for Rails 3 with Spork and&nbsp;Guard">Speedy Test Iterations for Rails 3 with Spork and&nbsp;Guard</a></li>
+				<li><a href="http://blog.carbonfive.com/2010/12/07/better-error-handling-in-ruby-with-rescue-else/" title="Better error handling in Ruby with rescue&nbsp;else">Better error handling in Ruby with rescue&nbsp;else</a></li>
+				<li><a href="http://blog.carbonfive.com/2010/12/06/iphone-distributed-computing-fallacy-8-the-network-is-homogeneous/" title="iPhone Distributed Computing Fallacy #8: the network is&nbsp;homogeneous">iPhone Distributed Computing Fallacy #8: the network is&nbsp;homogeneous</a></li>
+				</ul>
+		</li>	<li id="recent-comments" class="widget-container widget_recent_comments">		<h3 class="widget-title">Recent Comments</h3>		<table class='recentcommentsavatar' cellspacing='0' cellpadding='0' border='0'><tr><td title="tunylund" class="recentcommentsavatartop" style="height:32px; width:32px"><img alt='' src='http://1.gravatar.com/avatar/9cc550a43dd7f8e73a38749e16f93555?s=32&amp;d=identicon&amp;r=G' class='avatar avatar-32' height='32' width='32' /></td><td class="recentcommentstexttop">tunylund on <a href="http://blog.carbonfive.com/2010/12/10/speedy-test-iterations-for-rails-3-with-spork-and-guard/#comment-2609">Speedy Test Iterations for Rai&hellip;</a></td></tr><tr><td title="Shy Tests and Ping Pong Pair Programming" class="recentcommentsavatarend" style="height:32px; width:32px"><a href='http://codebix.com/posts/post/155019/Shy-Tests-and-Ping-Pong-Pair-Programming' rel='nofollow'></a></td><td class="recentcommentstextend"><a href='http://codebix.com/posts/post/155019/Shy-Tests-and-Ping-Pong-Pair-Programming' rel='nofollow'>Shy Tests and Ping P&hellip;</a> on <a href="http://blog.carbonfive.com/2010/12/20/shy-tests-and-ping-pong-pair-programming/#comment-2586">Shy Tests and Ping Pong Pair&hellip;</a></td></tr><tr><td title="Better error handling in Ruby with rescue else" class="recentcommentsavatarend" style="height:32px; width:32px"><a href='http://codebix.com/posts/post/154587/Better-error-handling-in-Ruby-with-rescue-else' rel='nofollow'></a></td><td class="recentcommentstextend"><a href='http://codebix.com/posts/post/154587/Better-error-handling-in-Ruby-with-rescue-else' rel='nofollow'>Better error handlin&hellip;</a> on <a href="http://blog.carbonfive.com/2010/12/07/better-error-handling-in-ruby-with-rescue-else/#comment-2570">Better error handling in Ruby &hellip;</a></td></tr><tr><td title="Ben Lindsey" class="recentcommentsavatarend" style="height:32px; width:32px"><img alt='' src='http://0.gravatar.com/avatar/6f76729a4ca1089b750a8b04e91469b8?s=32&amp;d=identicon&amp;r=G' class='avatar avatar-32' height='32' width='32' /></td><td class="recentcommentstextend">Ben Lindsey on <a href="http://blog.carbonfive.com/2010/12/10/speedy-test-iterations-for-rails-3-with-spork-and-guard/#comment-2234">Speedy Test Iterations for Rai&hellip;</a></td></tr></table>
+	</li><li id="author_grid" class="widget-container widget_author_grid">	<h3 class="widget-title">Authors</h3>	<ul>
+		<li>
+			<a href="http://blog.carbonfive.com/author/asalant/"> <img alt='' src='http://1.gravatar.com/avatar/be7bd70c8731cf1465c1806979637e21?s=32&amp;d=identicon&amp;r=G' class='avatar avatar-32' height='32' width='32' /></a>
+		</li>
+		<li>
+			<a href="http://blog.carbonfive.com/author/sivoh/"> <img alt='' src='http://0.gravatar.com/avatar/e3684a734a3c70615e7041a48bb5eeae?s=32&amp;d=identicon&amp;r=G' class='avatar avatar-32' height='32' width='32' /></a>
+		</li>
+		<li>
+			<a href="http://blog.carbonfive.com/author/mwynholds/"> <img alt='' src='http://1.gravatar.com/avatar/fcde096aa7e5b3859dc75a2fd661f5a1?s=32&amp;d=identicon&amp;r=G' class='avatar avatar-32' height='32' width='32' /></a>
+		</li>
+		<li>
+			<a href="http://blog.carbonfive.com/author/robpak/"> <img alt='' src='http://0.gravatar.com/avatar/0da92f01063b5bb8e4ba74f159716016?s=32&amp;d=identicon&amp;r=G' class='avatar avatar-32' height='32' width='32' /></a>
+		</li>
+		<li>
+			<a href="http://blog.carbonfive.com/author/ndp8/"> <img alt='' src='http://1.gravatar.com/avatar/91bbf24d5b134562def1bd1b7756cdf0?s=32&amp;d=identicon&amp;r=G' class='avatar avatar-32' height='32' width='32' /></a>
+		</li>
+		<li>
+			<a href="http://blog.carbonfive.com/author/rudyc5/"> <img alt='' src='http://1.gravatar.com/avatar/1f8c49c0c6642216b9acf9083125b2da?s=32&amp;d=identicon&amp;r=G' class='avatar avatar-32' height='32' width='32' /></a>
+		</li>
+		<li>
+			<a href="http://blog.carbonfive.com/author/xianpants/"> <img alt='' src='http://1.gravatar.com/avatar/119042842ac239878e4ae464ddea0f52?s=32&amp;d=identicon&amp;r=G' class='avatar avatar-32' height='32' width='32' /></a>
+		</li>
+		<li>
+			<a href="http://blog.carbonfive.com/author/jonahwilliams/"> <img alt='' src='http://1.gravatar.com/avatar/3c3d2b431d9849cabce0b349c703abc2?s=32&amp;d=identicon&amp;r=G' class='avatar avatar-32' height='32' width='32' /></a>
+		</li>
+		<li>
+			<a href="http://blog.carbonfive.com/author/c5admin/"> <img alt='' src='http://0.gravatar.com/avatar/a3d22daa031419925b7fd7a6a61e1f35?s=32&amp;d=identicon&amp;r=G' class='avatar avatar-32' height='32' width='32' /></a>
+		</li>
+		<li>
+			<a href="http://blog.carbonfive.com/author/jccarbonfive/"> <img alt='' src='http://1.gravatar.com/avatar/987def7741e1f36805e45f92d66ccf92?s=32&amp;d=identicon&amp;r=G' class='avatar avatar-32' height='32' width='32' /></a>
+		</li>
+		<li>
+			<a href="http://blog.carbonfive.com/author/christianbradley/"> <img alt='' src='http://0.gravatar.com/avatar/696d57fc85847295f74f85b74c2e1d1c?s=32&amp;d=identicon&amp;r=G' class='avatar avatar-32' height='32' width='32' /></a>
+		</li>
+	</ul>
+</li><li id="meta-2" class="widget-container widget_meta"><h3 class="widget-title">Meta</h3>			<ul>
+			<li><a href="http://carbonfivecommunity.wordpress.com/wp-login.php?action=register">Register</a></li>			<li><a href="http://carbonfivecommunity.wordpress.com/wp-login.php">Log in</a></li>
+			<li><a href="http://blog.carbonfive.com/feed/" title="Syndicate this site using RSS 2.0">Entries <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="http://blog.carbonfive.com/comments/feed/" title="The latest comments to all posts in RSS">Comments <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="http://wordpress.com/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">WordPress.com</a></li>
+						</ul>
+</li><li id="linkcat-1356" class="widget-container widget_links"><h3 class="widget-title">Blogroll</h3>
+	<ul class='xoxo blogroll'>
+<li><a href="http://www.carbonfive.com">Carbon Five</a></li>
+<li><a href="http://designbuild.carbonfive.com">Design Build Journal</a></li>
+
+	</ul>
+</li>
+			</ul>
+		</div><!-- #primary .widget-area -->
+
+	</div><!-- #main -->
+
+	<div id="footer" role="contentinfo">
+		<div id="colophon">
+
+
+
+			<div id="site-info">
+				<a href="http://blog.carbonfive.com/" title="Carbon Five Community" rel="home">
+					Carbon Five Community				</a>
+			</div><!-- #site-info -->
+
+			<div id="site-generator">
+				Theme: <a href="http://theme.wordpress.com/themes/twentyten/">Twenty Ten</a>				<a href="http://wordpress.com/?ref=footer" rel="generator">Blog at WordPress.com</a>.
+			</div><!-- #site-generator -->
+
+		</div><!-- #colophon -->
+	</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script>	<script type="text/javascript">
+	/* <![CDATA[ */
+		jQuery( function() {
+			
+			jQuery('#wpl-button > a.like').click( function(e) {
+				e.preventDefault();
+				
+				jQuery('#wpl-mustlogin').remove();
+
+				jQuery.post( 'http://carbonfivecommunity.wordpress.com/wp-admin/admin-ajax.php', { 
+					'action': 'wpl_record_stat',
+					'stat_name': 'loggedout_like_click'
+				} );
+
+				var tenMins = new Date();
+				tenMins.setTime( tenMins.getTime() + 600000 );
+				document.cookie = 'wpl_rand=9bad371691; expires=' + tenMins.toGMTString() + '; domain=wordpress.com; path=/;';
+				
+				jQuery('#wpl-count').after( '\
+					<div id="wpl-mustlogin"> \
+						<form action="http://carbonfivecommunity.wordpress.com/wp-login.php" method="post"> \
+							<p>Just one more step to like this post:</p> \
+							<label><span>Username</span> <input type="text" name="log" id="user_login" class="input" value="" size="20" tabindex="80" /></label> \
+							<label><span>Password</span> <input type="password" name="pwd" id="user_pass" class="input" value="" size="20" tabindex="81" /></label> \
+							<input type="submit" name="wp-submit" id="wp-submit" class="button-primary" value="Log In" tabindex="82" /> \
+							<input type="hidden" name="redirect_to" value="http://blog.carbonfive.com/2010/10/21/rspec-best-practices/?like=1" /> \
+							<input type="hidden" name="wpl_rand" value="9bad371691" /> \
+							<p>Not a member yet? <a href="http://wordpress.com/signup/?ref=likebox" id="wpl-signup-link">Sign up with WordPress.com</a></p> \
+						</form> \
+					</div> \
+				');
+				
+				jQuery('#wpl-mustlogin').hide().slideDown('fast');
+			} );
+			
+			jQuery('#wpl-mustlogin input.input').live( 'focus', function() {
+				jQuery(this).prev().hide();
+			}).live( 'blur', function() {
+				if ( jQuery(this).val() == '' )
+					jQuery(this).prev().show();
+			});
+			
+			jQuery('#wpl-mustlogin input#wp-submit').live( 'click', function(e) {
+				e.preventDefault();
+				
+				jQuery.post( 'http://carbonfivecommunity.wordpress.com/wp-admin/admin-ajax.php', { 
+					'action': 'wpl_record_stat',
+					'stat_name': 'loggedout_login_submit'
+				}, function() {
+					jQuery('#wpl-mustlogin form').submit();
+				} );
+			});			
+			
+			jQuery('#wpl-mustlogin a#wpl-signup-link').live( 'click', function(e) {
+				e.preventDefault();
+				
+				var link = jQuery(this).attr('href');
+				
+				jQuery.post( 'http://carbonfivecommunity.wordpress.com/wp-admin/admin-ajax.php', { 
+					'action': 'wpl_record_stat',
+					'stat_name': 'loggedout_signup_click'
+				}, function() {
+					location.href = link;
+				} );
+			});					
+			
+		});
+	/* ]]> */
+	</script>
+<script type="text/javascript">_qoptions={qacct:'p-18-mFEk4J448M',labels:'language.en,type.wpcom,posttag.ruby-on-rails,posttag.testing,as'};</script>
+<script type="text/javascript" src="http://edge.quantserve.com/quant.js"></script>
+<noscript><p><img class="robots-nocontent" src="http://pixel.quantserve.com/pixel/p-18-mFEk4J448M.gif?labels=language.en%2Ctype.wpcom%2Cposttag.ruby-on-rails%2Cposttag.testing%2Cas" style="display:none" height="1" width="1" alt="" /></p></noscript>
+<script type='text/javascript' src='http://s.gravatar.com/js/gprofiles.js?n&#038;ver=MU'></script>
+	<script type="text/javascript">	
+	// <![CDATA[
+	WPGroHo = {
+		data: {},
+		renderers: {},
+		syncProfileData: function( hash, id ) {
+			if ( !WPGroHo.data[hash] ) {
+				WPGroHo.data[hash] = {};
+				a = jQuery( 'div.grofile-hash-map-' + hash + ' span' ).each( function() {
+					WPGroHo.data[hash][this.className] = jQuery( this ).text();
+				} );
+			}
+
+			WPGroHo.appendProfileData( WPGroHo.data[hash], hash, id );
+		},
+		appendProfileData: function( data, hash, id ) {
+			for ( var key in data ) {
+				if ( jQuery.isFunction( WPGroHo.renderers[key] ) ) {
+					return WPGroHo.renderers[key]( data[key], hash, id, key );
+				}
+
+				jQuery( '#' + id ).find( 'h4' ).after( jQuery( '<p class="grav-extra ' + key + '" />' ).html( data[key] ) );
+			}
+		}
+	};
+	jQuery(document).ready(function($){
+		Gravatar.profile_cb = function( h, d ) {
+			WPGroHo.syncProfileData( h, d );
+		};
+		Gravatar.attach_profiles();
+	});
+	// ]]>
+	</script>
+	<div style="display:none">
+	<div class="grofile-hash-map-ff9eefc6ed72560c262b0e125151ea7c">
+	</div>
+	<div class="grofile-hash-map-13b7a8408bcd6fc2dfbf4acf1db3d453">
+	</div>
+	<div class="grofile-hash-map-5ee8c5de10548414fe630f290e6954c6">
+	</div>
+	<div class="grofile-hash-map-ba1a65ac3eb1b5acc78ca36f5425ea98">
+	</div>
+	<div class="grofile-hash-map-1f8c49c0c6642216b9acf9083125b2da">
+	</div>
+	<div class="grofile-hash-map-b2da7fcaff78d444c1ac9034427ea230">
+	</div>
+	<div class="grofile-hash-map-ee1937ec38ea1e0d39ed25e4e5e833b9">
+	</div>
+	<div class="grofile-hash-map-5996ec6efc2f04ae9b4dd72960e817a3">
+	</div>
+	<div class="grofile-hash-map-0cbcffbb3f4bbf189054c8c6fa1d4d1a">
+	</div>
+	<div class="grofile-hash-map-42d4590355a1404230fbc9aff4dd377b">
+	</div>
+	<div class="grofile-hash-map-987def7741e1f36805e45f92d66ccf92">
+	</div>
+	<div class="grofile-hash-map-5062a7d9e2878cb962e9a66648dbc576">
+	</div>
+	<div class="grofile-hash-map-ccf4fe97f61701a3f2fe96a29223fa35">
+	</div>
+	<div class="grofile-hash-map-7bb0d7e74198c735783b8a65cd14989c">
+	</div>
+	<div class="grofile-hash-map-e0f4c19148f8b1deb2e86847e225d33d">
+	</div>
+	<div class="grofile-hash-map-0e69b872f3c3f9d5a7048f1d65fe42e4">
+	</div>
+	<div class="grofile-hash-map-57240e72c8912c80bec2deda9b57d483">
+	</div>
+	<div class="grofile-hash-map-9cc550a43dd7f8e73a38749e16f93555">
+	</div>
+	<div class="grofile-hash-map-6f76729a4ca1089b750a8b04e91469b8">
+	</div>
+	</div>
+<script type='text/javascript'>_acseed='Nm01fCNhbSRyMENyRl10VlB+UnxCeC5UI3w4QX5PNH19W3ovYi5FdyEkPSY8bFQpYX1VRHI/OjFyIDdwMVVESi9ZMmgtPWxnJHdpSWc9SHs0P3djJGt2YDpNYjZKPCVKSVNDbGNvUyxrbVMxJmptY2BpOFoq';</script>
+<script type='text/javascript' src='http://s1.wp.com/wp-content/mu-plugins/sharing/sharing.js?m=1289605033g&amp;ver=0.1'></script>
+	<div id="sharing_email" style="display: none;">
+		<form action="" method="post">
+			<label for="target_email">Send to Email Address</label>
+			<input type="text" name="target_email" id="target_email" value="" />
+			
+			
+				<label for="source_name">Your Name</label>
+				<input type="text" name="source_name" id="source_name" value="" />
+				
+				<label for="source_email">Your Email Address</label>
+				<input type="text" name="source_email" id="source_email" value="" />
+
+						
+			<div class="recaptcha" id="sharing_recaptcha"></div>
+			<img style="float: right; display: none" class="loading" src="http://carbonfivecommunity.wordpress.com/wp-content/mu-plugins/sharing/images/loading.gif" alt="loading" width="16" height="16" />
+			<input type="submit" value="Send Email" class="sharing_send" />
+			<a href="#cancel" class="sharing_cancel">Cancel</a>
+			
+			<div class="errors errors-1" style="display: none;">
+				Post was not sent - check your email addresses!			</div>
+
+			<div class="errors errors-2" style="display: none;">
+				Email check failed, please try again			</div>
+			
+			<div class="errors errors-3" style="display: none;">
+				Sorry, your blog cannot share posts by email.			</div>
+		</form>
+	</div>
+<script type="text/javascript" src="http://b.scorecardresearch.com/beacon.js"></script><script type="text/javascript">try{COMSCORE.beacon({c1:2,c2:7518284});}catch(e){}</script><noscript><p class="robots-nocontent"><img src="http://b.scorecardresearch.com/p?cj=1c1=2&#038;c2=7518284" alt="" style="display:none" width="1" height="1" /></p></noscript><script type='text/javascript' src='http://s0.wp.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter/scripts/shCore.js?m=1258143671g&#038;ver=2.1.364b'></script>
+<script type='text/javascript' src='http://s1.wp.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter/scripts/shBrushRuby.js?m=1258143671g&#038;ver=2.1.364b'></script>
+<script type='text/javascript' src='http://s0.wp.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter/scripts/shBrushPlain.js?m=1258143671g&#038;ver=2.1.364b'></script>
+<script type='text/javascript'>
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var themecssurl = "http://s0.wp.com/wp-content/plugins/syntaxhighlighter-wpcom/shThemeDefault.css?m=1267535107g&amp;ver=2.1.364b";
+		if ( themecss.setAttribute ) {
+				themecss.setAttribute( "rel", "stylesheet" );
+				themecss.setAttribute( "type", "text/css" );
+				themecss.setAttribute( "href", themecssurl );
+		} else {
+				themecss.rel = "stylesheet";
+				themecss.href = themecssurl;
+		}
+		document.getElementsByTagName("head")[0].appendChild(themecss);
+	})();
+	SyntaxHighlighter.config.clipboardSwf = 'http://s1.wp.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter/scripts/clipboard.swf?m=1253219630g';
+	SyntaxHighlighter.config.strings.expandSource = 'show source';
+	SyntaxHighlighter.config.strings.viewSource = 'view source';
+	SyntaxHighlighter.config.strings.copyToClipboard = 'copy to clipboard';
+	SyntaxHighlighter.config.strings.copyToClipboardConfirmation = 'The code is in your clipboard now';
+	SyntaxHighlighter.config.strings.print = 'print';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t configured for html-script option: ';
+	SyntaxHighlighter.all();
+</script>
+<script src="http://s.stats.wordpress.com/w.js?19" type="text/javascript"></script>
+<script type="text/javascript">
+st_go({'blog':'18167316','v':'wpcom','user_id':'0','post':'1196','subd':'carbonfivecommunity'});
+ex_go({'crypt':'RDZ8LFkxbXF2QWo2ZGxCdEIydnJVX2UsZ3olWHIxdWJDbSY5QVUxJnJ5YXRIMTgzSERMcytaMyZQLnBhbkMzYkNMfHw2en4rZXd3TEtZWmorSyw9cXwraSZQV25ReEo0LGNLbF81K2VNWmhPU3gmOWFmUlclY3RpVWVMeiZfWmYyW2s4MEhafltxT0R1P2Vhdzh8dzdWU2VENG92Zj03MGxyPXV5NzBWOThSZUk3QUZvNG5xdk5IN0wwdixOcmpfRC1reEp3NHh2UWx0SU9HNGI9P09qQl0vZFB+MFllVEVWZ2t5bmssSTJ3c3xuNjBiLkxrYURYYWcxYS8zYjZuVktDeExvLXVzM2R2cEFXT3Z8SXd2JkV4aHIsRWd6JlJdMmpvOWM0fmtReVs/Lmg5dUstX0o5QzA4TVQ5MG11d2cxTmVRMzF1KzBwK3NBQUlxW3RNbT9TW2FhPTJxRURyWVYsaksyJVVRamtvcmxpa1ZKbUZRLyZ4QkZrZQ=='});
+re_go({'d[pandaji.wordpress.com]':'1','v':'sph','b':'18167316','p':'1196'});
+addLoadEvent(function(){linktracker_init('18167316',1196);});
+	</script>
+</body>
+</html>
