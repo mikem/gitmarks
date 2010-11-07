@@ -1,0 +1,748 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+            "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+  <head>
+    <title>
+      A crash course in how DOM events work - Jupiter JavaScript Consulting
+    </title>
+    <link rel="shortcut icon" href="/images/favicon.ico" />
+    
+    <link rel="stylesheet" href="/navigation/production.css" type="text/css">
+    
+    
+	<link rel="stylesheet" href="http://mediacdn.disqus.com/1066/build/themes/narcissus.css?1281560657&" type="text/css">
+	<link rel="stylesheet" href="http://mediacdn.disqus.com/1066/styles/embed/thread.css?" type="text/css">
+    <meta name="keywords" content="jQuery Consulting, jQuery, JavaScript, Consulting, Development" /><meta name="description" content="Jupiter Consulting provides expert jQuery and JavaScript consulting and development services." />
+  </head>
+  <body>
+    <div class="header">
+        <div id="header">
+
+<h1>
+	<a id="logo" href="/">
+		<img src="../images/logo.gif" alt="Jupiter" /> JavaScript development, design, and consulting.
+	</a>
+</h1>
+
+<div id="contact">
+	<ul>
+		<li class="phone">Call us at <strong>(847)924-6039</strong></li>
+		<li class="email"><a href="mailto:contact@jupiterit.com">contact@jupiterit.com</a></li>
+		<li class="twitter"><a href="http://twitter.com/jupiterjs">@jupiterjs</a> on Twitter</li>
+	</ul>
+</div>
+</div>
+        <div class="nav">
+            
+<ul>
+  
+<li>
+  <a href="/pages/services">Services</a>  
+  <ul>
+    
+<li>
+  <a href="/pages/consulting">Consulting</a>  
+</li>
+
+
+<li>
+  <a href="/pages/training">Training</a>  
+</li>
+
+
+
+  </ul>
+  
+</li>
+
+
+<li>
+  <a href="/pages/open-source">Open Source</a>  
+  <ul>
+    
+<li>
+  <a href="/pages/javascriptmvc">JavaScriptMVC</a>  
+</li>
+
+
+<li>
+  <a href="/pages/damnit">DamnIT</a>  
+</li>
+
+
+<li>
+  <a href="/pages/f-it">F->IT</a>  
+</li>
+
+
+<li>
+  <a href="/pages/embeddedjs">EmbeddedJS</a>  
+</li>
+
+
+<li>
+  <a href="/pages/jabbify">Jabbify</a>  
+</li>
+
+
+  </ul>
+  
+</li>
+
+
+<li>
+  <a href="/pages/clients">Clients</a>  
+  <ul>
+    
+<li>
+  <a href="/pages/t-mobile-and-zend">T-Mobile and Zend</a>  
+</li>
+
+
+<li>
+  <a href="/pages/mindjet">Mindjet</a>  
+</li>
+
+
+<li>
+  <a href="/pages/archer">Archer</a>  
+</li>
+
+
+<li>
+  <a href="/pages/cashnet">CashNet</a>  
+</li>
+
+
+<li>
+  <a href="/pages/shoretel">ShoreTel</a>  
+</li>
+
+
+<li>
+  <a href="/pages/kaplan">Kaplan</a>  
+</li>
+
+
+<li>
+  <a href="/pages/extension">Extension</a>  
+</li>
+
+
+  </ul>
+  
+</li>
+
+
+<li>
+  <a href="/pages/people">People</a>  
+  <ul>
+    
+<li>
+  <a href="/pages/justin-meyer">Justin Meyer</a>  
+</li>
+
+
+<li>
+  <a href="/pages/brian-moschel">Brian Moschel</a>  
+</li>
+
+
+<li>
+  <a href="/pages/jeremy-kahn">Jeremy Kahn</a>  
+</li>
+
+
+<li>
+  <a href="/pages/mihael-konjevic">Mihael Konjević</a>  
+</li>
+
+
+  </ul>
+  
+</li>
+
+
+</ul>
+
+        </div>
+    </div>
+    <div id='content'>
+       
+<div class="section"  id="main">
+	
+
+
+<div class="article">
+
+<h1><a href="http://jupiterit.com/news/a-crash-course-in-how-dom-events-work">A crash course in how DOM events work</a></h1>
+
+<p class="timestamp">Friday 01 October, 2010 by jeremyckahn</p>
+
+	<p>DOM events are something that web developers often take for granted, especially with libraries like jQuery. The complexity and low-level mechanics of events are abstracted away. As far we're concerned, snippets like the following:</p>
+<pre style="font-size: 11px; "><code style="font-size: 11px; ">$('button').click(function(){
+	console.log('Hello!');
+});
+</code>
+</pre>
+<p>just work, and it's magic. However, if you are building an application of any complexity, a solid understanding of the hows, whys, and wheres of the DOM event model is crucial.</p>
+<p>There are three parts to this article:</p>
+<ul><li style="list-style-type: disc; font-size: 11pt; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; text-decoration: none; vertical-align: baseline; "><strong>How to listen for an event</strong>
+</li>
+<li style="list-style-type: disc; font-size: 11pt; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; text-decoration: none; vertical-align: baseline; "><strong>How events move through the document</strong>
+</li>
+<li style="list-style-type: disc; font-size: 11pt; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; text-decoration: none; vertical-align: baseline; "><strong>What the browser is actually doing</strong>
+</li>
+</ul>
+<h2>How to listen for an event</h2>
+<p>There are three ways to listen to an event. Depending on your experience level, there's a good chance you've seen and used them all but have not realized it.</p>
+<h3>DOM Level 0</h3>
+<p>This is the simplest way of defining an event handler. &#160;It's done in the HTML of your page:</p>
+<pre style="font-size: 11px; overflow-x: auto; overflow-y: auto; "><code style="font-size: 11px; ">&lt;button onclick="alert('hello!');"&gt; Say Hello! &lt;/button&gt;</code>
+</pre>
+<p>This approach is highly discouraged. It is a very inflexible method of defining event behavior, and intermixes the structure of an HTML page and application functionality. &nbsp;Setting DOM Level 0 event handlers is not suitable for building applications.</p>
+<h3>DOM Level 1</h3>
+<p>Setting a DOM Level 1 event handler provides a bit more flexibility than DOM Level 0. &nbsp;Here is an example:</p>
+<pre style="font-size: 11px; overflow-x: auto; overflow-y: auto; "><code style="font-size: 11px; ">document.getElementById('myButton').onclick = function(){
+	alert('Hello!');
+}</code>
+</pre>
+<p>This approach separates our JavaScript from our HTML, which is great. &nbsp;It works by setting a callback function as an attribute of an HTML element. &nbsp;However, this approach only allows one handler per element. &nbsp;We can still do better.</p>
+<h3>DOM Level 2 - Event listeners</h3>
+<p>To get the most control over events when scripting the DOM, we want to use a DOM Level 2 event listener. &nbsp;Here's what it looks like:</p>
+<pre style="font-size: 11px; overflow-x: auto; overflow-y: auto; "><code style="font-size: 11px; ">var el = document.getElementById('myButton')
+el.addEventListener( 'click', function(){
+     alert('Hello!');
+}, false);</code>
+</pre>
+<p>This might look a little more complicated than the previous methods, but the extra code is worth taking the time to type out. &nbsp;The big advantage to DOM Level 2 events is that you can have as many handlers for an event as you want - something we will learn about shortly. &nbsp;You can also specify whether the event handler is to be fired on the Capture or Bubble Phase (that's the third parameter in "addEventListener()" - true means Capture Phase, and false means Bubble Phase).</p>
+<p>The remainder of this article applies exclusively to DOM Level 2 events.</p>
+<h2>How events move through the document</h2>
+<p>Events travel through the document in two phases. &nbsp;They are the capture and bubble phase. &nbsp;To understand what these phases mean, take a look at this HTML code:</p>
+<pre style="font-size: 11px; "><code style="font-size: 11px; ">&lt;html&gt;
+  &lt;head&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id="myDiv"&gt;
+      &lt;a id="myAnchor" 
+         href="http://jupiterjs.com/"&gt;Jupiter!
+      &lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code>
+</pre>
+<p>In this code, #myAnchor is a child element of #myDiv, which is a child of the body element, and finally a child of the HTML document element. &nbsp;It's kind of like a file system where you have files inside of folders, it is a hierarchy.&nbsp;</p>
+<p>When you click the anchor tag, the click event actually "drills down" the document through the anchor's parents to reach it, and then makes its way back up. &nbsp;This initial "drilling down" is called the "Capture Phase," and when it circles around and goes back up to the document element, it is known as the "Bubble Phase." &nbsp;Here's an image to demonstrate this point:</p>
+<p><img src="https://lh3.googleusercontent.com/-i0sEFUKCh4IXRWsJ2HoE19davqUoQgeexgnu6c5DA-BOKxe35eYEFPnn0L98KZNM8o2Agl7N8Wmd_kNTlHfD_HYt5Tzm8TXPYVaIeHPOTdDAM4LMg" width="520px;" height="396px;" /></p>
+<p>When we click the anchor tag, the DOM calcualtes the Capture Phase path, firing the Capture Phase event handlers of the root document, body, div and anchor tags (in that order), and then it turns around and fires all of the Bubble Phase event handlers in the reverse order of the Capture Phase.</p>
+<p>Once the event bubbles all the way up to the top of the DOM, the default browser behavior occurs. &nbsp;In the case of an anchor tag, the user is redirected to another page.</p>
+<p>The important thing to understand here is that many events follow this "down-and-up" path through the effected elements in the DOM tree. &nbsp;The distinct phases can each have a separate collection of event handlers on each DOM node associated with them.</p>
+<h2>What the browser is actually doing</h2>
+<p>So now we understand some key concepts, but how do they work? &nbsp;How do they effect our applications? &nbsp;Perhaps the best way to understand what the browser does with our event handlers is to express it in code.</p>
+<h4>addEventListener()</h4>
+<p>Earlier I showed you how to use "<code style="font-size: 11px; ">element.addEventListener()</code>". This is what it is doing internally:</p>
+<pre style="font-size: 11px; overflow-x: auto; overflow-y: auto; "><code style="font-size: 11px; ">// Specify an event handler for a given event and phase
+HTMLNode.prototype.addEventListener = 
+  function(eventName, handler, phase){
+    // Make a __handlers object on 
+    // this element if there is none already
+    if(!this.__handlers){
+      this.__handlers = {};
+    }
+	
+    // If there are no event handler lists for 
+    //  this event, add them
+    if(!this.__handlers[eventName]){
+      this.__handlers[eventName] = 
+        {capture : [], bubble: []};
+    }
+
+    // Add the new handler function 
+    //  to the specified phase list
+    this.__handlers[eventName]
+        [phase ? 'capture' : 'bubble'].push(handler);
+}
+</code>
+</pre>
+<p>"addEventListener()" is a function that every DOM node has, as we can see in the first line (that is what the prototype keyword is doing). &nbsp;Essentially, this function is adding the event handler to a list of event handlers. &nbsp;Each DOM node maintains a list of event handlers for both the Capture and Bubble phases.</p>
+<p><strong>Note</strong>: &nbsp;"__handlers" isn't an actual property of "addEventListener." &nbsp;It is simply a theoretical property that I am using to demonstrate the concept of an internal collection of event handlers.</p>
+<h3>Handle()</h3>
+<p>Now we can see what the browser is doing when we set an event listener, but how exactly are events being fired, and in what order?</p>
+<p>Our Handle() function is an answer to this question. &nbsp;It is a theoretical JavaScript implementation of the DOM's event dispatching code. &nbsp;It's somewhat similar in concept to what happens in Envjs or jQuery's trigger() method. &nbsp;But, it's not actual working code. &nbsp;I will explain the general flow of how it works alongside sections of the code, and then I will show you the code in its entirety.</p>
+<p>Here's a step by step of what the DOM does when an event happens on an element:</p>
+<ol><li style="list-style-type: decimal; font-size: 11pt; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; text-decoration: none; vertical-align: baseline; "><strong>Event setup</strong>
+</li>
+<li style="list-style-type: decimal; font-size: 11pt; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; text-decoration: none; vertical-align: baseline; "><strong>Calculate parent node path</strong>
+</li>
+<li style="list-style-type: decimal; font-size: 11pt; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; text-decoration: none; vertical-align: baseline; "><strong>Execute Capture Phase handlers</strong>
+</li>
+<li style="list-style-type: decimal; font-size: 11pt; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; text-decoration: none; vertical-align: baseline; "><strong>Execute DOM Level 1 event handler</strong>
+</li>
+<li style="list-style-type: decimal; font-size: 11pt; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; text-decoration: none; vertical-align: baseline; "><strong>Execute Bubble Phase handlers</strong>
+</li>
+<li style="list-style-type: decimal; font-size: 11pt; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: bold; font-style: normal; text-decoration: none; vertical-align: baseline; "><strong>Execute default browser behavior</strong>
+</li>
+</ol>
+<h4>1. &nbsp;Event setup</h4>
+<pre style="font-size: 11px; "><code style="font-size: 11px; ">  var elements = [],
+    target = ev.target,
+    isPropagationStopped = false,
+    isDefaultPrevented = false;
+  	
+  // We are on the Capture Phase to start with
+  ev.eventPhase = 1;
+  
+  ev.stopPropagation = function(){
+    isPropagationStopped = true;
+  }
+  
+  ev.preventDefault = function(){
+    isDefaultPrevented = true;
+  }
+</code>
+</pre>
+<p>In the beginning of this function, we want to set up some function properties that we will use later in Handle(). &nbsp;Note that we can determine the most deeply-nested DOM node that was affected by the event with "ev.target." &nbsp;Here, we also want to designate that we are in the Capture Phase by setting "eventPhase" to "1".</p>
+<h4>2. &nbsp;Calculate parent node path</h4>
+<pre style="font-size: 11px; "><code style="font-size: 11px; ">  // Loop up through the DOM and collect all of the 
+  // parent nodes into the 'elements' array
+  do{
+    elements.push(target);
+  }while((target = target.parentNode)); 
+  
+  // Reverse the list so it's a bit easier to read 
+  // in the following for loop
+  elements.reverse();
+</code>
+</pre>
+<p>Here, we collect all of the event target's parents by traversing upwards through the DOM tree until we hit the "documentElement," adding each node to a list along the way. &nbsp;This will actually give us the list we want ordered backwards, so we must reverse the list in order to evaluate it in the next step properly.</p>
+<h4>3. &nbsp;Execute Capture Phase handlers</h4>
+<pre style="font-size: 11px; "><code style="font-size: 11px; ">  // For all of the elements in the list...
+  for(var i = 0 ; i &lt; elements.length; i++){
+  	
+    // If stopPropagation() was called, end the loop - 
+    // we're done.
+    if(isPropagationStopped){
+      break;
+    }
+      
+    var currentElement = elements[i],
+      
+      // If there are any event handlers set for 
+      // this element, event type and phase, 
+      // set that array to 'handlers'.  Otherwise, 
+      // set 'handlers' to an empty array.
+        handlers = currentElement.__handlers
+          &amp;&amp; currentElement.__handlers[ev.type]
+          &amp;&amp; currentElement.__handlers[ev.type].capture 
+          || [];
+          
+    ev.currentTarget = currentElement;
+      
+    // Loop through the handlers we've collected and 
+    // execute them in the context of the current element
+    for(var h = 0; i &lt; handlers.length; h++){
+      handlers[h].call(currentElement, ev);
+    }
+  }
+</code>
+</pre>
+<p>Now, we loop through all of the elements that we just collected (and flipped around). &nbsp;A few things we need to do here:</p>
+<ul><li style="list-style-type: disc; font-size: 11pt; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; text-decoration: none; vertical-align: baseline; ">We need to check if "event.stopPropagation()" was called by one of the event handlers fired (see the last step of this bulleted list). &nbsp;If it was, just break out of this loop - we don't need to iterate through the rest of the list.</li>
+<li style="list-style-type: disc; font-size: 11pt; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; text-decoration: none; vertical-align: baseline; ">Next, we check to see if there were any Capture Phase event handlers set for the DOM node currently being evaluated.</li>
+<li style="list-style-type: disc; font-size: 11pt; font-family: Arial; color: rgb(0, 0, 0); background-color: transparent; font-weight: normal; font-style: normal; text-decoration: none; vertical-align: baseline; ">Finally, loop through all of the handlers we collected and execute them in the context of the node currently being evaluated.</li>
+</ul>
+<h4>4. &nbsp;Execute DOM Level 1 event handler</h4>
+<pre style="font-size: 11px; "><code style="font-size: 11px; ">  // If propagation was not stopped, execute 
+  // the DOM level 1 event handler
+  if(!isPropagationStopped){
+    ev.target["on" + ev.type].call(ev.target, ev);
+  }
+  
+  elements.reverse();
+  ev.eventPhase = 3;
+</code>
+</pre>
+<p>After drilling all the way into the DOM tree, we once again check to see if "event.stopPropagation()" was called. &nbsp;If not, we execute the DOM Level 1 event handler (onclick, onmouseover, etc.) in the context of the event's target node. &nbsp;Afterwards, reverse the list again and change the "eventPhase" to "3" - Bubbling.</p>
+<h4>5. Execute Bubble Phase handlers</h4>
+<pre style="font-size: 11px; "><code style="font-size: 11px; ">  // Basically, do the same thing as before, 
+  // but with the 'elements' list reversed...
+  for(var i = 0 ; i &lt; elements.length; i++){
+    if(isPropagationStopped){
+      break;
+    }
+
+    // ... Also, we are working with the 'bubble' phase 
+    // this time, not 'capture'
+    var currentElement =  elements[i],
+      handlers = currentElement.__handlers 
+        &amp;&amp; currentElement.__handlers[ev.type]
+        &amp;&amp; currentElement.__handlers[ev.type].bubble 
+        || [];
+
+    ev.currentTarget = currentElement;
+
+    for(var h = 0 ; i &lt; handlers.length; h++){
+      handlers[h].call(currentElement,ev);
+    }
+  }
+</code>
+</pre>
+<p>This process is very similar to the one we used in step 3, where we collected and called the Capture Phase event handlers. &nbsp;The only difference is the that list of Nodes was reversed, and we are now evaluating the event handlers stored in the "Bubble" list rather than "Capture."</p>
+<h4>6. Execute default browser behavior</h4>
+<pre style="font-size: 11px; "><code style="font-size: 11px; ">  // Default behaviors for HTML elements
+  if(!isDefaultPrevented){
+
+    // anchor tag (a link)
+    if(ev.type == "click" 
+      &amp;&amp; ev.target.nodeName.toLowerCase() == "a"){
+      window.location = ev.target.href;
+    }
+        
+  // default cases for the rest of the elements go here...
+  }
+</code>
+</pre>
+<p>Many DOM nodes have a default behavior. &nbsp;For example, links redirect you to another page, Submit buttons send data to a server, and so on. &nbsp;So long as "event.preventDefault()" was not called in any of the event handlers, execute the default behavior corresponding to the event target node type. &nbsp;The default functionality is only shown in the sample code for anchor tags, but you can extrapolate the rest.&nbsp;</p>
+<h4><strong>The complete code</strong>
+</h4>
+<p>Again, this is not actual browser code, but this is functionally very similar to how the browser responds to events:</p>
+<pre style="font-size: 11px; overflow-x: auto; overflow-y: auto; "><code style="font-size: 11px; ">// Gets called whenever an en event is fired
+Handle = function(ev){
+  
+  // Step 1: Event setup
+  var elements = [],
+    target = ev.target,
+    isPropagationStopped = false,
+    isDefaultPrevented = false;
+  	
+  // We are on the Capture Phase to start with
+  ev.eventPhase = 1;
+  
+  ev.stopPropagation = function(){
+    isPropagationStopped = true;
+  }
+  
+  ev.preventDefault = function(){
+    isDefaultPrevented = true;
+  }
+  
+  // Step 2: Calculate parent node path
+  	
+  // Loop up through the DOM and collect all of the 
+  // parent nodes into the 'elements' array
+  do{
+    elements.push(target);
+  }while((target = target.parentNode)); 
+  
+  // Reverse the list so it's a bit easier to read 
+  // in the following for loop
+  elements.reverse();
+  
+  // Step 3: Execute Capture Phase handlers
+  
+  // For all of the elements in the list...
+  for(var i = 0 ; i &lt; elements.length; i++){
+  	
+    // If stopPropagation() was called, end the loop - 
+    // we're done.
+    if(isPropagationStopped){
+      break;
+    }
+      
+    var currentElement = elements[i],
+      
+      // If there are any event handlers set for 
+      // this element, event type and phase, 
+      // set that array to 'handlers'.  Otherwise, 
+      // set 'handlers' to an empty array.
+        handlers = currentElement.__handlers
+          &amp;&amp; currentElement.__handlers[ev.type]
+          &amp;&amp; currentElement.__handlers[ev.type].capture 
+          || [];
+          
+    ev.currentTarget = currentElement;
+      
+    // Loop through the handlers we've collected and 
+    // execute them in the context of the current element
+    for(var h = 0; i &lt; handlers.length; h++){
+      handlers[h].call(currentElement, ev);
+    }
+  }
+	
+  // Step 4: Execute DOM Level 1 event handler
+
+  // If propagation was not stopped, execute 
+  // the DOM level 1 event handler
+  if(!isPropagationStopped){
+    ev.target["on" + ev.type].call(ev.target, ev);
+  }
+  
+  elements.reverse();
+  ev.eventPhase = 3;
+
+  // Step 5: Execute Bubble Phase handlers
+
+  // Basically, do the same thing as before, 
+  // but with the 'elements' list reversed...
+  for(var i = 0 ; i &lt; elements.length; i++){
+    if(isPropagationStopped){
+      break;
+    }
+
+    // ... Also, we are working with the 'bubble' phase 
+    // this time, not 'capture'
+    var currentElement =  elements[i],
+      handlers = currentElement.__handlers 
+        &amp;&amp; currentElement.__handlers[ev.type]
+        &amp;&amp; currentElement.__handlers[ev.type].bubble 
+        || [];
+
+    ev.currentTarget = currentElement;
+
+    for(var h = 0 ; i &lt; handlers.length; h++){
+      handlers[h].call(currentElement,ev);
+    }
+  }
+	
+  // Step 6: Execute default browser behavior
+
+  // Default behaviors for HTML elements
+  if(!isDefaultPrevented){
+
+    // anchor tag (a link)
+    if(ev.type == "click" 
+      &amp;&amp; ev.target.nodeName.toLowerCase() == "a"){
+      window.location = ev.target.href;
+    }
+		
+  // default cases for the rest of the elements go here...
+  }
+}</code>
+</pre>
+<h2>Conclusion</h2>
+<p>This was a simplified explanation of event handlers demonstrated in JavaScript code. It's worth mentioning that this is very similar to the way&nbsp;<a href="http://www.envjs.com/" title="http://www.envjs.com/" target="_blank" style="color: rgb(34, 68, 187); ">Envjs</a>&nbsp;handles events. Envjs is a pure JavaScript browser environment that runs in <a href="http://www.mozilla.org/rhino/" title="http://www.mozilla.org/rhino/" target="_blank" style="color: rgb(34, 68, 187); ">Rhino</a>.</p>
+<p>The most important take aways:</p>
+<ul><li>DOM events traverse the document in the bubble and capture phase</li>
+<li>The order the event traverses the parent chain is determined before any event handlers are fired. &nbsp;This means that changing the elements within an event handler won't affect which elements get their event handlers called. &nbsp;For example, if an element's event handler removes its parent and attaches itself to the next containing element, the removed element's event handler will still be called.</li>
+</ul>
+	
+		<h3>Subscribe to:</h3>
+		<ul class='subscriptions'>
+			<li><a href='http://feeds.feedburner.com/JupiterMain'>Jupiter</a></li>
+		
+			<li><a href='http://feeds.feedburner.com/JupiterJavascriptmvc'>JavaScriptMVC</a></li>
+		
+			<li><a href=''>Jeremy Kahn</a></li>
+		
+		</ul>
+	
+<div id='comments'>
+ <div id="disqus_thread"></div>
+ <script type="text/javascript">
+ 	
+	var disqus_identifier = 41;
+ </script>
+</div>
+	
+	<h3>Related Content</h3>
+	<ul class='related_items'>
+	
+		<li><a href="http://jupiterit.com/news/developing-javascript-kangax">Developing JavaScript: Kangax</a></li>
+	
+		<li><a href="http://jupiterit.com/news/talkin-javascriptmvc-is-hard">Talkin JavaScriptMVC is Hard</a></li>
+	
+		<li><a href="http://jupiterit.com/news/jquery-conf">jQuery Conf</a></li>
+	
+		<li><a href="http://jupiterit.com/news/javascript-vs-silverlight">JavaScript vs Silverlight</a></li>
+	
+		<li><a href="http://jupiterit.com/news/phui-grid-and-paginator-widget">Phui Grid and Paginator Widget</a></li>
+	
+		<li><a href="http://jupiterit.com/news/sau-window-name-json-rpc">SAU, Window.Name, JSON-RPC</a></li>
+	
+		<li><a href="http://jupiterit.com/news/archer-and-jupiter-consulting">Archer and Jupiter Consulting</a></li>
+	
+		<li><a href="http://jupiterit.com/news/cashnet-jupiter-and-javascriptmvc">Cashnet, Jupiter, and JavaScriptMVC</a></li>
+	
+		<li><a href="http://jupiterit.com/news/activate-select-and-ui-design-patterns">Activate, Select and UI Design Patterns</a></li>
+	
+		<li><a href="http://jupiterit.com/news/ten-commandments-of-software-engineering">Ten Commandments of Software Engineering</a></li>
+	
+		<li><a href="http://jupiterit.com/news/too-enterprisey">Too Enterprisey?</a></li>
+	
+		<li><a href="http://jupiterit.com/news/mindjet-training">Mindjet Training</a></li>
+	
+		<li><a href="http://jupiterit.com/news/jupiter-is-big">Jupiter is Big</a></li>
+	
+		<li><a href="http://jupiterit.com/news/element-destroyed-a-jquery-special-event">Element Destroyed (a jQuery Special Event)</a></li>
+	
+		<li><a href="http://jupiterit.com/news/js-conf-2010-sponsors">JS Conf 2010 Sponsors</a></li>
+	
+		<li><a href="http://jupiterit.com/news/delegate-able-drag-drop-events-for-jquery">Delegate-able Drag-Drop Events for jQuery</a></li>
+	
+		<li><a href="http://jupiterit.com/news/delegate-able-hover-events-for-jquery">Delegate-able Hover Events for jQuery</a></li>
+	
+		<li><a href="http://jupiterit.com/news/jquery-default-events">jQuery Default Events</a></li>
+	
+		<li><a href="http://jupiterit.com/news/ajax-fixtures-plugin-for-jquery">Ajax Fixtures Plugin for jQuery</a></li>
+	
+		<li><a href="http://jupiterit.com/news/comparedocumentposition-plugin-for-jquery">compareDocumentPosition plugin for jQuery</a></li>
+	
+		<li><a href="http://jupiterit.com/news/convert-form-elements-to-javascript-object-literals-with-jquery-formparams-plugin">Convert Form Elements to JavaScript Object Literals with jQuery formParams Plugin</a></li>
+	
+		<li><a href="http://jupiterit.com/news/should-you-hire-jupiter-for-jquery-consulting">Should You Hire Jupiter for jQuery Consulting?</a></li>
+	
+		<li><a href="http://jupiterit.com/news/get-multiple-computed-styles-fast-with-the-curstyles-jquery-plugin">Get Multiple Computed Styles FAST with the curStyles jQuery Plugin </a></li>
+	
+		<li><a href="http://jupiterit.com/news/set-inner-outer-width-height-with-jquery-dimensions-etc-plugin">Set inner/outer width/height with jQuery Dimensions.Etc Plugin</a></li>
+	
+		<li><a href="http://jupiterit.com/news/a-simple-powerful-lightweight-class-for-jquery">A Simple, Powerful, Lightweight Class for jQuery</a></li>
+	
+		<li><a href="http://jupiterit.com/news/why-jquery-needs-the-enterprise">Why jQuery needs the Enterprise</a></li>
+	
+		<li><a href="http://jupiterit.com/news/ben-alman-is-awesome">Ben Alman is Awesome</a></li>
+	
+		<li><a href="http://jupiterit.com/news/jquery-s-object-literal-coding-conventions">jQuery's Object Literal Coding Conventions</a></li>
+	
+		<li><a href="http://jupiterit.com/news/javascriptmvc-features">JavaScriptMVC Features</a></li>
+	
+		<li><a href="http://jupiterit.com/news/an-open-letter-to-you-and-alex-russell">An Open Letter to You and Alex Russell</a></li>
+	
+		<li><a href="http://jupiterit.com/news/why-jquery-needs-javascriptmvc-part-2">Why jQuery Needs JavaScriptMVC Part 2</a></li>
+	
+		<li><a href="http://jupiterit.com/news/why-jquery-needs-javascriptmvc">Why jQuery needs JavaScriptMVC</a></li>
+	
+		<li><a href="http://jupiterit.com/news/stealjs-script-manager">StealJS - Script Manager</a></li>
+	
+		<li><a href="http://jupiterit.com/news/writing-the-perfect-jquery-plugin">Writing the Perfect jQuery Plugin</a></li>
+	
+		<li><a href="http://jupiterit.com/news/jquery-model-a-jquery-model-layer">jQuery.Model - A jQuery Model Layer</a></li>
+	
+		<li><a href="http://jupiterit.com/news/jquery-boston-conference-2010-moving-up-the-stack">jQuery Boston Conference 2010:  Moving up the stack</a></li>
+	
+		<li><a href="http://jupiterit.com/news/skyscrapers-and-cranes">Skyscrapers and Cranes</a></li>
+	
+		<li><a href="http://jupiterit.com/news/organizing-a-jquery-application">Organizing A jQuery Application</a></li>
+	
+		<li><a href="http://jupiterit.com/news/jquery-view-client-side-templates-for-jquery">jQuery.View - Client Side Templates for jQuery</a></li>
+	
+		<li><a href="http://jupiterit.com/news/funcunit-infographic">FuncUnit Infographic</a></li>
+	
+		<li><a href="http://jupiterit.com/news/premier-training-lessons-learned">Premier Training Lessons Learned</a></li>
+	
+		<li><a href="http://jupiterit.com/news/javascriptmvc-3-0-good-to-go">JavaScriptMVC 3.0: Good To Go!</a></li>
+	
+		<li><a href="http://jupiterit.com/news/creating-a-javascriptmvc-slider">Creating a JavaScriptMVC Slider</a></li>
+	
+		<li><a href="http://jupiterit.com/news/javascriptmvc-cheat-sheet">JavaScriptMVC Cheat Sheet</a></li>
+	
+	</ul>
+
+
+</div>
+
+
+
+</div>
+
+<div class="section"  id="sidebar">
+	
+<br />
+	
+	<div class="section"  id="about">
+	<div class="header">
+		<h3>About Jupiter</h3>
+	</div>
+	<p>
+		Jupiter is dedicated to making JavaScript an easy and enjoyable place to develop kick ass apps.
+		We <a href='/pages/open-source'>open-source</a> everything and 
+		
+		provide expert <a href='/pages/consulting'>web application development</a>, 
+		<a href='/pages/support'>support</a>, and <a href='/pages/training'>training</a>. 
+		
+	</p>
+</div>
+	<div class="section"  id="recent">
+	<div class="header">
+		<h3>Recent Posts</h3>
+	</div>
+	<ul>
+	  
+	    <li>
+	      <a href="http://jupiterit.com/news/javascriptmvc-cheat-sheet">JavaScriptMVC Cheat Sheet</a>
+	    </li>
+	  
+	    <li>
+	      <a href="http://jupiterit.com/news/creating-a-javascriptmvc-slider">Creating a JavaScriptMVC Slider</a>
+	    </li>
+	  
+	    <li>
+	      <a href="http://jupiterit.com/news/javascriptmvc-3-0-good-to-go">JavaScriptMVC 3.0: Good To Go!</a>
+	    </li>
+	  
+	    <li>
+	      <a href="http://jupiterit.com/news/premier-training-lessons-learned">Premier Training Lessons Learned</a>
+	    </li>
+	  
+	    <li>
+	      <a href="http://jupiterit.com/news/funcunit-infographic">FuncUnit Infographic</a>
+	    </li>
+	  
+	    <li>
+	      <a href="http://jupiterit.com/news/jquery-view-client-side-templates-for-jquery">jQuery.View - Client Side Templates for jQuery</a>
+	    </li>
+	  
+	    <li>
+	      <a href="http://jupiterit.com/news/organizing-a-jquery-application">Organizing A jQuery Application</a>
+	    </li>
+	  
+	    <li>
+	      <a href="http://jupiterit.com/news/skyscrapers-and-cranes">Skyscrapers and Cranes</a>
+	    </li>
+	  
+	    <li>
+	      <a href="http://jupiterit.com/news/jquery-boston-conference-2010-moving-up-the-stack">jQuery Boston Conference 2010:  Moving up the stack</a>
+	    </li>
+	  
+	    <li>
+	      <a href="http://jupiterit.com/news/jquery-model-a-jquery-model-layer">jQuery.Model - A jQuery Model Layer</a>
+	    </li>
+	  
+	</ul>
+	
+	<p><a href="http://jupiterit.com/news">Back to all news</a></p>
+</div>
+	
+
+	<div class="section"  id="twitter">
+	<div class="header">
+		<h3><a href="http://twitter.com/jupiterjs">@jupiterjs</a> on Twitter</h3>
+	</div>
+</div>
+</div>
+    </div>
+    <div class="footer">
+          Copyright &copy;2007-2010 Jupiter IT. 
+    </div>
+    
+    <script type='text/javascript' 
+                src='/steal/steal.production.js?navigation'>   
+        </script>
+    
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-2302003-1']);
+  _gaq.push(['_trackPageview']);
+  _gaq.push(['_setDomainName', '.jupiterit.com']);
+  _gaq.push(['_setAllowLinker', true]);
+  _gaq.push(['_setAllowHash', false]);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+  </body>
+</html>
