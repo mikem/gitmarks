@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=550, maximum-scale=1.0" />
+  <meta name="keywords" content="jeff kreeftmeijer, jeffkreeftmeijer" />
+  <meta name="description" content="Combining the work of Nick Evans and Michael Grosser in an attempt to create a better RSpec formatter" />
+  <title>
+    Fuubar: the instafailing RSpec progress bar formatter -  Jeff Kreeftmeijer
+  </title>
+  <link rel="stylesheet" href="/css/reset.css" type="text/css" />
+  
+  <link rel="stylesheet" href="/css/screen.css" type="text/css" />
+  <link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="/css/iphone.css" type="text/css" />
+  <link rel="stylesheet" media="only screen and (max-device-width: 1024px)" href="/css/ipad.css" type="text/css" />
+  <link rel="alternate" type="application/atom+xml" href="http://feeds.feedburner.com/jeffkreeftmeijer" />
+  <link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+  <link href="/images/icon.jpg" rel="apple-touch-icon" />
+</head>
+<body>
+  <div id="wrapper">
+    <div id="inner">
+      <div id="container">
+        <div id="header">
+          <h1>
+            
+              <a href="/">&larr; Jeff Kreeftmeijer</a>
+            
+          </h1>
+          <ul>
+            <li>
+              <a href="/projects">Projects</a>
+            </li>
+            <li>
+              <a href="/archive">Archive</a>
+            </li>
+            <li>
+              <a href="http://github.com/jeffkreeftmeijer">Github &rarr;</a>
+            </li>
+            <li>
+              <a href="http://twitter.com/jkreeftmeijer">Twitter &rarr;</a>
+            </li>
+            <li>
+              <a href="/contact">Contact</a>
+            </li>
+          </ul>
+          <hr class="right"/>
+        </div>
+        <h2>Fuubar: the instafailing RSpec progress bar formatter</h2>
+        
+
+<p class="article_date date">
+  15 Nov 2010
+</p>
+
+<span class="article_buttons">
+  <a class="tweet" target="_blank">
+    <span class="balloon">tweet!</span> <img src="/images/tweet.png"/>
+  </a>
+  <a href="http://feeds.feedburner.com/jeffkreeftmeijer">
+    <span class="balloon">subscribe!</span> <img src="/images/feed.png"/>
+  </a>
+</span>
+
+<hr/>
+
+<div id="content">
+	<p>As you might have noticed, I&#8217;ve been spending some time trying to get running test suites with <a href="https://github.com/rspec">RSpec</a> a bit better and faster over the last weeks. This week I looked into RSpec&#8217;s formatters.</p>
+<p><img src="http://jeffkreeftmeijer.com/images/fuubar.png" alt="" /></p>
+<p>Aside from the red &#8220;F&#8221; RSpec will output when a spec fails, there&#8217;s no direct feedback that allows you to go fix things immediately. You&#8217;ll simply have to wait until your whole suite is done running, or use ^C to interrupt the run. Another thing you can do is use <a href="http://jeffkreeftmeijer.com/2010/making-rspec-stop-operation-immediately-after-failing">the <code>--fail-fast</code> option I wrote about last week</a> or check out <a href="https://github.com/grosser/rspec-instafail">rspec-instafail</a>, which will output the failure details while continuing to run the rest of your specs. Nice.</p>
+<p>Besides that, I realized there were more things that could be improved on, like knowing the total number of specs, the number of specs that have run already and maybe even an <span class="caps">ETA</span> or something like that. Also, the big string of dots and &quot;F&quot;&#8217;s started to seem unnecessary, there should be a nicer way to display this information.</p>
+<p>I checked out RSpec&#8217;s formatters and realized it was extremely easy to write one, so I got distracted and wrote <a href="http://gist.github.com/676219">FffuuuFormatter</a>, which makes RSpec print <span class="caps">FFFUUU</span> instead of <span class="caps">FFFFF</span>. Heh.</p>
+<h3>Fuubar</h3>
+<p>After looking around for a bit, I found an article by <a href="http://twitter.com/nick_evans" title="Nicholas Evans">@nick_evans</a> posted in 2008, in which he tried to fix some of the issues I&#8217;m having with a <a href="http://ekenosen.net/nick/devblog/2008/12/better-progress-bar-for-rspec">progress bar formatter</a>. Nick wrote a really nice solution for it using the <a href="http://rubygems.org/gems/progressbar">progressbar gem</a> by <a href="http://twitter.com/peleteiro" title="Jose Peleteiro">@peleteiro</a>.</p>
+<p>I decided to continue Nick&#8217;s work and got the formatter up to speed with RSpec 2, using rspec-instafail to handle the direct feedback after every failure.  I put the whole thing in a gem and <a href="http://twitter.com/josevalim" title="José Valim">@josevalim</a> came up with the name: <a href="http://github.com/jeffkreeftmeijer/fuubar">Fuubar</a>.</p>
+<p>Here&#8217;s a <a href="http://vimeo.com/16845253">short video of Fuubar in action</a>:</p>
+<p><object width="440" height="350"><br />
+  <param name="allowfullscreen" value="true" /><br />
+  <param name="allowscriptaccess" value="always" /><br />
+  <param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id=16845253&amp;server=vimeo.com&amp;show_title=0&amp;show_byline=0&amp;show_portrait=0&amp;color=ff9933&amp;fullscreen=1" /><br />
+  <embed src="http://vimeo.com/moogaloop.swf?clip_id=16845253&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=ff9933&amp;fullscreen=1" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always"  width="440" height="350"></embed><br />
+</object></p>
+<p>Installing Fuubar is easy. Just put it in your <code>Gemfile</code> and run your specs like this from now on:</p>
+<div class="highlight"><pre><code class="console"><span class="gp">$</span> rspec --format Fuubar --color spec
+</code></pre>
+</div><p>If you want to use Fuubar as your default formatter, simply put the options in your <code>.rspec</code> file:</p>
+<pre><code>--format Fuubar
+--color</code></pre>
+<p>After doing that you can simply run your specs like you&#8217;re used to:</p>
+<div class="highlight"><pre><code class="console"><span class="gp">$</span> rspec spec
+</code></pre>
+</div><h3>Fuuture</h3>
+<p>As always: Let me know how you like it and be sure to create an <a href="http://github.com/jeffkreeftmeijer/fuubar/issues">issue on Github</a>, send me a <a href="https://github.com/inbox/new/jeffkreeftmeijer">Github message</a> or an <a href="http://jeffkreeftmeijer.com/contact/">email</a> if you have any ideas or run into any issues. Of course you can always fork the project and send me a pull request or a patch via email.</p>
+<p>Fuubar only works on RSpec 2 right now, but there&#8217;s no reason why it would be impossible to make it compatible with earlier versions. Also, Nick&#8217;s original code had some functionality to find slow specs, but I omitted it because I couldn&#8217;t really find a nice implementation.</p>
+<p>So, there&#8217;s still a lot to do but I think this is quite an improvement from the current formatters. Maybe we can even turn this into a patch for RSpec to make Fuubar one of the default formatters. What do you think?</p>
+</div>
+
+<span class="article_buttons">
+  <a class="tweet" target="_blank">
+    <span class="balloon">tweet!</span> <img src="/images/tweet.png"/>
+  </a>
+  <a href="http://feeds.feedburner.com/jeffkreeftmeijer">
+    <span class="balloon">subscribe!</span> <img src="/images/feed.png"/>
+  </a>
+</span>
+
+<hr/>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://jeffkreeftmeijer.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+
+      </div>
+
+      <div id="ads">
+        <div class="ad box" id="adzerk">
+          <div id="adzerk_ad_div">
+            <script type="text/javascript" src="http://engine.rubyrow.net/Server/RUBY/JK/NOCSS"></script>
+          </div>
+          <p id="adzerk_by">Ads from <a href='http://rubyrow.net'>RubyRow</a></p>
+        </div>
+
+        <div class="ad" id="webbynode">
+          <a href="http://webbynode.com">
+            <img src="/images/webbynode.png"/>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/jquery.js" type="text/javascript"></script>
+  <script src="http://www.google-analytics.com/ga.js" type="text/javascript"></script>
+  <script src="//static.woopra.com/js/woopra.v2.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    try {
+      var pageTracker = _gat._getTracker("UA-12888762-1");
+      pageTracker._trackPageview();
+    } catch(err){}
+
+    woopraTracker.track();
+  </script>
+
+  <script type="text/javascript">
+
+  var disqus_shortname = 'jeffkreeftmeijer';
+  (function () {
+    var s = document.createElement('script'); s.async = true;
+    s.src = 'http://disqus.com/forums/jeffkreeftmeijer/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+  }());
+  </script>
+
+  <script type="text/javascript" src="http://include.reinvigorate.net/re_.js"></script>
+  <script type="text/javascript">
+  try {
+  reinvigorate.track("h9x8u-654b2wi2u8");
+  } catch(err) {}
+  </script>
+
+  <script stype="text/javascript">
+    $('.tweet').attr('href', 'http://twitter.com/share?url=' + escape(document.location) + '&via=jkreeftmeijer&text=' + escape(document.title.split(' - ')[0]));
+  </script>
+</body>
+</html>
