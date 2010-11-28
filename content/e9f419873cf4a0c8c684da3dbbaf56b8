@@ -1,0 +1,425 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+  "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <title>Tweaking IRB</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  
+  <link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://blog.nicksieger.com/xml/rsd" />
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://blog.nicksieger.com/xml/rss20/article/2/feed.xml" />
+  <link rel="alternate" type="application/atom+xml" title="Atom" href="http://blog.nicksieger.com/xml/atom10/article/2/feed.xml" />
+  <script src="/javascripts/cookies.js" type="text/javascript"></script>
+  <script src="/javascripts/prototype.js" type="text/javascript"></script>
+  <script src="/javascripts/effects.js" type="text/javascript"></script>
+  <script src="/javascripts/typo.js" type="text/javascript"></script>
+  
+  <script type="text/javascript"></script>
+  <link href="/stylesheets/theme/blueprint/screen.css" media="screen, projection" rel="Stylesheet" type="text/css" />
+  <link href="/stylesheets/theme/blueprint/print.css" media="print" rel="Stylesheet" type="text/css" />
+  <!--[if IE]><link href="/stylesheets/theme/blueprint/ie.css" media="screen, projection" rel="Stylesheet" type="text/css" /><![endif]-->
+  <link href="/stylesheets/theme/nick.css" media="all" rel="Stylesheet" type="text/css" />
+  <link href="/stylesheets/user-styles.css" media="all" rel="Stylesheet" type="text/css" />
+</head>
+
+<body>
+  <div id="header">
+    <div class="container">
+      <div id="logo" class="span-14">
+        <h1 id="sitename">
+          <a href="/">Nick Sieger</a>
+          <span id="subtitle"></span>
+        </h1>
+      </div>
+      <div id="search" class="span-6 last"> </div>
+    </div>
+  </div>
+  <div id="header-sep"></div>
+  <div class="container">
+    <div class="span-14">
+      <div id="content">
+        
+        <!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+       xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/"
+       xmlns:dc="http://purl.org/dc/elements/1.1/">
+<rdf:Description
+    rdf:about=""
+    trackback:ping="http://blog.nicksieger.com/articles/trackback/2"
+    dc:title="Tweaking IRB"
+    dc:identifier="http://blog.nicksieger.com/articles/2006/04/23/tweaking-irb"
+    dc:description="IRB (Interactive Ruby Shell) is one of those tools that a hacker learning Ruby hopefully discovers right away&amp;#46; It&amp;#8217;s an extremely useful way to learn the language, verify hunches, test assumptions, and get immediate feedback&amp;#46; IRB promotes"
+    dc:creator="nick"
+    dc:date="2010-11-22T18:03:57+00:00" />
+</rdf:RDF>
+-->
+
+<div class="post" onmouseover="if (getCookie('is_admin') == 'yes') { Element.show('admin_article'); }"  onmouseout="Element.hide('admin_article');" >
+  <a href="/admin/content/edit/2" class="admintools" id="admin_article" style="display: none">edit</a>
+  <h2>Tweaking IRB</h2>
+  <p class="auth">Posted by Nick Sieger
+  <span class="typo_date" title="Sun, 23 Apr 2006 04:02:00 GMT">Sun, 23 Apr 2006 04:02:00 GMT</span></p>
+  <p>IRB (Interactive Ruby Shell) is one of those tools that a hacker
+learning Ruby hopefully discovers right away&#46;  It&#8217;s an extremely
+useful way to learn the language, verify hunches, test assumptions,
+and get immediate feedback&#46;  IRB promotes learning by doing, which is
+the best way of making something stick in your head&#46;  (You can even
+<a href="http://tryruby.hobix.com/">try an online version of irb</a> without even installing Ruby!)</p>
+
+<p>The first order of business when using IRB is to setup your
+preferences&#46;  If you haven&#8217;t done so already, create the file
+<code>~/.irbrc</code> (<code>%USERPROFILE%.irbrc</code> on windows native ruby)&#46;  <code>.irbrc</code>
+is just a regular ruby script where you can run arbitrary ruby code at
+the start of your IRB session&#46;  Add the following to <code>.irbrc</code>: </p>
+
+<div class="typocode"><pre><code class="typocode_ruby "><span class="ident">require</span> <span class="punct">'</span><span class="string">irb/completion</span><span class="punct">'</span>
+<span class="constant">ARGV</span><span class="punct">.</span><span class="ident">concat</span> <span class="punct">[</span> <span class="punct">&quot;</span><span class="string">--readline</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">--prompt-mode</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">simple</span><span class="punct">&quot;</span> <span class="punct">]</span></code></pre></div>
+
+<p>This sets up usage of <a href="http://tiswww.tis.case.edu/~chet/readline/rltop.html">readline</a> in your session and turns on TAB
+completion, making IRB feel as comfortable as regular old <code>bash</code>&#46;  Now
+you can type <code>Kernel::&lt;TAB&gt;</code> and get a list of available methods!
+Good&#46;</p>
+
+<p>Next, the thing that you find yourself doing after using IRB for a
+while is cutting and pasting code from your console buffer over to
+your text editor&#46;  Don&#8217;t have Ruby&#8217;s reflection rules down yet?  Not
+sure whether to use <code>instance_eval</code> or <code>module_eval</code> when working on
+that metaprogramming hack?  Working inside Rails&#8217; <code>script/console</code> and
+searching for the right ActiveRecord finder options?  No matter how
+good your terminal program, you probably have to use the mouse to
+select text out of it to copy to your text editor, and hackers hate
+having to switch from the keyboard to the mouse when in the flow of
+programming&#46;</p>
+
+<p>So here&#8217;s a technique that will append commands entered in your IRB
+session to a file in your home directory (idea from
+<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/58931">ruby&#45;talk:58931</a>)&#46;  Put the following in your <code>.irbrc</code>:</p>
+
+<div class="typocode"><pre><code class="typocode_ruby "><span class="keyword">module </span><span class="module">Readline</span>
+  <span class="keyword">module </span><span class="module">History</span>
+    <span class="constant">LOG</span> <span class="punct">=</span> <span class="punct">&quot;</span><span class="string"><span class="expr">#{ENV['HOME']}</span>/.irb-history</span><span class="punct">&quot;</span>
+
+    <span class="keyword">def </span><span class="method">self.write_log</span><span class="punct">(</span><span class="ident">line</span><span class="punct">)</span>
+      <span class="constant">File</span><span class="punct">.</span><span class="ident">open</span><span class="punct">(</span><span class="constant">LOG</span><span class="punct">,</span> <span class="punct">'</span><span class="string">ab</span><span class="punct">')</span> <span class="punct">{|</span><span class="ident">f</span><span class="punct">|</span> <span class="ident">f</span> <span class="punct">&lt;&lt;</span> <span class="punct">&quot;</span><span class="string"><span class="expr">#{line}</span>
+</span><span class="punct">&quot;}</span>
+    <span class="keyword">end</span>
+
+    <span class="keyword">def </span><span class="method">self.start_session_log</span>
+      <span class="ident">write_log</span><span class="punct">(&quot;</span><span class="string">
+# session start: <span class="expr">#{Time.now}</span>
+
+</span><span class="punct">&quot;)</span>
+      <span class="ident">at_exit</span> <span class="punct">{</span> <span class="ident">write_log</span><span class="punct">(&quot;</span><span class="string">
+# session stop: <span class="expr">#{Time.now}</span>
+</span><span class="punct">&quot;)</span> <span class="punct">}</span>
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+
+  <span class="keyword">alias</span> <span class="symbol">:old_readline</span> <span class="symbol">:readline</span>
+  <span class="keyword">def </span><span class="method">readline</span><span class="punct">(*</span><span class="ident">args</span><span class="punct">)</span>
+    <span class="ident">ln</span> <span class="punct">=</span> <span class="ident">old_readline</span><span class="punct">(*</span><span class="ident">args</span><span class="punct">)</span>
+    <span class="keyword">begin</span>
+      <span class="constant">History</span><span class="punct">.</span><span class="ident">write_log</span><span class="punct">(</span><span class="ident">ln</span><span class="punct">)</span>
+    <span class="keyword">rescue</span>
+    <span class="keyword">end</span>
+    <span class="ident">ln</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="constant">Readline</span><span class="punct">::</span><span class="constant">History</span><span class="punct">.</span><span class="ident">start_session_log</span></code></pre></div>
+
+<p>Now every line typed into IRB will immediately be saved into
+<code>~/.irb-history</code>&#46;  Exercise left to the reader to bind a custom
+keystroke and macro to yank the last line out of that file and
+automatically paste into your text editor&#46;</p>
+
+<p>Long&#45;time <code>bash</code> users know that the shell maintains a history of
+commands across sessions so that you can access commands you typed
+yesterday&#46;  Wouldn&#8217;t it be nice to do this in IRB as well?  Wish
+granted:</p>
+
+<div class="typocode"><pre><code class="typocode_ruby "><span class="ident">require</span> <span class="punct">'</span><span class="string">irb/ext/save-history</span><span class="punct">'</span>
+<span class="constant">IRB</span><span class="punct">.</span><span class="ident">conf</span><span class="punct">[</span><span class="symbol">:SAVE_HISTORY</span><span class="punct">]</span> <span class="punct">=</span> <span class="number">100</span>
+<span class="constant">IRB</span><span class="punct">.</span><span class="ident">conf</span><span class="punct">[</span><span class="symbol">:HISTORY_FILE</span><span class="punct">]</span> <span class="punct">=</span> <span class="punct">&quot;</span><span class="string"><span class="expr">#{ENV['HOME']}</span>/.irb-save-history</span><span class="punct">&quot;</span></code></pre></div>
+
+<p>Happy ruby hacking!  If you find any more handy IRB tips leave them at
+<a href="http://www.rubygarden.org/ruby?Irb/TipsAndTricks">rubygarden</a>, and let me know about them&#46;</p>
+
+<p><em>Footnote: I realize there is duplication and non&#45;DRY happening here
+with two copies of your IRB history, but I came across these
+techniques at two different times, and the functions they serve seem
+different enough to potentially use them both&#46;  If you don&#8217;t like
+that, choose whichever is more appropriate for your needs&#46;</em></p>
+
+<p><em>(Hope this post serves your needs <a href="http://www.unpossible.com/2006/04/20/time-saver-rails-console-reset">Dan</a>&#46;)</em></p>
+</div>
+<p class="meta">
+  Posted in <a href="/articles/category/ruby" rel="tag">ruby</a>&nbsp;<strong>|</strong>&nbsp;<a href="/articles/2006/04/23/tweaking-irb#comments">2 comments</a>&nbsp;<strong>|</strong>&nbsp;<a href="/articles/2006/04/23/tweaking-irb#trackbacks">no trackbacks</a>
+</p>
+
+  <a name="comments"></a><h4 class="blueblk">Comments</h4> 
+      <p class="postmetadata alt">
+      <small><a href="#respond">Leave a response</a></small>
+    </p>
+    <ol class="comment-list" id="commentList">
+  
+    <li id="comment-35"   onmouseover="if (getCookie('is_admin') == 'yes') { Element.show('admin_comment_35'); }"  onmouseout="Element.hide('admin_comment_35');" >
+  <div id="admin_comment_35" style="display: none"><a class="admintools" href="#" onclick="if (confirm('Are you sure you want to delete this comment?')) { new Ajax.Request('/articles/nuke_comment/35', {asynchronous:true, evalScripts:true, onComplete:function(request){new Effect.Puff('comment-35',{duration:0.6});}}); }; return false;">nuke</a><a href="/admin/comments/article/2/edit/35" class="admintools">edit</a></div>
+  <a name="comment-35"></a>
+  <img alt="Avatar" class="gravatar" src="http://www.gravatar.com/avatar.php?gravatar_id=8b72389daf4540ff086ec79c0c42c632&amp;size=60" />
+  <cite><strong><a href="http://justaddwater.dk/">Jessper Rønn-Jensen (justaddwater.dk)</a></strong> </cite> said 94 days later:<br />
+  <p>Thanks a lot for this Nick!
+What a great trick&#46; Thanks a lot for sharing&#46;</p>
+
+<p>I had to make one small adjustment compared to what you describe above&#46; On my system (win xp), I had to set a system variable &#8220;HOME&#8221; and point it to a dir where I put the &#46;irbrc file&#46;</p>
+
+<p>Found via: &#8221;<a href='http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/77139' rel="nofollow">irb completion under windows</a>&#8221; (ruby&#45;talk)</p>
+
+<p>Please let me (and your other readers) know of any updates you make to this code&#46;</p>
+
+<p>/Jesper</p>
+
+<p><a href='http://justaddwater' rel="nofollow">http://justaddwater</a>&#46;dk</p>
+</li>
+<li id="comment-36"   onmouseover="if (getCookie('is_admin') == 'yes') { Element.show('admin_comment_36'); }"  onmouseout="Element.hide('admin_comment_36');" >
+  <div id="admin_comment_36" style="display: none"><a class="admintools" href="#" onclick="if (confirm('Are you sure you want to delete this comment?')) { new Ajax.Request('/articles/nuke_comment/36', {asynchronous:true, evalScripts:true, onComplete:function(request){new Effect.Puff('comment-36',{duration:0.6});}}); }; return false;">nuke</a><a href="/admin/comments/article/2/edit/36" class="admintools">edit</a></div>
+  <a name="comment-36"></a>
+  <img alt="Avatar" class="gravatar" src="http://www.gravatar.com/avatar.php?gravatar_id=d41d8cd98f00b204e9800998ecf8427e&amp;size=60" />
+  <cite><strong>Rand Thacker</strong> </cite> said 94 days later:<br />
+  <p>You can also use HOMEPATH which should be defined on XP pro (not sure about XP home)</p>
+
+<p>just change
+LOG = &#8220;#{ENV[&#8216;HOME&#8217;]}/&#46;irb&#45;history&#8221;
+to
+LOG = &#8220;#{ENV[&#8216;HOMEPATH&#8217;]}&#46;irb&#45;history&#8221;</p>
+
+<p>Rand</p>
+</li>
+
+  
+  </ol>
+
+  <a name="trackbacks"></a><h4 class="blueblk">Trackbacks</h4>
+  <p>
+    Use the following link to trackback from your own site:<br/>
+    <span class="light-bg">http://blog.nicksieger.com/articles/trackback/2</span>
+    </p>    
+    
+
+<p class="postmetadata alt">
+  <small>
+  <a href="http://blog.nicksieger.com/xml/rss20/article/2/feed.xml" title="RSS Feed">RSS feed for this post</a>
+  <a href="http://blog.nicksieger.com/articles/trackback/2" >trackback uri</a>  
+  </small>
+</p>
+
+  <form action="/articles/comment/2" class="commentform" id="commentform" method="post" onsubmit="new Ajax.Updater({success:'commentList'}, '/articles/comment/2', {asynchronous:true, evalScripts:true, insertion:Insertion.Bottom, onComplete:function(request){complete(request)}, onFailure:function(request){failure(request)}, onLoading:function(request){loading()}, parameters:Form.serialize(this)}); return false;">
+
+
+<div class="comment-box">
+  <div id="errors"></div>
+  <div id="preview" style="display: none"></div>
+
+  <a name="respond"></a>
+  <table cellpadding="4" cellspacing="0" class="frm-tbl">
+    <tr>
+      <td><p><label for="comment_author">Your name</label></p></td>
+      <td> <input id="comment_author" name="comment[author]" size="20" type="text" /> <small><a href="#" onclick="Element.toggle('guest_url'); Element.toggle('guest_email'); return false;">(leave url/email &#187;)</a></small></td>
+    </tr>
+    <tr id="guest_url" style="display:none;">
+      <td><p><label for="comment_url">Your blog</label></p></td>
+      <td> <input id="comment_url" name="comment[url]" size="30" type="text" /></td>
+    </tr>
+    <tr id="guest_email" style="display:none;">
+      <td><p><label for="comment_email">Your email</label></p></td>
+      <td> <input id="comment_email" name="comment[email]" size="30" type="text" /></td>
+    </tr>
+    <tr>
+      <td><p><label for="comment_body">Your message</label></p></td>
+      <td valign="top" colspan="2">
+        <textarea cols="40" id="comment_body" name="comment[body]" rows="20"></textarea>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" id="frm-btns">
+      <span id="comment_loading" style="display:none;"><img alt="Spinner" src="/images/spinner.gif" /></span>&nbsp;&nbsp;
+      <a href="#" onclick="new Ajax.Updater('preview', '/articles/comment_preview',  {asynchronous:true, evalScripts:true, parameters:Form.serialize('commentform'), onComplete:function(request){Element.show('preview')}}); return false;">Preview comment</a>      
+      <input type="submit" name="submit" id="form-submit-button" value="submit" class="button" />
+      </td>
+    </tr>
+  </table>
+</div>
+</form>
+
+        <script type="text/javascript">
+//<![CDATA[
+show_dates_as_local_time()
+//]]>
+</script>
+        
+      </div>
+    </div>
+    <div id="sidebar" class="prepend-1 span-6 last">
+      <div>
+        <h3>Contact</h3>
+        <div>
+          <a href="mailto:nick@nicksieger.com">nick@nicksieger.com</a>
+          <a href="http://feeds.feedburner.com/nicksieger" title="Subscribe to my feed, Nick Sieger" rel="alternate" type="application/rss+xml">
+          <img src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png" alt="" style="border:0"/>
+          </a>
+      </div>
+      <div id="search">
+      <h3>Search</h3>
+      <form action="/articles/search" id="sform" method="get">
+ <label for="q">Live Search:</label><input type="text" id="q" name="q" value="" size="15" />
+<img alt="Spinner-blue" id="search_spinner" src="/images/spinner-blue.gif" style="display:none;" />
+</form>
+<script type="text/javascript">
+//<![CDATA[
+new Form.Element.Observer('q', 1, function(element, value) {new Ajax.Updater('search-results', '/live/search', {asynchronous:true, evalScripts:true, onComplete:function(request){Element.hide('search_spinner')}, onLoading:function(request){Element.show('search_spinner')}, parameters:'q=' + escape($F('q'))})})
+//]]>
+</script>
+      </div>
+      <div id="search-results"></div>
+      
+      
+      
+      <div class="sidebar-node">
+        
+<h3>Archives</h3>
+<ul id="archives">
+  
+    <li>
+      <a href="/articles/2010/11">November 2010</a>
+      <em>(2)</em>
+    </li>
+  
+    <li>
+      <a href="/articles/2010/10">October 2010</a>
+      <em>(1)</em>
+    </li>
+  
+    <li>
+      <a href="/articles/2010/09">September 2010</a>
+      <em>(1)</em>
+    </li>
+  
+    <li>
+      <a href="/articles/2010/08">August 2010</a>
+      <em>(2)</em>
+    </li>
+  
+    <li>
+      <a href="/articles/2010/04">April 2010</a>
+      <em>(2)</em>
+    </li>
+  
+    <li>
+      <a href="/articles/2010/03">March 2010</a>
+      <em>(2)</em>
+    </li>
+  
+    <li>
+      <a href="/articles/2010/02">February 2010</a>
+      <em>(1)</em>
+    </li>
+  
+    <li>
+      <a href="/articles/2010/01">January 2010</a>
+      <em>(1)</em>
+    </li>
+  
+    <li>
+      <a href="/articles/2009/11">November 2009</a>
+      <em>(1)</em>
+    </li>
+  
+    <li>
+      <a href="/articles/2009/10">October 2009</a>
+      <em>(1)</em>
+    </li>
+  
+</ul>
+
+
+      </div>
+    
+      
+      <div class="sidebar-node">
+        <h3>Elsewhere</h3>
+<ul>
+  <li><a href="http://twitter.com/nicksieger">Twitter</a></li>
+  <li><a href="http://flickr.com/photos/nicksieger">Flickr</a></li>
+  <li><a href="http://www.facebook.com/nicksieger">Facebook</a></li>
+  <li><a href="http://github.com/nicksieger/">GitHub</a></li>
+  <li><a href="/0141460/index.html" title="Klactoveesedstene">Klactoveesedstene</a></li>
+</ul>
+
+
+      </div>
+    
+      
+      <div class="sidebar-node">
+          <div id="delicious">
+    <h3><a href="http://Pinboard (nicksieger)">Pinboard (nicksieger)</a></h3>
+            <ul>
+      
+      <li>
+        <a href="http://0.0.0.0/downtime/" title=" #JRuby on #Rails app for newbies: $ rails new blog -m , $ cd blog, $ bundle install, $ rails server &amp; :3000 ">Pinboard is Down</a>
+              </li>
+      
+      <li>
+        <a href="http://jruby.org" title=" @jaceklaskowski try regenerating the app with &quot;--template &quot; or change your Gemfile to use &quot;activerecord-jdbcsqlite3-adapter&quot; ">Home — JRuby.org</a>
+              </li>
+      
+      <li>
+        <a href="http://nick.kreucher.net/blog/2010/ruby-on-rails-jruby-ibm-i-and-websphere/" title=" In this article, I will describe how to deploy a Ruby on Rails application to WebSphere and IBM i using JRuby, Warbler and the ActiveRecord-JDBC adapter.
+
+This guide will also work for a DB2 target on another platform (ex: Linux), but we’ll focus on the extra bits needed for IBM i (i5/OS, AS400) support. ">Nicholas J Kreucher » Ruby on Rails, JRuby, IBM i and WebSphere</a>
+              </li>
+      
+      <li>
+        <a href="http://groups.google.com/group/vagrant-up/browse_thread/thread/f3393430e36c9a63" title=" RT @mitchellh: Vagrant 0.6.9. Works on 64-bit Windows (thanks @jruby) and has a puppet provisioner. Announcement:  H ... ">Vagrant 0.6.9. Works on 64-bit Windows! And Puppet! -
+  Vagrant |
+  Google Groups</a>
+              </li>
+      
+      <li>
+        <a href="http://www.theatlantic.com/technology/archive/2010/12/steve-wozniak-to-the-fcc-keep-the-internet-free/68294/" title=" Woz, always a great storyteller, on a most important topic.   ">Steve Wozniak to the FCC: Keep the Internet Free - Steve Wozniak - Technology - The Atlantic</a>
+              </li>
+      
+      <li>
+        <a href="http://lookfirst.com/2010/10/how-to-fix-missing-source-for-latest.html" title=" How to fix missing source for latest Java for Mac OS X 6 22
+This will make clicking through to the JDK source work in Eclipse again after updating to the latest Java for Mac OS X. ">Kick me in the nuts: How to fix missing source for latest Java for Mac OS X 6 22</a>
+              </li>
+      
+      <li>
+        <a href="http://stackoverflow.com/questions/4466683/sql-server-with-rails-3-and-jruby-login-failed-for-user" title=" If you need to use NTLM authentication, you can leave the username blank and make sure ntlmauth.dll is in your PAT ">SQL Server with Rails 3 and jRuby. (Login failed for user) - Stack Overflow</a>
+              </li>
+      
+      <li>
+        <a href="http://wisconsincheesetalk.com/2010/12/20/grilled-beer-and-cheese-sandwich/" title=" I’m not a huge beer drinker.  And by that I mean it’s not my drink of choice. I prefer to eat my beer, actually. I like the flavor it gives to meats and breads and soups, like Wisconsin’s famous beer and cheese soup! Which brings me to how this particular grilled beer and cheese sandwich was born.
+
+It happened one day when I was really craving a grilled cheese sandwich. I wanted to come up with something different, though. So I started by thinking about what kind of bread to use because I figured that would help determine the rest. Immediately it hit me – beer bread! ">Grilled Beer and Cheese Sandwich | Wisconsin Cheese Talk</a>
+              </li>
+      
+      <li>
+        <a href="http://bit.l" title=" RT @engineyard: #JRuby: Connecting #Java &amp; #Ruby webinar recording and slides are up. Check out @nicksieger's presentation.  ... ">(500) http://bit.l</a>
+              </li>
+      
+      <li>
+        <a href="http://ofallpossibleworlds.wordpress.com/2010/12/19/introducing-pacer/" title=" Pacer is a Ruby implementation of the Gremlin graph traversal language. It’s built on JRuby and uses the same very cool graph processing stack that Gremlin uses to do high speed pure Java graph processing, but with lots of extra Ruby goodness baked in. ">Introducing Pacer « All Possible Worlds</a>
+              </li>
+          </ul>
+      </div>
+
+      </div>
+    
+  
+
+
+      
+    </div>
+  </div>
+</body>
+</html>
+
