@@ -1,0 +1,419 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7; IE=EmulateIE9"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel='stylesheet' href='http://l-stat.livejournal.com/ad_base.css?v=1256233931' type='text/css' />
+<link rel="meta" type="application/rdf+xml" title="FOAF" href="http://xach.livejournal.com/data/foaf" />
+<meta name="foaf:maker" content="foaf:mbox_sha1sum '6df998f1f347a71b823d8a636e46dd4000043fd1'" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script>
+// don't crawl this.  read http://www.livejournal.com/developer/exporting.bml
+var LJ_cmtinfo = {"668191":{"parent":null,"u":"ralmoritz","rc":["668447"],"full":1,"username":"ext_336438"},"form_auth":"c0%3A1293264000%3A442%3A86400%3AizbuL0vx0j-0-YE7SvYlM3dHXZj5%3A6ab6de91dc6b92279317fc0ac3bf2a83","673055":{"parent":668447,"u":"ghd0531","rc":[],"full":0,"username":"ghd0531"},"667167":{"parent":null,"u":"jorgetavares","rc":["667935"],"full":1,"username":"ext_333385"},"668447":{"parent":668191,"u":"ralmoritz","rc":["673055"],"full":1,"username":"ext_336438"},"667679":{"parent":null,"u":"georgekoliver","rc":[],"full":1,"username":"georgekoliver"},"remote":null,"667423":{"parent":null,"u":"","rc":[],"full":1,"username":""},"674079":{"parent":null,"u":"","rc":["674335"],"full":1,"username":""},"674335":{"parent":674079,"u":"xach","rc":[],"full":1,"username":"xach"},"666911":{"parent":null,"u":"","rc":[],"full":1,"username":""},"journal":"xach","canAdmin":0,"667935":{"parent":667167,"u":"","rc":[],"full":1,"username":""}}
+</script>
+        <script type="text/javascript">
+            Site = window.Site || {};
+
+            (function(){
+                var p = {"media_embed_enabled":1,"inbox_update_poll":0,"has_remote":0,"statprefix":"http://l-stat.livejournal.com","server_time":1293264442,"ctx_popup":1,"remote_is_suspended":0,"imgprefix":"http://l-stat.livejournal.com/img","esn_async":1,"remote_can_track_threads":null,"currentJournal":"xach","siteroot":"http://www.livejournal.com","currentJournalBase":"http://xach.livejournal.com"}, i;
+                for (i in p) Site[i] = p[i];
+            })();
+       </script>
+    <link rel="stylesheet" type="text/css" href="http://l-stat.livejournal.com/??lj_base.css,esn.css,contextualhover.css?v=1292528841" />
+<!--[if IE]><link rel="stylesheet" type="text/css" href="http://l-stat.livejournal.com/??ie.css?v=1292528841" /><![endif]-->
+<!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="http://l-stat.livejournal.com/??interstitial_banner_us.css?v=1263499801" /><![endif]-->
+<script type="text/javascript" src="http://l-stat.livejournal.com/js/??jquery.js,jquery_fn.js,basic.js,livejournal.js,esn.js,ippu.js,lj_ippu.js,ljwidget.js,ljwidget_ippu.js,journal.js,hourglass.js,contextualhover.js,livejournal-local.js,thread_expander.js,thread_expander.ex.js,quickreply.js,md5.js?v=1292965427"></script>
+<script type="text/javascript" src="http://l-stat.livejournal.com/js/??fb-select-image.js,commentmanage.js?v=1291149813"></script>
+<script type="text/javascript" src="http://w.sharethis.com/button/sharethis.js#publisher=1483b796-4406-4000-98db-019c32f6059e&amp;type=website&amp;embeds=true&amp;post_services=livejournal%2Cfacebook%2Ctwitter%2Cmyspace%2Cdigg%2Cdelicious%2Clinkedin%2Cfriendfeed%2Cwordpress%2Cblogger%2Cgoogle_bmarks%2Ctechnorati&amp;onmouseover=false"></script><meta name="resource-type" content="Document" />
+<meta name="type" content="index" />
+<link rel="bookmark" href="#header" title="Top of the Page" />
+<link rel="bookmark" href="#menu" title="Main Menu" />
+<link rel="bookmark" href="#summary" title="Page Summary" />
+<link rel="bookmark" href="#content" title="Entries" />
+<link rel="stylesheet" href="http://xach.livejournal.com/res/17377224/stylesheet?1292539022" type="text/css" />
+<style type="text/css">
+/* Cleaned CSS: */
+#banner h1 {
+   display: none;
+ 
+}
+
+#entries {
+   margin-left: -200px;
+   width: 50em;
+}
+
+#entries h2 {
+   margin: 0px;
+}
+
+#entries pre {
+   padding-left: 1em;
+}
+
+#menu {
+display: none;
+}
+
+</style>
+<title>Zach&#39;s Journal - Making a small Lisp project with quickproject and Quicklisp</title>
+</head>
+<body id="recent">
+<div id="container">
+<div id="header">
+<div id="banner">
+<h1>Zach&#39;s Journal - Making a small Lisp project with quickproject and Quicklisp</h1>
+</div>
+</div>
+<div id="menu">
+<h2 class="userpic"><img border="0" src="http://l-userpic.livejournal.com/21139885/995384" height="100" width="100" alt="Zach Beane" /></h2>
+<ul id="lj-links"><li><a href="http://xach.livejournal.com/" title="Recent Entries">Recent Entries</a></li><li><a href="http://xach.livejournal.com/friends" title="Friends">Friends</a></li><li><a href="http://xach.livejournal.com/calendar" title="Archive">Archive</a></li><li><a href="http://xach.livejournal.com/profile" title="User Info">User Info</a></li><li><a href="http://www.xach.com/" title=""></a></li></ul><h2>Page Summary</h2><ul id="lj-summary"><li><a href="#t666911">(no subject)</a> [<a href="http://xach.livejournal.com/278047.html?thread=666911#t666911">#</a>]</li><li><a href="#t667167">Managing development of libraries</a> [<a href="http://xach.livejournal.com/278047.html?thread=667167#t667167">#</a>]</li><li><a href="#t667423">Sweet!</a> [<a href="http://xach.livejournal.com/278047.html?thread=667423#t667423">#</a>]</li><li><a href="#t667679">(no subject)</a> [<a href="http://xach.livejournal.com/278047.html?thread=667679#t667679">#</a>]</li><li><a href="#t668191">Brilliant!</a> [<a href="http://xach.livejournal.com/278047.html?thread=668191#t668191">#</a>]</li><li><a href="#t674079">tests?</a> [<a href="http://xach.livejournal.com/278047.html?thread=674079#t674079">#</a>]</li></ul></div>
+<div id="content">
+<div id="entries">
+<div id="entry_278047" class="ind-entry"><h2>Making a small Lisp project with quickproject and Quicklisp</h2><h4><a href="http://www.livejournal.com/go.bml?journal=xach&amp;itemid=278047&amp;dir=prev" title="previous entry">&laquo; previous entry</a> | <a href="http://www.livejournal.com/go.bml?journal=xach&amp;itemid=278047&amp;dir=next" title="next entry">next entry &raquo;</a><br /><b>Nov. 24th, 2010 | 11:35 am</b><br /></h4><div class="entry-item"><p>A few years ago I wrote
+  about <a href="http://xach.livejournal.com/130040.html">how I make
+  small Common Lisp projects</a>. With the availability
+  of <a href="http://www.quicklisp.org/">Quicklisp</a> and ASDF2, my
+  process has changed quite a bit. Here's what I do lately.
+
+<p><a name="cutid1"></a><b>Get a comfortable environment</b> (done only once, not once per
+  project). First, as part of setting up my CL environment, I install
+  Quicklisp and add it to my SBCL startup file. That means
+  downloading <a href="http://beta.quicklisp.org/quicklisp.lisp">quicklisp.lisp</a>
+  and then running a couple commands:
+
+<pre>
+(load "quicklisp.lisp")
+(quicklisp-quickstart:install)
+(ql:add-to-init-file)
+</pre>
+
+<p>After that, Quicklisp loads automatically every time I start Lisp, and I
+  have <a href="http://www.quicklisp.org/beta/releases.html">more than
+  300 libraries</a> available to add as easy dependencies of my
+  project, if needed.
+
+<p>Since I use Emacs and really like slime, I also usually install
+  <a href="https://github.com/quicklisp/quicklisp-slime-helper">quicklisp-slime-helper</a>
+  with <tt>(ql:quickload&nbsp;"quicklisp-slime-helper")</tt> as one of
+  my first steps on a new system. Emacs isn't required to follow the
+  project-creation steps below, though.
+
+<p>Second, Quicklisp includes ASDF2. I like to set up ASDF2 to scan a
+  particular directory tree, <tt>~/src/lisp/</tt>, for local
+  systems. To do that, I create a config file
+  named <tt>~/.config/common-lisp/source-registry.co<wbr />nf.d/projects.conf</tt>
+  that has this in it:
+
+<pre>
+(:tree (:home "src/lisp/"))
+</pre>
+
+<p>With that file in place, I can add new projects to that directory
+  tree, and after an <tt>(asdf:initialize-source-registry)</tt> the
+  project's systems will be loadable with <tt>asdf:load-system</tt>. I
+  can unpack tarballs, check things out from source control systems,
+  or create new projects and they'll all be easily available for
+  loading.
+
+<p>ASDF2's default setup also scans a directory
+called <tt>~/.local/share/common-lisp/source/</tt>, so if you don't
+mind putting projects there, you can use that without any additional
+configuration.
+
+<p>With Quicklisp installed and ASDF2 configured, here are the steps I
+  follow when I get an idea and I want to explore it in Common Lisp.
+
+<p><b>note</b> In the following examples, I use pathnames like <tt>#p"~/foo/"</tt> to mean
+<tt>(merge-pathnames "foo/" (user-homedir-pathname))</tt>. Most CL implementations allow this
+shorthand, but if yours doesn't, you will need to use the full pathname, e.g. <tt>#p"/home/xach/foo/"</tt>.
+
+<p><b>Create a project skeleton with <a href="https://github.com/xach/quickproject">quickproject</a> and load it</b>. Quickproject is part of
+    Quicklisp, so if it's not already loaded, I can just use this:
+
+<pre>
+(ql:quickload "quickproject")
+</pre>
+
+<p>For this example, I'll make a project called <i>swatchblade</i>
+  that generates rounded-rectangle PNGs of a particular color, and
+  makes it available as a web service with Hunchentoot. To create a
+  project skeleton for the project, I use this:
+
+<pre>
+* (quickproject:make-project "~/src/lisp/<b>swatchblade</b>/"
+                             :depends-on '(vecto hunchentoot))
+"swatchblade"
+</pre>
+
+<p>The last part of the directory name is used as the new project
+name. I could choose a different name by passing the <tt>:name</tt>
+option explicitly.
+
+<p><tt>quickproject:make-project</tt> creates several files in the
+  swatchblade directory:
+
+<ul>
+<li> package.lisp
+<li> swatchblade.lisp
+<li> swatchblade.asd
+<li> README.txt
+</ul> 
+
+<p>It also adds the directory to your ASDF configuration, so you can
+  immediately load the skeleton project and its dependencies:
+
+<pre>
+(ql:quickload "swatchblade")
+</pre>
+
+<p><tt>ql:quickload</tt> will automatically install required libraries
+  if they're available in Quicklisp.
+
+<p><b>Write some code</b>. I open the newly-created
+  <tt>~/src/lisp/swatchblade/swatchblade.lisp</tt> and start hacking. 
+
+<p>I define variables with defvar and defparameter, functions with
+defun and defgeneric, macros with defmacro, classes with defclass,
+etc. As I write each one, I compile it immediately with C-c C-c and
+occasionally switch over to the REPL to run some code.
+
+<p>As I use symbols from other projects, I update
+the <tt>defpackage</tt> form in <tt>package.lisp</tt> to import
+symbols. For example, I might want to use several Vecto symbols
+without package prefixes, so I could do this:
+
+<pre>
+(defpackage #:swatchblade
+  (:use #:cl)
+  (:shadowing-import-from #:vecto
+                          #:with-canvas
+                          #:rounded-rectangle
+                          #:set-rgb-fill
+                          #:save-png-stream))
+</pre>
+
+<p><p>I don't put any library management code directly into Lisp
+source files. If I decide to use more external projects, I
+edit <tt>swatchblade.asd</tt> and add to the <tt>:depends-on</tt>
+list, e.g.:
+
+<pre>
+(asdf:defsystem #:swatchblade
+  :serial t
+  :depends-on (#:vecto
+               #:hunchentoot
+               <b>#:cl-colors</b>)
+  :components ((:file "package")
+               (:file "swatchblade")))
+</pre>
+
+<p>Reloading the system with <tt>ql:quickload</tt> will install (if
+necessary) and load any newly-required systems.
+
+<p><b>Reorganize</b>. For small projects, sometimes a single file
+suffices. Most of the time, though, I end up splitting code up into
+multiple files. In this example, I might make a file
+called <tt>utils.lisp</tt>, a file called <tt>graphics.lisp</tt>, and
+a file called <tt>web.lisp</tt>, and update the system definition from
+this, the system automatically created by quickproject:
+
+<pre>
+(asdf:defsystem #:swatchblade
+  :serial t
+  :depends-on (#:vecto
+               #:hunchentoot)
+  :components ((:file "package")
+               (:file "swatchblade")))
+</pre>
+
+...to be something like this:
+
+<pre>
+(asdf:defsystem #:swatchblade
+  :serial t
+  :depends-on (#:vecto
+               #:hunchentoot)
+  :components ((:file "package")
+               (:file "utils")
+               (:file "graphics")
+               (:file "web")
+               (:file "swatchblade")))
+</pre>
+
+<p>When the <tt>:serial t</tt> option is present in the defsystem,
+files are compiled and loaded in order. You can get more complicated
+in expressing inter-file relationships, but I haven't found it worth
+the trouble. I just organize my files so that functions and macros
+needed in later files are provided in earlier files.
+
+
+<p><b>Reuse</b>. With something like swatchblade, I would probably
+re-use it by starting Lisp, loading the project
+with <tt>ql:quickload</tt>, and running a function to start
+Hunchentoot with the swatchbade handler in effect. The final
+package definition might look something like this:
+
+<pre>
+(defpackage #:swatchblade
+  (:use #:cl)
+  <b>(:export #:start-web-server)</b>
+  (:shadowing-import-from #:vecto
+                          #:with-canvas
+                          #:rounded-rectangle
+                          #:set-rgb-fill
+                          #:save-png-stream))
+</pre>
+
+<p>The session then might look something like this:
+
+<pre>
+* <b>(ql:quickload "swatchblade")</b>
+<i>loading output</i>
+* <b>(swatchblade:start-web-server :port 8080)</b>
+Server started on port 8080.
+</pre>
+
+<p>With a project that is meant to be used more as a library, the
+package would likely have many more exports, and I would re-use it by
+passing it with the <tt>:depends-on</tt> argument
+of <tt>quickproject:make-project</tt>, e.g.:
+
+<pre>
+(quickproject:make-project "~/src/lisp/whimsytron/" 
+                           <b>:depends-on '(swatchblade)</b>)
+</pre>
+
+<p>From there I can go back to the "Write some code" step and continue
+the cycle.
+
+<p>If I want to reuse a project as a standalone program I can run from
+the command-line, I
+use <a href="http://www.xach.com/lisp/buildapp/">Buildapp</a>.
+<div class='ljtags'>Tags: <a rel='tag' href='http://xach.livejournal.com/tag/lisp'>lisp</a>, <a rel='tag' href='http://xach.livejournal.com/tag/quicklisp'>quicklisp</a></div></div>
+<h4><a href="http://xach.livejournal.com/278047.html" title="permalink" class="Link">Link</a> | <a onclick="return QuickReply.reply('topcomment',0,'')" href="http://xach.livejournal.com/278047.html?mode=reply" class="comments">Leave a comment</a><div  id="ljqrttopcomment" style="display: none;"></div> | <a href="http://www.livejournal.com/tools/memadd.bml?journal=xach&amp;itemid=278047" title="Add to Memories">Add to Memories</a> | <a href="#" title="Share this!">Share this!</a><script type="text/javascript">
+            var stLink = jQuery('a:last')[0];
+            stLink.href = 'javascript:void(0)';
+            SHARETHIS_post = SHARETHIS.addEntry({url:'http://xach.livejournal.com/278047.html', title: 'Making a small Lisp project with quickproject and Quicklisp'}, {button: false});
+            SHARETHIS_post.attachButton(stLink);
+            SHARETHIS_ary.push(SHARETHIS_post);
+            </script></h4></div><h2>Comments {10}</h2><div id="comments"><div id='ljcmt666911' style='margin-left: 0px; margin-top: 5px'>
+<a name="t666911"></a><div class="ind-comment-one" style="margin-left: 0px;">
+
+<h2> <i>(no subject)</i></h2><h4><b>from:</b> <i>anonymous</i><br />
+<b>date:</b> <span title="1 hours after journal entry">Nov. 24th, 2010 05:37 pm (UTC)</span><br />
+<a href="http://xach.livejournal.com/278047.html?thread=666911#t666911" title="permalink" class="Link">Link</a><br />
+</h4>
+<div class="entry-item">“ASDF2's default setup also scans a directory called ~/.local/share/common-lisp/source/, so if you don't mind putting projects there, …”<br /><br />You don’t have to: just make a symbolic link to your projects directory here.<br />  ln -s ~/path/to/my/projects ~/.local/share/common-lisp/source/<br /></div>
+<h4><a onclick="return QuickReply.reply('666911',2605,'')" href="http://xach.livejournal.com/278047.html?replyto=666911">Reply</a> | <a href="http://xach.livejournal.com/278047.html?thread=666911#t666911" title="Thread">Thread</a></h4><div  id="ljqrt666911" style="display: none;"></div></div>
+
+</div><div id='ljcmt667167' style='margin-left: 0px; margin-top: 5px'>
+<a name="t667167"></a><div class="ind-comment-one" style="margin-left: 0px;">
+<h3 class="userpic"><img src="http://l-userpic.livejournal.com/106124843/32326384" width="48" height="48" alt="Jorge Tavares" /></h3>
+<h2> Managing development of libraries</h2><h4><b>from:</b> <span class="ljuser with-alias-value ljuser-name_" lj:user="ext_333385" style="white-space:nowrap"><a href="http://www.livejournal.com/userinfo.bml?userid=32326384&amp;t=I"><img src="http://l-stat.livejournal.com/img/twitter-profile.gif?v=1" alt="[info]" width="16" height="16" style="vertical-align: bottom; border: 0; padding-right: 1px;" /></a><a href="http://twitter.com/jorgetavares"><b>jorgetavares</b></a></span><br />
+<b>date:</b> <span title="1 hours after journal entry">Nov. 24th, 2010 05:51 pm (UTC)</span><br />
+<a href="http://xach.livejournal.com/278047.html?thread=667167#t667167" title="permalink" class="Link">Link</a><br />
+</h4>
+<div class="entry-item">This is a very nice overview of how to start a project.<br /><br />However, I just wonder how people usually manage the development of their own libraries. Specifically, when you need a "stable" version and a "development" version. For example, I have right now three personal libraries where I need to keep them "frozen" so that I can keep running some experiments for a project I am working on. But at the same time, I need to change/improve some of the code in these libraries for future projects. <br /><br />Is is just a case of using the vcs (e.g., git), or having different system names (e.g., lib1-stable and lib1-dev), a combination of several things, or something else?</div>
+<h4><a onclick="return QuickReply.reply('667167',2606,'Re: Managing development of libraries')" href="http://xach.livejournal.com/278047.html?replyto=667167">Reply</a> | <a href="http://xach.livejournal.com/278047.html?thread=667167#t667167" title="Thread">Thread</a></h4><div  id="ljqrt667167" style="display: none;"></div></div>
+
+</div><div id='ljcmt667935' style='margin-left: 25px; margin-top: 5px'>
+<a name="t667935"></a><div class="ind-comment-two" style="margin-left: 5px;">
+
+<h2> Re: Managing development of libraries</h2><h4><b>from:</b> <i>anonymous</i><br />
+<b>date:</b> <span title="1 days after journal entry">Nov. 25th, 2010 06:28 pm (UTC)</span><br />
+<a href="http://xach.livejournal.com/278047.html?thread=667935#t667935" title="permalink" class="Link">Link</a><br />
+</h4>
+<div class="entry-item">I would suggest using git's branches.</div>
+<h4><a onclick="return QuickReply.reply('667935',2609,'Re: Managing development of libraries')" href="http://xach.livejournal.com/278047.html?replyto=667935">Reply</a> | <a href="http://xach.livejournal.com/278047.html?thread=667167#t667167" title="Parent">Parent</a> | <a href="http://xach.livejournal.com/278047.html?thread=667935#t667935" title="Thread">Thread</a></h4><div  id="ljqrt667935" style="display: none;"></div></div>
+
+</div><div id='ljcmt667423' style='margin-left: 0px; margin-top: 5px'>
+<a name="t667423"></a><div class="ind-comment-one" style="margin-left: 0px;">
+
+<h2> Sweet!</h2><h4><b>from:</b> <i>anonymous</i><br />
+<b>date:</b> <span title="3 hours after journal entry">Nov. 24th, 2010 08:27 pm (UTC)</span><br />
+<a href="http://xach.livejournal.com/278047.html?thread=667423#t667423" title="permalink" class="Link">Link</a><br />
+</h4>
+<div class="entry-item">Nice work! I didn't know about the quickproject aspect of quicklisp. <br /><br />Makes me wish I were making small projects instead of always laboring on one giant one. <br /><br /> -- Chris P</div>
+<h4><a onclick="return QuickReply.reply('667423',2607,'Re: Sweet!')" href="http://xach.livejournal.com/278047.html?replyto=667423">Reply</a> | <a href="http://xach.livejournal.com/278047.html?thread=667423#t667423" title="Thread">Thread</a></h4><div  id="ljqrt667423" style="display: none;"></div></div>
+
+</div><div id='ljcmt667679' style='margin-left: 0px; margin-top: 5px'>
+<a name="t667679"></a><div class="ind-comment-one" style="margin-left: 0px;">
+
+<h2> <i>(no subject)</i></h2><h4><b>from:</b> <span class="ljuser with-alias-value ljuser-name_" lj:user="georgekoliver" style="white-space:nowrap"><a href="http://georgekoliver.livejournal.com/profile"><img src="http://l-stat.livejournal.com/img/userinfo.gif?v=1" alt="[info]" width="17" height="17" style="vertical-align: bottom; border: 0; padding-right: 1px;" /></a><a href="http://georgekoliver.livejournal.com/"><b>georgekoliver</b></a></span><br />
+<b>date:</b> <span title="9 hours after journal entry">Nov. 25th, 2010 01:55 am (UTC)</span><br />
+<a href="http://xach.livejournal.com/278047.html?thread=667679#t667679" title="permalink" class="Link">Link</a><br />
+</h4>
+<div class="entry-item">very useful post, thank you. <br /><br /></div>
+<h4><a onclick="return QuickReply.reply('667679',2608,'')" href="http://xach.livejournal.com/278047.html?replyto=667679">Reply</a> | <a href="http://xach.livejournal.com/278047.html?thread=667679#t667679" title="Thread">Thread</a></h4><div  id="ljqrt667679" style="display: none;"></div></div>
+
+</div><div id='ljcmt668191' style='margin-left: 0px; margin-top: 5px'>
+<a name="t668191"></a><div class="ind-comment-one" style="margin-left: 0px;">
+<h3 class="userpic"><img src="http://l-userpic.livejournal.com/106193337/32391376" width="48" height="48" alt="Ralph Moritz" /></h3>
+<h2> Brilliant!</h2><h4><b>from:</b> <span class="ljuser with-alias-value ljuser-name_" lj:user="ext_336438" style="white-space:nowrap"><a href="http://www.livejournal.com/userinfo.bml?userid=32391376&amp;t=I"><img src="http://l-stat.livejournal.com/img/twitter-profile.gif?v=1" alt="[info]" width="16" height="16" style="vertical-align: bottom; border: 0; padding-right: 1px;" /></a><a href="http://twitter.com/ralmoritz"><b>ralmoritz</b></a></span><br />
+<b>date:</b> <span title="2 days after journal entry">Nov. 27th, 2010 11:27 am (UTC)</span><br />
+<a href="http://xach.livejournal.com/278047.html?thread=668191#t668191" title="permalink" class="Link">Link</a><br />
+</h4>
+<div class="entry-item">Excellent post Zach! I've been using quicklisp to simplify setup of my dev environment & quicklisp seems like another great addition to my toolkit. Way to go man.</div>
+<h4><a onclick="return QuickReply.reply('668191',2610,'Re: Brilliant!')" href="http://xach.livejournal.com/278047.html?replyto=668191">Reply</a> | <a href="http://xach.livejournal.com/278047.html?thread=668191#t668191" title="Thread">Thread</a></h4><div  id="ljqrt668191" style="display: none;"></div></div>
+
+</div><div id='ljcmt668447' style='margin-left: 25px; margin-top: 5px'>
+<a name="t668447"></a><div class="ind-comment-two" style="margin-left: 5px;">
+<h3 class="userpic"><img src="http://l-userpic.livejournal.com/106193337/32391376" width="48" height="48" alt="Ralph Moritz" /></h3>
+<h2> Re: Brilliant!</h2><h4><b>from:</b> <span class="ljuser with-alias-value ljuser-name_" lj:user="ext_336438" style="white-space:nowrap"><a href="http://www.livejournal.com/userinfo.bml?userid=32391376&amp;t=I"><img src="http://l-stat.livejournal.com/img/twitter-profile.gif?v=1" alt="[info]" width="16" height="16" style="vertical-align: bottom; border: 0; padding-right: 1px;" /></a><a href="http://twitter.com/ralmoritz"><b>ralmoritz</b></a></span><br />
+<b>date:</b> <span title="2 days after journal entry">Nov. 27th, 2010 11:41 am (UTC)</span><br />
+<a href="http://xach.livejournal.com/278047.html?thread=668447#t668447" title="permalink" class="Link">Link</a><br />
+</h4>
+<div class="entry-item">Sorry, I meant <strong>quickproject</strong> seems like another great addition to my toolkit.</div>
+<h4><a onclick="return QuickReply.reply('668447',2611,'Re: Brilliant!')" href="http://xach.livejournal.com/278047.html?replyto=668447">Reply</a> | <a href="http://xach.livejournal.com/278047.html?thread=668191#t668191" title="Parent">Parent</a> | <a href="http://xach.livejournal.com/278047.html?thread=668447#t668447" title="Thread">Thread</a> | <a href='http://xach.livejournal.com/278047.html?thread=668447#t668447' onClick="Expander.make(this,'http://xach.livejournal.com/278047.html?thread=668447&expand=b8fa716778003d1d0c511f33071b059f#t668447','668447'); return false;">Expand</a></h4><div  id="ljqrt668447" style="display: none;"></div></div>
+
+</div><div id='ljcmt673055' style='margin-left: 50px; margin-top: 5px'>
+<a href="http://xach.livejournal.com/278047.html?thread=673055#t673055">(no subject)</a> - <span class="ljuser with-alias-value ljuser-name_" lj:user="ghd0531" style="white-space:nowrap;text-decoration:line-through"><a href="http://ghd0531.livejournal.com/profile"><img src="http://l-stat.livejournal.com/img/userinfo.gif?v=1" alt="[info]" width="17" height="17" style="vertical-align: bottom; border: 0; padding-right: 1px;" /></a><a href="http://ghd0531.livejournal.com/"><b>ghd0531</b></a></span> <a href='http://xach.livejournal.com/278047.html?thread=673055#t673055' onClick="Expander.make(this,'http://xach.livejournal.com/278047.html?thread=673055&expand=19fd5b2b029e77a3245352dfe90bc0fb#t673055','673055'); return false;">Expand</a></div><div id='ljcmt674079' style='margin-left: 0px; margin-top: 5px'>
+<a name="t674079"></a><div class="ind-comment-one" style="margin-left: 0px;">
+
+<h2> tests?</h2><h4><b>from:</b> <i>anonymous</i><br />
+<b>date:</b> <span title="16 days after journal entry">Dec. 10th, 2010 10:26 pm (UTC)</span><br />
+<a href="http://xach.livejournal.com/278047.html?thread=674079#t674079" title="permalink" class="Link">Link</a><br />
+</h4>
+<div class="entry-item">Thanks, this is really great. Do you have any advice for how to include tests? Everyone seems to do it differently and I don't understand the additional "perform" methods that are often included with the defsystems. It would be really great if you could describe the steps you would take to add a test system onto a project that you started with quickproject.</div>
+<h4><a onclick="return QuickReply.reply('674079',2633,'Re: tests?')" href="http://xach.livejournal.com/278047.html?replyto=674079">Reply</a> | <a href="http://xach.livejournal.com/278047.html?thread=674079#t674079" title="Thread">Thread</a></h4><div  id="ljqrt674079" style="display: none;"></div></div>
+
+</div><div id='ljcmt674335' style='margin-left: 25px; margin-top: 5px'>
+<a name="t674335"></a><div class="ind-comment-two" style="margin-left: 5px;">
+<h3 class="userpic"><img src="http://l-userpic.livejournal.com/21139885/995384" width="100" height="100" alt="Zach Beane" /></h3>
+<h2> Re: tests?</h2><h4><b>from:</b> <span class="ljuser with-alias-value ljuser-name_" lj:user="xach" style="white-space:nowrap"><a href="http://xach.livejournal.com/profile"><img src="http://l-stat.livejournal.com/img/userinfo.gif?v=1" alt="[info]" width="17" height="17" style="vertical-align: bottom; border: 0; padding-right: 1px;" /></a><a href="http://xach.livejournal.com/"><b>xach</b></a></span><br />
+<b>date:</b> <span title="16 days after journal entry, 05:32 pm (xach&#39;s time)">Dec. 10th, 2010 10:32 pm (UTC)</span><br />
+<a href="http://xach.livejournal.com/278047.html?thread=674335#t674335" title="permalink" class="Link">Link</a><br />
+</h4>
+<div class="entry-item">I don't usually write tests so I'm afraid I can't offer any guidance.</div>
+<h4><a onclick="return QuickReply.reply('674335',2634,'Re: tests?')" href="http://xach.livejournal.com/278047.html?replyto=674335">Reply</a> | <a href="http://xach.livejournal.com/278047.html?thread=674079#t674079" title="Parent">Parent</a> | <a href="http://xach.livejournal.com/278047.html?thread=674335#t674335" title="Thread">Thread</a></h4><div  id="ljqrt674335" style="display: none;"></div></div>
+
+</div></div></div><div id="footer"><p><a href="http://xach.livejournal.com/278047.html?mode=reply" title="Leave a comment">Leave a comment</a>
+</p></div></div>
+</div>
+<script src='http://www.google-analytics.com/ga.js' type='text/javascript'></script>
+<script type='text/javascript'>try{var pageTracker=_gat._getTracker('UA-16546692-1');pageTracker._trackPageview()}catch(e){}</script><div id='hello-world' style='text-align: left; font-size:0; line-height:0; height:0; overflow:hidden;'>
+<script type="text/javascript"> var DR_id = 1111; </script>
+<script src="http://l-stat.livejournal.com/js/pagestats/DR_v4u3.js?v=1" type="text/javascript"></script>
+    <!-- Begin comScore Tag -->
+<script>
+    document.write(unescape("%3Cscript src='" + (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js' %3E%3C/script%3E"));
+</script>
+
+<script>
+  COMSCORE.beacon({
+    c1:2,
+    c2:7602110,
+    c3:"",
+    c4:"",
+    c5:"",
+    c6:"",
+    c15:""
+  });
+</script>
+<noscript>
+  <img src="http://b.scorecardresearch.com/p?c1=2&c2=7602110&c3=&c4=&c5=&c6=&c15=&cj=1" />
+</noscript>
+<!-- End comScore Tag -->
+</div></body>
+</html>
