@@ -1,0 +1,432 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--[if IE 7]>
+<html id="ie7" xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+<![endif]-->
+<!--[if (gt IE 7) | (!IE)]><!-->
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+<!--<![endif]-->
+
+<head profile="http://gmpg.org/xfn/11">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title> &raquo; Global namespace pollution detection with Jasmine The Samurai Principle</title>
+
+
+
+	<style type="text/css" media="screen">
+		@import url( http://samuraiprinciple.com/wp-content/themes/rubric/style.css );
+	</style>
+
+	<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://samuraiprinciple.com/feed/" />
+
+	<link rel="pingback" href="http://samuraiprinciple.com/xmlrpc.php" />
+					
+	<script type="text/javascript">//<![CDATA[
+	// Google Analytics for WordPress by Yoast v4.06 | http://yoast.com/wordpress/google-analytics/
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount','UA-20073941-1']);
+	_gaq.push(['_trackPageview']);
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
+	// End of Google Analytics for WordPress by Yoast v4.0
+	//]]></script>
+<link rel="alternate" type="application/rss+xml" title="The Samurai Principle &raquo; Global namespace pollution detection with Jasmine Comments Feed" href="http://samuraiprinciple.com/2010/12/03/global-namespace-pollution-detection-with-jasmine/feed/" />
+<script type='text/javascript' src='http://samuraiprinciple.com/wp-includes/js/jquery/jquery.js?ver=1.4.2'></script>
+<script type='text/javascript' src='http://samuraiprinciple.com/wp-includes/js/comment-reply.js?ver=20090102'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://samuraiprinciple.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://samuraiprinciple.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='index' title='The Samurai Principle' href='http://samuraiprinciple.com/' />
+<link rel='start' title='Function declaration hoisting' href='http://samuraiprinciple.com/2010/11/30/function-declaration-hoisting/' />
+<link rel='prev' title='Function declaration hoisting' href='http://samuraiprinciple.com/2010/11/30/function-declaration-hoisting/' />
+<meta name="generator" content="WordPress 3.0.2" />
+<link rel='canonical' href='http://samuraiprinciple.com/2010/12/03/global-namespace-pollution-detection-with-jasmine/' />
+<link rel='shortlink' href='http://samuraiprinciple.com/?p=9' />
+<link rel="stylesheet" type="text/css" href="http://samuraiprinciple.com/wp-content/plugins/highlight-source-pro/all.css" /><!--[if IE]><link rel="stylesheet" type="text/css" href="http://samuraiprinciple.com/wp-content/plugins/highlight-source-pro/ie.css" /><![endif]-->
+ 		<!-- by Twitter Follow Me Box v1.1 -->
+ 		<script type="text/javascript">
+ 			//<![CDATA[
+  			jQuery(document).ready(function(){
+    			jQuery("body").append("<div id=\"tfmBox\"></div>");
+    			jQuery("#tfmBox").css({'position' : 'fixed', 'top' : '130px', 'width' : '30px', 'height' : '119px', 'z-index' : '1000', 'cursor' : 'pointer', 'background' : '#575757 url(http://samuraiprinciple.com/wp-content/plugins/twitter-follow-me-box/follow-me.png) no-repeat scroll left top', 'right' : '0'});
+    			jQuery("#tfmBox").click(function () { 
+			      window.open('http://twitter.com/samuraijs/');
+    			});
+    		});
+    		//]]>
+  		</script>
+		<!-- /by Twitter Follow Me Box -->
+ 	<style type="text/css">
+#header{
+	background: url() no-repeat top right;
+}
+#header a {
+	color:#854141;
+}
+</style>
+</head>
+
+<body>
+<div id="rap">
+<h1 id="header"><a href="http://samuraiprinciple.com/">The Samurai Principle</a></h1>
+
+<div id="content">
+<!-- end header -->
+
+
+<h2>December 3, 2010</h2>
+<div class="post-9 post type-post hentry category-jasmine-javascript category-javascript" id="post-9">
+	 <h3 class="storytitle"><a href="http://samuraiprinciple.com/2010/12/03/global-namespace-pollution-detection-with-jasmine/" rel="bookmark">Global namespace pollution detection with Jasmine</a></h3>
+	<div class="meta">Filed under:  <a href="http://samuraiprinciple.com/category/javascript/jasmine-javascript/" title="View all posts in Jasmine" rel="category tag">Jasmine</a>,<a href="http://samuraiprinciple.com/category/javascript/" title="View all posts in JavaScript" rel="category tag">JavaScript</a> &#8212; damjan @ 12:19 am <br /></div>
+
+	<div class="storycontent">
+		<p>I have been doing a fair bit of JavaScript development recently. I think of myself as a craftsman, and I like my work to be of a good quality. One of the practices I strongly believe in is automated testing (having worked with <a href='http://gojko.net'>Gojko</a> it&#8217;s hard not to be a believer <img src='http://samuraiprinciple.com/wp-includes/images/smilies/icon_smile.gif' alt=':)' class='wp-smiley' /> ). <a href='http://docs.jquery.com/Qunit'>QUnit</a> used to be my JavaScript unit-testing framework of choice for a long time. On a couple of my recent gigs I took <a href='http://pivotal.github.com/jasmine/'>Jasmine</a> for a test-drive and was quite pleased with the results. However, there&#8217;s one QUnit feature Jasmine lacks &#8211; global namespace pollution detection. The ability to fail a test if something is added (or removed) from global namespace. Jasmine is an open-source library, so why not add it?</p>
+<p>It turned out to be quite simple &#8211; due to a good job Jasmine developers did. I ripped-off the relevant part of the QUnit (that was quite easy to find too) and hooked it to beforeEach/afterEach callbacks that Jasmine exposes. Failing a test was easy due to the fail method and clever binding of &#8216;this&#8217; in the callbacks. So without further ado &#8211; here&#8217;s what I came up with:</p>
+<div class="geshi no javascript">
+<ol>
+<li class="li1">
+<div class="de1"><span class="coMULTI">/*global afterEach, beforeEach, window*/</span></div>
+</li>
+<li class="li1">
+<div class="de1"><span class="br0">&#40;</span><span class="kw2">function</span> <span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span></div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; <span class="kw2">var</span> pollution,</div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; saveGlobal = <span class="kw2">function</span> <span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span></div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; <span class="kw2">var</span> key;</div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; pollution = <span class="br0">&#91;</span><span class="br0">&#93;</span>;</div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; <span class="kw1">for</span> <span class="br0">&#40;</span>key <span class="kw1">in</span> window<span class="br0">&#41;</span> <span class="br0">&#123;</span></div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; &nbsp; pollution.<span class="me1">push</span><span class="br0">&#40;</span>key<span class="br0">&#41;</span>;</div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; <span class="br0">&#125;</span></div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; <span class="br0">&#125;</span>,</div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; diff = <span class="kw2">function</span> <span class="br0">&#40;</span>a, b<span class="br0">&#41;</span> <span class="br0">&#123;</span></div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; <span class="kw2">var</span> result = a.<span class="me1">slice</span><span class="br0">&#40;</span><span class="br0">&#41;</span>, i, j;</div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; <span class="kw1">for</span> <span class="br0">&#40;</span>i = <span class="nu0">0</span>; i <span class="sy0">&lt;</span> result.<span class="me1">length</span>; i += <span class="nu0">1</span><span class="br0">&#41;</span> <span class="br0">&#123;</span></div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; &nbsp; <span class="kw1">for</span> <span class="br0">&#40;</span>j = <span class="nu0">0</span>; j <span class="sy0">&lt;</span> b.<span class="me1">length</span>; j += <span class="nu0">1</span><span class="br0">&#41;</span> <span class="br0">&#123;</span></div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">if</span> <span class="br0">&#40;</span>result<span class="br0">&#91;</span>i<span class="br0">&#93;</span> === b<span class="br0">&#91;</span>j<span class="br0">&#93;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span></div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; result.<span class="me1">splice</span><span class="br0">&#40;</span>i, <span class="nu0">1</span><span class="br0">&#41;</span>;</div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; i -= <span class="nu0">1</span>;</div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="kw1">break</span>;</div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; &nbsp; &nbsp; <span class="br0">&#125;</span></div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; &nbsp; <span class="br0">&#125;</span></div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; <span class="br0">&#125;</span></div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; <span class="kw1">return</span> result;</div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; <span class="br0">&#125;</span>;</div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; beforeEach<span class="br0">&#40;</span></div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; <span class="kw2">function</span> <span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span></div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; &nbsp; saveGlobal<span class="br0">&#40;</span><span class="br0">&#41;</span>;</div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; <span class="br0">&#125;</span></div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; <span class="br0">&#41;</span>;</div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; afterEach<span class="br0">&#40;</span></div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; <span class="kw2">function</span> <span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span></div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; &nbsp; <span class="kw2">var</span> old = pollution, introducedGlobals, deletedGlobals, that = <span class="kw1">this</span>,</div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; &nbsp; failMe = <span class="kw2">function</span> <span class="br0">&#40;</span>message<span class="br0">&#41;</span> <span class="br0">&#123;</span></div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; &nbsp; &nbsp; that.<span class="me1">fail</span><span class="br0">&#40;</span><span class="br0">&#123;</span></div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="kw3">name</span>: that.<span class="me1">description</span>,</div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; message: message</div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; &nbsp; &nbsp; <span class="br0">&#125;</span><span class="br0">&#41;</span>;</div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; &nbsp; <span class="br0">&#125;</span>;</div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; &nbsp; saveGlobal<span class="br0">&#40;</span><span class="br0">&#41;</span>;</div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; &nbsp; introducedGlobals = diff<span class="br0">&#40;</span>pollution, old<span class="br0">&#41;</span>;</div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; &nbsp; <span class="kw1">if</span> <span class="br0">&#40;</span>introducedGlobals.<span class="me1">length</span><span class="br0">&#41;</span> <span class="br0">&#123;</span></div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; &nbsp; &nbsp; failMe<span class="br0">&#40;</span><span class="st0">&#39;Introduced global variable(s): &#39;</span> + introducedGlobals.<span class="me1">join</span><span class="br0">&#40;</span><span class="st0">&#39;, &#39;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>;</div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; &nbsp; <span class="br0">&#125;</span></div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; &nbsp; deletedGlobals = diff<span class="br0">&#40;</span>old, pollution<span class="br0">&#41;</span>;</div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; &nbsp; <span class="kw1">if</span> <span class="br0">&#40;</span>deletedGlobals.<span class="me1">length</span><span class="br0">&#41;</span> <span class="br0">&#123;</span></div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; &nbsp; &nbsp; failMe<span class="br0">&#40;</span><span class="st0">&#39;Deleted global variable(s): &#39;</span> + deletedGlobals.<span class="me1">join</span><span class="br0">&#40;</span><span class="st0">&#39;, &#39;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>;</div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; &nbsp; <span class="br0">&#125;</span></div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; <span class="br0">&#125;</span></div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; <span class="br0">&#41;</span>;</div>
+</li>
+<li class="li1">
+<div class="de1"><span class="br0">&#125;</span><span class="br0">&#41;</span><span class="br0">&#40;</span><span class="br0">&#41;</span>;</div>
+</li>
+</ol>
+</div>
+<p>So, how do you use it? All you have to do is include the above script in your spec runner and watch it fail when you alter global namespace:</p>
+<div class="geshi no javascript">
+<ol>
+<li class="li1">
+<div class="de1">window.<span class="me1">deletedKey</span> = <span class="st0">&#39;value&#39;</span>;</div>
+</li>
+<li class="li1">
+<div class="de1">describe<span class="br0">&#40;</span><span class="st0">&#39;Global namespace pollution detection&#39;</span>, <span class="kw2">function</span> <span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span></div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; it<span class="br0">&#40;</span><span class="st0">&#39;should pass&#39;</span>, <span class="kw2">function</span> <span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span></div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; expect<span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>.<span class="me1">toBe</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>;</div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; <span class="br0">&#125;</span><span class="br0">&#41;</span>;</div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; it<span class="br0">&#40;</span><span class="st0">&#39;should fail because addedKey is added to global namespace&#39;</span>, <span class="kw2">function</span> <span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span></div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; window.<span class="me1">addedKey</span> = <span class="st0">&#39;value&#39;</span>;</div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; expect<span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>.<span class="me1">toBe</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>;</div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; <span class="br0">&#125;</span><span class="br0">&#41;</span>;</div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; it<span class="br0">&#40;</span><span class="st0">&#39;should fail because deletedKey is deleted from global namespace&#39;</span>, <span class="kw2">function</span> <span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span></div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; <span class="kw1">delete</span> window.<span class="me1">deletedKey</span>;</div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; expect<span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>.<span class="me1">toBe</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>;</div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; <span class="br0">&#125;</span><span class="br0">&#41;</span>;</div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; it<span class="br0">&#40;</span><span class="st0">&#39;should pass too&#39;</span>, <span class="kw2">function</span> <span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span></div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; &nbsp; expect<span class="br0">&#40;</span><span class="nu0">2</span><span class="br0">&#41;</span>.<span class="me1">toBe</span><span class="br0">&#40;</span><span class="nu0">2</span><span class="br0">&#41;</span>;</div>
+</li>
+<li class="li1">
+<div class="de1">&nbsp; <span class="br0">&#125;</span><span class="br0">&#41;</span>;</div>
+</li>
+<li class="li1">
+<div class="de1"><span class="br0">&#125;</span><span class="br0">&#41;</span>;</div>
+</li>
+</ol>
+</div>
+<p>This was all done as an excuse to not work on the slides for my upcoming <a href='http://skillsmatter.com/event/java-jee/javascript-functions-this-that-lexical-scope/zx-1195'>In the brain</a> session &#8211; I guess this means my time&#8217;s up now. Any problems/comments/suggestions &#8211; fill your boots.</p>
+	</div>
+
+	<div class="feedback">
+                        <a href="http://samuraiprinciple.com/2010/12/03/global-namespace-pollution-detection-with-jasmine/#comments" title="Comment on Global namespace pollution detection with Jasmine">Comments (3)</a>	</div>
+
+</div>
+
+
+<h2 id="comments">3 Comments 
+	<a href="#postcomment" title="Leave a comment">&raquo;</a>
+</h2>
+
+<ol id="commentlist">
+<li class="comment even thread-even depth-1" id="comment-2">
+	<div id="div-comment-2">
+	<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/845ca917d5700958b12b82461f4218c7?s=32&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D32&amp;r=G' class='avatar avatar-32 photo' height='32' width='32' />	<p>Nice job. We added a getGlobal function in Jasmine somewhere around 1.0.  You should be able to use it instead of window to make the node.js guys happy.</p>
+<p>If you wrap this up in a Github repo and make it safe for non-browser projects, we&#8217;ll pimp it.</p>
+	<p><cite>Comment by <span class="fn"><a href='http://pivotal.github.com/jasmine' rel='external nofollow' class='url'>Davis W. Frank</a></span> &#8212; December 3, 2010 @ <a href="#comment-2">1:16 am</a></cite> 	<span class="reply">
+		 | <a rel='nofollow' class='comment-reply-link' href='/2010/12/03/global-namespace-pollution-detection-with-jasmine/?replytocom=2#respond' onclick='return addComment.moveForm("div-comment-2", "2", "respond", "9")'>Reply</a>	</span>
+	</p>
+	</div>
+	</div>
+</li>
+<li class="comment byuser comment-author-damjan bypostauthor odd alt thread-odd thread-alt depth-1" id="comment-3">
+	<div id="div-comment-3">
+	<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/b40aad0e95b7d8c77dca0d5b235be00c?s=32&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D32&amp;r=G' class='avatar avatar-32 photo' height='32' width='32' />	<p>Great, and thank you for the quick follow-up.</p>
+<p>I&#8217;ll clean it up as soon as I progress with the slides enough not to feel guilty working on it <img src='http://samuraiprinciple.com/wp-includes/images/smilies/icon_smile.gif' alt=':)' class='wp-smiley' /> </p>
+	<p><cite>Comment by <span class="fn">damjan</span> &#8212; December 3, 2010 @ <a href="#comment-3">1:51 am</a></cite> 	<span class="reply">
+		 | <a rel='nofollow' class='comment-reply-link' href='/2010/12/03/global-namespace-pollution-detection-with-jasmine/?replytocom=3#respond' onclick='return addComment.moveForm("div-comment-3", "3", "respond", "9")'>Reply</a>	</span>
+	</p>
+	</div>
+	</div>
+</li>
+<li class="pingback even thread-even depth-1" id="comment-4">
+	<div id="div-comment-4">
+	<div class="comment-author vcard">
+			<p>[...] This post was mentioned on Twitter by Jasmine JavaScript, Damjan Vujnovic. Damjan Vujnovic said: Global namespace pollution detection with Jasmine <a href="http://j.mp/e9iEJ4" rel="nofollow">http://j.mp/e9iEJ4</a> @jasminebdd [...]</p>
+	<p><cite>Pingback by <span class="fn"><a href='http://topsy.com/samuraiprinciple.com/2010/12/03/global-namespace-pollution-detection-with-jasmine/?utm_source=pingback&amp;utm_campaign=L2' rel='external nofollow' class='url'>Tweets that mention » Global namespace pollution detection with Jasmine The Samurai Principle -- Topsy.com</a></span> &#8212; December 3, 2010 @ <a href="#comment-4">2:13 pm</a></cite> 	<span class="reply">
+		 | <a rel='nofollow' class='comment-reply-link' href='/2010/12/03/global-namespace-pollution-detection-with-jasmine/?replytocom=4#respond' onclick='return addComment.moveForm("div-comment-4", "4", "respond", "9")'>Reply</a>	</span>
+	</p>
+	</div>
+	</div>
+</li>
+</ol>
+	<div class="navigation">
+		<div class="alignleft"></div>
+		<div class="alignright"></div>
+	</div>
+	<br />
+
+	<p><a href='http://samuraiprinciple.com/2010/12/03/global-namespace-pollution-detection-with-jasmine/feed/'><abbr title="Really Simple Syndication">RSS</abbr> feed for comments on this post.</a> 
+	<a href="http://samuraiprinciple.com/2010/12/03/global-namespace-pollution-detection-with-jasmine/trackback/" rel="trackback">TrackBack <abbr title="Uniform Resource Identifier">URI</abbr></a>
+</p>
+
+								<div id="respond">
+				<h3 id="reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/2010/12/03/global-namespace-pollution-detection-with-jasmine/#respond" style="display:none;">Cancel reply</a></small></h3>
+									<form action="http://samuraiprinciple.com/wp-comments-post.php" method="post" id="commentform">
+																			<p class="comment-notes">Your email address will not be published. Required fields are marked <span class="required">*</span></p>							<p class="comment-form-author"><label for="author">Name</label> <span class="required">*</span><input id="author" name="author" type="text" value="" size="30" aria-required='true' /></p>
+<p class="comment-form-email"><label for="email">Email</label> <span class="required">*</span><input id="email" name="email" type="text" value="" size="30" aria-required='true' /></p>
+<p class="comment-form-url"><label for="url">Website</label><input id="url" name="url" type="text" value="" size="30" /></p>
+												<p class="comment-form-comment"><label for="comment">Comment</label><textarea id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea></p>						<p class="form-allowed-tags">You may use these <abbr title="HyperText Markup Language">HTML</abbr> tags and attributes:  <code>&lt;a href=&quot;&quot; title=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;acronym title=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote cite=&quot;&quot;&gt; &lt;cite&gt; &lt;code&gt; &lt;del datetime=&quot;&quot;&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=&quot;&quot;&gt; &lt;strike&gt; &lt;strong&gt; </code></p>						<p class="form-submit">
+							<input name="submit" type="submit" id="submit" value="Post Comment" />
+							<input type='hidden' name='comment_post_ID' value='9' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+						</p>
+											</form>
+							</div><!-- #respond -->
+			<script type="text/javascript" charset="utf-8">
+    jQuery(document).ready(function() {
+        jQuery('#commentform').submit(function() {
+            _gaq.push(
+                ['_setAccount','UA-20073941-1'],
+                ['_trackEvent','comment']
+            );
+        });
+    });    
+</script>
+			
+
+
+<!-- begin footer -->
+</div>
+
+
+<!-- begin sidebar -->
+<div id="menu">
+
+<ul>
+
+	<li class="pagenav">Pages<ul><li class="page_item page-item-2"><a href="http://samuraiprinciple.com/about/" title="About">About</a></li>
+</ul></li>	 <li id="categories">Categories:	<ul>
+		<li class="cat-item cat-item-3"><a href="http://samuraiprinciple.com/category/javascript/" title="View all posts filed under JavaScript">JavaScript</a>
+<ul class='children'>
+	<li class="cat-item cat-item-5"><a href="http://samuraiprinciple.com/category/javascript/jasmine-javascript/" title="View all posts filed under Jasmine">Jasmine</a>
+</li>
+</ul>
+</li>
+	</ul>
+ </li>
+ <li id="search">
+   <label for="s">Search:</label>
+   <form id="searchform" method="get" action="http://samuraiprinciple.com/">
+	<div>
+		<input type="text" name="s" id="s" size="15" /><br />
+		<input type="submit" value="Search" />
+	</div>
+	</form>
+ </li>
+ <li id="archives">Archives: 	<ul>
+	 	<li><a href='http://samuraiprinciple.com/2010/12/' title='December 2010'>December 2010</a></li>
+	<li><a href='http://samuraiprinciple.com/2010/11/' title='November 2010'>November 2010</a></li>
+ 	</ul>
+ </li>
+ <li id="meta">Meta: 	<ul>
+				<li><a href="http://samuraiprinciple.com/wp-login.php">Log in</a></li>
+		<li><a href="http://samuraiprinciple.com/feed/" title="Syndicate this site using RSS"><abbr title="Really Simple Syndication">RSS</abbr></a></li>
+		<li><a href="http://samuraiprinciple.com/comments/feed/" title="The latest comments to all posts in RSS">Comments <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+		<li><a href="http://validator.w3.org/check/referer" title="This page validates as XHTML 1.0 Transitional">Valid <abbr title="eXtensible HyperText Markup Language">XHTML</abbr></a></li>
+		<li><a href="http://gmpg.org/xfn/"><abbr title="XHTML Friends Network">XFN</abbr></a></li>
+		<li><a href="http://wordpress.com/">WordPress.com</a></li>
+			</ul>
+ </li>
+
+</ul>
+
+</div>
+<!-- end sidebar -->
+
+<p class="credit"><cite><a href="http://wordpress.com/" rel="generator">Get a free blog at WordPress.com</a></cite></p>
+
+</div>
+
+</body>
+</html>
+
+<!-- Dynamic page generated in 0.372 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2010-12-25 08:07:20 -->
