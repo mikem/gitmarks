@@ -1,0 +1,1123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+Design by Free CSS Templates
+http://www.freecsstemplates.org
+Released for free under a Creative Commons Attribution 2.5 License
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  
+    Clojure Libs and Namespaces: require, use, import, and ns -
+  
+  8th Light Blog
+</title>
+<meta name="Keywords" content="" />
+<meta name="Description" content="" />
+<link href="/stylesheets/default.css" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/coderay.css" rel="stylesheet" type="text/css" />
+<link href="/feed/atom.xml" rel="alternate" type="application/atom+xml" />
+</head>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-5664651-3");
+pageTracker._trackPageview();
+</script>
+
+<body>
+<div id="header">
+	<ul id="menu">
+		
+
+		
+
+		
+	</ul>
+	 <form action="/search" id="sform" method="get" name="sform">
+            <input type="text" id="q" name="q" value="" />
+            <span class="search_text"><input type="submit" value="Search" /></span>
+     </form>
+
+
+
+</div>
+<div id="content">
+	<div id="colOne">
+
+		<div id="logo" >
+      <a href="/">
+        <img src="/images/8thlightlogo_200x120.png" alt="8th Light, Inc." />
+      </a>
+		</div>
+
+<table border="0"><tr>
+<td><a href= "http://blog.8thlight.com/feed/atom.xml" ><img src="/images/rss.png"/></a></td>
+<td valign="middle">
+<a href= "http://blog.8thlight.com/feed/atom.xml" >Articles Feed</a></td>
+</tr></table>
+
+		<div class="box">
+			<h3>
+				Authors
+			</h3>
+			<ul class="bottom">
+				
+					<li><a class="selected" href="/micah" title="Micah">Micah</a> (41)</li>
+				
+					<li><a href="/eric" title="Eric">Eric</a> (38)</li>
+				
+					<li><a href="/paul" title="Paul">Paul</a> (36)</li>
+				
+					<li><a href="/doug" title="Doug">Doug</a> (19)</li>
+				
+					<li><a href="/jim" title="Jim">Jim</a> (11)</li>
+				
+					<li><a href="/colin" title="Colin">Colin</a> (11)</li>
+				
+					<li><a href="/lihsuan" title="Li-Hsuan">Li-Hsuan</a> (2)</li>
+				
+					<li><a href="/justin" title="Justin">Justin</a> (1)</li>
+				
+					<li><a href="/craig" title="Craig">Craig</a> (1)</li>
+				
+					<li><a href="/eric-meyer" title="Eric Meyer">Eric Meyer</a> (1)</li>
+				
+			</ul>
+		</div>
+
+		<div class="box">
+			<h3>
+				Categories
+			</h3>
+			<ul class="bottom">
+				
+					<li><a href="/" title="Home">Home</a> (165)</li>
+				
+					<li><a href="/coding" title="Coding">Coding</a> (70)</li>
+				
+					<li><a href="/craftsmanship" title="Craftsmanship">Craftsmanship</a> (55)</li>
+				
+					<li><a href="/process" title="Process">Process</a> (19)</li>
+				
+					<li><a href="/fun" title="Fun">Fun</a> (18)</li>
+				
+					<li><a href="/testing" title="Testing">Testing</a> (12)</li>
+				
+					<li><a href="/statemachine" title="Statemachine">Statemachine</a> (5)</li>
+				
+					<li><a href="/etiquette" title="Etiquette">Etiquette</a> (5)</li>
+				
+					<li><a href="/iphone" title="iPhone">iPhone</a> (4)</li>
+				
+					<li><a href="/rinda" title="Rinda">Rinda</a> (3)</li>
+				
+					<li><a href="/limelight" title="Limelight">Limelight</a> (2)</li>
+				
+					<li><a href="/kata" title="Kata">Kata</a> (1)</li>
+				
+			</ul>
+		</div>
+
+
+			<div class="box">
+ 
+	<h3>Archives</h3>
+	<ul class="bottom">
+
+		 
+		    
+		    
+<li><a href="/archives/2010/12" title="December 2010">December 2010</a> (4)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2010/11" title="November 2010">November 2010</a> (1)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2010/10" title="October 2010">October 2010</a> (1)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2010/9" title="September 2010">September 2010</a> (3)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2010/8" title="August 2010">August 2010</a> (1)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2010/7" title="July 2010">July 2010</a> (5)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2010/6" title="June 2010">June 2010</a> (4)</li>
+
+							 
+	  
+		    
+		    
+	  
+		    
+		    
+<li><a href="/archives/2010/4" title="April 2010">April 2010</a> (3)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2010/3" title="March 2010">March 2010</a> (2)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2010/2" title="February 2010">February 2010</a> (2)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2010/1" title="January 2010">January 2010</a> (1)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2009/12" title="December 2009">December 2009</a> (1)</li>
+
+							 
+	  
+		    
+		    
+	  
+		    
+		    
+<li><a href="/archives/2009/10" title="October 2009">October 2009</a> (2)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2009/9" title="September 2009">September 2009</a> (2)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2009/8" title="August 2009">August 2009</a> (1)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2009/7" title="July 2009">July 2009</a> (5)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2009/6" title="June 2009">June 2009</a> (2)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2009/5" title="May 2009">May 2009</a> (2)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2009/4" title="April 2009">April 2009</a> (8)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2009/3" title="March 2009">March 2009</a> (7)</li>
+
+							 
+	  
+		    
+		    
+	  
+		    
+		    
+<li><a href="/archives/2009/1" title="January 2009">January 2009</a> (2)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2008/12" title="December 2008">December 2008</a> (3)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2008/11" title="November 2008">November 2008</a> (5)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2008/10" title="October 2008">October 2008</a> (4)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2008/9" title="September 2008">September 2008</a> (6)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2008/8" title="August 2008">August 2008</a> (4)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2008/7" title="July 2008">July 2008</a> (5)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2008/6" title="June 2008">June 2008</a> (5)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2008/5" title="May 2008">May 2008</a> (4)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2008/4" title="April 2008">April 2008</a> (2)</li>
+
+							 
+	  
+		    
+		    
+	  
+		    
+		    
+<li><a href="/archives/2008/2" title="February 2008">February 2008</a> (4)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2008/1" title="January 2008">January 2008</a> (2)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2007/12" title="December 2007">December 2007</a> (2)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2007/11" title="November 2007">November 2007</a> (2)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2007/10" title="October 2007">October 2007</a> (2)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2007/9" title="September 2007">September 2007</a> (1)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2007/8" title="August 2007">August 2007</a> (3)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2007/7" title="July 2007">July 2007</a> (1)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2007/6" title="June 2007">June 2007</a> (4)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2007/5" title="May 2007">May 2007</a> (7)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2007/4" title="April 2007">April 2007</a> (2)</li>
+
+							 
+	  
+		    
+		    
+	  
+		    
+		    
+<li><a href="/archives/2007/2" title="February 2007">February 2007</a> (3)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2007/1" title="January 2007">January 2007</a> (3)</li>
+
+							 
+	  
+		    
+		    
+	  
+		    
+		    
+<li><a href="/archives/2006/11" title="November 2006">November 2006</a> (3)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2006/10" title="October 2006">October 2006</a> (3)</li>
+
+							 
+	  
+		    
+		    
+<li><a href="/archives/2006/9" title="September 2006">September 2006</a> (17)</li>
+
+							 
+	  
+		    
+		    
+	  
+		    
+		    
+	  
+		    
+		    
+	  
+		    
+		    
+	  
+		    
+		    
+	  
+		    
+		    
+	  
+		    
+		    
+	  
+		    
+		    
+	  
+		    
+		    
+	  
+		    
+		    
+	  
+		    
+		    
+	  
+		    
+		    
+	  
+		    
+		    
+	  
+		    
+		    
+	  
+		    
+		    
+	  
+		    
+		    
+	  
+		    
+		    
+	  
+		    
+		    
+	  
+		    
+		    
+	  
+		    
+		    
+	  
+		    
+		    
+	  
+		    
+		    
+<li><a href="/archives/2004/11" title="November 2004">November 2004</a> (1)</li>
+
+							 
+	  
+
+
+		</ul>
+
+	</div>
+
+
+	</div>
+	<div id="colTwo">
+
+
+
+			 
+  <p>	
+
+
+
+
+
+<h3 style = "font-size: 24pt;"> <a href="/articles/2010/12/6/clojure-libs-and-namespaces-require-use-import-and-ns" title="Clojure Libs and Namespaces: require, use, import, and ns">Clojure Libs and Namespaces: require, use, import, and ns</a></h3>
+<h4><strong>by: colin | December 5th, 2010 |  
+	
+	
+		</strong></h4>
+		
+		
+	  
+		  
+		
+		
+		  <p>Whenever I'm showing a newcomer to Clojure how to bring in code from other namespaces, I inevitably find myself apologizing that it's a bit complex and at times confusing.  Now, I won't spend time moaning about the current state of namespaces (see <a href="http://groups.google.com/group/clojure-dev/browse_thread/thread/46559fd9eb127bdd">this Clojure mailing list discussion</a> and <a href="http://dev.clojure.org/display/design/Loading,+Compiling,+and+Namespaces">the design discussion around namespaces in the Clojure Confluence</a>), but I thought it might be helpful to give an overview of the various calls you can make to require a Clojure lib.</p>
+
+<p>Let's start a Clojure REPL, where we'll outline the baseline commands to pull in libs.  If you don't know how, <a href="http://clojure.org/downloads">download Clojure</a> and use <a href="http://clojure.org/getting_started">these instructions</a> to get a REPL up and running. If you already have the jar, just fire up a REPL using <code>java -jar clojure-1.2.0.jar</code>.</p>
+
+<p>Later, we'll see the <code>ns</code> macro, which is much more idiomatic, and that's what you'll use in real Clojure projects. However, since <code>require</code>, <code>use</code>, and <code>import</code> are what you'll often use in the REPL, and because those are used behind the scenes, we'll start there.</p>
+
+<h2>The baseline: <code>require</code></h2>
+
+<p>Let's say we want to use some of Clojure's built-in string operations. In the current version of Clojure (1.2), there's a library called <code>clojure.string</code> which contains some useful functions like <code>split</code>, <code>join</code>, and <code>capitalize</code>.</p>
+
+<p>Let's try to use <code>split</code> to break up the first line of a CSV file:</p>
+
+<code><table class="CodeRay"><tr>
+  <td class="line_numbers" title="click to toggle" onclick="with (this.firstChild.style) { display = (display == '') ? 'none' : '' }"><pre>1<tt>
+</tt>2<tt>
+</tt></pre></td>
+  <td class="code"><pre ondblclick="with (this.style) { overflow = (overflow == 'auto' || overflow == '') ? 'visible' : 'auto' }">user=&gt; (clojure.string/split <span style="background-color:#fff0f0"><span style="color:#710">&quot;</span><span style="color:#D20">name,address,city,state,zip,email,phone</span><span style="color:#710">&quot;</span></span> <span style="color:#888">#&quot;,&quot;)</span><tt>
+</tt>java.lang.<span style="color:#036; font-weight:bold">ClassNotFoundException</span>: clojure.string (<span style="color:#036; font-weight:bold">NO_SOURCE_FILE</span>:<span style="color:#00D; font-weight:bold">0</span>)<tt>
+</tt></pre></td>
+</tr></table>
+</code>
+
+<p>Whoops! We forgot to actually tell Clojure that we're going to be using that namespace. There are a few namespaces (<code>clojure.core</code>, <code>clojure.set</code>, etc.) that get auto-required into the <code>user</code> namespace when the REPL starts up, but <code>clojure.string</code> isn't one of them. So let's tell the REPL that we're going to be using <code>clojure.string</code>:</p>
+
+<code><table class="CodeRay"><tr>
+  <td class="line_numbers" title="click to toggle" onclick="with (this.firstChild.style) { display = (display == '') ? 'none' : '' }"><pre>1<tt>
+</tt>2<tt>
+</tt>3<tt>
+</tt>4<tt>
+</tt></pre></td>
+  <td class="code"><pre ondblclick="with (this.style) { overflow = (overflow == 'auto' || overflow == '') ? 'visible' : 'auto' }">user=&gt; (require <span style="background-color:#fff0f0"><span style="color:#710">'</span><span style="color:#D20">clojure.string)<tt>
+</tt>nil<tt>
+</tt>user=&gt; (clojure.string/split &quot;name,address,city,state,zip,email,phone&quot; #&quot;,&quot;)<tt>
+</tt>[&quot;name&quot; &quot;address&quot; &quot;city&quot; &quot;state&quot; &quot;zip&quot; &quot;email&quot; &quot;phone&quot;]<tt>
+</tt></span></span></pre></td>
+</tr></table>
+</code>
+
+<p>Great, so that worked. Let's take a moment to examine this, the most basic syntax for pulling in other Clojure code. <code>require</code> is just a Clojure function that takes a few different types of arguments. First, we could pass a single quoted symbol, and <code>require</code> will make the namespace named by that symbol available with the full <code>namespace/var-name</code> syntax in later code. We can also pass multiple quoted symbols, as below:</p>
+
+<code><table class="CodeRay"><tr>
+  <td class="line_numbers" title="click to toggle" onclick="with (this.firstChild.style) { display = (display == '') ? 'none' : '' }"><pre>1<tt>
+</tt>2<tt>
+</tt>3<tt>
+</tt>4<tt>
+</tt>5<tt>
+</tt>6<tt>
+</tt>7<tt>
+</tt>8<tt>
+</tt>9<tt>
+</tt><strong>10</strong><tt>
+</tt></pre></td>
+  <td class="code"><pre ondblclick="with (this.style) { overflow = (overflow == 'auto' || overflow == '') ? 'visible' : 'auto' }">user=&gt; (require <span style="background-color:#fff0f0"><span style="color:#710">'</span><span style="color:#D20">clojure.string </span><span style="color:#710">'</span></span>clojure.test)<tt>
+</tt><span style="color:#038; font-weight:bold">nil</span><tt>
+</tt>user=&gt; (clojure.string/join <span style="background-color:#fff0f0"><span style="color:#710">&quot;</span><span style="color:#D20"> </span><span style="color:#710">&quot;</span></span> [<span style="background-color:#fff0f0"><span style="color:#710">&quot;</span><span style="color:#D20">name</span><span style="color:#710">&quot;</span></span> <span style="background-color:#fff0f0"><span style="color:#710">&quot;</span><span style="color:#D20">address</span><span style="color:#710">&quot;</span></span> <span style="background-color:#fff0f0"><span style="color:#710">&quot;</span><span style="color:#D20">city</span><span style="color:#710">&quot;</span></span> <span style="background-color:#fff0f0"><span style="color:#710">&quot;</span><span style="color:#D20">state</span><span style="color:#710">&quot;</span></span> <span style="background-color:#fff0f0"><span style="color:#710">&quot;</span><span style="color:#D20">zip</span><span style="color:#710">&quot;</span></span> <span style="background-color:#fff0f0"><span style="color:#710">&quot;</span><span style="color:#D20">email</span><span style="color:#710">&quot;</span></span> <span style="background-color:#fff0f0"><span style="color:#710">&quot;</span><span style="color:#D20">phone</span><span style="color:#710">&quot;</span></span>])<tt>
+</tt><span style="background-color:#fff0f0"><span style="color:#710">&quot;</span><span style="color:#D20">name address city state zip email phone</span><span style="color:#710">&quot;</span></span><tt>
+</tt>user=&gt; (clojure.test/is (= <span style="color:#00D; font-weight:bold">1</span> <span style="color:#00D; font-weight:bold">2</span>))<tt>
+</tt><tt>
+</tt><span style="color:#036; font-weight:bold">FAIL</span> <span style="color:#080; font-weight:bold">in</span> clojure.lang.<span style="color:#036; font-weight:bold">PersistentList</span><span style="color:#d70; font-weight:bold">$EmptyList</span><span style="color:#F00; background-color:#FAA">@</span><span style="color:#00D; font-weight:bold">1</span> (<span style="color:#036; font-weight:bold">NO_SOURCE_FILE</span>:<span style="color:#00D; font-weight:bold">10</span>)<tt>
+</tt>expected: (= <span style="color:#00D; font-weight:bold">1</span> <span style="color:#00D; font-weight:bold">2</span>)<tt>
+</tt>  actual: (<span style="color:#080; font-weight:bold">not</span> (= <span style="color:#00D; font-weight:bold">1</span> <span style="color:#00D; font-weight:bold">2</span>))<tt>
+</tt><span style="color:#038; font-weight:bold">false</span><tt>
+</tt></pre></td>
+</tr></table>
+</code>
+
+<p>Keep in mind that I'm starting a fresh REPL for each of these examples, to demonstrate what happens the first time you load a lib. In general, if you require a lib a second time, nothing will happen. There's a way around that (mainly for interactive development), as we'll see later on, but for now, just start up a new REPL as you're trying these out.</p>
+
+<p>It's worth noting here that the name of the lib itself parallels the directory structure, so in order to require <code>clojure.string</code>, you'd need a directory named <code>clojure</code> relative to your classpath, and a file called <code>string.clj</code> within that directory. That particular case is already true within the clojure jar, but it's something to keep in mind as you write your own Clojure code and have need to require it outside of the namespace where it lives.</p>
+
+<p>There's also a way to alias namespaces when you require them, such that you could refer to a <code>string</code> namespace rather than a <code>clojure.string</code> namespace, and you'd get the same result:</p>
+
+<code><table class="CodeRay"><tr>
+  <td class="line_numbers" title="click to toggle" onclick="with (this.firstChild.style) { display = (display == '') ? 'none' : '' }"><pre>1<tt>
+</tt>2<tt>
+</tt>3<tt>
+</tt>4<tt>
+</tt></pre></td>
+  <td class="code"><pre ondblclick="with (this.style) { overflow = (overflow == 'auto' || overflow == '') ? 'visible' : 'auto' }">user=&gt; (require <span style="background-color:#fff0f0"><span style="color:#710">'</span><span style="color:#D20">[clojure.string :as string])<tt>
+</tt>nil<tt>
+</tt>user=&gt; (string/capitalize &quot;foo&quot;)<tt>
+</tt>&quot;Foo&quot;<tt>
+</tt></span></span></pre></td>
+</tr></table>
+</code>
+
+<p>The strange-looking quoted vector is a shorthand to avoid having to quote every individual symbol within the vector. You could type:</p>
+
+<code><table class="CodeRay"><tr>
+  <td class="line_numbers" title="click to toggle" onclick="with (this.firstChild.style) { display = (display == '') ? 'none' : '' }"><pre>1<tt>
+</tt></pre></td>
+  <td class="code"><pre ondblclick="with (this.style) { overflow = (overflow == 'auto' || overflow == '') ? 'visible' : 'auto' }">(require [<span style="background-color:#fff0f0"><span style="color:#710">'</span><span style="color:#D20">clojure.string :as </span><span style="color:#710">'</span></span>string])<tt>
+</tt></pre></td>
+</tr></table>
+</code>
+
+<p>if you really wanted to, but I doubt you would (especially with some of the forms with many symbols that we'll see later).</p>
+
+<p>The same concepts apply to using requiring multiple namespaces: <code>require</code> will take an arbitrary number of "libspecs", such as the quoted symbol and vector we've just seen. You can also mix and match symbols with vectors here:</p>
+
+<code><table class="CodeRay"><tr>
+  <td class="line_numbers" title="click to toggle" onclick="with (this.firstChild.style) { display = (display == '') ? 'none' : '' }"><pre>1<tt>
+</tt>2<tt>
+</tt>3<tt>
+</tt>4<tt>
+</tt></pre></td>
+  <td class="code"><pre ondblclick="with (this.style) { overflow = (overflow == 'auto' || overflow == '') ? 'visible' : 'auto' }">user=&gt; (require <span style="background-color:#fff0f0"><span style="color:#710">'</span><span style="color:#D20">clojure.string </span><span style="color:#710">'</span></span>[clojure.test <span style="color:#A60">:as</span> test])<tt>
+</tt><span style="color:#038; font-weight:bold">nil</span><tt>
+</tt>user=&gt; (test/is (= <span style="color:#00D; font-weight:bold">1</span> <span style="color:#00D; font-weight:bold">1</span>))<tt>
+</tt><span style="color:#038; font-weight:bold">true</span><tt>
+</tt></pre></td>
+</tr></table>
+</code>
+
+<p>One last way to use <code>require</code> simplifies things when a prefix is the same in several libraries you want to load:</p>
+
+<code><table class="CodeRay"><tr>
+  <td class="line_numbers" title="click to toggle" onclick="with (this.firstChild.style) { display = (display == '') ? 'none' : '' }"><pre>1<tt>
+</tt>2<tt>
+</tt></pre></td>
+  <td class="code"><pre ondblclick="with (this.style) { overflow = (overflow == 'auto' || overflow == '') ? 'visible' : 'auto' }">user=&gt; (require <span style="background-color:#fff0f0"><span style="color:#710">'</span><span style="color:#D20">(clojure string test))<tt>
+</tt>nil<tt>
+</tt></span></span></pre></td>
+</tr></table>
+</code>
+
+<p>Here, <code>clojure</code> is the prefix for both of the libraries we want, so we only need to type "clojure" once. <code>string</code> and <code>test</code> are just libspecs in these situations, so you can use the <code>:as</code> option here as well:</p>
+
+<code><table class="CodeRay"><tr>
+  <td class="line_numbers" title="click to toggle" onclick="with (this.firstChild.style) { display = (display == '') ? 'none' : '' }"><pre>1<tt>
+</tt>2<tt>
+</tt>3<tt>
+</tt>4<tt>
+</tt></pre></td>
+  <td class="code"><pre ondblclick="with (this.style) { overflow = (overflow == 'auto' || overflow == '') ? 'visible' : 'auto' }">user=&gt; (require <span style="background-color:#fff0f0"><span style="color:#710">'</span><span style="color:#D20">(clojure [string :as string] test))<tt>
+</tt>nil<tt>
+</tt>user=&gt; (string/join [1 2 3])<tt>
+</tt>&quot;123&quot;<tt>
+</tt></span></span></pre></td>
+</tr></table>
+</code>
+
+<p>At this point, the variation between list and vector notation (parentheses and square brackets, respectively) may be driving you a bit bonkers. Never fear, the main thing to remember here is that a libspec should be either a quoted symbol or vector. So whenever you want to use something like <code>:as</code>, that thing (the libspec) should be a vector.</p>
+
+<p>It's become somewhat idiomatic to use lists for many other places we'll see later, but often that isn't actually enforced by the language, and there are in fact situations where either vectors or lists might make more sense than the other from a semantic perspective.  Phil Hagelberg has <a href="http://p.hagelb.org/import-indent.html">some thought-provoking advice on this matter</a>. Just stick with the syntax you see here and in the Clojure documentation, remembering that you <em>must</em> use vectors for libspecs, and you'll be fine.</p>
+
+<p>If you're interested, you can see more details about what happens under the covers by appending a <code>:verbose</code> flag to the end of the argument list to <code>require</code> (note that the <code>:verbose</code> flag is <em>outside</em> the libspec vector that pulls in <code>clojure.string</code>):</p>
+
+<code><table class="CodeRay"><tr>
+  <td class="line_numbers" title="click to toggle" onclick="with (this.firstChild.style) { display = (display == '') ? 'none' : '' }"><pre>1<tt>
+</tt>2<tt>
+</tt>3<tt>
+</tt>4<tt>
+</tt>5<tt>
+</tt></pre></td>
+  <td class="code"><pre ondblclick="with (this.style) { overflow = (overflow == 'auto' || overflow == '') ? 'visible' : 'auto' }">user=&gt; (require <span style="background-color:#fff0f0"><span style="color:#710">'</span><span style="color:#D20">[clojure.string :as string] :verbose)<tt>
+</tt>(clojure.core/load &quot;/clojure/string&quot;)<tt>
+</tt>(clojure.core/in-ns </span><span style="color:#710">'</span></span>user)<tt>
+</tt>(clojure.core/<span style="color:#080; font-weight:bold">alias</span> <span style="background-color:#fff0f0"><span style="color:#710">'</span><span style="color:#D20">string </span><span style="color:#710">'</span></span>clojure.string)<tt>
+</tt><span style="color:#038; font-weight:bold">nil</span><tt>
+</tt></pre></td>
+</tr></table>
+</code>
+
+<p>As you can see, <code>clojure.core/load</code> does the low-level loading, then we switch back to the <code>user</code> namespace (loading <code>clojure.string</code> made it the current namespace for a brief, shining moment), and finally we create an alias in the <code>user</code> namespace so that we can refer to <code>clojure.string</code> as simply <code>string</code>. You'll see significantly more complex output from this if you do something similar with <code>clojure.test</code>, as it requires other libraries itself:</p>
+
+<code><table class="CodeRay"><tr>
+  <td class="line_numbers" title="click to toggle" onclick="with (this.firstChild.style) { display = (display == '') ? 'none' : '' }"><pre>1<tt>
+</tt>2<tt>
+</tt>3<tt>
+</tt>4<tt>
+</tt>5<tt>
+</tt>6<tt>
+</tt>7<tt>
+</tt>8<tt>
+</tt>9<tt>
+</tt><strong>10</strong><tt>
+</tt>11<tt>
+</tt>12<tt>
+</tt>13<tt>
+</tt>14<tt>
+</tt></pre></td>
+  <td class="code"><pre ondblclick="with (this.style) { overflow = (overflow == 'auto' || overflow == '') ? 'visible' : 'auto' }">user=&gt; (require <span style="background-color:#fff0f0"><span style="color:#710">'</span><span style="color:#D20">[clojure.test :as test] :verbose)<tt>
+</tt>(clojure.core/load &quot;/clojure/test&quot;)<tt>
+</tt>(clojure.core/load &quot;/clojure/template&quot;)<tt>
+</tt>(clojure.core/load &quot;/clojure/walk&quot;)<tt>
+</tt>(clojure.core/in-ns </span><span style="color:#710">'</span></span>clojure.template)<tt>
+</tt>(clojure.core/<span style="color:#080; font-weight:bold">alias</span> <span style="background-color:#fff0f0"><span style="color:#710">'</span><span style="color:#D20">walk </span><span style="color:#710">'</span></span>clojure.walk)<tt>
+</tt>(clojure.core/<span style="color:#080; font-weight:bold">in</span>-ns <span style="background-color:#fff0f0"><span style="color:#710">'</span><span style="color:#D20">clojure.test)<tt>
+</tt>(clojure.core/alias </span><span style="color:#710">'</span></span>temp <span style="background-color:#fff0f0"><span style="color:#710">'</span><span style="color:#D20">clojure.template)<tt>
+</tt>(clojure.core/load &quot;/clojure/stacktrace&quot;)<tt>
+</tt>(clojure.core/in-ns </span><span style="color:#710">'</span></span>clojure.test)<tt>
+</tt>(clojure.core/<span style="color:#080; font-weight:bold">alias</span> <span style="background-color:#fff0f0"><span style="color:#710">'</span><span style="color:#D20">stack </span><span style="color:#710">'</span></span>clojure.stacktrace)<tt>
+</tt>(clojure.core/<span style="color:#080; font-weight:bold">in</span>-ns <span style="background-color:#fff0f0"><span style="color:#710">'</span><span style="color:#D20">user)<tt>
+</tt>(clojure.core/alias </span><span style="color:#710">'</span></span>test <span style="background-color:#fff0f0"><span style="color:#710">'</span><span style="color:#D20">clojure.test)<tt>
+</tt>nil<tt>
+</tt></span></span></pre></td>
+</tr></table>
+</code>
+
+<p>That might have seemed intimidating at the start of the article, but you're likely now at a point now where you can guess the things that are being required under the covers.</p>
+
+<p>Finally, I promised an example of reloading code from a particular namespace for interactive development, so here's how it works:</p>
+
+<code><table class="CodeRay"><tr>
+  <td class="line_numbers" title="click to toggle" onclick="with (this.firstChild.style) { display = (display == '') ? 'none' : '' }"><pre>1<tt>
+</tt>2<tt>
+</tt>3<tt>
+</tt>4<tt>
+</tt>5<tt>
+</tt></pre></td>
+  <td class="code"><pre ondblclick="with (this.style) { overflow = (overflow == 'auto' || overflow == '') ? 'visible' : 'auto' }">user=&gt; (require <span style="background-color:#fff0f0"><span style="color:#710">'</span><span style="color:#D20">clojure.string :verbose)<tt>
+</tt>(clojure.core/load &quot;/clojure/string&quot;)<tt>
+</tt>nil<tt>
+</tt>user=&gt; (require </span><span style="color:#710">'</span></span>clojure.string <span style="color:#A60">:verbose</span>)<tt>
+</tt><span style="color:#038; font-weight:bold">nil</span><tt>
+</tt></pre></td>
+</tr></table>
+</code>
+
+<p>Nothing happens the second time, as you can see. However, we can change that with the <code>:reload</code> flag:</p>
+
+<code><table class="CodeRay"><tr>
+  <td class="line_numbers" title="click to toggle" onclick="with (this.firstChild.style) { display = (display == '') ? 'none' : '' }"><pre>1<tt>
+</tt>2<tt>
+</tt>3<tt>
+</tt>4<tt>
+</tt>5<tt>
+</tt>6<tt>
+</tt></pre></td>
+  <td class="code"><pre ondblclick="with (this.style) { overflow = (overflow == 'auto' || overflow == '') ? 'visible' : 'auto' }">user=&gt; (require <span style="background-color:#fff0f0"><span style="color:#710">'</span><span style="color:#D20">clojure.string :verbose)<tt>
+</tt>(clojure.core/load &quot;/clojure/string&quot;)<tt>
+</tt>nil<tt>
+</tt>user=&gt; (require </span><span style="color:#710">'</span></span>clojure.string <span style="color:#A60">:verbose</span> <span style="color:#A60">:reload</span>)<tt>
+</tt>(clojure.core/load <span style="background-color:#fff0f0"><span style="color:#710">&quot;</span><span style="color:#D20">/clojure/string</span><span style="color:#710">&quot;</span></span>)<tt>
+</tt><span style="color:#038; font-weight:bold">nil</span><tt>
+</tt></pre></td>
+</tr></table>
+</code>
+
+<p>As you'd expect, the code gets loaded again with the <code>:reload</code> flag. The <code>reload-all</code> flag works similarly, but it will also make sure that all dependencies of the namespace in question are also reloaded.</p>
+
+<p>Now don't get overwhelmed yet. This is a lot of information for one function, but <code>require</code> is quite similar to other code-including functions and macros, so you'll see the same patterns again.</p>
+
+<h2>Using other namespaces' code as though it's yours: <code>use</code></h2>
+
+<p>Sometimes, including any namespace information at all seems too verbose (unit tests for a namespace are a good example). In these cases, we want to refer to vars as though they were ours, and that's where <code>use</code> comes in. <code>use</code> actually uses two other functions to do the bulk of its work: <code>require</code> and <code>refer</code>. We've covered <code>require</code> already, and you'll rarely have a need to use <code>refer</code> directly, so let's stick to the syntax of <code>use</code>.</p>
+
+<code><table class="CodeRay"><tr>
+  <td class="line_numbers" title="click to toggle" onclick="with (this.firstChild.style) { display = (display == '') ? 'none' : '' }"><pre>1<tt>
+</tt>2<tt>
+</tt>3<tt>
+</tt>4<tt>
+</tt>5<tt>
+</tt>6<tt>
+</tt></pre></td>
+  <td class="code"><pre ondblclick="with (this.style) { overflow = (overflow == 'auto' || overflow == '') ? 'visible' : 'auto' }">user=&gt; (use <span style="background-color:#fff0f0"><span style="color:#710">'</span><span style="color:#D20">clojure.string)<tt>
+</tt>WARNING: replace already refers to: #</span><span style="color:#710">'</span></span>clojure.core/replace <span style="color:#080; font-weight:bold">in</span> namespace: user, being replaced by: <span style="color:#888">#'clojure.string/replace</span><tt>
+</tt><span style="color:#036; font-weight:bold">WARNING</span>: reverse already refers to: <span style="color:#888">#'clojure.core/reverse in namespace: user, being replaced by: #'clojure.string/reverse</span><tt>
+</tt><span style="color:#038; font-weight:bold">nil</span><tt>
+</tt>user=&gt; (split <span style="background-color:#fff0f0"><span style="color:#710">&quot;</span><span style="color:#D20">a,b,c</span><span style="color:#710">&quot;</span></span> <span style="color:#888">#&quot;,&quot;)</span><tt>
+</tt>[<span style="background-color:#fff0f0"><span style="color:#710">&quot;</span><span style="color:#D20">a</span><span style="color:#710">&quot;</span></span> <span style="background-color:#fff0f0"><span style="color:#710">&quot;</span><span style="color:#D20">b</span><span style="color:#710">&quot;</span></span> <span style="background-color:#fff0f0"><span style="color:#710">&quot;</span><span style="color:#D20">c</span><span style="color:#710">&quot;</span></span>]<tt>
+</tt></pre></td>
+</tr></table>
+</code>
+
+<p>This is pretty heavy-handed. We've just blown away the definitions of <code>replace</code> and <code>reverse</code> in <code>clojure.core</code>, so if we wanted to use those again, we'd have to fully qualify those functions (something like <code>clojure.core/replace</code>. In addition, this kind of wholesale inclusion of vars into our current namespace can make it difficult do decipher where the definitions live. It's not something we want to do very often - maybe in the case of a unit test. It would be much better to limit the vars being referred to a named subset, like this:</p>
+
+<code><table class="CodeRay"><tr>
+  <td class="line_numbers" title="click to toggle" onclick="with (this.firstChild.style) { display = (display == '') ? 'none' : '' }"><pre>1<tt>
+</tt>2<tt>
+</tt>3<tt>
+</tt>4<tt>
+</tt></pre></td>
+  <td class="code"><pre ondblclick="with (this.style) { overflow = (overflow == 'auto' || overflow == '') ? 'visible' : 'auto' }">user=&gt; (use <span style="background-color:#fff0f0"><span style="color:#710">'</span><span style="color:#D20">[clojure.string :only [split]])<tt>
+</tt>nil<tt>
+</tt>user=&gt; (split &quot;a,b,c&quot; #&quot;,&quot;)<tt>
+</tt>[&quot;a&quot; &quot;b&quot; &quot;c&quot;]<tt>
+</tt></span></span></pre></td>
+</tr></table>
+</code>
+
+<p>It still works, but now we're very clear about what we want. Anyone peeking into this code for the first time will know immediately that <code>split</code> comes from the <code>clojure.string</code> namespace, with no need to grep the whole project for the function definition. Note that the libspecs here are strikingly similar to what we used for <code>require</code>! We have a new option, <code>:only</code>, where we used <code>:as</code> before, and that option is associated with a list rather than a symbol, but it's easy to see that they're really the same sort of data structure. There are other options with <code>use</code> as well:</p>
+
+<code><table class="CodeRay"><tr>
+  <td class="line_numbers" title="click to toggle" onclick="with (this.firstChild.style) { display = (display == '') ? 'none' : '' }"><pre>1<tt>
+</tt>2<tt>
+</tt>3<tt>
+</tt>4<tt>
+</tt></pre></td>
+  <td class="code"><pre ondblclick="with (this.style) { overflow = (overflow == 'auto' || overflow == '') ? 'visible' : 'auto' }">user=&gt; (use <span style="background-color:#fff0f0"><span style="color:#710">'</span><span style="color:#D20">[clojure.string :exclude [replace reverse]])<tt>
+</tt>nil<tt>
+</tt>user=&gt; (split &quot;a,b,c&quot; #&quot;,&quot;)<tt>
+</tt>[&quot;a&quot; &quot;b&quot; &quot;c&quot;]<tt>
+</tt></span></span></pre></td>
+</tr></table>
+</code>
+
+<p>This eliminates one of the problems with the first <code>use</code> example (shadowing the <code>clojure.core</code> functions), but it's still not obvious at a glance where <code>split</code> comes from. I prefer <code>:only</code> in most situations. I've seen a quote come across my Twitter stream, attributed to Stuart Halloway (<a href="http://coding.derkeiler.com/Archive/Fortran/comp.lang.fortran/2004-05/0971.html">also discussed in the context of Fortran</a>), that recommends: "Only use <code>use</code> with :only." With rare exceptions, I think that advice is pretty sound.</p>
+
+<p>There's one more available option, <code>:rename</code>, that lets us specify a map of vars to rename in the context of the current namespace:</p>
+
+<code><table class="CodeRay"><tr>
+  <td class="line_numbers" title="click to toggle" onclick="with (this.firstChild.style) { display = (display == '') ? 'none' : '' }"><pre>1<tt>
+</tt>2<tt>
+</tt>3<tt>
+</tt>4<tt>
+</tt>5<tt>
+</tt>6<tt>
+</tt></pre></td>
+  <td class="code"><pre ondblclick="with (this.style) { overflow = (overflow == 'auto' || overflow == '') ? 'visible' : 'auto' }">user=&gt; (use <span style="background-color:#fff0f0"><span style="color:#710">'</span><span style="color:#D20">[clojure.string :rename {replace str-replace, reverse str-reverse})<tt>
+</tt>nil<tt>
+</tt>user=&gt; (str-reverse &quot;foobar&quot;)<tt>
+</tt>&quot;raboof&quot;<tt>
+</tt>user=&gt; (reverse &quot;foobar&quot;)<tt>
+</tt>(</span><span style="color:#D20">\r</span><span style="color:#D20"> </span><span style="color:#D20">\a</span><span style="color:#D20"> </span><span style="color:#D20">\b</span><span style="color:#D20"> </span><span style="color:#D20">\o</span><span style="color:#D20"> </span><span style="color:#D20">\o</span><span style="color:#D20"> </span><span style="color:#D20">\f</span><span style="color:#D20">)<tt>
+</tt></span></span></pre></td>
+</tr></table>
+</code>
+
+<p>The most common of these options in the wild is certainly <code>:only</code>, but knowing that all of these are available will prepare you for that moment when they're <em>exactly</em> what you need. It's also worth pointing out here that you can also use <code>:as</code>, in the same way that we did with <code>require</code>, to provide a shorter alias for a namespace.</p>
+
+<code><table class="CodeRay"><tr>
+  <td class="line_numbers" title="click to toggle" onclick="with (this.firstChild.style) { display = (display == '') ? 'none' : '' }"><pre>1<tt>
+</tt>2<tt>
+</tt>3<tt>
+</tt>4<tt>
+</tt></pre></td>
+  <td class="code"><pre ondblclick="with (this.style) { overflow = (overflow == 'auto' || overflow == '') ? 'visible' : 'auto' }">user=&gt; (use <span style="background-color:#fff0f0"><span style="color:#710">'</span><span style="color:#D20">[clojure.string :as str :only [join split]])<tt>
+</tt>nil<tt>
+</tt>user=&gt; (str/replace &quot;foobar&quot; &quot;f&quot; &quot;p&quot;)<tt>
+</tt>&quot;poobar&quot;<tt>
+</tt></span></span></pre></td>
+</tr></table>
+</code>
+
+<p>So it turns out that we could use <code>use</code> for exactly the same purposes as <code>require</code>, if we supply an empty list to the <code>:only</code> option. I don't recommend that use - <code>require</code> itself is more idiomatic - but it's there!</p>
+
+<h2>Working with Java and deftypes/defrecords: <code>import</code></h2>
+
+<p>In terms of syntax, <code>import</code> is much simpler than either <code>require</code> or <code>use</code> - there are no options to specify various behaviors. In general, you can think of <code>import</code> as the way you get ahold of Java code. The specifics are only a bit more complex. Let's take a look.</p>
+
+<p>As long as the Java class you want it on the classpath, you can already refer to it using the fully-qualified name:</p>
+
+<code><table class="CodeRay"><tr>
+  <td class="line_numbers" title="click to toggle" onclick="with (this.firstChild.style) { display = (display == '') ? 'none' : '' }"><pre>1<tt>
+</tt>2<tt>
+</tt></pre></td>
+  <td class="code"><pre ondblclick="with (this.style) { overflow = (overflow == 'auto' || overflow == '') ? 'visible' : 'auto' }">user=&gt; (java.util.<span style="color:#036; font-weight:bold">Date</span>.<span style="color:#F00; background-color:#FAA">)</span><tt>
+</tt><span style="color:#888">#&lt;date 22 mon cst 20:34:52 2010 nov&gt;</span><tt>
+</tt></pre></td>
+</tr></table>
+</code>
+
+<p>If you're at all familiar with Java already, you already know that <code>import</code> can be used in a way similar to <code>use</code>, so that you can just talk about a <code>Date</code> in your code, rather than specifying the packages every time as <code>java.util.Date</code>:</p>
+
+<code><table class="CodeRay"><tr>
+  <td class="line_numbers" title="click to toggle" onclick="with (this.firstChild.style) { display = (display == '') ? 'none' : '' }"><pre>1<tt>
+</tt>2<tt>
+</tt>3<tt>
+</tt>4<tt>
+</tt></pre></td>
+  <td class="code"><pre ondblclick="with (this.style) { overflow = (overflow == 'auto' || overflow == '') ? 'visible' : 'auto' }">user=&gt; (import <span style="background-color:#fff0f0"><span style="color:#710">'</span><span style="color:#D20">java.util.Date)<tt>
+</tt>nil<tt>
+</tt>user=&gt; (Date.)<tt>
+</tt>#&lt;date 22 mon cst 20:34:52 2010 nov&gt;<tt>
+</tt></span></span></pre></td>
+</tr></table>
+</code>
+
+<p>You're probably already wondering if you can use a libspec instead of a plain old symbol! It's actually not a libspec in this case, but you can indeed use a vector to get some different behavior here:</p>
+
+<code><table class="CodeRay"><tr>
+  <td class="line_numbers" title="click to toggle" onclick="with (this.firstChild.style) { display = (display == '') ? 'none' : '' }"><pre>1<tt>
+</tt>2<tt>
+</tt>3<tt>
+</tt>4<tt>
+</tt>5<tt>
+</tt>6<tt>
+</tt></pre></td>
+  <td class="code"><pre ondblclick="with (this.style) { overflow = (overflow == 'auto' || overflow == '') ? 'visible' : 'auto' }">user=&gt; (import <span style="background-color:#fff0f0"><span style="color:#710">'</span><span style="color:#D20">(java.util Date GregorianCalendar))<tt>
+</tt>nil<tt>
+</tt>user=&gt; Date<tt>
+</tt>java.util.Date<tt>
+</tt>user=&gt; GregorianCalendar<tt>
+</tt>java.util.GregorianCalendar<tt>
+</tt></span></span></pre></td>
+</tr></table>
+</code>
+
+<p>So here we're specifying a package as the first element of the vector, and the classes from that package that we want to import as the remaining elements. You actually don't need a vector here (a list would do just fine), but it seems more symmetrical to the other functions to use a vector, so that's what I prefer here. I haven't seen a strong trend emerge here, but particular projects generally stick to one or the other.</p>
+
+<p>It's very important to note here that <code>import</code> actually applies to <em>any</em> classes you need to get ahold of, including Clojure defrecords and deftypes. Pretend you have a namespace <code>stuff</code> which contains a defrecord called <code>BigWidget</code>.</p>
+
+<code><table class="CodeRay"><tr>
+  <td class="line_numbers" title="click to toggle" onclick="with (this.firstChild.style) { display = (display == '') ? 'none' : '' }"><pre>1<tt>
+</tt>2<tt>
+</tt>3<tt>
+</tt>4<tt>
+</tt>5<tt>
+</tt>6<tt>
+</tt></pre></td>
+  <td class="code"><pre ondblclick="with (this.style) { overflow = (overflow == 'auto' || overflow == '') ? 'visible' : 'auto' }">user=&gt; (require <span style="background-color:#fff0f0"><span style="color:#710">'</span><span style="color:#D20">stuff)<tt>
+</tt>nil<tt>
+</tt>user=&gt; (import </span><span style="color:#710">'</span></span>stuff.<span style="color:#036; font-weight:bold">BigWidget</span>)<tt>
+</tt>stuff.<span style="color:#036; font-weight:bold">BigWidget</span><tt>
+</tt>user=&gt; (<span style="color:#036; font-weight:bold">BigWidget</span>.<span style="color:#F00; background-color:#FAA">)</span><tt>
+</tt><span style="color:#888">#:stuff.BigWidget{}</span><tt>
+</tt></pre></td>
+</tr></table>
+</code>
+
+<p>One important detail here is that the initial <code>require</code> is necessary - without it, you'll get a <code>ClassNotFoundException</code>. Defypes work identically, though their printed representation will of course vary. You can use the same vector notation as with Java classes, but here you'd specify a namespace rather than a Java package as the first element of the vector.</p>
+
+<p>This difference in code-loading requirements between deftypes/defrecords and other Clojure code may be surprising at first (it was to me, anyway), but the capitalization (along with several semantic differences) is a good hint that something different needs to happen. And once you've <code>require</code>d the Clojure namespace, you can refer to defrecords and deftypes by their fully-qualified names (e.g. <code>stuff.BigWidget</code>), in a similar way that you could with Java classes.</p>
+
+<h2>Bringing it all together: <code>ns</code></h2>
+
+<p>While <code>require</code>, <code>use</code>, and <code>import</code> are the basis for all of your expeditions into other people's code in Clojure, you won't often be using them directly in your actual Clojure projects. It's far more idiomatic to use the <code>ns</code> macro, which pulls all of these together. The most basic use of <code>ns</code> gives just the namespace for the code that comes afterwards - you'll see at least this much in just about every Clojure file you come across:</p>
+
+<code><table class="CodeRay"><tr>
+  <td class="line_numbers" title="click to toggle" onclick="with (this.firstChild.style) { display = (display == '') ? 'none' : '' }"><pre>1<tt>
+</tt></pre></td>
+  <td class="code"><pre ondblclick="with (this.style) { overflow = (overflow == 'auto' || overflow == '') ? 'visible' : 'auto' }">(ns my-great-project.core)<tt>
+</tt></pre></td>
+</tr></table>
+</code>
+
+<p>Because we have so much background already, let's jump right into a much more complex <code>ns</code> example:</p>
+
+<code><table class="CodeRay"><tr>
+  <td class="line_numbers" title="click to toggle" onclick="with (this.firstChild.style) { display = (display == '') ? 'none' : '' }"><pre>1<tt>
+</tt>2<tt>
+</tt>3<tt>
+</tt>4<tt>
+</tt>5<tt>
+</tt>6<tt>
+</tt>7<tt>
+</tt></pre></td>
+  <td class="code"><pre ondblclick="with (this.style) { overflow = (overflow == 'auto' || overflow == '') ? 'visible' : 'auto' }">(ns my-great-project.core<tt>
+</tt>  <span style="background-color:#fff0f0"><span style="color:#710">&quot;</span><span style="color:#D20">This namespace is CRAZY!</span><span style="color:#710">&quot;</span></span><tt>
+</tt>  (<span style="color:#A60">:use</span> [clojure.string <span style="color:#A60">:only</span> [split join]] <span style="color:#A60">:reload</span>)<tt>
+</tt>  (<span style="color:#A60">:require</span> clojure.stacktrace<tt>
+</tt>            [clojure.test <span style="color:#A60">:as</span> test]<tt>
+</tt>            (clojure template walk) <span style="color:#A60">:verbose</span>)<tt>
+</tt>  (<span style="color:#A60">:import</span> (java.util <span style="color:#036; font-weight:bold">Date</span> <span style="color:#036; font-weight:bold">GregorianCalendar</span>)))<tt>
+</tt></pre></td>
+</tr></table>
+</code>
+
+<p>There's a lot here to look at, but take heart! Our trusty old <code>use</code> has been reincarnated as <code>:use</code>, the first element of a list within the <code>ns</code> macro body. The same goes for <code>require</code> -> <code>:require</code> and <code>import</code> -> <code>:import</code>. The other syntax change to get used to is that we no longer need to quote any of our libspecs - that's done internally. If you know much about how writing Clojure macros works, it'll make a good bit of sense.</p>
+
+<p>You can take any of our previous examples and plug them into the <code>ns</code> macro with only these small changes. Multiple <code>:use</code>, <code>:require</code>, or <code>:import</code> forms are OK here:</p>
+
+<code><table class="CodeRay"><tr>
+  <td class="line_numbers" title="click to toggle" onclick="with (this.firstChild.style) { display = (display == '') ? 'none' : '' }"><pre>1<tt>
+</tt>2<tt>
+</tt>3<tt>
+</tt></pre></td>
+  <td class="code"><pre ondblclick="with (this.style) { overflow = (overflow == 'auto' || overflow == '') ? 'visible' : 'auto' }">(ns my-great-project.core<tt>
+</tt>  (<span style="color:#A60">:require</span> clojure.stacktrace)<tt>
+</tt>  (<span style="color:#A60">:require</span> clojure.walk))<tt>
+</tt></pre></td>
+</tr></table>
+</code>
+
+<p>But it's more often the case that you'd eliminate the duplication there by rolling those into the same <code>:require</code> form:</p>
+
+<code><table class="CodeRay"><tr>
+  <td class="line_numbers" title="click to toggle" onclick="with (this.firstChild.style) { display = (display == '') ? 'none' : '' }"><pre>1<tt>
+</tt>2<tt>
+</tt>3<tt>
+</tt></pre></td>
+  <td class="code"><pre ondblclick="with (this.style) { overflow = (overflow == 'auto' || overflow == '') ? 'visible' : 'auto' }">(ns my-great-project.core<tt>
+</tt>  (<span style="color:#A60">:require</span> clojure.stacktrace<tt>
+</tt>            clojure.walk))<tt>
+</tt></pre></td>
+</tr></table>
+</code>
+
+<p>Another point of style: unless you're using the prefix form (as in <code>(clojure template walk)</code> from the first <code>ns</code> example above, you generally want to stick to one namespace per line, and left-align the libspecs.</p>
+
+<p>Once you've made these small syntax leaps, you've got all the knowledge you'll need to use Clojure libs. Remember that you should prefer <code>ns</code> in any non-REPL code that you write - the basic <code>require</code>, <code>use</code>, and <code>import</code> are just the building blocks.</p>
+
+<p>Libs can be among the most confusing areas of Clojure, but with a little effort and practice, they start to make a lot more sense. I hope this has been helpful - happy requiring!</p>
+		
+	
+		
+
+		
+
+		
+	
+	
+
+
+
+	</p>
+
+
+  
+    
+	<h3 id="comments">5 Responses to &#8220;Clojure Libs and Namespaces: require, use, import, and ns&#8221;</h3> 
+	<ol class="commentlist">
+	
+		<li class="alt" id="comment-14852">
+			<cite><a href="http://technomancy.us">Phil</a></cite> Says:
+			<br />
+			<small class="commentmetadata"><a href="#comment-14852" title="">December 5th, 2010 at 11:46 PM</a></small>
+			<p>I think it's important to remember that this complexity is not inherent in the problem; it's definitely something that will be cleaned up in future Clojure releases. That said, this is a great resource for dealing with that complexity in the mean time.</p>
+		</li>
+  
+		<li class="" id="comment-14858">
+			<cite><span>Paul M Bauer</span></cite> Says:
+			<br />
+			<small class="commentmetadata"><a href="#comment-14858" title="">December 6th, 2010 at 03:13 AM</a></small>
+			<p>You put together an excellent explaination
+Good cover on one of clojure's warts.  Thank you!</p>
+		</li>
+  
+		<li class="alt" id="comment-15127">
+			<cite><a href="http://getrailo.com">Sean Corfield</a></cite> Says:
+			<br />
+			<small class="commentmetadata"><a href="#comment-15127" title="">December 13th, 2010 at 10:37 AM</a></small>
+			<p>Great explanation of the options, thank you!</p>
+
+<p>In one example you have:</p>
+
+<p>user=> (use '[clojure.string :as str :only [join split]])</p>
+
+<p>nil</p>
+
+<p>user=> (str/replace "foobar" "f" "p")</p>
+
+<p>"poobar"</p>
+
+<p>Since you're using str/replace, should the use be:</p>
+
+<p>user=> (use '[clojure.string :as str :only replace])</p>
+		</li>
+  
+		<li class="" id="comment-15201">
+			<cite><a href="http://blog.8thlight.com/colin">Colin Jones</a></cite> Says:
+			<br />
+			<small class="commentmetadata"><a href="#comment-15201" title="">December 14th, 2010 at 09:05 PM</a></small>
+			<p>Sean- actually, not necessarily! Maybe it's not so clear why:</p>
+
+<p>The <code>:as str</code> option means we can use <em>anything</em> from the <code>clojure.string</code> namespace as <code>str/some-fn-goes-here</code>. The fact that <code>:only</code> is there too means that <code>(join ["a" "b"])</code> is still available without providing the namespace prefix.</p>
+
+<p>However, using the version you suggest (with one slight tweak, wrapping <code>replace</code> in a vector) will work just as well for the example given - that way you could use the non-namespaced syntax for <code>(replace "foobar" "f" "p")</code>.</p>
+		</li>
+  
+		<li class="alt" id="comment-15396">
+			<cite><span>Base</span></cite> Says:
+			<br />
+			<small class="commentmetadata"><a href="#comment-15396" title="">December 23rd, 2010 at 08:55 AM</a></small>
+			<p>Fantastic overview!  Thank you for pulling this together.  I will be referring a lot of people here.</p>
+		</li>
+  
+	</ol>
+
+
+
+
+
+<h3 id="respond">Leave a Reply</h3>
+<form id="comment-form" method="post" action="/articles/2010/12/6/clojure-libs-and-namespaces-require-use-import-and-ns/comments#comment-form">
+  <p><input type="text" id="comment_author" name="comment[author]" value="" /><label for="author"><small>Name (required)</small></label></p>
+  <p><input type="text" id="comment_author_email" name="comment[author_email]" value="" /><label for="email"><small>Mail (will not be published)</small></label></p>
+  <p><input type="text" id="comment_author_url" name="comment[author_url]" value="" /><label for="url"><small>Website</small></label></p>
+  <p><textarea name="comment[body]" id="comment" cols="50" rows="10"></textarea></p>
+  <p><input name="submit" type="submit" id="submit" value="Submit Comment" /></p>
+</form>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+#<ArticleDrop:0x9a845cc>
+
+
+		</div>
+
+</div>
+				<div id="footer">
+					<p>Copyright (c) 2008 8thlight Inc. All rights reserved.</p>
+				</div>
+				</body>
+				</html>
