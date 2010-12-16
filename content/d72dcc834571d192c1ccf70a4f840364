@@ -1,0 +1,245 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="nl" lang="nl">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Deploying Rails 3 on Ruby 1.9.2</title>
+    <link href="/rss/" rel="alternate" title="RSS" type="application/rss+xml" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/tags.css" />
+   
+    <!-- Code Highlighter CSS en JS -->
+   <script type="text/javascript" src="/codehighlighter/code_highlighter.js"></script>
+   <script type="text/javascript" src="/codehighlighter/ruby.js"></script>
+    
+  <!--[if lt IE 8]>
+    <link href="/stylesheets/ie.css" media="screen" rel="Stylesheet" type="text/css" />
+    <script src="http://ie7-js.googlecode.com/svn/version/2.0(beta3)/IE8.js" type="text/javascript"></script>
+  <![endif]-->
+
+    <script src="/javascripts/prototype.js" type="text/javascript"></script>
+    <script src="/javascripts/validation.js" type="text/javascript"></script>
+
+<!-- LinkedIN-->
+ <script src="http://www.linkedin.com/companyInsider?script&useBorder=no" type="text/javascript"></script>
+  </head>
+  <body id="xaop" class="deploying-rails-3-on-ruby-1-9-2 blog">
+      <div id="header">
+        <div class="container">
+                  <p id="skip_to_content"><a href="#content">&#x2193; Direct naar inhoud</a></p>
+        <p id="logo">
+          <a href="/">Xaop</a><br />
+          <span id="baseline">eXtreme Aspect Oriented Programmers</span>
+        </p>
+        <div id="navigation" class="clearfix">
+          <ul id="nav_main">
+    <li class="first"><a href="/">Home</a></li>
+	<li class="has_children">
+    <a href="/news/">News</a></li>
+	<li class="has_children parent_of_current">
+    <a href="/blog/">Blog</a></li>
+	<li class="has_children">
+    <a href="/work/">Work</a></li>
+	<li>
+    <a href="/services/">Services</a></li>
+	<li class="has_children">
+    <a href="/products/">Products</a></li>
+
+    </ul>
+          <ul id="nav_extra">
+            <li><a href="/labs">Xaop Labs</a></li> <li><a href="/xaop/about-us">About us</a></li> <li><a href="/xaop/contact-us">Contact us</a></li> <li><a href="/xaop/join-us">Join us</a></li>
+          </ul>
+        </div>
+        </div>
+      </div>
+    
+      <hr />
+
+      <div id="content">
+        <div class="container clearfix">
+          <div id="breadcrumb">
+  <p><strong>You are here:</strong> <a href="/">Home</a> &gt; <a href="/blog/">Blog</a> &gt; Deploying Rails 3 on Ruby 1.9.2</p>
+</div>
+          
+  <div id="content_main" class="span-15 colborder">
+    
+    
+  <div id="nav_contextual">
+    <p>
+      <span>&#8592;</span> <a href="/blog">More entries</a>
+    </p>
+  </div>
+
+    <h1>Deploying Rails 3 on Ruby 1.9.2</h1>
+    
+  <p class="extended-entry-info">Posted by <span>Peter Vanbroekhoven</span> on <span>Aug 04, 2010</span></p>
+
+    <p>The past two days I've been on a veritable odyssey trying to deploy a Rails 3 application on Ruby 1.9.2, complete with sirens leading me astray with their seductive song and six-headed monsters nearly killing me. It's an adventure alright.</p><p>We have been using a home-brewed <a href="http://googleenterprise.blogspot.com/2010/07/because-time-is-money-leveraging-google.html">time management application based on Google Calendar</a> for a while now at XAOP and we are pretty happy with how it works. We decided to rewrite it from scratch in Rails 3. Determined to live on the edge on this one, we built it on top of Ruby 1.9.2 and threw ourselves at its new features such as the new hash syntax.</p><p>Two days ago the time had come to deploy a first version. The original application was deployed on <a href="http://heroku.com/">Heroku</a>, but Heroku supports neither Ruby 1.9.2 nor Rails 3.0.0 RC. We need the latter for a feature introduced after the fourth beta. The same goes for <a href="http://www.engineyard.com/products/technology">Engine Yard</a>'s cloud platforms. And thus, in a heroic move, we decided to deploy the application ourselves on Amazon EC2. Having done this before, this seemed like a good idea in anticipation of support from Heroku/EY.</p>
+    <h4>Simian express</h4><p>First off, building the application was not hard compared to Rails 2.3 on Ruby 1.8.6. Most of the changes in Rails and ActiveRecord make a lot of sense and are incredibly easy to get used to. Ruby 1.9 support in gems and plugins is pretty good already. We had to wait for the mysql2 gem to get the encodings right, and some plugins used methods that were renamed or had disappeared from Rails 3, but these issues have been reported and should have been fixed. Monkey patching is great as a temporary solution in these cases.</p><h4>Wrestling with Amazons</h4><p>Setting up a database with <a href="http://aws.amazon.com/rds/">Amazon RDS</a> was a breeze. Starting an EC2 instance running Ubuntu was a piece of cake. Been there done that. No complaints in this department.</p><h4>The keeper of secrets of the forest</h4><p>Next up was the installation of the necessary packages: libreadline, libssl, libxml2, libxslt, apache2, lib-mysqlclient, and dev packages for all the libs in there. We need libreadline for getting history and input editing support in IRB. We need libssl for SSL support. We need libxml2 znd libxslt for Nokogiri. Surprisingly, the dev packages for zlib were already installed on the <a href="http://alestic.com/">EC2 image I was using</a> (we need zlib support for Rubygems to work). Apparently, the image also had a decent build environment installed so I didn't need to install it myself.</p><h4>Painting the town Ruby</h4><p>I decided to use <a href="http://rvm.beginrescueend.com/">RVM</a> to install Ruby on the EC2 instance. This was painless, though I had to redo the installation after I realized that I would need access to the Ruby installation as root to start the Rails processes and so I needed to install it <a href="http://rvm.beginrescueend.com/deployment/system-wide/">system-wide</a>. On Ubuntu, loading RVM in the shell profile is as easy as executing this:</p><pre>sudo "ln -s /usr/local/lib/rvm /etc/profile.d/rvm.sh"</pre><p>For reference, we are using ruby-1.9.2-preview3. So far, so good.</p><h4>Crossroads</h4><p>Once the machine was set up, it was time to decide how to deploy and how to manage our Rails processed. For the latter, <a href="http://www.modrails.com/">Phusion Passenger</a> is a popular choice but it doesn't appear to have support for Ruby 1.9.2 yet -- it is planned for the 3.0 version. I considered using Moonshine for the full deployment stack, but it doesn't support Ruby 1.9.2 either. After a couple of false starts, I decided to set it all up myself. I was going to use good old Capistrano and the familiar Mongrel cluster with an Apache in front of it.</p><h4>Digging for gems</h4><p>Given our prior experience with Capistrano, getting the code deployed to the EC2 instance was easy enough. Capistrano has some nice hooks that allow you to customize certain things, such as creating a shared database.yml pointing to the RDS instance. I also added a hook to install the gems based on the Gemfile. This is where I hit the first hitch: calls to run in Capistrano can't find the gem command or any executables for installed gems. RVM has <a href="http://rvm.beginrescueend.com/integration/capistrano/">Capistrano support</a> that installs rvm-shell as the default shell in Capistrano which has RVM preloaded. This does not solve the problem when you run sudo because it resets the PATH variable and the executables still cannot be found. You can adapt the sudoers file such that PATH isn't reset, and then the executables are found, but then Rubygems can't find any of the installed gems.</p><p>The solution to this is very simple: use sudo -i. The simplest solutions are really the hardest to find. You can set up Capistrano to always use sudo -i by adding this to your config/deploy.rb:</p><pre>set :sudo, "sudo -i"</pre><p>This means that root's profile is loaded anew on each request which could be slower, but this is hardly noticeable. I'm not entirely happy with this solution because it supposes that Capistrano performs no extra magic on the command string. It works, though, and there may be a better solution in Capistrano but I have a hard time finding some things in the Capistrano documentation. This is a bit surprising given that Jamis Buck, Capistrano's creator, was praised for his awesome documentation in the days when Ruby documentation was very scarce or simply non-existing.</p><h4>Deploying the Calabrian cavalry</h4><p>Given our prior experience with Capistrano, it was easy enough to get our code onto the EC2 instance. Our code is in a private github project and we don't want to put our keys on the EC2 instance, but this option in Capistrano does the trick:</p><pre>set :deploy_via, :copy</pre><p>It tells Capistrano to check out the source on our development machine with our GitHub keys, zip the source up, copy it to the server and unpack it there.</p><h4>Blustering through clustering</h4><p>Then I turned to setting up a Mongrel cluster. There's a Ruby 1.9 compatible fork of mongrel_cluster on <a href="http://github.com/kyusik/mongrel_cluster">GitHub</a> that we can use. Setting it up is all standard stuff, but our Rails processes crash with the following error:</p><pre>no such file to load -- dispatcher</pre><p>When starting the Rails server as a daemon with the -d option, the process also crashes during start-up. A quick Google search on that error message reveals that they removed the dispatcher file from Rails at some point. The same Google search tells me that Thin had this problem too but they already fixed it. So I resorted to using a Thin cluster.</p><p>As it turns out, Thin is written in C++ and requires g++. This renewed my gripes with Ubuntu's, and in general Debian's package management. The g++ executable now needs to be installed from its separate package. This is pretty silly because as far as I know g++ is just a shell script that calls gcc with some extra parameters to make it behave as a C++ compiler. Joy!</p><p>Regardless, setting up a Thin cluster is easier than setting up a Mongrel cluster. Installing the start-up script is a matter of doing:</p><pre>&#160; sudo "thin install"<br />&nbsp; sudo "/usr/sbin/update-rc.d -f thin defaults"</pre><p>All you need to do now is put a Thin config file for your application in /etc/thin and it will be run at boot. You can generate a skeleton file by running this command:</p><pre>thin config -C /etc/thin/myapp.yml</pre><p>I couldn't find any Capistrano recipes for Thin, but these do the trick just fine:</p><pre>namespace :deploy do<br />&nbsp; desc "Start the Thin processes"<br />&nbsp; task :start do<br />&nbsp;&nbsp;&nbsp; run "sudo -i thin start -C /etc/thin/timetag.yml"<br />&nbsp; end<br />&nbsp; desc "Stop the Thin processes"<br />&nbsp; task :stop do<br />&nbsp;&nbsp;&nbsp; run "sudo -i thin stop -C /etc/thin/timetag.yml"<br />&nbsp; end<br />&nbsp; desc "Restart the Thin processes"<br />&nbsp; task :restart do<br />&nbsp;&nbsp;&nbsp; run "sudo -i thin restart -C /etc/thin/timetag.yml"<br />&nbsp; end<br />end</pre><h4>Indians on the war path</h4><p>Now we are ready to set up Apache for load balancing. This <a href="http://blog.codahale.com/2006/06/19/time-for-a-grown-up-server-rails-mongrel-apache-capistrano-and-you/">blog post</a> still does the trick. You just have to remember to enable the required modules:</p><pre>sudo "ln -sf ../mods-available/proxy_balancer.load ../mods-available/rewrite.load ../mods-available/proxy.load ../mods-available/proxy.conf ../mods-available/proxy_http.load ../mods-available/proxy_connect.load /etc/apache2/mods-enabled/"</pre><h4>The grey havens</h4><p>The whole process was more of a hassle than I hoped it would be. It gives me a renewed appreciation of companies such as Heroku and Engine Yard. It has a happy end, but it's not all bliss yet. We use PDFKit to generate PDF exports, and PDFKit doesn't work with Thin for some reason. Requests for PDF versions of a page seem to hang indefinitely. On our development machines, running Mac OS X, it seems to work if we start Thin in threaded mode, but on Ubuntu this makes things unpredictable and often extremely slow to the extent where it is beyond unusable.</p><p>I haven't tested any other web servers; we will probably wait until Mongrel catches up or until Heroku/EY tackle all the deployment issues for us. They are probably waiting for the final release of Ruby 1.9.2, but that should be this weekend if Yugui can manage to get it done.</p>
+    
+  <div class="entry_footer">
+    <p class="posted_in">Posted in: <a href="/search/by-tag?tag=rails" class="tag">rails</a>, <a href="/search/by-tag?tag=ruby" class="tag">ruby</a></p>
+  </div>
+  
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+  
+  var disqus_identifier = "deploying-rails-3-on-ruby-1-9-2";
+  
+ (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://xaopblog.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=xaopblog">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+  </div>
+  <div id="content_sec" class="span-8 last">
+    <h3>Entries per category</h3>
+<ol class="tag_cloud"><li class="size2"><span>7 pages are tagged with </span><a href="/search/by-tag?tag=documentum" class="tag">documentum</a></li><li class="size4"><span>12 pages are tagged with </span><a href="/search/by-tag?tag=events" class="tag">events</a></li><li class="size4"><span>14 pages are tagged with </span><a href="/search/by-tag?tag=rails" class="tag">rails</a></li><li class="size9"><span>32 pages are tagged with </span><a href="/search/by-tag?tag=ruby" class="tag">ruby</a></li><li class="size3"><span>9 pages are tagged with </span><a href="/search/by-tag?tag=sharepoint" class="tag">sharepoint</a></li></ol>
+<div id="recentcomments" class="dsq-widget"><h3 class="dsq-widget-title">Recent Comments</h3>
+<script type="text/javascript" src="http://disqus.com/forums/xaopblog/recent_comments_widget.js?num_items=5&hide_avatars=0&avatar_size=32&excerpt_length=200"></script></div>
+<div id="popularthreads" class="dsq-widget"><h3 class="dsq-widget-title">Popular Threads</h3>
+<script type="text/javascript" src="http://disqus.com/forums/xaopblog/popular_threads_widget.js?num_items=5"></script></div>
+    <div id="searchbox" class="form">
+  <div>  
+    <h3>Search Xaop.com</h3>
+    <form action="/search" method="get" id="search_form">    
+      <fieldset>
+          <input type="text" id="q" name="q" value="" class="searchfield" />
+          <input class="submit" type="image" src="/images/search_btn.jpg" alt="Verzenden" />
+      </fieldset>
+    </form>
+  </div>
+</div>
+    
+  </div>
+
+      </div>
+    </div>
+
+    <hr />
+
+    <div id="footer">
+      <div class="container">
+                  <div id="newsfeed" class="span-7 colborder">
+            <div id="xaop_news">
+              <h2>XAOP News</h2>
+              <ol>
+                
+                  
+                    <li>
+                      <h3><a href="/news/2010/12/23/xaop-one-of-the-plug-play---ibbt-contest-winners/">XAOP, one of the Plug & Play - IBBT contest winners!</a></h3>
+                    </li>
+                  
+                    <li>
+                      <h3><a href="/news/2010/12/02/timetag-view-entries-organized-by-day/">TimeTag: view entries organized by day</a></h3>
+                    </li>
+                  
+                    <li>
+                      <h3><a href="/news/2010/10/01/documentum-helicopter-view-training/">Documentum Helicopter View Training</a></h3>
+                    </li>
+                  
+                
+              </ol>
+              <p class="rss_subscribe"><a href="/rss/news">Subscribe</a></p> 
+            </div>
+
+            <div id="from_the_blog">   
+              <h2>From the blog</h2>
+              <ol>
+                
+                  
+                    <li>
+                      <h3><a href="/blog/2010/11/22/the-xaop-rubyconf-x-report/">The XAOP RubyConf X report</a></h3>                
+                    </li>
+                  
+                    <li>
+                      <h3><a href="/blog/2010/11/22/the-difference-between-traits-and-modules/">The difference between Traits and Modules</a></h3>                
+                    </li>
+                  
+                    <li>
+                      <h3><a href="/blog/2010/10/04/timetag-it-release/">TimeTag.it release</a></h3>                
+                    </li>
+                  
+                
+              </ol>
+            <p class="rss_subscribe"><a href="/rss/blog">Subscribe</a></p>
+          </div>
+        </div>
+      
+        <div id="footer_contact_info" class="span-7 colborder">
+          <h2>Contact us</h2>
+          <p>
+            <em>XAOP</em> is based in Belgium, close to Brussels, in the district of Halle.
+          </p>
+          <p>
+            Don't hesitate to <a href="/xaop/contact-us">contact us for further information</a> regarding our products and services. 
+          </p>
+          <p>
+            Get to know us, <a href="/xaop/about-us">meet the team</a>
+          </p>
+<p>
+See how we are connected on LinkedIn 
+<span id="xaopli"></span><small>(Click on the blue icon)</small>
+  <script type="text/javascript">
+   new LinkedIn.CompanyInsiderPopup("xaopli","XAOP");
+</script>
+</p>
+<p><a href="http://www.linkedin.com/companies/xaop" ><img src="http://static.linkedin.com/scds/common/u/img/webpromo/btn_cofollow_badge.png" alt="XAOP on LinkedIn"></a>
+</p>
+        </div>
+        
+        <div id="support" class="span-7 last">
+<h2>Follow us on Twitter</h2>
+         <script src="http://widgets.twimg.com/j/2/widget.js"></script>
+<script>
+new TWTR.Widget({
+  version: 2,
+  type: 'profile',
+  rpp: 4,
+  interval: 6000,
+  width: 250,
+  height: 300,
+  theme: {
+    shell: {
+      background: '#493e32',
+      color: '#ffffff'
+    },
+    tweets: {
+      background: '#493e32',
+      color: '#ffffff',
+      links: '#e5debe'
+    }
+  },
+  features: {
+    scrollbar: true,
+    loop: false,
+    live: true,
+    hashtags: true,
+    timestamp: true,
+    avatars: false,
+    behavior: 'all'
+  }
+}).render().setUser('xaop').start();
+</script>
+        </div>
+        <hr />
+        <p id="site_info" class="clear">XAOP is a registered trademark of XAOP bvba.<br/>
+  All other trademarks or registered trademarks are the property of their respective trademark holders. 
+  </p>
+      </div>
+
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-380340-1";
+urchinTracker();
+</script>
+    </div>
+  </body>
+</html>
