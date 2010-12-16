@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<!--[if IE 6]>
+<html id="ie6" dir="ltr" lang="en">
+<![endif]-->
+<!--[if (gt IE 6) | (!IE)]><!-->
+<html dir="ltr" lang="en">
+<!--<![endif]-->
+<head>
+<meta charset="UTF-8" />
+<title>Namespacing in JavaScript | JavaScript, JavaScript</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="stylesheet" type="text/css" media="all" href="https://s-ssl.wordpress.com/wp-content/themes/pub/coraline/style.css" />
+<link rel="pingback" href="http://javascriptweblog.wordpress.com/xmlrpc.php" />
+<link rel="alternate" type="application/rss+xml" title="JavaScript, JavaScript &raquo; Feed" href="https://javascriptweblog.wordpress.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="JavaScript, JavaScript &raquo; Comments Feed" href="https://javascriptweblog.wordpress.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="JavaScript, JavaScript &raquo; Namespacing in&nbsp;JavaScript Comments Feed" href="https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/feed/" />
+<script type="text/javascript">
+/* <![CDATA[ */
+function addLoadEvent(func){var oldonload=window.onload;if(typeof window.onload!='function'){window.onload=func;}else{window.onload=function(){oldonload();func();}}}
+/* ]]> */
+</script>
+<link rel="stylesheet" href="https://s-ssl.wordpress.com/wp-content/themes/h4/global.css" type="text/css" />
+<link rel='stylesheet' id='sharedaddy-css'  href='https://s-ssl.wordpress.com/wp-content/mu-plugins/sharing/sharing.css?m=1287601727g&#038;ver=MU' type='text/css' media='all' />
+<script type='text/javascript' src='https://s-ssl.wordpress.com/wp-includes/js/l10n.js?ver=20101110'></script>
+<script type='text/javascript' src='https://s-ssl.wordpress.com/wp-includes/js/jquery/jquery.js?ver=1.4.4'></script>
+<script type='text/javascript' src='https://s-ssl.wordpress.com/wp-includes/js/comment-reply.js?ver=20090102'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://javascriptweblog.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://javascriptweblog.wordpress.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='index' title='JavaScript, JavaScript' href='https://javascriptweblog.wordpress.com/' />
+<link rel='prev' title='JSON and&nbsp;JSONP' href='https://javascriptweblog.wordpress.com/2010/11/29/json-and-jsonp/' />
+<link rel='next' title='Delegation vs Inheritance in&nbsp;JavaScript' href='https://javascriptweblog.wordpress.com/2010/12/22/delegation-vs-inheritance-in-javascript/' />
+<meta name="generator" content="WordPress.com" />
+<link rel='canonical' href='https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/' />
+<link rel='shortlink' href='http://wp.me/pQpop-sR' />
+<link rel="shortcut icon" type="image/x-icon" href="https://s-ssl.wordpress.com/i/favicon-stacked.ico" sizes="16x16 24x24 32x32 48x48" />
+<link rel="icon" type="image/x-icon" href="https://s-ssl.wordpress.com/i/favicon-stacked.ico" sizes="16x16 24x24 32x32 48x48" />
+<link rel="apple-touch-icon" href="https://s-ssl.wordpress.com/wp-content/themes/h4/i/webclip.png" />
+	<style type="text/css">
+	/* <![CDATA[ */
+				div#likes { margin-top: 15px; }
+		.like-button { border: 1px solid #eee; padding: 2px 6px; font-size: 13px; font-family: arial, tahoma, sans-serif; }
+		#wpl-likebox { clear: left; font-size: 11px; font-family: arial, tahoma, verdana, sans-serif !important; min-height: 30px; margin: 10px 0 !important; padding: 5px 0 10px 0 !important; }
+		#wpl-button { float: left; background: url( /i/buttonbg.png ) top left repeat-x; margin-right: 7px; border: 1px solid #d4d4d4; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; }
+		#wpl-button a { color: #666 !important; line-height: 130% !important; text-decoration: none !important; outline: none; float: left; padding: 3px 6px 2px 24px !important; font-size: 11px !important; background: url( /i/likestar.png ) 6px 49.8% no-repeat; }
+		#wpl-button.liked { background: #feffce; border: 1px solid #f3e389; }
+		#wpl-button.liked a { color: #ba871b !important; }
+		#wpl-likebox #wpl-count { min-height: 25px; line-height: 130% !important; float: left; padding-top: 4px; }
+		#wpl-likebox #wpl-avatars { clear: left; max-height: 98px; overflow: hidden; margin-top: 15px; line-height: 130% !important; }
+		#wpl-likebox #wpl-avatars img { border: none !important; }
+		#wpl-likebox #wpl-mustlogin { line-height: 14px !important; font-size: 11px; clear: left; margin-top: 5px; background: #f0f0f0; padding: 10px; width: 65%; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; }
+		#wpl-likebox #wpl-mustlogin a { color: #888; text-decoration: underline; }
+		#wpl-likebox #wpl-mustlogin p { margin: 5px 0; padding: 0 }
+		#wpl-likebox #wpl-mustlogin input.input { padding: 2px; background: #fff; font-size: 11px; font-family: inherit; border: 1px solid #ccc; -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1) inset; -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1) inset; line-height: 12px; }
+		#wpl-likebox #wpl-mustlogin input#wp-submit { border: 1px solid #ccc; font-size: 11px; background: #fafafa; repeat-x; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; padding: 2px 4px !important; line-height: 12px; }
+		#wpl-likebox #wpl-mustlogin label { position: relative; cursor: text; }
+		#wpl-likebox #wpl-mustlogin label span { position: absolute; top: 0px; left: 5px; padding: 0 !important; }
+		#wpl-likebox #wpl-mustlogin label span { top /*\**/: -10px\9; }
+	/* ]]> */
+	</style>
+	<link rel='openid.server' href='http://javascriptweblog.wordpress.com/?openidserver=1' />
+<link rel='openid.delegate' href='http://javascriptweblog.wordpress.com/' />
+<link rel="search" type="application/opensearchdescription+xml" href="https://javascriptweblog.wordpress.com/osd.xml" title="JavaScript, JavaScript" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://wordpress.com/opensearch.xml" title="WordPress.com" />
+<style type="text/css">
+body { background-color: #f5f6fa; }
+</style>
+<meta name="application-name" content="JavaScript, JavaScript" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-task" content="name=Subscribe;action-uri=https://javascriptweblog.wordpress.com/feed/;icon-uri=https://s-ssl.wordpress.com/i/favicon-stacked.ico" /><meta name="msapplication-task" content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=https://s-ssl.wordpress.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=https://s-ssl.wordpress.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=https://s-ssl.wordpress.com/i/favicon.ico" /><script type="text/javascript"> 
+	window.google_analytics_uacct = "UA-52447-2"; 
+</script>
+
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-52447-2']);
+	_gaq.push(['_setDomainName', 'wordpress.com']);
+	_gaq.push(['_initData']);
+	_gaq.push(['_trackPageview']);
+
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+	})();
+</script>
+</head>
+
+<body class="single single-post postid-1789 single-format-standard two-column content-sidebar">
+<div id="container" class="hfeed">
+	<div id="header">
+		<div id="masthead" role="banner">
+						<div id="site-title">
+				<span>
+					<a href="https://javascriptweblog.wordpress.com/" title="JavaScript, JavaScript" rel="home">JavaScript, JavaScript</a>
+				</span>
+			</div>
+			<div id="site-description"></div>
+		</div><!-- #masthead -->
+
+		<div id="access" role="navigation">
+		  			<div class="skip-link screen-reader-text"><a href="#content" title="Skip to content">Skip to content</a></div>
+						<div class="menu"><ul><li ><a href="https://javascriptweblog.wordpress.com/" title="Home">Home</a></li></ul></div>
+		</div><!-- #access -->
+
+		<div id="branding">
+						<a href="https://javascriptweblog.wordpress.com/">
+									<img src="https://javascriptweblog.files.wordpress.com/2010/08/cropped-notes2.jpg" width="990" height="180" alt="" />
+							</a>
+					</div><!-- #branding -->
+	</div><!-- #header -->
+
+	<div id="content-box">
+
+		<div id="content-container">
+			<div id="content" role="main">
+
+			
+				<div id="nav-above" class="navigation">
+					<div class="nav-previous"><a href="https://javascriptweblog.wordpress.com/2010/11/29/json-and-jsonp/" rel="prev"><span class="meta-nav">&larr;</span> JSON and&nbsp;JSONP</a></div>
+					<div class="nav-next"><a href="https://javascriptweblog.wordpress.com/2010/12/22/delegation-vs-inheritance-in-javascript/" rel="next">Delegation vs Inheritance in&nbsp;JavaScript <span class="meta-nav">&rarr;</span></a></div>
+				</div><!-- #nav-above -->
+
+				<div id="post-1789" class="post-1789 post type-post status-publish format-standard hentry category-javascript tag-global-abatement tag-module tag-namespaces">
+					<h1 class="entry-title">Namespacing in&nbsp;JavaScript</h1>
+
+					<div class="entry-meta">
+						<span class="meta-prep meta-prep-author">Posted on</span> <a href="https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/" title="08:54" rel="bookmark"><span class="entry-date">December 7, 2010</span></a> <span class="byline"><span class="meta-sep">by</span> <span class="author vcard"><a class="url fn n" href="https://javascriptweblog.wordpress.com/author/angusjs/" title="View all posts by Angus Croll">Angus Croll</a></span></span><span class="comments-link"><span class="meta-sep">|</span> <a href="https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/#comments" title="Comment on Namespacing in&nbsp;JavaScript">42 Comments</a></span>
+											</div><!-- .entry-meta -->
+
+					<div class="entry-content">
+						<script type="text/javascript" src="http://s-ssl.wordpress.com/wp-content/plugins/adverts/adsense.js?1"></script><p>Global variables should be reserved for objects that have system-wide relevance and they should be named to avoid ambiguity and minimize the risk of naming collisions. In practice this means you should avoid creating global objects unless they are absolutely necessary. </p>
+<p>But, hey, you already knew all that&#8230;.. </p>
+<p>So what do you do about it? Conventional wisdom tells us that the best global abatement strategy is to create a small number of global objects which will serve as de facto namespaces for underlying modules and subsystems. I&#8217;m going to explore several approaches to namespacing, culminating in an elegant, safe and flexible solution that I based on a recent article by <a href="http://www.brothercake.com/" target="_blank">James Edwards</a>. </p>
+<p><strong><span id="more-1789"></span></strong></p>
+<h4 style="color:black;">Static Namespacing</h4>
+<p>I&#8217;m using <em>static namespacing</em> as an umbrella term for solutions in which the namespace label is effectively hard coded. It&#8217;s true, you <em>could</em> re-assign one namespace to another but the new namespace will reference the same objects as the old one. </p>
+<p><b>1. By Direct Assignment</b></p>
+<p>The most basic approach. Its verbose and if you ever wanted to rename the namespace you&#8217;ve got a job on your hands. However its safe and unambiguous. </p>
+<pre class="brush: jscript;">
+var myApp = {}
+
+myApp.id = 0;
+
+myApp.next = function() {
+	return myApp.id++;
+}
+
+myApp.reset = function() {
+	myApp.id = 0;
+}
+
+window.console &amp;&amp; console.log(
+	myApp.next(),
+	myApp.next(),
+	myApp.reset(),
+	myApp.next()
+); //0, 1, undefined, 0
+</pre>
+<p>&nbsp;<br />
+You could make future maintenance a little easier by using <code>this</code> to reference sibling properties &#8211; but this is a little risky since there is nothing to stop your namespaced functions from being reassigned: </p>
+<pre class="brush: jscript;">
+var myApp = {}
+
+myApp.id = 0;
+
+myApp.next = function() {
+	return this.id++;
+}
+
+myApp.reset = function() {
+	this.id = 0;
+}
+
+myApp.next(); //0
+myApp.next(); //1
+var getNextId = myApp.next;
+getNextId(); //NaN whoops!
+</pre>
+<p>&nbsp;<br />
+<b>2. Using Object Literal Notation</b></p>
+<p>Now we need only refer to the namespace name once, so switching the name later is a little easier (assuming you haven&#8217;t already referenced the namespace  too often). There is still a danger that the value of <code>this</code> might throw a surprise &#8211; but its a little safer to assume that objects defined within an object literal construct will not be reassigned. </p>
+<pre class="brush: jscript;">
+var myApp = {
+
+	id: 0,
+
+	next: function() {
+		return this.id++;
+	},
+
+	reset: function() {
+		this.id = 0;
+	}
+}
+window.console &amp;&amp; console.log(
+	myApp.next(),
+	myApp.next(),
+	myApp.reset(),
+	myApp.next()
+) //0, 1, undefined, 0
+</pre>
+<p>&nbsp;<br />
+<b>3. The Module Pattern</b></p>
+<p>I find myself using the <a href="http://www.adequatelygood.com/2010/3/JavaScript-Module-Pattern-In-Depth" target="_blank">module pattern</a> more often these days. The logic is shielded from the global scope by a function wrapper (usually self-invoking) which returns an object representing the module&#8217;s public interface. By immediately invoking the function and assigning the result to a namespace variable, we lock up the module&#8217;s API in the namespace. Additionally any variables not included in the return value will remain forever private, visible only to the public functions that reference them.</p>
+<pre class="brush: jscript;">
+var myApp = (function() {
+
+	var id= 0;
+
+	return {
+		next: function() {
+			return id++;
+		},
+
+		reset: function() {
+			id = 0;
+		}
+	};
+})();	
+
+window.console &amp;&amp; console.log(
+	myApp.next(),
+	myApp.next(),
+	myApp.reset(),
+	myApp.next()
+) //0, 1, undefined, 0
+</pre>
+<p>&nbsp;<br />
+Like the object literal example above, the receiving namespace can be easily switched, but there are added advantages: object literal notation is rigid &#8211; its all about property assignments, with no room for supporting logic. Moreover all properties must be initialized and property values cannot easily cross reference one another (so, for example, internal closures are not possible). The module pattern suffers none of these constraints and gives us the added benefit of privacy. </p>
+<h4 style="color:black;">Dynamic Namespacing</h4>
+<p>We could also call this section <em>namespace injection</em>. The namespace is represented by a proxy which is directly referenced <em>inside</em> the function wrapper &#8211; which means we no longer have to bundle up a return value to assign to the namespace. This makes namespace definition more flexible and makes it very easy to have multiple independent instances of a module existing in separate namespaces (or even in the global context). Dynamic namespacing supports all the features of the module pattern with the added advantage of being intuitive and readable. </p>
+<p><b>4. Supply a Namespace Argument</b></p>
+<p>Here we simply pass the namespace as an argument to a self-invoking function. The <code>id</code> variable is private because it does not get assigned to the <code>context</code>.</p>
+<pre class="brush: jscript;">
+var myApp = {};
+(function(context) {
+	var id = 0;
+
+	context.next = function() {
+		return id++;
+	};
+
+	context.reset = function() {
+		id = 0;
+	}
+})(myApp);	
+
+window.console &amp;&amp; console.log(
+	myApp.next(),
+	myApp.next(),
+	myApp.reset(),
+	myApp.next()
+) //0, 1, undefined, 0
+</pre>
+<p>&nbsp;<br />
+We can even set the context to the global object (with a one word change!). This is a big asset for library vendors &#8211; who can wrap their features in a self-invoking function and leave it to the user to decide whether they should be global or not (John Resig was an early adopter of this concept when he wrote JQuery) </p>
+<pre class="brush: jscript;">
+var myApp = {};
+(function(context) {
+	var id = 0;
+
+	context.next = function() {
+		return id++;
+	};
+
+	context.reset = function() {
+		id = 0;
+	}
+})(this);	
+
+window.console &amp;&amp; console.log(
+	next(),
+	next(),
+	reset(),
+	next()
+) //0, 1, undefined, 0
+</pre>
+<p>&nbsp;<br />
+<b>5. Use <em>this</em> as a Namespace Proxy</b></p>
+<p>A recent posting by <a href="http://www.brothercake.com/" target="_blank">James Edwards</a> piqued my interest. <a href="http://blogs.sitepoint.com/2010/11/30/my-favorite-javascript-design-pattern/" target="_blank">My Favorite JavaScript Design Pattern</a> was apparently misunderstood by many commentators, who thought he might as well resort to the module pattern. The article peddles multiple techniques (which probably contributed to readers&#8217; confusion) but at its heart is a little bit of genius which I&#8217;ve revamped and presented a namespacing tool.</p>
+<p>The beauty of the pattern is that it simply uses the language as designed &#8211; nothing more, nothing less, no tricks, no sugar. Moreover because the namespace is injected via the <em>this</em> keyword (which is static within a given execution context) it cannot be accidentally modified. </p>
+<pre class="brush: jscript;">
+var myApp = {};
+(function() {
+	var id = 0;
+
+	this.next = function() {
+		return id++;
+	};
+
+	this.reset = function() {
+		id = 0;
+	}
+}).apply(myApp)	
+
+window.console &amp;&amp; console.log(
+	myApp.next(),
+	myApp.next(),
+	myApp.reset(),
+	myApp.next()
+) //0, 1, undefined, 0
+</pre>
+<p>&nbsp;<br />
+Even better, the <code>apply</code> (and <code>call</code>) APIs provide natural separation of context and arguments &#8211; so passing additional arguments to the module creator is very clean. The following example demonstrates this, and also shows how to run the module independently over multiple namespaces:</p>
+<pre class="brush: jscript;">
+var subsys1 = {}, subsys2 = {};
+var nextIdMod = function(startId) {
+	var id = startId || 0;
+
+	this.next = function() {
+		return id++;
+	};
+
+	this.reset = function() {
+		id = 0;
+	}
+};
+
+nextIdMod.call(subsys1);
+nextIdMod.call(subsys2,1000);	
+
+window.console &amp;&amp; console.log(
+	subsys1.next(),
+	subsys1.next(),
+	subsys2.next(),
+	subsys1.reset(),
+	subsys2.next(),
+	subsys1.next()
+) //0, 1, 1000, undefined, 1001, 0
+</pre>
+<p>&nbsp;<br />
+Of course if we wanted a global id generator, its a breeze&#8230;</p>
+<pre class="brush: jscript;">
+nextIdMod();    
+
+window.console &amp;&amp; console.log(
+    next(),
+    next(),
+    reset(),
+    next()
+) //0, 1, undefined, 0
+</pre>
+<p>&nbsp;<br />
+The id generator tool we&#8217;ve been using as an example does not do justice to the full potential of this pattern. By wrapping an entire library and using the <code>this</code> keyword as a stand in for the namespace we make it easy for the user to run the library in whichever context they choose (including the global context) </p>
+<pre class="brush: jscript;">
+//library code
+var protoQueryMooJo = function() {
+	//everything
+}
+
+//user code
+var thirdParty = {};
+protoQueryMooJo.apply(thirdParty);
+</pre>
+<p>&nbsp;</p>
+<h4 style="color:black;">Other considerations</h4>
+<p>I try to avoid nested namespaces. They are harder to follow (for both human and computer) and they will bulk out your code with cruft. As <a href="http://michaux.ca/articles/javascript-namespacing" target="_blank">Peter Michaux</a> points out, deeply nested namespaces may be a legacy of nostalgic Java developers trying to recreate the lengthy package chains they knew and loved.</p>
+<p>It&#8217;s possible to span a single namespace across .js files (though only by namespace injection or direct assignment of every variable) however you should be careful with dependencies. Moreover binding a namespace to a file can help the reader more easily navigate the codeline.</p>
+<p>Since JavaScript has no formal namespace construct, there is a rich landscape of home grown solutions out there. This survey details just a few of them and there may well be better techniques that I did not cover. I&#8217;d love to hear about them.</p>
+<h4 style="color:black;">Further reading</h4>
+<p>James Edwards: <a href="http://blogs.sitepoint.com/2010/11/30/my-favorite-javascript-design-pattern/" target="_blank">My Favorite JavaScript Design Pattern</a><br />
+Peter Michaux: <a href="http://michaux.ca/articles/javascript-namespacing" target="_blank">JavaScript Namespacing</a></p>
+<div class="snap_nopreview sharing robots-nocontent">
+<ul>
+<li class="sharing_label">Share this:</li>
+<li class="share-twitter share-regular">
+<div class="twitter_button"><iframe allowtransparency="true" frameborder="0" scrolling="no" src="http://platform.twitter.com/widgets/tweet_button.html?url=http%3A%2F%2Fwp.me%2FpQpop-sR&#038;counturl=http%3A%2F%2Fjavascriptweblog.wordpress.com%2F2010%2F12%2F07%2Fnamespacing-in-javascript%2F&#038;count=horizontal&#038;text=Namespacing%20in%20JavaScript: " style="width:97px; height:20px;"></iframe></div>
+</li>
+<li class="share-end"></li>
+</ul>
+<div class="sharing-clear"></div>
+</div>
+
+<!--adcode-->
+<div align="center" style="padding-top: 5px; text-align: left;" class="adcode">
+<script type="text/javascript"><!--
+google_ad_client = "pub-3443918307802676";
+google_ad_output = "js";
+google_feedback = "on";
+google_max_num_ads = "4";
+google_ad_width = 336;
+google_ad_height = 280;
+google_ad_format = "336x280_as";
+google_image_size = "336x280";
+google_ad_type = "text,flash,html";
+google_ad_channel ="7770228814+3633280292+7401333398+7453468586+2794543176";
+var color_bg = 'ffffff';
+var color_text = '000000';
+var color_link = '0060ff';
+var color_border = 'ffffff';
+var color_url = '0060ff';
+
+google_analytics_domain_name = "wordpress.com";
+//--></script>
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+</div>
+<div style="clear: both"><br /></div>
+<!--/adcode-->
+											</div><!-- .entry-content -->
+
+					<div class="entry-info">
+						This entry was posted in <a href="https://javascriptweblog.wordpress.com/category/javascript/" title="View all posts in JavaScript" rel="category tag">JavaScript</a> and tagged <a href="https://javascriptweblog.wordpress.com/tag/global-abatement/" rel="tag">Global abatement</a>, <a href="https://javascriptweblog.wordpress.com/tag/module/" rel="tag">Module</a>, <a href="https://javascriptweblog.wordpress.com/tag/namespaces/" rel="tag">Namespaces</a>. Bookmark the <a href="https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/" title="Permalink to Namespacing in&nbsp;JavaScript" rel="bookmark">permalink</a>.											</div><!-- .entry-info -->
+				</div><!-- #post-## -->
+
+				<div id="nav-below" class="navigation">
+					<div class="nav-previous"><a href="https://javascriptweblog.wordpress.com/2010/11/29/json-and-jsonp/" rel="prev"><span class="meta-nav">&larr;</span> JSON and&nbsp;JSONP</a></div>
+					<div class="nav-next"><a href="https://javascriptweblog.wordpress.com/2010/12/22/delegation-vs-inheritance-in-javascript/" rel="next">Delegation vs Inheritance in&nbsp;JavaScript <span class="meta-nav">&rarr;</span></a></div>
+				</div><!-- #nav-below -->
+
+				<div id="wpl-likebox"><div id="wpl-button"><a href='https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/?like=1&amp;_wpnonce=1c6ce24a74' title='I like this post' class='like needs-login'><span>Like</span></a></div><div id="wpl-count"><span>3</span> bloggers like this post.</div><div id="wpl-avatars"><a href="http://gravatar.com/pppz" title="pppz"><img src='https://secure.gravatar.com/avatar/49c872496302213fc81386611eac153b?s=35&amp;d=monsterid&amp;r=G' class='avatar avatar-35' alt='pppz' width='30' height='30' /> </a><a href="http://gravatar.com/batmoo" title="Mo Jangda"><img src='https://secure.gravatar.com/avatar/16aeda409d2a00b51ac4c5058a3a8435?s=35&amp;d=monsterid&amp;r=G' class='avatar avatar-35' alt='Mo Jangda' width='30' height='30' /> </a><a href="http://gravatar.com/willfris" title="immeëmosol"><img src='https://secure.gravatar.com/avatar/47d269b1cb875f9a8e39e83eaefe6a0d?s=35&amp;d=monsterid&amp;r=G' class='avatar avatar-35' alt='immeëmosol' width='30' height='30' /> </a></div></div>
+<div id="comments">
+	
+	
+			<h3 id="comments-title">42 Responses to <span>Namespacing in&nbsp;JavaScript</span></h3>
+
+		
+		<ol class="commentlist">
+				<li class="post pingback">
+		<p>Pingback: <a href='http://topsy.com/javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/?utm_source=pingback&amp;utm_campaign=L2' rel='external nofollow' class='url'>Tweets that mention Namespacing in JavaScript | JavaScript, JavaScript -- Topsy.com</a></p>
+	</li>
+	<li class="comment even thread-even depth-1" id="li-comment-1208">
+		<div id="comment-1208">
+		<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/6766096e8ae81ad6b3b82b9c12be19e0?s=48&amp;d=monsterid&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn"><a href='http://fitzgeraldnick.com/weblog/' rel='external nofollow' class='url'>Nick Fitzgerald</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/#comment-1208">
+				December 7, 2010 at 09:34</a>
+					|
+					<a class='comment-reply-link' href='/2010/12/07/namespacing-in-javascript/?replytocom=1208#respond' onclick='return addComment.moveForm("comment-1208", "1208", "respond", "1789")'>Reply</a>								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>Gotta love using `this` as your namespace with applying an immediately invoked function.</p>
+<p>So clean <img src='https://s-ssl.wordpress.com/wp-includes/images/smilies/icon_wink.gif' alt=';)' class='wp-smiley' /> </p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	<ul class='children'>
+	<li class="comment byuser comment-author-angusjs bypostauthor odd alt depth-2" id="li-comment-1209">
+		<div id="comment-1209">
+		<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/d8eb53574a39b25e6b89a7282deb9f74?s=48&amp;d=monsterid&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn"><a href='http://javascriptweblog.wordpress.com' rel='external nofollow' class='url'>Angus Croll</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/#comment-1209">
+				December 7, 2010 at 09:38</a>
+					|
+					<a class='comment-reply-link' href='/2010/12/07/namespacing-in-javascript/?replytocom=1209#respond' onclick='return addComment.moveForm("comment-1209", "1209", "respond", "1789")'>Reply</a>								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>Yes! Seems so obvious now <img src='https://s-ssl.wordpress.com/wp-includes/images/smilies/icon_surprised.gif' alt=':-o' class='wp-smiley' /> </p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	</li>
+</ul>
+</li>
+	<li class="comment even thread-odd thread-alt depth-1" id="li-comment-1210">
+		<div id="comment-1210">
+		<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/553b7ee5fd3f0409fb3423787deb947a?s=48&amp;d=monsterid&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn">Will Meurer</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/#comment-1210">
+				December 7, 2010 at 09:55</a>
+					|
+					<a class='comment-reply-link' href='/2010/12/07/namespacing-in-javascript/?replytocom=1210#respond' onclick='return addComment.moveForm("comment-1210", "1210", "respond", "1789")'>Reply</a>								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>I like the concept of 5, but when you need access to both the &#8216;this&#8217; object and, for example, the &#8216;this&#8217; in the context of a click callback, you have to assign the outer context &#8216;this&#8217; to another variable anyway. At that point, you&#8217;re starting to confuse which &#8216;this&#8217; is which.</p>
+<p>I like 4 because it removes one more level of &#8216;this&#8217;.</p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	<ul class='children'>
+	<li class="comment odd alt depth-2" id="li-comment-1211">
+		<div id="comment-1211">
+		<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/67723d04593ffa9cf83281ead78ec507?s=48&amp;d=monsterid&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn"><a href='http://www.danubilla.com' rel='external nofollow' class='url'>Dan</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/#comment-1211">
+				December 7, 2010 at 10:34</a>
+					|
+					<a class='comment-reply-link' href='/2010/12/07/namespacing-in-javascript/?replytocom=1211#respond' onclick='return addComment.moveForm("comment-1211", "1211", "respond", "1789")'>Reply</a>								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>I agree with Will.  #5 is the cleanest until you consider accessing the global  &#8220;this&#8221;.</p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	<ul class='children'>
+	<li class="comment byuser comment-author-angusjs bypostauthor even depth-3" id="li-comment-1213">
+		<div id="comment-1213">
+		<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/d8eb53574a39b25e6b89a7282deb9f74?s=48&amp;d=monsterid&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn"><a href='http://javascriptweblog.wordpress.com' rel='external nofollow' class='url'>Angus Croll</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/#comment-1213">
+				December 7, 2010 at 11:18</a>
+					|
+													</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>@Will @Dan</p>
+<p>Hi guys &#8211; yes &#8216;this&#8217; pollution can be an issue in itself &#8211; however in this case I&#8217;m not sure I see a problem&#8230;.</p>
+<p>Each function call gets its own &#8216;this&#8217; property. Since the wrapper function was only created to isolate the namespace context it is designed to be called just once. A click callback, for example will be defined in an inner function and will therefore have its own &#8216;this&#8217; context.</p>
+<p>Moreover if you want the global context there are normally other ways to reference it (e.g. window in the case of browser code) &#8211; or better still, pass it as an argument to your function wrapper</p>
+<pre class="brush: jscript;">
+(function(global) {
+    global.blah();
+    //more code
+}).call(myApp, this)
+</pre>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	</li>
+	<li class="comment odd alt depth-3" id="li-comment-1214">
+		<div id="comment-1214">
+		<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/553b7ee5fd3f0409fb3423787deb947a?s=48&amp;d=monsterid&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn">Will Meurer</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/#comment-1214">
+				December 7, 2010 at 11:30</a>
+					|
+													</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>Yeah, Angus, I get that, but the following gets messy:</p>
+<pre class="brush: jscript;">
+var myApp = {};
+(function() {
+    this.id = 1;
+    this.myHandler = function(){
+        alert(this.id); //should alert the clicked dom element's id
+    };
+    $('a').click(this.myHandler);
+}).apply(myApp);
+</pre>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	</li>
+	<li class="comment byuser comment-author-angusjs bypostauthor even depth-3" id="li-comment-1219">
+		<div id="comment-1219">
+		<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/d8eb53574a39b25e6b89a7282deb9f74?s=48&amp;d=monsterid&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn"><a href='http://javascriptweblog.wordpress.com' rel='external nofollow' class='url'>Angus Croll</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/#comment-1219">
+				December 7, 2010 at 11:55</a>
+					|
+													</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>Will, you&#8217;re going all JQuery on me now <img src='https://s-ssl.wordpress.com/wp-includes/images/smilies/icon_wink.gif' alt=';-)' class='wp-smiley' /><br />
+I&#8217;m not  a JQuery expert but I&#8217;m not sure why your example will not work. JQuery&#8217;s click will bind $(a) to this.myHandler &#8211; so $(a) becomes the myHandler function&#8217;s &#8216;this&#8217;</p>
+<p>Or are you just saying this makes the code look uglier?</p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	</li>
+	<li class="comment odd alt depth-3" id="li-comment-1220">
+		<div id="comment-1220">
+		<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/553b7ee5fd3f0409fb3423787deb947a?s=48&amp;d=monsterid&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn">Will Meurer</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/#comment-1220">
+				December 7, 2010 at 11:59</a>
+					|
+													</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>I&#8217;m not even a jQuery guy, just figured I&#8217;d keep the code simplistic. <img src='https://s-ssl.wordpress.com/wp-includes/images/smilies/icon_smile.gif' alt=':)' class='wp-smiley' /> </p>
+<p>It definitely works, I was just commenting on how that gets a little confusing. Not insurmountable, and you&#8217;d even with #4 get into the &#8216;this&#8217; problem, but I think #5 is just making it messier. Mine is merely a subjective comment.</p>
+<p>I think #5 is cool and clean in theory and I don&#8217;t mean to knock it, I just think it&#8217;ll get messy faster.</p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	</li>
+	<li class="comment byuser comment-author-angusjs bypostauthor even depth-3" id="li-comment-1221">
+		<div id="comment-1221">
+		<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/d8eb53574a39b25e6b89a7282deb9f74?s=48&amp;d=monsterid&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn"><a href='http://javascriptweblog.wordpress.com' rel='external nofollow' class='url'>Angus Croll</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/#comment-1221">
+				December 7, 2010 at 12:01</a>
+					|
+													</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>Yeah &#8211; I hear you. The pattern is new to me &#8211; we&#8217;ll see how it goes</p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	</li>
+	<li class="comment odd alt depth-3" id="li-comment-1312">
+		<div id="comment-1312">
+		<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/46cbb0981fc1a913ae80f1e974edc420?s=48&amp;d=monsterid&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn">moo</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/#comment-1312">
+				December 17, 2010 at 12:29</a>
+					|
+													</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>The this will always refer to the innermost this availible, eg the one sent from clickhandler or whatever.<br />
+A common hack to use other this&#8217;es is to redefine this to a local variable. It seems to be a convention that people use &#8220;that&#8221; as variablename.<br />
+<code><br />
+function NS() {<br />
+   var that= this;  //Storing our desired "this"<br />
+   this.doSomething= function(){<br />
+       that.foo();   //use "that" to reference the outer "this"<br />
+   };<br />
+   this.foo = function(){};<br />
+   setTimeout(this.doSomething, 100); //here "this" is still withing the scope but using "that" would have worked aswell.<br />
+}<br />
+var myNS = new NS();<br />
+var a = myNs.doSomething;<br />
+a(); //will still work<br />
+</code></p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	</li>
+</ul>
+</li>
+</ul>
+</li>
+	<li class="comment even thread-even depth-1" id="li-comment-1212">
+		<div id="comment-1212">
+		<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/2b0a93dc132be4bf3b15b50c8a7e8089?s=48&amp;d=monsterid&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn"><a href='http://skilldrick.co.uk' rel='external nofollow' class='url'>Skilldrick</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/#comment-1212">
+				December 7, 2010 at 10:36</a>
+					|
+					<a class='comment-reply-link' href='/2010/12/07/namespacing-in-javascript/?replytocom=1212#respond' onclick='return addComment.moveForm("comment-1212", "1212", "respond", "1789")'>Reply</a>								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>I&#8217;ve been a big fan of the module pattern for a while, but I really like your option 4 &#8211; I&#8217;ll have to have a play with that sometime.</p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	</li>
+	<li class="post pingback">
+		<p>Pingback: <a href='http://www.netcrema.com/?p=62430' rel='external nofollow' class='url'>Namespacing in JavaScript | JavaScript, JavaScript &laquo; Netcrema &#8211; creme de la social news via digg + delicious + stumpleupon + reddit</a></p>
+	</li>
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-1216">
+		<div id="comment-1216">
+		<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/1fabe88cc065f91ac03606f1fce584b5?s=48&amp;d=monsterid&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn"><a href='http://www.reigndropsfall.net' rel='external nofollow' class='url'>Bryan Forbes</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/#comment-1216">
+				December 7, 2010 at 11:44</a>
+					|
+					<a class='comment-reply-link' href='/2010/12/07/namespacing-in-javascript/?replytocom=1216#respond' onclick='return addComment.moveForm("comment-1216", "1216", "respond", "1789")'>Reply</a>								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>In #5, call should probably be used instead of apply since you&#8217;re not passing any arguments and you know you&#8217;re not passing any arguments.  Call is a bit faster on most platforms if you know your argument list.  There is a <a href="http://jsperf.com/apply-vs-call" rel="nofollow">test</a> for it on jsperf if you want to see.  If performance isn&#8217;t your cup of tea, call is one less character to type and send down the wire <img src='https://s-ssl.wordpress.com/wp-includes/images/smilies/icon_wink.gif' alt=';)' class='wp-smiley' /> .</p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	<ul class='children'>
+	<li class="comment byuser comment-author-angusjs bypostauthor even depth-2" id="li-comment-1217">
+		<div id="comment-1217">
+		<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/d8eb53574a39b25e6b89a7282deb9f74?s=48&amp;d=monsterid&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn"><a href='http://javascriptweblog.wordpress.com' rel='external nofollow' class='url'>Angus Croll</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/#comment-1217">
+				December 7, 2010 at 11:49</a>
+					|
+					<a class='comment-reply-link' href='/2010/12/07/namespacing-in-javascript/?replytocom=1217#respond' onclick='return addComment.moveForm("comment-1217", "1217", "respond", "1789")'>Reply</a>								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>Hi Bryan &#8211; since its only likely to be invoked a few times at most its not a major issue for this pattern. But interesting point anyway &#8211; I wasn&#8217;t aware of the performance difference.</p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	</li>
+</ul>
+</li>
+	<li class="post pingback">
+		<p>Pingback: <a href='http://webcodingunravelled.com/?p=20017' rel='external nofollow' class='url'>Namespacing in JavaScript | JavaScript, JavaScript &raquo; Web Coding Unravelled</a></p>
+	</li>
+	<li class="post pingback">
+		<p>Pingback: <a href='http://htmlallyouneedtoknow.com/2010/12/07/namespacing-in-javascript-javascript-javascript/' rel='external nofollow' class='url'>HTML all you need to know&raquo; Blog Archive &raquo; Namespacing in JavaScript | JavaScript, JavaScript</a></p>
+	</li>
+	<li class="comment odd alt thread-even depth-1" id="li-comment-1224">
+		<div id="comment-1224">
+		<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/e057e63267f838ff76ab7da1785ba7a6?s=48&amp;d=monsterid&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn">Thomas</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/#comment-1224">
+				December 7, 2010 at 15:14</a>
+					|
+					<a class='comment-reply-link' href='/2010/12/07/namespacing-in-javascript/?replytocom=1224#respond' onclick='return addComment.moveForm("comment-1224", "1224", "respond", "1789")'>Reply</a>								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>Thanks again for this writing this article. The two links to &#8220;JavaScript Namespacing&#8221; article are malformed <img src='https://s-ssl.wordpress.com/wp-includes/images/smilies/icon_wink.gif' alt=';)' class='wp-smiley' /> </p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	<ul class='children'>
+	<li class="comment byuser comment-author-angusjs bypostauthor even depth-2" id="li-comment-1225">
+		<div id="comment-1225">
+		<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/d8eb53574a39b25e6b89a7282deb9f74?s=48&amp;d=monsterid&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn"><a href='http://javascriptweblog.wordpress.com' rel='external nofollow' class='url'>Angus Croll</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/#comment-1225">
+				December 7, 2010 at 15:26</a>
+					|
+					<a class='comment-reply-link' href='/2010/12/07/namespacing-in-javascript/?replytocom=1225#respond' onclick='return addComment.moveForm("comment-1225", "1225", "respond", "1789")'>Reply</a>								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>Thanks! (fixed now)</p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	</li>
+</ul>
+</li>
+	<li class="post pingback">
+		<p>Pingback: <a href='http://javascript.darmowe-blogi.pisz.pl/bez-kategorii/namespacing-in-javascript-javascript-javascript.html' rel='external nofollow' class='url'>Namespacing in JavaScript | JavaScript, JavaScript &#8211; javascript - dowiedz się więcej!</a></p>
+	</li>
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-1229">
+		<div id="comment-1229">
+		<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/1d962766903f9c6bbf0b528395af1db9?s=48&amp;d=monsterid&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn">Mark</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/#comment-1229">
+				December 8, 2010 at 00:37</a>
+					|
+					<a class='comment-reply-link' href='/2010/12/07/namespacing-in-javascript/?replytocom=1229#respond' onclick='return addComment.moveForm("comment-1229", "1229", "respond", "1789")'>Reply</a>								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>&#8220;Pedals&#8221; is what you do to a bike. &#8220;Peddles&#8221; means to sell, and is what you meant.</p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	<ul class='children'>
+	<li class="comment byuser comment-author-angusjs bypostauthor even depth-2" id="li-comment-1239">
+		<div id="comment-1239">
+		<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/d8eb53574a39b25e6b89a7282deb9f74?s=48&amp;d=monsterid&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn"><a href='http://javascriptweblog.wordpress.com' rel='external nofollow' class='url'>Angus Croll</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/#comment-1239">
+				December 8, 2010 at 08:40</a>
+					|
+					<a class='comment-reply-link' href='/2010/12/07/namespacing-in-javascript/?replytocom=1239#respond' onclick='return addComment.moveForm("comment-1239", "1239", "respond", "1789")'>Reply</a>								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>Correct and Corrected</p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	</li>
+</ul>
+</li>
+	<li class="comment odd alt thread-even depth-1" id="li-comment-1231">
+		<div id="comment-1231">
+		<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/baa838c347cae8f26ff1eeaaa8f4da82?s=48&amp;d=monsterid&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn">lOlive</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/#comment-1231">
+				December 8, 2010 at 01:45</a>
+					|
+					<a class='comment-reply-link' href='/2010/12/07/namespacing-in-javascript/?replytocom=1231#respond' onclick='return addComment.moveForm("comment-1231", "1231", "respond", "1789")'>Reply</a>								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>Hello.<br />
+I am absolutely newbie in Javascript, and this is the first article I read about design patterns in JS.<br />
+My question is:<br />
+which debugger will manage those (quite complicated) constructs?<br />
+Let&#8217;s say I want to put a breakpoint at code &#8220;return id++&#8221;, will a debugger really stop at that line in each of the presented cases?</p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	<ul class='children'>
+	<li class="comment byuser comment-author-angusjs bypostauthor even depth-2" id="li-comment-1237">
+		<div id="comment-1237">
+		<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/d8eb53574a39b25e6b89a7282deb9f74?s=48&amp;d=monsterid&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn"><a href='http://javascriptweblog.wordpress.com' rel='external nofollow' class='url'>Angus Croll</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/#comment-1237">
+				December 8, 2010 at 08:39</a>
+					|
+					<a class='comment-reply-link' href='/2010/12/07/namespacing-in-javascript/?replytocom=1237#respond' onclick='return addComment.moveForm("comment-1237", "1237", "respond", "1789")'>Reply</a>								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>Yes &#8211; any debugger will stop at any line. Firefox&#8217;s firebug add-on is probably still the best, but the webkit browsers (chrome and safari) have nice debuggers in their built in developer tool. IE8/9 also has a built in debugger</p>
+<p>You can also type &#8216;debugger&#8217; in your sourcecode before any line you want to stop at</p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	</li>
+</ul>
+</li>
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-1232">
+		<div id="comment-1232">
+		<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/c6332c07732dbf20e1f8dee960a0b1c5?s=48&amp;d=monsterid&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn"><a href='http://www.viget.com/' rel='external nofollow' class='url'>Doug Avery</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/#comment-1232">
+				December 8, 2010 at 04:44</a>
+					|
+					<a class='comment-reply-link' href='/2010/12/07/namespacing-in-javascript/?replytocom=1232#respond' onclick='return addComment.moveForm("comment-1232", "1232", "respond", "1789")'>Reply</a>								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>Had no idea namespacing had so many possible implementations&#8230;time to try some of these out. Thanks for posting!</p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	<ul class='children'>
+	<li class="comment byuser comment-author-angusjs bypostauthor even depth-2" id="li-comment-1238">
+		<div id="comment-1238">
+		<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/d8eb53574a39b25e6b89a7282deb9f74?s=48&amp;d=monsterid&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn"><a href='http://javascriptweblog.wordpress.com' rel='external nofollow' class='url'>Angus Croll</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/#comment-1238">
+				December 8, 2010 at 08:40</a>
+					|
+					<a class='comment-reply-link' href='/2010/12/07/namespacing-in-javascript/?replytocom=1238#respond' onclick='return addComment.moveForm("comment-1238", "1238", "respond", "1789")'>Reply</a>								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>@Doug &#8211; glad you liked it!</p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	</li>
+</ul>
+</li>
+	<li class="comment odd alt thread-even depth-1" id="li-comment-1240">
+		<div id="comment-1240">
+		<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/15cf2f1fa9ef1e1e63a7baa03477b8b5?s=48&amp;d=monsterid&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn"><a href='http://github.com/jweir' rel='external nofollow' class='url'>J. Weir</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/#comment-1240">
+				December 8, 2010 at 12:00</a>
+					|
+					<a class='comment-reply-link' href='/2010/12/07/namespacing-in-javascript/?replytocom=1240#respond' onclick='return addComment.moveForm("comment-1240", "1240", "respond", "1789")'>Reply</a>								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>I have a different solution:  <a href="http://jweir.github.com/namespace/" rel="nofollow">http://jweir.github.com/namespace/</a></p>
+<p>It is a modular approach, inspired by Erlang.  The syntax is very clean and gives you private/public methods.</p>
+<pre class="brush: jscript;">
+(function(){
+    // a string for the namespace, and the functions to make public
+    namespace(&quot;book&quot;, create, update);
+
+    function private(title){
+        return {title:title, author:&quot;Bill&quot;};
+    } 
+
+    function create(title){
+        return private(title);
+    };
+
+    function update(){
+        //...
+    };
+})();
+
+book.create(&quot;Whitepages&quot;);
+</pre>
+<p>It accepts nested namespaces, an automatically generates any parents if they don&#8217;t exist.</p>
+<p><code>namespace("book.author", ...functions to export...);</code></p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	<ul class='children'>
+	<li class="comment byuser comment-author-angusjs bypostauthor even depth-2" id="li-comment-1241">
+		<div id="comment-1241">
+		<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/d8eb53574a39b25e6b89a7282deb9f74?s=48&amp;d=monsterid&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn"><a href='http://javascriptweblog.wordpress.com' rel='external nofollow' class='url'>Angus Croll</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/#comment-1241">
+				December 8, 2010 at 13:50</a>
+					|
+					<a class='comment-reply-link' href='/2010/12/07/namespacing-in-javascript/?replytocom=1241#respond' onclick='return addComment.moveForm("comment-1241", "1241", "respond", "1789")'>Reply</a>								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>nice &#8211; I&#8217;m always interested in the functional alternative</p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	</li>
+	<li class="comment odd alt depth-2" id="li-comment-1272">
+		<div id="comment-1272">
+		<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/efb2415f773b0a945ff2b15f48401c0b?s=48&amp;d=monsterid&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn"><a href='http://joseanpg.net' rel='external nofollow' class='url'>joseanpg</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/#comment-1272">
+				December 12, 2010 at 05:31</a>
+					|
+					<a class='comment-reply-link' href='/2010/12/07/namespacing-in-javascript/?replytocom=1272#respond' onclick='return addComment.moveForm("comment-1272", "1272", "respond", "1789")'>Reply</a>								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>J. Weir,  your approach is very elegant!</p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	<ul class='children'>
+	<li class="comment even depth-3" id="li-comment-1278">
+		<div id="comment-1278">
+		<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/15cf2f1fa9ef1e1e63a7baa03477b8b5?s=48&amp;d=monsterid&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn"><a href='http://github.com/jweir' rel='external nofollow' class='url'>J. Weir</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/#comment-1278">
+				December 13, 2010 at 08:22</a>
+					|
+													</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>Thank you very much.  I came across the pattern &#8220;accidentally&#8221; and I didn&#8217;t really understand the mechanics of how it worked until I read <a href="http://javascriptweblog.wordpress.com/2010/07/06/function-declarations-vs-function-expressions" rel="nofollow">Function Declarations vs. Function Expressions</a>.  The &#8220;hoisting&#8221; explains how Javascript allows you to reference functions which haven&#8217;t yet been defined, which is a useful aspect.</p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	</li>
+</ul>
+</li>
+</ul>
+</li>
+	<li class="post pingback">
+		<p>Pingback: <a href='http://www.subtlysimple.com/?p=164' rel='external nofollow' class='url'>Namespacing in Javascript | subtly simple</a></p>
+	</li>
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-1249">
+		<div id="comment-1249">
+		<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/7861f12a71e40b3548137f3aa70acb3a?s=48&amp;d=monsterid&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn"><a href='http://alexcollins.org' rel='external nofollow' class='url'>atc</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/#comment-1249">
+				December 9, 2010 at 02:33</a>
+					|
+					<a class='comment-reply-link' href='/2010/12/07/namespacing-in-javascript/?replytocom=1249#respond' onclick='return addComment.moveForm("comment-1249", "1249", "respond", "1789")'>Reply</a>								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>Really informative and helpful; have corrected some code at work using the module pattern.</p>
+<p>Thanks <img src='https://s-ssl.wordpress.com/wp-includes/images/smilies/icon_smile.gif' alt=':)' class='wp-smiley' /> </p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	</li>
+	<li class="comment even thread-even depth-1" id="li-comment-1256">
+		<div id="comment-1256">
+		<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/5d608d8fe9156b0e01b3f224e28409b0?s=48&amp;d=monsterid&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn"><a href='http://aaron-powell.com' rel='external nofollow' class='url'>Aaron Powell</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/#comment-1256">
+				December 9, 2010 at 21:39</a>
+					|
+					<a class='comment-reply-link' href='/2010/12/07/namespacing-in-javascript/?replytocom=1256#respond' onclick='return addComment.moveForm("comment-1256", "1256", "respond", "1789")'>Reply</a>								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>I take a slightly different approach to how I create namespaces, I&#8217;ve got a piece of code which I keep in my toolbox which has a function on it for creating namespaces, allowing you to do this:</p>
+<p>slace.core.registerNamespace(&#8216;some.new.namespace&#8217;);</p>
+<p>It&#8217;ll also ensure that if you&#8217;ve already got a &#8216;some&#8217; object (or a &#8216;some&#8217; object with a &#8216;new&#8217; property) then they&#8217;ll just get appended down the chain.</p>
+<p>Code (and explanatory blog) can be found <a href="http://www.aaron-powell.com/slace-core-javascript-library" rel="nofollow">here</a>.<br />
+One other nifty feature of the method I use is that you can augment existing objects too:</p>
+<p>var foo = { bah: &#8216;bah&#8217; };<br />
+slace.core.registerNamespace(&#8216;anotherBah&#8217;, foo);</p>
+<p>Now &#8216;foo&#8217; looks like:</p>
+<p>{<br />
+  bah: &#8216;bah&#8217;,<br />
+  anotherBah: { }<br />
+}</p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	</li>
+	<li class="post pingback">
+		<p>Pingback: <a href='http://jsmag.com/blog/2010/12/crankshaft-websockets-disabled-3d-christmas-tree/' rel='external nofollow' class='url'>JavaScript Magazine Blog for JSMag &raquo; Blog Archive &raquo; News roundup: Crankshaft, WebSockets disabled, 3d Christmas tree</a></p>
+	</li>
+	<li class="post pingback">
+		<p>Pingback: <a href='http://www.benjaminkeen.com/?p=410' rel='external nofollow' class='url'>BenjaminKeen.com</a></p>
+	</li>
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-1273">
+		<div id="comment-1273">
+		<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/efb2415f773b0a945ff2b15f48401c0b?s=48&amp;d=monsterid&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn"><a href='http://joseanpg.net' rel='external nofollow' class='url'>joseanpg</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/#comment-1273">
+				December 12, 2010 at 05:33</a>
+					|
+					<a class='comment-reply-link' href='/2010/12/07/namespacing-in-javascript/?replytocom=1273#respond' onclick='return addComment.moveForm("comment-1273", "1273", "respond", "1789")'>Reply</a>								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>The best JavaScript-blog Angus, the best <img src='https://s-ssl.wordpress.com/wp-includes/images/smilies/icon_biggrin.gif' alt=':D' class='wp-smiley' /> </p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	</li>
+	<li class="comment even thread-even depth-1" id="li-comment-1277">
+		<div id="comment-1277">
+		<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/f4749cce627b584fb9e59966a5d2c924?s=48&amp;d=monsterid&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn"><a href='http://blueskyonmars.com' rel='external nofollow' class='url'>Kevin Dangoor</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/#comment-1277">
+				December 13, 2010 at 07:10</a>
+					|
+					<a class='comment-reply-link' href='/2010/12/07/namespacing-in-javascript/?replytocom=1277#respond' onclick='return addComment.moveForm("comment-1277", "1277", "respond", "1789")'>Reply</a>								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>Don&#8217;t forget the CommonJS module pattern, which is used in node.js and can be conveniently used in the browser using Transporter, RequireJS or a number of other loaders.</p>
+<p>Here&#8217;s the basic pattern (adjusted for using in the browser with RequireJS):</p>
+<p><code><br />
+define(function(require, exports, module) {<br />
+var mathlib = require("mathlib");</p>
+<p>exports.computeFoo = function(x) {<br />
+    return mathlib.someComplexThing(x) * mathlib.somethingElse(x);<br />
+};<br />
+});<br />
+</code></p>
+<p>CommonJS modules are a nice stepping stone for the proposed ECMAScript Harmony modules:</p>
+<p><a href="http://wiki.ecmascript.org/doku.php?id=strawman:simple_modules" rel="nofollow">http://wiki.ecmascript.org/doku.php?id=strawman:simple_modules</a></p>
+<p>though they clearly can&#8217;t do everything Harmony modules can do because that&#8217;s why they&#8217;re adding modules to the language <img src='https://s-ssl.wordpress.com/wp-includes/images/smilies/icon_smile.gif' alt=':)' class='wp-smiley' /> </p>
+<p>Kevin</p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	</li>
+	<li class="post pingback">
+		<p>Pingback: <a href='http://itxmedia.net/post/2010/12/13/Great-Readings-for-those-Web-Developers-out-there.aspx' rel='external nofollow' class='url'>ITXMedia | Great Readings for those Web Developers out there.</a></p>
+	</li>
+	<li class="post pingback">
+		<p>Pingback: <a href='http://www.barelyfitz.com/blog/archives/2010/12/13/1079/' rel='external nofollow' class='url'>links for 2010-12-13 &laquo; BarelyBlogging</a></p>
+	</li>
+	<li class="post pingback">
+		<p>Pingback: <a href='http://blog.mklog.fr/2010/12/javascript-oriente-objet-et-manipulation-du-prototype-via-call-apply/' rel='external nofollow' class='url'>Javascript: Orienté objet et manipulation du prototype (via call/apply) &laquo; MKLog.fr</a></p>
+	</li>
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-1297">
+		<div id="comment-1297">
+		<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/3c9da486f4ab709c368fdde6596c480a?s=48&amp;d=monsterid&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn">JB</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/#comment-1297">
+				December 16, 2010 at 05:58</a>
+					|
+					<a class='comment-reply-link' href='/2010/12/07/namespacing-in-javascript/?replytocom=1297#respond' onclick='return addComment.moveForm("comment-1297", "1297", "respond", "1789")'>Reply</a>								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>Great discussion, though I&#8217;m most happy that you spelled &#8216;piqued&#8217; correctly.</p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	<ul class='children'>
+	<li class="comment byuser comment-author-angusjs bypostauthor even depth-2" id="li-comment-1310">
+		<div id="comment-1310">
+		<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/d8eb53574a39b25e6b89a7282deb9f74?s=48&amp;d=monsterid&amp;r=G' class='avatar avatar-48' height='48' width='48' />
+			<cite class="fn"><a href='http://javascriptweblog.wordpress.com' rel='external nofollow' class='url'>Angus Croll</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/#comment-1310">
+				December 17, 2010 at 06:26</a>
+					|
+					<a class='comment-reply-link' href='/2010/12/07/namespacing-in-javascript/?replytocom=1310#respond' onclick='return addComment.moveForm("comment-1310", "1310", "respond", "1789")'>Reply</a>								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-author .vcard -->
+		
+		<div class="comment-body"><p>Thanks, but don&#8217;t get too excited &#8211; I misspelled &#8216;peddled&#8217; originally <img src='https://s-ssl.wordpress.com/wp-includes/images/smilies/icon_wink.gif' alt=';-)' class='wp-smiley' /> </p>
+</div>
+
+	</div><!-- #comment-##  -->
+
+	</li>
+</ul>
+</li>
+		</ol>
+
+		
+	
+									<div id="respond">
+				<h3 id="reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/2010/12/07/namespacing-in-javascript/#respond" style="display:none;">Cancel reply</a></small></h3>
+									<form action="https://javascriptweblog.wordpress.com/wp-comments-post.php" method="post" id="commentform">
+																			<p class="comment-notes">Your email address will not be published.</p>							<p class="comment-form-author"><label for="author">Name</label> <input id="author" name="author" type="text" value="" size="30" /></p>
+<p class="comment-form-email"><label for="email">Email</label> <input id="email" name="email" type="text" value="" size="30" /></p>
+<p class="comment-form-url"><label for="url">Website</label><input id="url" name="url" type="text" value="" size="30" /></p>
+												<p class="comment-form-comment"><label for="comment">Comment</label><textarea id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea></p>						<p class="form-allowed-tags">You may use these <abbr title="HyperText Markup Language">HTML</abbr> tags and attributes:  <code>&lt;a href=&quot;&quot; title=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;acronym title=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote cite=&quot;&quot;&gt; &lt;cite&gt; &lt;code&gt; &lt;pre&gt; &lt;del datetime=&quot;&quot;&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=&quot;&quot;&gt; &lt;strike&gt; &lt;strong&gt; </code></p>						<p class="form-submit">
+							<input name="submit" type="submit" id="submit" value="Post Comment" />
+							<input type='hidden' name='comment_post_ID' value='1789' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+						</p>
+						
+<input type="hidden" name="genseq" value="1293264419" />
+<p><input type="checkbox" name="subscribe" id="subscribe" value="subscribe" style="width: auto;" tabindex="6"/> <label class="subscribe-label" id="subscribe-label" for="subscribe">Notify me of follow-up comments via email.</label></p><p><input type="checkbox" name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto;" tabindex="7"/> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog">Subscribe to this site by email</label></p><input type="hidden" name="sub-type" value="comment-form-text2" /><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="c7fe35df17" /></p>					</form>
+							</div><!-- #respond -->
+						
+</div><!-- #comments -->
+			
+			</div><!-- #content -->
+		</div><!-- #content-container -->
+
+
+		
+		<div id="primary" class="widget-area" role="complementary">
+			<ul class="xoxo">
+
+			<li id="text-3" class="widget-container widget_text">			<div class="textwidget"><a href="http://feeds.feedburner.com/JavascriptJavascript" title="Subscribe to my feed" rel="alternate"><img src="http://www.feedburner.com/fb/images/pub/feed-icon32x32.png" style="border:none;vertical-align:text-middle;" alt=""></a>&nbsp;&nbsp;<a href="http://www.twitter.com/angusTweets"><img src="http://twitter-badges.s3.amazonaws.com/follow_bird-b.png" style="border:none;vertical-align:text-middle;" alt="Follow angusTweets on Twitter" /></a>
+</div>
+		</li><li id="text-6" class="widget-container widget_text"><h3 class="widget-title">About me&#8230;</h3>			<div class="textwidget"><span style="font-weight:normal;">Angus Croll<br>
+Senior Architect<br>
+<u><a href="http://jaspersoft.com">Jaspersoft Corporation</a></u><br>
+San Francisco<br></span></div>
+		</li><li id="text-12" class="widget-container widget_text">			<div class="textwidget"><a href='https://developer.mozilla.org/en/javascript' title='JavaScript'><img src='http://static.jsconf.us/promotejsv.gif' height='180' width='140' alt='Learning JavaScript' /></a></div>
+		</li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://javascriptweblog.wordpress.com/2010/12/22/delegation-vs-inheritance-in-javascript/" title="Delegation vs Inheritance in&nbsp;JavaScript">Delegation vs Inheritance in&nbsp;JavaScript</a></li>
+				<li><a href="http://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/" title="Namespacing in&nbsp;JavaScript">Namespacing in&nbsp;JavaScript</a></li>
+				<li><a href="http://javascriptweblog.wordpress.com/2010/11/29/json-and-jsonp/" title="JSON and&nbsp;JSONP">JSON and&nbsp;JSONP</a></li>
+				<li><a href="http://javascriptweblog.wordpress.com/2010/11/15/extending-objects-with-javascript-getters/" title="Extending Objects with JavaScript&nbsp;Getters">Extending Objects with JavaScript&nbsp;Getters</a></li>
+				<li><a href="http://javascriptweblog.wordpress.com/2010/11/08/javascripts-dream-team-in-praise-of-split-and-join/" title="JavaScript&#8217;s Dream Team: in praise of split and&nbsp;join">JavaScript&#8217;s Dream Team: in praise of split and&nbsp;join</a></li>
+				<li><a href="http://javascriptweblog.wordpress.com/2010/10/25/understanding-javascript-closures/" title="Understanding JavaScript&nbsp;Closures">Understanding JavaScript&nbsp;Closures</a></li>
+				<li><a href="http://javascriptweblog.wordpress.com/2010/10/16/book-review-eloquent-javascript-by-marijn%c2%a0haverbeke/" title="Book Review: Eloquent JavaScript by&nbsp;Marijn Haverbeke">Book Review: Eloquent JavaScript by&nbsp;Marijn Haverbeke</a></li>
+				<li><a href="http://javascriptweblog.wordpress.com/2010/10/11/rethinking-javascript-for-loops/" title="Rethinking JavaScript&nbsp;for-loops">Rethinking JavaScript&nbsp;for-loops</a></li>
+				<li><a href="http://javascriptweblog.wordpress.com/2010/09/27/the-secret-life-of-javascript-primitives/" title="The Secret Life of&nbsp;JavaScript Primitives">The Secret Life of&nbsp;JavaScript Primitives</a></li>
+				<li><a href="http://javascriptweblog.wordpress.com/2010/09/20/auto-generating-javascript-unit-tests/" title="Auto-generating JavaScript Unit&nbsp;Tests">Auto-generating JavaScript Unit&nbsp;Tests</a></li>
+				</ul>
+		</li><li id="linkcat-1356" class="widget-container widget_links"><h3 class="widget-title">Blogroll</h3>
+	<ul class='xoxo blogroll'>
+<li><a href="http://dmitrysoshnikov.com/2010/04/">dmitry soshnikov</a></li>
+<li><a href="http://webreflection.blogspot.com/">webreflection</a></li>
+<li><a href="http://perfectionkills.com/">perfectionkills.com</a></li>
+<li><a href="http://peter.michaux.ca">peter.michaux.ca</a></li>
+<li><a href="http://www.adequatelygood.com/">adequatelygood.com</a></li>
+<li><a href="http://osteele.com/" target="_blank">oliver steele</a></li>
+<li><a href="http://dailyjs.com/" target="_blank">dailyjs.com</a></li>
+
+	</ul>
+</li>
+<li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='https://javascriptweblog.wordpress.com/2010/12/' title='December 2010'>December 2010</a></li>
+	<li><a href='https://javascriptweblog.wordpress.com/2010/11/' title='November 2010'>November 2010</a></li>
+	<li><a href='https://javascriptweblog.wordpress.com/2010/10/' title='October 2010'>October 2010</a></li>
+	<li><a href='https://javascriptweblog.wordpress.com/2010/09/' title='September 2010'>September 2010</a></li>
+	<li><a href='https://javascriptweblog.wordpress.com/2010/08/' title='August 2010'>August 2010</a></li>
+	<li><a href='https://javascriptweblog.wordpress.com/2010/07/' title='July 2010'>July 2010</a></li>
+	<li><a href='https://javascriptweblog.wordpress.com/2010/06/' title='June 2010'>June 2010</a></li>
+	<li><a href='https://javascriptweblog.wordpress.com/2010/05/' title='May 2010'>May 2010</a></li>
+	<li><a href='https://javascriptweblog.wordpress.com/2010/04/' title='April 2010'>April 2010</a></li>
+	<li><a href='https://javascriptweblog.wordpress.com/2010/03/' title='March 2010'>March 2010</a></li>
+		</ul>
+</li><li id="text-7" class="widget-container widget_text">			<div class="textwidget"><a href="http://feedjit.com/ir1/36a838868ab6245b84eef90cd00c1327/"><img src="http://feedjit.com/b/36a838868ab6245b84eef90cd00c1327.png" alt="" border="0" style="width:1px;height:1px;" /></a></div>
+		</li><li id="text-13" class="widget-container widget_text">			<div class="textwidget"></div>
+		</li>			</ul>
+		</div><!-- #primary .widget-area -->
+
+		
+			</div><!-- #content-box -->
+
+	<div id="footer" role="contentinfo">
+		
+
+		<div id="colophon">
+			Theme: <a href="http://theme.wordpress.com/themes/coraline/">Coraline</a> by <a href="http://automattic.com/">Automattic</a> <span class="generator-link"><a href="http://wordpress.com/?ref=footer" rel="generator">Blog at WordPress.com</a>.</span>
+		</div><!-- #colophon -->
+	</div><!-- #footer -->
+
+</div><!-- #container -->
+
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script>	<script type="text/javascript">
+	/* <![CDATA[ */
+		jQuery( function() {
+			
+			jQuery('#wpl-button > a.like').click( function(e) {
+				e.preventDefault();
+				
+				jQuery('#wpl-mustlogin').remove();
+
+				jQuery.post( 'https://javascriptweblog.wordpress.com/wp-admin/admin-ajax.php', { 
+					'action': 'wpl_record_stat',
+					'stat_name': 'loggedout_like_click'
+				} );
+
+				var tenMins = new Date();
+				tenMins.setTime( tenMins.getTime() + 600000 );
+				document.cookie = 'wpl_rand=f278cf0c4d; expires=' + tenMins.toGMTString() + '; domain=wordpress.com; path=/;';
+				
+				jQuery('#wpl-count').after( '\
+					<div id="wpl-mustlogin"> \
+						<form action="https://javascriptweblog.wordpress.com/wp-login.php" method="post"> \
+							<p>Just one more step to like this post:</p> \
+							<label><span>Username</span> <input type="text" name="log" id="user_login" class="input" value="" size="20" tabindex="80" /></label> \
+							<label><span>Password</span> <input type="password" name="pwd" id="user_pass" class="input" value="" size="20" tabindex="81" /></label> \
+							<input type="submit" name="wp-submit" id="wp-submit" class="button-primary" value="Log In" tabindex="82" /> \
+							<input type="hidden" name="redirect_to" value="https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/?like=1" /> \
+							<input type="hidden" name="wpl_rand" value="f278cf0c4d" /> \
+							<p>Not a member yet? <a href="http://wordpress.com/signup/?ref=likebox" id="wpl-signup-link">Sign up with WordPress.com</a></p> \
+						</form> \
+					</div> \
+				');
+				
+				jQuery('#wpl-mustlogin').hide().slideDown('fast');
+			} );
+			
+			jQuery('#wpl-mustlogin input.input').live( 'focus', function() {
+				jQuery(this).prev().hide();
+			}).live( 'blur', function() {
+				if ( jQuery(this).val() == '' )
+					jQuery(this).prev().show();
+			});
+			
+			jQuery('#wpl-mustlogin input#wp-submit').live( 'click', function(e) {
+				e.preventDefault();
+				
+				jQuery.post( 'https://javascriptweblog.wordpress.com/wp-admin/admin-ajax.php', { 
+					'action': 'wpl_record_stat',
+					'stat_name': 'loggedout_login_submit'
+				}, function() {
+					jQuery('#wpl-mustlogin form').submit();
+				} );
+			});			
+			
+			jQuery('#wpl-mustlogin a#wpl-signup-link').live( 'click', function(e) {
+				e.preventDefault();
+				
+				var link = jQuery(this).attr('href');
+				
+				jQuery.post( 'https://javascriptweblog.wordpress.com/wp-admin/admin-ajax.php', { 
+					'action': 'wpl_record_stat',
+					'stat_name': 'loggedout_signup_click'
+				}, function() {
+					location.href = link;
+				} );
+			});					
+			
+		});
+	/* ]]> */
+	</script>
+<script type="text/javascript">_qoptions={qacct:'p-18-mFEk4J448M',labels:'language.en,type.wpcom,posttag.global-abatement,posttag.module,posttag.namespaces,as'};</script>
+<script type="text/javascript" src="//secure.quantserve.com/quant.js"></script>
+<noscript><p><img class="robots-nocontent" src="//secure.quantserve.com/pixel/p-18-mFEk4J448M.gif?labels=language.en%2Ctype.wpcom%2Cposttag.global-abatement%2Cposttag.module%2Cposttag.namespaces%2Cas" style="display:none" height="1" width="1" alt="" /></p></noscript>
+<script type='text/javascript' src='https://secure.gravatar.com/js/gprofiles.js?n&#038;ver=MU'></script>
+	<script type="text/javascript">	
+	// <![CDATA[
+	WPGroHo = {
+		data: {},
+		renderers: {},
+		syncProfileData: function( hash, id ) {
+			if ( !WPGroHo.data[hash] ) {
+				WPGroHo.data[hash] = {};
+				a = jQuery( 'div.grofile-hash-map-' + hash + ' span' ).each( function() {
+					WPGroHo.data[hash][this.className] = jQuery( this ).text();
+				} );
+			}
+
+			WPGroHo.appendProfileData( WPGroHo.data[hash], hash, id );
+		},
+		appendProfileData: function( data, hash, id ) {
+			for ( var key in data ) {
+				if ( jQuery.isFunction( WPGroHo.renderers[key] ) ) {
+					return WPGroHo.renderers[key]( data[key], hash, id, key );
+				}
+
+				jQuery( '#' + id ).find( 'h4' ).after( jQuery( '<p class="grav-extra ' + key + '" />' ).html( data[key] ) );
+			}
+		}
+	};
+	jQuery(document).ready(function($){
+		Gravatar.profile_cb = function( h, d ) {
+			WPGroHo.syncProfileData( h, d );
+		};
+		Gravatar.attach_profiles();
+	});
+	// ]]>
+	</script>
+	<div style="display:none">
+	<div class="grofile-hash-map-6766096e8ae81ad6b3b82b9c12be19e0">
+	</div>
+	<div class="grofile-hash-map-d8eb53574a39b25e6b89a7282deb9f74">
+	</div>
+	<div class="grofile-hash-map-553b7ee5fd3f0409fb3423787deb947a">
+	</div>
+	<div class="grofile-hash-map-67723d04593ffa9cf83281ead78ec507">
+	</div>
+	<div class="grofile-hash-map-46cbb0981fc1a913ae80f1e974edc420">
+	</div>
+	<div class="grofile-hash-map-2b0a93dc132be4bf3b15b50c8a7e8089">
+	</div>
+	<div class="grofile-hash-map-1fabe88cc065f91ac03606f1fce584b5">
+	</div>
+	<div class="grofile-hash-map-e057e63267f838ff76ab7da1785ba7a6">
+	</div>
+	<div class="grofile-hash-map-1d962766903f9c6bbf0b528395af1db9">
+	</div>
+	<div class="grofile-hash-map-baa838c347cae8f26ff1eeaaa8f4da82">
+	</div>
+	<div class="grofile-hash-map-c6332c07732dbf20e1f8dee960a0b1c5">
+	</div>
+	<div class="grofile-hash-map-15cf2f1fa9ef1e1e63a7baa03477b8b5">
+	</div>
+	<div class="grofile-hash-map-efb2415f773b0a945ff2b15f48401c0b">
+	</div>
+	<div class="grofile-hash-map-7861f12a71e40b3548137f3aa70acb3a">
+	</div>
+	<div class="grofile-hash-map-5d608d8fe9156b0e01b3f224e28409b0">
+	</div>
+	<div class="grofile-hash-map-f4749cce627b584fb9e59966a5d2c924">
+	</div>
+	<div class="grofile-hash-map-3c9da486f4ab709c368fdde6596c480a">
+	</div>
+	</div>
+<script type='text/javascript'>_acseed='Nm01fCNhbSRyV0tjMXhPKj0sXVg1VjJtLlBdPlpsN0wkYiQrcixJUnRnMWNUWCtGNCNNZiNUeHhgSSgybS5WSGlmZCNxQzI8R1lVal8kdFBUJHZqIFMsTmgxZGtYX3FEP2ZeZG0meTdHR35ZL2lsSFg1JHl8ezdSIWdecztgK01zViR8Kw==';</script>
+<script type='text/javascript' src='https://s-ssl.wordpress.com/wp-content/mu-plugins/sharing/sharing.js?ver=0.1'></script>
+<script type="text/javascript" src="https://sb.scorecardresearch.com/beacon.js"></script><script type="text/javascript">try{COMSCORE.beacon({c1:2,c2:7518284});}catch(e){}</script><noscript><p class="robots-nocontent"><img src="https://sb.scorecardresearch.com/p?cj=1c1=2&#038;c2=7518284" alt="" style="display:none" width="1" height="1" /></p></noscript><script type='text/javascript' src='https://s-ssl.wordpress.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter/scripts/shCore.js?m=1285346440g&#038;ver=2.1.364b'></script>
+<script type='text/javascript' src='https://s-ssl.wordpress.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter/scripts/shBrushJScript.js?m=1285346440g&#038;ver=2.1.364b'></script>
+<script type='text/javascript'>
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var themecssurl = "https://s-ssl.wordpress.com/wp-content/plugins/syntaxhighlighter-wpcom/shThemeDefault.css?m=1285346439g&amp;ver=2.1.364b";
+		if ( themecss.setAttribute ) {
+				themecss.setAttribute( "rel", "stylesheet" );
+				themecss.setAttribute( "type", "text/css" );
+				themecss.setAttribute( "href", themecssurl );
+		} else {
+				themecss.rel = "stylesheet";
+				themecss.href = themecssurl;
+		}
+		document.getElementsByTagName("head")[0].appendChild(themecss);
+	})();
+	SyntaxHighlighter.config.clipboardSwf = 'https://s-ssl.wordpress.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter/scripts/clipboard.swf';
+	SyntaxHighlighter.config.strings.expandSource = 'show source';
+	SyntaxHighlighter.config.strings.viewSource = 'view source';
+	SyntaxHighlighter.config.strings.copyToClipboard = 'copy to clipboard';
+	SyntaxHighlighter.config.strings.copyToClipboardConfirmation = 'The code is in your clipboard now';
+	SyntaxHighlighter.config.strings.print = 'print';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t configured for html-script option: ';
+	SyntaxHighlighter.all();
+</script>
+<script src="https://ssl-stats.wordpress.com/w.js?19" type="text/javascript"></script>
+<script type="text/javascript">
+st_go({'blog':'12490669','v':'wpcom','user_id':'0','post':'1789','subd':'javascriptweblog'});
+ex_go({'crypt':'RDZ8LFkxbXFDLktoNzN4ZXpzQTY0K0d8UWNkPTRYJmViJl1ZT10/JVRLNy5TJWVEMHM2Qi9wUTlQT08tajgzNF9SfjB6Llk1MWN+TXhVbnRUTHFJVk8wYUJSaUtVPXF3UTQzZTYzMC9mcXgvbWdsYzhWa11WSVJBSll4LXc3TFZBdmVkK3lDWktaLC5xRzdtcCZVWnY/U0wlcDlsS3UwP2JJVCsmNVMrcHZzQyV4bzFZbXZYP0lBS2VHXTR4JS9yaUJFQy1WV0d4MXZjdDNsRDYzLE9fTjBpYXV+aWR4VTgzRVNwMmwwcXpnemNuMEZwJixVTTM/aytsaUVdUU0uLnB3cXRddG89RWt3UGs0LG9+VncmbTlVJTRDSFs4TjYyaywsVVlxU0pqQXZKZ0tdNiYlX181WD0xVVV1TmxTS0I0aHw0JUhkMnNmdUclV3xwV0hpP2RHSWJVP1ErRzc9Mw=='});
+addLoadEvent(function(){linktracker_init('12490669',1789);});
+	</script>
+</body>
+</html>
