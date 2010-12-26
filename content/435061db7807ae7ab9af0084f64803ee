@@ -1,0 +1,319 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- Use this code block to activate a prestitial if there's one to load -->
+<!-- BEGIN ADVERTPRO ADVANCED CODE BLOCK -->
+
+<SCRIPT language="JavaScript" type="text/javascript">
+<!--
+document.write('<SCR'+'IPT src="http://avpa.dzone.com/servlet/view/dynamic/javascript/zone?zid=159&pid=0&random='+Math.floor(89999999*Math.random()+10000000)+'&millis='+new Date().getTime()+'" language="JavaScript" type="text/javascript"></SCR'+'IPT>');
+//-->
+</SCRIPT>
+
+<!-- END ADVERTPRO ADVANCED CODE BLOCK -->
+<title>JavaScript BDD, with Jasmine, without a browser | Agile Zone</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="alternate" type="application/rss+xml" title="Comments for &quot;JavaScript BDD, with Jasmine, without a browser&quot;" href="/crss/node/32713" />
+
+<link rel="shortcut icon" href="/misc/favicon.ico" type="image/x-icon" />
+	<link rel="alternate" type="application/rss+xml" title="Agile Zone RSS" href="http://feeds.dzone.com/zones/agile" />
+	<link type="text/css" rel="stylesheet" media="all" href="http://cdn.dzone.com/sites/all/files/css/css_a1b3211a187ff45730d956127b77708c.css" />
+<link type="text/css" rel="stylesheet" media="print" href="http://cdn.dzone.com/sites/all/files/css/css_4050910e305418353c70d479dbbedb5a.css" />
+			<META NAME="Description" CONTENT="I’ve been test driving the domain of my build radiator, XFD with the lovely Jasmine BDD framework for JavaScript.  Jasmine is lovely.  Browsers aren’t. ...">
+	
+                  <meta name="google-site-verification" content="Sz_0y6oSgz3X38lir7pEv1Iio3tqLItTgPdyYPuQPsk" />
+    </head>
+<body class="sidebar-right">
+
+<div id="header-region" class="clear-block"></div>
+
+<div id="wrapper" class="fewerAds">
+<div id="container" class="clear-block">
+	<div id="header">
+		<div id="masthead">
+			<div class="join">
+			  								<img src="http://cdn.dzone.com//sites/all/themes/dzone/images/avatars/default_64.gif" class="mh_avatar"/>
+				<a href="/user" title="Login">Login</a><br/>
+								<a href="/user/register" title="Join DZone">Join DZone</a>
+											</div>
+			<div id="site_id">
+				<a href="http://www.dzone.com" title="DZone: Your Personal Tech Universe"><img class="dz_logo"
+					 src="/sites/all/themes/dzone/images/mh_dzone_logo.gif"
+					 alt="DZone: Your Personal Tech Universe" title="DZone: Your Personal Tech Universe" /></a>
+				<a href="/" title="Agile Zone"><img class="site_logo" src="/sites/all/themes/dzone/images/mh_logo_agile.gif"
+					 alt="Agile Zone" title="Agile Zone" /></a>
+				<span class="site_slogan">Software Methodologies for Development Managers</span>
+			</div>
+			<div class="global_menu">
+								<ul class="nice-menu nice-menu-down" id="nice-menu-1"><li id="menu-211" class="menu-path-front"><a href="/">Home</a></li>
+<li id="menu-125" class="menuparent menu-path-domain"><a href="/domain">Zones</a><ul><li id="menu-295" class="menu-path-domain-dotnet.dzone.com"><a href="/domain/dotnet.dzone.com">.NET Zone</a></li>
+<li id="menu-358" class="menu-path-domain-agile.dzone.com"><a href="/domain/agile.dzone.com" title="Go to agile.dzone.com">Agile Zone</a></li>
+<li id="menu-189" class="menu-path-domain-architects.dzone.com"><a href="/domain/architects.dzone.com" title="Go to architects.dzone.com">Architects Zone</a></li>
+<li id="menu-400" class="menu-path-domain-books.dzone.com"><a href="/domain/books.dzone.com" title="Go to books.dzone.com">Book Zone</a></li>
+<li id="menu-3197" class="menu-path-domain-reach.dzone.com"><a href="/domain/reach.dzone.com" title="Go to reach.dzone.com">DZone Reach</a></li>
+<li id="menu-413" class="menu-path-domain-eclipse.dzone.com"><a href="/domain/eclipse.dzone.com" title="Go to eclipse.dzone.com">Eclipse Zone</a></li>
+<li id="menu-416" class="menu-path-domain-groovy.dzone.com"><a href="/domain/groovy.dzone.com" title="Go to groovy.dzone.com">Groovy Zone</a></li>
+<li id="menu-426" class="menu-path-domain-java.dzone.com"><a href="/domain/java.dzone.com" title="Go to java.dzone.com">Javalobby</a></li>
+<li id="menu-317" class="menu-path-domain-jetbrains.dzone.com"><a href="/domain/jetbrains.dzone.com" title="Go to jetbrains.dzone.com">JetBrains Zone</a></li>
+<li id="menu-4849" class="menu-path-domain-mobile.dzone.com"><a href="/domain/mobile.dzone.com" title="Go to mobile.dzone.com">Mobile Dev Zone</a></li>
+<li id="menu-431" class="menu-path-domain-netbeans.dzone.com"><a href="/domain/netbeans.dzone.com" title="Go to netbeans.dzone.com">NetBeans Zone</a></li>
+<li id="menu-314" class="menu-path-domain-soa.dzone.com"><a href="/domain/soa.dzone.com" title="Go to soa.dzone.com">SOA Zone</a></li>
+<li id="menu-287" class="menu-path-domain-server.dzone.com"><a href="/domain/server.dzone.com">Server Zone</a></li>
+<li id="menu-454" class="menu-path-domain-css.dzone.com"><a href="/domain/css.dzone.com" title="Go to css.dzone.com">Web Builder Zone</a></li>
+</ul>
+</li>
+<li id="menu-367" class="menu-path-library.dzone.com"><a href="http://library.dzone.com">Library</a></li>
+<li id="menu-167" class="menu-path-refcardz.dzone.com-"><a href="http://refcardz.dzone.com/">Refcardz</a></li>
+<li id="menu-169" class="menu-path-forums.dzone.com"><a href="http://forums.dzone.com">Forums</a></li>
+<li id="menu-215" class="menu-path-www.dzone.com-links"><a href="http://www.dzone.com/links">Links</a></li>
+<li id="menu-4753" class="menu-path-itquestions.com"><a href="http://itquestions.com" title="">ITQuestions</a></li>
+<li id="menu-1349" class="menu-path-snippets.dzone.com"><a href="http://snippets.dzone.com" title="">Snippets</a></li>
+<li id="menu-4893" class="menu-path-www.dzone.com-contribute"><a href="http://www.dzone.com/contribute" title="">Contribute</a></li>
+</ul>
+			</div>
+			                <div class="mh_leader">
+                <div class="leaderboard">
+                <!-- BEGIN ADVERTPRO ADVANCED CODE BLOCK -->
+                  <SCRIPT language="JavaScript" type="text/javascript">
+                <!--
+                document.write('<SCR'+'IPT src="http://avpa.dzone.com/servlet/view/banner/javascript/zone?zid=107&keywords=agile.dzone.com&pid=0&random='+Math.floor(89999999*Math.random()+10000000)+'&millis='+new Date().getTime()+'" language="JavaScript" type="text/javascript"></SCR'+'IPT>');
+                //-->
+                </SCRIPT>
+                  <NOSCRIPT>
+                  <A href="http://avpa.dzone.com/servlet/click/zone?zid=107&pid=0&lookup=true&position=1" target="_top"> <IMG src="http://avpa.dzone.com/servlet/view/banner/image/zone?zid=107&pid=0&position=1" height="90" width="728" hspace="0" vspace="0" border="0" alt="Click Here!"> </A>
+                  </NOSCRIPT>
+                  <!-- END ADVERTPRO ADVANCED CODE BLOCK -->
+                </div>
+                </div>
+            		
+		</div>
+	</div>
+	<!-- end of header -->
+	<div id="center"><div id="squeeze">
+		<div id="article"> <div class="breadcrumb"><a href="/">Home</a></div>						 
+						<div id="articleHead">
+		   <div id="dzone_vote_widget" style="float: left; margin-right: 8px;">
+		   <script type="text/javascript">var dzone_title = 'JavaScript BDD, with Jasmine, without a browser';</script>
+			 		   <script type="text/javascript">var dzone_url = 'http://agile.dzone.com/news/javascript-bdd-jasmine-without';</script>
+		   <script language="javascript" src="http://widgets.dzone.com/widgets/zoneit.js"></script></div>		   <h1>JavaScript BDD, with Jasmine, without a browser</h1>
+														</div>
+							
+			<div id="articleText">
+						
+						<div id="node-32713" class="node node-page node-story" >
+
+
+  <div class="meta"> 
+    <span class="submitted">Submitted by Julian Simpson on Mon, 2010/12/13 - 8:10am</span>
+    <div class="serviceTags">
+    	<div class="service-links"><div class="item-list"><ul><li class="first"><a href="http://del.icio.us/post?url=http%3A%2F%2Fagile.dzone.com%2Fnews%2Fjavascript-bdd-jasmine-without&amp;title=JavaScript+BDD%2C+with+Jasmine%2C+without+a+browser" title="Bookmark this post on del.icio.us." rel="nofollow"><img src="http://cdn.dzone.com/sites/all/modules/service_links/images/delicious.png" alt="Delicious" /></a></li>
+<li class="first"><a href="http://digg.com/submit?phase=2&amp;url=http%3A%2F%2Fagile.dzone.com%2Fnews%2Fjavascript-bdd-jasmine-without&amp;title=JavaScript+BDD%2C+with+Jasmine%2C+without+a+browser" title="Digg this post on digg.com." rel="nofollow"><img src="http://cdn.dzone.com/sites/all/modules/service_links/images/digg.png" alt="Digg" /></a></li>
+<li class="first"><a href="http://www.stumbleupon.com/submit?url=http%3A%2F%2Fagile.dzone.com%2Fnews%2Fjavascript-bdd-jasmine-without&amp;title=JavaScript+BDD%2C+with+Jasmine%2C+without+a+browser" title="Thumb this up at StumbleUpon." rel="nofollow"><img src="http://cdn.dzone.com/sites/all/modules/service_links/images/stumbleit.png" alt="StumbleUpon" /></a></li>
+<li class="first"><a href="http://reddit.com/submit?url=http%3A%2F%2Fagile.dzone.com%2Fnews%2Fjavascript-bdd-jasmine-without&amp;title=JavaScript+BDD%2C+with+Jasmine%2C+without+a+browser" title="Submit this post on reddit.com." rel="nofollow"><img src="http://cdn.dzone.com/sites/all/modules/service_links/images/reddit.png" alt="Reddit" /></a></li>
+<li class="first"><a href="http://technorati.com/search/http%3A%2F%2Fagile.dzone.com%2Fnews%2Fjavascript-bdd-jasmine-without" title="Search Technorati for links to this post." rel="nofollow"><img src="http://cdn.dzone.com/sites/all/modules/service_links/images/technorati.png" alt="Technorati" /></a></li>
+</ul></div></div>        <span class="terms">Tags: <ul class="links inline"><li class="taxonomy_term_1127 first"><a href="/category/tags/bdd" rel="tag" title="">BDD</a></li>
+<li class="taxonomy_term_37425"><a href="/category/tags/jasmine" rel="tag" title="">Jasmine</a></li>
+<li class="taxonomy_term_4415"><a href="/category/dzone-taxonomy/languages/javascript" rel="tag" title="">Javascript</a></li>
+<li class="taxonomy_term_4465 last"><a href="/category/dzone-taxonomy/tools-methods/agile" rel="tag" title="">Agile</a></li>
+</ul></span>
+    </div>
+  </div>
+ 
+  <div class="content" style="margin-bottom: 5px;">      		<div class="related_library_content" style="float: right;"><h3>We Recommend These Resources</h3><h4 style="background: url(/sites/all/modules/dzone/dzone_library/icons/page_external.png) no-repeat 0 0;" class="sponsored_link"><a href="http://java.dzone.com/assets/request/sponsored_link/9223?oid=rel32713">FREE Refcard - Adobe Flash Builder 4</a></h4><h4 style="background: url(/sites/all/modules/dzone/dzone_library/icons/page_external.png) no-repeat 0 0;" class="sponsored_link"><a href="http://library.dzone.com/assets/request/sponsored_link/31231?oid=rel32713">Agile Development & Security: Mutually Exclusive?</a></h4><h4 style="background: url(/sites/all/modules/dzone/dzone_library/icons/page_external.png) no-repeat 0 0;" class="sponsored_link"><a href="http://library.dzone.com/assets/request/sponsored_link/31475?oid=rel32713">Getting Started with Application Lifecycle Management by Aldon</a></h4><h4 style="background: url(/sites/all/modules/dzone/dzone_library/icons/page_external.png) no-repeat 0 0;" class="sponsored_link"><a href="http://java.dzone.com/assets/request/sponsored_link/10833?oid=rel32713">Download Flex SDK 3.5 </a></h4><h4 style="background: url(/sites/all/modules/dzone/dzone_library/icons/page_external.png) no-repeat 0 0;" class="sponsored_link"><a href="http://library.dzone.com/assets/request/sponsored_link/11133?oid=rel32713">Explore Flex Capabilities - Install Tour de Flex</a></h4></div>		<span class='print-link'></span><p>I’ve been test driving the domain of my build radiator, <a href="http://xfd.build-doctor.com/">XFD</a> with the lovely <a href="http://pivotal.github.com/jasmine/">Jasmine BDD</a> framework for JavaScript.  Jasmine is lovely.  Browsers aren’t.  Spawning a new browser to run your tests has  issues for me:<br /></p>
+<ul><li>Spawning a browser takes time and ruins my flow, </li><li>I’m trying to drive out logic – having a browser present will lead my design to un-natural couplings, and</li><li>It makes Continuous Integration that much harder</li></ul>
+<p><br />So I started investigating what I could do with <a href="http://www.mozilla.org/rhino/">Rhino</a> and <a href="http://www.envjs.com/">Envjs</a> to make testing with Jasmine more awesome.  Ingvald Skaug had <a href="http://skaug.no/ingvald/2010/10/javascript-unit-testing.html">been there before</a>. It took me some time to really understand how the pieces fit together works, so I thought I’d expand on it.</p>
+<p><strong>Step 1: Check that Jasmine is working</strong></p>
+<p>I would have saved so much time if I’d started with this bit.  What 
+you need to do is download the core of Jasmine and stick it in your 
+project.  I started with the Jasmine RubyGem that spawns a browser and 
+does the plumbing, but for this it’s back to basics.  In my project it’s
+ checked in at <em>lib/jasmine-1.0.1</em>.  You need an HTML file to reference all the scripts and kick off the tests.  Here’s an example derived from the Jasmine docs:</p><pre class="xml">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;<br />  &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;<br />&lt;html&gt;<br />&lt;head&gt;<br />  &lt;title&gt;Jasmine Test Runner&lt;/title&gt;<br />  &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;lib/jasmine-1.0.1/jasmine.css&quot;&gt;&lt;/link&gt;<br />  &lt;script type=&quot;text/javascript&quot; src=&quot;lib/jasmine-1.0.1/jasmine.js&quot;&gt;&lt;/script&gt;<br />  &lt;script type=&quot;text/javascript&quot; src=&quot;lib/jasmine-1.0.1/jasmine-html.js&quot;&gt;&lt;/script&gt;<br /><br />  &lt;!-- include source files here... --&gt;<br />  &lt;script type=&quot;text/javascript&quot; src=&quot;src/Player.js&quot;&gt;&lt;/script&gt;<br />  &lt;script type=&quot;text/javascript&quot; src=&quot;src/Song.js&quot;&gt;&lt;/script&gt;<br /><br />  &lt;!-- include spec files here... --&gt;<br />  &lt;script type=&quot;text/javascript&quot; src=&quot;spec/SpecHelper.js&quot;&gt;&lt;/script&gt;<br />  &lt;script type=&quot;text/javascript&quot; src=&quot;spec/PlayerSpec.js&quot;&gt;&lt;/script&gt;<br /><br />&lt;/head&gt;<br />&lt;body&gt;<br /><br />&lt;script type=&quot;text/javascript&quot;&gt;<br />  jasmine.getEnv().addReporter(new jasmine.TrivialReporter());<br />  jasmine.getEnv().execute();<br />&lt;/script&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;<br /></pre><p>In my real project I generate this file at build time from an <a href="http://en.wikipedia.org/wiki/ERuby#erb">ERB</a> template, to make sure I get all the source files and tests.  However you do it, <strong>make sure it works in a browser first</strong>.  Yes.  Really.
+</p><p><strong>Step 2: Get the bits that you need</strong></p>
+<p>In my lib directory I have: <br /></p>
+<ul><li><em>js.jar</em> – which is the Rhino implementation of JavaScript.  I already used this to run JsLint as part of my build</li><li><em>env.rhino.1.2.js</em> – which is Envjs – a DOM implementation written in JavaScript.</li><li><em>jasmine.console_reporter.js</em>, <em>jasmine.junit_reporter.js</em> and <em>envjs.bootstrap.js</em> – all from Larry Myers’ excellent <a href="https://github.com/larrymyers/jasmine-reporters">Jasmine Reporters</a> project.  Jasmine Reporters is really what glues everything together.</li></ul>
+<p><strong><br />Step 3: Wire up Jasmine Reporters</strong></p>
+<p>You can have many Jasmine reporters wired up in the SpecRunner.html. 
+ In this example I’m leaving two in – the TrivialReporter that gives 
+HTML/CSS reports, and the ConsoleReporter, which we’ll use later.  
+Here’s the edit to the SpecRunner file now:</p><pre class="xml">&lt;script type=&quot;text/javascript&quot;&gt;<br />  jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());<br />  jasmine.getEnv().addReporter(new jasmine.TrivialReporter());<br />  jasmine.getEnv().execute();<br />&lt;/script&gt;<br /></pre><p><strong>Step 4: Put it all together</strong></p>
+<p>Here’s where it all happens.  In my example I use a shell script but 
+in real life the Rakefile that generates the SpecRunner file also fires 
+up the JVM and checks STDOUT for error messages.</p><pre class="shell">#!/bin/bash<br />java -jar lib/js.jar -opt -1 lib/envjs.bootstrap.js SpecRunner.html</pre><p><em>envjs.bootstrap.js</em> is worth examining, too:</p><pre class="js">load('lib/env.rhino.1.2.js');<br /><br />Envjs.scriptTypes['text/javascript'] = true;<br /><br />var specFile;<br /><br />for (i = 0; i &lt; arguments.length; i++) {<br />    specFile = arguments[i];<br /><br />    console.log(&quot;Loading: &quot; + specFile);<br /><br />    window.location = specFile<br />}</pre><p>This file takes the list of HTML files that you give it and tells the
+ fake browser inside the JVM to load each one.  Jasmine then fires and 
+runs your tests:</p>
+
+<pre>jsimpson@curie:~/Documents/workspace/jasmine-rhino-envjs$ ./jasmine<br />[  Envjs/1.6 (Rhino; U; Linux i386 2.6.32-26-generic; en-US; rv:1.7.0.rc2) Resig/20070309 PilotFish/1.2.13  ]<br />Loading: SpecRunner.html<br />Runner Started.<br />Player : should be able to play a Song ...<br />&gt;&gt; Jasmine Running Player should be able to play a Song...<br />Passed.<br />when song has been paused : should indicate that the song is currently paused ...<br />&gt;&gt; Jasmine Running when song has been paused should indicate that the song is currently paused...<br />Passed.<br />when song has been paused : should be possible to resume ...<br />&gt;&gt; Jasmine Running when song has been paused should be possible to resume...<br />Passed.<br />when song has been paused: 4 of 4 passed.<br />Player : tells the current song if the user has made it a favorite ...<br />&gt;&gt; Jasmine Running Player tells the current song if the user has made it a favorite...<br />Passed.<br />#resume : should throw an exception if song is already playing ...<br />&gt;&gt; Jasmine Running #resume should throw an exception if song is already playing...<br />Passed.<br />#resume: 1 of 1 passed.<br />Player: 8 of 8 passed.<br />Runner Finished.<br /></pre>
+<p>There’s also a JUnit compatible XML reporter, courtesy of Larry.  
+This lets you make the Continuous Integration server report test results
+ as usual.</p>
+<p><strong>Summary</strong><br />
+I’m very impressed.  All of my tests that used to run in the browser run headless, with some fiddling of paths.  I’m using the <a href="https://github.com/velesin/jasmine-jquery">Jasmine JQuery</a> plugin, which probably saved my bacon on the test that is too tightly coupled to views.  I’ve collected the <a href="https://github.com/builddoctor/jasmine-rhino-envjs">example</a> on GitHub.  </p>
+<p>Props to <a href="#%21/ingvald">Ingvald</a>, <a href="#%21/larrymyers">Larry</a>, and the <a href="#%21/jasminebdd">Jasmine</a>, Rhino and Envjs teams.  You guys rock.</p><p><br /><br /></p><fieldset class="fieldgroup group-reposting"><legend>References</legend><div class="field field-type-link field-field-reference">
+      <div class="field-label">Reference:&nbsp;</div>
+    <div class="field-items">
+            <div class="field-item odd">
+                    <a href="http://www.build-doctor.com/2010/12/08/javascript-bdd-jasmine/">JavaScript BDD, with Jasmine, without a browser</a>        </div>
+        </div>
+</div>
+</fieldset>
+<div class="fivestar-static-form-item"><div class="form-item">
+ <label>Your rating: </label>
+ <div class="fivestar-widget-static fivestar-widget-static-vote fivestar-widget-static-5 clear-block"><div class="star star-1 star-odd star-first"><span class="off">0</span></div><div class="star star-2 star-even"><span class="off"></span></div><div class="star star-3 star-odd"><span class="off"></span></div><div class="star star-4 star-even"><span class="off"></span></div><div class="star star-5 star-odd star-last"><span class="off"></span></div></div>
+ <div class="description"><div class="fivestar-summary fivestar-summary-"></div></div>
+</div>
+</div>				        <div style="min-height: 75px; border: 1px #ccc solid; padding: 3px 3px; margin-top: 7px; ">         
+            <a href="/users/simpsonjulian"><img src="http://cdn.dzone.com/sites/all/files/imagecache/user_64/avatars/picture-283919.png" alt="" title=""  class="node_author_pic" style="float: left;" width="64" height="64" /></a>        <p style="padding-left: 80px; padding-top: 0; margin-top: 0;">
+        Julian writes by night as The Build Doctor, a poorly disguised non de plume. By day he is a freelance build engineer, systems administrator and all round useful guy.  Julian lives near London with his fiance and children.  He enjoys balancing a love of real ale and Indian food with cycling. Julian is a DZone MVB and is not an employee of DZone and has posted 14 posts at DZone.</p></div>
+    	<div style="clear: both;"></div>
+
+    </div>
+<ul class="links inline"><li class="comment_forbidden first"><span><a href="/user/login?destination=node%2F32713%23comment-form">Login</a> or <a href="/user/register?destination=node%2F32713%23comment-form">register</a> to post comments</span></li>
+<li class="statistics_counter"><span>2767 reads</span></li>
+<li class="print_html last"><a href="/print/32713" title="Display a printer-friendly version of this page." class="print-page" rel="nofollow">Printer-friendly version</a></li>
+</ul><p style="font-size: 11px; padding-left: 1em;" class="disclaimer"><em>(Note: Opinions expressed in this article and its replies are the opinions of their respective authors and not those of DZone, Inc.)</em></p></div></div>
+		</div>
+	</div></div>
+	<!-- end of squeeze, center (main content) -->
+						<div id="sidebar-right" class="sidebar">
+
+			                
+		    <div id="search_bar" style="margin-bottom: 0px; padding-bottom: 0;">
+	            <form action="/search/google"  accept-charset="UTF-8" method="get" id="google-cse-searchbox-form">
+<div><input type="hidden" name="cx" id="edit-cx" value="010821965829155306098:ogyaz_5nsc8"  />
+<input type="hidden" name="cof" id="edit-cof" value="FORID:11"  />
+<div class="form-item" id="edit-query-wrapper">
+ <input type="text" maxlength="128" name="query" id="edit-query" size="15" value="" title="Enter the terms you wish to search for." class="form-text" />
+</div>
+<input type="submit" name="op" id="edit-sa" value="Search"  class="form-submit" />
+<input type="hidden" name="form_build_id" id="form-1c0384a933d65d54d559a7a73ad720a7" value="form-1c0384a933d65d54d559a7a73ad720a7"  />
+<input type="hidden" name="form_id" id="edit-google-cse-searchbox-form" value="google_cse_searchbox_form"  />
+
+</div></form>
+            </div>
+
+				                                <div id="followButtons" style="margin-top: 10px; margin-bottom: 10px;">
+                                                <a href="http://feeds.dzone.com/zones/agile" target="_blank" title="Subscribe to the RSS feed"><img width="32" height="32" style="margin-right: 5px;" src="http://cdn.dzone.com/links/themes/reader/images/actions/feed-32x32.png" border="0"></a>
+                                                <a href="http://www.linkedin.com/groups?gid=696877&trk=hb_side_g" target="_blank" title="Join the DZone LinkedIn group"><img width="32" height="32" tyle="margin-right: 5px;" src="http://cdn.dzone.com/links/themes/reader/images/actions/linkedin-32x32.png" border="0"></a>
+                        <a href="http://twitter.com/dzone" title="Follow DZone on Twitter" target="_blank"><img style="margin-right: 5px;" width="32" height="32" src="http://cdn.dzone.com/links/themes/reader/images/actions/twitter-32x32.png" border="0"></a>
+                        <a href="http://www.facebook.com/home.php?#/pages/DZone/259639764711?ref=sgm" target="_blank" title="Become a DZone fan on Facebook"><img style="margin-right: 5px;" width="32" height="32" src="http://cdn.dzone.com/links/themes/reader/images/actions/facebook-32x32.png" border="0"></a>
+                        <a href="mailto:feedback@dzone.com" title="Email DZone"><img style="margin-right: 5px;" width="32" height="32" src="http://cdn.dzone.com/links/themes/reader/images/actions/email-32x32.png" border="0"></a>
+                       <!-- Begin SupportSuite Javascript Code -->
+	                           <script type="text/javascript" src="http://support.dzone.com/visitor/index.php?_m=livesupport&_a=htmlcode&departmentid=2"></script> 
+                        <!-- End SupportSuite Javascript Code -->
+                    </div>
+                    			     
+                                         <div id="mh_rectangle">
+                        <!-- BEGIN ADVERTPRO ADVANCED CODE BLOCK -->
+                         <SCRIPT language="JavaScript" type="text/javascript">
+                        <!--
+                        document.write('<SCR'+'IPT src="http://avpa.dzone.com/servlet/view/banner/javascript/zone?zid=106&keywords=agile.dzone.com&pid=0&random='+Math.floor(89999999*Math.random()+10000000)+'&millis='+new Date().getTime()+'" language="JavaScript" type="text/javascript"></SCR'+'IPT>');
+                        //-->
+                        </SCRIPT>
+                        <NOSCRIPT>
+                        <a href="http://avpa.dzone.com/servlet/click/zone?zid=106&pid=0&lookup=true&position=1" target="_top"> <IMG src="http://avpa.dzone.com/servlet/view/banner/image/zone?zid=106&pid=0&position=1" hspace="0" vspace="0" border="0" alt="Click Here!"> </a>
+                        </NOSCRIPT>
+                        <!-- END ADVERT PRO ADVANCED CODE BLOCK -->
+                    </div>
+		        												<div id="block-dzone_extprofile-0" class="block block-dzone_extprofile">
+  <h2>About the author</h2>
+
+  <div class="content">
+    <div class="author_info"><div class="node_author_pic" style="float: left;"><img src="http://cdn.dzone.com/sites/all/files/imagecache/user_90/avatars/picture-283919.png" alt="" title=""  width="90" height="90" /></div><div class="node_author_fields"><p><strong>First Name</strong>: Julian</p><p><strong>Last Name</strong>: Simpson</p><p><b></b></p><p><strong>Posts:</strong> 14</p><p><strong>Joined:</strong> 04/29/2008</p><p><a href="/users/simpsonjulian">View full user profile</a></p></div></div><div style="clear: both;"></div>  </div>
+</div>
+<div id="block-block-5" class="block block-block">
+
+  <div class="content">
+    <div id="sidebar_features"><h2 class="header">Spotlight Features</h2>				
+				  	<div>
+	  		<a href="/click/30663/1"><img src="http://cdn.dzone.com/sites/all/files/imagecache/spotlight_80/refcard-alm.png" alt="" title=""  class="node_author_pic" width="80" height="60" /></a>
+	  		<h2><a href="/click/30663/1">Application Lifecycle Management</a></h2>
+	  		<p>Covers end-to-end ALM, change request tracking, inventory control, process and deployment automation, and more.</p>	
+	  	</div>
+	  	<div>
+	  		<a href="/click/30403/1"><img src="http://cdn.dzone.com/sites/all/files/imagecache/spotlight_80/refcard-apache-hadoop.png" alt="" title=""  class="node_author_pic" width="80" height="60" /></a>
+	  		<h2><a href="/click/30403/1">Apache Hadoop Refcard</a></h2>
+	  		<p>An authoritative overview of MapReduce, Hadoop Components, Cluster Building Blocks, HDFS and more. </p>	
+	  	</div>
+	  	<div>
+	  		<a href="/click/30405/1"><img src="http://cdn.dzone.com/sites/all/files/imagecache/spotlight_80/refcard-solr.png" alt="" title=""  class="node_author_pic" width="80" height="60" /></a>
+	  		<h2><a href="/click/30405/1">Solr: 'Search' for the Enterprise</a></h2>
+	  		<p>Develop high performance search applications with faceting, dynamic clustering, database integration and more. </p>	
+	  	</div>
+</div>  </div>
+</div>
+<div id="block-block-3" class="block block-block">
+
+  <div class="content">
+    <ul class="sidebarlinks"><li><h2>Popular at DZone</h2></li><li><a href="http://www.dzone.com/links/moving_towards_bpmn_20.html">Moving towards BPMN 2.0</a></li>
+                <li><a href="http://www.dzone.com/links/clean_urls_in_java_web_applications.html">Clean URLs in Java web applications</a></li>
+                <li><a href="http://www.dzone.com/links/tutorial_how_to_manage_developers.html">Tutorial: how to manage developers</a></li>
+                <li><a href="http://www.dzone.com/links/obie_fernandez_mastering_the_art_of_application_d.html">Obie Fernandez: Mastering the Art of Application Development</a></li>
+                <li><a href="http://www.dzone.com/links/happy_holidays_and_free_book_chapter.html">Happy Holidays! (and Free Book Chapter)</a></li>
+                <li><a href="http://www.dzone.com/links/using_groovy_closures_instead_of_template_method.html">Using Groovy Closures Instead of Template Method</a></li>
+                <li><a href="http://www.dzone.com/links/stop_the_insanity_dont_track_actuals.html">Stop the Insanity. Don’t Track Actuals.</a></li>
+                <li><a class="moredz" href="http://www.dzone.com">See more popular at DZone</a></li><li><a class="rss" href="http://feeds.dzone.com/dzone/frontpage">Subscribe to the RSS feed</a></li></ul>  </div>
+</div>
+								</div>
+		<!-- end of right sidebar -->
+			
+	<div id="footer"><div id="legal"><a href="/page/advertise">Advertising</a> - <a href="/page/tos">Terms of Service</a> - <a href="/page/privacy">Privacy</a> - &copy; 1997-2010, DZone, Inc.</div>
+	</div>
+	<!-- end of footer -->
+
+</div><!-- end of container -->
+</div><!-- end of wrapper -->
+<script type="text/javascript" src="http://cdn.dzone.com/sites/all/files/js/js_05fc1d3873fefe51ca1cbcd89df98ad4.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+jQuery.extend(Drupal.settings, { "basePath": "/", "fivestar": { "titleUser": "Your rating: ", "titleAverage": "Average: ", "feedbackSavingVote": "Saving your vote...", "feedbackVoteSaved": "Your vote has been saved.", "feedbackDeletingVote": "Deleting your vote...", "feedbackVoteDeleted": "Your vote has been deleted." }, "jstools": { "cleanurls": true, "basePath": "/" }, "activemenu": { "#block-book-0": "activemenu/book", "#block-menu-devel": "activemenu/menu", "#block-menu-menu-library-navigat": "activemenu/menu", "#block-menu-primary-links": "activemenu/menu", "#block-menu-secondary-links": "activemenu/menu", "#block-menu-menu-sections": "activemenu/menu", "#block-menu-menu-zones": "activemenu/menu", "#block-user-1": "activemenu/menu" } });
+//--><!]]>
+</script>
+<script type="text/javascript"> 
+    SyntaxHighlighter.config.bloggerMode = true;
+    SyntaxHighlighter.config.taName = "pre";
+    SyntaxHighlighter.config.clipboardSwf = '/sites/all/themes/dzone/scripts/syntaxHighlighter/clipboard.swf';
+    SyntaxHighlighter.all();
+    dp.SyntaxHighlighter.HighlightAll('code');
+</script>
+
+<script type="text/javascript" src="/sites/all/files/js/js_def5b13468ddfa4386970cbe7d780b8e.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+jQuery.extend(Drupal.settings, { "googleCSE": { "language": "en" } });
+//--><!]]>
+</script>
+	<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-410289-1");
+pageTracker._setDomainName(".dzone.com");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>
+ 
+<!-- Start Quantcast tag -->
+<script type="text/javascript">
+_qoptions={
+qacct:"p-ebK_XdQH1HeLo"
+};
+</script>
+<script type="text/javascript" src="http://edge.quantserve.com/quant.js"></script>
+<noscript>
+<img src="http://pixel.quantserve.com/pixel/p-ebK_XdQH1HeLo.gif" style="display: none;" border="0" height="1" width="1" alt="Quantcast"/>
+</noscript>
+<!-- End Quantcast tag -->
+<script type="text/javascript" language="JavaScript"
+src="http://certify.alexametrics.com/atrk.js"></script>
+<script type="text/javascript" language="JavaScript">_atrk_opts = {
+atrk_acct: "2Zc291a0g0y12X" }; atrk ();</script>
+<noscript><img
+src="http://certify.alexametrics.com/atrk.gif?account=2Zc291a0g0y12X&jsv=20080822" style="display:none" height="1" width="1"></noscript>		            <script type="text/javascript">
+               pageTracker._trackEvent('mitchp\'s Pageviews', 'Reprint', "JavaScript BDD, with Jasmine, without a browser");
+            </script>
+	     </body>
+</html>
