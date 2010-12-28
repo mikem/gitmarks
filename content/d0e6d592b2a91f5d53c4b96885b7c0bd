@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Installing Passenger 3 with RVM and Nginx on OSX | Shape Shed</title>
+  <!-- Meta -->
+  <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
+  <meta name="keywords" content="Rails, Ruby, Nginx" />
+  <meta name="description" content="A multi-ruby development environment on Nginx is easier than ever with the release of Passenger 3" />
+  <meta name="dc.date.created" content="2010-10-21" />
+  <meta name="generator" content="Jekyll 0.5.7" />
+  <meta name="author" content="George Ornbo" />
+  <!-- Google Verification -->
+  <meta name="verify-v1" content="vH7YjvNyhVphmJwkBU/VyV1oY2d5bJ9nMVKTuzb5rbw=" />
+  <!-- Open ID -->
+  <link rel="openid.server" href="http://www.myopenid.com/server" />
+  <link rel="openid.delegate" href="http://shapeshed.myopenid.com/" />
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="Shape Shed" href="http://feeds.shapeshed.com/shapeshed" />
+  <!-- CSS -->
+  <link rel="stylesheet" href="/stylesheets/screen.css?06122010124044" type="text/css" media="screen" />
+  <!--[if lte IE 6]>
+    <link rel="stylesheet" href="/stylesheets/ie6_and_below.css?06122010124044" type="text/css" media="screen" />
+  <![endif]-->
+  <!--[if IE 7]>
+    <link rel="stylesheet" href="/stylesheets/ie7.css?06122010124044" type="text/css" media="screen" />
+  <![endif]-->
+  <!--[if IE 8]>
+    <link rel="stylesheet" href="/stylesheets/ie8.css?06122010124044" type="text/css" media="screen" />
+  <![endif]-->
+  <!-- Fix IE for HTML5 http://remysharp.com/2009/01/07/html5-enabling-script/ -->
+  <!--[if IE]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-324369-3']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+     })();
+
+  </script>
+  </head>
+<body id="journal-page">
+
+<ul id="skip-links">
+	<li><a href="#content">Skip to main content</a></li>
+	<li><a href="#nav">Skip to navigation</a></li>
+</ul>
+<nav>
+  <p>On this site</p>
+  <ul>
+    <li id="home"><a href="/">Home</a></li>
+    
+      <li id="portfolio"><a href="/portfolio/">Portfolio</a> <span>21</span></li>     
+    
+      <li id="journal"><a href="/journal/">Journal</a> <span>260</span></li>     
+    
+      <li id="talks"><a href="/talks/">Talks</a> <span>1</span></li>     
+    
+    <li id="contact"><a href="/contact/" title="Say hello!">Contact</a></li>
+  </ul>
+
+  <p>Elsewhere</p>
+  <ul>
+    <li id="twitter"><a href="http://twitter.com/shapeshed">Twitter</a></li>
+    <li id="flickr"><a href="http://flickr.com/photos/dodland/">Flickr</a></li>
+    <li id="lastfm"><a href="http://www.last.fm/user/dodinator">Last.fm</a></li>
+    <li id="github"><a href="http://github.com/shapeshed">Github</a></li>
+    <li id="delicious"><a href="http://delicious.com/shapeshed">delicious</a></li>
+  </ul>
+</nav>
+<section id="content-wrapper">
+  <section id="content">
+    <article>
+  <aside id="post-meta">
+    <ul>
+      <li class="date">Thursday, 21 October  2010</li>
+    
+      <li><a href="/tags/#rails" class="tag">Rails</a></li>
+    
+      <li><a href="/tags/#ruby" class="tag">Ruby</a></li>
+    
+      <li><a href="/tags/#nginx" class="tag">Nginx</a></li>
+    
+    </ul>
+  </aside>
+  <h1 class="article">Installing Passenger 3 with RVM and Nginx on OSX</h1>
+  <p class="summary">A multi-ruby development environment on Nginx is easier than ever with the release of Passenger 3</p>	  
+  <h2>Nginx</h2>
+
+<p>My preferred way of installing nginx on OSX is using <a href="http://github.com/mxcl/homebrew">homebrew</a>. You need to compile it with passenger support</p>
+
+<div class="highlight"><pre><code class="bash">brew install nginx --with-passenger
+</code></pre>
+</div>
+
+
+<h2>RVM</h2>
+
+<p><a href="http://rvm.beginrescueend.com/rvm/install/">RVM</a> makes it easy to manage multiple rubies. Installation is easy</p>
+
+<div class="highlight"><pre><code class="bash">bash &lt; &lt;<span class="o">(</span> curl http://rvm.beginrescueend.com/releases/rvm-install-head <span class="o">)</span>
+</code></pre>
+</div>
+
+
+<p>You can then install different versions of ruby. In this case let's install <a href="http://www.rubyenterpriseedition.com/">Ruby Enterprise Edition</a></p>
+
+<div class="highlight"><pre><code class="bash">rvm install ree
+</code></pre>
+</div>
+
+
+<p>Then we can make Ruby Enterprise Edition the default Ruby on this machine with</p>
+
+<div class="highlight"><pre><code class="bash">rvm --default ree
+</code></pre>
+</div>
+
+
+<h2>Passenger</h2>
+
+<p>This is the most tricky part of the install. To start you'll need the passenger gem</p>
+
+<div class="highlight"><pre><code class="bash">gem install passenger
+</code></pre>
+</div>
+
+
+<p>We need to use the nginx source code for this process. If your homebrew setup is a default one run</p>
+
+<div class="highlight"><pre><code class="bash">tar -xzf /Users/george/Library/Caches/Homebrew/nginx-0.8.53.tar.gz
+</code></pre>
+</div>
+
+
+<p>Note your version of nginx may be different from this!</p>
+
+<p>Then we need to run the nginx passenger module installer</p>
+
+<div class="highlight"><pre><code class="bash">passenger-install-nginx-module
+</code></pre>
+</div>
+
+
+<p>The default install downloads an entirely new binary for Nginx - a bit annoying. If you choose option 2 you'll be able to choose the source you've downloaded with homebrew. For the source directory choose the one we've just extracted</p>
+
+<div class="highlight"><pre><code class="bash">/Users/george/Library/Caches/Homebrew/nginx-0.8.53
+</code></pre>
+</div>
+
+
+<p>Then choose to install Nginx to (if you've used the default homebrew install)</p>
+
+<div class="highlight"><pre><code class="bash">/usr/local/Cellar/nginx/0.8.53/sbin
+</code></pre>
+</div>
+
+
+<p>Hit return on the next two prompts. Drink tea whilst it compiles.</p>
+
+<p>The installer spits out some configuration for you. Open up /usr/local/etc/nginx/nginx.conf in your favourite text editor and paste this in.</p>
+
+<p>Then you just need to create a virtual host</p>
+
+<div class="highlight"><pre><code class="nginx"><span class="k">server</span> <span class="p">{</span>
+    <span class="kn">listen</span> <span class="mi">80</span><span class="p">;</span>
+    <span class="kn">server_name</span> <span class="s">foo.local</span><span class="p">;</span>
+    <span class="kn">root</span> <span class="s">/webapps/foo.com/public</span><span class="p">;</span>
+    <span class="kn">passenger_enabled</span> <span class="no">on</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+
+<p>Provided you've added foo.local to your /etc/hosts file you should be able to start the server and see your site using</p>
+
+<div class="highlight"><pre><code class="bash">sudo nginx
+</code></pre>
+</div>
+
+
+<h2>Running multiple virtual hosts</h2>
+
+<p>Passenger 3 adds a killer feature - the ability to run a standalone passenger and proxy using Nginx and TCP sockets. The process for this is to first setup a virtual host to proxy through to a socket</p>
+
+<div class="highlight"><pre><code class="nginx"><span class="k">upstream</span> <span class="s">bar_upstream</span> <span class="p">{</span>
+    <span class="kn">server</span> <span class="s">unix:/tmp/bar.local.socket</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">server</span> <span class="p">{</span>
+    <span class="kn">listen</span> <span class="mi">80</span><span class="p">;</span>
+    <span class="kn">server_name</span> <span class="s">bar.local</span><span class="p">;</span>
+    <span class="kn">root</span> <span class="s">/webapps/bar.local/public</span><span class="p">;</span>
+    <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
+        <span class="kn">proxy_pass</span> <span class="s">http://bar_upstream</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+
+<p>Then start a standalone instance of Passenger. This downloads and complies a new binary of Nginx for some reason</p>
+
+<div class="highlight"><pre><code class="bash">passenger start --socket /tmp/bar.local.socket -d --nginx-version 0.8.53
+</code></pre>
+</div>
+
+
+<p>This is explained in more detail on the <a href="http://blog.phusion.nl/2010/09/21/phusion-passenger-running-multiple-ruby-versions/">Phusion Blog</a>. Because the standalone passenger is invoked within an RVM context it is completely possible to have different ruby versions and gemsets. TOTAL WIN!</p>
+
+<p>It should then be trivial use something like <a href="http://mmonit.com/monit/">Monit</a> to make sure that the process for virtual hosts is running and start / stop it.</p>
+
+<p>This setup can be applied to a Linux server too to create a flexible Rails stack with multiple hosts, Rubies and gemsets.</p>
+
+  <h3>Possibly related</h3>
+  <ul class="posts">
+    
+    <li><span>03 Mar 2008</span> &raquo; <a href="/journal/automating_backups_with_amazon_s3_on_linux">Automating backups with Amazon S3 on Linux</a></li>
+    
+    <li><span>04 Sep 2009</span> &raquo; <a href="/journal/setting_up_local_websites_on_snow_leopard">Setting up local websites on Snow Leopard</a></li>
+    
+    <li><span>30 Aug 2010</span> &raquo; <a href="/journal/setting-up-nodejs-and-npm-on-mac-osx">Setting up node.js and npm on Mac OSX</a></li>
+    
+  </ul>
+</article>    
+  </section>
+  <section id="author">
+    <img src="/images/content/avatar.jpg" alt="Avatar" />
+    <p>George Ornbo works at <a href="http://pebbleit.com">pebble.it</a> in London.<br />
+			I like HTML5, Macs and Ruby.<br />
+			Need help with a project? <a href="/contact">Contact me</a>.</p>
+  </section>
+</section>
+  <footer>
+    <p>Designs &copy; 2006-10 George Ornbo. Article content and talks are licensed under a <a href="http://creativecommons.org/licenses/by-sa/2.0/uk/">Attribution-Share Alike 2.0 License</a></p>
+  </footer>		
+<!--[if IE 6]>
+<script type="text/javascript" src="http://shapeshed.github.com/ie6-notice/ie6notice-1.0.0.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="/javascripts/jquery-1.3.2.min.js?06122010124044"></script>
+<script type="text/javascript" src="/javascripts/onDomLoad.js?06122010124044"></script>
+</body>
+</html>
+
+
+
+
+
