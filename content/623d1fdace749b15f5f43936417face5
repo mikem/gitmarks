@@ -1,0 +1,5231 @@
+
+<HTML>
+<head>
+<style type="text/css">
+body {font: 10pt/18pt Georgia, Verdana, Times New Roman, Times; color: #000000; }
+td {font: 10pt/18pt Georgia, Verdana, Times New Roman, Times; color: #000000; }
+.regular {font: 10pt/18pt Georgia, Verdana, Times New Roman, Times; color: #000000; }
+.bold {font: 10pt/18pt Georgia, Verdana, Times New Roman, Times; color: #000000; font-weight: bold;}
+.italic {font: 10pt/18pt Georgia, Verdana, Times New Roman, Times; color: #000000; font-style: italic}
+</style>
+<TITLE>Non-Uniform Random Variate Generation</TITLE>
+<meta name="keywords" content="luc devroye, Non-Uniform Random Variate Generation">
+</head>
+
+<BODY bgcolor="white">
+
+<a href="RNBOOK.jpg"><img src="RNBOOK-petit.jpg" align="right" valign="top"></img></a>
+<BR>
+<BR>
+<font class="bold">
+Non-Uniform Random Variate Generation<BR>
+</font>
+<BR>
+<font class="regular">
+(originally published with Springer-Verlag, New York, 1986)<BR><BR>
+<a href="http://cg.scs.carleton.ca/~luc/index.html">Luc Devroye</a><BR>
+School of Computer Science<BR>
+McGill University<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+</font>
+<font class="bold">
+Preface to the Web Edition<BR>
+</font>
+
+<font class="regular">
+<P>
+When I wrote this book in 1986, I had to argue
+long and hard with Springer Verlag to publish it. 
+They printed a small number of copies, and never
+bothered with a second printing, even though,
+surprisingly, there seemed to be some continued
+demand for the book. I have asked Springer to
+print more copies, but they flatly refused, unless
+I was willing to publish a second edition with
+them in the near future.  Burnt once, why would
+I trust them with a second edition? Also,
+I figured that since Springer had gross income
+about 500,000 US dollars from my books with them, 
+that they would be more generous with their
+royalties and more responsive to demands for
+second printings. The contrary is true in fact:
+royalties are decreasing (they stand now at 7.5%
+per book), and I feel that I am just one of the
+many academic rape victims. 
+</P>
+
+<P>
+As the book is out of print, the copyright
+and ownership is mine, so I do with it what I want.
+On these web pages, you will find a fine
+scan of my book in text searchable PDF format (thanks, HK).
+This is the original text. A list of errata
+is <a href="http://cg.scs.carleton.ca/~luc/errors.pdf">here</a>.
+</P>
+
+<P>
+Furthermore, <font class="bold">I give anyone the permission, even without
+asking me, to take these PDF files to a printer,
+print as many copies as you like, and sell them
+for profit.</font>
+If you would like me to advertise
+the sales points of the hard copies, please let me
+know.
+<font class="bold">To the libraries</a>: Please do not
+charge patrons for copying this book. I grant everyone
+the right to copy at will, for free.</font>
+</P>
+
+<P>
+So, there you have it. Eventually, I will do this
+with all my books. While I love Springer, my honeymoon
+with them is over. I will of course never start any affairs
+with the champion bloodsuckers like Elsevier, Kluwer
+or Dekker. Outfits I like are SIAM (nonprofit),
+Dover (great pricing) and Oxford University Press
+(allowing authors to post books on the web).
+With the arrival of Amazon, book advertising is no
+longer necessary, and one can publish with any
+company, really. So, it will be a matter of a few years
+before the old publishers will come back to the
+academics on their hands and knees asking for
+manuscripts. Too late.
+</P>
+
+<P>
+The <a href="nonuniformrandomvariates.zip">zip file</a>
+with all PDF files is provided for your convenience. Below, you
+will find a table of contents and an index, both in HTML
+format: look for a keyword, note the page number, go
+to the right chapter via the table, and you are done.
+</P>
+
+<P>
+Luc Devroye<BR>
+Montreal, September 29, 2003
+</P>
+
+</font>
+
+<BR>
+<BR>
+<HR>
+
+<BR>
+<font class="bold">
+Table of contents<BR>
+</font>
+<BR>
+<font class="bold"><a href="frontmatter.pdf">PREFACE</a></font><BR>
+&nbsp;&nbsp;&nbsp;<BR>
+<font class="bold">TABLE OF CONTENTS</font><BR>
+&nbsp;&nbsp;&nbsp;<BR>
+<font class="bold">I. <a href="chapter_one.pdf">INTRODUCTION</a> 1</font><BR>
+1. General outline. 1<BR>
+2. About our notation. 5<BR>
+&nbsp;&nbsp;&nbsp;2.1. Definitions. 5<BR>
+&nbsp;&nbsp;&nbsp;2.2. A few important univariate densities. 7<BR>
+3. Assessment of random variate generators. 8<BR>
+&nbsp;&nbsp;&nbsp;3.1. Distributions with no variable parameters. 9<BR>
+&nbsp;&nbsp;&nbsp;3.2. Parametric families. 9<BR>
+4. Operations on random variables. 11<BR>
+&nbsp;&nbsp;&nbsp;4.1. Transformations. 11<BR>
+&nbsp;&nbsp;&nbsp;4.2. Mixtures. 16<BR>
+&nbsp;&nbsp;&nbsp;4.3. Order statistics. 17<BR>
+&nbsp;&nbsp;&nbsp;4.4. Convolutions. Sums of independent random variables. 19<BR>
+&nbsp;&nbsp;&nbsp;4.5. Sums of independent uniform random variables. 21<BR>
+&nbsp;&nbsp;&nbsp;4.6. Exercises. 23<BR>
+&nbsp;&nbsp;&nbsp;<BR>
+<font class="bold">II. <a href="chapter_two.pdf">GENERAL PRINCIPLES IN RANDOM VARIATE GENERATION</a> 27</font><BR>
+1. Introduction. 27<BR>
+2. The inversion method. 27<BR>
+&nbsp;&nbsp;&nbsp;2.1. The inversion principle. 27<BR>
+&nbsp;&nbsp;&nbsp;2.2. Inversion by numerical solution of $F(X)=U$. 31<BR>
+&nbsp;&nbsp;&nbsp;2.3. Explicit approximations. 35<BR>
+&nbsp;&nbsp;&nbsp;2.4. Exercises. 36<BR>
+3. The rejection method. 40<BR>
+&nbsp;&nbsp;&nbsp;3.1. Definition. 40<BR>
+&nbsp;&nbsp;&nbsp;3.2. Development of good rejection algorithms. 43<BR>
+&nbsp;&nbsp;&nbsp;3.3. Generalizations of the rejection method. 47<BR>
+&nbsp;&nbsp;&nbsp;3.4. Wald's equation. 50<BR>
+&nbsp;&nbsp;&nbsp;3.5. Letac's lower bound. 52<BR>
+&nbsp;&nbsp;&nbsp;3.6. The squeeze principle. 53<BR>
+&nbsp;&nbsp;&nbsp;3.7. Recycling random variates. 58<BR>
+&nbsp;&nbsp;&nbsp;3.8. Exercises. 60<BR>
+4. Decomposition as discrete mixtures. 66<BR>
+&nbsp;&nbsp;&nbsp;4.1. Definition. 66<BR>
+&nbsp;&nbsp;&nbsp;4.2. Decomposition into simple components. 66<BR>
+&nbsp;&nbsp;&nbsp;4.3. Partitions into intervals. 67<BR>
+&nbsp;&nbsp;&nbsp;4.4. The waiting time method for asymmetric mixtures. 71<BR>
+&nbsp;&nbsp;&nbsp;4.5. Polynomial densities on $[0,1]$. 71<BR>
+&nbsp;&nbsp;&nbsp;4.6. Mixtures with negative coefficients. 74<BR>
+5. The acceptance-complement method. 75<BR>
+&nbsp;&nbsp;&nbsp;5.1. Definition. 75<BR>
+&nbsp;&nbsp;&nbsp;5.2. Simple acceptance-complement methods. 77<BR>
+&nbsp;&nbsp;&nbsp;5.3. Acceleration by avoiding the ratio computation. 78<BR>
+&nbsp;&nbsp;&nbsp;5.4. An example : nearly flat densities on $[0,1]$. 79<BR>
+&nbsp;&nbsp;&nbsp;5.5. Exercises. 81<BR>
+&nbsp;&nbsp;&nbsp;<BR>
+<font class="bold">III. <a href="chapter_three.pdf">DISCRETE RANDOM VARIATES</a> 83</font><BR>
+1. Introduction. 83<BR>
+2. The inversion method. 85<BR>
+&nbsp;&nbsp;&nbsp;2.1. Introduction. 85<BR>
+&nbsp;&nbsp;&nbsp;2.2. Inversion by truncation of a continuous random variate. 87<BR>
+&nbsp;&nbsp;&nbsp;2.3. Comparison-based inversions. 88<BR>
+&nbsp;&nbsp;&nbsp;2.4. The method of guide tables. 96<BR>
+&nbsp;&nbsp;&nbsp;2.5. Inversion by correction. 98<BR>
+&nbsp;&nbsp;&nbsp;2.6. Exercises. 101<BR>
+3. Table look-up methods. 102<BR>
+&nbsp;&nbsp;&nbsp;3.1. The table look-up principle. 102<BR>
+&nbsp;&nbsp;&nbsp;3.2. Multiple table look-ups. 104<BR>
+4. The alias method. 107<BR>
+&nbsp;&nbsp;&nbsp;4.1. Definition. 107<BR>
+&nbsp;&nbsp;&nbsp;4.2. The alias-urn method. 110<BR>
+&nbsp;&nbsp;&nbsp;4.3. Geometrical puzzles. 111<BR>
+&nbsp;&nbsp;&nbsp;4.4. Exercises. 112<BR>
+5. Other general principles. 113<BR>
+&nbsp;&nbsp;&nbsp;5.1. The rejection method. 113<BR>
+&nbsp;&nbsp;&nbsp;5.2. The composition and acceptance-complement methods. 116<BR>
+&nbsp;&nbsp;&nbsp;5.3. Exercises. 116<BR>
+&nbsp;&nbsp;&nbsp;<BR>
+<font class="bold">IV. <a href="chapter_four.pdf">SPECIALIZED ALGORITHMS</a> 118</font><BR>
+1. Introduction. 118<BR>
+&nbsp;&nbsp;&nbsp;1.1. Motivation for the chapter. 118<BR>
+&nbsp;&nbsp;&nbsp;1.2. Exercises. 118<BR>
+2. The Forsythe-von Neumann method. 121<BR>
+&nbsp;&nbsp;&nbsp;2.1. Description of the method. 121<BR>
+&nbsp;&nbsp;&nbsp;2.2. Von Neumann's exponential random variate generator. 125<BR>
+&nbsp;&nbsp;&nbsp;2.3. Monahan's generalization. 127<BR>
+&nbsp;&nbsp;&nbsp;2.4. An example : Vaduva's gamma generator. 130<BR>
+&nbsp;&nbsp;&nbsp;2.5. Exercises. 132<BR>
+3. Almost-exact inversion. 133<BR>
+&nbsp;&nbsp;&nbsp;3.1. Definition. 133<BR>
+&nbsp;&nbsp;&nbsp;3.2. Monotone densities on $[0, inf )$. 134<BR>
+&nbsp;&nbsp;&nbsp;3.3. Polya's approximation for the normal distribution. 135<BR>
+&nbsp;&nbsp;&nbsp;3.4. Approximations by simple functions of normal random variates. 136<BR>
+&nbsp;&nbsp;&nbsp;3.5. Exercises. 143<BR>
+4. Many-to-one transformations. 145<BR>
+&nbsp;&nbsp;&nbsp;4.1. The principle. 145<BR>
+&nbsp;&nbsp;&nbsp;4.2. The absolute value transformation. 147<BR>
+&nbsp;&nbsp;&nbsp;4.3. The inverse gaussian distribution. 148<BR>
+&nbsp;&nbsp;&nbsp;4.4. Exercises. 150<BR>
+5. The series method. 151<BR>
+&nbsp;&nbsp;&nbsp;5.1. Description. 151<BR>
+&nbsp;&nbsp;&nbsp;5.2. Analysis of the alternating series algorithm. 154<BR>
+&nbsp;&nbsp;&nbsp;5.3. Analysis of the convergent series algorithm. 156<BR>
+&nbsp;&nbsp;&nbsp;5.4. The exponential distribution. 157<BR>
+&nbsp;&nbsp;&nbsp;5.5. The Raab-Green distribution. 158<BR>
+&nbsp;&nbsp;&nbsp;5.6. The Kolmogorov-Smirnov distribution. 161<BR>
+&nbsp;&nbsp;&nbsp;5.7. Exercises. 168<BR>
+6. Representations of densities as integrals. 171<BR>
+&nbsp;&nbsp;&nbsp;6.1. Introduction. 171<BR>
+&nbsp;&nbsp;&nbsp;6.2. Khinchine's and related theorems. 171<BR>
+&nbsp;&nbsp;&nbsp;6.3. The inverse-of-$f$ method for monotone densities. 178<BR>
+&nbsp;&nbsp;&nbsp;6.4. Convex densities. 179<BR>
+&nbsp;&nbsp;&nbsp;6.5. Recursive methods based upon representations. 180<BR>
+&nbsp;&nbsp;&nbsp;6.6. A representation for the stable distribution. 183<BR>
+&nbsp;&nbsp;&nbsp;6.7. Densities with Polya type characteristic functions. 186<BR>
+&nbsp;&nbsp;&nbsp;6.8. Exercises. 191<BR>
+7. The ratio-of-uniforms method. 194<BR>
+&nbsp;&nbsp;&nbsp;7.1. Introduction. 194<BR>
+&nbsp;&nbsp;&nbsp;7.2. Several examples. 197<BR>
+&nbsp;&nbsp;&nbsp;7.3. Exercises. 203<BR>
+&nbsp;&nbsp;&nbsp;<BR>
+<font class="bold">V. <a href="chapter_five.pdf">UNIFORM AND EXPONENTIAL SPACINGS</a> 206</font><BR>
+1. Motivation. 206<BR>
+2. Uniform and exponential spacings. 207<BR>
+&nbsp;&nbsp;&nbsp;2.1. Uniform spacings. 207<BR>
+&nbsp;&nbsp;&nbsp;2.2. Exponential spacings. 211<BR>
+&nbsp;&nbsp;&nbsp;2.3. Exercises. 213<BR>
+3. Generating ordered samples. 213<BR>
+&nbsp;&nbsp;&nbsp;3.1. Generating uniform $[0,1]$ order statistics. 214<BR>
+&nbsp;&nbsp;&nbsp;3.2. Bucket sorting. Bucket searching. 215<BR>
+&nbsp;&nbsp;&nbsp;3.3. Generating exponential order statistics. 219<BR>
+&nbsp;&nbsp;&nbsp;3.4. Generating order statistics with distribution function F. 220<BR>
+&nbsp;&nbsp;&nbsp;3.5. Generating exponential random variates in batches. 223<BR>
+&nbsp;&nbsp;&nbsp;3.6. Exercises. 223<BR>
+4. The polar method. 225<BR>
+&nbsp;&nbsp;&nbsp;4.1. Radially symmetric distributions. 225<BR>
+&nbsp;&nbsp;&nbsp;4.2. Generating random vectors uniformly distributed on $C sub d$. 230<BR>
+&nbsp;&nbsp;&nbsp;4.3. Generating points uniformly in and on $C sub 2$.	233<BR>
+&nbsp;&nbsp;&nbsp;4.4. Generating normal random variates in batches. 235<BR>
+&nbsp;&nbsp;&nbsp;4.5. Generating radially symmetric random vectors. 236<BR>
+&nbsp;&nbsp;&nbsp;4.6. The deconvolution method. 239<BR>
+&nbsp;&nbsp;&nbsp;4.7. Exercises. 240<BR>
+&nbsp;&nbsp;&nbsp;<BR>
+<font class="bold">VI. <a href="chapter_six.pdf">THE POISSON PROCESS</a> 246</font><BR>
+1. The Poisson process. 246<BR>
+&nbsp;&nbsp;&nbsp;1.1. Introduction. 246<BR>
+&nbsp;&nbsp;&nbsp;1.2. Simulation of homogeneous Poisson processes. 248<BR>
+&nbsp;&nbsp;&nbsp;1.3. Nonhomogeneous Poisson processes. 250<BR>
+&nbsp;&nbsp;&nbsp;1.4. Global methods for nonhomogeneous Poisson <BR>
+&nbsp;&nbsp;&nbsp;process simulation. 257<BR>
+&nbsp;&nbsp;&nbsp;1.5. Exercises. 258<BR>
+2. Generation of random variates with a given hazard rate. 260<BR>
+&nbsp;&nbsp;&nbsp;2.1. Hazard rate. Connection with Poisson processes. 260<BR>
+&nbsp;&nbsp;&nbsp;2.2. The inversion method. 261<BR>
+&nbsp;&nbsp;&nbsp;2.3. The composition method. 262<BR>
+&nbsp;&nbsp;&nbsp;2.4. The thinning method. 264<BR>
+&nbsp;&nbsp;&nbsp;2.5. DHR distributions. Dynamic thinning. 267<BR>
+&nbsp;&nbsp;&nbsp;2.6. Analysis of the dynamic thinning algorithm. 269<BR>
+&nbsp;&nbsp;&nbsp;2.7. Exercises. 276<BR>
+3. Generating random variates with a given <BR>
+&nbsp;&nbsp;&nbsp;discrete hazard rate. 278<BR>
+&nbsp;&nbsp;&nbsp;3.1. Introduction. 278<BR>
+&nbsp;&nbsp;&nbsp;3.2. The sequential test method. 279<BR>
+&nbsp;&nbsp;&nbsp;3.3. Hazard rates bounded away from 1.	280<BR>
+&nbsp;&nbsp;&nbsp;3.4. Discrete dynamic thinning. 283<BR>
+&nbsp;&nbsp;&nbsp;3.5. Exercises. 284<BR>
+&nbsp;&nbsp;&nbsp;<BR>
+<font class="bold">VII. <a href="chapter_seven.pdf">UNIVERSAL METHODS</a> 286</font><BR>
+1. Black box philosophy. 286<BR>
+2. Log-concave densities. 287<BR>
+&nbsp;&nbsp;&nbsp;2.1. Definition. 287<BR>
+&nbsp;&nbsp;&nbsp;2.2. Inequalities for log-concave densities. 288<BR>
+&nbsp;&nbsp;&nbsp;2.3. A black box algorithm. 290<BR>
+&nbsp;&nbsp;&nbsp;2.4. The optimal rejection algorithm. 293<BR>
+&nbsp;&nbsp;&nbsp;2.5. The mirror principle. 295<BR>
+&nbsp;&nbsp;&nbsp;2.6. Non-universal rejection methods. 298<BR>
+&nbsp;&nbsp;&nbsp;2.7. Exercises. 308<BR>
+3. Inequalities for families of densities. 310<BR>
+&nbsp;&nbsp;&nbsp;3.1. Motivation. 310<BR>
+&nbsp;&nbsp;&nbsp;3.2. Bounds for unimodal densities. 310<BR>
+&nbsp;&nbsp;&nbsp;3.3. Densities satisfying a Lipschitz condition. 320<BR>
+&nbsp;&nbsp;&nbsp;3.4. Normal scale mixtures. 325<BR>
+&nbsp;&nbsp;&nbsp;3.5. Exercises. 328<BR>
+4. The inversion-rejection method. 331<BR>
+&nbsp;&nbsp;&nbsp;4.1. The principle. 331<BR>
+&nbsp;&nbsp;&nbsp;4.2. Bounded densities. 332<BR>
+&nbsp;&nbsp;&nbsp;4.3. Unimodal and monotone densities. 334<BR>
+&nbsp;&nbsp;&nbsp;4.4. Monotone densities on $[0,1]$. 335<BR>
+&nbsp;&nbsp;&nbsp;4.5. Bounded monotone densities : inversion-rejection <BR>
+&nbsp;&nbsp;&nbsp;based on Newton-Raphson iterations. 341<BR>
+&nbsp;&nbsp;&nbsp;4.6. Bounded monotone densities : geometrically <BR>
+&nbsp;&nbsp;&nbsp;increasing interval sizes. 344<BR>
+&nbsp;&nbsp;&nbsp;4.7. Lipschitz densities on $[0, inf )$. 348<BR>
+&nbsp;&nbsp;&nbsp;4.8. Exercises. 355<BR>
+&nbsp;&nbsp;&nbsp;<BR>
+<font class="bold">VIII. <a href="chapter_eight.pdf">TABLE METHODS FOR CONTINUOUS RANDOM VARIATES</a> 358</font><BR>
+1. Composition versus rejection. 358<BR>
+2. Strip methods. 359<BR>
+&nbsp;&nbsp;&nbsp;2.1. Definition. 359<BR>
+&nbsp;&nbsp;&nbsp;2.2. Example 1 : monotone densities on $[0,1]$.	362<BR>
+&nbsp;&nbsp;&nbsp;2.3. Other examples. 366<BR>
+&nbsp;&nbsp;&nbsp;2.4. Exercises. 367<BR>
+3. Grid methods. 368<BR>
+&nbsp;&nbsp;&nbsp;3.1. Introduction. 368<BR>
+&nbsp;&nbsp;&nbsp;3.2. Generating a point uniformly in a compact set $A$. 368<BR>
+&nbsp;&nbsp;&nbsp;3.3. Avoidance problems. 372<BR>
+&nbsp;&nbsp;&nbsp;3.4. Fast random variate generators. 375<BR>
+&nbsp;&nbsp;&nbsp;<BR>
+<font class="bold">IX. <a href="chapter_nine.pdf">CONTINUOUS UNIVARIATE DENSITIES</a> 379</font><BR>
+1. The normal density. 379<BR>
+&nbsp;&nbsp;&nbsp;1.1. Definition. 379<BR>
+&nbsp;&nbsp;&nbsp;1.2. The tail of the normal density. 380<BR>
+&nbsp;&nbsp;&nbsp;1.3. Composition/rejection methods. 382<BR>
+&nbsp;&nbsp;&nbsp;1.4. Exercises. 391<BR>
+2. The exponential density. 392<BR>
+&nbsp;&nbsp;&nbsp;2.1. Overview. 392<BR>
+&nbsp;&nbsp;&nbsp;2.2. Marsaglia's exponential generator. 394<BR>
+&nbsp;&nbsp;&nbsp;2.3. The rectangle-wedge-tail method. 397<BR>
+&nbsp;&nbsp;&nbsp;2.4. Exercises. 401<BR>
+3. The gamma density. 401<BR>
+&nbsp;&nbsp;&nbsp;3.1. The gamma family. 401<BR>
+&nbsp;&nbsp;&nbsp;3.2. Gamma variate generators. 404<BR>
+&nbsp;&nbsp;&nbsp;3.3. Uniformly fast rejection algorithms for $a >= 1$.	407<BR>
+&nbsp;&nbsp;&nbsp;3.4. The Weibull density. 414<BR>
+&nbsp;&nbsp;&nbsp;3.5. Johnk's theorem and its implications. 416<BR>
+&nbsp;&nbsp;&nbsp;3.6. Gamma variate generators when $a <= 1$.	419<BR>
+&nbsp;&nbsp;&nbsp;3.7. The tail of the gamma density. 420<BR>
+&nbsp;&nbsp;&nbsp;3.8. Stacy's generalized gamma distribution. 423<BR>
+&nbsp;&nbsp;&nbsp;3.9. Exercises. 423<BR>
+4. The beta density. 428<BR>
+&nbsp;&nbsp;&nbsp;4.1. Properties of the beta density. 428<BR>
+&nbsp;&nbsp;&nbsp;4.2. Overview of beta generators. 431<BR>
+&nbsp;&nbsp;&nbsp;4.3. The symmetric beta density. 433<BR>
+&nbsp;&nbsp;&nbsp;4.4. Uniformly fast rejection algorithms. 437<BR>
+&nbsp;&nbsp;&nbsp;4.5. Generators when $min (a,b) <= 1$.	439<BR>
+&nbsp;&nbsp;&nbsp;4.6. Exercises. 444<BR>
+5. The t distribution. 445<BR>
+&nbsp;&nbsp;&nbsp;5.1. Overview. 445<BR>
+&nbsp;&nbsp;&nbsp;5.2. Ordinary rejection methods. 447<BR>
+&nbsp;&nbsp;&nbsp;5.3. The Cauchy density. 450<BR>
+&nbsp;&nbsp;&nbsp;5.4. Exercises. 451<BR>
+6. The stable distribution. 454<BR>
+&nbsp;&nbsp;&nbsp;6.1. Definition and properties. 454<BR>
+&nbsp;&nbsp;&nbsp;6.2. Overview of generators. 458<BR>
+&nbsp;&nbsp;&nbsp;6.3. The Bergstrom-Feller series. 460<BR>
+&nbsp;&nbsp;&nbsp;6.4. The series method for stable random variates. 463<BR>
+&nbsp;&nbsp;&nbsp;6.5. Exercises. 467<BR>
+7. Nonstandard distributions. 468<BR>
+&nbsp;&nbsp;&nbsp;7.1. Bessel function distributions. 468<BR>
+&nbsp;&nbsp;&nbsp;7.2. The logistic and hyperbolic secant distributions. 471<BR>
+&nbsp;&nbsp;&nbsp;7.3. The von Mises distribution. 473<BR>
+&nbsp;&nbsp;&nbsp;7.4. The Burr distribution. 476<BR>
+&nbsp;&nbsp;&nbsp;7.5. The generalized inverse gaussian distribution. 478<BR>
+&nbsp;&nbsp;&nbsp;7.6. Exercises. 480<BR>
+&nbsp;&nbsp;&nbsp;<BR>
+<font class="bold">X. <a href="chapter_ten.pdf">DISCRETE UNIVARIATE DISTRIBUTIONS</a> 485</font><BR>
+1. Introduction. 485<BR>
+&nbsp;&nbsp;&nbsp;1.1. Goals of this chapter. 485<BR>
+&nbsp;&nbsp;&nbsp;1.2. Generating functions. 486<BR>
+&nbsp;&nbsp;&nbsp;1.3. Factorials. 489<BR>
+&nbsp;&nbsp;&nbsp;1.4. A universal rejection method. 493<BR>
+&nbsp;&nbsp;&nbsp;1.5. Exercises. 496<BR>
+2. The geometric distribution. 498<BR>
+&nbsp;&nbsp;&nbsp;2.1. Definition and genesis. 498<BR>
+&nbsp;&nbsp;&nbsp;2.2. Generators. 499<BR>
+&nbsp;&nbsp;&nbsp;2.3. Exercises. 500<BR>
+3. The Poisson distribution. 501<BR>
+&nbsp;&nbsp;&nbsp;3.1. Basic properties. 501<BR>
+&nbsp;&nbsp;&nbsp;3.2. Overview of generators. 502<BR>
+&nbsp;&nbsp;&nbsp;3.3. Simple generators. 502<BR>
+&nbsp;&nbsp;&nbsp;3.4. Rejection methods. 506<BR>
+&nbsp;&nbsp;&nbsp;3.5. Exercises. 518<BR>
+4. The binomial distribution. 520<BR>
+&nbsp;&nbsp;&nbsp;4.1. Properties. 520<BR>
+&nbsp;&nbsp;&nbsp;4.2. Overview of generators. 523<BR>
+&nbsp;&nbsp;&nbsp;4.3. Simple generators. 523<BR>
+&nbsp;&nbsp;&nbsp;4.4. The rejection method. 526<BR>
+&nbsp;&nbsp;&nbsp;4.5. Recursive methods. 536<BR>
+&nbsp;&nbsp;&nbsp;4.6. Symmetric binomial random variates. 538<BR>
+&nbsp;&nbsp;&nbsp;4.7. The negative binomial distribution. 543<BR>
+&nbsp;&nbsp;&nbsp;4.8. Exercises. 543<BR>
+5. The logarithmic series distribution. 545<BR>
+&nbsp;&nbsp;&nbsp;5.1. Introduction. 545<BR>
+&nbsp;&nbsp;&nbsp;5.2. Generators. 546<BR>
+&nbsp;&nbsp;&nbsp;5.3. Exercises. 549<BR>
+6. The Zipf distribution. 550<BR>
+&nbsp;&nbsp;&nbsp;6.1. A simple generator. 550<BR>
+&nbsp;&nbsp;&nbsp;6.2. The Planck distribution. 552<BR>
+&nbsp;&nbsp;&nbsp;6.3. The Yule distribution. 553<BR>
+&nbsp;&nbsp;&nbsp;6.4. Exercises. 553<BR>
+&nbsp;&nbsp;&nbsp;<BR>
+<font class="bold">XI. <a href="chapter_eleven.pdf">MULTIVARIATE DISTRIBUTIONS</a> 554</font><BR>
+1. General principles. 554<BR>
+&nbsp;&nbsp;&nbsp;1.1. Introduction. 554<BR>
+&nbsp;&nbsp;&nbsp;1.2. The conditional distribution method. 555<BR>
+&nbsp;&nbsp;&nbsp;1.3. The rejection method. 557<BR>
+&nbsp;&nbsp;&nbsp;1.4. The composition method. 557<BR>
+&nbsp;&nbsp;&nbsp;1.5. Discrete distributions. 559<BR>
+&nbsp;&nbsp;&nbsp;1.6. Exercises. 562<BR>
+2. Linear transformations. The multinormal distribution. 563<BR>
+&nbsp;&nbsp;&nbsp;2.1. Linear transformations. 563<BR>
+&nbsp;&nbsp;&nbsp;2.2. Generators of random vectors with a <BR>
+&nbsp;&nbsp;&nbsp;given covariance matrix. 564<BR>
+&nbsp;&nbsp;&nbsp;2.3. The multinormal distribution. 566<BR>
+&nbsp;&nbsp;&nbsp;2.4. Points uniformly distributed in a hyperellipsoid. 567<BR>
+&nbsp;&nbsp;&nbsp;2.5. Uniform polygonal random vectors. 568<BR>
+&nbsp;&nbsp;&nbsp;2.6. Time series. 571<BR>
+&nbsp;&nbsp;&nbsp;2.7. Singular distributions. 571<BR>
+&nbsp;&nbsp;&nbsp;2.8. Exercises. 572<BR>
+3. Dependence. Bivariate distributions. 573<BR>
+&nbsp;&nbsp;&nbsp;3.1. Creating and measuring dependence. 573<BR>
+&nbsp;&nbsp;&nbsp;3.2. Bivariate uniform distributions. 576<BR>
+&nbsp;&nbsp;&nbsp;3.3. Bivariate exponential distributions. 583<BR>
+&nbsp;&nbsp;&nbsp;3.4. A case study: bivariate gamma distributions. 586<BR>
+&nbsp;&nbsp;&nbsp;3.5. Exercises. 588<BR>
+4. The Dirichlet distribution. 593<BR>
+&nbsp;&nbsp;&nbsp;4.1. Definitions and properties. 593<BR>
+&nbsp;&nbsp;&nbsp;4.2. Liouville distributions. 596<BR>
+&nbsp;&nbsp;&nbsp;4.3. Exercises. 599<BR>
+5. Some useful multivariate families. 600<BR>
+&nbsp;&nbsp;&nbsp;5.1. The Cook-Johnson family. 600<BR>
+&nbsp;&nbsp;&nbsp;5.2. Multivariate Khinchine mixtures. 603<BR>
+&nbsp;&nbsp;&nbsp;5.3. Exercises. 604<BR>
+6. Random matrices. 605<BR>
+&nbsp;&nbsp;&nbsp;6.1. Random correlation matrices. 605<BR>
+&nbsp;&nbsp;&nbsp;6.2. Random orthogonal matrices. 607<BR>
+&nbsp;&nbsp;&nbsp;6.3. Random $R times C$ tables. 608<BR>
+&nbsp;&nbsp;&nbsp;6.4. Exercises. 610<BR>
+&nbsp;&nbsp;&nbsp;<BR>
+<font class="bold">XII. <a href="chapter_twelve.pdf">RANDOM SAMPLING</a> 611</font><BR>
+1. Introduction. 611<BR>
+2. Classical sampling. 612<BR>
+&nbsp;&nbsp;&nbsp;2.1. The swapping method. 612<BR>
+&nbsp;&nbsp;&nbsp;2.2. Classical sampling with membership checking 613<BR>
+&nbsp;&nbsp;&nbsp;2.3. Exercises. 619<BR>
+3. Sequential sampling. 619<BR>
+&nbsp;&nbsp;&nbsp;3.1. Standard sequential sampling. 619<BR>
+&nbsp;&nbsp;&nbsp;3.2. The spacings method for sequential sampling. 621<BR>
+&nbsp;&nbsp;&nbsp;3.3. The inversion method for sequential sampling. 624<BR>
+&nbsp;&nbsp;&nbsp;3.4. Inversion-with-correction. 625<BR>
+&nbsp;&nbsp;&nbsp;3.5. The ghost point method. 626<BR>
+&nbsp;&nbsp;&nbsp;3.6. The rejection method. 631<BR>
+&nbsp;&nbsp;&nbsp;3.7. Exercises. 635<BR>
+4. Oversampling. 635<BR>
+&nbsp;&nbsp;&nbsp;4.1. Definition. 635<BR>
+&nbsp;&nbsp;&nbsp;4.2. Exercises. 638<BR>
+5. Reservoir sampling. 638<BR>
+&nbsp;&nbsp;&nbsp;5.1. Definition. 638<BR>
+&nbsp;&nbsp;&nbsp;5.2. The reservoir method with geometric jumps. 640<BR>
+&nbsp;&nbsp;&nbsp;5.3. Exercises. 641<BR>
+&nbsp;&nbsp;&nbsp;<BR>
+<font class="bold">XIII. <a href="chapter_thirteen.pdf">RANDOM COMBINATORIAL OBJECTS</a> 642</font><BR>
+1. General principles. 642<BR>
+&nbsp;&nbsp;&nbsp;1.1. Introduction. 642<BR>
+&nbsp;&nbsp;&nbsp;1.2. The decoding method. 643<BR>
+&nbsp;&nbsp;&nbsp;1.3. Generation based upon recurrences. 645<BR>
+2. Random permutations. 648<BR>
+&nbsp;&nbsp;&nbsp;2.1. Simple generators. 648<BR>
+&nbsp;&nbsp;&nbsp;2.2. Random binary search trees. 648<BR>
+&nbsp;&nbsp;&nbsp;2.3. Exercises. 650<BR>
+3. Random binary trees. 652<BR>
+&nbsp;&nbsp;&nbsp;3.1. Representations of binary trees. 652<BR>
+&nbsp;&nbsp;&nbsp;3.2. Generation by rejection. 655<BR>
+&nbsp;&nbsp;&nbsp;3.3. Generation by sequential sampling. 656<BR>
+&nbsp;&nbsp;&nbsp;3.4. The decoding method. 657<BR>
+&nbsp;&nbsp;&nbsp;3.5. Exercises. 657<BR>
+4. Random partitions. 657<BR>
+&nbsp;&nbsp;&nbsp;4.1. Recurrences and codewords. 657<BR>
+&nbsp;&nbsp;&nbsp;4.2. Generation of random partitions. 660<BR>
+&nbsp;&nbsp;&nbsp;4.3. Exercises. 661<BR>
+5. Random free trees. 662<BR>
+&nbsp;&nbsp;&nbsp;5.1. Prufer's construction. 662<BR>
+&nbsp;&nbsp;&nbsp;5.2. Klingsberg's algorithm. 664<BR>
+&nbsp;&nbsp;&nbsp;5.3. Free trees with a given number of leaves. 665<BR>
+&nbsp;&nbsp;&nbsp;5.4. Exercises. 666<BR>
+6. Random graphs. 667<BR>
+&nbsp;&nbsp;&nbsp;6.1. Random graphs with simple properties. 667<BR>
+&nbsp;&nbsp;&nbsp;6.2. Connected graphs. 668<BR>
+&nbsp;&nbsp;&nbsp;6.3. Tinhofer's graph generators. 669<BR>
+&nbsp;&nbsp;&nbsp;6.4. Bipartite graphs. 671<BR>
+&nbsp;&nbsp;&nbsp;6.5. Excercises. 673<BR>
+&nbsp;&nbsp;&nbsp;<BR>
+<font class="bold">XIV. <a href="chapter_fourteen_1.pdf">PROBABILISTIC SHORTCUTS AND ADDITIONAL TOPICS</a> 674</font><BR>
+1. The maximum of iid random variables. 674<BR>
+&nbsp;&nbsp;&nbsp;1.1. Overview of methods. 674<BR>
+&nbsp;&nbsp;&nbsp;1.2. The quick elimination principle. 675<BR>
+&nbsp;&nbsp;&nbsp;1.3. The record time method. 679<BR>
+&nbsp;&nbsp;&nbsp;1.4. Exercises. 681<BR>
+2. Random variates with given moments. 682<BR>
+&nbsp;&nbsp;&nbsp;2.1. The moment problem. 682<BR>
+&nbsp;&nbsp;&nbsp;2.2. Discrete distributions. 686<BR>
+&nbsp;&nbsp;&nbsp;2.3. Unimodal densities and scale mixtures. 687<BR>
+&nbsp;&nbsp;&nbsp;2.4. Convex combinations. 689<BR>
+&nbsp;&nbsp;&nbsp;2.5. Exercises. 693<BR>
+3. Characteristic functions. 695<BR>
+&nbsp;&nbsp;&nbsp;3.1. Problem statement. 695<BR>
+&nbsp;&nbsp;&nbsp;3.2. The rejection method for characteristic functions. 696<BR>
+&nbsp;&nbsp;&nbsp;3.3. A black box method. 700<BR>
+&nbsp;&nbsp;&nbsp;3.4. Exercises. 715<BR>
+4. <a href="chapter_fourteen_2.pdf">The simulation of sums</a>. 716<BR>
+&nbsp;&nbsp;&nbsp;4.1. Problem statement. 716<BR>
+&nbsp;&nbsp;&nbsp;4.2. A detour via characteristic functions. 718<BR>
+&nbsp;&nbsp;&nbsp;4.3. Rejection based upon a local central limit theorem. 719<BR>
+&nbsp;&nbsp;&nbsp;4.4. A local limit theorem. 720<BR>
+&nbsp;&nbsp;&nbsp;4.5. The mixture method for simulating sums. 731<BR>
+&nbsp;&nbsp;&nbsp;4.6. Sums of independent uniform random variables. 732<BR>
+&nbsp;&nbsp;&nbsp;4.7. Exercises. 734<BR>
+5. Discrete event simulation. 735<BR>
+&nbsp;&nbsp;&nbsp;5.1. Future event set algorithms. 735<BR>
+&nbsp;&nbsp;&nbsp;5.2. Reeves's model. 738<BR>
+&nbsp;&nbsp;&nbsp;5.3. Linear lists. 740<BR>
+&nbsp;&nbsp;&nbsp;5.4. Tree structures. 747<BR>
+&nbsp;&nbsp;&nbsp;5.5. Exercises. 748<BR>
+6. Regenerative phenomena. 749<BR>
+&nbsp;&nbsp;&nbsp;6.1. The principle. 749<BR>
+&nbsp;&nbsp;&nbsp;6.2. Random walks. 749<BR>
+&nbsp;&nbsp;&nbsp;6.3. Birth and death processes. 755<BR>
+&nbsp;&nbsp;&nbsp;6.4. Phase type distributions. 757<BR>
+&nbsp;&nbsp;&nbsp;6.5. Exercises. 758<BR>
+7. The generalization of a sample. 759<BR>
+&nbsp;&nbsp;&nbsp;7.1. Problem statement. 759<BR>
+&nbsp;&nbsp;&nbsp;7.2. Sample independence. 760<BR>
+&nbsp;&nbsp;&nbsp;7.3. Consistency of density estimates. 762<BR>
+&nbsp;&nbsp;&nbsp;7.4. Sample indistinguishability. 763<BR>
+&nbsp;&nbsp;&nbsp;7.5. Moment matching. 764<BR>
+&nbsp;&nbsp;&nbsp;7.6. Generators for $f sub n$. 765<BR>
+&nbsp;&nbsp;&nbsp;7.7. Exercises. 766<BR>
+&nbsp;&nbsp;&nbsp;<BR>
+<font class="bold">XV. <a href="chapter_fifteen_1.pdf">THE RANDOM BIT MODEL</a> 768</font><BR>
+1. The random bit model. 768<BR>
+&nbsp;&nbsp;&nbsp;1.1. Introduction. 768<BR>
+&nbsp;&nbsp;&nbsp;1.2. Some examples. 769<BR>
+2. The Knuth-Yao lower bound. 771<BR>
+&nbsp;&nbsp;&nbsp;2.1. DDG trees. 771<BR>
+&nbsp;&nbsp;&nbsp;2.2. The lower bound. 771<BR>
+&nbsp;&nbsp;&nbsp;2.3. Exercises. 775<BR>
+3. Optimal and suboptimal DDG-tree algorithms. 775<BR>
+&nbsp;&nbsp;&nbsp;3.1. Suboptimal DDG-tree algorithms. 775<BR>
+&nbsp;&nbsp;&nbsp;3.2. Optimal DDG-tree algorithms. 777<BR>
+&nbsp;&nbsp;&nbsp;3.3. Distribution-free inequalities for the performance <BR>
+&nbsp;&nbsp;&nbsp;of optimal DDG-tree algorithms. 780<BR>
+&nbsp;&nbsp;&nbsp;3.4. Exercises. 782<BR>
+&nbsp;&nbsp;&nbsp;<BR>
+<a href="chapter_fifteen_2.pdf">REFERENCES</a> 784<BR>
+&nbsp;&nbsp;&nbsp;<BR>
+<a href="chapter_fifteen_2.pdf">INDEX</a> 817<BR>
+<BR>
+<BR>
+<HR>
+<BR>
+<BR>
+ 2-3 tree 613<BR>
+<BR>
+2-3 tree<BR>
+&nbsp;&nbsp;&nbsp;
+in discrete event simulation 747<BR>
+<BR>
+Abramowitz, M. 297 302 391 415 678<BR>
+<BR>
+absolute continuity 172<BR>
+<BR>
+absolute value transformation 147<BR>
+<BR>
+absorbing Markov chain 757<BR>
+<BR>
+acceptance complement method<BR>
+&nbsp;&nbsp;&nbsp;
+for discrete distributions 116<BR>
+<BR>
+acceptance-complement method 75<BR>
+&nbsp;&nbsp;&nbsp;
+accelerated 78<BR>
+&nbsp;&nbsp;&nbsp;
+for Cauchy distribution 81 451<BR>
+&nbsp;&nbsp;&nbsp;
+for Poisson distribution 502<BR>
+&nbsp;&nbsp;&nbsp;
+for t distribution 446<BR>
+&nbsp;&nbsp;&nbsp;
+of Ahrens and Dieter 77 79<BR>
+&nbsp;&nbsp;&nbsp;
+squeeze principle for 78<BR>
+<BR>
+aceptance-complement method<BR>
+&nbsp;&nbsp;&nbsp;
+for nearly flat densities 79<BR>
+<BR>
+adaptive inversion method 38<BR>
+<BR>
+adaptive strip method 367<BR>
+<BR>
+adjacency list 669<BR>
+<BR>
+admissible algorithm 9<BR>
+<BR>
+admissible generator 9 10<BR>
+<BR>
+Afifi, A.A. 606<BR>
+<BR>
+Aho, A.V. 90 92 214 372 669<BR>
+<BR>
+Ahrens, J.H. 36 72 76 77 84 98 121 145 359 379 380 383 391 396 397 405 413 420 423 424 425 432 502 507 518 523 538 617<BR>
+<BR>
+Ahrens-Dieter generator<BR>
+&nbsp;&nbsp;&nbsp;
+for exponential distribution 397<BR>
+<BR>
+Aitchison, J. 594<BR>
+<BR>
+Akima, H. 763<BR>
+<BR>
+Alder, B.J. 372<BR>
+<BR>
+algorithm B2PE
+&nbsp;&nbsp;&nbsp;
+for beta distribution 305 309<BR>
+<BR>
+algorithm B4PE
+&nbsp;&nbsp;&nbsp;
+for beta distribution 305<BR>
+<BR>
+algorithm of Nijenhuis and Wilf<BR>
+&nbsp;&nbsp;&nbsp;
+for classical sampling 618<BR>
+<BR>
+algorithm 2<BR>
+<BR>
+Ali, M.M. 578<BR>
+<BR>
+alias method<BR>
+&nbsp;&nbsp;&nbsp;
+algorithm 108<BR>
+&nbsp;&nbsp;&nbsp;
+bit-based 777<BR>
+&nbsp;&nbsp;&nbsp;
+set-up 109<BR>
+&nbsp;&nbsp;&nbsp;
+with two tables 109<BR>
+<BR>
+alias-urn method 110<BR>
+<BR>
+almost-exact inversion method 133<BR>
+&nbsp;&nbsp;&nbsp;
+for exponential distribution 134<BR>
+&nbsp;&nbsp;&nbsp;
+for gamma distribution 137 139 141 145<BR>
+&nbsp;&nbsp;&nbsp;
+for monotone densities 134<BR>
+&nbsp;&nbsp;&nbsp;
+for normal distribution 135 380<BR>
+&nbsp;&nbsp;&nbsp;
+for t distribution 143<BR>
+<BR>
+alternating series method 153<BR>
+&nbsp;&nbsp;&nbsp;
+analysis of 154<BR>
+&nbsp;&nbsp;&nbsp;
+exponential version of 154<BR>
+&nbsp;&nbsp;&nbsp;
+for exponential distribution 158<BR>
+&nbsp;&nbsp;&nbsp;
+for Kolmogorov-Smirnov distribution 162<BR>
+&nbsp;&nbsp;&nbsp;
+for Raab-Green distribution 158<BR>
+<BR>
+analytic characteristic function 685<BR>
+<BR>
+Ananthanarayanan, K. 359<BR>
+<BR>
+Anderson, T.W. 168 716<BR>
+<BR>
+Anderson-Darling statistic 168<BR>
+<BR>
+Andrews, D.F. 326<BR>
+<BR>
+approximations for inverse of normal distribution function 36<BR>
+<BR>
+arc sine distribution 429 481<BR>
+&nbsp;&nbsp;&nbsp;
+as the projection of a radially symmetric random vector 230<BR>
+&nbsp;&nbsp;&nbsp;
+deconvolution method 239<BR>
+&nbsp;&nbsp;&nbsp;
+polar method for 482<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 482<BR>
+<BR>
+Archer, N.P. 687<BR>
+<BR>
+Arfwedson's distribution 497<BR>
+<BR>
+Arfwedson, G. 497<BR>
+<BR>
+Arnason, A.N. 432<BR>
+<BR>
+Arnold, B.C. 482 583<BR>
+<BR>
+Arnold, D.B. 592 656<BR>
+<BR>
+Asau, Y. 96<BR>
+<BR>
+assessment of generators 8<BR>
+<BR>
+association 574 576 589<BR>
+<BR>
+asymmetric Kolmogorov-Smirnov statistics 167<BR>
+<BR>
+asymmetric mixtures 71<BR>
+<BR>
+asymptotic independence 760<BR>
+<BR>
+Atkinson's algorithm<BR>
+&nbsp;&nbsp;&nbsp;
+for Poisson distribution 518<BR>
+<BR>
+Atkinson, A.C. 121 379 380 404 432 439 440 443 480 502 505 507 518<BR>
+<BR>
+Atkinson-Whittaker method<BR>
+&nbsp;&nbsp;&nbsp;
+for beta distribution 440 443<BR>
+<BR>
+autocorrelation matrix 571<BR>
+<BR>
+AVL tree<BR>
+&nbsp;&nbsp;&nbsp;
+in discrete event simulation 747<BR>
+<BR>
+avoidance problems 372<BR>
+&nbsp;&nbsp;&nbsp;
+grid method for 373<BR>
+<BR>
+Baase, S. 214<BR>
+<BR>
+Babu, A.J.G. 304 305 309 432<BR>
+<BR>
+Badel, M. 571<BR>
+<BR>
+Bailey, B.J.R. 36<BR>
+<BR>
+balanced binary search tree<BR>
+&nbsp;&nbsp;&nbsp;
+in discrete event simulation 746<BR>
+<BR>
+balanced parentheses 652<BR>
+<BR>
+ball-in-urn method 608 609<BR>
+&nbsp;&nbsp;&nbsp;
+for multinomial distribution 558<BR>
+&nbsp;&nbsp;&nbsp;
+for random bipartite graphs 671<BR>
+<BR>
+Banks, J. 4 736<BR>
+<BR>
+Barbu, G. 204<BR>
+<BR>
+Barlow, R.E. 260 277 343 356 742<BR>
+<BR>
+Barnard, D.R. 367<BR>
+<BR>
+Barndorff-Nielsen, O. 329 330 478 483<BR>
+<BR>
+Barnett, V. 582<BR>
+<BR>
+Barr, D.R. 566<BR>
+<BR>
+Bartels's bounds 460 461<BR>
+<BR>
+Bartels, R. 458 459 460 462<BR>
+<BR>
+Bartlett's kernel 762 765 767<BR>
+&nbsp;&nbsp;&nbsp;
+inversion method for 767<BR>
+&nbsp;&nbsp;&nbsp;
+order statistics method for 766<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 765<BR>
+<BR>
+Bartlett, M.S. 762<BR>
+<BR>
+Barton, D.E. 168 519<BR>
+<BR>
+Basu, D. 594<BR>
+<BR>
+batch method<BR>
+&nbsp;&nbsp;&nbsp;
+for exponential distribution 223<BR>
+<BR>
+Beasley, J.D. 36<BR>
+<BR>
+Beckman, R.J. 175<BR>
+<BR>
+Bell, J.R. 236 380<BR>
+<BR>
+Bendel, R.B. 606<BR>
+<BR>
+Bene, B. 4<BR>
+<BR>
+Bentley, J.L. 215<BR>
+<BR>
+Berenson, M.L. 215 220<BR>
+<BR>
+Bergstrom, H. 459 460<BR>
+<BR>
+Bergstrom-Feller series<BR>
+&nbsp;&nbsp;&nbsp;
+for stable distribution 459 460 461<BR>
+<BR>
+Berman's method<BR>
+&nbsp;&nbsp;&nbsp;
+analysis of 419<BR>
+&nbsp;&nbsp;&nbsp;
+for beta distribution 418<BR>
+&nbsp;&nbsp;&nbsp;
+for gamma distribution 419 420<BR>
+<BR>
+Berman's theorem 416<BR>
+<BR>
+Berman, M.B. 416 420<BR>
+<BR>
+Bernoulli distribution 486 521<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 689<BR>
+<BR>
+Bernoulli generator 769<BR>
+<BR>
+Bernoulli number 490 493 550<BR>
+<BR>
+Bernoulli trial 521<BR>
+<BR>
+Berry-Esseen theorem<BR>
+&nbsp;&nbsp;&nbsp;
+application of 225<BR>
+<BR>
+Besag, J.E. 372<BR>
+<BR>
+Bessel function distribution 469<BR>
+&nbsp;&nbsp;&nbsp;
+type I 469<BR>
+&nbsp;&nbsp;&nbsp;
+type II 469<BR>
+<BR>
+Bessel function 469<BR>
+&nbsp;&nbsp;&nbsp;
+integral representation for 470<BR>
+&nbsp;&nbsp;&nbsp;
+modified 469<BR>
+&nbsp;&nbsp;&nbsp;
+of the first kind 473 755<BR>
+&nbsp;&nbsp;&nbsp;
+of the second kind 469<BR>
+<BR>
+Best's rejection method<BR>
+&nbsp;&nbsp;&nbsp;
+for gamma distribution 410<BR>
+<BR>
+Best, D.J. 379 380 405 407 410 420 426 436 447 450 473 474 476<BR>
+<BR>
+beta distribution 428<BR>
+&nbsp;&nbsp;&nbsp;
+algorithm B2PE for 305 309<BR>
+&nbsp;&nbsp;&nbsp;
+algorithm B4PE for 305<BR>
+&nbsp;&nbsp;&nbsp;
+algorithm BA for 438<BR>
+&nbsp;&nbsp;&nbsp;
+algorithm BB for 438<BR>
+&nbsp;&nbsp;&nbsp;
+algorithm BC for 439<BR>
+&nbsp;&nbsp;&nbsp;
+as an IHR distribution 343<BR>
+&nbsp;&nbsp;&nbsp;
+Atkinson-Whittaker method for 440 443<BR>
+&nbsp;&nbsp;&nbsp;
+Berman's method for 418<BR>
+&nbsp;&nbsp;&nbsp;
+Cheng's rejection method for 438<BR>
+&nbsp;&nbsp;&nbsp;
+definition 7<BR>
+&nbsp;&nbsp;&nbsp;
+Forsythe's method for 432<BR>
+&nbsp;&nbsp;&nbsp;
+inversion-rejection method for 339 347<BR>
+&nbsp;&nbsp;&nbsp;
+Johnk's method for 418 432 439<BR>
+&nbsp;&nbsp;&nbsp;
+log-concavity of 287<BR>
+&nbsp;&nbsp;&nbsp;
+of second kind 25<BR>
+&nbsp;&nbsp;&nbsp;
+of the second kind 428 429 437 444<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 416 428 429<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 432<BR>
+&nbsp;&nbsp;&nbsp;
+relation to binomial distribution 536<BR>
+&nbsp;&nbsp;&nbsp;
+relation to Cauchy distribution 429<BR>
+&nbsp;&nbsp;&nbsp;
+relation to Dirichlet distribution 595<BR>
+&nbsp;&nbsp;&nbsp;
+relation to F distribution 429<BR>
+&nbsp;&nbsp;&nbsp;
+relation to gamma distribution 429 432 595<BR>
+&nbsp;&nbsp;&nbsp;
+relation to multivariate Pearson II distribution 237<BR>
+&nbsp;&nbsp;&nbsp;
+relation to multivariate Pearson VII distribution 238<BR>
+&nbsp;&nbsp;&nbsp;
+relation to order statistics 17<BR>
+&nbsp;&nbsp;&nbsp;
+relation to Pearson VI distribution 429<BR>
+&nbsp;&nbsp;&nbsp;
+relation to Snedecor distribution 429<BR>
+&nbsp;&nbsp;&nbsp;
+relation to t distribution 429<BR>
+&nbsp;&nbsp;&nbsp;
+relation to uniform distribution on unit sphere 227<BR>
+&nbsp;&nbsp;&nbsp;
+relation to uniform order statistics 210 431<BR>
+&nbsp;&nbsp;&nbsp;
+relation to z distribution 330<BR>
+&nbsp;&nbsp;&nbsp;
+shape of 428<BR>
+&nbsp;&nbsp;&nbsp;
+strip method for 432<BR>
+&nbsp;&nbsp;&nbsp;
+uniform order statistics method for 431<BR>
+&nbsp;&nbsp;&nbsp;
+universal method for 432<BR>
+&nbsp;&nbsp;&nbsp;
+with one or two parameters less than one 439<BR>
+<BR>
+Beyer, W.H. 245<BR>
+<BR>
+Bhagavan, B.K. 571<BR>
+<BR>
+Bhattacharjee, G.P. 678<BR>
+<BR>
+Bhattacharyya, B.C. 482<BR>
+<BR>
+Bignami, A. 74<BR>
+<BR>
+binary search tree 89 613<BR>
+&nbsp;&nbsp;&nbsp;
+in discrete event simulation 747 748<BR>
+&nbsp;&nbsp;&nbsp;
+inorder traversal of 89<BR>
+&nbsp;&nbsp;&nbsp;
+nearly optimal 94<BR>
+&nbsp;&nbsp;&nbsp;
+set-up of 90<BR>
+<BR>
+binary tree<BR>
+&nbsp;&nbsp;&nbsp;
+equivalent 652<BR>
+&nbsp;&nbsp;&nbsp;
+inorder traversal of 653<BR>
+&nbsp;&nbsp;&nbsp;
+representation of 652<BR>
+&nbsp;&nbsp;&nbsp;
+similar 652<BR>
+<BR>
+Binet's series 491 497<BR>
+&nbsp;&nbsp;&nbsp;
+for the log-gamma function 491<BR>
+<BR>
+binomial distribution 486 496 520<BR>
+&nbsp;&nbsp;&nbsp;
+coin flip method for 524<BR>
+&nbsp;&nbsp;&nbsp;
+convergence to normal distribution 526<BR>
+&nbsp;&nbsp;&nbsp;
+definition 84<BR>
+&nbsp;&nbsp;&nbsp;
+first waiting time method for 525<BR>
+&nbsp;&nbsp;&nbsp;
+first waiting time property 522<BR>
+&nbsp;&nbsp;&nbsp;
+generating function of 521<BR>
+&nbsp;&nbsp;&nbsp;
+genesis 521<BR>
+&nbsp;&nbsp;&nbsp;
+inequalities for 527 544<BR>
+&nbsp;&nbsp;&nbsp;
+inversion method for 524<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 497 521 526<BR>
+&nbsp;&nbsp;&nbsp;
+recursive method for 523 536 537 545<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 115 523 526 529 533 543<BR>
+&nbsp;&nbsp;&nbsp;
+relation to beta distribution 536<BR>
+&nbsp;&nbsp;&nbsp;
+relation to geometric distribution 522<BR>
+&nbsp;&nbsp;&nbsp;
+relation to hypergeometric distribution 545<BR>
+&nbsp;&nbsp;&nbsp;
+relation to Poisson distribution 543<BR>
+&nbsp;&nbsp;&nbsp;
+second waiting time method for 525<BR>
+&nbsp;&nbsp;&nbsp;
+second waiting time property 522<BR>
+&nbsp;&nbsp;&nbsp;
+sequential search method for 89<BR>
+&nbsp;&nbsp;&nbsp;
+splitting algorithm for 527<BR>
+&nbsp;&nbsp;&nbsp;
+table method for 523<BR>
+&nbsp;&nbsp;&nbsp;
+universal rejection method for 495<BR>
+<BR>
+bipartite graph 671<BR>
+<BR>
+birth and death process 755<BR>
+<BR>
+bisection method 32 38<BR>
+&nbsp;&nbsp;&nbsp;
+analysis 38<BR>
+<BR>
+bit vector 613<BR>
+<BR>
+bivariate dependence 576<BR>
+<BR>
+bivariate distributions<BR>
+&nbsp;&nbsp;&nbsp;
+transformations of 577<BR>
+<BR>
+bivariate exponential distribution 583 584<BR>
+&nbsp;&nbsp;&nbsp;
+of Johnson and Tenenbein 585 591<BR>
+&nbsp;&nbsp;&nbsp;
+of Lawrance and Lewis 585<BR>
+&nbsp;&nbsp;&nbsp;
+of Marshall and Olkin 585<BR>
+&nbsp;&nbsp;&nbsp;
+of Moran 585<BR>
+&nbsp;&nbsp;&nbsp;
+trivariate reduction for 592<BR>
+<BR>
+bivariate extreme value distribution 563<BR>
+<BR>
+bivariate gamma distribution 586<BR>
+&nbsp;&nbsp;&nbsp;
+composition method for 587<BR>
+&nbsp;&nbsp;&nbsp;
+trivariate reduction for 587 588<BR>
+<BR>
+bivariate geometric distribution<BR>
+&nbsp;&nbsp;&nbsp;
+trivariate reduction for 592<BR>
+<BR>
+bivariate Hermite distribution 592<BR>
+<BR>
+bivariate multinormal distribution 566<BR>
+<BR>
+bivariate normal distribution 581<BR>
+<BR>
+bivariate Poisson distribution 592<BR>
+&nbsp;&nbsp;&nbsp;
+trivariate reduction for 592<BR>
+<BR>
+bivariate uniform distribution 576 578 589<BR>
+<BR>
+bivariate Weibull distribution<BR>
+&nbsp;&nbsp;&nbsp;
+trivariate reduction for 592<BR>
+<BR>
+black box method 286<BR>
+&nbsp;&nbsp;&nbsp;
+for characteristic function 696<BR>
+&nbsp;&nbsp;&nbsp;
+for log-concave densities 290<BR>
+<BR>
+Blaesild, P. 478<BR>
+<BR>
+Blum, M. 431<BR>
+<BR>
+Bolshev, L.N. 25 136 144 518<BR>
+<BR>
+Bondesson, L. 458<BR>
+<BR>
+Boole's rule 701<BR>
+<BR>
+bootstrap estimate 766<BR>
+<BR>
+Borel-Tanner distribution 520<BR>
+<BR>
+Boswell, M.T. 4 759<BR>
+<BR>
+bounded densities 43<BR>
+&nbsp;&nbsp;&nbsp;
+grid method for 376<BR>
+&nbsp;&nbsp;&nbsp;
+inversion-rejection method for 332<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 43<BR>
+&nbsp;&nbsp;&nbsp;
+strip method for 360<BR>
+<BR>
+bounded monotone densities<BR>
+&nbsp;&nbsp;&nbsp;
+inversion-rejection method for 345<BR>
+<BR>
+Box, G.E.P. 206 235 380<BR>
+<BR>
+Box-Muller method<BR>
+&nbsp;&nbsp;&nbsp;
+for normal distribution 235<BR>
+<BR>
+Boyett, J.M. 608<BR>
+<BR>
+Bratley, P. 4 29 251 736 767<BR>
+<BR>
+Bray, T.A. 359 380 383 388 392 397<BR>
+<BR>
+Brent, R. 295<BR>
+<BR>
+Brent, R.P. 121 380<BR>
+<BR>
+Brown, G.W. 457<BR>
+<BR>
+Bryson, M.C. 603 604<BR>
+<BR>
+bucket searching 215 218<BR>
+<BR>
+bucket sorting 215 219<BR>
+&nbsp;&nbsp;&nbsp;
+analysis of 216 224<BR>
+<BR>
+bucket structure 613<BR>
+&nbsp;&nbsp;&nbsp;
+in discrete event simulation 743 744 745<BR>
+<BR>
+Burr distribution 476 477<BR>
+&nbsp;&nbsp;&nbsp;
+inversion method for 477<BR>
+<BR>
+Burr family 476 477 685<BR>
+<BR>
+Burr XII distribution 423 432 437<BR>
+&nbsp;&nbsp;&nbsp;
+generator for 411<BR>
+<BR>
+Burr, I.W. 476<BR>
+<BR>
+busy period<BR>
+&nbsp;&nbsp;&nbsp;
+of a queue 755<BR>
+<BR>
+Butcher, J.C. 391<BR>
+<BR>
+Butler, E.L. 763<BR>
+<BR>
+Cacoullos's theorem 452<BR>
+<BR>
+Cacoullos, T. 446 452<BR>
+<BR>
+Cannon, L.E. 106<BR>
+<BR>
+Cantelli's inequality 33<BR>
+<BR>
+car parking problem 372<BR>
+&nbsp;&nbsp;&nbsp;
+search tree for 374<BR>
+<BR>
+Carleman's condition 684<BR>
+<BR>
+Carlton, A.G. 24<BR>
+<BR>
+Carson, J.S. 4 736<BR>
+<BR>
+Catalan's constant 120<BR>
+<BR>
+Cauchy distribution 445 450<BR>
+&nbsp;&nbsp;&nbsp;
+acceptance-complement method for 81 451<BR>
+&nbsp;&nbsp;&nbsp;
+as a normal scale mixture 326<BR>
+&nbsp;&nbsp;&nbsp;
+as a stable distribution 183 455<BR>
+&nbsp;&nbsp;&nbsp;
+as dominating distribution 45<BR>
+&nbsp;&nbsp;&nbsp;
+closure under addition 25<BR>
+&nbsp;&nbsp;&nbsp;
+definition 7<BR>
+&nbsp;&nbsp;&nbsp;
+inversion method for 29 450<BR>
+&nbsp;&nbsp;&nbsp;
+Kronmal-Peterson generator for 82<BR>
+&nbsp;&nbsp;&nbsp;
+polar method for 451<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 452<BR>
+&nbsp;&nbsp;&nbsp;
+ratio-of-uniforms method for 201<BR>
+&nbsp;&nbsp;&nbsp;
+relation to beta distribution 429<BR>
+&nbsp;&nbsp;&nbsp;
+relation to gamma distribution 427<BR>
+&nbsp;&nbsp;&nbsp;
+relation to normal distribution 240 451 452<BR>
+&nbsp;&nbsp;&nbsp;
+relation to uniform distribution in unit circle 234<BR>
+&nbsp;&nbsp;&nbsp;
+tail of 453<BR>
+<BR>
+Cawdery, M.N. 367<BR>
+<BR>
+Cayley's theorem 662<BR>
+<BR>
+central limit theorem 21 136 222<BR>
+&nbsp;&nbsp;&nbsp;
+for binomial distribution 526<BR>
+&nbsp;&nbsp;&nbsp;
+local 719<BR>
+<BR>
+Chalmers, C.P. 606<BR>
+<BR>
+Chambers, J.M. 184 185 459<BR>
+<BR>
+characteristic function 6 19 695<BR>
+&nbsp;&nbsp;&nbsp;
+black box method for 696<BR>
+&nbsp;&nbsp;&nbsp;
+definition 5<BR>
+&nbsp;&nbsp;&nbsp;
+inequalities for 707 721<BR>
+&nbsp;&nbsp;&nbsp;
+of uniform distribution 708<BR>
+&nbsp;&nbsp;&nbsp;
+Polya 718<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 697<BR>
+&nbsp;&nbsp;&nbsp;
+with compact support 706 712<BR>
+<BR>
+Chebyshev's inequality 321<BR>
+<BR>
+Chen, H.C. 96<BR>
+<BR>
+Cheng's rejection method<BR>
+&nbsp;&nbsp;&nbsp;
+for beta distribution 438<BR>
+&nbsp;&nbsp;&nbsp;
+for gamma distribution 411 413 423<BR>
+<BR>
+Cheng, R.C.H. 194 203 405 406 411 412 413 423 432 437 438 439 477<BR>
+<BR>
+Cherian, K.C. 587<BR>
+<BR>
+Chernin, K.E. 183 184 455 459<BR>
+<BR>
+Chhikara, R.S. 148<BR>
+<BR>
+chi-square distribution 403<BR>
+&nbsp;&nbsp;&nbsp;
+properties 13<BR>
+<BR>
+Chmielewski, M.A. 226<BR>
+<BR>
+Chow, Y.S. 5 21 50 63 225 323<BR>
+<BR>
+Cinlar, E. 246 251 257 261<BR>
+<BR>
+circle avoidance problem 372<BR>
+<BR>
+circle parking problem 374<BR>
+<BR>
+circular array<BR>
+&nbsp;&nbsp;&nbsp;
+in discrete event simulation 741<BR>
+<BR>
+Cislak, P.J. 476<BR>
+<BR>
+classical sampling 612<BR>
+&nbsp;&nbsp;&nbsp;
+algorithm of Nijenhuis and Wilf for 618<BR>
+&nbsp;&nbsp;&nbsp;
+analysis of 614 615<BR>
+&nbsp;&nbsp;&nbsp;
+with membership checking based on a hash table 616<BR>
+&nbsp;&nbsp;&nbsp;
+with membership checking 613<BR>
+<BR>
+closed hashing 613 617<BR>
+<BR>
+codeword 662<BR>
+<BR>
+coding function 559 643<BR>
+&nbsp;&nbsp;&nbsp;
+for binary tree 657 658<BR>
+&nbsp;&nbsp;&nbsp;
+for edges in a graph 668<BR>
+&nbsp;&nbsp;&nbsp;
+for random partition 661<BR>
+<BR>
+Cohen, J. 673<BR>
+<BR>
+coin flip method<BR>
+&nbsp;&nbsp;&nbsp;
+for binomial distribution 524<BR>
+<BR>
+coin flips<BR>
+&nbsp;&nbsp;&nbsp;
+simulation of 104<BR>
+<BR>
+compact support 43<BR>
+<BR>
+comparison-based inversion methods 88<BR>
+<BR>
+compiled code 8<BR>
+<BR>
+complete binary tree 90<BR>
+<BR>
+complexity 2<BR>
+<BR>
+composition method with quick acceptance 263<BR>
+<BR>
+composition method 66 68<BR>
+&nbsp;&nbsp;&nbsp;
+analysis of 69<BR>
+&nbsp;&nbsp;&nbsp;
+based upon hazard rates 262<BR>
+&nbsp;&nbsp;&nbsp;
+for bivariate gamma distribution 587<BR>
+&nbsp;&nbsp;&nbsp;
+for discrete distributions 116<BR>
+&nbsp;&nbsp;&nbsp;
+for multivariate distributions 557<BR>
+&nbsp;&nbsp;&nbsp;
+for normal distribution 67<BR>
+&nbsp;&nbsp;&nbsp;
+for order statistics 224<BR>
+&nbsp;&nbsp;&nbsp;
+for Poisson processes 253<BR>
+&nbsp;&nbsp;&nbsp;
+for polynomial densities 71 72<BR>
+&nbsp;&nbsp;&nbsp;
+modified 69<BR>
+<BR>
+composition-rejection method<BR>
+&nbsp;&nbsp;&nbsp;
+for gamma distribution 420<BR>
+&nbsp;&nbsp;&nbsp;
+for normal distribution 380 382<BR>
+&nbsp;&nbsp;&nbsp;
+for t distribution 446 453<BR>
+<BR>
+compound Poisson distribution 487<BR>
+<BR>
+compound Weibull distribution 414<BR>
+<BR>
+comprehensive family 581<BR>
+<BR>
+concave distribution 172<BR>
+<BR>
+concave monotone densities<BR>
+&nbsp;&nbsp;&nbsp;
+inequalities for 328<BR>
+&nbsp;&nbsp;&nbsp;
+universal rejection method for 329<BR>
+<BR>
+conditional density 555<BR>
+<BR>
+conditional distribution method 555<BR>
+&nbsp;&nbsp;&nbsp;
+for Gumbel's bivariate exponential family 584<BR>
+&nbsp;&nbsp;&nbsp;
+for Morgenstern's family 580<BR>
+&nbsp;&nbsp;&nbsp;
+for multinomial distribution 558 559 731<BR>
+&nbsp;&nbsp;&nbsp;
+for multinormal distribution 556<BR>
+&nbsp;&nbsp;&nbsp;
+for multivariate Cauchy distribution 555<BR>
+&nbsp;&nbsp;&nbsp;
+for normal distribution 556<BR>
+&nbsp;&nbsp;&nbsp;
+for random $R times C$ table 610<BR>
+&nbsp;&nbsp;&nbsp;
+tables for 561<BR>
+<BR>
+connected graph 668<BR>
+<BR>
+consistency 762<BR>
+<BR>
+consistent density estimate 762<BR>
+<BR>
+context-free language 673<BR>
+<BR>
+contingency table 608<BR>
+<BR>
+continuous mixtures<BR>
+&nbsp;&nbsp;&nbsp;
+definition 16<BR>
+<BR>
+convergence to the stable distribution 468<BR>
+<BR>
+convergent series method 152<BR>
+&nbsp;&nbsp;&nbsp;
+analysis of 156<BR>
+<BR>
+convex characteristic function 186<BR>
+<BR>
+convex densities 179<BR>
+&nbsp;&nbsp;&nbsp;
+generator for 180<BR>
+&nbsp;&nbsp;&nbsp;
+inequalities for 311<BR>
+&nbsp;&nbsp;&nbsp;
+inversion-rejection method for 355<BR>
+&nbsp;&nbsp;&nbsp;
+universal rejection method for 313<BR>
+<BR>
+convex density<BR>
+&nbsp;&nbsp;&nbsp;
+inequalities for 322<BR>
+<BR>
+convex distribution 172<BR>
+<BR>
+convex hull 571<BR>
+<BR>
+convex polygon in the plane 570<BR>
+<BR>
+convex polytope 568<BR>
+<BR>
+convolutions 19<BR>
+<BR>
+Cook, J.M. 241<BR>
+<BR>
+Cook, R.D. 600 602<BR>
+<BR>
+Cook-Johnson distribution 600 602<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 601<BR>
+<BR>
+Cooper, B.E. 678<BR>
+<BR>
+Cornish-Fisher approximation 136<BR>
+<BR>
+correlated random variates 29<BR>
+<BR>
+correlation coefficient 573<BR>
+<BR>
+covariance matrix 564<BR>
+&nbsp;&nbsp;&nbsp;
+random vector with given 565<BR>
+<BR>
+Cox, D.R. 258<BR>
+<BR>
+Cramer, H. 733<BR>
+<BR>
+cumulative hazard rate 260<BR>
+<BR>
+cyclic rate function 256<BR>
+<BR>
+Dagpunar, J.S. 426<BR>
+<BR>
+Dahl, O.J. 743<BR>
+<BR>
+Darboux's formula 460 462<BR>
+<BR>
+Darboux, M. 460 462<BR>
+<BR>
+Darling, D.A. 168 716<BR>
+<BR>
+Davey, D. 743 746<BR>
+<BR>
+David, F.N. 587<BR>
+<BR>
+Davidovic, Ju.S. 309<BR>
+<BR>
+Davis, P.J. 701 704<BR>
+<BR>
+DDG tree algorithm 771<BR>
+&nbsp;&nbsp;&nbsp;
+analysis of 772<BR>
+&nbsp;&nbsp;&nbsp;
+optimal 777<BR>
+&nbsp;&nbsp;&nbsp;
+suboptimal 775<BR>
+<BR>
+DDG tree 771<BR>
+&nbsp;&nbsp;&nbsp;
+for rejection method 777<BR>
+&nbsp;&nbsp;&nbsp;
+relation to finite state machine 782<BR>
+<BR>
+de Balbine, G. 648 651<BR>
+<BR>
+de Matteis, A. 74<BR>
+<BR>
+Deak, I. 4 77 232 566<BR>
+<BR>
+decoding function 559<BR>
+<BR>
+decoding method 643<BR>
+&nbsp;&nbsp;&nbsp;
+for random binary tree 657<BR>
+&nbsp;&nbsp;&nbsp;
+for random permutation 644<BR>
+&nbsp;&nbsp;&nbsp;
+Robson's 648<BR>
+<BR>
+decoding with rejection 645<BR>
+<BR>
+decomposition of a polytope 570<BR>
+<BR>
+deconvolution method 239<BR>
+&nbsp;&nbsp;&nbsp;
+for arc sine distribution 239<BR>
+<BR>
+Denardo, E.V. 746<BR>
+<BR>
+densities with known moments 324<BR>
+<BR>
+density estimate 759<BR>
+&nbsp;&nbsp;&nbsp;
+consistency of 762<BR>
+<BR>
+density 5<BR>
+&nbsp;&nbsp;&nbsp;
+inequalities for 696 698 705<BR>
+<BR>
+dependence 573<BR>
+<BR>
+depth of a node 649<BR>
+<BR>
+derivatives of characteristic function<BR>
+&nbsp;&nbsp;&nbsp;
+inequalities for 703<BR>
+<BR>
+Devroye, L. 4 35 49 151 162 167 169 187 216 218 261 264 268 277 278 288 331 334 406 422 502 507 523 544 568 621 624 625 626 675 676 680 696 759 762 763 764 766 767<BR>
+<BR>
+DHR distributions 261<BR>
+&nbsp;&nbsp;&nbsp;
+dynamic thinning method for 268 283<BR>
+&nbsp;&nbsp;&nbsp;
+inversion method for 267<BR>
+&nbsp;&nbsp;&nbsp;
+inversion-rejection method for 342 344<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 277<BR>
+<BR>
+diagonal matrix 605<BR>
+<BR>
+dice<BR>
+&nbsp;&nbsp;&nbsp;
+simulation of 103<BR>
+<BR>
+Dieter, U. 72 76 77 121 145 379 380 383 391 396 397 405 413 420 423 424 425 432 502 507 518 523 538 617<BR>
+<BR>
+digamma distribution 553<BR>
+<BR>
+Diggle, P.J. 372<BR>
+<BR>
+Dirichlet distribution 593<BR>
+&nbsp;&nbsp;&nbsp;
+generalization of 596<BR>
+&nbsp;&nbsp;&nbsp;
+relation to beta distribution 595<BR>
+&nbsp;&nbsp;&nbsp;
+relation to gamma distribution 594<BR>
+&nbsp;&nbsp;&nbsp;
+relation to uniform spacings 593<BR>
+<BR>
+Dirichlet tessellation 374<BR>
+<BR>
+discrete distribution generating tree 771<BR>
+<BR>
+discrete distribution 83<BR>
+&nbsp;&nbsp;&nbsp;
+inequalities for 497<BR>
+&nbsp;&nbsp;&nbsp;
+universal rejection method for 497<BR>
+<BR>
+discrete dynamic thinning method 283<BR>
+<BR>
+discrete event simulation 735<BR>
+<BR>
+discrete hazard rate function 278<BR>
+<BR>
+discrete Markov chain 757 758<BR>
+<BR>
+discrete mixtures 66<BR>
+&nbsp;&nbsp;&nbsp;
+definition 16<BR>
+<BR>
+discrete normal distribution<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 117<BR>
+<BR>
+discrete random variable 83<BR>
+<BR>
+discrete t distribution 497<BR>
+<BR>
+discrete thinning method<BR>
+&nbsp;&nbsp;&nbsp;
+analysis of 282<BR>
+&nbsp;&nbsp;&nbsp;
+for logarithmic series distribution 282<BR>
+&nbsp;&nbsp;&nbsp;
+for negative binomial distribution 284<BR>
+<BR>
+discrete uniform distribution 88<BR>
+<BR>
+distribution function 5<BR>
+&nbsp;&nbsp;&nbsp;
+inequalities for 321<BR>
+<BR>
+distributions on hyperspheres 571<BR>
+<BR>
+Dubey, S.D. 414<BR>
+<BR>
+Dudewicz, E.J. 483<BR>
+<BR>
+Dugue, D. 186<BR>
+<BR>
+Dumouchel, W.H. 458<BR>
+<BR>
+Durstenfeld, R. 648<BR>
+<BR>
+Duval, P. 743 744 746<BR>
+<BR>
+Dvoretzky, A. 373<BR>
+<BR>
+dynamic hashing 38<BR>
+<BR>
+dynamic thinning method<BR>
+&nbsp;&nbsp;&nbsp;
+analysis of 269<BR>
+&nbsp;&nbsp;&nbsp;
+for DHR distributions 268<BR>
+<BR>
+Easton, M.C. 619<BR>
+<BR>
+economical method 77<BR>
+<BR>
+eigenvalue 605<BR>
+<BR>
+empiric distribution function 167<BR>
+<BR>
+energy spectrum of fission neutrons 191<BR>
+<BR>
+Englebrecht-Wiggans, R. 743<BR>
+<BR>
+entropy 771 775<BR>
+<BR>
+equiprobable mixture 106<BR>
+<BR>
+Erdos, P. 170 668<BR>
+<BR>
+Erdos-Kac distribution 170<BR>
+&nbsp;&nbsp;&nbsp;
+series method for 170<BR>
+<BR>
+Ernvall, J. 617<BR>
+<BR>
+error estimates<BR>
+&nbsp;&nbsp;&nbsp;
+for inversion formula 702<BR>
+<BR>
+Euler's constant 424 552 639 680<BR>
+<BR>
+Evans, J.O. 36<BR>
+<BR>
+event simulator 673<BR>
+<BR>
+event-driven simulation 736<BR>
+<BR>
+expected complexity 2<BR>
+<BR>
+experimental method<BR>
+&nbsp;&nbsp;&nbsp;
+for geometric distribution 499<BR>
+<BR>
+explicit approximations for inverse of distribution function 35<BR>
+<BR>
+explicit factorial model 631<BR>
+<BR>
+exponential class of distributions 38<BR>
+<BR>
+exponential distribution<BR>
+&nbsp;&nbsp;&nbsp;
+Ahrens-Dieter generator for 397<BR>
+&nbsp;&nbsp;&nbsp;
+almost-exact inversion method for 134<BR>
+&nbsp;&nbsp;&nbsp;
+alternating series method for 158<BR>
+&nbsp;&nbsp;&nbsp;
+as an IHR distribution 343<BR>
+&nbsp;&nbsp;&nbsp;
+batch method for 223<BR>
+&nbsp;&nbsp;&nbsp;
+definition 7<BR>
+&nbsp;&nbsp;&nbsp;
+generating iid random variates 223<BR>
+&nbsp;&nbsp;&nbsp;
+inequalities for 157<BR>
+&nbsp;&nbsp;&nbsp;
+inversion method for 29<BR>
+&nbsp;&nbsp;&nbsp;
+Marsaglia's generator for 394 396<BR>
+&nbsp;&nbsp;&nbsp;
+memoryless property of 219 393<BR>
+&nbsp;&nbsp;&nbsp;
+memoryless property 212<BR>
+&nbsp;&nbsp;&nbsp;
+mixtures of 16<BR>
+&nbsp;&nbsp;&nbsp;
+Monahan's algorithm for 132<BR>
+&nbsp;&nbsp;&nbsp;
+order statistics of 219<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 125 393 395<BR>
+&nbsp;&nbsp;&nbsp;
+properties 12<BR>
+&nbsp;&nbsp;&nbsp;
+ratio-of-uniforms method for 200<BR>
+&nbsp;&nbsp;&nbsp;
+rectangle-wedge-tail method for 397<BR>
+&nbsp;&nbsp;&nbsp;
+relation to exponential integral distribution 176<BR>
+&nbsp;&nbsp;&nbsp;
+relation to normal distribution 240<BR>
+&nbsp;&nbsp;&nbsp;
+relation to Poisson process 248<BR>
+&nbsp;&nbsp;&nbsp;
+relation to Weibull distribution 414<BR>
+&nbsp;&nbsp;&nbsp;
+series method for 168<BR>
+&nbsp;&nbsp;&nbsp;
+truncated 157<BR>
+&nbsp;&nbsp;&nbsp;
+uniform spacings method for 394<BR>
+&nbsp;&nbsp;&nbsp;
+von Neumann's method for 125<BR>
+<BR>
+exponential function<BR>
+&nbsp;&nbsp;&nbsp;
+inequalities for 721<BR>
+<BR>
+exponential inequalities 142<BR>
+<BR>
+exponential integral distribution<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 191<BR>
+&nbsp;&nbsp;&nbsp;
+relation to exponential distribution 176<BR>
+<BR>
+exponential inter-arrival time method<BR>
+&nbsp;&nbsp;&nbsp;
+for Poisson distribution 504<BR>
+<BR>
+exponential mixtures 176<BR>
+<BR>
+exponential order statistics 219<BR>
+<BR>
+exponential power distribution 174<BR>
+&nbsp;&nbsp;&nbsp;
+log-concavity of 287<BR>
+&nbsp;&nbsp;&nbsp;
+multivariate properties of 244<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 302<BR>
+&nbsp;&nbsp;&nbsp;
+relation to gamma distribution 175 193 420<BR>
+<BR>
+exponential scale mixture 329<BR>
+<BR>
+exponential spacings method<BR>
+&nbsp;&nbsp;&nbsp;
+for exponential order statistics 219<BR>
+&nbsp;&nbsp;&nbsp;
+for Poisson process 249<BR>
+&nbsp;&nbsp;&nbsp;
+for uniform order statistics 214<BR>
+<BR>
+exponential spacings 211<BR>
+<BR>
+extendible hashing 104<BR>
+<BR>
+extremal value distribution<BR>
+&nbsp;&nbsp;&nbsp;
+relation to logistic distribution 39<BR>
+<BR>
+extreme value distribution<BR>
+&nbsp;&nbsp;&nbsp;
+bivariate 563<BR>
+&nbsp;&nbsp;&nbsp;
+log-concavity of 287<BR>
+&nbsp;&nbsp;&nbsp;
+relation to Weibull distribution 414<BR>
+<BR>
+F distribution<BR>
+&nbsp;&nbsp;&nbsp;
+definition 23<BR>
+&nbsp;&nbsp;&nbsp;
+relation to beta distribution 429<BR>
+&nbsp;&nbsp;&nbsp;
+relation to gamma distribution 23 428<BR>
+&nbsp;&nbsp;&nbsp;
+relation to t distribution 446<BR>
+<BR>
+factorial moment generating function 486<BR>
+<BR>
+factorial moment 486<BR>
+<BR>
+factorial representation 644<BR>
+<BR>
+factorials<BR>
+&nbsp;&nbsp;&nbsp;
+evaluation of 489<BR>
+<BR>
+Faddeeva, V.N. 565<BR>
+<BR>
+Fagin, R. 104<BR>
+<BR>
+Fama, E. 458<BR>
+<BR>
+Fan, C.T. 620 624<BR>
+<BR>
+Farlie, D.J.G. 578 589<BR>
+<BR>
+Feast, G.M. 194 203 406<BR>
+<BR>
+Fejer-de la Vallee Poussin density 187 459 718<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 187<BR>
+<BR>
+Fejer-de la Vallee Poussin distribution 169<BR>
+<BR>
+Feller, W. 161 168 172 184 246 326 329 452 453 454 455 457 459 460 468 469 470 563 654 684 693 715 721<BR>
+<BR>
+Ferreri's system 482<BR>
+<BR>
+Ferreri, C. 482<BR>
+<BR>
+finite mixtures 66<BR>
+<BR>
+finite state machine<BR>
+&nbsp;&nbsp;&nbsp;
+relation to DDG tree 782<BR>
+<BR>
+first passage time distribution 150<BR>
+<BR>
+first waiting time method<BR>
+&nbsp;&nbsp;&nbsp;
+for binomial distribution 525<BR>
+<BR>
+first-passage-time in M/M/1 queue<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 757<BR>
+<BR>
+first-passage-time 755<BR>
+&nbsp;&nbsp;&nbsp;
+distribution of 755<BR>
+<BR>
+Fisher's approximation 136<BR>
+<BR>
+Fisher's transformation 406<BR>
+<BR>
+Fisher, N.I. 473 474 476<BR>
+<BR>
+Fisher-von Mises distribution 571<BR>
+<BR>
+Fishman, G.S. 4 502 505 523 543<BR>
+<BR>
+Fix, E. 587<BR>
+<BR>
+Fleishman's family 694<BR>
+<BR>
+Fleishman, A.I. 694<BR>
+<BR>
+Floyd, R.W. 431 747<BR>
+<BR>
+folded normal distribution 469<BR>
+<BR>
+Folks, J.L. 148<BR>
+<BR>
+Forsythe's method 123<BR>
+&nbsp;&nbsp;&nbsp;
+analysis of 124 132<BR>
+&nbsp;&nbsp;&nbsp;
+for beta distribution 432<BR>
+&nbsp;&nbsp;&nbsp;
+for normal distribution 380<BR>
+&nbsp;&nbsp;&nbsp;
+for the exponential distribution 125<BR>
+&nbsp;&nbsp;&nbsp;
+Monahan's generalization of 127<BR>
+<BR>
+Forsythe, G.E. 121 123 380<BR>
+<BR>
+Forsythe-von Neumann method 121<BR>
+&nbsp;&nbsp;&nbsp;
+for gamma distribution 130 420<BR>
+<BR>
+Fox, B.L. 4 29 251 431 580 736 746 747 767<BR>
+<BR>
+Fraker, J.R. 571<BR>
+<BR>
+Franklin, J.N. 571<BR>
+<BR>
+Franta, W.R. 746 747<BR>
+<BR>
+Frechet bounds 586<BR>
+<BR>
+Frechet distributions 578 579<BR>
+<BR>
+Frechet's extremal distributions 579 580 581 600<BR>
+&nbsp;&nbsp;&nbsp;
+discrete form for 593<BR>
+<BR>
+Frechet's family 581<BR>
+<BR>
+Frechet's inequalities 579 586 593<BR>
+<BR>
+Frechet, M. 578 581<BR>
+<BR>
+Fredkin, E. 104<BR>
+<BR>
+free tree 662<BR>
+<BR>
+Freeman, M.F. 136<BR>
+<BR>
+Freeman-Tukey approximation 136<BR>
+<BR>
+Friday, D.S. 4<BR>
+<BR>
+full correlation range 582<BR>
+<BR>
+future event set algorithm 736<BR>
+<BR>
+future event set 736<BR>
+<BR>
+gambler's ruin problem 758 759<BR>
+<BR>
+gamma distribution 401<BR>
+&nbsp;&nbsp;&nbsp;
+algorithm G4PE for 426<BR>
+&nbsp;&nbsp;&nbsp;
+algorithm GB for 405 411 413 420 423<BR>
+&nbsp;&nbsp;&nbsp;
+algorithm GBH for 406<BR>
+&nbsp;&nbsp;&nbsp;
+algorithm GC for 405<BR>
+&nbsp;&nbsp;&nbsp;
+algorithm GO for 405 413 423<BR>
+&nbsp;&nbsp;&nbsp;
+algorithm GRUB for 406<BR>
+&nbsp;&nbsp;&nbsp;
+algorithm GS for 420 424 425 426<BR>
+&nbsp;&nbsp;&nbsp;
+algorithm RGS for 426<BR>
+&nbsp;&nbsp;&nbsp;
+algorithm TAD2 for 405<BR>
+&nbsp;&nbsp;&nbsp;
+algorithm XG for 405 410<BR>
+&nbsp;&nbsp;&nbsp;
+almost-exact inversion method for 137 145<BR>
+&nbsp;&nbsp;&nbsp;
+as a DHR distribution 267<BR>
+&nbsp;&nbsp;&nbsp;
+as an IHR distribution 343<BR>
+&nbsp;&nbsp;&nbsp;
+as an NBUE distribution 742<BR>
+&nbsp;&nbsp;&nbsp;
+as an NWUE distribution 742<BR>
+&nbsp;&nbsp;&nbsp;
+Berman's method for 419 420<BR>
+&nbsp;&nbsp;&nbsp;
+Best's rejection method for 410<BR>
+&nbsp;&nbsp;&nbsp;
+characteristic function of 734<BR>
+&nbsp;&nbsp;&nbsp;
+Cheng's rejection method for 411 413 423<BR>
+&nbsp;&nbsp;&nbsp;
+closure under addition 20<BR>
+&nbsp;&nbsp;&nbsp;
+composition-rejection method for 420<BR>
+&nbsp;&nbsp;&nbsp;
+convergence to normal distribution 58<BR>
+&nbsp;&nbsp;&nbsp;
+definition 7<BR>
+&nbsp;&nbsp;&nbsp;
+distribution of ratio 25<BR>
+&nbsp;&nbsp;&nbsp;
+Forsythe-von Neumann method for 130 420<BR>
+&nbsp;&nbsp;&nbsp;
+generator for 182<BR>
+&nbsp;&nbsp;&nbsp;
+inequalities for 408 425 734<BR>
+&nbsp;&nbsp;&nbsp;
+Johnk's method for 418 420<BR>
+&nbsp;&nbsp;&nbsp;
+local central limit theorem for 404<BR>
+&nbsp;&nbsp;&nbsp;
+log-concavity of 287 406<BR>
+&nbsp;&nbsp;&nbsp;
+Marsaglia's algorithm RGAMA for 406<BR>
+&nbsp;&nbsp;&nbsp;
+normal approximations for 136<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 182 402 423 428<BR>
+&nbsp;&nbsp;&nbsp;
+properties 13 23<BR>
+&nbsp;&nbsp;&nbsp;
+ratio-of-uniforms method for 203 406<BR>
+&nbsp;&nbsp;&nbsp;
+recursive properties of 181<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 132 304 405 415 419 426<BR>
+&nbsp;&nbsp;&nbsp;
+relation to beta distribution 403 429 595<BR>
+&nbsp;&nbsp;&nbsp;
+relation to Cauchy distribution 427<BR>
+&nbsp;&nbsp;&nbsp;
+relation to Dirichlet distribution 594<BR>
+&nbsp;&nbsp;&nbsp;
+relation to exponential distribution 402<BR>
+&nbsp;&nbsp;&nbsp;
+relation to exponential power distribution 175 193 420<BR>
+&nbsp;&nbsp;&nbsp;
+relation to generalized inverse gaussian distribution 478<BR>
+&nbsp;&nbsp;&nbsp;
+relation to Johnson-Tietjen-Beckman distribution 175<BR>
+&nbsp;&nbsp;&nbsp;
+relation to normal distribution 23 402<BR>
+&nbsp;&nbsp;&nbsp;
+relation to Pareto distribution 194<BR>
+&nbsp;&nbsp;&nbsp;
+relation to Pearson VI distribution 427<BR>
+&nbsp;&nbsp;&nbsp;
+relation to Stacy's generalized gamma distribution 423<BR>
+&nbsp;&nbsp;&nbsp;
+relation to t distribution 15 427 445<BR>
+&nbsp;&nbsp;&nbsp;
+relation to uniform distribution on unit sphere 227<BR>
+&nbsp;&nbsp;&nbsp;
+relation to uniform order statistics 210<BR>
+&nbsp;&nbsp;&nbsp;
+sample maximum of 678<BR>
+&nbsp;&nbsp;&nbsp;
+strip method for 406<BR>
+&nbsp;&nbsp;&nbsp;
+thinning method for 277<BR>
+&nbsp;&nbsp;&nbsp;
+Wilson-Hilferty approximation-based method for 139 141<BR>
+&nbsp;&nbsp;&nbsp;
+Wilson-Hilferty transformation for 137<BR>
+&nbsp;&nbsp;&nbsp;
+with parameter less than one 415 419 424 425<BR>
+<BR>
+gamma function 490 491 493<BR>
+<BR>
+gamma-integral distribution 191<BR>
+<BR>
+Gaver, D.P. 261 277<BR>
+<BR>
+Gebelein, H. 574<BR>
+<BR>
+Gehrke, H. 631<BR>
+<BR>
+general alias algorithm 111<BR>
+<BR>
+general position 568<BR>
+<BR>
+generalization of a sample 759<BR>
+<BR>
+generalized Cauchy distribution 452<BR>
+<BR>
+generalized gaussian distribution 323<BR>
+&nbsp;&nbsp;&nbsp;
+inequalities for 323<BR>
+&nbsp;&nbsp;&nbsp;
+universal rejection method for 324<BR>
+<BR>
+generalized hyperbolic distribution 478<BR>
+<BR>
+generalized inverse gaussian distribution 478<BR>
+&nbsp;&nbsp;&nbsp;
+log-concavity of 287 479<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 479<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 479 480<BR>
+<BR>
+generalized Liouville distribution 599<BR>
+<BR>
+generalized logarithmic series distribution 549<BR>
+<BR>
+generalized logistic distribution 330 480<BR>
+&nbsp;&nbsp;&nbsp;
+relation to beta distribution 480<BR>
+<BR>
+generating function 83 486<BR>
+<BR>
+generator<BR>
+&nbsp;&nbsp;&nbsp;
+admissible 9 10<BR>
+&nbsp;&nbsp;&nbsp;
+portability 8<BR>
+&nbsp;&nbsp;&nbsp;
+readability 8<BR>
+&nbsp;&nbsp;&nbsp;
+set-up time 8<BR>
+&nbsp;&nbsp;&nbsp;
+speed 8<BR>
+<BR>
+Gentle, J.E. 4<BR>
+<BR>
+geometric distribution 487 498<BR>
+&nbsp;&nbsp;&nbsp;
+definition 84<BR>
+&nbsp;&nbsp;&nbsp;
+experimental method for 499<BR>
+&nbsp;&nbsp;&nbsp;
+inversion method for 87 499 500<BR>
+&nbsp;&nbsp;&nbsp;
+memoryless property of 500<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 498<BR>
+&nbsp;&nbsp;&nbsp;
+relation to binomial distribution 522<BR>
+&nbsp;&nbsp;&nbsp;
+relation to logarithmic series distribution 547<BR>
+&nbsp;&nbsp;&nbsp;
+sequential test method for 280<BR>
+<BR>
+geometrical puzzles 111<BR>
+<BR>
+Gerontides, I. 215 220<BR>
+<BR>
+ghost point method<BR>
+&nbsp;&nbsp;&nbsp;
+analysis of 629<BR>
+&nbsp;&nbsp;&nbsp;
+in sequential sampling 626 628<BR>
+<BR>
+ghost sample method<BR>
+&nbsp;&nbsp;&nbsp;
+in sequential sampling 621 626<BR>
+<BR>
+Gibbons, J.D. 574<BR>
+<BR>
+Girault, M. 186<BR>
+<BR>
+Gleaves, J.T. 372<BR>
+<BR>
+Glick, N. 649<BR>
+<BR>
+Godwin, H.J. 322 685 691<BR>
+<BR>
+Gonnet, G.H. 747<BR>
+<BR>
+Gordon's inequality 681<BR>
+<BR>
+Gordon, R.D. 681<BR>
+<BR>
+grade correlation 574<BR>
+<BR>
+Gram-Charlier series 735<BR>
+<BR>
+Grassia's distribution 444 445<BR>
+<BR>
+Grassia, A. 444<BR>
+<BR>
+Graybill, F.A. 565<BR>
+<BR>
+Green, E.H. 158<BR>
+<BR>
+Green, P.J. 372 374<BR>
+<BR>
+Greenwood, A.J. 63 141 406<BR>
+<BR>
+Grenander, U. 171<BR>
+<BR>
+grid method 368<BR>
+&nbsp;&nbsp;&nbsp;
+analysis of 370 371<BR>
+&nbsp;&nbsp;&nbsp;
+for bounded densities 376<BR>
+&nbsp;&nbsp;&nbsp;
+for Riemann integrable densities 377<BR>
+&nbsp;&nbsp;&nbsp;
+for unimodal density 377<BR>
+&nbsp;&nbsp;&nbsp;
+in avoidance problems 373<BR>
+&nbsp;&nbsp;&nbsp;
+size of directory 370<BR>
+<BR>
+grid<BR>
+&nbsp;&nbsp;&nbsp;
+directory 368<BR>
+<BR>
+Groeneveld, R.A. 482<BR>
+<BR>
+grouping method<BR>
+&nbsp;&nbsp;&nbsp;
+for order statistics 220<BR>
+<BR>
+Guerra, V.O. 763<BR>
+<BR>
+guide tables<BR>
+&nbsp;&nbsp;&nbsp;
+algorithm 97<BR>
+&nbsp;&nbsp;&nbsp;
+definition 96<BR>
+&nbsp;&nbsp;&nbsp;
+set-up 98<BR>
+<BR>
+Gumbel's bivariate exponential family 583 591<BR>
+&nbsp;&nbsp;&nbsp;
+conditional distribution method for 584<BR>
+<BR>
+Gumbel's bivariate logistic distribution<BR>
+&nbsp;&nbsp;&nbsp;
+relation to Cook-Johnson distribution 602<BR>
+<BR>
+Gumbel's family 578<BR>
+<BR>
+Gumbel, E.J. 287 330 578 583 584<BR>
+<BR>
+Guralnik, G. 232<BR>
+<BR>
+Gyorfi, L. 759 762 763 764 766 767<BR>
+<BR>
+Haas, R.W. 145<BR>
+<BR>
+Hacet, B.I. 309<BR>
+<BR>
+halfnormal distribution<BR>
+&nbsp;&nbsp;&nbsp;
+as an IHR distribution 343<BR>
+<BR>
+Halgreen, C. 478<BR>
+<BR>
+Hall, P. 733<BR>
+<BR>
+Hammersley, J.M. 29<BR>
+<BR>
+Hammond, J.L. 571<BR>
+<BR>
+Handscomb, D.C. 29<BR>
+<BR>
+Hankel determinant 683<BR>
+<BR>
+Haq, M.S. 578<BR>
+<BR>
+Hardy, G.H. 338<BR>
+<BR>
+Harris, C.M. 194<BR>
+<BR>
+Hart, J.F. 626<BR>
+<BR>
+Hartley, H.O. 215<BR>
+<BR>
+hashing with chaining 617<BR>
+<BR>
+Hastings, C. 36<BR>
+<BR>
+hazard rate 260 341<BR>
+&nbsp;&nbsp;&nbsp;
+relation to nonhomogeneous Poisson process 260<BR>
+<BR>
+heap 92<BR>
+&nbsp;&nbsp;&nbsp;
+in discrete event simulation 747 748<BR>
+<BR>
+heapsort 214<BR>
+<BR>
+Heiberger, R.M. 607<BR>
+<BR>
+height-balanced tree 613<BR>
+<BR>
+Henriksen's algorithm 746<BR>
+<BR>
+Henriksen, J.O. 746<BR>
+<BR>
+Hermite distribution 592<BR>
+<BR>
+Hermite polynomial 733<BR>
+<BR>
+Heyde's family 693<BR>
+<BR>
+Heyde, C. 693<BR>
+<BR>
+Heyman, D.P. 749 755<BR>
+<BR>
+Hickey, T. 673<BR>
+<BR>
+Hicks, J.S. 243<BR>
+<BR>
+hierarchical bucket structure<BR>
+&nbsp;&nbsp;&nbsp;
+in discrete event simulation 746<BR>
+<BR>
+Hilferty, M.M. 136<BR>
+<BR>
+Hill, I.D. 678<BR>
+<BR>
+Hill, T.W. 685<BR>
+<BR>
+histogram method 103<BR>
+<BR>
+histogram 685 687<BR>
+<BR>
+Hitchin, D. 678<BR>
+<BR>
+Hoeffding, W. 580 588<BR>
+<BR>
+Hoffman, R.G. 571<BR>
+<BR>
+Holcomb, E.W. 458<BR>
+<BR>
+HOLD model 742 743<BR>
+&nbsp;&nbsp;&nbsp;
+analysis of 748<BR>
+<BR>
+Holliday, E.M. 571<BR>
+<BR>
+Hopcroft, J.E. 90 92 214 372 669<BR>
+<BR>
+Hora, S.C. 763<BR>
+<BR>
+Horner's rule 141<BR>
+<BR>
+Horspool, N. 101<BR>
+<BR>
+Hsuan, F.C. 570<BR>
+<BR>
+Hu, T.C. 91 657<BR>
+<BR>
+Hu-Tucker algorithm 91<BR>
+<BR>
+Huffman tree 91 776<BR>
+&nbsp;&nbsp;&nbsp;
+analysis of 93<BR>
+&nbsp;&nbsp;&nbsp;
+construction of 92<BR>
+<BR>
+Huffman, D. 91<BR>
+<BR>
+Hutchinson, T.P. 558 600 602<BR>
+<BR>
+hybrid rejection method 115<BR>
+<BR>
+hyperbola distribution 483<BR>
+<BR>
+hyperbolic cosine distribution 330<BR>
+<BR>
+hyperbolic distribution 483<BR>
+&nbsp;&nbsp;&nbsp;
+log-concavity of 483<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 483<BR>
+&nbsp;&nbsp;&nbsp;
+relation to generalized inverse gaussian distribution 483 484<BR>
+<BR>
+hyperbolic secant distribution 471<BR>
+&nbsp;&nbsp;&nbsp;
+inequalities for 472<BR>
+&nbsp;&nbsp;&nbsp;
+inversion method for 472<BR>
+&nbsp;&nbsp;&nbsp;
+log-concavity of 287<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 472<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 472<BR>
+&nbsp;&nbsp;&nbsp;
+relation to Cauchy distribution 472<BR>
+&nbsp;&nbsp;&nbsp;
+relation to normal distribution 472<BR>
+<BR>
+hypergeometric distribution 544<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 545 619<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 545<BR>
+&nbsp;&nbsp;&nbsp;
+relation to binomial distribution 545<BR>
+&nbsp;&nbsp;&nbsp;
+universal rejection method for 545<BR>
+<BR>
+hyperrectangle parking problem 374<BR>
+<BR>
+hypoexponential distribution<BR>
+&nbsp;&nbsp;&nbsp;
+generators for 121<BR>
+<BR>
+Ibragimov, I.A. 183 184 288 455 459 720<BR>
+<BR>
+IHR distributions 261<BR>
+&nbsp;&nbsp;&nbsp;
+inversion-rejection method for 342<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 343 356<BR>
+<BR>
+incidence matrix 671<BR>
+<BR>
+inclusion-exclusion principle 21 519<BR>
+<BR>
+incremental method<BR>
+&nbsp;&nbsp;&nbsp;
+for uniform distribution on hypersphere 243<BR>
+<BR>
+independence 6<BR>
+<BR>
+indicator function 8<BR>
+<BR>
+inequalities<BR>
+&nbsp;&nbsp;&nbsp;
+for exponential distribution 55<BR>
+&nbsp;&nbsp;&nbsp;
+for tails of distribution functions 321<BR>
+<BR>
+inequality<BR>
+&nbsp;&nbsp;&nbsp;
+Chebyshev's 321<BR>
+&nbsp;&nbsp;&nbsp;
+Markov's 321<BR>
+&nbsp;&nbsp;&nbsp;
+Narumi's 321<BR>
+<BR>
+integral representation<BR>
+&nbsp;&nbsp;&nbsp;
+for Bessel function of first kind 756<BR>
+&nbsp;&nbsp;&nbsp;
+for stable distribution 459<BR>
+<BR>
+invariance under monotone transformations 574<BR>
+<BR>
+inverse gaussian distribution 148 478<BR>
+&nbsp;&nbsp;&nbsp;
+generator of Michael, Schucany and Haas for 149<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 148 150<BR>
+<BR>
+inverse-of-f method 178<BR>
+&nbsp;&nbsp;&nbsp;
+application of 315<BR>
+&nbsp;&nbsp;&nbsp;
+for normal distribution 178<BR>
+<BR>
+inversion by correction<BR>
+&nbsp;&nbsp;&nbsp;
+algorithm 99<BR>
+&nbsp;&nbsp;&nbsp;
+analysis 99<BR>
+&nbsp;&nbsp;&nbsp;
+modified algorithms 100<BR>
+<BR>
+inversion formula 700 719<BR>
+<BR>
+inversion inequalities 625<BR>
+<BR>
+inversion method 27 28 261<BR>
+&nbsp;&nbsp;&nbsp;
+approximations 35<BR>
+&nbsp;&nbsp;&nbsp;
+by sequential search 776<BR>
+&nbsp;&nbsp;&nbsp;
+for Bartlett's kernel 767<BR>
+&nbsp;&nbsp;&nbsp;
+for binomial distribution 524<BR>
+&nbsp;&nbsp;&nbsp;
+for Burr distribution 477<BR>
+&nbsp;&nbsp;&nbsp;
+for Cauchy distribution 29 450<BR>
+&nbsp;&nbsp;&nbsp;
+for DHR distributions 267<BR>
+&nbsp;&nbsp;&nbsp;
+for discrete distributions 85<BR>
+&nbsp;&nbsp;&nbsp;
+for exponential distribution 29<BR>
+&nbsp;&nbsp;&nbsp;
+for exponential family of distributions 38<BR>
+&nbsp;&nbsp;&nbsp;
+for generating the maximum 675<BR>
+&nbsp;&nbsp;&nbsp;
+for geometric distribution 87 499 500<BR>
+&nbsp;&nbsp;&nbsp;
+for hyperbolic secant distribution 472<BR>
+&nbsp;&nbsp;&nbsp;
+for logarithmic series distribution 546<BR>
+&nbsp;&nbsp;&nbsp;
+for logistic distribution 39 471<BR>
+&nbsp;&nbsp;&nbsp;
+for maxima 30<BR>
+&nbsp;&nbsp;&nbsp;
+for multivariate discrete distributions 560<BR>
+&nbsp;&nbsp;&nbsp;
+for normal distribution 380<BR>
+&nbsp;&nbsp;&nbsp;
+for order statistics 30<BR>
+&nbsp;&nbsp;&nbsp;
+for Pareto distribution 29 262<BR>
+&nbsp;&nbsp;&nbsp;
+for Poisson distribution 502 505<BR>
+&nbsp;&nbsp;&nbsp;
+for Poisson processes 251 252<BR>
+&nbsp;&nbsp;&nbsp;
+for power function distribution 262<BR>
+&nbsp;&nbsp;&nbsp;
+for Rayleigh distribution 29<BR>
+&nbsp;&nbsp;&nbsp;
+for stable distribution 458<BR>
+&nbsp;&nbsp;&nbsp;
+for t distribution 445<BR>
+&nbsp;&nbsp;&nbsp;
+for t3 distribution 37<BR>
+&nbsp;&nbsp;&nbsp;
+for tail of extreme value distribution 276<BR>
+&nbsp;&nbsp;&nbsp;
+for tail of Rayleigh distribution 29<BR>
+&nbsp;&nbsp;&nbsp;
+for tail of the Cauchy distribution 453<BR>
+&nbsp;&nbsp;&nbsp;
+for triangular density 29<BR>
+&nbsp;&nbsp;&nbsp;
+for Weibull distribution 262<BR>
+&nbsp;&nbsp;&nbsp;
+for wrapped Cauchy density 474<BR>
+&nbsp;&nbsp;&nbsp;
+in sequential sampling 621 624<BR>
+&nbsp;&nbsp;&nbsp;
+numerical approximation algorithms for 31<BR>
+<BR>
+inversion of a many-to-one transformation 146<BR>
+<BR>
+inversion<BR>
+&nbsp;&nbsp;&nbsp;
+by binary search 89 93<BR>
+&nbsp;&nbsp;&nbsp;
+by correction 98<BR>
+&nbsp;&nbsp;&nbsp;
+by hashing 96<BR>
+&nbsp;&nbsp;&nbsp;
+by sequential search 85<BR>
+&nbsp;&nbsp;&nbsp;
+by truncation of a continuous random variable 87<BR>
+<BR>
+inversion-rejection method 331<BR>
+&nbsp;&nbsp;&nbsp;
+analysis of 337 342 345 351<BR>
+&nbsp;&nbsp;&nbsp;
+for beta distribution 339 347<BR>
+&nbsp;&nbsp;&nbsp;
+for bounded densities 332<BR>
+&nbsp;&nbsp;&nbsp;
+for bounded monotone densities 345<BR>
+&nbsp;&nbsp;&nbsp;
+for convex densities 355<BR>
+&nbsp;&nbsp;&nbsp;
+for DHR distributions 342<BR>
+&nbsp;&nbsp;&nbsp;
+for IHR distributions 342<BR>
+&nbsp;&nbsp;&nbsp;
+for Lipschitz densities 348<BR>
+&nbsp;&nbsp;&nbsp;
+for monotone densities 336 341<BR>
+&nbsp;&nbsp;&nbsp;
+optimization of 339 347<BR>
+<BR>
+inversion-with-correction 625<BR>
+<BR>
+Inzevitov, P. 720 731<BR>
+<BR>
+Irving, D.C. 4 480<BR>
+<BR>
+Jackson-de la Vallee Poussin distribution 169<BR>
+<BR>
+Jacobian 14<BR>
+<BR>
+Jacobs, P.A. 571<BR>
+<BR>
+Jansson, B. 4 648<BR>
+<BR>
+jigsaw puzzle method 67<BR>
+<BR>
+Johnk's method<BR>
+&nbsp;&nbsp;&nbsp;
+analysis of 419<BR>
+&nbsp;&nbsp;&nbsp;
+for beta distribution 418 432 439<BR>
+&nbsp;&nbsp;&nbsp;
+for gamma distribution 418 420<BR>
+<BR>
+Johnk's theorem 416<BR>
+<BR>
+Johnk, M.D. 416 420 432<BR>
+<BR>
+Johnson's family 484<BR>
+<BR>
+Johnson's system 484 685<BR>
+<BR>
+Johnson, D.G. 606<BR>
+<BR>
+Johnson, M.E. 175 237 244 404 576 582 583 585 586 587 590 591 592 600 602 603 604<BR>
+<BR>
+Johnson, M.M. 175<BR>
+<BR>
+Johnson, N.L. 7 84 379 480 484 496 498 552 555 600 602 604 688<BR>
+<BR>
+Johnson-Ramberg bivariate uniform family 592<BR>
+<BR>
+Johnson-Ramberg method<BR>
+&nbsp;&nbsp;&nbsp;
+for normal distribution 244<BR>
+&nbsp;&nbsp;&nbsp;
+for radially symmetric distributions 237<BR>
+<BR>
+Johnson-Tenenbein family 582 583<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 590<BR>
+<BR>
+Johnson-Tietjen-Beckman distribution 175<BR>
+&nbsp;&nbsp;&nbsp;
+relation to gamma distribution 175<BR>
+<BR>
+Jonassen, A. 743<BR>
+<BR>
+Jones, T.G. 620<BR>
+<BR>
+Jorgensen, B. 287 478<BR>
+<BR>
+k-excellence 764<BR>
+<BR>
+Kac, M. 170<BR>
+<BR>
+Kachitvichyanukul, V. 502 507 523 545<BR>
+<BR>
+Kadoya, M. 583 590<BR>
+<BR>
+Kaminsky, F.C. 261<BR>
+<BR>
+Kanter, M. 183 184 455 459<BR>
+<BR>
+Kapadia, C.H. 322<BR>
+<BR>
+Kawarasaki, J. 631<BR>
+<BR>
+Kawata, T. 731<BR>
+<BR>
+Keilson, J. 329<BR>
+<BR>
+Kelker, D. 226 228 326<BR>
+<BR>
+Kelly, F.P. 372<BR>
+<BR>
+Kelton, W.D. 4 736<BR>
+<BR>
+Kemp's generator<BR>
+&nbsp;&nbsp;&nbsp;
+for logarithmic series distribution 548<BR>
+<BR>
+Kemp, A.W. 86 546 547 559 560 593 759<BR>
+<BR>
+Kemp, C.D. 559 560 561 592 593 759<BR>
+<BR>
+Kendall's tau 574<BR>
+<BR>
+Kendall, D.G. 547<BR>
+<BR>
+Kendall, M. 678 691 694<BR>
+<BR>
+Kendall-Stuart density 694<BR>
+<BR>
+Kennedy, W.J. 4<BR>
+<BR>
+Kent, J. 329 330<BR>
+<BR>
+kernel estimate 687 762<BR>
+&nbsp;&nbsp;&nbsp;
+analysis of 767<BR>
+&nbsp;&nbsp;&nbsp;
+consistency of 767<BR>
+&nbsp;&nbsp;&nbsp;
+in Monte Carlo integration 766<BR>
+&nbsp;&nbsp;&nbsp;
+mixture method for 765<BR>
+<BR>
+Khinchine's theorem 172 687<BR>
+<BR>
+Kimeldorf, G. 574 575 576 589 590<BR>
+<BR>
+Kimeldorf-Sampson bivariate uniform distribution 589<BR>
+<BR>
+Kinderman, A.J. 194 195 201 203 379 380 383 390 391 406 446 454<BR>
+<BR>
+Kinderman-Ramage generator<BR>
+&nbsp;&nbsp;&nbsp;
+for normal distribution 391<BR>
+<BR>
+Kingston, J.H. 737 746 747<BR>
+<BR>
+Klincsek, T. 216 218<BR>
+<BR>
+Klingsberg's algorithm 664 665<BR>
+<BR>
+Klingsberg, P. 663<BR>
+<BR>
+Knopp's series 493<BR>
+&nbsp;&nbsp;&nbsp;
+for the log-gamma function 493<BR>
+<BR>
+Knopp, K. 493 498<BR>
+<BR>
+Knott, G.D. 657<BR>
+<BR>
+Knuth, D.E. 4 214 502 618 638 743 747 768 771 774 777 779 781<BR>
+<BR>
+Knuth-Yao lower bound 772<BR>
+<BR>
+Kohrt, K.D. 36 84 98 359<BR>
+<BR>
+Kolmogorov, A.N. 161 168<BR>
+<BR>
+Kolmogorov-Smirnov distribution 161<BR>
+&nbsp;&nbsp;&nbsp;
+alternating series method for 162<BR>
+&nbsp;&nbsp;&nbsp;
+series expansions for 161<BR>
+<BR>
+Kolmogorov-Smirnov statistic 168<BR>
+<BR>
+Korenbljum, B.I. 309<BR>
+<BR>
+Kotz, S. 7 84 379 469 480 496 498 552 555 600 602 604<BR>
+<BR>
+Kowalski, C.J. 603<BR>
+<BR>
+Krein's condition 684<BR>
+<BR>
+Kronmal, R.A. 75 81 82 108 110 359 369 451<BR>
+<BR>
+Kruskal, W.H. 574<BR>
+<BR>
+Kuiper's statistic 168<BR>
+<BR>
+Kuiper, N.H. 168<BR>
+<BR>
+Kullback, S. 402 423<BR>
+<BR>
+labeled free tree 665<BR>
+<BR>
+Laha's distribution 451<BR>
+<BR>
+Laha, R.G. 451 469<BR>
+<BR>
+Lakhan, V.C. 571<BR>
+<BR>
+Lal, R. 426 587 588 591<BR>
+<BR>
+Lancaster, H.O. 589<BR>
+<BR>
+Laplace distribution<BR>
+&nbsp;&nbsp;&nbsp;
+as a normal scale mixture 326<BR>
+&nbsp;&nbsp;&nbsp;
+as dominating distribution 44<BR>
+&nbsp;&nbsp;&nbsp;
+generators for 119<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 401<BR>
+&nbsp;&nbsp;&nbsp;
+relation to normal distribution 25<BR>
+<BR>
+Law, A.M. 4 736<BR>
+<BR>
+Lawrance, A.J. 571 583 585 586 591<BR>
+<BR>
+Lawrance-Lewis bivariate exponential distribution 585<BR>
+<BR>
+Lehmer's factorial representation 644<BR>
+<BR>
+Lehmer, D.H. 644<BR>
+<BR>
+Leipnik, R. 694<BR>
+<BR>
+Leitch, R.A. 458<BR>
+<BR>
+Lekkerkerker, C.G. 288<BR>
+<BR>
+Letac's lower bound 52<BR>
+&nbsp;&nbsp;&nbsp;
+application of 124<BR>
+<BR>
+Letac, G. 52<BR>
+<BR>
+Levy's representation<BR>
+&nbsp;&nbsp;&nbsp;
+for stable distribution 454<BR>
+<BR>
+Levy, P. 457<BR>
+<BR>
+Lewis, P.A.W. 251 253 256 258 259 261 264 571 583 585 586 591<BR>
+<BR>
+Li, F.S. 136<BR>
+<BR>
+Li, S.T. 571<BR>
+<BR>
+library traversal 561<BR>
+<BR>
+Lieblein, J. 26<BR>
+<BR>
+line distribution 571 572<BR>
+<BR>
+linear list<BR>
+&nbsp;&nbsp;&nbsp;
+back search in 742<BR>
+&nbsp;&nbsp;&nbsp;
+front search in 742<BR>
+&nbsp;&nbsp;&nbsp;
+in discrete event simulation 740<BR>
+<BR>
+linear selection algorithm 431<BR>
+<BR>
+linear transformations 12 563<BR>
+<BR>
+Linnik's distribution 186<BR>
+&nbsp;&nbsp;&nbsp;
+generator for 190<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 189<BR>
+<BR>
+Linnik, Yu.V. 186 720<BR>
+<BR>
+Liouville distribution 596<BR>
+&nbsp;&nbsp;&nbsp;
+generalization of 599<BR>
+&nbsp;&nbsp;&nbsp;
+of the first kind 596<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 598<BR>
+&nbsp;&nbsp;&nbsp;
+relation to Dirichlet distribution 598<BR>
+<BR>
+Lipschitz condition 63 320<BR>
+<BR>
+Lipschitz densities<BR>
+&nbsp;&nbsp;&nbsp;
+inequalities for 320 322<BR>
+&nbsp;&nbsp;&nbsp;
+inversion-rejection method for 348<BR>
+&nbsp;&nbsp;&nbsp;
+proportional squeeze method for 63<BR>
+&nbsp;&nbsp;&nbsp;
+strip method for 366<BR>
+&nbsp;&nbsp;&nbsp;
+universal rejection method for 323<BR>
+<BR>
+Littlewood, J.E. 338<BR>
+<BR>
+local central limit theorem 719 720<BR>
+&nbsp;&nbsp;&nbsp;
+application of 58<BR>
+&nbsp;&nbsp;&nbsp;
+for gamma distribution 404<BR>
+<BR>
+Loeve, M. 697<BR>
+<BR>
+log-concave densities 287<BR>
+&nbsp;&nbsp;&nbsp;
+black box method for 290<BR>
+&nbsp;&nbsp;&nbsp;
+inequalities for 288 290 295 296 299 321 325<BR>
+&nbsp;&nbsp;&nbsp;
+optimal rejection method for 293 294<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 309<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 291 292 298 301<BR>
+&nbsp;&nbsp;&nbsp;
+tail inequalities for 308<BR>
+&nbsp;&nbsp;&nbsp;
+universal rejection method for 301 325<BR>
+<BR>
+logarithm<BR>
+&nbsp;&nbsp;&nbsp;
+inequalities for 140 168 198 508 540 722<BR>
+<BR>
+logarithmic series distribution 488 545<BR>
+&nbsp;&nbsp;&nbsp;
+definition 84<BR>
+&nbsp;&nbsp;&nbsp;
+discrete thinning method for 282<BR>
+&nbsp;&nbsp;&nbsp;
+inversion method for 546<BR>
+&nbsp;&nbsp;&nbsp;
+Kemp's generator for 548<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 284 546 547<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 546 549<BR>
+&nbsp;&nbsp;&nbsp;
+relation to geometric distribution 547<BR>
+&nbsp;&nbsp;&nbsp;
+sequential test method for 282<BR>
+<BR>
+logistic distribution 471 518<BR>
+&nbsp;&nbsp;&nbsp;
+as a normal scale mixture 326<BR>
+&nbsp;&nbsp;&nbsp;
+as a z distribution 330<BR>
+&nbsp;&nbsp;&nbsp;
+definition 39<BR>
+&nbsp;&nbsp;&nbsp;
+generators for 119<BR>
+&nbsp;&nbsp;&nbsp;
+inequalities for 471<BR>
+&nbsp;&nbsp;&nbsp;
+inversion method for 39 471<BR>
+&nbsp;&nbsp;&nbsp;
+log-concavity of 287<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 472 480<BR>
+&nbsp;&nbsp;&nbsp;
+properties 39<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 471<BR>
+&nbsp;&nbsp;&nbsp;
+relation to extremal value distribution 39<BR>
+&nbsp;&nbsp;&nbsp;
+relation to extreme value distribution 472<BR>
+<BR>
+lognormal distribution 392 484<BR>
+&nbsp;&nbsp;&nbsp;
+moments of 693<BR>
+<BR>
+lost-games distribution 758 759<BR>
+<BR>
+Lotwick, H.W. 372 374<BR>
+<BR>
+Loukas, S. 559 560 561 592 593<BR>
+<BR>
+lower triangular matrix 564<BR>
+<BR>
+Lukacs, E. 186 469 694<BR>
+<BR>
+Lurie, D. 215<BR>
+<BR>
+Lusk, E.J. 733<BR>
+<BR>
+Lux's algorithm 61<BR>
+<BR>
+Lux, I. 60 176<BR>
+<BR>
+Lyapunov's inequality 324<BR>
+<BR>
+m-ary heap<BR>
+&nbsp;&nbsp;&nbsp;
+in discrete event simulation 747<BR>
+<BR>
+M/M/1 queue 755 759<BR>
+<BR>
+Maclaren, M.D. 359 380 397<BR>
+<BR>
+Maclaurin series 460<BR>
+<BR>
+Maejima, M. 720 731<BR>
+<BR>
+Magnus, W. 470 756<BR>
+<BR>
+Mallows, C.L. 168 184 185 326 459<BR>
+<BR>
+Malmquist's theorem 212<BR>
+<BR>
+Malmquist, S. 212<BR>
+<BR>
+Maly, K. 746 747<BR>
+<BR>
+Mandelbrot, B. 454<BR>
+<BR>
+Mannion, D. 373<BR>
+<BR>
+Mantel, N. 25<BR>
+<BR>
+many-to-one transformations 145<BR>
+<BR>
+Mardia's generator<BR>
+&nbsp;&nbsp;&nbsp;
+for Plackett's family 589<BR>
+<BR>
+Mardia, K.V. 473 576 581 587 588 589<BR>
+<BR>
+marginal density 555<BR>
+<BR>
+marginal distribution 6<BR>
+<BR>
+marginal random variable 6<BR>
+<BR>
+Markov chain<BR>
+&nbsp;&nbsp;&nbsp;
+transition matrix 758<BR>
+<BR>
+Markov's inequality 321<BR>
+<BR>
+Marsaglia's algorithm RGAMA
+&nbsp;&nbsp;&nbsp;
+for gamma distribution 406<BR>
+<BR>
+Marsaglia's almost-exact inversion method 136<BR>
+<BR>
+Marsaglia's approximation 136<BR>
+<BR>
+Marsaglia's generator<BR>
+&nbsp;&nbsp;&nbsp;
+for exponential distribution 394 396<BR>
+<BR>
+Marsaglia's method<BR>
+&nbsp;&nbsp;&nbsp;
+for tail of the normal distribution 381<BR>
+<BR>
+Marsaglia's table look-up method 106<BR>
+<BR>
+Marsaglia, G. 4 53 67 106 133 135 136 137 141 143 144 236 241 242 359 378 380 381 382 383 388 392 394 395 397 406 446 605 606<BR>
+<BR>
+Marsaglia-Bray generator<BR>
+&nbsp;&nbsp;&nbsp;
+for normal distribution 390 392<BR>
+<BR>
+Marshall, A.W. 277 343 356 563 576 583 585 774<BR>
+<BR>
+Mason, R.L. 215<BR>
+<BR>
+matched moment generator 690<BR>
+&nbsp;&nbsp;&nbsp;
+for unimodal distribution 691<BR>
+<BR>
+matching distribution 519<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 520<BR>
+<BR>
+maximal correlation 29 574 580<BR>
+<BR>
+maximum of a uniform sample 210<BR>
+<BR>
+maximum<BR>
+&nbsp;&nbsp;&nbsp;
+distribution of 19<BR>
+&nbsp;&nbsp;&nbsp;
+inversion method for 30 675<BR>
+&nbsp;&nbsp;&nbsp;
+of a gamma sample 678<BR>
+&nbsp;&nbsp;&nbsp;
+of a normal sample 678<BR>
+&nbsp;&nbsp;&nbsp;
+quick elimination algorithm for 676<BR>
+&nbsp;&nbsp;&nbsp;
+record time method for 679 680<BR>
+&nbsp;&nbsp;&nbsp;
+simulation of 674<BR>
+<BR>
+Maxwell distribution<BR>
+&nbsp;&nbsp;&nbsp;
+relation to normal distribution 176<BR>
+<BR>
+Maxwell, W.L. 743<BR>
+<BR>
+May, J.H. 568<BR>
+<BR>
+McCallum, D. 112<BR>
+<BR>
+McCormack, W.M. 737 743 747<BR>
+<BR>
+McGrath, E.J. 4 480<BR>
+<BR>
+McKay, A.T. 482<BR>
+<BR>
+McKay, J.K.S. 661<BR>
+<BR>
+McMullen, P. 571<BR>
+<BR>
+mean value 5<BR>
+<BR>
+median of a uniform sample 18<BR>
+<BR>
+median 5<BR>
+&nbsp;&nbsp;&nbsp;
+density of 18<BR>
+<BR>
+mergesort 214<BR>
+<BR>
+method of guide tables 96 97<BR>
+&nbsp;&nbsp;&nbsp;
+analysis of 97<BR>
+<BR>
+method of Lewis and Shedler 264<BR>
+<BR>
+method of Michael, Schucany and Haas 146<BR>
+<BR>
+method of percentiles 484<BR>
+<BR>
+Michael, J.R. 145<BR>
+<BR>
+Mickey, M.R. 606<BR>
+<BR>
+Mikhail, N.N. 578<BR>
+<BR>
+Mikhailov's theorem 177<BR>
+<BR>
+Mikhailov, G.A. 176 177 191 571<BR>
+<BR>
+minimal spacing 213<BR>
+<BR>
+minimax strategy 762<BR>
+<BR>
+mirror principle 295<BR>
+&nbsp;&nbsp;&nbsp;
+for random walk 654<BR>
+&nbsp;&nbsp;&nbsp;
+for unimodal densities 329<BR>
+<BR>
+Mirsky, L. 682<BR>
+<BR>
+Mitchell, R.L. 367<BR>
+<BR>
+Mitra, S.S. 457<BR>
+<BR>
+Mitrinovic, D.S. 681<BR>
+<BR>
+mixture method<BR>
+&nbsp;&nbsp;&nbsp;
+for kernel estimate 765<BR>
+&nbsp;&nbsp;&nbsp;
+for simulating sum 731<BR>
+<BR>
+mixtures of distributions 16<BR>
+<BR>
+mixtures of triangles 179<BR>
+<BR>
+mixtures with negative coefficients 74<BR>
+<BR>
+mode 5<BR>
+<BR>
+modified Bessel function<BR>
+&nbsp;&nbsp;&nbsp;
+of the first kind 473<BR>
+&nbsp;&nbsp;&nbsp;
+of the third kind 478 483 484<BR>
+<BR>
+modified composition method 69<BR>
+<BR>
+moment generating function 322 486<BR>
+<BR>
+moment matching<BR>
+&nbsp;&nbsp;&nbsp;
+in density estimates 764<BR>
+<BR>
+moment mismatch 764<BR>
+<BR>
+moment problem 682<BR>
+<BR>
+moment 5<BR>
+<BR>
+Monahan's algorithm 127<BR>
+&nbsp;&nbsp;&nbsp;
+for exponential distribution 132<BR>
+<BR>
+Monahan's theorem 127<BR>
+<BR>
+Monahan, J.F. 127 132 194 195 201 203 406 446 454<BR>
+<BR>
+monotone correlation 574<BR>
+<BR>
+monotone densities<BR>
+&nbsp;&nbsp;&nbsp;
+almost-exact inversion method for 134<BR>
+&nbsp;&nbsp;&nbsp;
+generator for 174<BR>
+&nbsp;&nbsp;&nbsp;
+inequalities for 311 313 321 330 331<BR>
+&nbsp;&nbsp;&nbsp;
+inverse-of-f method for 178<BR>
+&nbsp;&nbsp;&nbsp;
+inversion method for 39<BR>
+&nbsp;&nbsp;&nbsp;
+inversion-rejection method for 336 341<BR>
+&nbsp;&nbsp;&nbsp;
+order statistics of 224<BR>
+&nbsp;&nbsp;&nbsp;
+splitting algorithm for 335<BR>
+&nbsp;&nbsp;&nbsp;
+strip method for 362<BR>
+&nbsp;&nbsp;&nbsp;
+universal rejection method for 312 316 317<BR>
+<BR>
+monotone dependence 575<BR>
+<BR>
+monotone discrete distributions 114<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 115<BR>
+<BR>
+monotone distributions<BR>
+&nbsp;&nbsp;&nbsp;
+inequalities for 173<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 173<BR>
+<BR>
+monotone transformations 220<BR>
+<BR>
+Monte Carlo integration 766<BR>
+<BR>
+Monte Carlo simulation 580<BR>
+<BR>
+Moonan, W.J. 565<BR>
+<BR>
+Moran's bivariate exponential distribution 585<BR>
+<BR>
+Moran, P.A.P. 518 583 585 586<BR>
+<BR>
+Morgan, B.J.T. 4<BR>
+<BR>
+Morgenstern's family 578 590<BR>
+&nbsp;&nbsp;&nbsp;
+conditional distribution method for 580<BR>
+<BR>
+Morgenstern, D. 578<BR>
+<BR>
+Moses, L.E. 648<BR>
+<BR>
+Mudholkar, G.S. 472<BR>
+<BR>
+Muller, M.E. 206 235 379 380 617 620 624<BR>
+<BR>
+multinomial distribution 558<BR>
+&nbsp;&nbsp;&nbsp;
+ball-in-urn method for 558<BR>
+&nbsp;&nbsp;&nbsp;
+conditional distribution method for 558 559 731<BR>
+&nbsp;&nbsp;&nbsp;
+relation to binomial distribution 558<BR>
+&nbsp;&nbsp;&nbsp;
+relation to Poisson distribution 518 563<BR>
+<BR>
+multinomial method<BR>
+&nbsp;&nbsp;&nbsp;
+for Poisson distribution 563<BR>
+<BR>
+multinormal distribution 566<BR>
+&nbsp;&nbsp;&nbsp;
+conditional distribution method for 556<BR>
+<BR>
+multiple pointer method<BR>
+&nbsp;&nbsp;&nbsp;
+in discrete event simulation 743 746<BR>
+<BR>
+multiple table look-up 104<BR>
+<BR>
+multiplicative method<BR>
+&nbsp;&nbsp;&nbsp;
+for Poisson distribution 504<BR>
+<BR>
+multivariate Burr distribution 558 600<BR>
+&nbsp;&nbsp;&nbsp;
+relation to Cook-Johnson distribution 602<BR>
+<BR>
+multivariate Cauchy distribution 238 555<BR>
+&nbsp;&nbsp;&nbsp;
+conditional distribution method for 555<BR>
+<BR>
+multivariate Cauchy dsistribution 589<BR>
+<BR>
+multivariate density 6<BR>
+<BR>
+multivariate discrete distributions 559<BR>
+&nbsp;&nbsp;&nbsp;
+inversion method for 560<BR>
+<BR>
+multivariate inversion method<BR>
+&nbsp;&nbsp;&nbsp;
+analysis of 560 561<BR>
+<BR>
+multivariate Khinchine mixtures 603<BR>
+<BR>
+multivariate logistic distribution 600<BR>
+&nbsp;&nbsp;&nbsp;
+relation to Cook-Johnson distribution 602<BR>
+<BR>
+multivariate normal distribution 603 604<BR>
+&nbsp;&nbsp;&nbsp;
+relation to Cook-Johnson distribution 602<BR>
+<BR>
+multivariate Pareto distribution 589 600 604<BR>
+&nbsp;&nbsp;&nbsp;
+relation to Cook-Johnson distribution 602 604<BR>
+<BR>
+multivariate Pearson II distribution 237<BR>
+&nbsp;&nbsp;&nbsp;
+relation to beta distribution 237<BR>
+<BR>
+multivariate Pearson VII distribution 238<BR>
+&nbsp;&nbsp;&nbsp;
+relation to beta distribution 238<BR>
+<BR>
+multivariate transformations of random variables 14<BR>
+<BR>
+Murty, V.N. 26<BR>
+<BR>
+Mykytka, E.F. 483<BR>
+<BR>
+Naderisamani, A. 523 544<BR>
+<BR>
+Nagao, M. 583 590<BR>
+<BR>
+Nagao-Kadoya distribution 583 590<BR>
+<BR>
+naive method<BR>
+&nbsp;&nbsp;&nbsp;
+for sum of independent random variables 717<BR>
+<BR>
+Nance, R.E. 4<BR>
+<BR>
+Narula, S.C. 136<BR>
+<BR>
+Narumi's inequality 321 329<BR>
+<BR>
+Nataf, A. 576<BR>
+<BR>
+NBUE distribution 742<BR>
+<BR>
+nearly flat densities<BR>
+&nbsp;&nbsp;&nbsp;
+aceptance-complement method for 79<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 80<BR>
+<BR>
+negative binomial distribution 284 488 543<BR>
+&nbsp;&nbsp;&nbsp;
+as an IHR distribution 284<BR>
+&nbsp;&nbsp;&nbsp;
+definition 84<BR>
+&nbsp;&nbsp;&nbsp;
+discrete thinning method for 284<BR>
+&nbsp;&nbsp;&nbsp;
+generators for 543<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 488<BR>
+<BR>
+negative mixture algorithm of Bignami and de Matteis 74<BR>
+<BR>
+negative stable distribution 455<BR>
+<BR>
+Neuts, M.F. 758<BR>
+<BR>
+Nevalainen, O. 617<BR>
+<BR>
+Newby, M.J. 220<BR>
+<BR>
+Newman, T.G. 4 416<BR>
+<BR>
+Newton-Cotes integration formulas 701<BR>
+<BR>
+Newton-Raphson iterations 341<BR>
+<BR>
+Newton-Raphson method 33<BR>
+&nbsp;&nbsp;&nbsp;
+convergence of 36 37<BR>
+<BR>
+Neyman, J. 24<BR>
+<BR>
+Nievergelt, J. 104<BR>
+<BR>
+Nijenhuis, A. 617 618 642 645 661<BR>
+<BR>
+non-lattice distributions 496<BR>
+<BR>
+nonhomogeneous Poisson process<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 254<BR>
+<BR>
+normal distribution 379<BR>
+&nbsp;&nbsp;&nbsp;
+almost-exact inversion method for 135 380<BR>
+&nbsp;&nbsp;&nbsp;
+approximation by sum of uniform random variables 25 144<BR>
+&nbsp;&nbsp;&nbsp;
+as a stable distribution 183 455<BR>
+&nbsp;&nbsp;&nbsp;
+as an NBUE distribution 742<BR>
+&nbsp;&nbsp;&nbsp;
+Box-Muller method for 235<BR>
+&nbsp;&nbsp;&nbsp;
+closure under addition 19<BR>
+&nbsp;&nbsp;&nbsp;
+composition method for 67<BR>
+&nbsp;&nbsp;&nbsp;
+composition-rejection method for 380 382<BR>
+&nbsp;&nbsp;&nbsp;
+conditional distribution method for 556<BR>
+&nbsp;&nbsp;&nbsp;
+convergence to 22<BR>
+&nbsp;&nbsp;&nbsp;
+definition 7<BR>
+&nbsp;&nbsp;&nbsp;
+Forsythe's method for 380<BR>
+&nbsp;&nbsp;&nbsp;
+inequalities for 169 384 385 386<BR>
+&nbsp;&nbsp;&nbsp;
+inverse-of-f method for 178<BR>
+&nbsp;&nbsp;&nbsp;
+inversion method for 36 380<BR>
+&nbsp;&nbsp;&nbsp;
+Johnson-Ramberg method for 244<BR>
+&nbsp;&nbsp;&nbsp;
+Kinderman-Ramage generator for 391<BR>
+&nbsp;&nbsp;&nbsp;
+log-concavity of 287<BR>
+&nbsp;&nbsp;&nbsp;
+Marsaglia-Bray generator for 390 392<BR>
+&nbsp;&nbsp;&nbsp;
+moments of 693<BR>
+&nbsp;&nbsp;&nbsp;
+polar method for 235 242 380<BR>
+&nbsp;&nbsp;&nbsp;
+Polya's approximation for 135<BR>
+&nbsp;&nbsp;&nbsp;
+properties 13 23 26<BR>
+&nbsp;&nbsp;&nbsp;
+radial symmetry of 228<BR>
+&nbsp;&nbsp;&nbsp;
+ratio-of-uniforms method for 199 380<BR>
+&nbsp;&nbsp;&nbsp;
+rectangle-wedge-tail method for 380<BR>
+&nbsp;&nbsp;&nbsp;
+rejection from Cauchy density 45<BR>
+&nbsp;&nbsp;&nbsp;
+rejection from Laplace density 44<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 56 62 380 391<BR>
+&nbsp;&nbsp;&nbsp;
+relation to Cauchy distribution 240<BR>
+&nbsp;&nbsp;&nbsp;
+relation to exponential distribution 240<BR>
+&nbsp;&nbsp;&nbsp;
+relation to Rayleigh distribution 240 381<BR>
+&nbsp;&nbsp;&nbsp;
+relation to t distribution 15<BR>
+&nbsp;&nbsp;&nbsp;
+sample maximum of 678<BR>
+&nbsp;&nbsp;&nbsp;
+series method for 169 380<BR>
+&nbsp;&nbsp;&nbsp;
+table method for 380<BR>
+&nbsp;&nbsp;&nbsp;
+tail of the 380<BR>
+&nbsp;&nbsp;&nbsp;
+transformations of 136<BR>
+&nbsp;&nbsp;&nbsp;
+trapezoidal method for 383 391<BR>
+<BR>
+normal random vector method<BR>
+&nbsp;&nbsp;&nbsp;
+for uniform distribution on hypersphere 230<BR>
+<BR>
+normal scale mixtures 325 687<BR>
+&nbsp;&nbsp;&nbsp;
+inequalities for 327<BR>
+<BR>
+normalizing transformations 136<BR>
+<BR>
+Norman, J.E. 106<BR>
+<BR>
+Norton, R.M. 482<BR>
+<BR>
+numerical integration 700<BR>
+<BR>
+numerical inversion algorithms 31<BR>
+&nbsp;&nbsp;&nbsp;
+convergence of 35<BR>
+<BR>
+NWUE distribution 742<BR>
+<BR>
+Oakford, R.V. 648<BR>
+<BR>
+Oberhettinger, F. 470 756<BR>
+<BR>
+Odeh, R.E. 36<BR>
+<BR>
+Odell, P.L. 4 416<BR>
+<BR>
+Ojo, M.O. 480<BR>
+<BR>
+Olds, E.G. 733<BR>
+<BR>
+Olkin, I. 563 576 583 585 605 606 774<BR>
+<BR>
+Olusegun George, E. 472 480<BR>
+<BR>
+open hashing 613<BR>
+<BR>
+operations on random variables 11<BR>
+<BR>
+optimal binary search tree 91<BR>
+<BR>
+optimal DDG tree algorithm<BR>
+&nbsp;&nbsp;&nbsp;
+analysis of 778 780<BR>
+<BR>
+optimal rejection method<BR>
+&nbsp;&nbsp;&nbsp;
+for log-concave densities 293 294<BR>
+<BR>
+Ord, J.K. 84 469 497 735<BR>
+<BR>
+order statistics method<BR>
+&nbsp;&nbsp;&nbsp;
+for Bartlett's kernel 766<BR>
+&nbsp;&nbsp;&nbsp;
+for Poisson processes 258<BR>
+<BR>
+order statistics 207<BR>
+&nbsp;&nbsp;&nbsp;
+definition 17<BR>
+&nbsp;&nbsp;&nbsp;
+exponential 211<BR>
+&nbsp;&nbsp;&nbsp;
+from an arbitrary distribution 220<BR>
+&nbsp;&nbsp;&nbsp;
+inversion method for 30<BR>
+&nbsp;&nbsp;&nbsp;
+of a mixture 224<BR>
+&nbsp;&nbsp;&nbsp;
+of a monotone densities 224<BR>
+&nbsp;&nbsp;&nbsp;
+of the Weibull distribution 220<BR>
+<BR>
+ordered polytope 571<BR>
+<BR>
+ordinal measures of association 574<BR>
+<BR>
+Ostrowski, A.M. 34<BR>
+<BR>
+overflow bucket<BR>
+&nbsp;&nbsp;&nbsp;
+in discrete event simulation 746<BR>
+<BR>
+overflow list<BR>
+&nbsp;&nbsp;&nbsp;
+in discrete event simulation 746<BR>
+<BR>
+oversampling 635 636<BR>
+&nbsp;&nbsp;&nbsp;
+analysis of 637<BR>
+<BR>
+Overstreet, C. 4<BR>
+<BR>
+Owen, D.B. 322<BR>
+<BR>
+Padgett, W.J. 149<BR>
+<BR>
+Pagano, M.E. 758<BR>
+<BR>
+Papageorgiou, H. 593<BR>
+<BR>
+parametric form of a density 13<BR>
+<BR>
+Pareto distribution<BR>
+&nbsp;&nbsp;&nbsp;
+as a DHR distribution 267 344<BR>
+&nbsp;&nbsp;&nbsp;
+definition 7<BR>
+&nbsp;&nbsp;&nbsp;
+dynamic thinning method for 270<BR>
+&nbsp;&nbsp;&nbsp;
+inversion method for 29 262<BR>
+&nbsp;&nbsp;&nbsp;
+relation to gamma distribution 194<BR>
+<BR>
+partitions into intervals 67<BR>
+<BR>
+Parzen, E. 762<BR>
+<BR>
+Pascal's triangle 659<BR>
+<BR>
+Patefield, W.M. 609 610<BR>
+<BR>
+Patel, I.D. 549<BR>
+<BR>
+Patel, J.K. 322<BR>
+<BR>
+Paterson, M. 431<BR>
+<BR>
+Patil, G.P. 4 518 759<BR>
+<BR>
+Paul, N.J. 359<BR>
+<BR>
+Paulauskas, V. 458<BR>
+<BR>
+Paulson, E.S. 458<BR>
+<BR>
+Payne, J.A. 4<BR>
+<BR>
+Payne, W.H. 379<BR>
+<BR>
+Pearce, M.C. 121 379 380 404 432<BR>
+<BR>
+Pearson family 480 481<BR>
+<BR>
+Pearson IV distribution 308 480<BR>
+<BR>
+Pearson product moment correlation coefficient 573<BR>
+<BR>
+Pearson system 480 481<BR>
+<BR>
+Pearson V distribution 456<BR>
+<BR>
+Pearson VI distribution<BR>
+&nbsp;&nbsp;&nbsp;
+relation to beta distribution 429<BR>
+&nbsp;&nbsp;&nbsp;
+relation to gamma distribution 427<BR>
+<BR>
+Pearson's system 685<BR>
+<BR>
+Pearson, E.S. 24<BR>
+<BR>
+Peizer-Pratt approximation 136<BR>
+<BR>
+Perks distribution 472<BR>
+&nbsp;&nbsp;&nbsp;
+log-concavity of 287<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 472<BR>
+<BR>
+Perks, W.F. 287<BR>
+<BR>
+perturbation matrix 606<BR>
+<BR>
+Peterson, A.V. 75 81 82 108 110 359 369 451<BR>
+<BR>
+Petrov, V.V. 58 225 496 720 733<BR>
+<BR>
+PH-distribution 757<BR>
+<BR>
+phase type distribution 757<BR>
+<BR>
+Pippenger, N. 104 431<BR>
+<BR>
+Plackett's family 578 581 582 588 590<BR>
+&nbsp;&nbsp;&nbsp;
+Mardia's generator for 589<BR>
+<BR>
+Plackett, R.L. 578 588 590 648<BR>
+<BR>
+Planck distribution 552<BR>
+&nbsp;&nbsp;&nbsp;
+relation to Zipf distribution 552<BR>
+<BR>
+Poisson distribution 487 501<BR>
+&nbsp;&nbsp;&nbsp;
+acceptance-complement method for 502<BR>
+&nbsp;&nbsp;&nbsp;
+Atkinson's algorithm for 518<BR>
+&nbsp;&nbsp;&nbsp;
+convergence to normal distribution 501 518<BR>
+&nbsp;&nbsp;&nbsp;
+definition 84<BR>
+&nbsp;&nbsp;&nbsp;
+exponential inter-arrival time method for 504<BR>
+&nbsp;&nbsp;&nbsp;
+inequalities for 506 509 515<BR>
+&nbsp;&nbsp;&nbsp;
+inversion method for 502 505<BR>
+&nbsp;&nbsp;&nbsp;
+multinomial method for 563<BR>
+&nbsp;&nbsp;&nbsp;
+multiplicative method for 504<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 501 503 504 506 518<BR>
+&nbsp;&nbsp;&nbsp;
+recursive method for 518<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 502 511 518<BR>
+&nbsp;&nbsp;&nbsp;
+relation to multinomial distribution 518<BR>
+&nbsp;&nbsp;&nbsp;
+sequential search method for 86<BR>
+<BR>
+Poisson point process 246<BR>
+<BR>
+Poisson process 246 755<BR>
+&nbsp;&nbsp;&nbsp;
+composition method for 253<BR>
+&nbsp;&nbsp;&nbsp;
+exponential spacings method for 249<BR>
+&nbsp;&nbsp;&nbsp;
+homogeneous 246 252<BR>
+&nbsp;&nbsp;&nbsp;
+inversion method for 251 252<BR>
+&nbsp;&nbsp;&nbsp;
+nonhomogeneous 250<BR>
+&nbsp;&nbsp;&nbsp;
+on unit circle 250<BR>
+&nbsp;&nbsp;&nbsp;
+order statistics method for 258<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 247 738<BR>
+&nbsp;&nbsp;&nbsp;
+relation to exponential distribution 248<BR>
+&nbsp;&nbsp;&nbsp;
+the uniform distribution method for 248<BR>
+&nbsp;&nbsp;&nbsp;
+thinning method for 253 255<BR>
+<BR>
+polar method 225<BR>
+&nbsp;&nbsp;&nbsp;
+for arc sine distribution 482<BR>
+&nbsp;&nbsp;&nbsp;
+for Cauchy distribution 451<BR>
+&nbsp;&nbsp;&nbsp;
+for normal distribution 235 242 380<BR>
+&nbsp;&nbsp;&nbsp;
+for symmetric beta distribution 437<BR>
+<BR>
+polar representation<BR>
+&nbsp;&nbsp;&nbsp;
+for stable distribution 455<BR>
+<BR>
+Polge, R.J. 571<BR>
+<BR>
+Polya characteristic function 186 695 718<BR>
+<BR>
+Polya characteristic functions<BR>
+&nbsp;&nbsp;&nbsp;
+representation of 186<BR>
+<BR>
+Polya, G. 135 338<BR>
+<BR>
+Polya-Aeppli distribution 468<BR>
+<BR>
+polynomial densities<BR>
+&nbsp;&nbsp;&nbsp;
+composition method for 71 72<BR>
+<BR>
+polynomial density algorithm of Ahrens and Dieter 73<BR>
+<BR>
+portability 8 9<BR>
+<BR>
+positive stable distribution 455 463<BR>
+<BR>
+power distribution<BR>
+&nbsp;&nbsp;&nbsp;
+definition 24<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 24<BR>
+<BR>
+power function distribution<BR>
+&nbsp;&nbsp;&nbsp;
+inversion method for 262<BR>
+<BR>
+power of a gamma random variable 423<BR>
+<BR>
+power transformations 13<BR>
+<BR>
+Pratt, V. 431<BR>
+<BR>
+Prekopa, A. 309<BR>
+<BR>
+Press, S.J. 454<BR>
+<BR>
+Price, T.G. 571<BR>
+<BR>
+Pritsker, A.A.B. 743<BR>
+<BR>
+probabilistic shortcut 674<BR>
+<BR>
+probability vector 83<BR>
+<BR>
+projection method 572<BR>
+<BR>
+proportional squeeze method 57<BR>
+&nbsp;&nbsp;&nbsp;
+application of 63<BR>
+<BR>
+proportional squeezing 56<BR>
+<BR>
+Proschan, F. 260 277 343 356 742<BR>
+<BR>
+Prufer's construction 662 663<BR>
+<BR>
+quantile 5<BR>
+<BR>
+quasi-empirical method of Bratley, Fox and Schrage 767<BR>
+<BR>
+Quenouille, M.H. 488<BR>
+<BR>
+queueing system 735 755<BR>
+<BR>
+quick acceptance step 54<BR>
+<BR>
+quick elimination algorithm<BR>
+&nbsp;&nbsp;&nbsp;
+analysis of 676<BR>
+&nbsp;&nbsp;&nbsp;
+for generating the maximum 676<BR>
+<BR>
+quick elimination principle 675<BR>
+<BR>
+quick-and-dirty estimate 763<BR>
+<BR>
+quicksort 214<BR>
+<BR>
+Raab, D.H. 158<BR>
+<BR>
+Raab-Green density 147<BR>
+<BR>
+Raab-Green distribution<BR>
+&nbsp;&nbsp;&nbsp;
+alternating series method for 158<BR>
+&nbsp;&nbsp;&nbsp;
+improved alternating series method for 160<BR>
+<BR>
+Rabinowitz, M. 215 220<BR>
+<BR>
+Rabinowitz, P. 701 704<BR>
+<BR>
+radial transformations 229<BR>
+<BR>
+radially symmetric distributions 225<BR>
+&nbsp;&nbsp;&nbsp;
+Johnson-Ramberg method for 237<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 227<BR>
+<BR>
+Rahman, N.A. 24<BR>
+<BR>
+Ramage, J.G. 379 380 383 390 391 446 454<BR>
+<BR>
+Ramberg, J.S. 215 237 244 482 483 587 592<BR>
+<BR>
+random $R times C$ table 608<BR>
+&nbsp;&nbsp;&nbsp;
+conditional distribution method for 610<BR>
+<BR>
+random binary search tree 649 650<BR>
+&nbsp;&nbsp;&nbsp;
+height of 651<BR>
+<BR>
+random binary tree 652<BR>
+&nbsp;&nbsp;&nbsp;
+decoding method for 657<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 655<BR>
+&nbsp;&nbsp;&nbsp;
+sequential sampling for 656 657<BR>
+<BR>
+random bipartite graph 671<BR>
+<BR>
+random bipartite graphs<BR>
+&nbsp;&nbsp;&nbsp;
+ball-in-urn method for 671<BR>
+<BR>
+random bit model 768<BR>
+<BR>
+random codeword 659<BR>
+<BR>
+random combinatorial objects 642<BR>
+<BR>
+random connected graph<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 669<BR>
+<BR>
+random correlation matrix 605<BR>
+<BR>
+random cubic graph 672<BR>
+<BR>
+random free tree 662 663<BR>
+&nbsp;&nbsp;&nbsp;
+with given number of nodes and leaves 666<BR>
+<BR>
+random graph 667<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 672<BR>
+<BR>
+random heap 651<BR>
+<BR>
+random labeled free tree 663<BR>
+<BR>
+random orthogonal matrix 606 607<BR>
+<BR>
+random orthonormal matrix 607<BR>
+<BR>
+random partition 658 659<BR>
+&nbsp;&nbsp;&nbsp;
+coding function for 661<BR>
+&nbsp;&nbsp;&nbsp;
+of integers 661<BR>
+&nbsp;&nbsp;&nbsp;
+recurrence-based method for 660<BR>
+<BR>
+random permutation 612 644 648<BR>
+&nbsp;&nbsp;&nbsp;
+decoding method for 644<BR>
+&nbsp;&nbsp;&nbsp;
+Robson's decoding method for 648<BR>
+&nbsp;&nbsp;&nbsp;
+swapping method for 646<BR>
+<BR>
+random r-regular graph 672<BR>
+<BR>
+random rooted tree 658<BR>
+<BR>
+random rotation 607<BR>
+<BR>
+random sampling 611<BR>
+<BR>
+random string of balanced parentheses<BR>
+&nbsp;&nbsp;&nbsp;
+sequential sampling for 657<BR>
+<BR>
+random string 673<BR>
+<BR>
+random subset<BR>
+&nbsp;&nbsp;&nbsp;
+recurrence-based method for 647<BR>
+<BR>
+random sum 487<BR>
+<BR>
+random trie 651<BR>
+<BR>
+random uniform rotation 607<BR>
+<BR>
+random unlabeled free tree 666<BR>
+<BR>
+random variable 5<BR>
+<BR>
+random variate 2<BR>
+<BR>
+random vector 6<BR>
+<BR>
+random walk 470 654 749<BR>
+&nbsp;&nbsp;&nbsp;
+first return to origin 754<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 751 752<BR>
+<BR>
+range of a uniform sample 213<BR>
+<BR>
+rank correlation 574<BR>
+<BR>
+rate function 250<BR>
+&nbsp;&nbsp;&nbsp;
+cyclic 256<BR>
+&nbsp;&nbsp;&nbsp;
+log-linear 259<BR>
+&nbsp;&nbsp;&nbsp;
+log-quadratic 259<BR>
+&nbsp;&nbsp;&nbsp;
+piecewise constant 259<BR>
+<BR>
+ratio of gamma random variables 428<BR>
+<BR>
+ratio-of-uniforms method 194<BR>
+&nbsp;&nbsp;&nbsp;
+algorithm 196<BR>
+&nbsp;&nbsp;&nbsp;
+analysis of 204<BR>
+&nbsp;&nbsp;&nbsp;
+for Cauchy distribution 201<BR>
+&nbsp;&nbsp;&nbsp;
+for exponential distribution 200<BR>
+&nbsp;&nbsp;&nbsp;
+for gamma distribution 203 406<BR>
+&nbsp;&nbsp;&nbsp;
+for normal distribution 199 380<BR>
+&nbsp;&nbsp;&nbsp;
+for t distribution 200 204 446<BR>
+&nbsp;&nbsp;&nbsp;
+for t3 distribution 202 449<BR>
+&nbsp;&nbsp;&nbsp;
+with two-sided squeezing 197<BR>
+<BR>
+Rayleigh distribution 176 469<BR>
+&nbsp;&nbsp;&nbsp;
+inversion method for 29<BR>
+&nbsp;&nbsp;&nbsp;
+relation to normal distribution 240 381<BR>
+<BR>
+record time method<BR>
+&nbsp;&nbsp;&nbsp;
+for generating the maximum 679 680<BR>
+<BR>
+record 649<BR>
+<BR>
+rectangle-wedge-tail method<BR>
+&nbsp;&nbsp;&nbsp;
+analysis of 399<BR>
+&nbsp;&nbsp;&nbsp;
+for exponential distribution 397<BR>
+&nbsp;&nbsp;&nbsp;
+for normal distribution 380<BR>
+<BR>
+rectangular rule 700<BR>
+<BR>
+recurrence<BR>
+&nbsp;&nbsp;&nbsp;
+for combinatorial objects 646<BR>
+<BR>
+recurrence-based method<BR>
+&nbsp;&nbsp;&nbsp;
+for random partition 660<BR>
+&nbsp;&nbsp;&nbsp;
+for random subset 647<BR>
+<BR>
+recursive generator 181<BR>
+<BR>
+recursive method<BR>
+&nbsp;&nbsp;&nbsp;
+for binomial distribution 523 536 537 545<BR>
+&nbsp;&nbsp;&nbsp;
+for Poisson distribution 518<BR>
+<BR>
+recursive methods based upon representations 180<BR>
+<BR>
+recycling random variates 58<BR>
+<BR>
+Reeves's model 738 740<BR>
+&nbsp;&nbsp;&nbsp;
+analysis of 741 744 745 748<BR>
+<BR>
+Reeves, C.M. 737 741 743 747<BR>
+<BR>
+regenerative phenomena 749<BR>
+<BR>
+regula falsi method 33<BR>
+<BR>
+regular density 719<BR>
+<BR>
+rejection constant 42<BR>
+<BR>
+rejection method for order statistics<BR>
+&nbsp;&nbsp;&nbsp;
+analysis of 222<BR>
+<BR>
+rejection method<BR>
+&nbsp;&nbsp;&nbsp;
+bit-based 770<BR>
+&nbsp;&nbsp;&nbsp;
+definition 42<BR>
+&nbsp;&nbsp;&nbsp;
+development of 43<BR>
+&nbsp;&nbsp;&nbsp;
+for Bartlett's kernel 765<BR>
+&nbsp;&nbsp;&nbsp;
+for beta distribution 432<BR>
+&nbsp;&nbsp;&nbsp;
+for binomial distribution 115 523 526 529 533 543<BR>
+&nbsp;&nbsp;&nbsp;
+for bounded densities with compact support 43<BR>
+&nbsp;&nbsp;&nbsp;
+for characteristic function 697<BR>
+&nbsp;&nbsp;&nbsp;
+for discrete normal distribution 117<BR>
+&nbsp;&nbsp;&nbsp;
+for discrete random variates 113<BR>
+&nbsp;&nbsp;&nbsp;
+for exponential power distribution 302<BR>
+&nbsp;&nbsp;&nbsp;
+for Fejer-de la Vallee Poussin density 187<BR>
+&nbsp;&nbsp;&nbsp;
+for first return to origin in random walk 754<BR>
+&nbsp;&nbsp;&nbsp;
+for first-passage-time in M/M/1 queue 757<BR>
+&nbsp;&nbsp;&nbsp;
+for gamma distribution 48 132 304 405 415 419 426<BR>
+&nbsp;&nbsp;&nbsp;
+for generalized inverse gaussian distribution 479 480<BR>
+&nbsp;&nbsp;&nbsp;
+for hyperbolic distribution 483<BR>
+&nbsp;&nbsp;&nbsp;
+for hyperbolic secant distribution 472<BR>
+&nbsp;&nbsp;&nbsp;
+for hypergeometric distribution 545<BR>
+&nbsp;&nbsp;&nbsp;
+for Lipschitz densities 63<BR>
+&nbsp;&nbsp;&nbsp;
+for log-concave densities 291 292 298 301<BR>
+&nbsp;&nbsp;&nbsp;
+for logarithmic series distribution 546 549<BR>
+&nbsp;&nbsp;&nbsp;
+for logistic distribution 471<BR>
+&nbsp;&nbsp;&nbsp;
+for matching distribution 520<BR>
+&nbsp;&nbsp;&nbsp;
+for monotone discrete distributions 115<BR>
+&nbsp;&nbsp;&nbsp;
+for multivariate distributions 557<BR>
+&nbsp;&nbsp;&nbsp;
+for nearly flat densities 80<BR>
+&nbsp;&nbsp;&nbsp;
+for normal distribution 44 45 380 391<BR>
+&nbsp;&nbsp;&nbsp;
+for order statistics 221<BR>
+&nbsp;&nbsp;&nbsp;
+for Perks distribution 472<BR>
+&nbsp;&nbsp;&nbsp;
+for Poisson distribution 502 511 518<BR>
+&nbsp;&nbsp;&nbsp;
+for random binary tree 655<BR>
+&nbsp;&nbsp;&nbsp;
+for random connected graph 669<BR>
+&nbsp;&nbsp;&nbsp;
+for random graph 672<BR>
+&nbsp;&nbsp;&nbsp;
+for Stacy's generalized gamma distribution 423<BR>
+&nbsp;&nbsp;&nbsp;
+for symmetric beta distribution 60 193 434<BR>
+&nbsp;&nbsp;&nbsp;
+for symmetric binomial distribution 539<BR>
+&nbsp;&nbsp;&nbsp;
+for t distribution 446 447 450<BR>
+&nbsp;&nbsp;&nbsp;
+for tail of the Cauchy distribution 453<BR>
+&nbsp;&nbsp;&nbsp;
+for tail of the gamma density 421 422 425<BR>
+&nbsp;&nbsp;&nbsp;
+for truncated gamma distribution 166<BR>
+&nbsp;&nbsp;&nbsp;
+for uniform distribution in unit circle 233<BR>
+&nbsp;&nbsp;&nbsp;
+for uniform distribution on hypersphere 231<BR>
+&nbsp;&nbsp;&nbsp;
+for uniform distribution on unit circle 235<BR>
+&nbsp;&nbsp;&nbsp;
+for von Mises distribution 473 476<BR>
+&nbsp;&nbsp;&nbsp;
+for Zipf distribution 550<BR>
+&nbsp;&nbsp;&nbsp;
+generalization of 49 60<BR>
+&nbsp;&nbsp;&nbsp;
+in avoidance problems 372<BR>
+&nbsp;&nbsp;&nbsp;
+in sequential sampling 621 631 634<BR>
+&nbsp;&nbsp;&nbsp;
+optimization of 62 512<BR>
+&nbsp;&nbsp;&nbsp;
+properties 42<BR>
+&nbsp;&nbsp;&nbsp;
+Sibuya's modified 62<BR>
+&nbsp;&nbsp;&nbsp;
+Vaduva's generalization of 47<BR>
+&nbsp;&nbsp;&nbsp;
+validation 40<BR>
+&nbsp;&nbsp;&nbsp;
+with recycling 59<BR>
+<BR>
+reliability theory 260<BR>
+<BR>
+Relles, D.A. 523 538<BR>
+<BR>
+Renyi, A. 373 574 589 668<BR>
+<BR>
+representations of densities as integrals 171<BR>
+<BR>
+reservoir sampling 638 639<BR>
+&nbsp;&nbsp;&nbsp;
+with geometric jumps 640<BR>
+<BR>
+residual density 382 385<BR>
+<BR>
+residual life density 330<BR>
+&nbsp;&nbsp;&nbsp;
+inequalities for 330<BR>
+&nbsp;&nbsp;&nbsp;
+universal rejection method for 330<BR>
+<BR>
+restricted density 67<BR>
+<BR>
+Rezucha, I. 620 624<BR>
+<BR>
+Rider, P.R. 24<BR>
+<BR>
+Riemann integrability 362<BR>
+<BR>
+Riemann integrable densities<BR>
+&nbsp;&nbsp;&nbsp;
+grid method for 377<BR>
+&nbsp;&nbsp;&nbsp;
+strip method for 362<BR>
+<BR>
+Riemann zeta function 550<BR>
+<BR>
+Ripley, B.D. 4 84 372 374 473<BR>
+<BR>
+Rippy, D.V. 571<BR>
+<BR>
+Rivest, R.L. 431<BR>
+<BR>
+Roach, S.A. 733<BR>
+<BR>
+Robbins, H. 373<BR>
+<BR>
+Robertson, I. 203<BR>
+<BR>
+Robinson, C.L. 648<BR>
+<BR>
+Robson's decoding method<BR>
+&nbsp;&nbsp;&nbsp;
+for random permutation 648<BR>
+<BR>
+Robson, J.M. 648<BR>
+<BR>
+robust scale estimate 763<BR>
+<BR>
+Rogers, C.A. 688<BR>
+<BR>
+Rogozin, B.A. 496<BR>
+<BR>
+Roll, R. 458<BR>
+<BR>
+Ronning, G. 588<BR>
+<BR>
+Rosenblatt, M. 171 762<BR>
+<BR>
+rotation 563<BR>
+<BR>
+Roy, M.K. 150<BR>
+<BR>
+Royden, H. 172<BR>
+<BR>
+Royden, H.L. 686 687<BR>
+<BR>
+Rubin, P.A. 570<BR>
+<BR>
+Rubinstein, R.Y. 3 4 232 243 567 570<BR>
+<BR>
+Rumpf, D.L. 261<BR>
+<BR>
+Ruskey, F. 657<BR>
+<BR>
+Ryan, T.P. 606<BR>
+<BR>
+Sahai, H. 4<BR>
+<BR>
+Sahler, W. 168<BR>
+<BR>
+Sakasegawa, H. 380<BR>
+<BR>
+sample independence 760<BR>
+<BR>
+sample indistinguishability 763<BR>
+<BR>
+sampling without replacement 544 611<BR>
+<BR>
+Sampson, A. 574 575 576 589 590<BR>
+<BR>
+Sargent, R.G. 737 743 747<BR>
+<BR>
+Sarmanov, O.V. 574<BR>
+<BR>
+Satterthwaite, S.P. 600 602<BR>
+<BR>
+Savage, I.R. 322<BR>
+<BR>
+Saxe, J.B. 215<BR>
+<BR>
+scale mixture 557<BR>
+<BR>
+scale parameter 7<BR>
+<BR>
+Scheffe's lemma 760<BR>
+<BR>
+Scheffe's theorem 575 590 760<BR>
+<BR>
+Scheffe, H. 590 760<BR>
+<BR>
+Scheuer, E.M. 566<BR>
+<BR>
+Schmeiser, B.W. 4 84 304 305 308 309 426 432 482 483 502 507 545 562 571 587 588 591<BR>
+<BR>
+Schonhage, A. 431<BR>
+<BR>
+Schrage, L.E. 4 29 251 736 767<BR>
+<BR>
+Schreck, H. 657<BR>
+<BR>
+Schucany, W.R. 145 215<BR>
+<BR>
+Schur convexity 774<BR>
+<BR>
+Schuster, E.F. 392<BR>
+<BR>
+search tree<BR>
+&nbsp;&nbsp;&nbsp;
+in car parking problem 374<BR>
+<BR>
+secant method 33 38<BR>
+&nbsp;&nbsp;&nbsp;
+convergence of 36<BR>
+<BR>
+second waiting time method<BR>
+&nbsp;&nbsp;&nbsp;
+for binomial distribution 525<BR>
+<BR>
+Seidel, R. 571<BR>
+<BR>
+Seigerstetter, J. 473<BR>
+<BR>
+selection sort 217<BR>
+<BR>
+sequential sampling 619<BR>
+&nbsp;&nbsp;&nbsp;
+for random binary tree 656 657<BR>
+&nbsp;&nbsp;&nbsp;
+for random string of balanced parentheses 657<BR>
+&nbsp;&nbsp;&nbsp;
+ghost point method in 626 628<BR>
+&nbsp;&nbsp;&nbsp;
+ghost sample method in 621 626<BR>
+&nbsp;&nbsp;&nbsp;
+inversion method in 621 624<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method in 621 631 634<BR>
+&nbsp;&nbsp;&nbsp;
+spacings method for 621<BR>
+<BR>
+sequential search method 85<BR>
+&nbsp;&nbsp;&nbsp;
+for binomial distribution 89<BR>
+&nbsp;&nbsp;&nbsp;
+for Poisson distribution 86<BR>
+&nbsp;&nbsp;&nbsp;
+Kemp's improvement of 86<BR>
+&nbsp;&nbsp;&nbsp;
+reorganization of 88<BR>
+<BR>
+sequential search 776<BR>
+<BR>
+sequential test method 279<BR>
+&nbsp;&nbsp;&nbsp;
+analysis of 279<BR>
+&nbsp;&nbsp;&nbsp;
+for geometric distribution 280<BR>
+&nbsp;&nbsp;&nbsp;
+for logarithmic series distribution 282<BR>
+<BR>
+series method 151<BR>
+&nbsp;&nbsp;&nbsp;
+based upon numerical integration 709<BR>
+&nbsp;&nbsp;&nbsp;
+for characteristic functions with compact support 713<BR>
+&nbsp;&nbsp;&nbsp;
+for characteristic functions 709<BR>
+&nbsp;&nbsp;&nbsp;
+for Erdos-Kac distribution 170<BR>
+&nbsp;&nbsp;&nbsp;
+for exponential distribution 168<BR>
+&nbsp;&nbsp;&nbsp;
+for normal distribution 169 380<BR>
+&nbsp;&nbsp;&nbsp;
+for symmetric stable distribution 465 466 467<BR>
+&nbsp;&nbsp;&nbsp;
+for very smooth densities 700<BR>
+<BR>
+Seshadri, V. 518<BR>
+<BR>
+set-up time 8 9 10<BR>
+<BR>
+Severo, N.C. 4<BR>
+<BR>
+Severo-Zelen approximation 136<BR>
+<BR>
+Shanthikumar, J.G. 279 280 281 283 284<BR>
+<BR>
+shape parameter 7<BR>
+<BR>
+Shedler, G.S. 251 253 256 259 261 264<BR>
+<BR>
+Shohat, J.A. 682 685 686<BR>
+<BR>
+Shorrock, R.W. 120<BR>
+<BR>
+Shuster, J. 148<BR>
+<BR>
+Sibson, R. 372 374<BR>
+<BR>
+Sibuya's modified rejection method 62<BR>
+<BR>
+Sibuya, M. 62 232 380 396 553 631<BR>
+<BR>
+Simon, H.A. 553<BR>
+<BR>
+simple distribution 8<BR>
+<BR>
+simple random variable 8<BR>
+<BR>
+simplex 207 568 593<BR>
+<BR>
+Simpson's rule 701<BR>
+<BR>
+simulation of sum 716<BR>
+<BR>
+singular distribution 571<BR>
+<BR>
+Sivazlian, B.D. 596 598 599<BR>
+<BR>
+skewness-kurtosis plane 484 688<BR>
+<BR>
+Sleep, M.R. 656<BR>
+<BR>
+Slezak, N.L. 566<BR>
+<BR>
+Smirnov, N.V. 161 168<BR>
+<BR>
+Smith, R.L. 215 220 568<BR>
+<BR>
+smoothing parameter 762<BR>
+<BR>
+Snedecor distribution 429<BR>
+<BR>
+Sobel, M.J. 749 755<BR>
+<BR>
+Soni, R.P. 470 756<BR>
+<BR>
+Sorensen, M. 329 330<BR>
+<BR>
+sorting 214<BR>
+<BR>
+Sowey, E.R. 4<BR>
+<BR>
+spacings method<BR>
+&nbsp;&nbsp;&nbsp;
+for sequential sampling 621<BR>
+&nbsp;&nbsp;&nbsp;
+for uniform distribution on hypersphere 242<BR>
+<BR>
+Spearman's rho 574<BR>
+<BR>
+speed 8<BR>
+<BR>
+splitting algorithm<BR>
+&nbsp;&nbsp;&nbsp;
+for binomial distribution 527<BR>
+&nbsp;&nbsp;&nbsp;
+for monotone densities 335<BR>
+<BR>
+Springer, M.D. 11 25 469 562 685<BR>
+<BR>
+Springer, S.G. 36<BR>
+<BR>
+square root method 565<BR>
+<BR>
+square root transformations 13<BR>
+<BR>
+squeeze method 54<BR>
+&nbsp;&nbsp;&nbsp;
+analysis of 65<BR>
+&nbsp;&nbsp;&nbsp;
+application of 57<BR>
+&nbsp;&nbsp;&nbsp;
+for normal distribution 56<BR>
+&nbsp;&nbsp;&nbsp;
+for symmetric beta distribution 64<BR>
+&nbsp;&nbsp;&nbsp;
+for uniform distribution in unit circle 233<BR>
+<BR>
+squeeze principle 53<BR>
+&nbsp;&nbsp;&nbsp;
+application of 141<BR>
+&nbsp;&nbsp;&nbsp;
+for strip method 360<BR>
+<BR>
+Srinivasan, R. 469<BR>
+<BR>
+stable distribution 454<BR>
+&nbsp;&nbsp;&nbsp;
+closure under additions 455<BR>
+&nbsp;&nbsp;&nbsp;
+convergence to 468<BR>
+&nbsp;&nbsp;&nbsp;
+generator of Chambers, Mallows and Stuck for 185 459<BR>
+&nbsp;&nbsp;&nbsp;
+inequalities for 461 463<BR>
+&nbsp;&nbsp;&nbsp;
+integral representation for 185 459<BR>
+&nbsp;&nbsp;&nbsp;
+inversion method for 458<BR>
+&nbsp;&nbsp;&nbsp;
+Kanter's method for 183 459<BR>
+&nbsp;&nbsp;&nbsp;
+Levy's representation for 454<BR>
+&nbsp;&nbsp;&nbsp;
+polar representation for 455<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 183 184 185 455 456 457<BR>
+&nbsp;&nbsp;&nbsp;
+representation for 183<BR>
+&nbsp;&nbsp;&nbsp;
+with exponent $1/2$ 150<BR>
+<BR>
+Stacy's generalized gamma distribution 423<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 423<BR>
+&nbsp;&nbsp;&nbsp;
+relation to gamma distribution 423<BR>
+<BR>
+Stacy, E.W. 423<BR>
+<BR>
+Stadlober, E. 10 77 446<BR>
+<BR>
+standard sequential sampling 619 620<BR>
+<BR>
+Standish, T.A. 741 747<BR>
+<BR>
+Steffensen's inequality 338<BR>
+<BR>
+Steffensen, J.F. 338<BR>
+<BR>
+Stegun, I.A. 297 302 391 415 678<BR>
+<BR>
+Steutel, F.W. 329<BR>
+<BR>
+Stieltjes's counterexample 694<BR>
+<BR>
+Stirling number 658 660<BR>
+&nbsp;&nbsp;&nbsp;
+of the second kind 658<BR>
+&nbsp;&nbsp;&nbsp;
+recurrence for 659<BR>
+<BR>
+Stirling's series 490<BR>
+<BR>
+Stoller, D.S. 566<BR>
+<BR>
+stopping time 50<BR>
+<BR>
+strip method 359<BR>
+&nbsp;&nbsp;&nbsp;
+adaptive 367<BR>
+&nbsp;&nbsp;&nbsp;
+analysis of 361 363<BR>
+&nbsp;&nbsp;&nbsp;
+for beta distribution 432<BR>
+&nbsp;&nbsp;&nbsp;
+for bounded densities 360<BR>
+&nbsp;&nbsp;&nbsp;
+for gamma distribution 406<BR>
+&nbsp;&nbsp;&nbsp;
+for Lipschitz densities 366<BR>
+&nbsp;&nbsp;&nbsp;
+for monotone densities 362<BR>
+&nbsp;&nbsp;&nbsp;
+for Riemann integrable densities 362<BR>
+<BR>
+Strong, H.R. 104<BR>
+<BR>
+Stuart's theorem 182 420 423 596<BR>
+<BR>
+Stuart, A. 182 420 423 596 678 691 694<BR>
+<BR>
+Stuck, B.W. 184 185 459<BR>
+<BR>
+Subbotin, M.T. 175<BR>
+<BR>
+suboptimal DDG tree algorithm 775<BR>
+<BR>
+Sukhatme, P.V. 211<BR>
+<BR>
+sum of independent random variables 19 708 714 716<BR>
+&nbsp;&nbsp;&nbsp;
+convergence to stable law 734<BR>
+&nbsp;&nbsp;&nbsp;
+mixture method for 731<BR>
+&nbsp;&nbsp;&nbsp;
+naive method for 717<BR>
+&nbsp;&nbsp;&nbsp;
+simulation of 496<BR>
+<BR>
+sum of independent uniform random variables 21<BR>
+<BR>
+sum of uniform random variables 732<BR>
+&nbsp;&nbsp;&nbsp;
+uniformly fast method for 735<BR>
+<BR>
+sum-of-uniforms method 204<BR>
+<BR>
+sup correlation 574<BR>
+<BR>
+Survila, P. 720<BR>
+<BR>
+swapping method 612<BR>
+&nbsp;&nbsp;&nbsp;
+for random permutation 646<BR>
+<BR>
+symmetric beta distribution 193 433<BR>
+&nbsp;&nbsp;&nbsp;
+analysis of 433<BR>
+&nbsp;&nbsp;&nbsp;
+convergence to normal distribution 433<BR>
+&nbsp;&nbsp;&nbsp;
+generators for 63 65<BR>
+&nbsp;&nbsp;&nbsp;
+inequalities for 434 441 442<BR>
+&nbsp;&nbsp;&nbsp;
+polar method for 437<BR>
+&nbsp;&nbsp;&nbsp;
+rejection from normal density for 193<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 60 434<BR>
+&nbsp;&nbsp;&nbsp;
+relation to t distribution 436 446<BR>
+&nbsp;&nbsp;&nbsp;
+squeeze method for 64<BR>
+&nbsp;&nbsp;&nbsp;
+Ulrich's polar method for 437<BR>
+<BR>
+symmetric binomial distribution 538<BR>
+&nbsp;&nbsp;&nbsp;
+inequalities for 540<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 539<BR>
+<BR>
+symmetric stable distribution 186 455<BR>
+&nbsp;&nbsp;&nbsp;
+as a normal scale mixture 326<BR>
+&nbsp;&nbsp;&nbsp;
+generator for 188<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 189<BR>
+&nbsp;&nbsp;&nbsp;
+series method for 465 466 467<BR>
+<BR>
+t distribution 10 445<BR>
+&nbsp;&nbsp;&nbsp;
+acceptance-complement method for 446<BR>
+&nbsp;&nbsp;&nbsp;
+almost-exact inversion method for 143<BR>
+&nbsp;&nbsp;&nbsp;
+as a normal scale mixture 326<BR>
+&nbsp;&nbsp;&nbsp;
+composition-rejection method for 446 453<BR>
+&nbsp;&nbsp;&nbsp;
+convergence to normal distribution 447<BR>
+&nbsp;&nbsp;&nbsp;
+discrete 497<BR>
+&nbsp;&nbsp;&nbsp;
+inequalities for 203 447 448 453 454<BR>
+&nbsp;&nbsp;&nbsp;
+inversion method for 445<BR>
+&nbsp;&nbsp;&nbsp;
+properties 15<BR>
+&nbsp;&nbsp;&nbsp;
+ratio-of-uniforms method for 200 204 446<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 446 447 450<BR>
+&nbsp;&nbsp;&nbsp;
+relation to beta distribution 429<BR>
+&nbsp;&nbsp;&nbsp;
+relation to F distribution 446<BR>
+&nbsp;&nbsp;&nbsp;
+relation to gamma distribution 427 445 452<BR>
+&nbsp;&nbsp;&nbsp;
+relation to multivariate Cauchy distribution 555<BR>
+&nbsp;&nbsp;&nbsp;
+relation to symmetric beta distribution 436 446<BR>
+&nbsp;&nbsp;&nbsp;
+table method for 446<BR>
+&nbsp;&nbsp;&nbsp;
+with three degrees of freedom 37<BR>
+&nbsp;&nbsp;&nbsp;
+with two degrees of freedom 407 408 429<BR>
+<BR>
+t3 distribution 446<BR>
+&nbsp;&nbsp;&nbsp;
+ratio-of-uniforms method for 202 449<BR>
+<BR>
+table look-up method 102<BR>
+&nbsp;&nbsp;&nbsp;
+Marsaglia's 106<BR>
+<BR>
+table look-up 102<BR>
+&nbsp;&nbsp;&nbsp;
+multilevel 106<BR>
+<BR>
+table method<BR>
+&nbsp;&nbsp;&nbsp;
+for binomial distribution 523<BR>
+&nbsp;&nbsp;&nbsp;
+for normal distribution 380<BR>
+&nbsp;&nbsp;&nbsp;
+for t distribution 446<BR>
+<BR>
+Tadikamalla, P.R. 215 404 405 420 423 445 477 483 518<BR>
+<BR>
+tail of extreme value distribution<BR>
+&nbsp;&nbsp;&nbsp;
+inversion method for 276<BR>
+<BR>
+tail of log-concave densities 308<BR>
+<BR>
+tail of Rayleigh distribution<BR>
+&nbsp;&nbsp;&nbsp;
+inversion method for 29<BR>
+<BR>
+tail of the Cauchy distribution 453<BR>
+&nbsp;&nbsp;&nbsp;
+inversion method for 453<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 453<BR>
+<BR>
+tail of the gamma density 420<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 421 422 425<BR>
+<BR>
+tail of the normal distribution 681<BR>
+&nbsp;&nbsp;&nbsp;
+Marsaglia's method for 381<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 391<BR>
+<BR>
+Takahasi, K. 558 600 602<BR>
+<BR>
+Talacko, J. 287 471 472<BR>
+<BR>
+Talbot, D.R.S. 372<BR>
+<BR>
+Tamarkin, J.D. 682 685 686<BR>
+<BR>
+Tanner, J.C. 520<BR>
+<BR>
+Tanner, M.A. 607<BR>
+<BR>
+Tapia, R.A. 763<BR>
+<BR>
+Tarjan, R.E. 431<BR>
+<BR>
+Tashiro, Y. 232<BR>
+<BR>
+Taylor's series 55<BR>
+&nbsp;&nbsp;&nbsp;
+for characteristic function 684<BR>
+&nbsp;&nbsp;&nbsp;
+for densities 698<BR>
+&nbsp;&nbsp;&nbsp;
+for logarithm 508<BR>
+&nbsp;&nbsp;&nbsp;
+for normal distribution 384<BR>
+<BR>
+Teicher, H. 5 21 50 63 225<BR>
+<BR>
+Teichroew's distribution 391<BR>
+<BR>
+Teichroew, D. 391<BR>
+<BR>
+Tenenbein, A. 576 582 583 585 586 590 591<BR>
+<BR>
+Teuhola, J. 617<BR>
+<BR>
+thinning method 264<BR>
+&nbsp;&nbsp;&nbsp;
+analysis of 264 266<BR>
+&nbsp;&nbsp;&nbsp;
+for discrete distributions 280<BR>
+&nbsp;&nbsp;&nbsp;
+for gamma distribution 277<BR>
+&nbsp;&nbsp;&nbsp;
+for Poisson processes 253 255<BR>
+<BR>
+Thisted, R.A. 607<BR>
+<BR>
+Thompson, J.R. 763<BR>
+<BR>
+Tietjen, J.L. 175<BR>
+<BR>
+time series 571<BR>
+<BR>
+Tinhofer's graph generators 669<BR>
+<BR>
+Tinhofer's random graph generator 670<BR>
+<BR>
+Tinhofer, G. 657 669 670<BR>
+<BR>
+Titchmarsh, E.C. 550<BR>
+<BR>
+Tiwari, R.C. 594<BR>
+<BR>
+Toranzos's system 482<BR>
+<BR>
+Toranzos, F.I. 482<BR>
+<BR>
+transformation of a homogeneous Poisson process 257<BR>
+<BR>
+transformation<BR>
+&nbsp;&nbsp;&nbsp;
+of beta random variables 444<BR>
+<BR>
+transformations of random variables 11<BR>
+<BR>
+transition matrix 758<BR>
+<BR>
+translation parameter 7<BR>
+<BR>
+trapezoidal method<BR>
+&nbsp;&nbsp;&nbsp;
+for normal distribution 383 391<BR>
+<BR>
+trapezoidal rule 701<BR>
+<BR>
+triangle 569<BR>
+<BR>
+triangular density 22 23<BR>
+&nbsp;&nbsp;&nbsp;
+inversion method for 29<BR>
+<BR>
+triangulation 570<BR>
+<BR>
+trie 104<BR>
+<BR>
+trigamma distribution 553<BR>
+<BR>
+trivariate reduction 587<BR>
+&nbsp;&nbsp;&nbsp;
+for bivariate exponential distribution 592<BR>
+&nbsp;&nbsp;&nbsp;
+for bivariate gamma distribution 587 588<BR>
+&nbsp;&nbsp;&nbsp;
+for bivariate geometric distribution 592<BR>
+&nbsp;&nbsp;&nbsp;
+for bivariate Poisson distribution 592<BR>
+&nbsp;&nbsp;&nbsp;
+for bivariate Weibull distribution 592<BR>
+<BR>
+Trivedi, K.S. 246<BR>
+<BR>
+Trojanowski, A.E. 657<BR>
+<BR>
+truncated distributions 38<BR>
+<BR>
+truncated exponential distribution 401<BR>
+<BR>
+truncated extreme value distribution<BR>
+&nbsp;&nbsp;&nbsp;
+as an IHR distribution 343<BR>
+<BR>
+truncated gamma distribution<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 166<BR>
+<BR>
+Tsang, W.W. 359<BR>
+<BR>
+Tucker, A.C. 91<BR>
+<BR>
+Tukey's lambda distribution 482<BR>
+&nbsp;&nbsp;&nbsp;
+convergence to exponential distribution 483<BR>
+&nbsp;&nbsp;&nbsp;
+convergence to logistic distribution 483<BR>
+&nbsp;&nbsp;&nbsp;
+generalization of 482 483<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 483<BR>
+<BR>
+Tukey, J.W. 136 457 482<BR>
+<BR>
+two-way contingency table 608<BR>
+<BR>
+Ullman, J.D. 90 92 214 372 669<BR>
+<BR>
+Ulrich's polar method<BR>
+&nbsp;&nbsp;&nbsp;
+for symmetric beta distribution 437<BR>
+<BR>
+Ulrich, E.G. 571 747<BR>
+<BR>
+Ulrich, G. 436<BR>
+<BR>
+uniform distribution in hyperellipsoid 567<BR>
+<BR>
+uniform distribution in simplex 568<BR>
+<BR>
+uniform distribution in triangle 569<BR>
+<BR>
+uniform distribution in unit circle 556<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 234<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 233<BR>
+&nbsp;&nbsp;&nbsp;
+relation to Cauchy distribution 234<BR>
+&nbsp;&nbsp;&nbsp;
+squeeze method for 233<BR>
+<BR>
+uniform distribution on 3d hypersphere<BR>
+&nbsp;&nbsp;&nbsp;
+generator for 241<BR>
+<BR>
+uniform distribution on 4d hypersphere<BR>
+&nbsp;&nbsp;&nbsp;
+generator for 241<BR>
+<BR>
+uniform distribution on a compact set 368<BR>
+<BR>
+uniform distribution on a convex set 371<BR>
+<BR>
+uniform distribution on a star 243<BR>
+<BR>
+uniform distribution on convex polytope 568<BR>
+<BR>
+uniform distribution on hypersphere<BR>
+&nbsp;&nbsp;&nbsp;
+incremental method for 243<BR>
+&nbsp;&nbsp;&nbsp;
+normal random vector method for 230<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 227<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 231<BR>
+&nbsp;&nbsp;&nbsp;
+spacings method for 242<BR>
+&nbsp;&nbsp;&nbsp;
+uniform spacings method for 231<BR>
+<BR>
+uniform distribution on unit circle<BR>
+&nbsp;&nbsp;&nbsp;
+efficient rejection method for 235<BR>
+<BR>
+uniform distribution 732<BR>
+&nbsp;&nbsp;&nbsp;
+as a beta distribution 428<BR>
+&nbsp;&nbsp;&nbsp;
+as an NBUE distribution 742<BR>
+&nbsp;&nbsp;&nbsp;
+as the projection of a radially symmetric random vector 230<BR>
+&nbsp;&nbsp;&nbsp;
+characteristic function of 708<BR>
+&nbsp;&nbsp;&nbsp;
+definition 7<BR>
+&nbsp;&nbsp;&nbsp;
+distribution of midrange 24<BR>
+&nbsp;&nbsp;&nbsp;
+distribution of products 24<BR>
+&nbsp;&nbsp;&nbsp;
+distribution of ratio of maxima 26<BR>
+&nbsp;&nbsp;&nbsp;
+distribution of sum 21<BR>
+&nbsp;&nbsp;&nbsp;
+in and on circle 233<BR>
+&nbsp;&nbsp;&nbsp;
+mixtures of 16<BR>
+&nbsp;&nbsp;&nbsp;
+properties 25<BR>
+&nbsp;&nbsp;&nbsp;
+sum of independent random variables 144<BR>
+<BR>
+uniform line density 572<BR>
+<BR>
+uniform order statistics method<BR>
+&nbsp;&nbsp;&nbsp;
+for beta distribution 431<BR>
+<BR>
+uniform order statistics 636<BR>
+&nbsp;&nbsp;&nbsp;
+exponential spacings method for 214<BR>
+&nbsp;&nbsp;&nbsp;
+relation to beta distribution 431<BR>
+&nbsp;&nbsp;&nbsp;
+sorting method for 214<BR>
+&nbsp;&nbsp;&nbsp;
+uniform spacings method for 214<BR>
+<BR>
+uniform Poisson process<BR>
+&nbsp;&nbsp;&nbsp;
+on unit circle 250<BR>
+<BR>
+uniform scale mixture 687 688<BR>
+<BR>
+uniform spacings method<BR>
+&nbsp;&nbsp;&nbsp;
+for exponential distribution 394<BR>
+&nbsp;&nbsp;&nbsp;
+for uniform distribution on hypersphere 231<BR>
+&nbsp;&nbsp;&nbsp;
+for uniform order statistics 214<BR>
+<BR>
+uniform spacings 207<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 208 210 212<BR>
+&nbsp;&nbsp;&nbsp;
+relation to Dirichlet distribution 593<BR>
+&nbsp;&nbsp;&nbsp;
+relation to exponential distribution 208<BR>
+<BR>
+uniform sum 732<BR>
+&nbsp;&nbsp;&nbsp;
+density of 732 733<BR>
+<BR>
+unimodal density<BR>
+&nbsp;&nbsp;&nbsp;
+grid method for 377<BR>
+<BR>
+unimodal distribution 172 687 707<BR>
+&nbsp;&nbsp;&nbsp;
+inequalities for 173 494<BR>
+&nbsp;&nbsp;&nbsp;
+matched moment generator for 691<BR>
+&nbsp;&nbsp;&nbsp;
+rectangular decomposition of 734<BR>
+&nbsp;&nbsp;&nbsp;
+universal rejection method for 495<BR>
+<BR>
+unit sphere<BR>
+&nbsp;&nbsp;&nbsp;
+volume of 226<BR>
+<BR>
+universal generator<BR>
+&nbsp;&nbsp;&nbsp;
+a la Letac 65<BR>
+<BR>
+universal method 286<BR>
+&nbsp;&nbsp;&nbsp;
+for beta distribution 432<BR>
+<BR>
+universal rejection method<BR>
+&nbsp;&nbsp;&nbsp;
+analysis of 317<BR>
+&nbsp;&nbsp;&nbsp;
+for binomial distribution 495<BR>
+&nbsp;&nbsp;&nbsp;
+for convex densities 313<BR>
+&nbsp;&nbsp;&nbsp;
+for discrete distribution 497<BR>
+&nbsp;&nbsp;&nbsp;
+for generalized gaussian distribution 324<BR>
+&nbsp;&nbsp;&nbsp;
+for hypergeometric distribution 545<BR>
+&nbsp;&nbsp;&nbsp;
+for Lipschitz densities 323<BR>
+&nbsp;&nbsp;&nbsp;
+for log-concave densities 301 325<BR>
+&nbsp;&nbsp;&nbsp;
+for monotone densities 312 316 317<BR>
+&nbsp;&nbsp;&nbsp;
+for residual life density 330<BR>
+&nbsp;&nbsp;&nbsp;
+for unimodal distribution 495<BR>
+<BR>
+Vaduva's gamma generator 130 424<BR>
+&nbsp;&nbsp;&nbsp;
+analysis of 131<BR>
+<BR>
+Vaduva's rejection method 48<BR>
+<BR>
+Vaduva, I. 47 130 404 415 419 420 424<BR>
+<BR>
+variance reduction 580<BR>
+<BR>
+variance 5<BR>
+<BR>
+Vaucher, J.G. 737 743 744 746<BR>
+<BR>
+very smooth densities<BR>
+&nbsp;&nbsp;&nbsp;
+series method for 700<BR>
+<BR>
+Vitter, J.S. 621 631 635 638<BR>
+<BR>
+volume<BR>
+&nbsp;&nbsp;&nbsp;
+of unit sphere 226<BR>
+<BR>
+von Mises distribution 473<BR>
+&nbsp;&nbsp;&nbsp;
+inequalities for 474<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 473 476<BR>
+<BR>
+von Mises's statistic 168<BR>
+<BR>
+von Mises, R. 685 686<BR>
+<BR>
+von Neumann's exponential generator 125 182<BR>
+&nbsp;&nbsp;&nbsp;
+analysis of 126<BR>
+<BR>
+von Neumann, J. 121 126 380 391<BR>
+<BR>
+Wainwright, T.E. 372<BR>
+<BR>
+waiting time method 71<BR>
+<BR>
+waiting time 749 759<BR>
+<BR>
+Wald's distribution 148<BR>
+<BR>
+Wald's equation 50<BR>
+&nbsp;&nbsp;&nbsp;
+application of 54<BR>
+&nbsp;&nbsp;&nbsp;
+second moment analog 63<BR>
+<BR>
+Walker, A.J. 107 369<BR>
+<BR>
+Wallace, C.S. 380<BR>
+<BR>
+Walls, L.A. 203<BR>
+<BR>
+Warnock, T. 232<BR>
+<BR>
+Wasan, L.T. 150<BR>
+<BR>
+Watson's statistic 168<BR>
+<BR>
+Watson, G.N. 161 377 435 489 490 491 508 552<BR>
+<BR>
+Watson, G.S. 168<BR>
+<BR>
+Weibull distribution 414<BR>
+&nbsp;&nbsp;&nbsp;
+as a DHR distribution 267<BR>
+&nbsp;&nbsp;&nbsp;
+as an IHR distribution 343<BR>
+&nbsp;&nbsp;&nbsp;
+inversion method for 262<BR>
+&nbsp;&nbsp;&nbsp;
+log-concavity of 287<BR>
+&nbsp;&nbsp;&nbsp;
+order statistics of 220<BR>
+&nbsp;&nbsp;&nbsp;
+properties of 424<BR>
+&nbsp;&nbsp;&nbsp;
+relation to exponential distribution 414<BR>
+&nbsp;&nbsp;&nbsp;
+relation to extreme value distribution 414<BR>
+&nbsp;&nbsp;&nbsp;
+relation to multivariate Burr distribution 558<BR>
+<BR>
+weighted sampling without replacement 619<BR>
+<BR>
+Welch, W.J. 606<BR>
+<BR>
+Wheeden, R.L. 217<BR>
+<BR>
+Wheeling, R.F. 243<BR>
+<BR>
+Whitt, W. 574 580 586 588<BR>
+<BR>
+Whittaker, E.T. 161 377 435 489 490 491 508 552<BR>
+<BR>
+Whittaker, J. 416 432 439 440 443<BR>
+<BR>
+Whitworth's formula 213<BR>
+<BR>
+Whitworth, W.A. 213<BR>
+<BR>
+Widder, D.V. 682 683 685 694<BR>
+<BR>
+Wilf, H.S. 617 618 642 645 661 666<BR>
+<BR>
+Wilks, S.S. 594<BR>
+<BR>
+Willis, J.R. 372<BR>
+<BR>
+Wilson, E.B. 136<BR>
+<BR>
+Wilson-Hilferty approximation 136<BR>
+<BR>
+Wilson-Hilferty transformation 137 406<BR>
+<BR>
+Wong, C.K. 619<BR>
+<BR>
+Wormald, N.C. 671 672<BR>
+<BR>
+wrapped Cauchy density 473<BR>
+&nbsp;&nbsp;&nbsp;
+inversion method for 474<BR>
+<BR>
+Wright, H. 733<BR>
+<BR>
+Wyman, F.P. 746<BR>
+<BR>
+Yakowitz, S.J. 4<BR>
+<BR>
+Yao, A.C. 768 771 774 777 779 781<BR>
+<BR>
+Young's inequality 338<BR>
+<BR>
+Yuen, C. 38 621 624 625 626<BR>
+<BR>
+Yule distribution 553<BR>
+<BR>
+Yule process 755<BR>
+<BR>
+z distribution 329<BR>
+&nbsp;&nbsp;&nbsp;
+as a normal scale mixture 330<BR>
+&nbsp;&nbsp;&nbsp;
+generators for 330<BR>
+&nbsp;&nbsp;&nbsp;
+relation to beta distribution 330<BR>
+<BR>
+Zelen, M. 4<BR>
+<BR>
+Zemach, C. 232<BR>
+<BR>
+Zigangirov, K.S. 150<BR>
+<BR>
+Zimmerman, S. 91<BR>
+<BR>
+Zipf distribution 550<BR>
+&nbsp;&nbsp;&nbsp;
+rejection method for 550<BR>
+<BR>
+Zolotarev, V.M. 183 184 185 455 459<BR>
+<BR>
+Zygmund, A. 217<BR>
+
+</BODY>
+</HTML>
